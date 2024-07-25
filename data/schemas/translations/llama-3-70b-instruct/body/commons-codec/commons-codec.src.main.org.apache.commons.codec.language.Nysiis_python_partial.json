@@ -236,16 +236,65 @@
                         "    def nysiis(self, str_: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def nysiis(self, str_: str) -> str:",
+                        "         if str_ is None:",
+                        "             return None",
+                        "",
+                        "         str_ = SoundexUtils.clean(str_)",
+                        "",
+                        "         if str_ == \"\":",
+                        "             return str_",
+                        "",
+                        "         str_ = self.__PAT_MAC.sub(\"MCC\", str_)",
+                        "         str_ = self.__PAT_KN.sub(\"NN\", str_)",
+                        "         str_ = self.__PAT_K.sub(\"C\", str_)",
+                        "         str_ = self.__PAT_PH_PF.sub(\"FF\", str_)",
+                        "         str_ = self.__PAT_SCH.sub(\"SSS\", str_)",
+                        "",
+                        "         str_ = self.__PAT_EE_IE.sub(\"Y\", str_)",
+                        "         str_ = self.__PAT_DT_ETC.sub(\"D\", str_)",
+                        "",
+                        "         key = [str_[0]]",
+                        "",
+                        "         chars = list(str_)",
+                        "         len_ = len(chars)",
+                        "",
+                        "         for i in range(1, len_):",
+                        "             next_ = chars[i + 1] if i < len_ - 1 else self.__SPACE",
+                        "             aNext = chars[i + 2] if i < len_ - 2 else self.__SPACE",
+                        "             transcoded = self.__transcodeRemaining(chars[i - 1], chars[i], next_, aNext)",
+                        "             chars[i:i] = transcoded",
+                        "",
+                        "             if chars[i] != chars[i - 1]:",
+                        "                 key.append(chars[i])",
+                        "",
+                        "         if len(key) > 1:",
+                        "             lastChar = key[-1]",
+                        "",
+                        "             if lastChar == 'S':",
+                        "                 key.pop()",
+                        "                 lastChar = key[-1]",
+                        "             if len(key) > 2:",
+                        "                 last2Char = key[-2]",
+                        "                 if last2Char == 'A' and lastChar == 'Y':",
+                        "                     key.pop(-2)",
+                        "             if lastChar == 'A':",
+                        "                 key.pop()",
+                        "",
+                        "         string_ = ''.join(key)",
+                        "         return self.isStrict() and string_[:min(self.__TRUE_LENGTH, len(string_))] or string_"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 18.59821915626526,
+                    "generation_timestamp": "2024-07-22T05:16:20.145628",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
                 "229-231:isStrict": {
                     "start": 229,
@@ -274,16 +323,20 @@
                         "    def isStrict(self) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isStrict(self) -> bool:",
+                        "         return self.__strict"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.728400707244873,
+                    "generation_timestamp": "2024-07-22T05:16:20.878266",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "220-222:encode1": {
                     "start": 220,
@@ -320,16 +373,20 @@
                         "    def encode1(self, str_: str) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode1(self, str_: str) -> str:",
+                        "         return self.nysiis(str_)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 225.7352843284607,
+                    "generation_timestamp": "2024-07-22T05:18:12.026810",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
                 "200-206:encode0": {
                     "start": 200,
@@ -375,14 +432,19 @@
                         "    def encode0(self, obj: typing.Any) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def encode0(self, obj: typing.Any) -> typing.Any:",
+                        "         if not isinstance(obj, str):",
+                        "             raise EncoderException(\"Parameter supplied to Nysiis encode is not of type java.lang.String\", None)",
+                        "         return self.nysiis(obj)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.070880889892578,
+                    "generation_timestamp": "2024-07-22T05:18:14.103516",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -421,14 +483,18 @@
                         "    def Nysiis1() -> Nysiis:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def Nysiis1() -> Nysiis:",
+                        "         return Nysiis(True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 121.3249945640564,
+                    "generation_timestamp": "2024-07-21T23:01:03.425193",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -461,16 +527,20 @@
                         "    def __init__(self, strict: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool) -> None:",
+                        "         self.__strict = strict"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8530490398406982,
+                    "generation_timestamp": "2024-07-22T05:16:22.545492",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
                 "113-156:transcodeRemaining": {
                     "start": 113,
@@ -553,16 +623,43 @@
                         "    def __transcodeRemaining(prev: str, curr: str, next_: str, aNext: str) -> typing.List[str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __transcodeRemaining(prev: str, curr: str, next_: str, aNext: str) -> typing.List[str]:",
+                        "         if curr == 'E' and next_ == 'V':",
+                        "             return Nysiis.__CHARS_AF",
+                        "         if Nysiis.__isVowel(curr):",
+                        "             return Nysiis.__CHARS_A",
+                        "         if curr == 'Q':",
+                        "             return Nysiis.__CHARS_G",
+                        "         if curr == 'Z':",
+                        "             return Nysiis.__CHARS_S",
+                        "         if curr == 'M':",
+                        "             return Nysiis.__CHARS_N",
+                        "         if curr == 'K':",
+                        "             if next_ == 'N':",
+                        "                 return Nysiis.__CHARS_NN",
+                        "             return Nysiis.__CHARS_C",
+                        "         if curr == 'S' and next_ == 'C' and aNext == 'H':",
+                        "             return Nysiis.__CHARS_SSS",
+                        "         if curr == 'P' and next_ == 'H':",
+                        "             return Nysiis.__CHARS_FF",
+                        "         if curr == 'H' and (not Nysiis.__isVowel(prev) or not Nysiis.__isVowel(next_)):",
+                        "             return [prev]",
+                        "         if curr == 'W' and Nysiis.__isVowel(prev):",
+                        "             return [prev]",
+                        "         return [curr]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.049325227737427,
+                    "generation_timestamp": "2024-07-22T05:16:32.599446",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "99-101:isVowel": {
                     "start": 99,
@@ -595,16 +692,21 @@
                         "    def __isVowel(c: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __isVowel(c: str) -> bool:",
+                        "         return c.upper() == 'A' or c.upper() == 'E' or c.upper() == 'I' or c.upper() == 'O' or c.upper() == 'U'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.9099624156951904,
+                    "generation_timestamp": "2024-07-22T05:16:34.514104",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 }
             },
             "fields": {
@@ -628,14 +730,17 @@
                         "    __strict: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __strict: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T18:30:21.403541",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -660,14 +765,16 @@
                         "    __TRUE_LENGTH: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __TRUE_LENGTH: int = 6"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.900115728378296,
+                    "generation_timestamp": "2024-07-21T18:30:43.310049",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -692,14 +799,16 @@
                         "    __SPACE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __SPACE: str = ' '"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.515857458114624,
+                    "generation_timestamp": "2024-07-21T18:31:04.837848",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -724,14 +833,16 @@
                         "    __PAT_DT_ETC: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_DT_ETC: re.Pattern = re.compile(r'(DT|RT|RD|NT|ND)$')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 23.313228130340576,
+                    "generation_timestamp": "2024-07-21T18:31:28.157249",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -756,14 +867,16 @@
                         "    __PAT_EE_IE: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_EE_IE: re.Pattern = re.compile(r'(EE|IE)$')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.38510513305664,
+                    "generation_timestamp": "2024-07-21T18:31:50.554552",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -788,14 +901,16 @@
                         "    __PAT_SCH: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_SCH: re.Pattern = re.compile(\"^SCH\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.34709405899048,
+                    "generation_timestamp": "2024-07-21T18:32:12.913846",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -820,14 +935,16 @@
                         "    __PAT_PH_PF: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_PH_PF: re.Pattern = re.compile(r\"^(PH|PF)\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.029019355773926,
+                    "generation_timestamp": "2024-07-21T18:32:34.948425",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -852,14 +969,16 @@
                         "    __PAT_K: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_K: re.Pattern = re.compile(\"^K\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.9022274017334,
+                    "generation_timestamp": "2024-07-21T18:32:56.865732",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -884,14 +1003,16 @@
                         "    __PAT_KN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_KN: re.Pattern = re.compile(\"^KN\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.829416275024414,
+                    "generation_timestamp": "2024-07-21T18:33:18.700974",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -916,14 +1037,16 @@
                         "    __PAT_MAC: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PAT_MAC: re.Pattern = re.compile(r\"^MAC\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.66533064842224,
+                    "generation_timestamp": "2024-07-21T18:33:40.377849",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -948,14 +1071,16 @@
                         "    __CHARS_SSS: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_SSS: typing.List[str] = ['S', 'S', 'S']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.830222368240356,
+                    "generation_timestamp": "2024-07-21T18:34:03.220426",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -980,14 +1105,16 @@
                         "    __CHARS_S: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_S: typing.List[str] = ['S']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.597138166427612,
+                    "generation_timestamp": "2024-07-21T18:34:25.830101",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1012,14 +1139,16 @@
                         "    __CHARS_NN: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_NN: typing.List[str] = ['N', 'N']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.98589849472046,
+                    "generation_timestamp": "2024-07-21T18:34:47.821694",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1044,14 +1173,16 @@
                         "    __CHARS_N: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_N: typing.List[str] = ['N']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.04868721961975,
+                    "generation_timestamp": "2024-07-21T18:35:09.876084",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1076,14 +1207,16 @@
                         "    __CHARS_G: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_G: typing.List[str] = ['G']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.15636706352234,
+                    "generation_timestamp": "2024-07-21T18:35:32.045383",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1108,14 +1241,16 @@
                         "    __CHARS_FF: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_FF: typing.List[str] = ['F', 'F']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.482920169830322,
+                    "generation_timestamp": "2024-07-21T18:35:54.541358",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1140,14 +1275,16 @@
                         "    __CHARS_C: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_C: typing.List[str] = ['C']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.689546585083008,
+                    "generation_timestamp": "2024-07-21T18:36:17.243083",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1172,14 +1309,16 @@
                         "    __CHARS_AF: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_AF: typing.List[str] = ['A', 'F']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.400725603103638,
+                    "generation_timestamp": "2024-07-21T18:36:39.656345",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1204,14 +1343,16 @@
                         "    __CHARS_A: typing.List[str] = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __CHARS_A: typing.List[str] = ['A']"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 22.164748907089233,
+                    "generation_timestamp": "2024-07-21T18:37:01.833963",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -86,16 +86,28 @@
                         "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int, initvalue: IntWrapper) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int, initvalue: IntWrapper) -> None:",
+                        "         if inlength == 0:",
+                        "             return",
+                        "         init = inpos.get()",
+                        "         self.F1.headlessUncompress(in_, inpos, inlength, out, outpos, num, initvalue)",
+                        "         if inpos.get() == init:",
+                        "             inpos.increment()",
+                        "         inlength -= inpos.get() - init",
+                        "         num -= outpos.get()",
+                        "         self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num, initvalue)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.70357084274292,
+                    "generation_timestamp": "2024-07-21T18:46:17.626940",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "47-61:headlessCompress": {
                     "start": 47,
@@ -161,16 +173,30 @@
                         "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, initvalue: IntWrapper) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, initvalue: IntWrapper) -> None:",
+                        "         if inlength == 0:",
+                        "             return",
+                        "         init = inpos.get()",
+                        "         outposInit = outpos.get()",
+                        "",
+                        "         self.F1.headlessCompress(in_, inpos, inlength, out, outpos, initvalue)",
+                        "         if outpos.get() == outposInit:",
+                        "             out[outposInit] = 0",
+                        "             outpos.increment()",
+                        "         inlength -= inpos.get() - init",
+                        "         self.F2.headlessCompress(in_, inpos, inlength, out, outpos, IntWrapper(in_[inpos.get() + inlength - 1]))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.4937028884887695,
+                    "generation_timestamp": "2024-07-21T18:48:05.513112",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "42-44:toString": {
                     "start": 42,
@@ -201,14 +227,17 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return str(self.F1) + \" + \" + str(self.F2)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.4660229682922363,
+                    "generation_timestamp": "2024-07-21T12:46:28.899272",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -244,16 +273,21 @@
                         "    def __init__(self, f1: SkippableIntegratedIntegerCODEC, f2: SkippableIntegratedIntegerCODEC) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, f1: SkippableIntegratedIntegerCODEC, f2: SkippableIntegratedIntegerCODEC) -> None:",
+                        "         self.F1 = f1",
+                        "         self.F2 = f2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.004748821258545,
+                    "generation_timestamp": "2024-07-21T18:48:06.519400",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 }
             },
             "fields": {
@@ -274,14 +308,17 @@
                         "    F2: SkippableIntegratedIntegerCODEC = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    F2: SkippableIntegratedIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:48:07.405854",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -302,14 +339,17 @@
                         "    F1: SkippableIntegratedIntegerCODEC = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    F1: SkippableIntegratedIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:48:07.407145",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -85,14 +85,23 @@
                         "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:",
+                        "         decompressed = [0] * compressed[0]",
+                        "         inpos = IntWrapper(1)",
+                        "         self.codec.headlessUncompress(compressed, inpos, ",
+                        "                compressed.length - inpos.intValue(), ",
+                        "                decompressed, IntWrapper(0), ",
+                        "                len(decompressed), IntWrapper(0))",
+                        "         return decompressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.584549903869629,
+                    "generation_timestamp": "2024-07-21T18:49:12.712009",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -157,14 +166,26 @@
                         "    def compress(self, input_: typing.List[int]) -> typing.List[int]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def compress(self, input_: typing.List[int]) -> typing.List[int]:",
+                        "         compressed = [0] * (len(input_) + len(input_) // 100 + 1024)",
+                        "         compressed[0] = len(input_)",
+                        "         outpos = IntWrapper(1)",
+                        "         initvalue = IntWrapper(0)",
+                        "         try:",
+                        "             self.codec.headlessCompress(input_, IntWrapper(0), len(input_), compressed, outpos, initvalue)",
+                        "         except IndexError:",
+                        "             raise UncompressibleInputException(f\"Your input is too poorly compressible with the current codec : {self.codec}\")",
+                        "         compressed = compressed[:outpos.intValue()]",
+                        "         return compressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 254.36101412773132,
+                    "generation_timestamp": "2024-07-21T19:11:21.757320",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -222,14 +243,20 @@
                         "    def __init__(self, constructorId: int, c: SkippableIntegratedIntegerCODEC) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, c: SkippableIntegratedIntegerCODEC) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.codec = c",
+                        "         else:",
+                        "             self.codec = SkippableIntegratedComposition(IntegratedBinaryPacking(), IntegratedVariableByte())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.343653440475464,
+                    "generation_timestamp": "2024-07-21T14:07:24.888158",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -252,14 +279,17 @@
                         "    codec: SkippableIntegratedIntegerCODEC = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    codec: SkippableIntegratedIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:06:19.727479",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

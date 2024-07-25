@@ -121,6 +121,11 @@
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
                             "CommandLine",
                             "283-285:getOptionValue4"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.bug.BugCLI71Test",
+                            "BugCLI71Test",
+                            "38-54:setUp"
                         ]
                     ],
                     "is_overload": false,
@@ -128,14 +133,22 @@
                         "    def testMistakenArgument(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testMistakenArgument(self) -> None:",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"A\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"a\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         self.assertEqual(\"Caesar\", line.getOptionValue4(\"a\"))",
+                        "         self.assertEqual(\"a\", line.getOptionValue4(\"k\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.586148262023926,
+                    "generation_timestamp": "2024-07-21T13:14:05.637647",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -183,6 +196,11 @@
                             "commons-cli.src.main.org.apache.commons.cli.MissingArgumentException",
                             "MissingArgumentException",
                             "63-65:getOption"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.bug.BugCLI71Test",
+                            "BugCLI71Test",
+                            "38-54:setUp"
                         ]
                     ],
                     "is_overload": false,
@@ -190,14 +208,22 @@
                         "    def testLackOfError(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testLackOfError(self) -> None:",
+                        "         args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "         try:",
+                        "             self.__parser.parse0(self.__options, args)",
+                        "             self.fail(\"MissingArgumentException expected\")",
+                        "         except MissingArgumentException as e:",
+                        "             self.assertEqual(\"option missing an argument\", e.getOption().getOpt())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.238481998443604,
+                    "generation_timestamp": "2024-07-21T13:14:13.892700",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -254,6 +280,11 @@
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
                             "CommandLine",
                             "244-246:getOptionValue1"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.bug.BugCLI71Test",
+                            "BugCLI71Test",
+                            "38-54:setUp"
                         ]
                     ],
                     "is_overload": false,
@@ -261,14 +292,22 @@
                         "    def testGetsDefaultIfOptional(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testGetsDefaultIfOptional(self) -> None:",
+                        "         args = [\"-k\", \"-a\", \"Caesar\"]",
+                        "         self.__options.getOption(\"k\").setOptionalArg(True)",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "",
+                        "         self.assertEqual(\"Caesar\", line.getOptionValue4(\"a\"))",
+                        "         self.assertEqual(\"a\", line.getOptionValue1('k', \"a\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.738173961639404,
+                    "generation_timestamp": "2024-07-21T13:14:22.654273",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -308,6 +347,11 @@
                             "commons-cli.src.main.org.apache.commons.cli.CommandLine",
                             "CommandLine",
                             "283-285:getOptionValue4"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.bug.BugCLI71Test",
+                            "BugCLI71Test",
+                            "38-54:setUp"
                         ]
                     ],
                     "is_overload": false,
@@ -315,14 +359,20 @@
                         "    def testBasic(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testBasic(self) -> None:",
+                        "         args = [\"-a\", \"Caesar\", \"-k\", \"A\"]",
+                        "         line = self.__parser.parse0(self.__options, args)",
+                        "         self.assertEqual(\"Caesar\", line.getOptionValue4(\"a\"))",
+                        "         self.assertEqual(\"A\", line.getOptionValue4(\"k\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.452582359313965,
+                    "generation_timestamp": "2024-07-21T13:14:30.118538",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -388,6 +438,11 @@
                             "commons-cli.src.main.org.apache.commons.cli.PosixParser",
                             "PosixParser",
                             "PosixParser"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.bug.BugCLI71Test",
+                            "BugCLI71Test",
+                            "38-54:setUp"
                         ]
                     ],
                     "is_overload": false,
@@ -395,14 +450,27 @@
                         "    def setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def setUp(self) -> None:",
+                        "         self.__options = Options()",
+                        "",
+                        "         algorithm = Option(0, \"a\", \"algo\", \"the algorithm which it to perform executing\", True, None)",
+                        "         algorithm.setArgName(\"algorithm name\")",
+                        "         self.__options.addOption0(algorithm)",
+                        "",
+                        "         key = Option(0, \"k\", \"key\", \"the key the setted algorithm uses to process\", True, None)",
+                        "         key.setArgName(\"value\")",
+                        "         self.__options.addOption0(key)",
+                        "",
+                        "         self.__parser = PosixParser()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.978709697723389,
+                    "generation_timestamp": "2024-07-21T12:42:03.320387",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -427,14 +495,17 @@
                         "    __parser: CommandLineParser = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __parser: CommandLineParser = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:47:05.147608",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -457,14 +528,17 @@
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:47:05.152197",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

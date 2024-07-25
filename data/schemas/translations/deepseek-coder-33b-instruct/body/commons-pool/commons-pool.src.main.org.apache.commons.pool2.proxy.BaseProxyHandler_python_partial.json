@@ -63,14 +63,25 @@
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "        ",
+                        "        builder = io.StringIO()",
+                        "        builder.write(self.__class__.__name__)",
+                        "        builder.write(\" [pooledObject=\")",
+                        "        builder.write(str(self.__pooledObject))",
+                        "        builder.write(\", usageTracking=\")",
+                        "        builder.write(str(self.__usageTracking))",
+                        "        builder.write(\"]\")",
+                        "        return builder.getvalue()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.421132802963257,
+                    "generation_timestamp": "2024-07-20T21:47:19.974844",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -103,14 +114,20 @@
                         "    def validateProxiedObject(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def validateProxiedObject(self) -> None:",
+                        "         if self.__pooledObject is None:",
+                        "            raise IllegalStateException(",
+                        "                \"This object may no longer be \"",
+                        "                + \"used as it has been returned to the Object Pool.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.854140281677246,
+                    "generation_timestamp": "2024-07-20T21:47:21.830801",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -139,14 +156,17 @@
                         "    def getPooledObject(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getPooledObject(self) -> typing.Any:",
+                        "         return self.__pooledObject"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6907210350036621,
+                    "generation_timestamp": "2024-07-20T21:47:22.525985",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -194,14 +214,22 @@
                         "    def doInvoke(self, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def doInvoke(self, method: typing.Union[inspect.Signature, typing.Callable], args: typing.List[typing.Any]) -> typing.Any:",
+                        "        ",
+                        "        self.validateProxiedObject()",
+                        "        object = self.getPooledObject()",
+                        "        if self.__usageTracking is not None:",
+                        "            self.__usageTracking.use(object)",
+                        "        return method(object, *args)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.071453094482422,
+                    "generation_timestamp": "2024-07-20T21:47:29.603400",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -232,14 +260,19 @@
                         "    def disableProxy(self) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def disableProxy(self) -> typing.Any:",
+                        "         result = self.__pooledObject",
+                        "         self.__pooledObject = None",
+                        "         return result"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.2525739669799805,
+                    "generation_timestamp": "2024-07-20T21:47:30.860100",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -272,14 +305,18 @@
                         "    def __init__(self, pooledObject: typing.Any, usageTracking: UsageTracking[typing.Any]) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, pooledObject: typing.Any, usageTracking: UsageTracking[typing.Any]) -> None:",
+                        "         self.__pooledObject = pooledObject",
+                        "         self.__usageTracking = usageTracking"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.141657829284668,
+                    "generation_timestamp": "2024-07-20T21:47:32.007023",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
@@ -305,14 +342,17 @@
                         "    __usageTracking: UsageTracking[typing.Any] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __usageTracking: UsageTracking[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:49:14.935354",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -336,14 +376,17 @@
                         "    __pooledObject: typing.Any = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __pooledObject: typing.Any = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:49:14.938142",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }

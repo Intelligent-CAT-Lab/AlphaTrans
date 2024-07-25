@@ -182,44 +182,47 @@
                             "428-430:hasOption2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testCLI13(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testCLI13(self) -> None:",
                         "        ",
-                        "",
                         "        debugOpt = \"debug\"",
-                        "        debug = OptionBuilder.withArgName(debugOpt) \\",
-                        "            .withDescription(\"turn on debugging\") \\",
-                        "            .withLongOpt(debugOpt) \\",
-                        "            .hasArg0() \\",
-                        "            .create1('d')",
+                        "        debug = OptionBuilder.withArgName(debugOpt).withDescription(\"turn on debugging\").withLongOpt(debugOpt).hasArg0().create1('d')",
                         "        options = Options()",
                         "        options.addOption0(debug)",
                         "        commandLine = PosixParser().parse0(options, [\"-d\", \"true\"])",
                         "",
-                        "        assert commandLine.getOptionValue4(debugOpt) == \"true\"",
-                        "        assert commandLine.getOptionValue0('d') == \"true\"",
-                        "        assert commandLine.hasOption0('d')",
-                        "        assert commandLine.hasOption2(debugOpt)",
-                        ""
+                        "        self.assertEqual(\"true\", commandLine.getOptionValue4(debugOpt))",
+                        "        self.assertEqual(\"true\", commandLine.getOptionValue0('d'))",
+                        "        self.assertTrue(commandLine.hasOption0('d'))",
+                        "        self.assertTrue(commandLine.hasOption2(debugOpt))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 6.861809730529785,
-                    "generation_timestamp": "2024-06-09T20:11:44.355688",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.20673942565918,
+                    "generation_timestamp": "2024-07-21T02:28:53.520343",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class BugCLI13Test:\n\n"
+            "is_enum": false,
+            "python_class_declaration": "class BugCLI13Test(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.cli.CommandLine import *",
         "from src.main.org.apache.commons.cli.Option import *",
         "from src.main.org.apache.commons.cli.OptionBuilder import *",

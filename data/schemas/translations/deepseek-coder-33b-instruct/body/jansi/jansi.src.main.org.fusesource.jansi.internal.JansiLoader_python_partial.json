@@ -1,0 +1,1524 @@
+{
+    "path": "java_projects/cleaned_final_projects/jansi/src/main/java/org/fusesource/jansi/internal/JansiLoader.java",
+    "imports": {
+        "38-38:import IOException": {
+            "start": 38,
+            "end": 38,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "34-34:import File": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "37-37:import FilenameFilter": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.io.FilenameFilter;\n"
+            ]
+        },
+        "40-40:import URL": {
+            "start": 40,
+            "end": 40,
+            "body": [
+                "import java.net.URL;\n"
+            ]
+        },
+        "35-35:import FileInputStream": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.io.FileInputStream;\n"
+            ]
+        },
+        "39-39:import InputStream": {
+            "start": 39,
+            "end": 39,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "36-36:import FileOutputStream": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.io.FileOutputStream;\n"
+            ]
+        },
+        "45-45:import List": {
+            "start": 45,
+            "end": 45,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "46-46:import Properties": {
+            "start": 46,
+            "end": 46,
+            "body": [
+                "import java.util.Properties;\n"
+            ]
+        },
+        "41-41:import Files": {
+            "start": 41,
+            "end": 41,
+            "body": [
+                "import java.nio.file.Files;\n"
+            ]
+        },
+        "42-42:import StandardCopyOption": {
+            "start": 42,
+            "end": 42,
+            "body": [
+                "import java.nio.file.StandardCopyOption;\n"
+            ]
+        },
+        "43-43:import Arrays": {
+            "start": 43,
+            "end": 43,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "44-44:import LinkedList": {
+            "start": 44,
+            "end": 44,
+            "body": [
+                "import java.util.LinkedList;\n"
+            ]
+        },
+        "47-47:import Random": {
+            "start": 47,
+            "end": 47,
+            "body": [
+                "import java.util.Random;\n"
+            ]
+        },
+        "49-49:import AnsiConsole": {
+            "start": 49,
+            "end": 49,
+            "body": [
+                "import org.fusesource.jansi.AnsiConsole;\n"
+            ]
+        }
+    },
+    "classes": {
+        "JansiLoader": {
+            "start": 61,
+            "end": 61,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Runnable(...) { ... }",
+                "new FilenameFilter(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "378-394:getVersion": {
+                    "start": 378,
+                    "end": 394,
+                    "body": [
+                        "    public static String getVersion() {\n",
+                        "\n",
+                        "        URL versionFile = JansiLoader.class.getResource(\"/org/fusesource/jansi/jansi.properties\");\n",
+                        "\n",
+                        "        String version = \"unknown\";\n",
+                        "        try {\n",
+                        "            if (versionFile != null) {\n",
+                        "                Properties versionData = new Properties();\n",
+                        "                versionData.load(versionFile.openStream());\n",
+                        "                version = versionData.getProperty(\"version\", version);\n",
+                        "                version = version.trim().replaceAll(\"[^0-9.]\", \"\");\n",
+                        "            }\n",
+                        "        } catch (IOException e) {\n",
+                        "            System.err.println(e);\n",
+                        "        }\n",
+                        "        return version;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getVersion()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getVersion() -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getVersion() -> str:",
+                        "        ",
+                        "        version_file = pathlib.Path(__file__).parent / \"org/fusesource/jansi/jansi.properties\"",
+                        "",
+                        "        version = \"unknown\"",
+                        "        try:",
+                        "            if version_file.exists():",
+                        "                with open(version_file, 'r') as f:",
+                        "                    version_data = f.read()",
+                        "                    version = version_data.split('=')[1].strip()",
+                        "                    version = ''.join(filter(str.isdigit, version))",
+                        "        except IOError as e:",
+                        "            print(e)",
+                        "        return version"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.681260347366333,
+                    "generation_timestamp": "2024-07-21T01:23:55.558508",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "370-373:getMinorVersion": {
+                    "start": 370,
+                    "end": 373,
+                    "body": [
+                        "    public static int getMinorVersion() {\n",
+                        "        String[] c = getVersion().split(\"\\\\.\");\n",
+                        "        return (c.length > 1) ? Integer.parseInt(c[1]) : 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMinorVersion()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "378-394:getVersion"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getMinorVersion() -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getMinorVersion() -> int:",
+                        "        ",
+                        "        c = JansiLoader.getVersion().split(\".\")",
+                        "        return int(c[1]) if len(c) > 1 else 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.4818542003631592,
+                    "generation_timestamp": "2024-07-21T01:23:57.053655",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "362-365:getMajorVersion": {
+                    "start": 362,
+                    "end": 365,
+                    "body": [
+                        "    public static int getMajorVersion() {\n",
+                        "        String[] c = getVersion().split(\"\\\\.\");\n",
+                        "        return (c.length > 0) ? Integer.parseInt(c[0]) : 1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMajorVersion()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "378-394:getVersion"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getMajorVersion() -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getMajorVersion() -> int:",
+                        "        ",
+                        "        c = JansiLoader.getVersion().split(\".\")",
+                        "        return int(c[0]) if len(c) > 0 else 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.7422809600830078,
+                    "generation_timestamp": "2024-07-21T01:23:58.805303",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "109-132:cleanup": {
+                    "start": 109,
+                    "end": 132,
+                    "body": [
+                        "    static void cleanup() {\n",
+                        "        String tempFolder = getTempDir().getAbsolutePath();\n",
+                        "        File dir = new File(tempFolder);\n",
+                        "\n",
+                        "        File[] nativeLibFiles = dir.listFiles(new FilenameFilter() {\n",
+                        "            private final String searchPattern = \"jansi-\" + getVersion();\n",
+                        "\n",
+                        "            public boolean accept(File dir, String name) {\n",
+                        "                return name.startsWith(searchPattern) && !name.endsWith(\".lck\");\n",
+                        "            }\n",
+                        "        });\n",
+                        "        if (nativeLibFiles != null) {\n",
+                        "            for (File nativeLibFile : nativeLibFiles) {\n",
+                        "                File lckFile = new File(nativeLibFile.getAbsolutePath() + \".lck\");\n",
+                        "                if (!lckFile.exists()) {\n",
+                        "                    try {\n",
+                        "                        nativeLibFile.delete();\n",
+                        "                    } catch (SecurityException e) {\n",
+                        "                        System.err.println(\"Failed to delete old native lib\" + e.getMessage());\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cleanup()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "101-103:getTempDir"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def cleanup() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def cleanup() -> None:",
+                        "        ",
+                        "        temp_folder = str(JansiLoader.__getTempDir())",
+                        "        dir = pathlib.Path(temp_folder)",
+                        "",
+                        "        search_pattern = \"jansi-\" + getVersion()",
+                        "        native_lib_files = [f for f in dir.iterdir() if f.name.startswith(search_pattern) and not f.name.endswith(\".lck\")]",
+                        "",
+                        "        for native_lib_file in native_lib_files:",
+                        "            lck_file = pathlib.Path(str(native_lib_file) + \".lck\")",
+                        "            if not lck_file.exists():",
+                        "                try:",
+                        "                    native_lib_file.unlink()",
+                        "                except PermissionError as e:",
+                        "                    print(\"Failed to delete old native lib\" + str(e))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.876144170761108,
+                    "generation_timestamp": "2024-07-21T01:24:38.777280",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "97-99:getNativeLibrarySourceUrl": {
+                    "start": 97,
+                    "end": 99,
+                    "body": [
+                        "    public static String getNativeLibrarySourceUrl() {\n",
+                        "        return nativeLibrarySourceUrl;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getNativeLibrarySourceUrl()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getNativeLibrarySourceUrl() -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getNativeLibrarySourceUrl() -> str:",
+                        "         return JansiLoader.__nativeLibrarySourceUrl"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.8027896881103516,
+                    "generation_timestamp": "2024-07-21T01:23:59.616218",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "93-95:getNativeLibraryPath": {
+                    "start": 93,
+                    "end": 95,
+                    "body": [
+                        "    public static String getNativeLibraryPath() {\n",
+                        "        return nativeLibraryPath;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getNativeLibraryPath()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getNativeLibraryPath() -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getNativeLibraryPath() -> str:",
+                        "         return JansiLoader.__nativeLibraryPath"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.7511851787567139,
+                    "generation_timestamp": "2024-07-21T01:24:00.376530",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "73-91:initialize": {
+                    "start": 73,
+                    "end": 91,
+                    "body": [
+                        "    public static synchronized boolean initialize() {\n",
+                        "        // only cleanup before the first extract\n",
+                        "        if (!loaded) {\n",
+                        "            Thread cleanup = new Thread(JansiLoader::cleanup, \"cleanup\");\n",
+                        "            cleanup.setPriority(Thread.MIN_PRIORITY);\n",
+                        "            cleanup.setDaemon(true);\n",
+                        "            cleanup.start();\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            loadJansiNativeLibrary();\n",
+                        "        } catch (Exception e) {\n",
+                        "            if (!Boolean.parseBoolean(System.getProperty(AnsiConsole.JANSI_GRACEFUL, \"true\"))) {\n",
+                        "                throw new RuntimeException(\n",
+                        "                        \"Unable to load jansi native library. You may want set the `jansi.graceful` system property to true to be able to use Jansi on your platform\",\n",
+                        "                        e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return loaded;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "initialize()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "283-353:loadJansiNativeLibrary"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def initialize() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def initialize() -> bool:",
+                        "        ",
+                        "        if JansiLoader.__loaded:",
+                        "            return JansiLoader.__loaded",
+                        "",
+                        "        cleanup = threading.Thread(target=JansiLoader.__cleanup, name=\"cleanup\")",
+                        "        cleanup.setDaemon(True)",
+                        "        cleanup.start()",
+                        "",
+                        "        try:",
+                        "            JansiLoader.__loadJansiNativeLibrary()",
+                        "        except Exception as e:",
+                        "            if not bool(os.getenv(AnsiConsole.JANSI_GRACEFUL, \"true\")):",
+                        "                raise RuntimeError(",
+                        "                    \"Unable to load jansi native library. You may want set the `jansi.graceful` system property to true to be able to use Jansi on your platform\",",
+                        "                    e)",
+                        "",
+                        "        return JansiLoader.__loaded"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "failed",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 74.15650057792664,
+                    "generation_timestamp": "2024-07-21T01:26:37.973535",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "355-357:hasResource": {
+                    "start": 355,
+                    "end": 357,
+                    "body": [
+                        "    private static boolean hasResource(String path) {\n",
+                        "        return JansiLoader.class.getResource(path) != null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasResource(String)",
+                    "parameters": [
+                        "path"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __hasResource(path: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __hasResource(path: str) -> bool:",
+                        "         return JansiLoader.__class__.getResource(path) is not None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.1033496856689453,
+                    "generation_timestamp": "2024-07-21T01:24:01.489397",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "283-353:loadJansiNativeLibrary": {
+                    "start": 283,
+                    "end": 353,
+                    "body": [
+                        "    private static void loadJansiNativeLibrary() throws Exception {\n",
+                        "        if (loaded) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        List<String> triedPaths = new LinkedList<String>();\n",
+                        "\n",
+                        "        // Try loading library from library.jansi.path library path */\n",
+                        "        String jansiNativeLibraryPath = System.getProperty(\"library.jansi.path\");\n",
+                        "        String jansiNativeLibraryName = System.getProperty(\"library.jansi.name\");\n",
+                        "        if (jansiNativeLibraryName == null) {\n",
+                        "            jansiNativeLibraryName = System.mapLibraryName(\"jansi\");\n",
+                        "            assert jansiNativeLibraryName != null;\n",
+                        "            if (jansiNativeLibraryName.endsWith(\".dylib\")) {\n",
+                        "                jansiNativeLibraryName = jansiNativeLibraryName.replace(\".dylib\", \".jnilib\");\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (jansiNativeLibraryPath != null) {\n",
+                        "            String withOs = jansiNativeLibraryPath + \"/\" + OSInfo.getNativeLibFolderPathForCurrentOS();\n",
+                        "            if (loadNativeLibrary(new File(withOs, jansiNativeLibraryName))) {\n",
+                        "                loaded = true;\n",
+                        "                return;\n",
+                        "            } else {\n",
+                        "                triedPaths.add(withOs);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (loadNativeLibrary(new File(jansiNativeLibraryPath, jansiNativeLibraryName))) {\n",
+                        "                loaded = true;\n",
+                        "                return;\n",
+                        "            } else {\n",
+                        "                triedPaths.add(jansiNativeLibraryPath);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        // Load the os-dependent library from the jar file\n",
+                        "        String packagePath = JansiLoader.class.getPackage().getName().replace('.', '/');\n",
+                        "        jansiNativeLibraryPath =\n",
+                        "                String.format(\"/%s/native/%s\", packagePath, OSInfo.getNativeLibFolderPathForCurrentOS());\n",
+                        "        boolean hasNativeLib = hasResource(jansiNativeLibraryPath + \"/\" + jansiNativeLibraryName);\n",
+                        "\n",
+                        "        if (hasNativeLib) {\n",
+                        "            // temporary library folder\n",
+                        "            String tempFolder = getTempDir().getAbsolutePath();\n",
+                        "            // Try extracting the library from jar\n",
+                        "            if (extractAndLoadLibraryFile(jansiNativeLibraryPath, jansiNativeLibraryName, tempFolder)) {\n",
+                        "                loaded = true;\n",
+                        "                return;\n",
+                        "            } else {\n",
+                        "                triedPaths.add(jansiNativeLibraryPath);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        // As a last resort try from java.library.path\n",
+                        "        String javaLibraryPath = System.getProperty(\"java.library.path\", \"\");\n",
+                        "        for (String ldPath : javaLibraryPath.split(File.pathSeparator)) {\n",
+                        "            if (ldPath.isEmpty()) {\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            if (loadNativeLibrary(new File(ldPath, jansiNativeLibraryName))) {\n",
+                        "                loaded = true;\n",
+                        "                return;\n",
+                        "            } else {\n",
+                        "                triedPaths.add(ldPath);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        throw new Exception(String.format(\n",
+                        "                \"No native library found for os.name=%s, os.arch=%s, paths=[%s]\",\n",
+                        "                OSInfo.getOSName(), OSInfo.getArchName(), String.join(File.pathSeparator, triedPaths)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "loadJansiNativeLibrary()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "355-357:hasResource"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.OSInfo",
+                            "OSInfo",
+                            "113-115:getNativeLibFolderPathForCurrentOS"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "247-276:loadNativeLibrary"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "101-103:getTempDir"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "184-235:extractAndLoadLibraryFile"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.OSInfo",
+                            "OSInfo",
+                            "117-119:getOSName"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.OSInfo",
+                            "OSInfo",
+                            "194-208:getArchName"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __loadJansiNativeLibrary() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __loadJansiNativeLibrary() -> None:",
+                        "        ",
+                        "        if JansiLoader.__loaded:",
+                        "            return",
+                        "",
+                        "        triedPaths = []",
+                        "",
+                        "        jansiNativeLibraryPath = os.getenv('library.jansi.path')",
+                        "        jansiNativeLibraryName = os.getenv('library.jansi.name')",
+                        "        if jansiNativeLibraryName is None:",
+                        "            jansiNativeLibraryName = ctypes.util.find_library('jansi')",
+                        "            assert jansiNativeLibraryName is not None",
+                        "            if jansiNativeLibraryName.endswith(\".dylib\"):",
+                        "                jansiNativeLibraryName = jansiNativeLibraryName.replace(\".dylib\", \".jnilib\")",
+                        "",
+                        "        if jansiNativeLibraryPath is not None:",
+                        "            withOs = os.path.join(jansiNativeLibraryPath, OSInfo.getNativeLibFolderPathForCurrentOS())",
+                        "            if JansiLoader.__loadNativeLibrary(pathlib.Path(withOs, jansiNativeLibraryName)):",
+                        "                JansiLoader.__loaded = True",
+                        "                return",
+                        "            else:",
+                        "                triedPaths.append(withOs)",
+                        "",
+                        "            if JansiLoader.__loadNativeLibrary(pathlib.Path(jansiNativeLibraryPath, jansiNativeLibraryName)):",
+                        "                JansiLoader.__loaded = True",
+                        "                return",
+                        "            else:",
+                        "                triedPaths.append(jansiNativeLibraryPath)",
+                        "",
+                        "        jansiNativeLibraryPath = os.path.join(JansiLoader.__class__.__module__.replace('.', '/'), 'native', OSInfo.getNativeLibFolderPathForCurrentOS())",
+                        "        hasNativeLib = JansiLoader.__hasResource(os.path.join(jansiNativeLibraryPath, jansiNativeLibraryName))",
+                        "",
+                        "        if hasNativeLib:",
+                        "            tempFolder = str(JansiLoader.__getTempDir().absolute())",
+                        "            if JansiLoader.__extractAndLoadLibraryFile(jansiNativeLibraryPath, jansiNativeLibraryName, tempFolder):",
+                        "                JansiLoader.__loaded = True",
+                        "                return",
+                        "            else:",
+                        "                triedPaths.append(jansiNativeLibraryPath)",
+                        "",
+                        "        javaLibraryPath = os.getenv('java.library.path', \"\").split(os.pathsep)",
+                        "        for ldPath in javaLibraryPath:",
+                        "            if not ldPath:",
+                        "                continue",
+                        "            if JansiLoader.__loadNativeLibrary(pathlib.Path(ldPath, jansiNativeLibraryName)):",
+                        "                JansiLoader.__loaded = True",
+                        "                return",
+                        "            else:",
+                        "                triedPaths.append(ldPath)",
+                        "",
+                        "        raise Exception(",
+                        "            \"No native library found for os.name={}, os.arch={}, paths=[{}]\".format(",
+                        "                OSInfo.getOSName(), OSInfo.getArchName(), os.pathsep.join(triedPaths)))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 21.848354816436768,
+                    "generation_timestamp": "2024-07-21T01:25:19.236888",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "247-276:loadNativeLibrary": {
+                    "start": 247,
+                    "end": 276,
+                    "body": [
+                        "    private static boolean loadNativeLibrary(File libPath) {\n",
+                        "        if (libPath.exists()) {\n",
+                        "            try {\n",
+                        "                String path = libPath.getAbsolutePath();\n",
+                        "                System.load(path);\n",
+                        "                nativeLibraryPath = path;\n",
+                        "                return true;\n",
+                        "            } catch (UnsatisfiedLinkError e) {\n",
+                        "                if (!libPath.canExecute()) {\n",
+                        "                    // NOTE: this can be tested using something like:\n",
+                        "                    // docker run --rm --tmpfs /tmp -v $PWD:/jansi openjdk:11 java -jar\n",
+                        "                    // /jansi/target/jansi-xxx-SNAPSHOT.jar\n",
+                        "                    System.err.printf(\n",
+                        "                            \"Failed to load native library:%s. The native library file at %s is not executable, \"\n",
+                        "                                    + \"make sure that the directory is mounted on a partition without the noexec flag, or set the \"\n",
+                        "                                    + \"jansi.tmpdir system property to point to a proper location.  osinfo: %s%n\",\n",
+                        "                            libPath.getName(), libPath, OSInfo.getNativeLibFolderPathForCurrentOS());\n",
+                        "                } else {\n",
+                        "                    System.err.printf(\n",
+                        "                            \"Failed to load native library:%s. osinfo: %s%n\",\n",
+                        "                            libPath.getName(), OSInfo.getNativeLibFolderPathForCurrentOS());\n",
+                        "                }\n",
+                        "                System.err.println(e);\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "loadNativeLibrary(File)",
+                    "parameters": [
+                        "libPath"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.OSInfo",
+                            "OSInfo",
+                            "113-115:getNativeLibFolderPathForCurrentOS"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __loadNativeLibrary(libPath: pathlib.Path) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __loadNativeLibrary(libPath: pathlib.Path) -> bool:",
+                        "        ",
+                        "        if libPath.exists():",
+                        "            try:",
+                        "                path = str(libPath.absolute())",
+                        "                ctypes.CDLL(path)",
+                        "                JansiLoader.__nativeLibraryPath = path",
+                        "                return True",
+                        "            except OSError as e:",
+                        "                if not os.access(libPath, os.X_OK):",
+                        "                    print(f\"Failed to load native library:{libPath.name}. The native library file at {libPath} is not executable, make sure that the directory is mounted on a partition without the noexec flag, or set the jansi.tmpdir system property to point to a proper location.  osinfo: {OSInfo.getNativeLibFolderPathForCurrentOS()}\", file=sys.stderr)",
+                        "                else:",
+                        "                    print(f\"Failed to load native library:{libPath.name}. osinfo: {OSInfo.getNativeLibFolderPathForCurrentOS()}\", file=sys.stderr)",
+                        "                print(e, file=sys.stderr)",
+                        "                return False",
+                        "        else:",
+                        "            return False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 13.326844692230225,
+                    "generation_timestamp": "2024-07-21T01:24:14.875764",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "237-239:randomUUID": {
+                    "start": 237,
+                    "end": 239,
+                    "body": [
+                        "    private static String randomUUID() {\n",
+                        "        return Long.toHexString(new Random().nextLong());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "randomUUID()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __randomUUID() -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __randomUUID() -> str:",
+                        "         return uuid.uuid4().hex"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.7842519283294678,
+                    "generation_timestamp": "2024-07-21T01:24:15.668483",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "184-235:extractAndLoadLibraryFile": {
+                    "start": 184,
+                    "end": 235,
+                    "body": [
+                        "    private static boolean extractAndLoadLibraryFile(\n",
+                        "            String libFolderForCurrentOS, String libraryFileName, String targetFolder) {\n",
+                        "        String nativeLibraryFilePath = libFolderForCurrentOS + \"/\" + libraryFileName;\n",
+                        "        // Include architecture name in temporary filename in order to avoid conflicts\n",
+                        "        // when multiple JVMs with different architectures running at the same time\n",
+                        "        String uuid = randomUUID();\n",
+                        "        String extractedLibFileName = String.format(\"jansi-%s-%s-%s\", getVersion(), uuid, libraryFileName);\n",
+                        "        String extractedLckFileName = extractedLibFileName + \".lck\";\n",
+                        "\n",
+                        "        File extractedLibFile = new File(targetFolder, extractedLibFileName);\n",
+                        "        File extractedLckFile = new File(targetFolder, extractedLckFileName);\n",
+                        "\n",
+                        "        try {\n",
+                        "            // Extract a native library file into the target directory\n",
+                        "            try (InputStream in = JansiLoader.class.getResourceAsStream(nativeLibraryFilePath)) {\n",
+                        "                if (!extractedLckFile.exists()) {\n",
+                        "                    new FileOutputStream(extractedLckFile).close();\n",
+                        "                }\n",
+                        "                Files.copy(in, extractedLibFile.toPath(), StandardCopyOption.REPLACE_EXISTING);\n",
+                        "            } finally {\n",
+                        "                // Delete the extracted lib file on JVM exit.\n",
+                        "                extractedLibFile.deleteOnExit();\n",
+                        "                extractedLckFile.deleteOnExit();\n",
+                        "            }\n",
+                        "\n",
+                        "            // Set executable (x) flag to enable Java to load the native library\n",
+                        "            extractedLibFile.setReadable(true);\n",
+                        "            extractedLibFile.setWritable(true);\n",
+                        "            extractedLibFile.setExecutable(true);\n",
+                        "\n",
+                        "            // Check whether the contents are properly copied from the resource folder\n",
+                        "            try (InputStream nativeIn = JansiLoader.class.getResourceAsStream(nativeLibraryFilePath)) {\n",
+                        "                try (InputStream extractedLibIn = new FileInputStream(extractedLibFile)) {\n",
+                        "                    String eq = contentsEquals(nativeIn, extractedLibIn);\n",
+                        "                    if (eq != null) {\n",
+                        "                        throw new RuntimeException(String.format(\n",
+                        "                                \"Failed to write a native library file at %s because %s\", extractedLibFile, eq));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            // Load library\n",
+                        "            if (loadNativeLibrary(extractedLibFile)) {\n",
+                        "                nativeLibrarySourceUrl =\n",
+                        "                        JansiLoader.class.getResource(nativeLibraryFilePath).toExternalForm();\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        } catch (IOException e) {\n",
+                        "            System.err.println(e.getMessage());\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "extractAndLoadLibraryFile(String, String, String)",
+                    "parameters": [
+                        "libFolderForCurrentOS",
+                        "libraryFileName",
+                        "targetFolder"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "237-239:randomUUID"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "378-394:getVersion"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "145-174:contentsEquals"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "247-276:loadNativeLibrary"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __extractAndLoadLibraryFile(libFolderForCurrentOS: str, libraryFileName: str, targetFolder: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __extractAndLoadLibraryFile(libFolderForCurrentOS: str, libraryFileName: str, targetFolder: str) -> bool:",
+                        "        ",
+                        "        nativeLibraryFilePath = os.path.join(libFolderForCurrentOS, libraryFileName)",
+                        "        uuid = JansiLoader.__randomUUID()",
+                        "        extractedLibFileName = \"jansi-{}-{}-{}\".format(JansiLoader.getVersion(), uuid, libraryFileName)",
+                        "        extractedLckFileName = extractedLibFileName + \".lck\"",
+                        "",
+                        "        extractedLibFile = pathlib.Path(targetFolder) / extractedLibFileName",
+                        "        extractedLckFile = pathlib.Path(targetFolder) / extractedLckFileName",
+                        "",
+                        "        try:",
+                        "            # Extract a native library file into the target directory",
+                        "            with open(nativeLibraryFilePath, 'rb') as in_file, open(extractedLibFile, 'wb') as out_file:",
+                        "                if not extractedLckFile.exists():",
+                        "                    open(extractedLckFile, 'a').close()",
+                        "                shutil.copyfileobj(in_file, out_file)",
+                        "",
+                        "            # Set executable (x) flag to enable Python to load the native library",
+                        "            extractedLibFile.chmod(extractedLibFile.stat().st_mode | stat.S_IEXEC)",
+                        "",
+                        "            # Check whether the contents are properly copied from the resource folder",
+                        "            with open(nativeLibraryFilePath, 'rb') as nativeIn, open(extractedLibFile, 'rb') as extractedLibIn:",
+                        "                eq = JansiLoader.__contentsEquals(nativeIn, extractedLibIn)",
+                        "                if eq is not None:",
+                        "                    raise RuntimeError(",
+                        "                        \"Failed to write a native library file at {} because {}\".format(extractedLibFile, eq))",
+                        "",
+                        "            # Load library",
+                        "            if JansiLoader.__loadNativeLibrary(extractedLibFile):",
+                        "                JansiLoader.__nativeLibrarySourceUrl = pathlib.Path(nativeLibraryFilePath).as_uri()",
+                        "                return True",
+                        "        except IOError as e:",
+                        "            print(e)",
+                        "        return False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.997687578201294,
+                    "generation_timestamp": "2024-07-21T01:24:56.791450",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "145-174:contentsEquals": {
+                    "start": 145,
+                    "end": 174,
+                    "body": [
+                        "    private static String contentsEquals(InputStream in1, InputStream in2) throws IOException {\n",
+                        "        byte[] buffer1 = new byte[8192];\n",
+                        "        byte[] buffer2 = new byte[8192];\n",
+                        "        int numRead1;\n",
+                        "        int numRead2;\n",
+                        "        while (true) {\n",
+                        "            numRead1 = readNBytes(in1, buffer1);\n",
+                        "            numRead2 = readNBytes(in2, buffer2);\n",
+                        "            if (numRead1 > 0) {\n",
+                        "                if (numRead2 <= 0) {\n",
+                        "                    return \"EOF on second stream but not first\";\n",
+                        "                }\n",
+                        "                if (numRead2 != numRead1) {\n",
+                        "                    return \"Read size different (\" + numRead1 + \" vs \" + numRead2 + \")\";\n",
+                        "                }\n",
+                        "                // Otherwise same number of bytes read\n",
+                        "                if (!Arrays.equals(buffer1, buffer2)) {\n",
+                        "                    return \"Content differs\";\n",
+                        "                }\n",
+                        "                // Otherwise same bytes read, so continue ...\n",
+                        "            } else {\n",
+                        "                // Nothing more in stream 1 ...\n",
+                        "                if (numRead2 > 0) {\n",
+                        "                    return \"EOF on first stream but not second\";\n",
+                        "                } else {\n",
+                        "                    return null;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "contentsEquals(InputStream, InputStream)",
+                    "parameters": [
+                        "in1",
+                        "in2"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "134-143:readNBytes"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __contentsEquals(in1: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], in2: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __contentsEquals(in1: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], in2: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader]) -> str:",
+                        "        ",
+                        "        buffer1 = bytearray(8192)",
+                        "        buffer2 = bytearray(8192)",
+                        "        numRead1 = 0",
+                        "        numRead2 = 0",
+                        "        while True:",
+                        "            numRead1 = JansiLoader.__readNBytes(in1, buffer1)",
+                        "            numRead2 = JansiLoader.__readNBytes(in2, buffer2)",
+                        "            if numRead1 > 0:",
+                        "                if numRead2 <= 0:",
+                        "                    return \"EOF on second stream but not first\"",
+                        "                if numRead2 != numRead1:",
+                        "                    return \"Read size different (\" + str(numRead1) + \" vs \" + str(numRead2) + \")\"",
+                        "                # Otherwise same number of bytes read",
+                        "                if buffer1 != buffer2:",
+                        "                    return \"Content differs\"",
+                        "                # Otherwise same bytes read, so continue ...",
+                        "            else:",
+                        "                # Nothing more in stream 1 ...",
+                        "                if numRead2 > 0:",
+                        "                    return \"EOF on first stream but not second\"",
+                        "                else:",
+                        "                    return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.608463525772095,
+                    "generation_timestamp": "2024-07-21T01:24:28.288288",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "134-143:readNBytes": {
+                    "start": 134,
+                    "end": 143,
+                    "body": [
+                        "    private static int readNBytes(InputStream in, byte[] b) throws IOException {\n",
+                        "        int n = 0;\n",
+                        "        int len = b.length;\n",
+                        "        while (n < len) {\n",
+                        "            int count = in.read(b, n, len - n);\n",
+                        "            if (count <= 0) break;\n",
+                        "            n += count;\n",
+                        "        }\n",
+                        "        return n;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "readNBytes(InputStream, byte[])",
+                    "parameters": [
+                        "in",
+                        "b"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __readNBytes(in_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], b: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __readNBytes(in_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], b: typing.List[int]) -> int:",
+                        "        ",
+                        "        n = 0",
+                        "        len_ = len(b)",
+                        "        while n < len_:",
+                        "            count = in_.readinto(b[n:])",
+                        "            if count is None or count <= 0:",
+                        "                break",
+                        "            n += count",
+                        "        return n"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.992776870727539,
+                    "generation_timestamp": "2024-07-21T01:24:20.670274",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "101-103:getTempDir": {
+                    "start": 101,
+                    "end": 103,
+                    "body": [
+                        "    private static File getTempDir() {\n",
+                        "        return new File(System.getProperty(\"jansi.tmpdir\", System.getProperty(\"java.io.tmpdir\")));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "signature": "getTempDir()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getTempDir() -> pathlib.Path:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __getTempDir() -> pathlib.Path:",
+                        "         return pathlib.Path(os.getenv('jansi.tmpdir', os.getenv('java.io.tmpdir')))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.593430519104004,
+                    "generation_timestamp": "2024-07-21T01:24:31.891826",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "65-65:nativeLibrarySourceUrl": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private static String nativeLibrarySourceUrl;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __nativeLibrarySourceUrl: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __nativeLibrarySourceUrl: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-07-21T00:44:46.635705",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "64-64:nativeLibraryPath": {
+                    "start": 64,
+                    "end": 64,
+                    "body": [
+                        "    private static String nativeLibraryPath;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __nativeLibraryPath: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __nativeLibraryPath: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-07-21T00:44:46.643495",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "63-63:loaded": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    private static boolean loaded = false;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __loaded: bool = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __loaded: bool = False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.720064163208008,
+                    "generation_timestamp": "2024-07-21T00:44:52.370332",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class JansiLoader:\n\n"
+        },
+        "new FilenameFilter(...) { ... }": {
+            "start": 113,
+            "end": 113,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "JansiLoader",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "116-118:accept": {
+                    "start": 116,
+                    "end": 118,
+                    "body": [
+                        "            public boolean accept(File dir, String name) {\n",
+                        "                return name.startsWith(searchPattern) && !name.endsWith(\".lck\");\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "accept(File, String)",
+                    "parameters": [
+                        "dir",
+                        "name"
+                    ],
+                    "calls": [],
+                    "is_overload": false
+                },
+                "113-113:": {
+                    "start": 113,
+                    "end": 113,
+                    "body": [
+                        "        File[] nativeLibFiles = dir.listFiles(new FilenameFilter() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {
+                "114-114:searchPattern": {
+                    "start": 114,
+                    "end": 114,
+                    "body": [
+                        "            private final String searchPattern = \"jansi-\" + getVersion();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            }
+        },
+        "new Runnable(...) { ... }": {
+            "start": 76,
+            "end": 76,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "JansiLoader",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "76-76:run": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "            Thread cleanup = new Thread(JansiLoader::cleanup, \"cleanup\");\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "from src.main.org.fusesource.jansi.AnsiConsole import *",
+        "from src.main.org.fusesource.jansi.internal.OSInfo import *"
+    ]
+}

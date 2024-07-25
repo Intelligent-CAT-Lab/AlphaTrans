@@ -164,14 +164,26 @@
                         "    def testJiraCsv249(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def testJiraCsv249(self) -> None:",
+                        "         csv_format = CSVFormat.DEFAULT.builder().setEscape0('\\\\').build()",
+                        "         string_writer = io.StringIO()",
+                        "         with CSVPrinter(string_writer, csv_format) as printer:",
+                        "             printer.printRecord1([\"foo \\\\\", \"bar\"])",
+                        "         string_reader = io.StringReader(string_writer.getvalue())",
+                        "         with CSVParser.CSVParser1(string_reader, csv_format) as parser:",
+                        "             records = list(parser.getRecords())",
+                        "         for record in records:",
+                        "             self.assertEqual(\"foo \\\\\", record.get(0))",
+                        "             self.assertEqual(\"bar\", record.get(1))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 12.948503732681274,
+                    "generation_timestamp": "2024-07-21T13:13:05.744143",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

@@ -122,47 +122,57 @@
                             "543-545:getDescription"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def toString(self) -> str:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def toString(self) -> str:",
                         "        ",
-                        "",
                         "        buff = io.StringIO()",
                         "",
-                        "        iter = self.getOptions().__iter__()",
+                        "        iter = iter(self.getOptions())",
                         "",
                         "        buff.write(\"[\")",
                         "",
-                        "        while iter.__next__():",
-                        "            option = iter.__next__()",
+                        "        while True:",
+                        "            try:",
+                        "                option = next(iter)",
+                        "            except StopIteration:",
+                        "                break",
                         "",
-                        "            if option.getOpt() != None:",
+                        "            if option.getOpt() is not None:",
                         "                buff.write(\"-\")",
                         "                buff.write(option.getOpt())",
                         "            else:",
                         "                buff.write(\"--\")",
                         "                buff.write(option.getLongOpt())",
                         "",
-                        "            if option.getDescription() != None:",
+                        "            if option.getDescription() is not None:",
                         "                buff.write(\" \")",
                         "                buff.write(option.getDescription())",
                         "",
-                        "            if iter.__next__():",
+                        "            try:",
+                        "                next(iter)",
+                        "            except StopIteration:",
+                        "                break",
+                        "            else:",
                         "                buff.write(\", \")",
                         "",
                         "        buff.write(\"]\")",
                         "",
-                        "        return buff.getvalue()",
-                        ""
+                        "        return buff.getvalue()"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 53.83977270126343,
-                    "generation_timestamp": "2024-06-09T19:43:34.384864",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.493210315704346,
+                    "generation_timestamp": "2024-07-20T21:00:04.029881",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "95-105:setSelected": {
                     "start": 95,
@@ -207,28 +217,30 @@
                             "56-67:AlreadySelectedException1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def setSelected(self, option: Option) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def setSelected(self, option: Option) -> None:",
-                        "        ",
+                        "         if option is None:",
+                        "             self.__selected = None",
+                        "             return",
                         "",
-                        "        if option is None:",
-                        "            self.__selected = None",
-                        "            return",
-                        "",
-                        "        if self.__selected is not None and self.__selected != option.getKey():",
-                        "            raise AlreadySelectedException.AlreadySelectedException1(self, option)",
-                        "        self.__selected = option.getKey()",
-                        ""
+                        "         if self.__selected is not None and self.__selected != option.getKey():",
+                        "             raise AlreadySelectedException.AlreadySelectedException1(self, option)",
+                        "         self.__selected = option.getKey()"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 50.24642062187195,
-                    "generation_timestamp": "2024-06-09T14:29:00.483240",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.6470000743865967,
+                    "generation_timestamp": "2024-07-20T21:03:59.101433",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "85-87:setRequired": {
                     "start": 85,
@@ -254,22 +266,24 @@
                         "required"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def setRequired(self, required: bool) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def setRequired(self, required: bool) -> None:",
-                        "        ",
-                        "",
-                        "        self.__required = required",
-                        ""
+                        "         self.__required = required"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 47.64475631713867,
-                    "generation_timestamp": "2024-06-09T13:34:17.494739",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.608630895614624,
+                    "generation_timestamp": "2024-07-20T20:57:49.122095",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-80:isRequired": {
                     "start": 78,
@@ -293,22 +307,24 @@
                     "signature": "isRequired()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def isRequired(self) -> bool:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def isRequired(self) -> bool:",
-                        "        ",
-                        "",
-                        "        return self.__required",
-                        ""
+                        "         return self.__required"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 46.949986934661865,
-                    "generation_timestamp": "2024-06-09T13:35:04.447684",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0879015922546387,
+                    "generation_timestamp": "2024-07-20T20:57:50.215938",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "69-71:getSelected": {
                     "start": 69,
@@ -332,22 +348,24 @@
                     "signature": "getSelected()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def getSelected(self) -> str:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def getSelected(self) -> str:",
-                        "        ",
-                        "",
-                        "        return self.__selected",
-                        ""
+                        "         return self.__selected"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 45.91813111305237,
-                    "generation_timestamp": "2024-06-09T13:35:50.368977",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.5961177349090576,
+                    "generation_timestamp": "2024-07-20T20:57:50.818581",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "62-64:getOptions": {
                     "start": 62,
@@ -371,22 +389,24 @@
                     "signature": "getOptions()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def getOptions(self) -> typing.Collection[Option]:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def getOptions(self) -> typing.Collection[Option]:",
-                        "        ",
-                        "",
-                        "        return self.__optionMap.values()",
-                        ""
+                        "         return self.__optionMap.values()"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 47.423683404922485,
-                    "generation_timestamp": "2024-06-09T13:36:37.796859",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.8328638076782227,
+                    "generation_timestamp": "2024-07-20T20:57:51.655308",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "55-57:getNames": {
                     "start": 55,
@@ -410,22 +430,24 @@
                     "signature": "getNames()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def getNames(self) -> typing.Collection[str]:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def getNames(self) -> typing.Collection[str]:",
-                        "        ",
-                        "",
-                        "        return self.__optionMap.keys()",
-                        ""
+                        "         return self.__optionMap.keys()"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 47.533167600631714,
-                    "generation_timestamp": "2024-06-09T13:38:17.215614",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0.8404300212860107,
+                    "generation_timestamp": "2024-07-20T20:57:52.501338",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "46-50:addOption": {
                     "start": 46,
@@ -459,24 +481,25 @@
                             "562-564:getKey"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def addOption(self, option: Option) -> OptionGroup:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def addOption(self, option: Option) -> OptionGroup:",
-                        "        ",
-                        "",
-                        "        self.__optionMap[option.getKey()] = option",
-                        "",
-                        "        return self",
-                        ""
+                        "         self.__optionMap[option.getKey()] = option",
+                        "         return self"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 48.95328497886658,
-                    "generation_timestamp": "2024-06-09T13:39:06.187266",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.0247621536254883,
+                    "generation_timestamp": "2024-07-20T21:02:13.758054",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -495,15 +518,23 @@
                             "boolean"
                         ]
                     ],
-                    "partial_translation": "    __required: bool = None\n",
-                    "translation": [
-                        "    __required: bool = None",
+                    "partial_translation": [
+                        "    __required: bool = False",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation": [
+                        "    __required: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T13:33:24.185606",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-07-20T20:35:01.638993",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "35-35:selected": {
                     "start": 35,
@@ -520,15 +551,23 @@
                             "java.lang.String"
                         ]
                     ],
-                    "partial_translation": "    __selected: str = None\n",
-                    "translation": [
-                        "    __selected: str = None",
+                    "partial_translation": [
+                        "    __selected: str = ''",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation": [
+                        "    __selected: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T13:33:24.196975",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-07-20T20:35:01.641284",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "32-32:optionMap": {
                     "start": 32,
@@ -546,16 +585,23 @@
                             "java.util.Map<String,Option>"
                         ]
                     ],
-                    "partial_translation": "    __optionMap: typing.Dict[str, Option] = <placeholder>\n",
-                    "translation": [
-                        "",
+                    "partial_translation": [
                         "    __optionMap: typing.Dict[str, Option] = {}",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.8732590675354004,
-                    "generation_timestamp": "2024-06-09T13:33:27.072394",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    __optionMap: typing.Dict[str, Option] = {}",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-07-20T20:35:01.643397",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "29-29:serialVersionUID": {
                     "start": 29,
@@ -574,18 +620,25 @@
                             "long"
                         ]
                     ],
-                    "partial_translation": "    __serialVersionUID: int = <placeholder>\n",
-                    "translation": [
-                        "",
-                        "    __serialVersionUID: int = 1",
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.7731165885925293,
-                    "generation_timestamp": "2024-06-09T13:33:29.847376",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.8449547290802,
+                    "generation_timestamp": "2024-07-20T20:35:11.490952",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class OptionGroup():\n\n"
         }
     },

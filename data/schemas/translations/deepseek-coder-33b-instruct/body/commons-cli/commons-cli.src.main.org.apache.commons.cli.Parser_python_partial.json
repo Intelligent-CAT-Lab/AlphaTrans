@@ -88,23 +88,26 @@
                             "260-262:getRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _setOptions(self, options: Options) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def _setOptions(self, options: Options) -> None:",
-                        "        ",
-                        "",
-                        "        self.__options = options",
-                        "        self.__requiredOptions = list(options.getRequiredOptions())",
-                        ""
+                        "         self.__options = options",
+                        "         self.__requiredOptions = list(options.getRequiredOptions())"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 16.17932415008545,
-                    "generation_timestamp": "2024-06-09T14:28:10.229345",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.028598308563232,
+                    "generation_timestamp": "2024-07-21T03:33:59.596048",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 12
                 },
                 "276-312:processProperties": {
                     "start": 276,
@@ -215,46 +218,50 @@
                             "324-338:updateRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> None:\n",
+                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> None:",
+                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:",
                         "        ",
-                        "",
                         "        if properties is None:",
                         "            return",
                         "",
                         "        for option in properties:",
-                        "            opt = self.__options.getOption(option)",
+                        "            opt = self._options.getOption(option)",
                         "            if opt is None:",
                         "                raise UnrecognizedOptionException(\"Default option wasn't defined\", option)",
                         "",
-                        "            group = self.__options.getOptionGroup(opt)",
+                        "            group = self._options.getOptionGroup(opt)",
                         "            selected = group is not None and group.getSelected() is not None",
                         "",
                         "            if not self._cmd.hasOption2(option) and not selected:",
-                        "                value = properties.get(option)",
+                        "                value = properties[option]",
                         "",
                         "                if opt.hasArg():",
                         "                    if opt.getValues() is None or len(opt.getValues()) == 0:",
                         "                        try:",
                         "                            opt.addValueForProcessing(value)",
-                        "                        except RuntimeException:",
+                        "                        except RuntimeError:",
                         "                            pass",
-                        "                elif not (value.lower() == \"yes\" or value.lower() == \"true\" or value.lower() == \"1\"):",
+                        "                elif not (value.lower() == \"yes\" or value.lower() == \"true\" or value == \"1\"):",
                         "                    continue",
                         "",
-                        "                self._cmd.addOption(opt)",
-                        "                self.__updateRequiredOptions(opt)",
-                        ""
+                        "                self._cmd._addOption(opt)",
+                        "                self.__updateRequiredOptions(opt)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 25.812369346618652,
-                    "generation_timestamp": "2024-06-09T19:50:05.403813",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "failed",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 302.03810596466064,
+                    "generation_timestamp": "2024-07-21T03:40:32.427168",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 9
                 },
                 "251-268:processOption": {
                     "start": 251,
@@ -342,34 +349,38 @@
                             "99-101:addOption"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:\n",
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def _processOption(self, arg: str, iter: typing.Iterator[str]) -> None:",
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:",
                         "        ",
-                        "",
                         "        hasOption = self._getOptions().hasOption(arg)",
                         "",
                         "        if not hasOption:",
-                        "            raise UnrecognizedOptionException(\"Unrecognized option: \" + arg, arg)",
+                        "            raise UnrecognizedOptionException.UnrecognizedOptionException1(\"Unrecognized option: \" + arg, arg)",
                         "",
-                        "        opt = typing.cast(Option, self._getOptions().getOption(arg).clone())",
+                        "        opt = self._getOptions().getOption(arg).clone()",
                         "",
                         "        self.__updateRequiredOptions(opt)",
                         "",
                         "        if opt.hasArg():",
-                        "            self.processArgs(opt, iter)",
+                        "            self.processArgs(opt, iter_)",
                         "",
-                        "        self._cmd.addOption(opt)",
-                        ""
+                        "        self._cmd._addOption(opt)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 18.443145990371704,
-                    "generation_timestamp": "2024-06-09T19:55:56.994950",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.252344131469727,
+                    "generation_timestamp": "2024-07-21T03:40:58.455061",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 8
                 },
                 "220-241:processArgs": {
                     "start": 220,
@@ -451,41 +462,42 @@
                             "42-49:MissingArgumentException1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def processArgs(self, opt: Option, iter: typing.Iterator[str]) -> None:\n",
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def processArgs(self, opt: Option, iter: typing.Iterator[str]) -> None:",
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:",
                         "        ",
-                        "",
                         "        while True:",
                         "            try:",
-                        "                str = next(iter)",
+                        "                str_ = next(iter_)",
+                        "",
+                        "                if self._getOptions().hasOption(str_) and str_.startswith(\"-\"):",
+                        "                    iter_ = iter(list(iter_)[-1:] + list(iter_))",
+                        "                    break",
+                        "",
+                        "                try:",
+                        "                    opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str_))",
+                        "                except RuntimeError:",
+                        "                    iter_ = iter(list(iter_)[-1:] + list(iter_))",
+                        "                    break",
                         "            except StopIteration:",
                         "                break",
                         "",
-                        "            if self._getOptions().hasOption(str) and str.startswith(\"-\"):",
-                        "                iter = iter.__reversed__()",
-                        "                next(iter)",
-                        "                break",
-                        "",
-                        "            try:",
-                        "                opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str))",
-                        "            except RuntimeException:",
-                        "                iter = iter.__reversed__()",
-                        "                next(iter)",
-                        "                break",
-                        "",
                         "        if opt.getValues() is None and not opt.hasOptionalArg():",
-                        "            raise MissingArgumentException.MissingArgumentException1(1, None, opt)",
-                        ""
+                        "            raise MissingArgumentException.MissingArgumentException1(1, None, opt)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 24.39714741706848,
-                    "generation_timestamp": "2024-06-09T19:50:29.808393",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.549195528030396,
+                    "generation_timestamp": "2024-07-20T21:06:46.225705",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "140-210:parse3": {
                     "start": 140,
@@ -585,7 +597,7 @@
                         [
                             "commons-cli.src.main.org.apache.commons.cli.Parser",
                             "Parser",
-                            "67-67:flatten"
+                            "67-69:flatten"
                         ],
                         [
                             "commons-cli.src.main.org.apache.commons.cli.Parser",
@@ -648,15 +660,14 @@
                             "49-53:checkRequiredOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse3(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
+                        "    def parse3(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def parse3(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict], stopAtNonOption: bool) -> CommandLine:",
+                        "    def parse3(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:",
                         "        ",
-                        "",
                         "        for opt in options.helpOptions():",
                         "            opt.clearValues()",
                         "",
@@ -672,7 +683,10 @@
                         "        if arguments is None:",
                         "            arguments = []",
                         "",
-                        "        tokenList = self._flatten(self._getOptions(), arguments, stopAtNonOption)",
+                        "        tokenList = self._flatten(options, arguments, stopAtNonOption)",
+                        "",
+                        "        if tokenList is None:  # Add this line to handle the case when tokenList is None",
+                        "            tokenList = []",
                         "",
                         "        iterator = iter(tokenList)",
                         "",
@@ -680,21 +694,21 @@
                         "            try:",
                         "                t = next(iterator)",
                         "",
-                        "                if t == \"--\":",
+                        "                if \"--\" == t:",
                         "                    eatTheRest = True",
-                        "                elif t == \"-\":",
+                        "                elif \"-\" == t:",
                         "                    if stopAtNonOption:",
                         "                        eatTheRest = True",
                         "                    else:",
-                        "                        self._cmd.addArg(t)",
+                        "                        self._cmd._addArg(t)",
                         "                elif t.startswith(\"-\"):",
-                        "                    if stopAtNonOption and not self._getOptions().hasOption(t):",
+                        "                    if stopAtNonOption and not options.hasOption(t):",
                         "                        eatTheRest = True",
-                        "                        self._cmd.addArg(t)",
+                        "                        self._cmd._addArg(t)",
                         "                    else:",
                         "                        self._processOption(t, iterator)",
                         "                else:",
-                        "                    self._cmd.addArg(t)",
+                        "                    self._cmd._addArg(t)",
                         "",
                         "                    if stopAtNonOption:",
                         "                        eatTheRest = True",
@@ -703,21 +717,26 @@
                         "                    while True:",
                         "                        str = next(iterator)",
                         "",
-                        "                        if str != \"--\":",
-                        "                            self._cmd.addArg(str)",
+                        "                        if \"--\" != str:",
+                        "                            self._cmd._addArg(str)",
                         "            except StopIteration:",
                         "                break",
                         "",
                         "        self._processProperties(properties)",
                         "        self._checkRequiredOptions()",
                         "",
-                        "        return self._cmd",
-                        ""
+                        "        return self._cmd"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 25.434215545654297,
-                    "generation_timestamp": "2024-06-09T14:31:55.236537",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 16.965391397476196,
+                    "generation_timestamp": "2024-07-21T03:33:55.562944",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 14
                 },
                 "120-124:parse2": {
                     "start": 120,
@@ -753,22 +772,25 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse2(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> CommandLine:\n",
+                        "    def parse2(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def parse2(self, options: Options, arguments: typing.List[str], properties: typing.Union[configparser.ConfigParser, configparser.ConfigParserExtended, typing.Dict]) -> CommandLine:",
+                        "    def parse2(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:",
                         "        ",
-                        "",
-                        "        return self.parse3(options, arguments, properties, False)",
-                        ""
+                        "        return self.parse3(options, arguments, properties, False)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 15.286375284194946,
-                    "generation_timestamp": "2024-06-09T14:32:10.526184",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "failed",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 76.59888482093811,
+                    "generation_timestamp": "2024-07-21T02:25:12.718128",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "103-107:parse1": {
                     "start": 103,
@@ -804,22 +826,25 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse1(self, options: Options, arguments: typing.List[str], stopAtNonOption: bool) -> CommandLine:\n",
+                        "    def parse1(self, options: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def parse1(self, options: Options, arguments: typing.List[str], stopAtNonOption: bool) -> CommandLine:",
+                        "    def parse1(self, options: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> CommandLine:",
                         "        ",
-                        "",
-                        "        return self.parse3(options, arguments, None, stopAtNonOption)",
-                        ""
+                        "        return self.parse3(options, arguments, None, stopAtNonOption)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 16.7861487865448,
-                    "generation_timestamp": "2024-06-09T14:32:27.315644",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "failed",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 98.7703173160553,
+                    "generation_timestamp": "2024-07-21T02:26:51.510458",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-90:parse0": {
                     "start": 87,
@@ -853,22 +878,25 @@
                             "140-210:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:\n",
+                        "    def parse0(self, options: Options, arguments: typing.List[typing.List[str]]) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def parse0(self, options: Options, arguments: typing.List[str]) -> CommandLine:",
-                        "        ",
-                        "",
-                        "        return self.parse3(options, arguments, None, False)",
-                        ""
+                        "    def parse0(self, options: Options, arguments: typing.List[typing.List[str]]) -> CommandLine:",
+                        "         return self.parse3(options, arguments, None, False)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 15.373380661010742,
-                    "generation_timestamp": "2024-06-09T14:32:42.692807",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 2.792139768600464,
+                    "generation_timestamp": "2024-07-21T03:33:30.498185",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 15
                 },
                 "74-76:getRequiredOptions": {
                     "start": 74,
@@ -892,22 +920,25 @@
                     "signature": "getRequiredOptions()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _getRequiredOptions(self) -> typing.List[typing.Any]:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def _getRequiredOptions(self) -> typing.List[typing.Any]:",
-                        "        ",
-                        "",
-                        "        return self.__requiredOptions",
-                        ""
+                        "         return self.__requiredOptions"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 16.022013425827026,
-                    "generation_timestamp": "2024-06-09T14:29:16.524990",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.545730113983154,
+                    "generation_timestamp": "2024-07-21T03:40:36.977572",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 9
                 },
                 "70-72:getOptions": {
                     "start": 70,
@@ -931,22 +962,25 @@
                     "signature": "getOptions()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _getOptions(self) -> Options:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def _getOptions(self) -> Options:",
-                        "        ",
-                        "",
-                        "        return self.__options",
-                        ""
+                        "         return self.__options"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 14.713590621948242,
-                    "generation_timestamp": "2024-06-09T14:29:31.241550",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 3.032238721847534,
+                    "generation_timestamp": "2024-07-21T03:41:01.491710",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 8
                 },
                 "49-53:checkRequiredOptions": {
                     "start": 49,
@@ -983,23 +1017,27 @@
                             "68-75:MissingOptionException1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def _checkRequiredOptions(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def _checkRequiredOptions(self) -> None:",
                         "        ",
-                        "",
                         "        if len(self._getRequiredOptions()) != 0:",
-                        "            raise MissingOptionException.MissingOptionException1(1, self._getRequiredOptions(), None)",
-                        ""
+                        "            raise MissingOptionException.MissingOptionException1(1, self._getRequiredOptions(), None)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 17.332619667053223,
-                    "generation_timestamp": "2024-06-09T14:30:13.339421",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.333738803863525,
+                    "generation_timestamp": "2024-07-21T03:40:45.315447",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 9
                 },
                 "324-338:updateRequiredOptions": {
                     "start": 324,
@@ -1073,37 +1111,38 @@
                             "95-105:setSelected"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def __updateRequiredOptions(self, opt: Option) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def __updateRequiredOptions(self, opt: Option) -> None:",
-                        "        ",
+                        "         if opt.isRequired():",
+                        "             self._getRequiredOptions().remove(opt.getKey())",
                         "",
-                        "        if opt.isRequired():",
-                        "            if opt.getKey() in self._getRequiredOptions():",
-                        "                self._getRequiredOptions().remove(opt.getKey())",
+                        "         if self._getOptions().getOptionGroup(opt) is not None:",
+                        "             group = self._getOptions().getOptionGroup(opt)",
                         "",
-                        "        group = self._getOptions().getOptionGroup(opt)",
+                        "             if group.isRequired():",
+                        "                 self._getRequiredOptions().remove(group.getKey())",
                         "",
-                        "        if group is not None:",
-                        "            if group.isRequired():",
-                        "                if group in self._getRequiredOptions():",
-                        "                    self._getRequiredOptions().remove(group)",
-                        "",
-                        "            group.setSelected(opt)",
-                        ""
+                        "             group.setSelected(opt)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 17.403802633285522,
-                    "generation_timestamp": "2024-06-09T14:30:30.754023",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 9.370335817337036,
+                    "generation_timestamp": "2024-07-21T03:41:10.866300",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 8
                 },
-                "67-67:flatten": {
+                "67-69:flatten": {
                     "start": 67,
-                    "end": 67,
+                    "end": 69,
                     "body": [
                         "    protected abstract String[] flatten(Options opts, String[] arguments, boolean stopAtNonOption)\n",
                         "            throws ParseException;\n"
@@ -1127,23 +1166,26 @@
                         "stopAtNonOption"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
-                        "    def _flatten(self, opts: Options, arguments: typing.List[str], stopAtNonOption: bool) -> typing.List[str]:\n",
+                        "    def _flatten(self, opts: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> typing.List[typing.List[str]]:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
-                        "    def _flatten(self, opts: Options, arguments: typing.List[str], stopAtNonOption: bool) -> typing.List[str]:",
+                        "    def _flatten(self, opts: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> typing.List[typing.List[str]]:",
                         "        ",
-                        "",
-                        "        # Your code here",
-                        "        pass",
-                        ""
+                        "        # Your implementation here",
+                        "        pass"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 15.022231817245483,
-                    "generation_timestamp": "2024-06-09T14:31:29.792686",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "success",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.304326772689819,
+                    "generation_timestamp": "2024-07-20T20:45:02.331306",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1162,15 +1204,23 @@
                             "CommandLine"
                         ]
                     ],
-                    "partial_translation": "    _cmd: CommandLine = None\n",
+                    "partial_translation": [
+                        "    _cmd: CommandLine = None",
+                        ""
+                    ],
                     "translation": [
                         "    _cmd: CommandLine = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T14:27:54.023663",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-07-20T20:30:30.043138",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "42-42:requiredOptions": {
                     "start": 42,
@@ -1187,15 +1237,23 @@
                             "java.util.List<>"
                         ]
                     ],
-                    "partial_translation": "    __requiredOptions: typing.List[typing.Any] = None\n",
+                    "partial_translation": [
+                        "    __requiredOptions: typing.List[typing.Any] = None",
+                        ""
+                    ],
                     "translation": [
                         "    __requiredOptions: typing.List[typing.Any] = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T14:27:54.033251",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-07-20T20:30:30.051152",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "39-39:options": {
                     "start": 39,
@@ -1212,17 +1270,26 @@
                             "Options"
                         ]
                     ],
-                    "partial_translation": "    __options: Options = None\n",
+                    "partial_translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
                     "translation": [
                         "    __options: Options = None",
                         ""
                     ],
-                    "translation_status": "success",
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": "2024-06-09T14:27:54.035515",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "generation_timestamp": "2024-07-20T20:30:30.058109",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
+            "is_enum": false,
             "python_class_declaration": "class Parser(CommandLineParser, ABC):\n\n"
         }
     },

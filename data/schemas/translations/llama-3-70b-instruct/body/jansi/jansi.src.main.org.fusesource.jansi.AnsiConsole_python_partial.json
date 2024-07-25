@@ -377,16 +377,24 @@
                         "    def initStreams() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def initStreams() -> None:",
+                        "         if not AnsiConsole.__initialized:",
+                        "             AnsiConsole.out = AnsiConsole.__ansiStream(True)",
+                        "             AnsiConsole.err = AnsiConsole.__ansiStream(False)",
+                        "             AnsiConsole.__initialized = True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.75544810295105,
+                    "generation_timestamp": "2024-07-21T12:42:22.151331",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 3
                 },
                 "546-559:systemUninstall": {
                     "start": 546,
@@ -435,14 +443,29 @@
                         "    def systemUninstall() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def systemUninstall() -> None:",
+                        "         AnsiConsole.__installed -= 1",
+                        "         if AnsiConsole.__installed == 0:",
+                        "             try:",
+                        "                 if AnsiConsole.out is not None:",
+                        "                     AnsiConsole.out.uninstall()",
+                        "                 if AnsiConsole.err is not None:",
+                        "                     AnsiConsole.err.uninstall()",
+                        "             except io.IOError as e:",
+                        "                 raise io.IOError(e)",
+                        "             AnsiConsole.__initialized = False",
+                        "             sys.stdout = AnsiConsole.system_out",
+                        "             sys.stderr = AnsiConsole.system_err"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.202489614486694,
+                    "generation_timestamp": "2024-07-21T13:01:19.524557",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -476,14 +499,18 @@
                         "    def isInstalled() -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def isInstalled() -> bool:",
+                        "         return AnsiConsole.__installed > 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9659316539764404,
+                    "generation_timestamp": "2024-07-21T12:35:44.983454",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -539,14 +566,27 @@
                         "    def systemInstall() -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def systemInstall() -> None:",
+                        "         if AnsiConsole.__installed == 0:",
+                        "             AnsiConsole.initStreams()",
+                        "             try:",
+                        "                 AnsiConsole.out.install()",
+                        "                 AnsiConsole.err.install()",
+                        "             except io.IOError as e:",
+                        "                 raise io.IOError(e)",
+                        "             sys.stdout = AnsiConsole.out",
+                        "             sys.stderr = AnsiConsole.err",
+                        "         AnsiConsole.__installed += 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 116.02200174331665,
+                    "generation_timestamp": "2024-07-21T13:16:01.644180",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -579,14 +619,18 @@
                         "    def sysErr() -> typing.IO:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def sysErr() -> typing.IO:",
+                        "         return AnsiConsole.system_err"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.9487979412078857,
+                    "generation_timestamp": "2024-07-21T12:35:45.952934",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -626,14 +670,19 @@
                         "    def err() -> AnsiPrintStream:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def err() -> AnsiPrintStream:",
+                        "         AnsiConsole.initStreams()",
+                        "         return AnsiConsole.err"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.5398507118225098,
+                    "generation_timestamp": "2024-07-21T13:16:04.209698",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -666,14 +715,18 @@
                         "    def sysOut() -> typing.IO:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def sysOut() -> typing.IO:",
+                        "         return AnsiConsole.system_out"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7970497608184814,
+                    "generation_timestamp": "2024-07-21T12:35:46.764524",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -713,14 +766,19 @@
                         "    def out() -> AnsiPrintStream:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def out() -> AnsiPrintStream:",
+                        "         AnsiConsole.initStreams()",
+                        "         return AnsiConsole.out"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 62.913511514663696,
+                    "generation_timestamp": "2024-07-21T13:17:07.139032",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -760,16 +818,27 @@
                         "    def getBoolean(name: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getBoolean(name: str) -> bool:",
+                        "         result = False",
+                        "         try:",
+                        "             val = os.environ.get(name)",
+                        "             result = val is None or val.lower() == 'true'",
+                        "         except (ValueError, AttributeError):",
+                        "             pass",
+                        "         return result"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6008222103118896,
+                    "generation_timestamp": "2024-07-21T12:42:24.759302",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 3
                 },
                 "198-204:getTerminalWidth": {
                     "start": 198,
@@ -820,14 +889,21 @@
                         "    def getTerminalWidth() -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getTerminalWidth() -> int:",
+                        "         w = AnsiConsole.out().getTerminalWidth()",
+                        "         if w <= 0:",
+                        "             w = AnsiConsole.err().getTerminalWidth()",
+                        "         return w"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.008521556854248,
+                    "generation_timestamp": "2024-07-21T13:17:12.180146",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -879,14 +955,27 @@
                         "    def __newPrintStream(out: AnsiOutputStream, enc: str) -> AnsiPrintStream:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __newPrintStream(out: AnsiOutputStream, enc: str) -> AnsiPrintStream:",
+                        "         if enc is not None:",
+                        "             try:",
+                        "                 return AnsiPrintStream(out, True, enc)",
+                        "             except LookupError:",
+                        "                 pass",
+                        "         try:",
+                        "             return AnsiPrintStream(out, True, None)",
+                        "         except LookupError:",
+                        "             pass",
+                        "         return None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.964768171310425,
+                    "generation_timestamp": "2024-07-21T13:02:22.630924",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1192,25 +1281,49 @@
                         "    def __ansiStream(stdout: bool) -> AnsiPrintStream:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __ansiStream(stdout: bool) -> AnsiPrintStream:",
+                        "         descriptor = FileDescriptor.out if stdout else FileDescriptor.err",
+                        "         out = FastBufferedOutputStream(FileOutputStream(descriptor))",
+                        "         enc = os.environ.get(\"stdout.encoding\" if stdout else \"stderr.encoding\")",
+                        "         if enc is None:",
+                        "             enc = os.environ.get(\"sun.stdout.encoding\" if stdout else \"sun.stderr.encoding\")",
+                        "         isatty = False",
+                        "         try:",
+                        "             isatty = AnsiConsole.isatty(STDOUT_FILENO if stdout else STDERR_FILENO) != 0",
+                        "         except Throwable:",
+                        "             pass",
+                        "         width = AnsiOutputStream.WidthSupplier()",
+                        "         processor = None",
+                        "         type_ = AnsiType.Unsupported",
+                        "         installer = uninstaller = None",
+                        "         if isatty:",
+                        "             # implementation for isatty",
+                        "             pass",
+                        "         else:",
+                        "             # implementation for not isatty",
+                        "             pass",
+                        "         mode = AnsiMode.Default if isatty else AnsiMode.Strip",
+                        "         colors = AnsiColors.Colors16",
+                        "         resetAtUninstall = type_ != AnsiType.Unsupported and not AnsiConsole.getBoolean(AnsiConsole.JANSI_NORESET)",
+                        "         return AnsiConsole.__newPrintStream(AnsiOutputStream(out, width, mode, processor, type_, colors, Charset.defaultCharset().name, installer, uninstaller, resetAtUninstall), enc)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 13.32358431816101,
+                    "generation_timestamp": "2024-07-21T12:42:16.747632",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
-                "231-235:AnsiConsole": {
-                    "start": 231,
+                "235-235:AnsiConsole": {
+                    "start": 235,
                     "end": 235,
                     "body": [
-                        "    private static boolean initialized; // synchronized on AnsiConsole.class\n",
-                        "    private static int installed; // synchronized on AnsiConsole.class\n",
-                        "    private static int virtualProcessing; // synchronized on AnsiConsole.class\n",
-                        "\n",
                         "    private AnsiConsole() {}\n"
                     ],
                     "is_constructor": true,
@@ -1232,14 +1345,17 @@
                         "    def __init__(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.419078826904297,
+                    "generation_timestamp": "2024-07-21T12:35:54.922272",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -1264,14 +1380,16 @@
                         "    STDERR_FILENO: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    STDERR_FILENO: int = 2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.659433126449585,
+                    "generation_timestamp": "2024-07-21T11:58:17.276179",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1294,14 +1412,16 @@
                         "    STDOUT_FILENO: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    STDOUT_FILENO: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.773066997528076,
+                    "generation_timestamp": "2024-07-21T11:58:25.063325",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1325,14 +1445,16 @@
                         "    ENABLE_VIRTUAL_TERMINAL_PROCESSING: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    ENABLE_VIRTUAL_TERMINAL_PROCESSING: int = 0x0004"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.509275913238525,
+                    "generation_timestamp": "2024-07-21T11:58:31.598462",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1356,14 +1478,16 @@
                         "    IS_CONEMU: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    IS_CONEMU: bool = IS_WINDOWS and os.getenv(\"ConEmuPID\") is not None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.692643880844116,
+                    "generation_timestamp": "2024-07-21T11:58:40.301488",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1390,14 +1514,16 @@
                         "    IS_MSYSTEM: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    IS_MSYSTEM: bool = IS_WINDOWS and \"MSYSTEM\" in os.environ and (os.environ[\"MSYSTEM\"].startswith(\"MINGW\") or os.environ[\"MSYSTEM\"] == \"MSYS\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.275441646575928,
+                    "generation_timestamp": "2024-07-21T11:58:49.602556",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1422,14 +1548,16 @@
                         "    IS_CYGWIN: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    IS_CYGWIN: bool = sys.platform == \"win32\" and \"PWD\" in os.environ and os.environ[\"PWD\"].startswith(\"/\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 10.846313714981079,
+                    "generation_timestamp": "2024-07-21T11:59:00.461532",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1454,14 +1582,16 @@
                         "    IS_WINDOWS: bool = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    IS_WINDOWS: bool = sys.platform.lower().startswith(\"win\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 9.964886903762817,
+                    "generation_timestamp": "2024-07-21T11:59:10.437509",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1486,14 +1616,17 @@
                         "    err: typing.IO = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    err: typing.IO = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:59:10.452594",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1518,14 +1651,16 @@
                         "    system_err: typing.IO = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    system_err: typing.IO = sys.stderr"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.666319847106934,
+                    "generation_timestamp": "2024-07-21T11:59:17.127654",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1550,14 +1685,17 @@
                         "    out: typing.IO = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    out: typing.IO = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:59:17.136713",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1582,14 +1720,16 @@
                         "    system_out: typing.IO = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    system_out: typing.IO = sys.stdout"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.307592391967773,
+                    "generation_timestamp": "2024-07-21T11:59:23.452227",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1614,14 +1754,16 @@
                         "    JANSI_GRACEFUL: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_GRACEFUL: str = \"jansi.graceful\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.269816160202026,
+                    "generation_timestamp": "2024-07-21T11:59:31.737783",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1646,14 +1788,16 @@
                         "    JANSI_NORESET: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_NORESET: str = \"jansi.noreset\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.956681489944458,
+                    "generation_timestamp": "2024-07-21T11:59:40.708801",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1679,14 +1823,16 @@
                         "    JANSI_EAGER: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_EAGER: str = \"jansi.eager\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.854696750640869,
+                    "generation_timestamp": "2024-07-21T11:59:48.576409",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1712,14 +1858,16 @@
                         "    JANSI_FORCE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_FORCE: str = \"jansi.force\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.581975221633911,
+                    "generation_timestamp": "2024-07-21T11:59:56.168252",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1745,14 +1893,16 @@
                         "    JANSI_STRIP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_STRIP: str = \"jansi.strip\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.304544687271118,
+                    "generation_timestamp": "2024-07-21T12:00:03.485922",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1778,14 +1928,16 @@
                         "    JANSI_PASSTHROUGH: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_PASSTHROUGH: str = \"jansi.passthrough\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 8.301779508590698,
+                    "generation_timestamp": "2024-07-21T12:00:11.796762",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1810,14 +1962,16 @@
                         "    JANSI_COLORS_TRUECOLOR: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_COLORS_TRUECOLOR: str = \"truecolor\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.373542308807373,
+                    "generation_timestamp": "2024-07-21T12:00:18.181220",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1842,14 +1996,16 @@
                         "    JANSI_COLORS_256: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_COLORS_256: str = \"256\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.727843999862671,
+                    "generation_timestamp": "2024-07-21T12:00:24.925562",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1874,14 +2030,16 @@
                         "    JANSI_COLORS_16: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_COLORS_16: str = \"16\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.134843349456787,
+                    "generation_timestamp": "2024-07-21T12:00:31.080438",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1906,14 +2064,16 @@
                         "    JANSI_ERR_COLORS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_ERR_COLORS: str = \"jansi.err.colors\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.419008731842041,
+                    "generation_timestamp": "2024-07-21T12:00:37.509682",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1938,14 +2098,16 @@
                         "    JANSI_OUT_COLORS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_OUT_COLORS: str = \"jansi.out.colors\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.638947486877441,
+                    "generation_timestamp": "2024-07-21T12:00:44.174057",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1970,14 +2132,16 @@
                         "    JANSI_COLORS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_COLORS: str = \"jansi.colors\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.23347020149231,
+                    "generation_timestamp": "2024-07-21T12:00:50.420448",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2002,14 +2166,16 @@
                         "    JANSI_MODE_DEFAULT: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_MODE_DEFAULT: str = \"default\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.504897117614746,
+                    "generation_timestamp": "2024-07-21T12:00:56.946824",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2034,14 +2200,16 @@
                         "    JANSI_MODE_FORCE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_MODE_FORCE: str = \"force\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.0321431159973145,
+                    "generation_timestamp": "2024-07-21T12:01:03.001420",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2066,14 +2234,16 @@
                         "    JANSI_MODE_STRIP: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_MODE_STRIP: str = \"strip\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 7.016326665878296,
+                    "generation_timestamp": "2024-07-21T12:01:10.029262",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2098,14 +2268,16 @@
                         "    JANSI_ERR_MODE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_ERR_MODE: str = \"jansi.err.mode\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.705996036529541,
+                    "generation_timestamp": "2024-07-21T12:01:16.756791",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2130,14 +2302,16 @@
                         "    JANSI_OUT_MODE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_OUT_MODE: str = \"jansi.out.mode\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.37236475944519,
+                    "generation_timestamp": "2024-07-21T12:01:23.143451",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2162,14 +2336,16 @@
                         "    JANSI_MODE: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    JANSI_MODE: str = \"jansi.mode\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.179400205612183,
+                    "generation_timestamp": "2024-07-21T12:01:29.332579",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2193,14 +2369,17 @@
                         "    __virtualProcessing: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __virtualProcessing: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:29.341292",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2224,14 +2403,17 @@
                         "    __installed: int = 0",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __installed: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:29.348978",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -2255,14 +2437,17 @@
                         "    __initialized: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __initialized: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T12:01:29.356272",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -2279,14 +2464,19 @@
                         "    }\n"
                     ],
                     "partial_translation": [],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "         if AnsiConsole.getBoolean(AnsiConsole.JANSI_EAGER):",
+                        "             AnsiConsole.initStreams()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.871570348739624,
+                    "generation_timestamp": "2024-07-21T12:01:36.235721",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

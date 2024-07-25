@@ -96,14 +96,34 @@
                         "    def _parse(self, value: str, formatter: Format) -> typing.Any:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:",
+                        "         parsed_value = super()._parse(value, formatter)",
+                        "         if parsed_value is not None or not isinstance(formatter, decimal.DecimalFormat):",
+                        "             return parsed_value",
+                        "",
+                        "         decimal_format = typing.cast(decimal.DecimalFormat, formatter)",
+                        "         pattern = decimal_format.to_pattern()",
+                        "         if self.__PERCENT_SYMBOL in pattern:",
+                        "             buffer = io.StringIO()",
+                        "             for char in pattern:",
+                        "                 if char != self.__PERCENT_SYMBOL:",
+                        "                     buffer.write(char)",
+                        "             decimal_format.apply_pattern(buffer.getvalue())",
+                        "             parsed_value = super()._parse(value, decimal_format)",
+                        "",
+                        "             if parsed_value is not None:",
+                        "                 parsed_value = parsed_value * self.__POINT_ZERO_ONE",
+                        "",
+                        "         return parsed_value"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 5.2096967697143555,
+                    "generation_timestamp": "2024-07-21T16:37:35.476676",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -142,14 +162,18 @@
                         "    def PercentValidator1() -> PercentValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def PercentValidator1() -> PercentValidator:",
+                        "         return PercentValidator(True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "failed",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 125.56019854545593,
+                    "generation_timestamp": "2024-07-21T19:42:25.709606",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -188,14 +212,17 @@
                         "    def __init__(self, strict: bool) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, strict: bool) -> None:",
+                        "         super().__init__(strict, self.PERCENT_FORMAT, True)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8905336856842041,
+                    "generation_timestamp": "2024-07-21T19:36:53.720308",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -228,14 +255,18 @@
                         "    def getInstance() -> BigDecimalValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> BigDecimalValidator:",
+                        "         return PercentValidator.__VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6627850532531738,
+                    "generation_timestamp": "2024-07-21T15:44:49.854817",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -262,14 +293,16 @@
                         "    __POINT_ZERO_ONE: decimal.Decimal = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __POINT_ZERO_ONE: decimal.Decimal = decimal.Decimal(\"0.01\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.622609853744507,
+                    "generation_timestamp": "2024-07-21T11:47:56.800865",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -294,14 +327,16 @@
                         "    __PERCENT_SYMBOL: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __PERCENT_SYMBOL: str = '%'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.143025398254395,
+                    "generation_timestamp": "2024-07-21T11:48:16.948884",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -326,16 +361,19 @@
                         "    __VALIDATOR: PercentValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __VALIDATOR: 'PercentValidator' = PercentValidator.PercentValidator1()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 41.48620915412903,
+                    "generation_timestamp": "2024-07-21T11:48:58.445596",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "50-50:serialVersionUID": {
                     "start": 50,
@@ -358,14 +396,16 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = -3508241924961535772"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.909857034683228,
+                    "generation_timestamp": "2024-07-21T11:49:19.359966",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

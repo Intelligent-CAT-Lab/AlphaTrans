@@ -159,27 +159,31 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testURLPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testURLPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"u/v/\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-u\", \"https://commons.apache.org\", \"-v\", \"foo://commons.apache.org\"])",
                         "",
-                        "        self.assertEqual(\"u value\", URL(\"https://commons.apache.org\"), line.getOptionObject1(\"u\"))",
-                        "        self.assertIsNone(\"v value\", line.getOptionObject1(\"v\"))",
-                        ""
+                        "        self.assertEqual(\"u value\", urllib.parse.urlparse(\"https://commons.apache.org\"), urllib.parse.urlparse(line.getOptionObject1(\"u\")))",
+                        "        self.assertIsNone(\"v value\", line.getOptionObject1(\"v\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 18.48616862297058,
-                    "generation_timestamp": "2024-06-09T20:15:03.650387",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.170668125152588,
+                    "generation_timestamp": "2024-07-21T02:51:42.941778",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "199-210:testUntypedPattern": {
                     "start": 199,
@@ -240,31 +244,35 @@
                             "133-135:getOptionObject0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUntypedPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUntypedPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"abc\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-abc\"])",
                         "",
-                        "        assert line.hasOption0('a')",
-                        "        assert line.getOptionObject0('a') is None",
-                        "        assert line.hasOption0('b')",
-                        "        assert line.getOptionObject0('b') is None",
-                        "        assert line.hasOption0('c')",
-                        "        assert line.getOptionObject0('c') is None",
-                        ""
+                        "        self.assertTrue(line.hasOption0('a'))",
+                        "        self.assertIsNone(line.getOptionObject0('a'))",
+                        "        self.assertTrue(line.hasOption0('b'))",
+                        "        self.assertIsNone(line.getOptionObject0('b'))",
+                        "        self.assertTrue(line.hasOption0('c'))",
+                        "        self.assertIsNone(line.getOptionObject0('c'))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 5.120522975921631,
-                    "generation_timestamp": "2024-06-09T20:15:08.775327",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 10.74173092842102,
+                    "generation_timestamp": "2024-07-21T03:00:59.215432",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "138-196:testSimplePattern": {
                     "start": 138,
@@ -392,15 +400,71 @@
                             "407-409:hasOption0"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testSimplePattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failed",
-                    "elapsed_time": 302.2440540790558,
-                    "generation_timestamp": "2024-06-05T15:39:14.923024",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testSimplePattern(self) -> None:",
+                        "        ",
+                        "        options = PatternOptionBuilder.parsePattern(\"a:b@cde>f+n%t/m*z#\")",
+                        "        args = [",
+                        "            \"-c\",",
+                        "            \"-a\",",
+                        "            \"foo\",",
+                        "            \"-b\",",
+                        "            \"java.util.Vector\",",
+                        "            \"-e\",",
+                        "            \"build.xml\",",
+                        "            \"-f\",",
+                        "            \"java.util.Calendar\",",
+                        "            \"-n\",",
+                        "            \"4.5\",",
+                        "            \"-t\",",
+                        "            \"https://commons.apache.org\",",
+                        "            \"-z\",",
+                        "            \"Thu Jun 06 17:48:57 EDT 2002\",",
+                        "            \"-m\",",
+                        "            \"test*\"",
+                        "        ]",
+                        "",
+                        "        parser = PosixParser()",
+                        "        line = parser.parse0(options, args)",
+                        "",
+                        "        self.assertEqual(\"flag a\", \"foo\", line.getOptionValue0('a'))",
+                        "        self.assertEqual(\"string flag a\", \"foo\", line.getOptionObject0('a'))",
+                        "        self.assertEqual(\"object flag b\", Vector(), line.getOptionObject0('b'))",
+                        "        self.assertTrue(\"boolean true flag c\", line.hasOption0('c'))",
+                        "        self.assertFalse(\"boolean false flag d\", line.hasOption0('d'))",
+                        "        self.assertEqual(\"file flag e\", Path(\"build.xml\"), line.getOptionObject0('e'))",
+                        "        self.assertEqual(\"class flag f\", Calendar, line.getOptionObject0('f'))",
+                        "        self.assertEqual(\"number flag n\", 4.5, line.getOptionObject0('n'))",
+                        "        self.assertEqual(",
+                        "            \"url flag t\", urlparse(\"https://commons.apache.org\"), line.getOptionObject0('t'))",
+                        "",
+                        "        try:",
+                        "            self.assertEqual(\"files flag m\", [Path(\"test*\")], line.getOptionObject0('m'))",
+                        "            self.fail(\"Multiple files are not supported yet, should have failed\")",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            pass",
+                        "",
+                        "        try:",
+                        "            self.assertEqual(\"date flag z\", datetime.strptime(\"Thu Jun 06 17:48:57 EDT 2002\", \"%a %b %d %H:%M:%S %Z %Y\"), line.getOptionObject0('z'))",
+                        "            self.fail(\"Date is not supported yet, should have failed\")",
+                        "        except UnsupportedOperationException as uoe:",
+                        "            pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.230560064315796,
+                    "generation_timestamp": "2024-07-21T03:32:54.583347",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 4
                 },
                 "124-135:testRequiredOption": {
                     "start": 124,
@@ -456,15 +520,14 @@
                             "90-92:getMissingOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testRequiredOption(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testRequiredOption(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"n%m%\")",
                         "        parser = PosixParser()",
                         "",
@@ -473,13 +536,18 @@
                         "            self.fail(\"MissingOptionException wasn't thrown\")",
                         "        except MissingOptionException as e:",
                         "            self.assertEqual(1, len(e.getMissingOptions()))",
-                        "            self.assertTrue(\"n\" in e.getMissingOptions())",
-                        ""
+                        "            self.assertTrue('n' in e.getMissingOptions())"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 10.453770637512207,
-                    "generation_timestamp": "2024-06-09T20:15:19.233058",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.18242359161377,
+                    "generation_timestamp": "2024-07-20T21:41:12.619989",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "103-121:testObjectPattern": {
                     "start": 103,
@@ -542,28 +610,34 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testObjectPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testObjectPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"o@i@n@\")",
                         "        parser = PosixParser()",
-                        "        line = parser.parse0(options, [\"-o\", \"java.lang.String\", \"-i\", \"java.util.Calendar\", \"-n\", \"System.DateTime\"])",
+                        "        line = parser.parse0(",
+                        "            options,",
+                        "            [\"-o\", \"java.lang.String\", \"-i\", \"java.util.Calendar\", \"-n\", \"System.DateTime\"]",
+                        "        )",
                         "",
-                        "        assert line.getOptionObject1(\"o\") == \"\", \"o value\"",
-                        "        assert line.getOptionObject1(\"i\") is None, \"i value\"",
-                        "        assert line.getOptionObject1(\"n\") is None, \"n value\"",
-                        ""
+                        "        self.assertEqual(\"o value\", \"\", line.getOptionObject1(\"o\"))",
+                        "        self.assertIsNone(\"i value\", line.getOptionObject1(\"i\"))",
+                        "        self.assertIsNone(\"n value\", line.getOptionObject1(\"n\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 5.653067588806152,
-                    "generation_timestamp": "2024-06-09T20:15:24.889925",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.345623970031738,
+                    "generation_timestamp": "2024-07-21T02:29:48.772181",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "87-100:testNumberPattern": {
                     "start": 87,
@@ -621,32 +695,35 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testNumberPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testNumberPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"n%d%x%\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-n\", \"1\", \"-d\", \"2.1\", \"-x\", \"3,5\"])",
                         "",
-                        "        self.assertEqual(\"n object class\", numbers.Integral, type(line.getOptionObject1(\"n\")))",
+                        "        self.assertEqual(\"n object class\", int, type(line.getOptionObject1(\"n\")))",
                         "        self.assertEqual(\"n value\", 1, line.getOptionObject1(\"n\"))",
                         "",
                         "        self.assertEqual(\"d object class\", float, type(line.getOptionObject1(\"d\")))",
                         "        self.assertEqual(\"d value\", 2.1, line.getOptionObject1(\"d\"))",
                         "",
-                        "        self.assertIsNone(\"x object\", line.getOptionObject1(\"x\"))",
-                        ""
+                        "        self.assertIsNone(line.getOptionObject1(\"x\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 7.914091348648071,
-                    "generation_timestamp": "2024-06-09T20:15:32.807907",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.330713987350464,
+                    "generation_timestamp": "2024-07-21T02:29:57.109117",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "78-84:testExistingFilePatternFileNotExist": {
                     "start": 78,
@@ -697,26 +774,29 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testExistingFilePatternFileNotExist(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testExistingFilePatternFileNotExist(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"f<\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-f\", \"non-existing.file\"])",
                         "",
-                        "        assert line.getOptionObject1(\"f\") is None, \"option f parsed\"",
-                        ""
+                        "        self.assertIsNone(line.getOptionObject1(\"f\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 4.754442453384399,
-                    "generation_timestamp": "2024-06-09T20:15:37.566155",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.914978265762329,
+                    "generation_timestamp": "2024-07-21T02:30:06.029742",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "59-75:testExistingFilePattern": {
                     "start": 59,
@@ -777,29 +857,32 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testExistingFilePattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testExistingFilePattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"g<\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-g\", \"src/test/resources/org/apache/commons/cli/existing-readable.file\"])",
                         "",
-                        "        parsedReadableFileStream = line.getOptionObject1(\"g\")",
+                        "        parsed_readable_file_stream = line.getOptionObject1(\"g\")",
                         "",
-                        "        assert parsedReadableFileStream is not None, \"option g not parsed\"",
-                        "        assert isinstance(parsedReadableFileStream, io.FileIO), \"option g not FileInputStream\"",
-                        ""
+                        "        self.assertIsNotNone(parsed_readable_file_stream, \"option g not parsed\")",
+                        "        self.assertIsInstance(parsed_readable_file_stream, io.FileIO, \"option g not FileInputStream\")"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 6.4983110427856445,
-                    "generation_timestamp": "2024-06-09T20:15:44.069026",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.275662422180176,
+                    "generation_timestamp": "2024-07-21T02:30:12.310593",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "53-56:testEmptyPattern": {
                     "start": 53,
@@ -837,23 +920,27 @@
                             "251-253:getOptions"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testEmptyPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testEmptyPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"\")",
-                        "        assert len(options.getOptions()) == 0",
-                        ""
+                        "        self.assertTrue(len(list(options.getOptions())) == 0)"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 2.7316360473632812,
-                    "generation_timestamp": "2024-06-09T20:15:46.803652",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.558809280395508,
+                    "generation_timestamp": "2024-07-20T22:23:56.827001",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "40-50:testClassPattern": {
                     "start": 40,
@@ -908,37 +995,44 @@
                             "145-153:getOptionObject1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testClassPattern(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testClassPattern(self) -> None:",
                         "        ",
-                        "",
                         "        options = PatternOptionBuilder.parsePattern(\"c+d+\")",
                         "        parser = PosixParser()",
                         "        line = parser.parse0(options, [\"-c\", \"java.util.Calendar\", \"-d\", \"System.DateTime\"])",
                         "",
-                        "        assert \"c value\" == line.getOptionObject1(\"c\")",
-                        "        assert \"d value\" == line.getOptionObject1(\"d\")",
-                        ""
+                        "        self.assertEqual(\"c value\", java.util.Calendar, line.getOptionObject1(\"c\"))",
+                        "        self.assertIsNone(\"d value\", line.getOptionObject1(\"d\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 7.301892995834351,
-                    "generation_timestamp": "2024-06-09T20:15:54.109265",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.345000982284546,
+                    "generation_timestamp": "2024-07-21T02:30:18.661239",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class PatternOptionBuilderTest:\n\n"
+            "is_enum": false,
+            "python_class_declaration": "class PatternOptionBuilderTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
         "import numbers",
+        "import unittest",
         "from src.main.org.apache.commons.cli.CommandLine import *",
         "from src.main.org.apache.commons.cli.CommandLineParser import *",
         "from src.main.org.apache.commons.cli.MissingOptionException import *",

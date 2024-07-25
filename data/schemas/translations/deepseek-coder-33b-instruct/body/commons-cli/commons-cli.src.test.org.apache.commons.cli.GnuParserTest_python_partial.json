@@ -44,7 +44,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -57,39 +59,49 @@
                     ],
                     "signature": "testUnrecognizedOptionWithBursting()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUnrecognizedOptionWithBursting(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnrecognizedOptionWithBursting(self) -> None:",
                         "        ",
+                        "        # Set up the command line arguments",
+                        "        args = [\"-abc\"]",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
+                        "        # Create a mock for System.err",
+                        "        mock_err = io.StringIO()",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
+                        "        # Set System.err to the mock",
+                        "        sys.stderr = mock_err",
                         "",
-                        "        # Create a list of options",
-                        "        options = clp.getOptions()",
+                        "        # Call the method under test",
+                        "        with pytest.raises(UnrecognizedOptionException):",
+                        "            self._parser.parse(self._options, args)",
                         "",
-                        "        # Create a list of arguments",
-                        "        arguments = ['-a', '-b', '-c']",
+                        "        # Reset System.err",
+                        "        sys.stderr = sys.__stderr__",
                         "",
-                        "        # Parse the arguments",
-                        "        try:",
-                        "            cmd = parser.parse(options, arguments)",
-                        "        except Exception as e:",
-                        "            print(f\"Exception occurred: {e}\")",
-                        ""
+                        "        # Check the output",
+                        "        assert mock_err.getvalue() == \"Unrecognized option: -abc\\n\""
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 5.436730146408081,
-                    "generation_timestamp": "2024-06-05T15:57:40.298100",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.336942672729492,
+                    "generation_timestamp": "2024-07-21T01:22:09.509812",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "131-131:testUnambiguousPartialLongOption4": {
                     "start": 131,
@@ -99,7 +111,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -112,24 +126,89 @@
                     ],
                     "signature": "testUnambiguousPartialLongOption4()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUnambiguousPartialLongOption4(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption4(self) -> None:",
                         "        ",
+                        "        options = self.getOptions()",
+                        "        parser = self._parser",
                         "",
-                        "        # The Java code does not contain any logic, so there is no translation needed.",
-                        "        pass",
-                        ""
+                        "        argv = [ \"--opt\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --opt\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--optio\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --optio\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option-\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option-\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option-n\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option-n\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option-na\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option-na\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option-nam\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option-nam\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option-name\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option-name\", ex.getMessage())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 2.0656697750091553,
-                    "generation_timestamp": "2024-06-05T15:57:42.368191",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 18.404239177703857,
+                    "generation_timestamp": "2024-07-21T01:22:27.930404",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "126-126:testUnambiguousPartialLongOption3": {
                     "start": 126,
@@ -139,7 +218,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -152,46 +233,43 @@
                     ],
                     "signature": "testUnambiguousPartialLongOption3()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUnambiguousPartialLongOption3(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption3(self) -> None:",
                         "        ",
-                        "",
                         "        # Create a list of options",
                         "        options = self.getOptions()",
                         "",
-                        "        # Create a command line parser",
-                        "        parser = GnuParser()",
-                        "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(self.getArguments(), options)",
+                        "        # Create a command line",
+                        "        cl = self.getCommandLine(GnuParser(), options, \"--ambig\")",
                         "",
                         "        # Assert that the command line has the expected number of arguments",
-                        "        self.assertEquals(2, cl.getArgs().size())",
+                        "        self.assertEquals(1, len(cl.getArgs()))",
+                        "        self.assertEquals(\"ambig\", cl.getArgs()[0])",
                         "",
-                        "        # Assert that the command line has the expected options",
-                        "        self.assertTrue(cl.hasOption(\"longopt\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt2\"))",
-                        "        self.assertFalse(cl.hasOption(\"unknown\"))",
-                        "",
-                        "        # Assert that the command line has the expected arguments",
-                        "        self.assertEquals(\"arg1\", cl.getArgs()[0])",
-                        "        self.assertEquals(\"arg2\", cl.getArgs()[1])",
-                        "",
-                        "        # Assert that the command line has the expected option values",
-                        "        self.assertEquals(\"value\", cl.getOptionValue(\"longopt\"))",
-                        "        self.assertEquals(\"value2\", cl.getOptionValue(\"longopt2\"))",
-                        ""
+                        "        # Assert that the command line has the expected number of options",
+                        "        self.assertEquals(0, cl.getOptions().size())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 9.422967433929443,
-                    "generation_timestamp": "2024-06-05T15:57:51.793737",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.781222820281982,
+                    "generation_timestamp": "2024-07-21T01:22:34.725633",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "121-121:testUnambiguousPartialLongOption2": {
                     "start": 121,
@@ -201,7 +279,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -214,40 +294,68 @@
                     ],
                     "signature": "testUnambiguousPartialLongOption2()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUnambiguousPartialLongOption2(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testUnambiguousPartialLongOption2(self) -> None:",
                         "        ",
-                        "",
-                        "        # Create a list of options",
                         "        options = self.getOptions()",
+                        "        parser = self._parser",
                         "",
-                        "        # Create a parser",
-                        "        parser = GnuParser()",
+                        "        argv = [ \"--opt\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --opt\", ex.getMessage())",
                         "",
-                        "        # Parse the arguments",
-                        "        cmd = parser.parse(self.options, self.arguments)",
+                        "        argv = [ \"--optio\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --optio\", ex.getMessage())",
                         "",
-                        "        # Assert that the command line has the expected number of arguments",
-                        "        self.assertEquals(2, cmd.getArgs().size())",
+                        "        argv = [ \"--option\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option\", ex.getMessage())",
                         "",
-                        "        # Assert that the command line has the expected options",
-                        "        self.assertTrue(cmd.hasOption(\"testUnambiguousPartialLongOption2\"))",
+                        "        argv = [ \"--option2\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option2\", ex.getMessage())",
                         "",
-                        "        # Assert that the command line has the expected arguments",
-                        "        self.assertEquals(\"arg1\", cmd.getArgs()[0])",
-                        "        self.assertEquals(\"arg2\", cmd.getArgs()[1])",
-                        ""
+                        "        argv = [ \"--option23\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option23\", ex.getMessage())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 6.838746786117554,
-                    "generation_timestamp": "2024-06-05T15:57:58.635032",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.72507929801941,
+                    "generation_timestamp": "2024-07-21T01:22:47.468644",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "116-116:testUnambiguousPartialLongOption1": {
                     "start": 116,
@@ -257,7 +365,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -270,16 +380,68 @@
                     ],
                     "signature": "testUnambiguousPartialLongOption1()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testUnambiguousPartialLongOption1(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failed",
-                    "elapsed_time": 302.41939306259155,
-                    "generation_timestamp": "2024-06-05T16:03:01.057039",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testUnambiguousPartialLongOption1(self) -> None:",
+                        "        ",
+                        "        options = self.getOptions()",
+                        "        parser = self._parser",
+                        "",
+                        "        argv = [ \"--opt\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --opt\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--optio\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --optio\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Unrecognized option: --option\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option=\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"Missing argument for option: option\", ex.getMessage())",
+                        "",
+                        "        argv = [ \"--option\", \"value\" ]",
+                        "        try:",
+                        "            cmd = parser.parse(options, argv)",
+                        "            self.fail(\"Expected exception not thrown\")",
+                        "        except ParseException as ex:",
+                        "            self.assertEquals(\"option doesn't have an argument\", ex.getMessage())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 12.589346885681152,
+                    "generation_timestamp": "2024-07-21T01:23:00.075999",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "111-111:testStopBursting2": {
                     "start": 111,
@@ -289,7 +451,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -302,24 +466,53 @@
                     ],
                     "signature": "testStopBursting2()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testStopBursting2(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopBursting2(self) -> None:",
                         "        ",
+                        "        # Create a list of options",
+                        "        options = self.getOptions()",
                         "",
-                        "        # The Java code does not contain any logic, so there is no translation needed.",
-                        "        pass",
-                        ""
+                        "        # Create a command line",
+                        "        cl = self.getCommandLine(GnuParser(), options, \"--longopt1\", \"--longopt2\")",
+                        "",
+                        "        # Assert that the command line is not null",
+                        "        self.assertNotNull(\"confirm that cl is not null\", cl)",
+                        "",
+                        "        # Assert that the command line has 2 arguments",
+                        "        self.assertEquals(\"confirm the number of arguments\", 2, cl.getArgs().length)",
+                        "",
+                        "        # Assert that the command line has 2 options",
+                        "        self.assertEquals(\"confirm the number of options\", 2, cl.getOptions().length)",
+                        "",
+                        "        # Assert that the command line has the expected argument",
+                        "        self.assertTrue(\"confirm the presence of the expected argument\", cl.hasOption(\"longopt1\"))",
+                        "        self.assertTrue(\"confirm the presence of the expected argument\", cl.hasOption(\"longopt2\"))",
+                        "",
+                        "        # Assert that the command line has the expected option",
+                        "        self.assertTrue(\"confirm the presence of the expected option\", cl.getOptionValue(\"longopt1\").equals(\"true\"))",
+                        "        self.assertTrue(\"confirm the presence of the expected option\", cl.getOptionValue(\"longopt2\").equals(\"true\"))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 2.6744112968444824,
-                    "generation_timestamp": "2024-06-05T16:03:03.734079",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 11.3363676071167,
+                    "generation_timestamp": "2024-07-21T01:23:11.429084",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "106-106:testStopBursting": {
                     "start": 106,
@@ -329,7 +522,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -342,39 +537,42 @@
                     ],
                     "signature": "testStopBursting()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testStopBursting(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testStopBursting(self) -> None:",
                         "        ",
+                        "        # Create a mock command line",
+                        "        command_line = \"--stop-bursting\"",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
+                        "        # Parse the command line",
+                        "        cmd = self._parser.parse(self._options, command_line.split(' '))",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
+                        "        # Check if the stop-bursting option is set",
+                        "        self.assertTrue(cmd.hasOption(\"stop-bursting\"))",
                         "",
-                        "        # Create a ParserTestCase instance",
-                        "        ptc = ParserTestCase()",
-                        "",
-                        "        # Call the stopBursting method on the parser instance",
-                        "        parser.stopBursting()",
-                        "",
-                        "        # Call the stopBursting method on the clp instance",
-                        "        clp.stopBursting()",
-                        "",
-                        "        # Call the stopBursting method on the ptc instance",
-                        "        ptc.stopBursting()",
-                        ""
+                        "        # Check if the stop-bursting option has the correct argument",
+                        "        self.assertEqual(cmd.getOptionValue(\"stop-bursting\"), \"true\")"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 7.6528284549713135,
-                    "generation_timestamp": "2024-06-05T16:03:11.389357",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 7.283300161361694,
+                    "generation_timestamp": "2024-07-21T01:23:18.731405",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "101-101:testShortWithUnexpectedArgument": {
                     "start": 101,
@@ -384,7 +582,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -397,40 +597,36 @@
                     ],
                     "signature": "testShortWithUnexpectedArgument()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testShortWithUnexpectedArgument(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testShortWithUnexpectedArgument(self) -> None:",
                         "        ",
+                        "        # Create a command line with a short option that is not expected",
+                        "        command_line = self._parser.parse(self._options, [\"-x\"])",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
-                        "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
-                        "",
-                        "        # Create a list of options",
-                        "        options = clp.getOptions()",
-                        "",
-                        "        # Create a list of arguments",
-                        "        arguments = ['-a', 'b']",
-                        "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(options, arguments)",
-                        "",
-                        "        # Check if the arguments were parsed correctly",
-                        "        self.assertTrue(cl.hasOption('a'))",
-                        "        self.assertEquals('b', cl.getOptionValue('a'))",
-                        ""
+                        "        # Check that the command line has an unexpected argument",
+                        "        self.assertTrue(command_line.hasOption(\"x\"))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 5.877604007720947,
-                    "generation_timestamp": "2024-06-05T16:03:17.269586",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 4.8602824211120605,
+                    "generation_timestamp": "2024-07-21T01:23:23.607612",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "96-96:testPartialLongOptionSingleDash": {
                     "start": 96,
@@ -440,7 +636,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -453,35 +651,45 @@
                     ],
                     "signature": "testPartialLongOptionSingleDash()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testPartialLongOptionSingleDash(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testPartialLongOptionSingleDash(self) -> None:",
                         "        ",
+                        "        # Create a list of options",
+                        "        options = self.getOptions()",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
+                        "        # Create a command line",
+                        "        cl = self.getCommandLine(GnuParser(), options, [\"--longopt\"])",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
+                        "        # Assert that the command line has the expected number of arguments",
+                        "        self.assertEquals(1, len(cl.getArgs()))",
                         "",
-                        "        # Call the method to be tested",
-                        "        # parser.parse(clp, ['--partialLongOptionSingleDash'])",
+                        "        # Assert that the command line has the expected option",
+                        "        self.assertTrue(cl.hasOption(\"longopt\"))",
                         "",
-                        "        # Add your assertions here",
-                        "        # self.assertEqual(expected, actual)",
-                        "",
-                        "        pass",
-                        ""
+                        "        # Assert that the command line has the expected value for the option",
+                        "        self.assertEquals(\"\", cl.getOptionValue(\"longopt\"))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 4.2067272663116455,
-                    "generation_timestamp": "2024-06-05T16:03:21.478891",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.645776033401489,
+                    "generation_timestamp": "2024-07-21T01:23:30.271499",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "91-91:testNegativeOption": {
                     "start": 91,
@@ -491,7 +699,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser (CLI-184)\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -504,33 +714,39 @@
                     ],
                     "signature": "testNegativeOption()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testNegativeOption(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testNegativeOption(self) -> None:",
                         "        ",
+                        "        # Create a list of options",
+                        "        options = self.getOptions()",
                         "",
-                        "        # Create a new GnuParser instance",
-                        "        parser = GnuParser()",
+                        "        # Create a command line without any arguments",
+                        "        cl = self.getCommandLine(options, \"\")",
                         "",
-                        "        # Create a new CommandLineParser instance",
-                        "        clp = CommandLineParser()",
-                        "",
-                        "        # Create a new ParserTestCase instance",
-                        "        ptc = ParserTestCase()",
-                        "",
-                        "        # Call the testNegativeOption method on the ParserTestCase instance",
-                        "        ptc.testNegativeOption()",
-                        ""
+                        "        # Assert that the command line does not have an option",
+                        "        self.assertFalse(cl.hasOption(\"p\"))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 4.895130634307861,
-                    "generation_timestamp": "2024-06-05T16:03:26.376655",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.141360521316528,
+                    "generation_timestamp": "2024-07-21T01:23:36.429681",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "86-86:testMissingArgWithBursting": {
                     "start": 86,
@@ -540,7 +756,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -553,16 +771,45 @@
                     ],
                     "signature": "testMissingArgWithBursting()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testMissingArgWithBursting(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failed",
-                    "elapsed_time": 302.26175260543823,
-                    "generation_timestamp": "2024-06-05T16:08:28.641014",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testMissingArgWithBursting(self) -> None:",
+                        "        ",
+                        "        # Create a list of options",
+                        "        options = self.getOptions()",
+                        "",
+                        "        # Create a command line without an argument",
+                        "        cl = self.getCommandLine(GnuParser(), options, [\"-a\"])",
+                        "",
+                        "        # Assert that the argument is missing",
+                        "        self.assertTrue(cl.getOptionValue('a') is None)",
+                        "",
+                        "        # Assert that the argument is missing",
+                        "        self.assertTrue(cl.getOptionValue('b') is None)",
+                        "",
+                        "        # Assert that the argument is missing",
+                        "        self.assertTrue(cl.getOptionValue('c') is None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.866276979446411,
+                    "generation_timestamp": "2024-07-21T01:23:42.314423",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "81-81:testLongWithUnexpectedArgument2": {
                     "start": 81,
@@ -572,7 +819,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -585,33 +834,48 @@
                     ],
                     "signature": "testLongWithUnexpectedArgument2()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testLongWithUnexpectedArgument2(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithUnexpectedArgument2(self) -> None:",
                         "        ",
-                        "",
-                        "        # Create a GnuParser instance",
+                        "        # Create a command line parser",
                         "        parser = GnuParser()",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        commandLineParser = CommandLineParser()",
+                        "        # Create a list of options",
+                        "        options = self.getOptions()",
                         "",
-                        "        # Create a ParserTestCase instance",
-                        "        parserTestCase = ParserTestCase()",
+                        "        # Create a command line",
+                        "        cl = self.getCommandLine(parser, options, \"--longopt1\")",
                         "",
-                        "        # Call the testLongWithUnexpectedArgument2 method",
-                        "        parserTestCase.testLongWithUnexpectedArgument2(parser, commandLineParser)",
-                        ""
+                        "        # Assert that the command line is not None",
+                        "        assert cl is not None",
+                        "",
+                        "        # Assert that the command line has one argument",
+                        "        self.assertEquals(1, len(cl.getArgs()))",
+                        "",
+                        "        # Assert that the command line argument is \"--unexpected\"",
+                        "        self.assertEquals(\"--unexpected\", cl.getArgs()[0])"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 5.15203070640564,
-                    "generation_timestamp": "2024-06-05T16:08:33.795773",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.553251028060913,
+                    "generation_timestamp": "2024-07-21T01:23:48.885948",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "76-76:testLongWithUnexpectedArgument1": {
                     "start": 76,
@@ -621,7 +885,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -634,33 +900,46 @@
                     ],
                     "signature": "testLongWithUnexpectedArgument1()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testLongWithUnexpectedArgument1(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testLongWithUnexpectedArgument1(self) -> None:",
                         "        ",
-                        "",
-                        "        # Create a GnuParser instance",
+                        "        # Create a command line parser",
                         "        parser = GnuParser()",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        commandLineParser = CommandLineParser()",
+                        "        # Define the command line options",
+                        "        options = self.getOptions()",
                         "",
-                        "        # Create a ParserTestCase instance",
-                        "        parserTestCase = ParserTestCase()",
+                        "        # Parse the command line arguments",
+                        "        command_line = parser.parse(self.getArguments(), options)",
                         "",
-                        "        # Call the testLongWithUnexpectedArgument1 method",
-                        "        parserTestCase.testLongWithUnexpectedArgument1(parser, commandLineParser)",
-                        ""
+                        "        # Check if the command line has the expected arguments",
+                        "        self.assertTrue(command_line.hasOption(\"longopt\"))",
+                        "        self.assertTrue(command_line.hasOption(\"unexpected\"))",
+                        "",
+                        "        # Check if the command line has the unexpected argument",
+                        "        self.assertFalse(command_line.hasOption(\"unexpected\"))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 4.683757305145264,
-                    "generation_timestamp": "2024-06-05T16:08:38.482259",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.8867151737213135,
+                    "generation_timestamp": "2024-07-21T01:23:54.780603",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "71-71:testLongWithoutEqualSingleDash": {
                     "start": 71,
@@ -670,7 +949,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -683,16 +964,42 @@
                     ],
                     "signature": "testLongWithoutEqualSingleDash()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testLongWithoutEqualSingleDash(self) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": null,
-                    "translation_status": "failed",
-                    "elapsed_time": 302.314989566803,
-                    "generation_timestamp": "2024-06-05T16:13:40.799949",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation": [
+                        "    def testLongWithoutEqualSingleDash(self) -> None:",
+                        "        ",
+                        "        # Create a command line",
+                        "        cmd_line = \"--longopt\"",
+                        "",
+                        "        # Parse the command line",
+                        "        cmd = self._parser._parser.parse(self._parser._tokenize(cmd_line), self._options)",
+                        "",
+                        "        # Assert that the command line has the expected option",
+                        "        self.assertTrue(cmd.hasOption(\"longopt\"))",
+                        "",
+                        "        # Assert that the command line does not have an argument for the option",
+                        "        self.assertFalse(cmd.getOptionValue(\"longopt\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.1286797523498535,
+                    "generation_timestamp": "2024-07-21T01:24:00.928762",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "66-66:testDoubleDash2": {
                     "start": 66,
@@ -702,7 +1009,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -715,54 +1024,42 @@
                     ],
                     "signature": "testDoubleDash2()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testDoubleDash2(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testDoubleDash2(self) -> None:",
                         "        ",
-                        "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
-                        "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
-                        "",
-                        "        # Create a list of options",
-                        "        options = clp.getOptions()",
-                        "",
                         "        # Create a list of arguments",
-                        "        arguments = [\"--\", \"-Dexec.classpathScope=runtime\", \"-Dexec.mainClass=com.mycompany.app.App\", \"clean\", \"install\"]",
+                        "        args = [\"--\", \"-q\"]",
                         "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(options, arguments)",
+                        "        # Create a new CommandLine instance",
+                        "        cl = self._parser.parse(self._options, args)",
                         "",
-                        "        # Get the arguments",
-                        "        args = cl.getArgs()",
+                        "        # Assert that the argument list is not empty",
+                        "        self.assertFalse(cl.getArgs().hasMoreElements())",
                         "",
-                        "        # Assert that the arguments are equal to the expected arguments",
-                        "        self.assertEqual([\"clean\", \"install\"], args)",
-                        "",
-                        "        # Get the option value",
-                        "        optionValue = cl.getOptionValue(\"Dexec.classpathScope\")",
-                        "",
-                        "        # Assert that the option value is equal to the expected value",
-                        "        self.assertEqual(\"runtime\", optionValue)",
-                        "",
-                        "        # Get the option value",
-                        "        optionValue = cl.getOptionValue(\"Dexec.mainClass\")",
-                        "",
-                        "        # Assert that the option value is equal to the expected value",
-                        "        self.assertEqual(\"com.mycompany.app.App\", optionValue)",
-                        ""
+                        "        # Assert that the option list is not empty",
+                        "        self.assertFalse(cl.getOptions().hasMoreElements())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 10.155238151550293,
-                    "generation_timestamp": "2024-06-05T16:13:50.958276",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.700098276138306,
+                    "generation_timestamp": "2024-07-21T01:24:06.646502",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "61-61:testBursting": {
                     "start": 61,
@@ -772,7 +1069,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -785,33 +1084,54 @@
                     ],
                     "signature": "testBursting()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testBursting(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testBursting(self) -> None:",
                         "        ",
+                        "        # Create a list of options",
+                        "        options = [\"-a\", \"-b\", \"-c\"]",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
+                        "        # Create a list of arguments",
+                        "        arguments = [\"arg1\", \"arg2\", \"arg3\"]",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
+                        "        # Create a list of expected results",
+                        "        expected_results = [\"result1\", \"result2\", \"result3\"]",
                         "",
-                        "        # Call the method to be tested",
-                        "        # parser.burstOption(clp)",
+                        "        # Iterate over the options, arguments, and expected results",
+                        "        for option, argument, expected_result in zip(options, arguments, expected_results):",
                         "",
-                        "        # Add your assertions here",
-                        "        # self.assertEqual(expected, actual)",
-                        ""
+                        "            # Create a command line string",
+                        "            command_line = f\"{option} {argument}\"",
+                        "",
+                        "            # Parse the command line string",
+                        "            command_line = self._parser.parse(self._options, command_line.split())",
+                        "",
+                        "            # Get the result",
+                        "            result = command_line.getOptionValue(option)",
+                        "",
+                        "            # Check if the result is equal to the expected result",
+                        "            self.assertEqual(result, expected_result)"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 5.550907135009766,
-                    "generation_timestamp": "2024-06-05T16:13:56.511918",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 8.17091965675354,
+                    "generation_timestamp": "2024-07-21T01:24:14.834606",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "56-56:testAmbiguousPartialLongOption4": {
                     "start": 56,
@@ -821,7 +1141,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -834,45 +1156,39 @@
                     ],
                     "signature": "testAmbiguousPartialLongOption4()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAmbiguousPartialLongOption4(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption4(self) -> None:",
                         "        ",
-                        "",
-                        "        # Create a list of options",
                         "        options = self.getOptions()",
+                        "        parser = self._parser",
                         "",
-                        "        # Create a command line parser",
-                        "        parser = GnuParser()",
-                        "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(self.getArguments(), options)",
-                        "",
-                        "        # Assert that the command line has the expected number of arguments",
-                        "        self.assertEquals(2, cl.getArgs().size())",
-                        "",
-                        "        # Assert that the command line has the expected options",
-                        "        self.assertTrue(cl.hasOption(\"longopt\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt2\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt3\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt4\"))",
-                        "",
-                        "        # Assert that the command line has the expected arguments",
-                        "        self.assertEquals(\"arg1\", cl.getOptionValue(\"longopt\"))",
-                        "        self.assertEquals(\"arg2\", cl.getOptionValue(\"longopt2\"))",
-                        "        self.assertEquals(\"arg3\", cl.getOptionValue(\"longopt3\"))",
-                        "        self.assertEquals(\"arg4\", cl.getOptionValue(\"longopt4\"))",
-                        ""
+                        "        try:",
+                        "            cmdLine = parser.parse(self._options, self._arguments)",
+                        "            self.assertTrue(\"Option with long name 'opt' is ambiguous; could be 'optC', 'optA', 'optB'\", False)",
+                        "        except Exception as e:",
+                        "            self.assertTrue(\"Option with long name 'opt' is ambiguous; could be 'optC', 'optA', 'optB'\", True)"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 9.645473718643188,
-                    "generation_timestamp": "2024-06-05T16:14:06.160229",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 5.80704665184021,
+                    "generation_timestamp": "2024-07-21T01:24:20.660093",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "51-51:testAmbiguousPartialLongOption3": {
                     "start": 51,
@@ -882,7 +1198,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -895,43 +1213,55 @@
                     ],
                     "signature": "testAmbiguousPartialLongOption3()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAmbiguousPartialLongOption3(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption3(self) -> None:",
                         "        ",
+                        "        # Create a command line",
+                        "        cl = CommandLine()",
                         "",
-                        "        # Create a list of options",
-                        "        options = self.getOptions()",
+                        "        # Create options",
+                        "        option1 = Option(\"p\", \"longopt\")",
+                        "        option2 = Option(\"r\", \"longopt\")",
                         "",
-                        "        # Create a command line parser",
+                        "        # Add options to the command line",
+                        "        cl.addOption(option1)",
+                        "        cl.addOption(option2)",
+                        "",
+                        "        # Create a parser",
                         "        parser = GnuParser()",
                         "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(self.getArguments(), options)",
-                        "",
-                        "        # Assert that the command line has the expected number of arguments",
-                        "        self.assertEquals(2, cl.getArgs().size())",
-                        "",
-                        "        # Assert that the command line has the expected options",
-                        "        self.assertTrue(cl.hasOption(\"longopt\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt2\"))",
-                        "        self.assertTrue(cl.hasOption(\"longopt3\"))",
-                        "",
-                        "        # Assert that the command line has the expected arguments",
-                        "        self.assertEquals(\"arg1\", cl.getOptionValue(\"longopt\"))",
-                        "        self.assertEquals(\"arg2\", cl.getOptionValue(\"longopt2\"))",
-                        "        self.assertEquals(\"arg3\", cl.getOptionValue(\"longopt3\"))",
-                        ""
+                        "        # Parse the command line",
+                        "        try:",
+                        "            parser.parse(cl.getArgs(), cl)",
+                        "        except AmbiguousOptionException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())",
+                        "        except UnrecognizedOptionException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())",
+                        "        except ParseException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 8.152763843536377,
-                    "generation_timestamp": "2024-06-05T16:14:14.315360",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 68.31357097625732,
+                    "generation_timestamp": "2024-07-21T01:25:28.983283",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "46-46:testAmbiguousPartialLongOption2": {
                     "start": 46,
@@ -941,7 +1271,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -954,33 +1286,55 @@
                     ],
                     "signature": "testAmbiguousPartialLongOption2()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAmbiguousPartialLongOption2(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption2(self) -> None:",
                         "        ",
+                        "        # Create a command line",
+                        "        cl = CommandLine()",
                         "",
-                        "        # Create a GnuParser instance",
+                        "        # Create options",
+                        "        option1 = Option(\"p\", \"longopt\")",
+                        "        option2 = Option(\"r\", \"longopt\")",
+                        "",
+                        "        # Add options to the command line",
+                        "        cl.addOption(option1)",
+                        "        cl.addOption(option2)",
+                        "",
+                        "        # Create a parser",
                         "        parser = GnuParser()",
                         "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
-                        "",
-                        "        # Create a ParserTestCase instance",
-                        "        ptc = ParserTestCase()",
-                        "",
-                        "        # Call the testAmbiguousPartialLongOption2 method",
-                        "        ptc.testAmbiguousPartialLongOption2()",
-                        ""
+                        "        # Parse the command line",
+                        "        try:",
+                        "            parser.parse(cl.getArgs(), cl)",
+                        "        except AmbiguousOptionException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())",
+                        "        except UnrecognizedOptionException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())",
+                        "        except ParseException as e:",
+                        "            self.fail(\"Unexpected exception: \" + e.getMessage())"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 4.310322284698486,
-                    "generation_timestamp": "2024-06-05T16:14:18.628322",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 66.95025539398193,
+                    "generation_timestamp": "2024-07-21T01:26:35.941437",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 1
                 },
                 "41-41:testAmbiguousPartialLongOption1": {
                     "start": 41,
@@ -990,7 +1344,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1003,33 +1359,48 @@
                     ],
                     "signature": "testAmbiguousPartialLongOption1()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAmbiguousPartialLongOption1(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousPartialLongOption1(self) -> None:",
                         "        ",
+                        "        options = self.getOptions()",
+                        "        parser = self._parser",
                         "",
-                        "        # Create a mock object for CommandLineParser",
-                        "        parser = CommandLineParser()",
+                        "        try:",
+                        "            cmdLine = parser.parse(self._options, self._arguments, False)",
+                        "            self.assertTrue(\"Encoding is not supported\", False)",
+                        "        except Exception:",
+                        "            pass",
                         "",
-                        "        # Create a mock object for GnuParser",
-                        "        gnu_parser = GnuParser()",
+                        "        try:",
+                        "            cmdLine = parser.parse(self._options, self._arguments, True)",
+                        "            self.assertTrue(\"Encoding is not supported\", False)",
+                        "        except UnsupportedEncodingException:",
+                        "            pass",
                         "",
-                        "        # Create a mock object for ParserTestCase",
-                        "        parser_test_case = ParserTestCase()",
-                        "",
-                        "        # Call the method to be tested",
-                        "        parser_test_case.testAmbiguousPartialLongOption1(parser, gnu_parser)",
-                        ""
+                        "        self.assertEquals(cmdLine.getOptionValue('e'), \"utf-8\")",
+                        "        self.assertEquals(cmdLine.getOptionValue('encoding'), \"utf-8\")"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 5.028226613998413,
-                    "generation_timestamp": "2024-06-05T16:14:23.659990",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.758129358291626,
+                    "generation_timestamp": "2024-07-21T01:26:42.715453",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "36-36:testAmbiguousLongWithoutEqualSingleDash": {
                     "start": 36,
@@ -1039,7 +1410,9 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Ignore(\"not supported by the GnuParser\")",
+                        "Test"
                     ],
                     "modifiers": [
                         "public"
@@ -1052,41 +1425,40 @@
                     ],
                     "signature": "testAmbiguousLongWithoutEqualSingleDash()",
                     "parameters": [],
-                    "calls": [],
+                    "calls": [
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
+                        ]
+                    ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testAmbiguousLongWithoutEqualSingleDash(self) -> None:",
                         "        ",
+                        "        options = self.getOptions()",
+                        "        commandLine = self.parse(\"--ambiguous -ab\")",
                         "",
-                        "        # Create a GnuParser instance",
-                        "        parser = GnuParser()",
-                        "",
-                        "        # Create a CommandLineParser instance",
-                        "        clp = CommandLineParser()",
-                        "",
-                        "        # Create a list of options",
-                        "        options = clp.getOptions()",
-                        "",
-                        "        # Create a list of arguments",
-                        "        arguments = ['-abc']",
-                        "",
-                        "        # Parse the arguments",
-                        "        cl = parser.parse(options, arguments)",
-                        "",
-                        "        # Check if the arguments were parsed correctly",
-                        "        self.assertTrue(cl.hasOption('a'))",
-                        "        self.assertTrue(cl.hasOption('b'))",
-                        "        self.assertTrue(cl.hasOption('c'))",
-                        ""
+                        "        self.assertTrue(commandLine.hasOption(\"ambiguous\"))",
+                        "        self.assertTrue(commandLine.hasOption(\"a\"))",
+                        "        self.assertTrue(commandLine.hasOption(\"b\"))",
+                        "        self.assertEquals(0, commandLine.getOptionValue('ambiguous'))",
+                        "        self.assertEquals(0, commandLine.getOptionValue('a'))",
+                        "        self.assertEquals(0, commandLine.getOptionValue('b'))"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 6.601012945175171,
-                    "generation_timestamp": "2024-06-05T16:14:30.263787",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 6.372767448425293,
+                    "generation_timestamp": "2024-07-21T01:26:49.106851",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 },
                 "28-31:setUp": {
                     "start": 28,
@@ -1099,7 +1471,8 @@
                     ],
                     "is_constructor": false,
                     "annotations": [
-                        "Override"
+                        "Override",
+                        "Before"
                     ],
                     "modifiers": [
                         "public"
@@ -1122,34 +1495,46 @@
                             "commons-cli.src.main.org.apache.commons.cli.GnuParser",
                             "GnuParser",
                             "GnuParser"
+                        ],
+                        [
+                            "commons-cli.src.test.org.apache.commons.cli.GnuParserTest",
+                            "GnuParserTest",
+                            "28-31:setUp"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def setUp(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def setUp(self) -> None:",
                         "        ",
-                        "",
                         "        super().setUp()",
-                        "        self.parser = GnuParser()",
-                        ""
+                        "        self._parser = GnuParser()"
                     ],
-                    "translation_status": "syntactical_success",
-                    "elapsed_time": 2.670825719833374,
-                    "generation_timestamp": "2024-06-05T16:14:32.941248",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 1.009300708770752,
+                    "generation_timestamp": "2024-07-21T01:18:18.234526",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class GnuParserTest(ParserTestCase):\n\n"
+            "is_enum": false,
+            "python_class_declaration": "class GnuParserTest(ParserTestCase, unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.cli.CommandLineParser import *",
         "from src.main.org.apache.commons.cli.GnuParser import *",
         "from src.test.org.apache.commons.cli.ParserTestCase import *"

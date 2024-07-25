@@ -68,14 +68,19 @@
                         "    def _isValidUser(self, user: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidUser(self, user: str) -> bool:",
+                        "         if user is None or len(user) > self.__MAX_USERNAME_LEN:",
+                        "             return False",
+                        "         return self.__USER_PATTERN.match(user) is not None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7462120056152344,
+                    "generation_timestamp": "2024-07-21T19:19:07.357500",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -140,14 +145,24 @@
                         "    def _isValidDomain(self, domain: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:",
+                        "         ip_domain_matcher = self.__IP_DOMAIN_PATTERN.match(domain)",
+                        "         if ip_domain_matcher:",
+                        "             inet_address_validator = InetAddressValidator.getInstance()",
+                        "             return inet_address_validator.isValid(ip_domain_matcher.group(1))",
+                        "         if self.__allowTld:",
+                        "             return self.__domainValidator.isValid(domain) or (not domain.startswith(\".\") and self.__domainValidator.isValidTld(domain))",
+                        "         else:",
+                        "             return self.__domainValidator.isValid(domain)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.3673462867736816,
+                    "generation_timestamp": "2024-07-21T19:19:10.735080",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -212,14 +227,33 @@
                         "    def isValid(self, email: str) -> bool:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def isValid(self, email: str) -> bool:",
+                        "         if email is None:",
+                        "             return False",
+                        "",
+                        "         if email.endswith(\".\"):  # check this first - it's cheap!",
+                        "             return False",
+                        "",
+                        "         email_matcher = self.__EMAIL_PATTERN.match(email)",
+                        "         if not email_matcher:",
+                        "             return False",
+                        "",
+                        "         if not self._isValidUser(email_matcher.group(1)):",
+                        "             return False",
+                        "",
+                        "         if not self._isValidDomain(email_matcher.group(2)):",
+                        "             return False",
+                        "",
+                        "         return True"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.326629161834717,
+                    "generation_timestamp": "2024-07-21T19:19:14.071889",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -260,14 +294,18 @@
                         "    def EmailValidator0(allowLocal: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def EmailValidator0(allowLocal: bool) -> EmailValidator:",
+                        "         return EmailValidator(1, allowLocal, False, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8603174686431885,
+                    "generation_timestamp": "2024-07-21T19:19:18.694434",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -333,14 +371,28 @@
                         "    def __init__(self, constructorId: int, allowLocal: bool, allowTld: bool, domainValidator: DomainValidator) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __init__(self, constructorId: int, allowLocal: bool, allowTld: bool, domainValidator: DomainValidator) -> None:",
+                        "         super().__init__()",
+                        "         if constructorId == 0:",
+                        "             self.__allowTld = allowTld",
+                        "             if domainValidator is None:",
+                        "                 raise ValueError(\"DomainValidator cannot be null\")",
+                        "             elif domainValidator.isAllowLocal() != allowLocal:",
+                        "                 raise ValueError(\"DomainValidator must agree with allowLocal setting\")",
+                        "             else:",
+                        "                 self.__domainValidator = domainValidator",
+                        "         else:",
+                        "             self.__allowTld = allowTld",
+                        "             self.__domainValidator = DomainValidator.getInstance1(allowLocal)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.7367677688598633,
+                    "generation_timestamp": "2024-07-21T19:19:17.824802",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -381,14 +433,18 @@
                         "    def getInstance2(allowLocal: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance2(allowLocal: bool) -> EmailValidator:",
+                        "         return EmailValidator.getInstance1(allowLocal, False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.23490571975708,
+                    "generation_timestamp": "2024-07-21T19:19:22.630670",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -436,14 +492,27 @@
                         "    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:",
+                        "         if allowLocal:",
+                        "             if allowTld:",
+                        "                 return EmailValidator.__EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD",
+                        "             else:",
+                        "                 return EmailValidator.__EMAIL_VALIDATOR_WITH_LOCAL",
+                        "         else:",
+                        "             if allowTld:",
+                        "                 return EmailValidator.__EMAIL_VALIDATOR_WITH_TLD",
+                        "             else:",
+                        "                 return EmailValidator.__EMAIL_VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.6829721927642822,
+                    "generation_timestamp": "2024-07-21T19:19:21.386931",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -476,14 +545,18 @@
                         "    def getInstance0() -> EmailValidator:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance0() -> EmailValidator:",
+                        "         return EmailValidator.__EMAIL_VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.6849796772003174,
+                    "generation_timestamp": "2024-07-21T19:19:23.323399",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
@@ -509,14 +582,17 @@
                         "    __domainValidator: DomainValidator = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __domainValidator: DomainValidator = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T15:06:06.338171",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -542,14 +618,16 @@
                         "    __EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD: EmailValidator = EmailValidator(1, True, True, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.860109090805054,
+                    "generation_timestamp": "2024-07-21T15:06:27.203001",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -575,14 +653,16 @@
                         "    __EMAIL_VALIDATOR_WITH_LOCAL: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL: EmailValidator = EmailValidator(1, True, False, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.17451572418213,
+                    "generation_timestamp": "2024-07-21T15:06:47.393732",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -608,14 +688,16 @@
                         "    __EMAIL_VALIDATOR_WITH_TLD: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR_WITH_TLD: EmailValidator = EmailValidator(1, False, True, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.514730215072632,
+                    "generation_timestamp": "2024-07-21T15:07:07.915245",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -640,14 +722,16 @@
                         "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_VALIDATOR: EmailValidator = EmailValidator(1, False, False, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 19.869905710220337,
+                    "generation_timestamp": "2024-07-21T15:07:27.801797",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -671,14 +755,17 @@
                         "    __allowTld: bool = False",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __allowTld: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T15:07:27.807628",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -703,14 +790,16 @@
                         "    __MAX_USERNAME_LEN: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __MAX_USERNAME_LEN: int = 64"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 19.34400248527527,
+                    "generation_timestamp": "2024-07-21T15:07:47.155562",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -735,16 +824,19 @@
                         "    __USER_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __USER_PATTERN: re.Pattern = re.compile(EmailValidator.__USER_REGEX)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "failed",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 97.9431266784668,
+                    "generation_timestamp": "2024-07-21T15:09:25.105583",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "48-48:IP_DOMAIN_PATTERN": {
                     "start": 48,
@@ -767,14 +859,17 @@
                         "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __IP_DOMAIN_REGEX: str = r\"^\\\\[(.*)\\\\]$\"",
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = re.compile(__IP_DOMAIN_REGEX)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.071296215057373,
+                    "generation_timestamp": "2024-07-21T15:09:45.185835",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -799,14 +894,17 @@
                         "    __EMAIL_PATTERN: re.Pattern = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_REGEX: str = \"^(.+)@(\\\\S+)$\"",
+                        "    __EMAIL_PATTERN: re.Pattern = re.compile(__EMAIL_REGEX)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.22844672203064,
+                    "generation_timestamp": "2024-07-21T15:10:05.429706",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -831,16 +929,19 @@
                         "    __USER_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __USER_REGEX: str = r\"^(\" + __WORD + r\")(\\\\.(\" + __WORD + r\"))*$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "failed",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 108.48883700370789,
+                    "generation_timestamp": "2024-07-21T15:11:53.925751",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "44-44:IP_DOMAIN_REGEX": {
                     "start": 44,
@@ -863,14 +964,16 @@
                         "    __IP_DOMAIN_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __IP_DOMAIN_REGEX: str = r\"^\\\\[(.*)\\\\]$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.435192346572876,
+                    "generation_timestamp": "2024-07-21T15:12:14.369612",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -895,14 +998,16 @@
                         "    __EMAIL_REGEX: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __EMAIL_REGEX: str = \"^(.+)@(\\\\S+)$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 19.91436243057251,
+                    "generation_timestamp": "2024-07-21T15:12:34.297803",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -927,14 +1032,16 @@
                         "    __WORD: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __WORD: str = f\"(({__VALID_CHARS}|')+|{__QUOTED_USER})\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.397989511489868,
+                    "generation_timestamp": "2024-07-21T15:12:54.706000",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -959,14 +1066,16 @@
                         "    __QUOTED_USER: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __QUOTED_USER: str = r'(\\\"(\\\\\\\"|[^\\\"])*\\\")'"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 20.439091205596924,
+                    "generation_timestamp": "2024-07-21T15:13:15.160957",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -991,14 +1100,19 @@
                         "    __VALID_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = r\"[\\p{Cntrl}()<>@,;:'\\\\\\\"\\.{}\\[\\]]\"",
+                        "",
+                        "",
+                        "    __VALID_CHARS: str = r\"(\\.{1})|[^\\\\s\" + __SPECIAL_CHARS + r\"]\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 24.341474294662476,
+                    "generation_timestamp": "2024-07-21T15:13:39.517607",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1023,14 +1137,16 @@
                         "    __SPECIAL_CHARS: str = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __SPECIAL_CHARS: str = r\"[\\p{Cntrl}()<>@,;:'\\\\\\\"\\.{}\\[\\]]\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 21.612682819366455,
+                    "generation_timestamp": "2024-07-21T15:14:01.137216",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -1055,14 +1171,16 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 1705927040799295880"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 19.51422953605652,
+                    "generation_timestamp": "2024-07-21T15:14:20.665582",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }

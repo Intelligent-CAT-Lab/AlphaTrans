@@ -106,15 +106,14 @@
                             "428-430:hasOption2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testRegularPartialMatching(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testRegularPartialMatching(self) -> None:",
                         "        ",
-                        "",
                         "        parser = DefaultParser(2, False, None)",
                         "",
                         "        options = Options()",
@@ -125,15 +124,24 @@
                         "",
                         "        line = parser.parse0(options, [\"-de\", \"--option=foobar\"])",
                         "",
-                        "        assert line.hasOption2(\"debug\"), \"There should be an option debug in any case...\"",
-                        "        assert not line.hasOption2(\"extract\"), \"There should not be an extract option because partial matching only selects debug\"",
-                        "        assert line.hasOption2(\"option\"), \"There should be an option option with a argument value\"",
-                        ""
+                        "        self.assertTrue(\"There should be an option debug in any case...\", line.hasOption2(\"debug\"))",
+                        "        self.assertFalse(",
+                        "            \"There should not be an extract option because partial matching only selects debug\",",
+                        "            line.hasOption2(\"extract\"))",
+                        "        self.assertTrue(",
+                        "            \"There should be an option option with a argument value\",",
+                        "            line.hasOption2(\"option\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 7.554203987121582,
-                    "generation_timestamp": "2024-06-09T20:16:01.670201",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 17.82905125617981,
+                    "generation_timestamp": "2024-07-20T21:27:45.984438",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "re_prompt_count": 5
                 },
                 "27-46:testDisablePartialMatching": {
                     "start": 27,
@@ -207,15 +215,14 @@
                             "428-430:hasOption2"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "    def testDisablePartialMatching(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [
-                        "",
                         "    def testDisablePartialMatching(self) -> None:",
                         "        ",
-                        "",
                         "        parser = DefaultParser(0, False, None)",
                         "",
                         "        options = Options()",
@@ -224,26 +231,34 @@
                         "        options.addOption0(Option(0, \"e\", \"extract\", \"Turn on extract.\", False, None))",
                         "        options.addOption0(Option(0, \"o\", \"option\", \"Turn on option with argument.\", True, None))",
                         "",
-                        "        line = parser.parse0(options, [\"-de\", \"--option=foobar\"])",
+                        "        line = parser.parse0(options, [\"--debug\", \"--extract\", \"--option=foobar\"])",
                         "",
-                        "        assert line.hasOption2(\"debug\"), \"There should be an option debug in any case...\"",
-                        "        assert line.hasOption2(\"extract\"), \"There should be an extract option because partial matching is off\"",
-                        "        assert line.hasOption2(\"option\"), \"There should be an option option with a argument value\"",
-                        ""
+                        "        self.assertTrue(line.hasOption2(\"debug\"))",
+                        "        self.assertTrue(line.hasOption2(\"extract\"))",
+                        "        self.assertTrue(line.hasOption2(\"option\"))"
                     ],
-                    "translation_status": "success",
-                    "elapsed_time": 7.425927639007568,
-                    "generation_timestamp": "2024-06-09T20:16:09.102351",
-                    "model_name": "deepseek-coder-33b-instruct"
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "pending",
+                    "test_validation_status": "pending",
+                    "graal_validation_status": "pending",
+                    "elapsed_time": 14.964548349380493,
+                    "generation_timestamp": "2024-07-20T21:17:30.568987",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
                 }
             },
             "fields": {},
-            "python_class_declaration": "class DisablePartialMatchingTest:\n\n"
+            "is_enum": false,
+            "python_class_declaration": "class DisablePartialMatchingTest(unittest.TestCase):\n\n"
         }
     },
     "python_imports": [
         "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
         "import io",
+        "import unittest",
         "from src.main.org.apache.commons.cli.CommandLine import *",
         "from src.main.org.apache.commons.cli.CommandLineParser import *",
         "from src.main.org.apache.commons.cli.DefaultParser import *",

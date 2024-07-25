@@ -90,14 +90,22 @@
                         "    def _decorateRemoveVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "        if v in self.__inbound:",
+                        "            del self.__inbound[v]",
+                        "        ",
+                        "        if v in self.__outbound:",
+                        "            del self.__outbound[v]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.315985679626465,
+                    "generation_timestamp": "2024-07-20T23:58:51.783261",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -134,14 +142,20 @@
                         "    def _decorateRemoveEdge(self, e: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:",
+                        "        ",
+                        "        vertices = self.getVertices1(e)",
+                        "        self.__inbound[vertices.getTail()].remove(vertices.getHead())",
+                        "        self.__outbound[vertices.getHead()].remove(vertices.getTail())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.376049518585205,
+                    "generation_timestamp": "2024-07-20T23:58:56.167468",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -177,14 +191,18 @@
                         "    def _decorateAddVertex(self, v: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:",
+                        "         self.__inbound[v] = set()",
+                        "         self.__outbound[v] = set()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7430593967437744,
+                    "generation_timestamp": "2024-07-20T23:58:58.916801",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -222,14 +240,26 @@
                         "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "        if tail in self.__inbound:",
+                        "            self.__inbound[tail].add(head)",
+                        "        else:",
+                        "            self.__inbound[tail] = {head}",
+                        "",
+                        "        if head in self.__outbound:",
+                        "            self.__outbound[head].add(tail)",
+                        "        else:",
+                        "            self.__outbound[head] = {tail}"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 4.088907241821289,
+                    "generation_timestamp": "2024-07-20T23:59:03.013174",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -263,14 +293,17 @@
                         "    def getOutDegree(self, v: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getOutDegree(self, v: typing.Any) -> int:",
+                        "         return len(self.__outbound.get(v, set()))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.996143341064453,
+                    "generation_timestamp": "2024-07-20T23:59:06.016868",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -304,14 +337,17 @@
                         "    def getOutbound(self, v: typing.Any) -> typing.Iterable[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getOutbound(self, v: typing.Any) -> typing.Iterable[typing.Any]:",
+                        "         return self.__outbound.get(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.7935659885406494,
+                    "generation_timestamp": "2024-07-20T23:59:06.817049",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -345,14 +381,17 @@
                         "    def getInDegree(self, v: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getInDegree(self, v: typing.Any) -> int:",
+                        "         return len(self.__inbound.get(v, set()))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 3.1046881675720215,
+                    "generation_timestamp": "2024-07-20T23:59:09.926129",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -386,14 +425,17 @@
                         "    def getInbound(self, v: typing.Any) -> typing.Iterable[typing.Any]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getInbound(self, v: typing.Any) -> typing.Iterable[typing.Any]:",
+                        "         return self.__inbound.get(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 0.8572585582733154,
+                    "generation_timestamp": "2024-07-20T23:59:10.788887",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -438,14 +480,17 @@
                         "    def getDegree(self, v: typing.Any) -> int:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getDegree(self, v: typing.Any) -> int:",
+                        "         return self.getInDegree(v) + self.getOutDegree(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 1.251213550567627,
+                    "generation_timestamp": "2024-07-20T23:59:12.049392",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }
@@ -471,14 +516,17 @@
                         "    __outbound: typing.Dict[typing.Any, typing.Set[typing.Any]] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __outbound: typing.Dict[typing.Any, typing.Set[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:55:06.941436",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -502,14 +550,17 @@
                         "    __inbound: typing.Dict[typing.Any, typing.Set[typing.Any]] = {}",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __inbound: typing.Dict[typing.Any, typing.Set[typing.Any]] = {}",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-20T20:55:06.943922",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
@@ -534,14 +585,16 @@
                         "    __serialVersionUID: int = <placeholder>",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    __serialVersionUID: int = 630111985439492792"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 26.749185800552368,
+                    "generation_timestamp": "2024-07-20T20:55:33.695987",
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 }

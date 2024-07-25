@@ -99,14 +99,22 @@
                         "    def _runProcEnvCommand(self) -> io.BufferedReader:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _runProcEnvCommand(self) -> io.BufferedReader:",
+                        "         out = io.BytesIO()",
+                        "         exe = DefaultExecutor.builder().get()",
+                        "         exe.set_stream_handler(PumpStreamHandler(out))",
+                        "         # ignore the exit value - Just try to use what we got",
+                        "         exe.execute(self.getProcEnvCommand())",
+                        "         return io.BufferedReader(io.StringIO(out.getvalue().decode()))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.99270224571228,
+                    "generation_timestamp": "2024-07-21T12:15:38.157480",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -181,14 +189,38 @@
                         "    def _getProcEnvCommand(self) -> CommandLine:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _getProcEnvCommand(self) -> CommandLine:",
+                        "         command_line = CommandLine()",
+                        "         if OS.is_family_os2():",
+                        "             command_line.executable = \"cmd\"",
+                        "             command_line.arguments = [\"/c\", \"set\"]",
+                        "         elif OS.is_family_windows():",
+                        "             if OS.is_family_win9x():",
+                        "                 command_line.executable = \"command.com\"",
+                        "             else:",
+                        "                 command_line.executable = \"cmd\"",
+                        "             command_line.arguments = [\"/c\", \"set\"]",
+                        "         elif OS.is_family_zos() or OS.is_family_unix():",
+                        "             if os.access(\"/bin/env\", os.R_OK):",
+                        "                 command_line.executable = \"/bin/env\"",
+                        "             elif os.access(\"/usr/bin/env\", os.R_OK):",
+                        "                 command_line.executable = \"/usr/bin/env\"",
+                        "             else:",
+                        "                 command_line.executable = \"env\"",
+                        "         elif OS.is_family_netware() or OS.is_family_os400():",
+                        "             command_line.executable = \"env\"",
+                        "         else:",
+                        "             command_line.executable = None",
+                        "         return command_line"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 11.546230792999268,
+                    "generation_timestamp": "2024-07-21T12:15:49.710105",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 },
@@ -239,16 +271,24 @@
                         "    def getProcEnvironment(self) -> typing.Dict[str, str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def getProcEnvironment(self) -> typing.Dict[str, str]:",
+                        "         if self._procEnvironment is None:",
+                        "             self._procEnvironment = self._createProcEnvironment()",
+                        "         copy = self.__createEnvironmentMap()",
+                        "         copy.update(self._procEnvironment)",
+                        "         return copy"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.7172293663024902,
+                    "generation_timestamp": "2024-07-21T12:45:56.916426",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
                 "56-62:createProcEnvironment": {
                     "start": 56,
@@ -287,16 +327,23 @@
                         "    def _createProcEnvironment(self) -> typing.Dict[str, str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def _createProcEnvironment(self) -> typing.Dict[str, str]:",
+                        "         if self._procEnvironment is None:",
+                        "             self._procEnvironment = self.__createEnvironmentMap()",
+                        "             self._procEnvironment.update(os.environ)",
+                        "         return self._procEnvironment"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 2.05198335647583,
+                    "generation_timestamp": "2024-07-21T12:45:58.970321",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 },
                 "43-48:createEnvironmentMap": {
                     "start": 43,
@@ -334,16 +381,22 @@
                         "    def __createEnvironmentMap(self) -> typing.Dict[str, str]:\n",
                         "        pass\n\n"
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
+                    "translation": [
+                        "    def __createEnvironmentMap(self) -> typing.Dict[str, str]:",
+                        "         if OS.isFamilyWindows():",
+                        "             return dict(sorted({}.items()), key=lambda item: item[0].casefold())",
+                        "         return {}"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
                     "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
+                    "test_validation_status": "success",
                     "graal_validation_status": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "elapsed_time": 6.568646192550659,
+                    "generation_timestamp": "2024-07-21T12:46:05.541097",
                     "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
+                    "include_implementation": true,
+                    "re_prompt_count": 2
                 }
             },
             "fields": {
@@ -366,14 +419,17 @@
                         "    _procEnvironment: typing.Dict[str, str] = None",
                         ""
                     ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactical_validation_status": "pending",
-                    "execution_validation_status": "pending",
+                    "translation": [
+                        "    _procEnvironment: typing.Dict[str, str] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactical_validation_status": "success",
+                    "execution_validation_status": "success",
                     "test_validation_status": "pending",
                     "graal_validation_status": "pending",
                     "elapsed_time": 0,
-                    "generation_timestamp": 0,
+                    "generation_timestamp": "2024-07-21T11:50:56.785449",
                     "model_name": "llama-3-70b-instruct",
                     "include_implementation": true
                 }
