@@ -226,7 +226,7 @@ def add_obj_to_clone_method(method_content: str, class_obj: dict) -> str:
         return_statement_start_pos = return_statement_match.start()
         return_statement_end_pos = return_statement_match.end()
 
-        return_value = return_statement[6:-1].strip()
+        return_value = "(" + return_statement[6:-1].strip() + ")"
 
         handling_code = f"""if ({return_value} != null) {{
             {return_value}.setPythonObject({class_obj['classref']}.invokeMember("getDefaultInstance"));
