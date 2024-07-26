@@ -39,8 +39,8 @@ class ParameterParser:
                 if paramValue is not None:
                     try:
                         paramValue = MimeUtility.decodeText(paramValue)
-                    except ValueError as e:
-                        raise e
+                    except ValueError:
+                        pass
 
             if self.__hasChar() and (self.__chars[self.__pos] == separator):
                 self.__pos += 1  # skip separator
