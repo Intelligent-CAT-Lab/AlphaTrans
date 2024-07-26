@@ -126,5 +126,5 @@ class DefaultFileItemTest(unittest.TestCase):
         buffer = ""
         if unicodeChars != None:
             for unicodeChar in unicodeChars:
-                buffer += str(unicodeChar)
+                buffer += chr(unicodeChar)
         return str(buffer)
