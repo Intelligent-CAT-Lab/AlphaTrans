@@ -9,19 +9,29 @@ from src.main.org.apache.commons.fileupload.FileUploadBase import FileUploadBase
 
 class MockPortletActionRequest:
 
-    def __init__(self, requestLength: int, byteArrayInputStream: BytesIO, contentType: str):
+    def __init__(
+        self,
+        requestLength: int,
+        byteArrayInputStream: typing.Union[io.BytesIO, bytearray],
+        contentType: str,
+    ) -> None:
+
         self.__attributes = {}
         self.__parameters = {}
         self.__characterEncoding = None
         self.__length = requestLength
         self.__contentType = contentType
-        self.__requestData = byteArrayInputStream
         self.__attributes[FileUploadBase.CONTENT_TYPE] = contentType
+
+        if isinstance(byteArrayInputStream, io.BytesIO):
+            self.__requestData = byteArrayInputStream
+        else:
+            self.__requestData = io.BytesIO(byteArrayInputStream)
 
     
     @staticmethod
     def MockPortletActionRequest1(requestData: typing.List[int], contentType: str):
-        return MockPortletActionRequest(len(requestData), BytesIO(requestData), contentType)
+        return MockPortletActionRequest(len(requestData), BytesIO(bytes(requestData)), contentType)
     
     def getAttribute(self, key: str) -> typing.Any:
         return self.__attributes.get(key)
@@ -39,13 +49,7 @@ class MockPortletActionRequest:
         return locale.getdefaultlocale()
 
     def getLocales(self) -> typing.Iterator[typing.Any]:
-        available_locales = []
-        for l in locale.locale_alias.items():
-            try:
-                available_locales.append(l)
-            except:
-                pass
-        return iter(available_locales)
+        return iter(locale.locale_alias.keys())
     
     def getParameter(self, key: str) -> str:
         return self.__parameters.get(key)
@@ -99,7 +103,8 @@ class MockPortletActionRequest:
         return False
     
     def removeAttribute(self, key: str) -> None:
-        del self.__attributes[key]
+        if key in self.__attributes:
+            del self.__attributes[key]
 
     def setAttribute(self, key: str, value: typing.Any) -> None:
         self.__attributes[key] = value
