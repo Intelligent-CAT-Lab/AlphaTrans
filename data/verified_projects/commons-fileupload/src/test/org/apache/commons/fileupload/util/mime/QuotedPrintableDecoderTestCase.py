@@ -100,9 +100,9 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
     @staticmethod
     def __assertIOException(messageText: str, encoded: str) -> None:
         out = BytesIO()
-        encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
+        encodedData = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         try:
-            QuotedPrintableDecoder.decode(encoded_data, out)
+            QuotedPrintableDecoder.decode(list(encodedData), out)
             unittest.TestCase().fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
@@ -112,7 +112,7 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
     def __assertEncoded(clearText: str, encoded: str) -> None:
         expected = clearText.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
         out = BytesIO()
-        encoded_data = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
-        QuotedPrintableDecoder.decode(encoded_data, out)
+        encodedData = encoded.encode(QuotedPrintableDecoderTestCase.__US_ASCII_CHARSET)
+        QuotedPrintableDecoder.decode(encodedData, out)
         actual = out.getvalue()
         unittest.TestCase().assertEqual(expected, actual)
