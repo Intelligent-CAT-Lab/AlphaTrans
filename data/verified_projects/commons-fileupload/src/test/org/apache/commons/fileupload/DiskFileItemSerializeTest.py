@@ -3,6 +3,7 @@ import pytest
 import unittest
 import typing
 from typing import *
+import io
 from io import BytesIO 
 from pathlib import Path
 from pickle import Pickler, Unpickler
