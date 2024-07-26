@@ -40,7 +40,7 @@ class Base64DecoderTestCase(unittest.TestCase):
 
     @pytest.mark.test
     def testTruncatedString(self) -> None:
-        x = b'n'
+        x = [ord("n")]
         with self.assertRaises(Exception) as context:
             Base64Decoder.decode(x, BytesIO())
         
@@ -113,9 +113,9 @@ class Base64DecoderTestCase(unittest.TestCase):
     @staticmethod
     def __assertIOException(messageText: str, encoded: str) -> None:
         out = BytesIO()
-        encoded_data = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
+        encodedData = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         try:
-            Base64Decoder.decode(encoded_data, out)
+            Base64Decoder.decode(list(encodedData), out)
             unittest.TestCase().fail("Expected IO-related Exception")
         except (IOError, OSError) as e:
             em = str(e)
@@ -125,7 +125,7 @@ class Base64DecoderTestCase(unittest.TestCase):
     def __assertEncoded(clearText: str, encoded: str) -> None:
         expected = clearText.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         out = BytesIO()
-        encoded_data = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
-        Base64Decoder.decode(encoded_data, out)
+        encodedData = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
+        Base64Decoder.decode(encodedData, out)
         actual = out.getvalue()
         unittest.TestCase().assertEqual(expected, actual)
