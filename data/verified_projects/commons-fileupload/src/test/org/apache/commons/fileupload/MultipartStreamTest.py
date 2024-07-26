@@ -17,7 +17,7 @@ class MultipartStreamTest(unittest.TestCase):
             contents = strData.encode()
             input = BytesIO(contents)
             boundary = self.__BOUNDARY_TEXT.encode()
-            iBufSize = len(boundary) + len(MultipartStream._BOUNDARY_PREFIX) + 1
+            iBufSize = len(boundary) + len(MultipartStream.BOUNDARY_PREFIX) + 1
             ms = MultipartStream(
                 input,
                 boundary,
