@@ -125,7 +125,7 @@ class Base64DecoderTestCase(unittest.TestCase):
     def __assertEncoded(clearText: str, encoded: str) -> None:
         expected = clearText.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
         out = BytesIO()
-        encodedData = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET)
+        encodedData = encoded.encode(Base64DecoderTestCase.__US_ASCII_CHARSET, errors="replace")
         Base64Decoder.decode(encodedData, out)
         actual = out.getvalue()
         unittest.TestCase().assertEqual(expected, actual)
