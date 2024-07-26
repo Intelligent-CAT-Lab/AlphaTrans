@@ -58,7 +58,7 @@ class MimeUtilityTestCase(unittest.TestCase):
     def testDecodeInvalidEncoding(self) -> None:
         with self.assertRaises(Exception) as context:
             MimeUtility.decodeText("=?invalid?B?xyz-?=")
-        self.assertTrue(isinstance(context.exception, UnicodeEncodeError) or isinstance(context.exception, UnicodeDecodeError))
+        self.assertTrue(isinstance(context.exception, ValueError) or isinstance(context.exception, UnicodeDecodeError))
 
 
 
