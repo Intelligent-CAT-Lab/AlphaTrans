@@ -188,12 +188,12 @@ class Project:
                         if (schema_file_name_without_ext, _class, _method) in injected_translations:
                             # this is the translated method
                             method_body = injected_translations[(schema_file_name_without_ext, _class, _method)]
+                            python_file_contents.append(method_body)
                         else:
                             # skip overridden overloaded methods that were retained only for java compatibility
                             if 'is_overload' not in schema_data['classes'][_class]['methods'][_method] or not schema_data['classes'][_class]['methods'][_method]['is_overload']:
                                 method_body = self.__get_instrumented_python_method_body(_method, schema_data['classes'][_class]['methods'][_method], _class)
-                                                   
-                        python_file_contents.append(method_body)
+                                python_file_contents.append(method_body)
                     
                     # add other graal stuff
                     # load up the Java class
@@ -807,6 +807,7 @@ class CompositionalTest:
             test_command = [
                 'mvn', 'clean', 'test', 
                 '-Drat.skip', '-Dcheckstyle.skip', '-Djacoco.skip',
+                '-DfailIfNoTests=false',
                 '-Dtest=' + test_selection_specification
             ]
             
