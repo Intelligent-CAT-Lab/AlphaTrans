@@ -816,12 +816,20 @@ class CompositionalTest:
                 with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
                     f.write(" ".join(test_command))
 
-            output = subprocess.run(
-                test_command,
-                cwd=self.project.glue_dir,
-                capture_output=True,
-                text=True
-            )
+            try:
+                output = subprocess.run(
+                    test_command,
+                    cwd=self.project.glue_dir,
+                    capture_output=True,
+                    text=True,
+                    timeout=60*10 # 10 minutes
+                )
+            except subprocess.TimeoutExpired:
+                return {
+                    "status": ERROR, # timeout
+                    "feedback": dict()
+                }
+
             failure_flag = (output.returncode != 0) # check if the failure is due to the tests or something else
             stdout, stderr = output.stdout, output.stderr
 
