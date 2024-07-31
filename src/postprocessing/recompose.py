@@ -299,9 +299,9 @@ def main(args):
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
         os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
-        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}', exist_ok=True)
 
         if args.recompose_evosuite:
+            os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}', exist_ok=True)
             file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
         else:
             file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
@@ -353,10 +353,6 @@ def pytest_collection_modifyitems(config, items):
     # Filter out items that belong to abstract classes
     items[:] = [item for item in items if not is_abstract_class(item)]
 """)
-
-    # print(f'total fragments: {total_fragments}, total unsuccessful: {total_unsuccessful}')
-    # print(f'percentage unsuccessful: {total_unsuccessful / total_fragments * 100}%')
-    # print(f'percentage successful: {100 - total_unsuccessful / total_fragments * 100}%')
 
 
 if __name__ == '__main__':
