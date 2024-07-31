@@ -12,7 +12,7 @@ from io import StringIO
 # Imports End
 
 
-class InputStreamPumper(typing.Callable):
+class InputStreamPumper:
 
     # Class Fields Begin
     SLEEPING_TIME: int = None

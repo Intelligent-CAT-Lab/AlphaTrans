@@ -10,7 +10,7 @@ import io
 # Imports End
 
 
-class JdkProxyHandler(typing.Callable, BaseProxyHandler):
+class JdkProxyHandler(BaseProxyHandler):
 
     # Class Fields Begin
     # Class Fields End

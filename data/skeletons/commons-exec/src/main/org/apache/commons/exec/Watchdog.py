@@ -32,7 +32,7 @@ class Builder:
     # Class Methods End
 
 
-class Watchdog(typing.Callable):
+class Watchdog:
 
     # Class Fields Begin
     __observers: typing.List[TimeoutObserver] = None

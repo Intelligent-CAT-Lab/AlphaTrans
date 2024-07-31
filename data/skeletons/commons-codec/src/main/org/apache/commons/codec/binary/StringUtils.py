@@ -85,7 +85,7 @@ class StringUtils:
 
     @staticmethod
     def __newIllegalStateException(
-        charsetName: str, e: typing.Union[UnicodeEncodeError, UnicodeDecodeError]
+        charsetName: str, e: typing.Union[UnicodeEncodeError, ValueError]
     ) -> RuntimeError:
         pass
 

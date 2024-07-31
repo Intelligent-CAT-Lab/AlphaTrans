@@ -12,7 +12,7 @@ from io import StringIO
 # Imports End
 
 
-class StreamPumper(typing.Callable):
+class StreamPumper:
 
     # Class Fields Begin
     __DEFAULT_SIZE: int = None

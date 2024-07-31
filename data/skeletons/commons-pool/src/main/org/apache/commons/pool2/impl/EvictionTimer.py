@@ -10,7 +10,7 @@ import io
 # Imports End
 
 
-class Reaper(typing.Callable):
+class Reaper:
 
     # Class Fields Begin
     # Class Fields End
@@ -22,7 +22,7 @@ class Reaper(typing.Callable):
     # Class Methods End
 
 
-class WeakRunner(typing.Callable):
+class WeakRunner:
 
     # Class Fields Begin
     __ref: weakref.ref = None

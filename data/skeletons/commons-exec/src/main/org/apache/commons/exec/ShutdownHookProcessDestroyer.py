@@ -29,7 +29,7 @@ class ProcessDestroyerThread(threading.Thread):
     # Class Methods End
 
 
-class ShutdownHookProcessDestroyer(typing.Callable, ProcessDestroyer):
+class ShutdownHookProcessDestroyer(ProcessDestroyer):
 
     # Class Fields Begin
     __processes: typing.List[subprocess.Popen] = None

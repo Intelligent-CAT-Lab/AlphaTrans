@@ -18,7 +18,7 @@ import io
 # Imports End
 
 
-class MethodCallLogger(typing.Callable):
+class MethodCallLogger:
 
     # Class Fields Begin
     __calledMethods: typing.List[str] = None
