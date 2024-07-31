@@ -214,7 +214,7 @@ def main(args):
                 class_name = class_.split('(')[0].replace('new ', '').strip()
 
             class_declaration = ''
-            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding', 'Supplier'}
+            exceptional_superclasses = {'typing.Any', 'typing.Union', 'Comparator', 'Queue', 'Comparable', 'threading.RLock', 'Closeable', 'Enum', 'Iterator', 'Iterable', 'scaffolding', 'Supplier', 'Runnable', 'typing.Callable'}
             if schema['classes'][class_]['extends'] != []:
                 schema['classes'][class_]['extends'] = [cls_name.split('<')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
                 schema['classes'][class_]['extends'] = [cls_name.split('(')[0].replace('new ', '').strip() for cls_name in schema['classes'][class_]['extends']]
@@ -273,10 +273,10 @@ def main(args):
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['partial_translation'] = []
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation'] = []
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['translation_status'] = 'pending'
-                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['syntactical_validation_status'] = 'pending'
-                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['execution_validation_status'] = 'pending'
-                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['test_validation_status'] = 'pending'
-                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['graal_validation_status'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['syntactic_validation'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['field_exercise'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['graal_validation'] = 'pending'
+                    target_schema['classes'][class_]['static_initializers'][static_initializer_se]['test_execution'] = 'pending'
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['elapsed_time'] = 0
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['generation_timestamp'] = 0
                     target_schema['classes'][class_]['static_initializers'][static_initializer_se]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
@@ -341,10 +341,10 @@ def main(args):
                 target_schema['classes'][class_]['fields'][field]['partial_translation'] = f'    {field_body}'.split('\n')
                 target_schema['classes'][class_]['fields'][field]['translation'] = []
                 target_schema['classes'][class_]['fields'][field]['translation_status'] = 'pending'
-                target_schema['classes'][class_]['fields'][field]['syntactical_validation_status'] = 'pending'
-                target_schema['classes'][class_]['fields'][field]['execution_validation_status'] = 'pending'
-                target_schema['classes'][class_]['fields'][field]['test_validation_status'] = 'pending'
-                target_schema['classes'][class_]['fields'][field]['graal_validation_status'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['syntactic_validation'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['field_exercise'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['graal_validation'] = 'pending'
+                target_schema['classes'][class_]['fields'][field]['test_execution'] = 'pending'
                 target_schema['classes'][class_]['fields'][field]['elapsed_time'] = 0
                 target_schema['classes'][class_]['fields'][field]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['fields'][field]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
@@ -439,10 +439,10 @@ def main(args):
                 target_schema['classes'][class_]['methods'][method]['partial_translation'] = current_method
                 target_schema['classes'][class_]['methods'][method]['translation'] = []
                 target_schema['classes'][class_]['methods'][method]['translation_status'] = 'pending'
-                target_schema['classes'][class_]['methods'][method]['syntactical_validation_status'] = 'pending'
-                target_schema['classes'][class_]['methods'][method]['execution_validation_status'] = 'pending'
-                target_schema['classes'][class_]['methods'][method]['test_validation_status'] = 'pending'
-                target_schema['classes'][class_]['methods'][method]['graal_validation_status'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['syntactic_validation'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['field_exercise'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['graal_validation'] = 'pending'
+                target_schema['classes'][class_]['methods'][method]['test_execution'] = 'pending'
                 target_schema['classes'][class_]['methods'][method]['elapsed_time'] = 0
                 target_schema['classes'][class_]['methods'][method]['generation_timestamp'] = 0
                 target_schema['classes'][class_]['methods'][method]['model_name'] = args.model_name if args.model_name else 'deepseek-coder-33b-instruct'
