@@ -19,12 +19,15 @@ def analyse(project_name: str, model_name: str, prompt_type: str):
         components = defaultdict(lambda: defaultdict(list)) # components to be "glued" for the test
         injected_translations = dict() # translations to be injected
         
-        for _schema, class_name, _method in project.test_dependencies[(test_schema, test_class, test_method)]:
+        for _schema, class_name, _method in project.test_dependencies[(test_schema, test_class, test_method)]:  
+            full_schema_name = _schema + '_python_partial'
+            method_name = _method.split(':')[-1]
+
             # ignore test classes
             if 'src.test.' in _schema: continue 
             
-            full_schema_name = _schema + '_python_partial'
-            method_name = _method.split(':')[-1]
+            # ignore non-test methods
+            if not _method.startswith('test'): continue
             
             # get the translation
             with open(f'{project.schema_dir}/{project.name}/{full_schema_name}.json') as f:
@@ -47,8 +50,11 @@ def analyse(project_name: str, model_name: str, prompt_type: str):
             output = test.run({test_class: [test_method_name]})
             results[(test_class, test_method_name)] = output['status']
         
-        print(f"{test_class}#{test_method_name}: {results[(test_class, test_method_name)]}")       
+        print(f"{test_class}#{test_method_name}: {results[(test_class, test_method_name)]}")
 
+        # write the results
+        with open(f'{project.root_dir}/per_test_results.{project.name}.txt', 'a') as f:
+            f.write(f"{test_class}#{test_method_name}: {results[(test_class, test_method_name)]}" + "\n")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run per-test analysis')
