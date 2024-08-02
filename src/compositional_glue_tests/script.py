@@ -1240,8 +1240,8 @@ class Schema:
         elif 'protected' in method_schema_data['modifiers'] and not is_constructor:
             method_name = f"_{method_name}"
             
-        # if method name is a keyword, add an underscore at the end
-        if keyword.iskeyword(method_name):
+        # if method name is a keyword or builtin name, add an underscore at the end
+        if keyword.iskeyword(method_name) or method_name in dir(__builtins__):
             method_name += "_"
         
         method_content = publicize_methods_of_anoymous_classes(method_content)
