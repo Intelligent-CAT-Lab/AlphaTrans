@@ -1,6 +1,8 @@
 package {project};
 {imports}
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Context;
@@ -15,12 +17,10 @@ public abstract class ContextInitializer {{
 
   static {{
     try {{
-      HostAccess hostAccess = HostAccess.newBuilder(HostAccess.ALL).build();
-
       sharedEngine = Engine.create();
       context =
           Context.newBuilder("python")
-              .allowHostAccess(hostAccess)
+              .allowExperimentalOptions(true)
               .allowAllAccess(true)
               .option("python.PythonPath", packageDirectory)
               .engine(sharedEngine)
@@ -50,7 +50,15 @@ public abstract class ContextInitializer {{
     }}
   }}
 
+  private static Map<String, Value> classCache = new HashMap<>();
+
   public static Value getPythonClass(String filePath, String className) {{
-    return getPythonClasses(filePath, className)[0];
+    String fullName = filePath + "::" + className;
+    if (classCache.containsKey(fullName)) {{
+      return classCache.get(fullName);
+    }}
+    Value cls = getPythonClasses(filePath, className)[0];
+    classCache.put(fullName, cls);
+    return cls;
   }}
 }}
