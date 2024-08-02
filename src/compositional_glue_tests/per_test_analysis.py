@@ -59,8 +59,8 @@ def analyse(project_name: str, model_name: str, prompt_type: str):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run per-test analysis')
     parser.add_argument('--project_name', type=str, help='Name of the project')
-    parser.add_argument('--model_name', type=str, help='Name of the model')
-    parser.add_argument('--prompt_type', type=str, help='Type of prompt')
+    parser.add_argument('--model_name', type=str, help='Name of the model', default='deepseek-coder-33b-instruct')
+    parser.add_argument('--prompt_type', type=str, help='Type of prompt', default='body')
     args = parser.parse_args()
     
     analyse(args.project_name, args.model_name, args.prompt_type)
