@@ -128,6 +128,28 @@
         <artifactId>spotbugs-maven-plugin</artifactId>
         <version>${commons.spotbugs.version}</version>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.10</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+                <propertyName>jacocoArgLine</propertyName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -319,7 +341,7 @@
                 versions after 2.21.0 and before 3.0-M4 (but only on Windows!)
                 Use the command-line instead to ensure the property is set early enough
               -->
-              <argLine>-Djava.locale.providers=COMPAT,SPI</argLine>
+              <argLine>${jacocoArgLine} -Djava.locale.providers=COMPAT,SPI</argLine>
             </configuration>
           </plugin>
         </plugins>
