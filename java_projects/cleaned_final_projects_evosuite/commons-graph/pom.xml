@@ -274,6 +274,30 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.10</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+                <propertyName>jacocoArgLine</propertyName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
@@ -398,7 +422,7 @@
                 <jub.xml.file>${project.build.directory}/benchmarks.xml</jub.xml.file>
                 <jub.charts.dir>${project.build.directory}/site</jub.charts.dir>
               </systemPropertyVariables>
-              <argLine>-Xmx512m -Xms512m</argLine>
+              <argLine>${jacocoArgLine} -Xmx512m -Xms512m</argLine>
             </configuration>
           </plugin>
         </plugins>
