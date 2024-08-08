@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileItemHeadersImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Commons FileUpload</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.fileupload.util</a> &gt; <span class="el_source">FileItemHeadersImpl.java</span></div><h1>FileItemHeadersImpl.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.fileupload.util;
+
+import org.apache.commons.fileupload.FileItemHeaders;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * Default implementation of the {@link FileItemHeaders} interface.
+ *
+ * @since 1.2.1
+ */
+<span class="fc" id="L35">public class FileItemHeadersImpl implements FileItemHeaders, Serializable {</span>
+
+    /** Serial version UID, being used, if serialized. */
+    private static final long serialVersionUID = -4455695752627032559L;
+
+    /** Map of &lt;code&gt;String&lt;/code&gt; keys to a &lt;code&gt;List&lt;/code&gt; of &lt;code&gt;String&lt;/code&gt; instances. */
+<span class="fc" id="L41">    private final Map&lt;String, List&lt;String&gt;&gt; headerNameToValueListMap =</span>
+            new LinkedHashMap&lt;String, List&lt;String&gt;&gt;();
+
+    /** {@inheritDoc} */
+    @Override
+    public String getHeader(String name) {
+<span class="fc" id="L47">        String nameLower = name.toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L48">        List&lt;String&gt; headerValueList = headerNameToValueListMap.get(nameLower);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (null == headerValueList) {</span>
+<span class="fc" id="L50">            return null;</span>
+        }
+<span class="fc" id="L52">        return headerValueList.get(0);</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Iterator&lt;String&gt; getHeaderNames() {
+<span class="fc" id="L58">        return headerNameToValueListMap.keySet().iterator();</span>
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Iterator&lt;String&gt; getHeaders(String name) {
+<span class="fc" id="L64">        String nameLower = name.toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L65">        List&lt;String&gt; headerValueList = headerNameToValueListMap.get(nameLower);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (null == headerValueList) {</span>
+<span class="fc" id="L67">            headerValueList = Collections.emptyList();</span>
+        }
+<span class="fc" id="L69">        return headerValueList.iterator();</span>
+    }
+
+    /**
+     * Method to add header values to this instance.
+     *
+     * @param name name of this header
+     * @param value value of this header
+     */
+    public synchronized void addHeader(String name, String value) {
+<span class="fc" id="L79">        String nameLower = name.toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L80">        List&lt;String&gt; headerValueList = headerNameToValueListMap.get(nameLower);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (null == headerValueList) {</span>
+<span class="fc" id="L82">            headerValueList = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L83">            headerNameToValueListMap.put(nameLower, headerValueList);</span>
+        }
+<span class="fc" id="L85">        headerValueList.add(value);</span>
+<span class="fc" id="L86">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

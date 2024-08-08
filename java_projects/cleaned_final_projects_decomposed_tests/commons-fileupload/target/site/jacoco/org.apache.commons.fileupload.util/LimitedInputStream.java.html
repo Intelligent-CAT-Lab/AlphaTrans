@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LimitedInputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Commons FileUpload</a> &gt; <a href="index.source.html" class="el_package">org.apache.commons.fileupload.util</a> &gt; <span class="el_source">LimitedInputStream.java</span></div><h1>LimitedInputStream.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.fileupload.util;
+
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+/**
+ * An input stream, which limits its data size. This stream is used, if the content length is
+ * unknown.
+ */
+public abstract class LimitedInputStream extends FilterInputStream implements Closeable {
+
+    /** The maximum size of an item, in bytes. */
+    private final long sizeMax;
+
+    /** The current number of bytes. */
+    private long count;
+
+    /** Whether this stream is already closed. */
+    private boolean closed;
+
+    /**
+     * Creates a new instance.
+     *
+     * @param inputStream The input stream, which shall be limited.
+     * @param pSizeMax The limit; no more than this number of bytes shall be returned by the source
+     *     stream.
+     */
+    public LimitedInputStream(InputStream inputStream, long pSizeMax) {
+<span class="nc" id="L46">        super(inputStream);</span>
+<span class="nc" id="L47">        sizeMax = pSizeMax;</span>
+<span class="nc" id="L48">    }</span>
+
+    /**
+     * Called to indicate, that the input streams limit has been exceeded.
+     *
+     * @param pSizeMax The input streams limit, in bytes.
+     * @param pCount The actual number of bytes.
+     * @throws IOException The called method is expected to raise an IOException.
+     */
+    protected abstract void raiseError(long pSizeMax, long pCount) throws IOException;
+
+    /**
+     * Called to check, whether the input streams limit is reached.
+     *
+     * @throws IOException The given limit is exceeded.
+     */
+    private void checkLimit() throws IOException {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (count &gt; sizeMax) {</span>
+<span class="nc" id="L66">            raiseError(sizeMax, count);</span>
+        }
+<span class="nc" id="L68">    }</span>
+
+    /**
+     * Reads the next byte of data from this input stream. The value byte is returned as an &lt;code&gt;
+     * int&lt;/code&gt; in the range &lt;code&gt;0&lt;/code&gt; to &lt;code&gt;255&lt;/code&gt;. If no byte is available because
+     * the end of the stream has been reached, the value &lt;code&gt;-1&lt;/code&gt; is returned. This method
+     * blocks until input data is available, the end of the stream is detected, or an exception is
+     * thrown.
+     *
+     * &lt;p&gt;This method simply performs &lt;code&gt;in.read()&lt;/code&gt; and returns the result.
+     *
+     * @return the next byte of data, or &lt;code&gt;-1&lt;/code&gt; if the end of the stream is reached.
+     * @throws IOException if an I/O error occurs.
+     * @see java.io.FilterInputStream#in
+     */
+    public int read0() throws IOException {
+<span class="nc" id="L84">        int res = super.read();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (res != -1) {</span>
+<span class="nc" id="L86">            count++;</span>
+<span class="nc" id="L87">            checkLimit();</span>
+        }
+<span class="nc" id="L89">        return res;</span>
+    }
+
+    /**
+     * Reads up to &lt;code&gt;len&lt;/code&gt; bytes of data from this input stream into an array of bytes. If
+     * &lt;code&gt;len&lt;/code&gt; is not zero, the method blocks until some input is available; otherwise, no
+     * bytes are read and &lt;code&gt;0&lt;/code&gt; is returned.
+     *
+     * &lt;p&gt;This method simply performs &lt;code&gt;in.read(b, off, len)&lt;/code&gt; and returns the result.
+     *
+     * @param b the buffer into which the data is read.
+     * @param off The start offset in the destination array &lt;code&gt;b&lt;/code&gt;.
+     * @param len the maximum number of bytes read.
+     * @return the total number of bytes read into the buffer, or &lt;code&gt;-1&lt;/code&gt; if there is no
+     *     more data because the end of the stream has been reached.
+     * @throws NullPointerException If &lt;code&gt;b&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;.
+     * @throws IndexOutOfBoundsException If &lt;code&gt;off&lt;/code&gt; is negative, &lt;code&gt;len&lt;/code&gt; is
+     *     negative, or &lt;code&gt;len&lt;/code&gt; is greater than &lt;code&gt;b.length - off&lt;/code&gt;
+     * @throws IOException if an I/O error occurs.
+     * @see java.io.FilterInputStream#in
+     */
+    public int read1(byte[] b, int off, int len) throws IOException {
+<span class="nc" id="L111">        int res = super.read(b, off, len);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (res &gt; 0) {</span>
+<span class="nc" id="L113">            count += res;</span>
+<span class="nc" id="L114">            checkLimit();</span>
+        }
+<span class="nc" id="L116">        return res;</span>
+    }
+
+    /**
+     * Returns, whether this stream is already closed.
+     *
+     * @return True, if the stream is closed, otherwise false.
+     * @throws IOException An I/O error occurred.
+     */
+    @Override
+    public boolean isClosed() throws IOException {
+<span class="nc" id="L127">        return closed;</span>
+    }
+
+    /**
+     * Closes this input stream and releases any system resources associated with the stream. This
+     * method simply performs &lt;code&gt;in.close()&lt;/code&gt;.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @see java.io.FilterInputStream#in
+     */
+    @Override
+    public void close() throws IOException {
+<span class="nc" id="L139">        closed = true;</span>
+<span class="nc" id="L140">        super.close();</span>
+<span class="nc" id="L141">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
