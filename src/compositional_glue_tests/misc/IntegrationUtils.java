@@ -351,6 +351,18 @@ public final class IntegrationUtils {{
       return file;
     }}
 
+    // re.Pattern
+    if (ValueTypeName.equals("Pattern")) {{
+      String pattern = value.getMember("pattern").asString();
+      int flags = value.getMember("flags").asInt();
+      Pattern compiledPattern = Pattern.compile(pattern, flags); 
+      if (targetObject != null) {{
+        compiledPattern = (Pattern) targetObject;
+      }}
+      idMap.put(id, compiledPattern);
+      return compiledPattern;
+    }}
+
     System.out.println("[valueToObject] Unhandled Python object type: " + value);
     return value; // return untranslated value
   }}
@@ -410,6 +422,10 @@ public final class IntegrationUtils {{
 
   public static boolean isPythonClass(Value obj) {{
     return JavaHandler.invokeMember("isPythonClass", obj).asBoolean();
+  }}
+
+  public static boolean isJavaClass(Object obj) {{
+    return obj.getClass().equals(Class.class);
   }}
 
   public static boolean hasTypeMismatch(String classDescriptor, Object obj) {{

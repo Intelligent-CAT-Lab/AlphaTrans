@@ -61,4 +61,12 @@ public abstract class ContextInitializer {{
     classCache.put(fullName, cls);
     return cls;
   }}
+
+  public static <T> Value getPythonClass(Class<T> cls) {{
+    Boolean isTestClass = cls.getProtectionDomain().getCodeSource().getLocation().getPath().contains("/test-classes/");
+    String baseDir = isTestClass ? "test" : "main";
+    String filePath = baseDir + "/" + cls.getName().split("\\$", 2)[0].replace(".", "/") + ".py";
+    String className = cls.getSimpleName();
+    return getPythonClass(filePath, className);
+  }}
 }}

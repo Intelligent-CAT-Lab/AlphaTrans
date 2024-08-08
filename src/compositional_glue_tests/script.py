@@ -132,7 +132,7 @@ class Project:
                     schema_data['python_imports']
                 )
                 python_file_contents.extend(imports_from_schema)
-                python_file_contents.append("import java") # import the java module (from Polyglot)
+                python_file_contents.append("import java # type: ignore") # import the java module (from Polyglot)
                 python_file_contents.append(f"from src.{self.main_path.replace('/java/', '/').replace('/', '.')}java_handler import *")
                 
                 class_order = schema_object.get_class_order()
@@ -343,59 +343,24 @@ class Project:
         """
         Determine the dependencies of each test method on other methods.
         """
-        self.test_dependencies = dict() # { (schema, class, method): { (schema, class, method) } }
+        self.test_dependencies = dict() # { test_class_name: { test_method_name: { class_name: [method_name] }}}
 
-        # load the call graph data
-        with open(f"{self.root_dir}/{CALLGRAPH_DIR}/{self.name}/call_graph.json") as f:
-            self.call_graph = json.load(f)
+        # load the coverage data
+        with open(f"{self.root_dir}/{COVERAGE_DIR}/{self.name}/coverage.json") as f:
+            coverage = json.load(f)
 
-        def recursively_explore_dependencies(schema_name: str, class_name: str, method_name: str, dep_list: list, reachable_methods=None):
-            """
-            Recursively explore the dependencies of the given method.
-            reachable_methods is a set of all methods reachable from the root method.
-            """
-            if not reachable_methods:
-                reachable_methods = set()
-                
-            # add the current method to the set
-            reachable_methods.add((schema_name, class_name, method_name))
-            
-            for dep in dep_list:
-                item = (dep['schema'], dep['class'], dep['method'])
-                if item in reachable_methods:
-                    continue # avoid RecursionError due to cycles
-
-                reachable_methods.add(item)
-                
-                # search for the method in the call graph and recursively explore its dependencies
-                for cls in self.call_graph:
-                    schema_of_cls = self.name + self.call_graph[cls]['schema_file'].split(self.name, 1)[1][:-5].replace("/java/", "/").replace('/', '.')
-                    if all([
-                        cls == dep['class'],
-                        schema_of_cls == dep['schema'],
-                        dep['method'] in self.call_graph[cls]
-                    ]):
-                        recursively_explore_dependencies(*item, self.call_graph[cls][dep['method']], reachable_methods)
-                        
-            return reachable_methods
-
-        for cls in self.call_graph:
-            # check if this is a test class
-            if "/src/test/" in self.call_graph[cls]["schema_file"] and "Test" in cls:
-                for method in self.call_graph[cls]:
-                    if method == "schema_file":
-                        continue
-                    
-                    schema_name = self.name + self.call_graph[cls]["schema_file"].split(self.name, 1)[1][:-5].replace("/java/", "/").replace('/', '.')
-
-                    reachable_methods = recursively_explore_dependencies(
-                        schema_name,
-                        cls,
-                        method,
-                        self.call_graph[cls][method]
-                    )
-                    
-                    self.test_dependencies[(self.call_graph[cls]["schema_file"], cls, method)] = reachable_methods
+        # load coverage data into the test_dependencies dictionary, with required preprocessing 
+        for test_class_name in coverage:
+            self.test_dependencies[test_class_name] = dict()
+            for test_method_name in coverage[test_class_name]:
+                self.test_dependencies[test_class_name][test_method_name] = dict()
+                for class_name in coverage[test_class_name][test_method_name]:
+                    proper_class_name = class_name.replace('/', '.')
+                    simple_class_name = class_name.split('/')[-1]
+                    self.test_dependencies[test_class_name][test_method_name][proper_class_name] = list()
+                    for method_name in coverage[test_class_name][test_method_name][class_name]:
+                        proper_method_name = method_name if method_name != "<init>" else simple_class_name
+                        self.test_dependencies[test_class_name][test_method_name][proper_class_name].append(proper_method_name)
 
     def derive_compositional_tests(self, components: dict[str, dict[str, list[str]]], debug: bool = False):
         """
@@ -794,10 +759,10 @@ class CompositionalTest:
                 if not tests_to_run:
                     tests_to_run = dict()
                     for test_item in self.test_items:
-                        _, test_class, test_method = test_item
+                        test_class, test_method = test_item
                         if test_class not in tests_to_run:
                             tests_to_run[test_class] = []
-                        tests_to_run[test_class].append(test_method.split(':')[-1].strip())
+                        tests_to_run[test_class].append(test_method)
                 
                 test_selection_specification = ",".join(
                     test_class + "#" + "+".join(tests_to_run[test_class])
@@ -833,8 +798,8 @@ class CompositionalTest:
 
             # check if any unsupported operation was encountered
             unsupported_operation_keywords = [
-                "[JavaHandler.mapping] Unhandled Java object type",
-                "[valueToObject] Unhandled Python object type",
+                # "[JavaHandler.mapping] Unhandled Java object type",
+                # "[valueToObject] Unhandled Python object type",
                 "[ExceptionHandler] Unhandled exception type"
             ]
             if any(x in stdout for x in unsupported_operation_keywords):
@@ -987,8 +952,11 @@ class Schema:
         # extract principle name of the schema (example: commons-cli.src.main.org.apache.commons.cli.Option)
         self.principle_name = self.name.split('_python_partial')[0]
         
-        # get full package name (including subpackages)
+        # get full package name (including subpackages) (example: org.apache.commons.cli)
         self.full_package_name = ".".join(self.principle_name.split('.')[3:-1])
+
+        # get the outer class name (example: Option)
+        self.outer_class_name = self.principle_name.split('.')[-1]
 
         self.__resolve_imports()
         
@@ -1074,8 +1042,8 @@ class Schema:
                 public void setPythonObject(Value obj) {{
                     this.obj = obj;
                 }}
-            """)        
-    
+            """)
+
         # we sort the fields to ensure that they are in the correct order
         # since key-names are prefixed by line numbers
         line_numbers_already_added = set()
@@ -1467,9 +1435,17 @@ class Schema:
         """
         relevant_tests = set()
 
-        for test_item in self.project.test_dependencies:
-            if (self.principle_name, class_name, method_name) in self.project.test_dependencies[test_item]:
-                relevant_tests.add(test_item)
+        fully_qualified_class_name = self.principle_name.split('.main.')[-1]
+        if self.outer_class_name != class_name:
+            fully_qualified_class_name += '$' + class_name
+
+        proper_method_name = method_name.split(':')[-1].strip()
+
+        for test_class in self.project.test_dependencies:
+            for test_method in self.project.test_dependencies[test_class]:
+                if proper_method_name in self.project.test_dependencies[test_class][test_method][fully_qualified_class_name]:
+                    test_class_name = test_class.split('.')[-1]
+                    relevant_tests.add((test_class_name, test_method))
 
         self.tests_to_execute.update(relevant_tests)
     
