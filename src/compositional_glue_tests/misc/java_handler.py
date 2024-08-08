@@ -4,6 +4,7 @@ import abc
 import inspect
 import io
 import pathlib
+import re
 
 
 class JavaHandler:
@@ -53,17 +54,20 @@ class JavaHandler:
             return ExceptionHandler.instance_mapping(x)
 
         # handle the 'Class' type
-        # this is safe because Strings don't have the foreign type
-        try:
-            if str(x).startswith("java."):
-                # Handle exception classes separately
-                if str(x).endswith("Exception"):
-                    return ExceptionHandler.mapping(x)
-                
-                # return other classes after mapping if possible
-                return ClassMapping.get(str(x), java.type(str(x)))
-        except:
-            pass
+        # builtin classes
+        if JavaHandler.isJavaClass(x) and str(x).startswith("java."):
+            # Handle exception classes separately
+            if str(x).endswith("Exception"):
+                return ExceptionHandler.mapping(x)
+            
+            # return other classes after mapping if possible
+            return ClassMapping.get(str(x), java.type(str(x)))
+        
+        # package classes
+        if JavaHandler.isJavaClass(x):
+            cls = JavaHandler.getPythonClassFromJavaClass(x)
+            if cls is not None: # check if class could be loaded
+                return cls
 
         # handle StringBuilder
         if x.getClass().getName() == "java.lang.StringBuilder":
@@ -92,6 +96,10 @@ class JavaHandler:
         # File
         if x.getClass().getName() == "java.io.File":
             return JavaHandler.file_to_path(x, id_map, target_object)
+
+        # Pattern
+        if x.getClass().getName() == "java.util.regex.Pattern":
+            return JavaHandler.pattern_to_pattern(x, id_map, target_object)
         
         print("[JavaHandler.mapping] Unhandled Java object type: " + repr(x))
         return x # return untranslated object
@@ -180,13 +188,28 @@ class JavaHandler:
         id_map[id] = P
         return P
 
+    def pattern_to_pattern(x, id_map, target_object=None):
+        P = re.compile(x.pattern(), x.flags())
+        if target_object:
+            P = target_object
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = P
+        return P
+
     def getPythonId(obj):
         return id(obj)
+
+    IntegrationUtils = java.type('{project}.IntegrationUtils')
+    ContextInitializer = java.type('{project}.ContextInitializer')
 
     def isPythonClass(obj):
         return inspect.isclass(obj)
 
-    IntegrationUtils = java.type('{project}.IntegrationUtils')
+    def isJavaClass(obj):
+        return JavaHandler.IntegrationUtils.isJavaClass(obj)
+
+    def getPythonClassFromJavaClass(javaClass):
+        return JavaHandler.mapping(JavaHandler.ContextInitializer.getPythonClass(javaClass))
 
     def getJavaId(obj):
         return JavaHandler.IntegrationUtils.getIdentityHashCode(obj)

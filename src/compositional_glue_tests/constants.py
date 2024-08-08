@@ -5,6 +5,7 @@ TRANSLATION_DIR = "data/translated_projects" # was: "data/verified_projects"
 SKELETON_DIR = "data/skeletons"
 SCHEMAS_DIR = "data/schemas"
 CALLGRAPH_DIR = "data/call_graphs"
+COVERAGE_DIR = "data/source_test_execution"
 
 DIR_DEPTH = "../" * (len(list(filter(None, ORIGINAL_DIR.split("/")))) + 1) # the depth of a glued project from the root directory of this repository
 SCRIPT_DIR_DEPTH = "../../" # the depth of this script from the root directory of this repository
