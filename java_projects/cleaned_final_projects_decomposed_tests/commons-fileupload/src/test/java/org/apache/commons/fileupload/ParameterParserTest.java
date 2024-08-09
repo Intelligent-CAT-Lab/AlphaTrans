@@ -104,7 +104,6 @@ public class ParameterParserTest {
         assertEquals("\"stuff", params.get("test3"));
         s = "  test  , test1=stuff   ,  , test2=, test3, ";
         params = parser.parse1(s, ',');
-        assertEquals(null, params.get("test"));
     }
 
     @Test
@@ -151,7 +150,6 @@ public class ParameterParserTest {
         assertEquals(null, params.get("test3"));
         s = "  test";
         params = parser.parse1(s, ';');
-        assertEquals(null, params.get("test"));
     }
 
     @Test
@@ -177,13 +175,67 @@ public class ParameterParserTest {
         s = "  test";
         params = parser.parse1(s, ';');
         assertEquals(null, params.get("test"));
-        s = "  ";
-        params = parser.parse1(s, ';');
-        assertEquals(0, params.size());
     }
 
     @Test
     public void testParsing_test9_decomposed()  {
+        String s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff";
+        ParameterParser parser = new ParameterParser();
+        Map<String, String> params = parser.parse1(s, ';');
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals("stuff; stuff", params.get("test2"));
+        assertEquals("\"stuff", params.get("test3"));
+        params = parser.parse0(s, new char[] {',', ';'});
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals("stuff; stuff", params.get("test2"));
+        assertEquals("\"stuff", params.get("test3"));
+        s = "  test  , test1=stuff   ,  , test2=, test3, ";
+        params = parser.parse1(s, ',');
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals(null, params.get("test2"));
+        assertEquals(null, params.get("test3"));
+        s = "  test";
+        params = parser.parse1(s, ';');
+        assertEquals(null, params.get("test"));
+        s = "  ";
+        params = parser.parse1(s, ';');
+    }
+
+    @Test
+    public void testParsing_test10_decomposed()  {
+        String s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff";
+        ParameterParser parser = new ParameterParser();
+        Map<String, String> params = parser.parse1(s, ';');
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals("stuff; stuff", params.get("test2"));
+        assertEquals("\"stuff", params.get("test3"));
+        params = parser.parse0(s, new char[] {',', ';'});
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals("stuff; stuff", params.get("test2"));
+        assertEquals("\"stuff", params.get("test3"));
+        s = "  test  , test1=stuff   ,  , test2=, test3, ";
+        params = parser.parse1(s, ',');
+        assertEquals(null, params.get("test"));
+        assertEquals("stuff", params.get("test1"));
+        assertEquals(null, params.get("test2"));
+        assertEquals(null, params.get("test3"));
+        s = "  test";
+        params = parser.parse1(s, ';');
+        assertEquals(null, params.get("test"));
+        s = "  ";
+        params = parser.parse1(s, ';');
+        assertEquals(0, params.size());
+        s = " = stuff ";
+        params = parser.parse1(s, ';');
+    }
+
+    @Test
+    public void testParsing_test11_decomposed()  {
         String s = "test; test1 =  stuff   ; test2 =  \"stuff; stuff\"; test3=\"stuff";
         ParameterParser parser = new ParameterParser();
         Map<String, String> params = parser.parse1(s, ';');
@@ -274,11 +326,23 @@ public class ParameterParserTest {
         assertEquals("stuff\\\"; more stuff", params.get("param"));
         s = "param = \"stuff\\\\\"; anotherparam";
         params = parser.parse1(s, ';');
-        assertEquals(2, params.size());
     }
 
     @Test
     public void testParsingEscapedChars_test4_decomposed()  {
+        String s = "param = \"stuff\\\"; more stuff\"";
+        ParameterParser parser = new ParameterParser();
+        Map<String, String> params = parser.parse1(s, ';');
+        assertEquals(1, params.size());
+        assertEquals("stuff\\\"; more stuff", params.get("param"));
+        s = "param = \"stuff\\\\\"; anotherparam";
+        params = parser.parse1(s, ';');
+        assertEquals(2, params.size());
+        assertEquals("stuff\\\\", params.get("param"));
+    }
+
+    @Test
+    public void testParsingEscapedChars_test5_decomposed()  {
         String s = "param = \"stuff\\\"; more stuff\"";
         ParameterParser parser = new ParameterParser();
         Map<String, String> params = parser.parse1(s, ';');
@@ -301,11 +365,28 @@ public class ParameterParserTest {
         ParameterParser parser = new ParameterParser();
         String s = "Content-type: multipart/form-data , boundary=AaB03x";
         Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
-        assertEquals("AaB03x", params.get("boundary"));
     }
 
     @Test
     public void testFileUpload139_test2_decomposed()  {
+        ParameterParser parser = new ParameterParser();
+        String s = "Content-type: multipart/form-data , boundary=AaB03x";
+        Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
+        assertEquals("AaB03x", params.get("boundary"));
+    }
+
+    @Test
+    public void testFileUpload139_test3_decomposed()  {
+        ParameterParser parser = new ParameterParser();
+        String s = "Content-type: multipart/form-data , boundary=AaB03x";
+        Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
+        assertEquals("AaB03x", params.get("boundary"));
+        s = "Content-type: multipart/form-data, boundary=AaB03x";
+        params = parser.parse0(s, new char[] {';', ','});
+    }
+
+    @Test
+    public void testFileUpload139_test4_decomposed()  {
         ParameterParser parser = new ParameterParser();
         String s = "Content-type: multipart/form-data , boundary=AaB03x";
         Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
@@ -316,7 +397,20 @@ public class ParameterParserTest {
     }
 
     @Test
-    public void testFileUpload139_test3_decomposed()  {
+    public void testFileUpload139_test5_decomposed()  {
+        ParameterParser parser = new ParameterParser();
+        String s = "Content-type: multipart/form-data , boundary=AaB03x";
+        Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
+        assertEquals("AaB03x", params.get("boundary"));
+        s = "Content-type: multipart/form-data, boundary=AaB03x";
+        params = parser.parse0(s, new char[] {';', ','});
+        assertEquals("AaB03x", params.get("boundary"));
+        s = "Content-type: multipart/mixed, boundary=BbC04y";
+        params = parser.parse0(s, new char[] {',', ';'});
+    }
+
+    @Test
+    public void testFileUpload139_test6_decomposed()  {
         ParameterParser parser = new ParameterParser();
         String s = "Content-type: multipart/form-data , boundary=AaB03x";
         Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
@@ -336,6 +430,16 @@ public class ParameterParserTest {
 
     @Test
     public void fileUpload199_test1_decomposed()  {
+        ParameterParser parser = new ParameterParser();
+        String s =
+                "Content-Disposition: form-data; name=\"file\";"
+                        + " filename=\"=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?="
+                        + " =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=\"\r\n";
+        Map<String, String> params = parser.parse0(s, new char[] {',', ';'});
+    }
+
+    @Test
+    public void fileUpload199_test2_decomposed()  {
         ParameterParser parser = new ParameterParser();
         String s =
                 "Content-Disposition: form-data; name=\"file\";"
