@@ -29,7 +29,7 @@ public class MultipartStreamTest {
     private static final String BOUNDARY_TEXT = "myboundary";
 
     @Test
-    public void testThreeParamConstructor() throws Exception {
+    public void testThreeParamConstructor_test0_decomposed() throws Exception {
         final String strData = "foobar";
         final byte[] contents = strData.getBytes();
         InputStream input = new ByteArrayInputStream(contents);
@@ -41,44 +41,6 @@ public class MultipartStreamTest {
                         boundary,
                         iBufSize,
                         new MultipartStream.ProgressNotifier(null, contents.length));
-        assertNotNull(ms);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testSmallBuffer() throws Exception {
-        final String strData = "foobar";
-        final byte[] contents = strData.getBytes();
-        InputStream input = new ByteArrayInputStream(contents);
-        byte[] boundary = BOUNDARY_TEXT.getBytes();
-        int iBufSize = 1;
-        new MultipartStream(
-                input,
-                boundary,
-                iBufSize,
-                new MultipartStream.ProgressNotifier(null, contents.length));
-    }
-
-    @Test
-    public void testTwoParamConstructor() throws Exception {
-        final String strData = "foobar";
-        final byte[] contents = strData.getBytes();
-        InputStream input = new ByteArrayInputStream(contents);
-        byte[] boundary = BOUNDARY_TEXT.getBytes();
-        MultipartStream ms =
-                MultipartStream.MultipartStream2(
-                        input,
-                        boundary,
-                        new MultipartStream.ProgressNotifier(null, contents.length));
-        assertNotNull(ms);
-    }
-
-    @Test
-    public void testThreeParamConstructor_test0_decomposed() throws Exception {
-        final String strData = "foobar";
-        final byte[] contents = strData.getBytes();
-        InputStream input = new ByteArrayInputStream(contents);
-        byte[] boundary = BOUNDARY_TEXT.getBytes();
-        int iBufSize = boundary.length + MultipartStream.BOUNDARY_PREFIX.length + 1;
     }
 
     @Test
@@ -94,15 +56,21 @@ public class MultipartStreamTest {
                         boundary,
                         iBufSize,
                         new MultipartStream.ProgressNotifier(null, contents.length));
+        assertNotNull(ms);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testSmallBuffer_test0_decomposed() throws Exception {
         final String strData = "foobar";
         final byte[] contents = strData.getBytes();
         InputStream input = new ByteArrayInputStream(contents);
         byte[] boundary = BOUNDARY_TEXT.getBytes();
         int iBufSize = 1;
+        new MultipartStream(
+                input,
+                boundary,
+                iBufSize,
+                new MultipartStream.ProgressNotifier(null, contents.length));
     }
 
     @Test
@@ -111,6 +79,11 @@ public class MultipartStreamTest {
         final byte[] contents = strData.getBytes();
         InputStream input = new ByteArrayInputStream(contents);
         byte[] boundary = BOUNDARY_TEXT.getBytes();
+        MultipartStream ms =
+                MultipartStream.MultipartStream2(
+                        input,
+                        boundary,
+                        new MultipartStream.ProgressNotifier(null, contents.length));
     }
 
     @Test
@@ -124,5 +97,6 @@ public class MultipartStreamTest {
                         input,
                         boundary,
                         new MultipartStream.ProgressNotifier(null, contents.length));
+        assertNotNull(ms);
     }
 }

@@ -48,83 +48,36 @@ public final class Base64DecoderTestCase {
      *
      * @see <a href="http://tools.ietf.org/html/rfc4648">http://tools.ietf.org/html/rfc4648</a>
      */
-    @Test
-    public void rfc4648Section10Decode() throws Exception {
-        assertEncoded("", "");
-        assertEncoded("f", "Zg==");
-        assertEncoded("fo", "Zm8=");
-        assertEncoded("foo", "Zm9v");
-        assertEncoded("foob", "Zm9vYg==");
-        assertEncoded("fooba", "Zm9vYmE=");
-        assertEncoded("foobar", "Zm9vYmFy");
-    }
+    
 
     /**
      * Test our decode with pad character in the middle. Continues provided that the padding is in
      * the correct place, i.e. concatenated valid strings decode OK.
      */
-    @Test
-    public void decodeWithInnerPad() throws Exception {
-        assertEncoded("Hello WorldHello World", "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ=");
-    }
+    
 
     /** Ignores non-BASE64 bytes. */
-    @Test
-    public void nonBase64Bytes() throws Exception {
-        assertEncoded("Hello World", "S?G!V%sbG 8g\rV\t\n29ybGQ*=");
-    }
+    
 
-    @Test(expected = IOException.class)
-    public void truncatedString() throws Exception {
-        final byte[] x = new byte[] {'n'};
-        Base64Decoder.decode(x, new ByteArrayOutputStream());
-    }
+    
 
-    @Test
-    public void decodeTrailingJunk() throws Exception {
-        assertEncoded("foobar", "Zm9vYmFy!!!");
-    }
+    
 
-    @Test
-    public void decodeTrailing1() throws Exception {
-        assertIOException("truncated", "Zm9vYmFy1");
-    }
+    
 
-    @Test
-    public void decodeTrailing2() throws Exception {
-        assertIOException("truncated", "Zm9vYmFy12");
-    }
+    
 
-    @Test
-    public void decodeTrailing3() throws Exception {
-        assertIOException("truncated", "Zm9vYmFy123");
-    }
+    
 
-    @Test
-    public void badPadding() throws Exception {
-        assertIOException("incorrect padding, 4th byte", "Zg=a");
-    }
+    
 
-    @Test
-    public void badPaddingLeading1() throws Exception {
-        assertIOException("incorrect padding, first two bytes cannot be padding", "=A==");
-    }
+    
 
-    @Test
-    public void badPaddingLeading2() throws Exception {
-        assertIOException("incorrect padding, first two bytes cannot be padding", "====");
-    }
+    
 
-    @Test
-    public void badLength() throws Exception {
-        assertIOException("truncated", "Zm8==");
-    }
+    
 
-    @Test
-    public void nonASCIIcharacter() throws Exception {
-        assertEncoded("f", "Zg=À="); // A-grave
-        assertEncoded("f", "Zg=\u0100=");
-    }
+    
 
     private static void assertEncoded(String clearText, String encoded) throws Exception {
         byte[] expected = clearText.getBytes(US_ASCII_CHARSET);
@@ -155,55 +108,73 @@ public final class Base64DecoderTestCase {
     @Test
     public void rfc4648Section10Decode_test0_decomposed() throws Exception {
         assertEncoded("", "");
-    }
-
-    @Test
-    public void rfc4648Section10Decode_test1_decomposed() throws Exception {
-        assertEncoded("", "");
-        assertEncoded("f", "Zg==");
-    }
-
-    @Test
-    public void rfc4648Section10Decode_test2_decomposed() throws Exception {
-        assertEncoded("", "");
-        assertEncoded("f", "Zg==");
-        assertEncoded("fo", "Zm8=");
-    }
-
-    @Test
-    public void rfc4648Section10Decode_test3_decomposed() throws Exception {
-        assertEncoded("", "");
-        assertEncoded("f", "Zg==");
-        assertEncoded("fo", "Zm8=");
-        assertEncoded("foo", "Zm9v");
-    }
-
-    @Test
-    public void rfc4648Section10Decode_test4_decomposed() throws Exception {
-        assertEncoded("", "");
-        assertEncoded("f", "Zg==");
-        assertEncoded("fo", "Zm8=");
-        assertEncoded("foo", "Zm9v");
-        assertEncoded("foob", "Zm9vYg==");
-    }
-
-    @Test
-    public void rfc4648Section10Decode_test5_decomposed() throws Exception {
-        assertEncoded("", "");
         assertEncoded("f", "Zg==");
         assertEncoded("fo", "Zm8=");
         assertEncoded("foo", "Zm9v");
         assertEncoded("foob", "Zm9vYg==");
         assertEncoded("fooba", "Zm9vYmE=");
+        assertEncoded("foobar", "Zm9vYmFy");
     }
 
     @Test
+    public void decodeWithInnerPad_test0_decomposed() throws Exception {
+        assertEncoded("Hello WorldHello World", "SGVsbG8gV29ybGQ=SGVsbG8gV29ybGQ=");
+    }
+
+    @Test
+    public void nonBase64Bytes_test0_decomposed() throws Exception {
+        assertEncoded("Hello World", "S?G!V%sbG 8g\rV\t\n29ybGQ*=");
+    }
+
+    @Test(expected = IOException.class)
     public void truncatedString_test0_decomposed() throws Exception {
         final byte[] x = new byte[] {'n'};
+        Base64Decoder.decode(x, new ByteArrayOutputStream());
+    }
+
+    @Test
+    public void decodeTrailingJunk_test0_decomposed() throws Exception {
+        assertEncoded("foobar", "Zm9vYmFy!!!");
+    }
+
+    @Test
+    public void decodeTrailing1_test0_decomposed() throws Exception {
+        assertIOException("truncated", "Zm9vYmFy1");
+    }
+
+    @Test
+    public void decodeTrailing2_test0_decomposed() throws Exception {
+        assertIOException("truncated", "Zm9vYmFy12");
+    }
+
+    @Test
+    public void decodeTrailing3_test0_decomposed() throws Exception {
+        assertIOException("truncated", "Zm9vYmFy123");
+    }
+
+    @Test
+    public void badPadding_test0_decomposed() throws Exception {
+        assertIOException("incorrect padding, 4th byte", "Zg=a");
+    }
+
+    @Test
+    public void badPaddingLeading1_test0_decomposed() throws Exception {
+        assertIOException("incorrect padding, first two bytes cannot be padding", "=A==");
+    }
+
+    @Test
+    public void badPaddingLeading2_test0_decomposed() throws Exception {
+        assertIOException("incorrect padding, first two bytes cannot be padding", "====");
+    }
+
+    @Test
+    public void badLength_test0_decomposed() throws Exception {
+        assertIOException("truncated", "Zm8==");
     }
 
     @Test
     public void nonASCIIcharacter_test0_decomposed() throws Exception {
         assertEncoded("f", "Zg=À=");
+        assertEncoded("f", "Zg=\u0100=");
     }
 }
