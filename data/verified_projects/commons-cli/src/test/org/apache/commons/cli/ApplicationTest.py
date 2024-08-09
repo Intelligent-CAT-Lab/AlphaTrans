@@ -254,7 +254,7 @@ class ApplicationTest(unittest.TestCase):
         eol = os.linesep
         out = io.StringIO()
         hf.printHelp3(
-            io.TextIOWrapper(out),
+            out,
             60,
             cmdLine,
             None,
@@ -270,7 +270,7 @@ class ApplicationTest(unittest.TestCase):
             eol + \
             "           [-Llocale] [-eextension] [section] page ..." + \
             eol + \
-            + " -7,--ascii                display ASCII translation or" + \
+            " -7,--ascii                display ASCII translation or" + \
             eol + \
             "                           certain latin1 chars." + \
             eol + \
