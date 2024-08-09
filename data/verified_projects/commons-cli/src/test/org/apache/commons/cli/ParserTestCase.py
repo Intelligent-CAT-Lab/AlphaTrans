@@ -1045,7 +1045,7 @@ class ParserTestCase(unittest.TestCase, ABC):
             args = ["-c", "foober", "-b", "toast"]
 
             cl = self._parser.parse1(self._options, args, True)
-            self.assertTrue(cl.hasOption2("a"), "Confirm -c is set")
+            self.assertTrue(cl.hasOption2("c"), "Confirm -c is set")
             self.assertEqual(
                 3,
                 len(cl.getArgList()),
