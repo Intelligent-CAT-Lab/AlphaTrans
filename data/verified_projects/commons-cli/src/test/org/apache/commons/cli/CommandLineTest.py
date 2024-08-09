@@ -17,13 +17,16 @@ class CommandLineTest(unittest.TestCase):
 
     @pytest.mark.test
     def testBuilder(self) -> None:
-        builder = CommandLine.Builder()
+        if hasattr(CommandLine, 'Builder'):
+            builder = CommandLine.Builder()
+        else:
+            builder = Builder()
         builder.addArg("foo").addArg("bar")
         builder.addOption(Option.builder1("T").build())
         cmd = builder.build()
 
         self.assertEqual("foo", cmd.getArgs()[0])
-        self.assertEqual("bar", cmd.getArgList().get(1))
+        self.assertEqual("bar", cmd.getArgList()[1])
         self.assertEqual("T", cmd.getOptions()[0].getOpt())
 
     @pytest.mark.test
@@ -100,13 +103,13 @@ class CommandLineTest(unittest.TestCase):
     def testGetOptions(self) -> None:
         cmd = CommandLine()
         self.assertIsNotNone(cmd.getOptions())
-        self.assertEqual(0, cmd.getOptions().length)
+        self.assertEqual(0, len(cmd.getOptions()))
 
         cmd.addOption(Option.Option1("a", None))
         cmd.addOption(Option.Option1("b", None))
         cmd.addOption(Option.Option1("c", None))
 
-        self.assertEqual(3, cmd.getOptions().length)
+        self.assertEqual(3, len(cmd.getOptions()))
 
     @pytest.mark.test
     def testGetParsedOptionValue(self) -> None:
@@ -125,7 +128,7 @@ class CommandLineTest(unittest.TestCase):
     def testNullhOption(self) -> None:
         try:
             options = Options()
-            optI = Option.builder1("i").hasArg0().type(numbers.Number).build()
+            optI = Option.builder1("i").hasArg0().type_(numbers.Number).build()
             optF = Option.builder1("f").hasArg0().build()
             options.addOption0(optI)
             options.addOption0(optF)
@@ -140,7 +143,7 @@ class CommandLineTest(unittest.TestCase):
     def testGetParsedOptionValueWithOption(self) -> None:
         try:
             options = Options()
-            optI = Option.builder1("i").hasArg0().type(numbers.Number).build()
+            optI = Option.builder1("i").hasArg0().type_(numbers.Number).build()
             optF = Option.builder1("f").hasArg0().build()
             options.addOption0(optI)
             options.addOption0(optF)
@@ -155,7 +158,7 @@ class CommandLineTest(unittest.TestCase):
     def testGetParsedOptionValueWithChar(self) -> None:
         try:
             options = Options()
-            options.addOption0(Option.builder1("i").hasArg0().type(numbers.Number).build())
+            options.addOption0(Option.builder1("i").hasArg0().type_(numbers.Number).build())
             options.addOption0(Option.builder1("f").hasArg0().build())
             parser = DefaultParser(2, False, None)
             cmd = parser.parse0(options, ["-i", "123", "-f", "foo"])
