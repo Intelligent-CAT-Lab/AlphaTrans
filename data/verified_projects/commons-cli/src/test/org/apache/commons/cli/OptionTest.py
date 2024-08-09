@@ -60,7 +60,7 @@ class OptionTest(unittest.TestCase):
 
         unittest.TestCase().assertEqual(optionalArg, option.hasOptionalArg())
         unittest.TestCase().assertEqual(valueSeparator, option.getValueSeparator())
-        unittest.TestCase().assertEqual(cls, type(option))
+        unittest.TestCase().assertEqual(cls, option.getType())
     
 
     @pytest.mark.test
@@ -248,7 +248,7 @@ class OptionTest(unittest.TestCase):
                 ':',\
                 str)
         self.__checkOption(
-                Option.builder1("a").desc("desc").type(int).build(),\
+                Option.builder1("a").desc("desc").type_(int).build(),\
                 "a",\
                 "desc",\
                 None,\
@@ -259,7 +259,7 @@ class OptionTest(unittest.TestCase):
                 defaultSeparator,\
                 int)
         self.__checkOption(
-                Option.builder0().option("a").desc("desc").type(int).build(),\
+                Option.builder0().option("a").desc("desc").type_(int).build(),\
                 "a",\
                 "desc",\
                 None,\
