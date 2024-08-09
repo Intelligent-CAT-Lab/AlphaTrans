@@ -93,21 +93,21 @@ class HelpFormatterTest(unittest.TestCase):
         hf = HelpFormatter()
 
         text = "This is a test."
-        self.assertEqual(7, hf.findWrapPos(text, 8, 0), "wrap position")
+        self.assertEqual(7, hf._findWrapPos(text, 8, 0), "wrap position")
 
-        self.assertEqual(-1, hf.findWrapPos(text, 8, 8), "wrap position 2")
+        self.assertEqual(-1, hf._findWrapPos(text, 8, 8), "wrap position 2")
 
         text = "aaaa aa"
-        self.assertEqual(3, hf.findWrapPos(text, 3, 0), "wrap position 3")
+        self.assertEqual(3, hf._findWrapPos(text, 3, 0), "wrap position 3")
 
         text = "aaaaaa aaaaaa"
-        self.assertEqual(6, hf.findWrapPos(text, 6, 0), "wrap position 4")
-        self.assertEqual(-1, hf.findWrapPos(text, 6, 7), "wrap position 4")
+        self.assertEqual(6, hf._findWrapPos(text, 6, 0), "wrap position 4")
+        self.assertEqual(-1, hf._findWrapPos(text, 6, 7), "wrap position 4")
 
         text = "aaaaaa\n aaaaaa"
-        self.assertEqual(7, hf.findWrapPos(text, 6, 0), "wrap position 5")
+        self.assertEqual(7, hf._findWrapPos(text, 6, 0), "wrap position 5")
         text = "aaaaaa\t aaaaaa"
-        self.assertEqual(7, hf.findWrapPos(text, 6, 0), "wrap position 6")
+        self.assertEqual(7, hf._findWrapPos(text, 6, 0), "wrap position 6")
 
     
     @pytest.mark.test
@@ -375,20 +375,20 @@ class HelpFormatterTest(unittest.TestCase):
     
     @pytest.mark.test
     def testPrintOptions(self) -> None:
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
         leftPad = 1
         descPad = 3
-        lpad = hf.createPadding(leftPad)
-        dpad = hf.createPadding(descPad)
+        lpad = hf._createPadding(leftPad)
+        dpad = hf._createPadding(descPad)
         options = None
         expected = None
 
 
         options = Options().addOption1("a", False, "aaaa aaaa aaaa aaaa aaaa")
         expected = lpad + "-a" + dpad + "aaaa aaaa aaaa aaaa aaaa"
-        hf.renderOptions(sb, 60, options, leftPad, descPad)
-        self.assertEqual(expected, str(sb), "simple non-wrapped option")
+        hf._renderOptions(sb, 60, options, leftPad, descPad)
+        self.assertEqual(expected, sb.getvalue(), "simple non-wrapped option")
 
         nextLineTabStop = leftPad + descPad + len("-a")
         expected = (
@@ -397,18 +397,18 @@ class HelpFormatterTest(unittest.TestCase):
                 dpad + \
                 "aaaa aaaa aaaa" + \
                 HelpFormatterTest.__EOL + \
-                hf.createPadding(nextLineTabStop) + \
+                hf._createPadding(nextLineTabStop) + \
                 "aaaa aaaa"
         )
-        sb = ""
-        hf.renderOptions(sb, nextLineTabStop + 17, options, leftPad, descPad)
-        self.assertEqual(expected, str(sb), "simple wrapped option")
+        sb = io.StringIO()
+        hf._renderOptions(sb, nextLineTabStop + 17, options, leftPad, descPad)
+        self.assertEqual(expected, sb.getvalue(), "simple wrapped option")
 
         options = Options().addOption3("a", "aaa", False, "dddd dddd dddd dddd")
         expected = lpad + "-a,--aaa" + dpad + "dddd dddd dddd dddd"
-        sb = ""
-        hf.renderOptions(sb, 60, options, leftPad, descPad)
-        self.assertEqual(expected, str(sb), "long non-wrapped option")
+        sb = io.StringIO()
+        hf._renderOptions(sb, 60, options, leftPad, descPad)
+        self.assertEqual(expected, sb.getvalue(), "long non-wrapped option")
 
         nextLineTabStop = leftPad + descPad + len("-a,--aaa")
         expected = (
@@ -417,12 +417,12 @@ class HelpFormatterTest(unittest.TestCase):
                 dpad + \
                 "dddd dddd" + \
                 HelpFormatterTest.__EOL + \
-                hf.createPadding(nextLineTabStop) + \
+                hf._createPadding(nextLineTabStop) + \
                 "dddd dddd"
         )
-        sb = ""
-        hf.renderOptions(sb, 25, options, leftPad, descPad)
-        self.assertEqual(expected, str(sb), "long wrapped option")
+        sb = io.StringIO()
+        hf._renderOptions(sb, 25, options, leftPad, descPad)
+        self.assertEqual(expected, sb.getvalue(), "long wrapped option")
 
         options = (
                 Options().addOption3("a", "aaa", False, "dddd dddd dddd dddd")\
@@ -434,20 +434,20 @@ class HelpFormatterTest(unittest.TestCase):
                 dpad + \
                 "dddd dddd" + \
                 HelpFormatterTest.__EOL + \
-                hf.createPadding(nextLineTabStop) + \
-                + "dddd dddd" + \
+                hf._createPadding(nextLineTabStop) + \
+                "dddd dddd" + \
                 HelpFormatterTest.__EOL + \
                 lpad + \
                 "-b      " + \
                 dpad + \
                 "feeee eeee" + \
                 HelpFormatterTest.__EOL + \
-                hf.createPadding(nextLineTabStop) + \
+                hf._createPadding(nextLineTabStop) + \
                 "eeee eeee"
         )
-        sb = ""
-        hf.renderOptions(sb, 25, options, leftPad, descPad)
-        self.assertEqual(expected, str(sb), "multiple wrapped options")
+        sb = io.StringIO()
+        hf._renderOptions(sb, 25, options, leftPad, descPad)
+        self.assertEqual(expected, sb.getvalue(), "multiple wrapped options")
 
     
     @pytest.mark.test
@@ -496,7 +496,7 @@ class HelpFormatterTest(unittest.TestCase):
         helpFormatter = HelpFormatter()
         helpFormatter.setOptionComparator(
                 lambda opt1, opt2: (opt2.getKey().lower() > opt1.getKey().lower()) - \
-                        (opt1.getKey().lower() < opt1.getKey().lower())
+                        (opt2.getKey().lower() < opt1.getKey().lower())
         )
         out = io.StringIO()
         helpFormatter.printUsage1(out, 80, "app", opts)
@@ -550,10 +550,10 @@ class HelpFormatterTest(unittest.TestCase):
                    HelpFormatterTest.__EOL + \
                    "aaaaa"
         
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, expected)
-        self.assertEqual(expected, str(sb), "multi line text")
+        hf._renderWrappedText(sb, width, padding, expected)
+        self.assertEqual(expected, sb.getvalue(), "multi line text")
 
 
     @pytest.mark.test
@@ -571,10 +571,10 @@ class HelpFormatterTest(unittest.TestCase):
                    HelpFormatterTest.__EOL + \
                    "    aaaaa"
         
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, text)
-        self.assertEqual(expected, str(sb), "multi-line padded text")
+        hf._renderWrappedText(sb, width, padding, text)
+        self.assertEqual(expected, sb.getvalue(), "multi-line padded text")
 
 
     @pytest.mark.test
@@ -584,10 +584,10 @@ class HelpFormatterTest(unittest.TestCase):
         text = "This is a test."
         expected = "This is a" + HelpFormatterTest.__EOL + "test."
         
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, text)
-        self.assertEqual(expected, str(sb), "single line text")
+        hf._renderWrappedText(sb, width, padding, text)
+        self.assertEqual(expected, sb.getvalue(), "single line text")
 
 
     @pytest.mark.test
@@ -597,10 +597,10 @@ class HelpFormatterTest(unittest.TestCase):
         text = "This is a test."
         expected = "This is a" + HelpFormatterTest.__EOL + "    test."
 
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, text)
-        self.assertEqual(expected, str(sb), "single line padded text")
+        hf._renderWrappedText(sb, width, padding, text)
+        self.assertEqual(expected, sb.getvalue(), "single line padded text")
 
 
     @pytest.mark.test
@@ -615,10 +615,10 @@ class HelpFormatterTest(unittest.TestCase):
                    HelpFormatterTest.__EOL + \
                    "                        has form YYYY[MM[DD]]"
         
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, text)
-        self.assertEqual(expected, str(sb), "single line padded text 2")
+        hf._renderWrappedText(sb, width, padding, text)
+        self.assertEqual(expected, sb.getvalue(), "single line padded text 2")
 
 
     @pytest.mark.test
@@ -628,19 +628,19 @@ class HelpFormatterTest(unittest.TestCase):
         text = "Thisisatest."
         expected = "Thisisa" + HelpFormatterTest.__EOL + "test."
 
-        sb = ""
+        sb = io.StringIO()
         hf = HelpFormatter()
-        hf.renderWrappedText(sb, width, padding, text)
-        self.assertEqual(expected, str(sb), "cut and wrap")
+        hf._renderWrappedText(sb, width, padding, text)
+        self.assertEqual(expected, sb.getvalue(), "cut and wrap")
     
     
     @pytest.mark.test
     def testRtrim(self) -> None:
         formatter = HelpFormatter()
 
-        self.assertIsNone(formatter.rtrim(None))
-        self.assertEqual("", formatter.rtrim(""))
-        self.assertEqual("  foo", formatter.rtrim("  foo  "))
+        self.assertIsNone(formatter._rtrim(None))
+        self.assertEqual("", formatter._rtrim(""))
+        self.assertEqual("  foo", formatter._rtrim("  foo  "))
     
     
     @pytest.mark.test
