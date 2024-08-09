@@ -57,7 +57,7 @@ class OptionBuilderTest(unittest.TestCase):
         self.assertEqual("s", simple.getOpt())
         self.assertEqual("simple option", simple.getLongOpt())
         self.assertEqual("this is a simple option", simple.getDescription())
-        self.assertEqual(simple.getType, float)
+        self.assertEqual(simple.getType(), float)
         self.assertTrue(simple.hasArg())
         self.assertTrue(simple.isRequired())
         self.assertTrue(simple.hasArgs())
