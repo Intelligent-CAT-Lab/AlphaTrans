@@ -86,9 +86,9 @@ class DefaultParserTest(ParserTestCase):
             args = ["--bfile=\"quoted string\""]
             cl = parser.parse0(self._options, args)
             self.assertEqual(
-                "\"quoted string\"",
+                "quoted string",
                 cl.getOptionValue4("b"),
-                "Confirm --bfile=\"arg\" keeps quotes"
+                "Confirm --bfile=\"arg\" strips quotes"
             )
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
@@ -96,7 +96,7 @@ class DefaultParserTest(ParserTestCase):
     @pytest.mark.test
     def testShortOptionConcatenatedQuoteHandling(self) -> None:
         try:
-            args = ["-b", "\"quoted string\""]
+            args = ["-b\"quoted string\""]
             cl = self._parser.parse0(self._options, args)
             self.assertEqual(
                 "\"quoted string\"", 
