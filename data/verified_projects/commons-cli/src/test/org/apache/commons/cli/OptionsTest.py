@@ -78,13 +78,13 @@ class OptionsTest(unittest.TestCase):
 
         allOptions = [longOnly1, longOnly2, shortOnly1, shortOnly2, bothA, bothB]
         helpOptions = options.helpOptions()
-        allOptionsSet = set(allOptions)
-        helpOptionsSet = set(helpOptions)
         self.assertTrue(
-            allOptionsSet.issubset(helpOptionsSet), "Everything in all should be in help"
+            all(option in helpOptions for option in allOptions),
+            "Everything in all should be in help"
         )
         self.assertTrue(
-            helpOptionsSet.issubset(allOptionsSet), "Everything in help should be in all"
+            all(option in allOptions for option in helpOptions),
+            "Everything in help should be in all"
         )
     
     
