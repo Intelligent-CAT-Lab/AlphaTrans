@@ -10,7 +10,7 @@ import unittest
 import io
 from pathlib import Path
 from urllib.parse import urlparse
-import datetime
+from datetime import datetime, date, time, timedelta, timezone
 
 
 class PatternOptionBuilderTest(unittest.TestCase):
@@ -21,11 +21,11 @@ class PatternOptionBuilderTest(unittest.TestCase):
             options = PatternOptionBuilder.parsePattern("c+d+")
             parser = PosixParser()
             line = parser.parse0(
-                options, ["-c", "datetime.datetime", "-d", "System.DateTime"]
+                options, ["-c", "datetime", "-d", "System.DateTime"]
             )
             self.assertIn(
                 line.getOptionObject1("c"),
-                [datetime.datetime, datetime.date, datetime.time, datetime.timedelta, datetime.timezone],
+                [datetime, date, time, timedelta, timezone],
                 "c value"
             )
             self.assertIsNone(line.getOptionObject1("d"), "d value")
@@ -54,7 +54,8 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.assertIsNotNone(parsedReadableFileStream, "option g not parsed")
             self.assertTrue(
                 isinstance(parsedReadableFileStream, io.FileIO)\
-                    or isinstance(parsedReadableFileStream, io.BufferedReader),
+                    or isinstance(parsedReadableFileStream, io.BufferedReader)\
+                    or isinstance(parsedReadableFileStream, io.TextIOWrapper),
                 "option g not FileInputStream"
             )
         except Exception as e:
@@ -64,7 +65,7 @@ class PatternOptionBuilderTest(unittest.TestCase):
     @pytest.mark.test
     def testExistingFilePatternFileNotExist(self) -> None:
         try:
-            options = self.parsePattern("f<")
+            options = PatternOptionBuilder.parsePattern("f<")
             parser = PosixParser()
             line = parser.parse0(options, ["-f", "non-existing.file"])
 
@@ -139,11 +140,11 @@ class PatternOptionBuilderTest(unittest.TestCase):
                 "-a",
                 "foo",
                 "-b",
-                "java.util.Vector",
+                "list",
                 "-e",
                 "build.xml",
                 "-f",
-                "java.util.Calendar",
+                "datetime",
                 "-n",
                 "4.5",
                 "-t",
@@ -165,7 +166,7 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.assertEqual(Path("build.xml"), line.getOptionObject1("e"), "file flag e")
             self.assertIn(
                 line.getOptionObject1("f"),
-                [datetime.datetime, datetime.date, datetime.time, datetime.timedelta, datetime.timezone],
+                [datetime, date, time, timedelta, timezone],
                 "class flag f"
             )
             self.assertEqual(float(4.5), line.getOptionObject1("n"), "number flag n")
@@ -183,12 +184,12 @@ class PatternOptionBuilderTest(unittest.TestCase):
             self.assertEqual(Path("build.xml"), line.getOptionObject0('e'), "file flag e")
             self.assertIn(
                 line.getOptionObject0('f'),
-                [datetime.datetime, datetime.date, datetime.time, datetime.timedelta, datetime.timezone],
+                [datetime, date, time, timedelta, timezone],
                 "class flag f"
             )
             self.assertEqual(float(4.5), line.getOptionObject0('n'), "number flag n")
             self.assertIn(
-                line.getOptionObject0('t')
+                line.getOptionObject0('t'),
                 ["https://commons.apache.org", urlparse("https://commons.apache.org")],
                 "url flag t"
             )
