@@ -796,24 +796,25 @@ class CompositionalTest:
                 with open(f"{self.project.root_dir}/glue_err.{self.project.name}.log", "w") as f:
                     f.write(stderr)
 
-            # check if any unsupported operation was encountered
-            unsupported_operation_keywords = [
-                # "[JavaHandler.mapping] Unhandled Java object type",
-                # "[valueToObject] Unhandled Python object type",
-                "[ExceptionHandler] Unhandled exception type"
-            ]
-            if any(x in stdout for x in unsupported_operation_keywords):
-                return {
-                    "status": ERROR, # unsupported operation encountered
-                    "feedback": dict()
-                }
-            
             # collect the results
             feedback = self.__get_feedback_from_surefire()
             
             if failure_flag and not feedback:
                 return {
                     "status": ERROR, # error in running the tests
+                    "feedback": dict()
+                }
+                
+            # check if any unsupported operation was encountered
+            # which may have caused the failure (if a failure occurred)
+            unsupported_operation_keywords = [
+                "[JavaHandler.mapping] Unhandled Java object type",
+                "[valueToObject] Unhandled Python object type",
+                "[ExceptionHandler] Unhandled exception type"
+            ]
+            if feedback and any(x in stdout for x in unsupported_operation_keywords):
+                return {
+                    "status": ERROR, # unsupported operation encountered
                     "feedback": dict()
                 }
             
