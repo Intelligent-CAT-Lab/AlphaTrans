@@ -16,7 +16,10 @@ def main(args):
         global_call_graph = {}
         for schema_file in os.listdir(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/{project_name}'):
 
-            if 'ESTest' in schema_file:
+            if 'ESTest' in schema_file and not args.evosuite:
+                continue
+
+            if 'ESTest' not in schema_file and args.evosuite:
                 continue
 
             data = {}
@@ -37,11 +40,13 @@ def main(args):
                             continue
                         global_call_graph[class_][method_].append({'schema': call_[0], 'class': call_[1], 'method': call_[2]})
 
-            with open(f'data/call_graphs/{project_name}/call_graph.json', 'w') as f:
+            suffix = '-evosuite' if args.evosuite else ''
+            with open(f'data/call_graphs/{project_name}/call_graph{suffix}.json', 'w') as f:
                 json.dump(global_call_graph, f, indent=4)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create call graph for test methods')
+    parser.add_argument('--evosuite', action='store_true', help='Use evosuite schemas')
     args = parser.parse_args()
     main(args)

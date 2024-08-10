@@ -5,11 +5,9 @@ import argparse
 
 def create_schema(args):
     project = args.project_name
-    projects_dir = 'java_projects/cleaned_final_projects/'
-    # projects_dir = 'java_projects/cleaned_final_projects_evosuite/'
-    query_outputs_dir = 'data/query_outputs'
-    # query_outputs_dir = 'data/query_outputs-evosuite'
-    os.makedirs(f'data/schemas/{project}', exist_ok=True)
+    projects_dir = f'java_projects/cleaned_final_projects{args.suffix}/'
+    query_outputs_dir = f'data/query_outputs{args.suffix}'
+    os.makedirs(f'data/schemas{args.suffix}/{project}', exist_ok=True)
     schemas = {}
 
     imports_query_out = f'{query_outputs_dir}/{project}/{project}_imports.txt'
@@ -384,6 +382,9 @@ def create_schema(args):
         path = start[start.find(':')+1:start.find(':', start.find(':')+1)]
         path = projects_dir + path[path.find(project):]
 
+        if path.endswith('.class') or 'new' in class_name or '{' in class_name:
+            continue
+
         schemas[path]["classes"][class_name]["is_abstract"] = True if is_abstract == 'true' else False
 
         if parent_class == 'Object':
@@ -509,15 +510,16 @@ def create_schema(args):
 
     for k,v in schemas.items():
         key = k[k.find(project):].replace('/', '.')
-        # if 'ESTest' not in key:
-        #     continue
+        if args.suffix == '_evosuite' and 'ESTest' not in key:
+            continue
         key = key.replace('.java', '')
-        with open(f'data/schemas/{project}/{key}.json', 'w') as f:
+        with open(f'data/schemas{args.suffix}/{project}/{key}.json', 'w') as f:
             json.dump(v, f, indent=4)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create schema for the project')
     parser.add_argument('--project_name', type=str, help='Name of the project')
+    parser.add_argument('--suffix', type=str, help='suffix')
     args = parser.parse_args()
     create_schema(args)

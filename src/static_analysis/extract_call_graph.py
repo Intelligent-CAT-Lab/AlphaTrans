@@ -1,21 +1,18 @@
 import json
 import argparse
-
+import tqdm
 
 def main(args):
 
     project = args.project_name
-    projects_dir = 'java_projects/cleaned_final_projects/'
-    # projects_dir = 'java_projects/cleaned_final_projects_evosuite/'
-
-    query_outputs_dir = 'data/query_outputs'
-    # query_outputs_dir = 'data/query_outputs-evosuite'
+    projects_dir = f'java_projects/cleaned_final_projects{args.suffix}/'
+    query_outputs_dir = f'data/query_outputs{args.suffix}'
 
     method_call_graph = []
     with open(f'{query_outputs_dir}/{project}/{project}_call_graph.txt') as f:
         method_call_graph = f.readlines()
     
-    for line in method_call_graph:
+    for line in tqdm.tqdm(method_call_graph):
         splitted_line = [x.strip() for x in line.split('|') if x.strip() != '']
 
         if len(splitted_line) != 5:
@@ -23,8 +20,8 @@ def main(args):
 
         call_location, caller_name, caller_location, callee_name, callee_location = splitted_line
 
-        # if 'ESTest' not in call_location:
-        #     continue
+        if args.suffix == '_evosuite' and 'ESTest' not in call_location:
+            continue
 
         if call_location == caller_location:
             continue
@@ -117,7 +114,7 @@ def main(args):
         callee_method_class_name, callee_method_key_name = None, None
         callee_schema = {}
         is_available = False
-        with open(f'data/schemas/{project}/{callee_schema_name}.json') as f:
+        with open(f'data/schemas{args.suffix}/{project}/{callee_schema_name}.json') as f:
             callee_schema = json.load(f)
             for class_ in callee_schema['classes']:
 
@@ -138,7 +135,7 @@ def main(args):
 
         caller_schema = {}
         is_available = False
-        with open(f'data/schemas/{project}/{caller_schema_name}.json') as f:
+        with open(f'data/schemas{args.suffix}/{project}/{caller_schema_name}.json') as f:
             caller_schema = json.load(f)
             for class_ in caller_schema['classes']:
 
@@ -151,12 +148,13 @@ def main(args):
 
         assert is_available, f'caller is not available: {caller_name} in {caller_schema_name}'
 
-        with open(f'data/schemas/{project}/{caller_schema_name}.json', 'w') as f:
+        with open(f'data/schemas{args.suffix}/{project}/{caller_schema_name}.json', 'w') as f:
             json.dump(caller_schema, f, indent=4)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='extract call graph of preprocessed project')
-    parser.add_argument('--project_name', type=str, help='Name of the project')    
+    parser.add_argument('--project_name', type=str, help='Name of the project')
+    parser.add_argument('--suffix', type=str, help='suffix')
     args = parser.parse_args()
     main(args)
