@@ -95,154 +95,32 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         return new ColognePhonetic();
     }
 
-    @Test(expected = org.junit.ComparisonFailure.class)
-    public void testCanFail() throws EncoderException {
-        this.checkEncoding("/", "Fehler");
-    }
+    
 
-    @Test
-    public void testAabjoe() throws EncoderException {
-        this.checkEncoding("01", "Aabjoe");
-    }
+    
 
-    @Test
-    public void testAaclan() throws EncoderException {
-        this.checkEncoding("0856", "Aaclan");
-    }
+    
 
     /**
      * Tests [CODEC-122]
      *
      * @throws EncoderException for some failure scenarios
      */
-    @Test
-    public void testAychlmajrForCodec122() throws EncoderException {
-        this.checkEncoding("04567", "Aychlmajr");
-    }
+    
 
-    @Test
-    public void testEdgeCases() throws EncoderException {
-        final String[][] data = {
-            {"a", "0"},
-            {"e", "0"},
-            {"i", "0"},
-            {"o", "0"},
-            {"u", "0"},
-            {"\u00E4", "0"}, // a-umlaut
-            {"\u00F6", "0"}, // o-umlaut
-            {"\u00FC", "0"}, // u-umlaut
-            {"\u00DF", "8"}, // small sharp s
-            {"aa", "0"},
-            {"ha", "0"},
-            {"h", ""},
-            {"aha", "0"},
-            {"b", "1"},
-            {"p", "1"},
-            {"ph", "3"},
-            {"f", "3"},
-            {"v", "3"},
-            {"w", "3"},
-            {"g", "4"},
-            {"k", "4"},
-            {"q", "4"},
-            {"x", "48"},
-            {"ax", "048"},
-            {"cx", "48"},
-            {"l", "5"},
-            {"cl", "45"},
-            {"acl", "085"},
-            {"mn", "6"},
-            {"{mn}", "6"}, // test chars above Z
-            {"r", "7"}
-        };
-        this.checkEncodings(data);
-    }
+    
 
-    @Test
-    public void testExamples() throws EncoderException {
-        final String[][] data = {
-            {"m\u00DCller", "657"}, // mÜller - why upper case U-umlaut?
-            {"m\u00FCller", "657"}, // müller - add equivalent lower-case
-            {"schmidt", "862"},
-            {"schneider", "8627"},
-            {"fischer", "387"},
-            {"weber", "317"},
-            {"wagner", "3467"},
-            {"becker", "147"},
-            {"hoffmann", "0366"},
-            {"sch\u00C4fer", "837"}, // schÄfer - why upper case A-umlaut ?
-            {"sch\u00e4fer", "837"}, // schäfer - add equivalent lower-case
-            {"Breschnew", "17863"},
-            {"Wikipedia", "3412"},
-            {"peter", "127"},
-            {"pharma", "376"},
-            {"m\u00f6nchengladbach", "664645214"}, // mönchengladbach
-            {"deutsch", "28"},
-            {"deutz", "28"},
-            {"hamburg", "06174"},
-            {"hannover", "0637"},
-            {"christstollen", "478256"},
-            {"Xanthippe", "48621"},
-            {"Zacharias", "8478"},
-            {"Holzbau", "0581"},
-            {"matsch", "68"},
-            {"matz", "68"},
-            {"Arbeitsamt", "071862"},
-            {"Eberhard", "01772"},
-            {"Eberhardt", "01772"},
-            {"Celsius", "8588"},
-            {"Ace", "08"},
-            {"shch", "84"}, // CODEC-254
-            {"xch", "484"}, // CODEC-255
-            {"heithabu", "021"}
-        };
-        this.checkEncodings(data);
-    }
+    
 
-    @Test
-    public void testHyphen() throws EncoderException {
-        final String[][] data = {
-            {"bergisch-gladbach", "174845214"}, {"M\u00fcller-L\u00fcdenscheidt", "65752682"}
-        }; // Müller-Lüdenscheidt
-        this.checkEncodings(data);
-    }
+    
 
-    @Test
-    public void testIsEncodeEquals() {
-        final String[][] data = {
-            {"Muller", "M\u00fcller"}, // Müller
-            {"Meyer", "Mayr"},
-            {"house", "house"},
-            {"House", "house"},
-            {"Haus", "house"},
-            {"ganz", "Gans"},
-            {"ganz", "G\u00e4nse"}, // Gänse
-            {"Miyagi", "Miyako"}
-        };
-        for (final String[] element : data) {
-            final boolean encodeEqual =
-                    this.getStringEncoder().isEncodeEqual(element[1], element[0]);
-            Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
-        }
-    }
+    
 
-    @Test
-    public void testVariationsMella() throws EncoderException {
-        final String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
-        this.checkEncodingVariations("65", data);
-    }
+    
 
-    @Test
-    public void testVariationsMeyer() throws EncoderException {
-        final String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
-        this.checkEncodingVariations("67", data);
-    }
+    
 
-    @Test
-    public void testSpecialCharsBetweenSameLetters() throws EncoderException {
-        final String data[] = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
-        this.checkEncodingVariations("28282", data);
-    }
+    
 
     public static void main(final String args[]) {
         final ColognePhonetic coder = new ColognePhonetic();
@@ -250,6 +128,26 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             final String code = coder.encode1(arg);
             System.out.println("'" + arg + "' = '" + code + "'");
         }
+    }
+
+    @Test(expected = org.junit.ComparisonFailure.class)
+    public void testCanFail_test0_decomposed() throws EncoderException {
+        this.checkEncoding("/", "Fehler");
+    }
+
+    @Test
+    public void testAabjoe_test0_decomposed() throws EncoderException {
+        this.checkEncoding("01", "Aabjoe");
+    }
+
+    @Test
+    public void testAaclan_test0_decomposed() throws EncoderException {
+        this.checkEncoding("0856", "Aaclan");
+    }
+
+    @Test
+    public void testAychlmajrForCodec122_test0_decomposed() throws EncoderException {
+        this.checkEncoding("04567", "Aychlmajr");
     }
 
     @Test
@@ -287,6 +185,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"{mn}", "6"}, // test chars above Z
             {"r", "7"}
         };
+        this.checkEncodings(data);
     }
 
     @Test
@@ -327,6 +226,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"xch", "484"}, // CODEC-255
             {"heithabu", "021"}
         };
+        this.checkEncodings(data);
     }
 
     @Test
@@ -334,6 +234,7 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
         final String[][] data = {
             {"bergisch-gladbach", "174845214"}, {"M\u00fcller-L\u00fcdenscheidt", "65752682"}
         };
+        this.checkEncodings(data);
     }
 
     @Test
@@ -348,20 +249,28 @@ public class ColognePhoneticTest extends StringEncoderAbstractTest<ColognePhonet
             {"ganz", "G\u00e4nse"}, // Gänse
             {"Miyagi", "Miyako"}
         };
+        for (final String[] element : data) {
+            final boolean encodeEqual =
+                    this.getStringEncoder().isEncodeEqual(element[1], element[0]);
+            Assert.assertTrue(element[1] + " != " + element[0], encodeEqual);
+        }
     }
 
     @Test
     public void testVariationsMella_test0_decomposed() throws EncoderException {
         final String data[] = {"mella", "milah", "moulla", "mellah", "muehle", "mule"};
+        this.checkEncodingVariations("65", data);
     }
 
     @Test
     public void testVariationsMeyer_test0_decomposed() throws EncoderException {
         final String data[] = {"Meier", "Maier", "Mair", "Meyer", "Meyr", "Mejer", "Major"};
+        this.checkEncodingVariations("67", data);
     }
 
     @Test
     public void testSpecialCharsBetweenSameLetters_test0_decomposed() throws EncoderException {
         final String data[] = {"Test test", "Testtest", "Test-test", "TesT#Test", "TesT?test"};
+        this.checkEncodingVariations("28282", data);
     }
 }

@@ -61,87 +61,6 @@ public abstract class BaseTestProxiedObjectPool {
     protected abstract ProxySource<TestObject> getproxySource();
 
     @Test
-    public void testAccessAfterInvalidate() throws Exception {
-        final TestObject obj = pool.borrowObject();
-        assertNotNull(obj);
-
-        obj.setData(DATA1);
-        assertEquals(DATA1, obj.getData());
-
-        pool.invalidateObject0(obj);
-
-        assertNotNull(obj);
-
-        assertThrows(IllegalStateException.class, obj::getData);
-    }
-
-    @Test
-    public void testAccessAfterReturn() throws Exception {
-        final TestObject obj = pool.borrowObject();
-        assertNotNull(obj);
-
-        obj.setData(DATA1);
-        assertEquals(DATA1, obj.getData());
-
-        pool.returnObject(obj);
-
-        assertNotNull(obj);
-
-        assertThrows(IllegalStateException.class, obj::getData);
-    }
-
-    @Test
-    public void testBorrowObject() throws Exception {
-        final TestObject obj = pool.borrowObject();
-        assertNotNull(obj);
-
-        obj.setData(DATA1);
-        assertEquals(DATA1, obj.getData());
-
-        pool.returnObject(obj);
-    }
-
-    @Test
-    public void testPassThroughMethods01() throws Exception {
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-
-        pool.addObject();
-
-        assertEquals(0, pool.getNumActive());
-        assertEquals(1, pool.getNumIdle());
-
-        pool.clear();
-
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-    }
-
-    @Test
-    public void testPassThroughMethods02() {
-        pool.close();
-
-        assertThrows(IllegalStateException.class, () -> pool.addObject());
-    }
-
-    @Test
-    public void testUsageTracking() throws Exception {
-        final TestObject obj = pool.borrowObject();
-        assertNotNull(obj);
-
-        obj.setData(DATA1);
-
-        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());
-
-        pool.borrowObject();
-
-        final String logOutput = log.getBuffer().toString();
-
-        assertTrue(logOutput.contains("Pooled object created"));
-        assertTrue(logOutput.contains("The last code to use this object was"));
-    }
-
-    @Test
     public void testAccessAfterInvalidate_test0_decomposed() throws Exception {
         final TestObject obj = pool.borrowObject();
     }
@@ -159,7 +78,6 @@ public abstract class BaseTestProxiedObjectPool {
         assertNotNull(obj);
         obj.setData(DATA1);
         assertEquals(DATA1, obj.getData());
-        pool.invalidateObject0(obj);
     }
 
     @Test
@@ -169,7 +87,17 @@ public abstract class BaseTestProxiedObjectPool {
         obj.setData(DATA1);
         assertEquals(DATA1, obj.getData());
         pool.invalidateObject0(obj);
+    }
+
+    @Test
+    public void testAccessAfterInvalidate_test4_decomposed() throws Exception {
+        final TestObject obj = pool.borrowObject();
         assertNotNull(obj);
+        obj.setData(DATA1);
+        assertEquals(DATA1, obj.getData());
+        pool.invalidateObject0(obj);
+        assertNotNull(obj);
+        assertThrows(IllegalStateException.class, obj::getData);
     }
 
     @Test
@@ -190,7 +118,6 @@ public abstract class BaseTestProxiedObjectPool {
         assertNotNull(obj);
         obj.setData(DATA1);
         assertEquals(DATA1, obj.getData());
-        pool.returnObject(obj);
     }
 
     @Test
@@ -200,7 +127,17 @@ public abstract class BaseTestProxiedObjectPool {
         obj.setData(DATA1);
         assertEquals(DATA1, obj.getData());
         pool.returnObject(obj);
+    }
+
+    @Test
+    public void testAccessAfterReturn_test4_decomposed() throws Exception {
+        final TestObject obj = pool.borrowObject();
         assertNotNull(obj);
+        obj.setData(DATA1);
+        assertEquals(DATA1, obj.getData());
+        pool.returnObject(obj);
+        assertNotNull(obj);
+        assertThrows(IllegalStateException.class, obj::getData);
     }
 
     @Test
@@ -221,6 +158,15 @@ public abstract class BaseTestProxiedObjectPool {
         assertNotNull(obj);
         obj.setData(DATA1);
         assertEquals(DATA1, obj.getData());
+    }
+
+    @Test
+    public void testBorrowObject_test3_decomposed() throws Exception {
+        final TestObject obj = pool.borrowObject();
+        assertNotNull(obj);
+        obj.setData(DATA1);
+        assertEquals(DATA1, obj.getData());
+        pool.returnObject(obj);
     }
 
     @Test
@@ -280,8 +226,26 @@ public abstract class BaseTestProxiedObjectPool {
     }
 
     @Test
+    public void testPassThroughMethods01_test7_decomposed() throws Exception {
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.addObject();
+        assertEquals(0, pool.getNumActive());
+        assertEquals(1, pool.getNumIdle());
+        pool.clear();
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+    }
+
+    @Test
     public void testPassThroughMethods02_test0_decomposed()  {
         pool.close();
+    }
+
+    @Test
+    public void testPassThroughMethods02_test1_decomposed()  {
+        pool.close();
+        assertThrows(IllegalStateException.class, () -> pool.addObject());
     }
 
     @Test
@@ -294,9 +258,6 @@ public abstract class BaseTestProxiedObjectPool {
         final TestObject obj = pool.borrowObject();
         assertNotNull(obj);
         obj.setData(DATA1);
-        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());
-        pool.borrowObject();
-        final String logOutput = log.getBuffer().toString();
     }
 
     @Test
@@ -306,7 +267,27 @@ public abstract class BaseTestProxiedObjectPool {
         obj.setData(DATA1);
         Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());
         pool.borrowObject();
+    }
+
+    @Test
+    public void testUsageTracking_test3_decomposed() throws Exception {
+        final TestObject obj = pool.borrowObject();
+        assertNotNull(obj);
+        obj.setData(DATA1);
+        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());
+        pool.borrowObject();
+        final String logOutput = log.getBuffer().toString();
+    }
+
+    @Test
+    public void testUsageTracking_test4_decomposed() throws Exception {
+        final TestObject obj = pool.borrowObject();
+        assertNotNull(obj);
+        obj.setData(DATA1);
+        Thread.sleep(ABANDONED_TIMEOUT_SECS.plusSeconds(2).toMillis());
+        pool.borrowObject();
         final String logOutput = log.getBuffer().toString();
         assertTrue(logOutput.contains("Pooled object created"));
+        assertTrue(logOutput.contains("The last code to use this object was"));
     }
 }

@@ -39,20 +39,14 @@ public class Base32OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase32EmptyOutputStreamMimeChunkSize() throws Exception {
-        testBase32EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
-    }
+    
 
     /**
      * Test the Base32OutputStream implementation against empty input.
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase32EmptyOutputStreamPemChunkSize() throws Exception {
-        testBase32EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
-    }
+    
 
     private void testBase32EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
@@ -66,40 +60,14 @@ public class Base32OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase32OutputStreamByChunk() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-
-        final BaseNCodec codec = Base32.Base320();
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByChunk(encoded, decoded, 0, LF);
-        }
-    }
+    
 
     /**
      * Test the Base32OutputStream implementation
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase32OutputStreamByteByByte() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByteByByte(encoded, decoded, 76, CR_LF);
-
-        final BaseNCodec codec = Base32.Base320();
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByteByByte(encoded, decoded, 0, LF);
-        }
-    }
+    
 
     /**
      * Test method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2.
@@ -212,8 +180,103 @@ public class Base32OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
+    
+
+    /**
+     * Tests Base32OutputStream.write(null).
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    
+
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception for some failure scenarios.
+     */
+
     @Test
-    public void testWriteOutOfBounds() throws Exception {
+    public void testBase32EmptyOutputStreamMimeChunkSize_test0_decomposed() throws Exception {
+        testBase32EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testBase32EmptyOutputStreamPemChunkSize_test0_decomposed() throws Exception {
+        testBase32EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testBase32OutputStreamByChunk_test0_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase32OutputStreamByChunk_test1_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+    }
+
+    @Test
+    public void testBase32OutputStreamByChunk_test2_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        final BaseNCodec codec = Base32.Base320();
+    }
+
+    @Test
+    public void testBase32OutputStreamByChunk_test3_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        final BaseNCodec codec = Base32.Base320();
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByChunk(encoded, decoded, 0, LF);
+        }
+    }
+
+    @Test
+    public void testBase32OutputStreamByteByByte_test0_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase32OutputStreamByteByByte_test1_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+    }
+
+    @Test
+    public void testBase32OutputStreamByteByByte_test2_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        final BaseNCodec codec = Base32.Base320();
+    }
+
+    @Test
+    public void testBase32OutputStreamByteByByte_test3_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
+        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        final BaseNCodec codec = Base32.Base320();
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByteByByte(encoded, decoded, 0, LF);
+        }
+    }
+
+    @Test
+    public void testWriteOutOfBounds_test0_decomposed() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final BaseNCodecOutputStream out = Base32OutputStream.Base32OutputStream0(bout)) {
@@ -252,13 +315,8 @@ public class Base32OutputStreamTest {
         }
     }
 
-    /**
-     * Tests Base32OutputStream.write(null).
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testWriteToNullCoverage() throws Exception {
+    public void testWriteToNullCoverage_test0_decomposed() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final BaseNCodecOutputStream out = Base32OutputStream.Base32OutputStream0(bout)) {
             out.write0(null, 0, 0);
@@ -267,13 +325,8 @@ public class Base32OutputStreamTest {
         }
     }
 
-    /**
-     * Test strict decoding.
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testStrictDecoding() throws Exception {
+    public void testStrictDecoding_test0_decomposed() throws Exception {
         for (final String s : Base32Test.BASE32_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -293,44 +346,5 @@ public class Base32OutputStreamTest {
             } catch (final IllegalArgumentException ex) {
             }
         }
-    }
-
-    @Test
-    public void testBase32OutputStreamByChunk_test0_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase32OutputStreamByChunk_test1_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-        final BaseNCodec codec = Base32.Base320();
-    }
-
-    @Test
-    public void testBase32OutputStreamByteByByte_test0_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase32OutputStreamByteByByte_test1_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8(Base32TestData.BASE32_FIXTURE);
-        byte[] decoded = StringUtils.getBytesUtf8(Base32TestData.STRING_FIXTURE);
-        testByteByByte(encoded, decoded, 76, CR_LF);
-        final BaseNCodec codec = Base32.Base320();
-    }
-
-    @Test
-    public void testWriteOutOfBounds_test0_decomposed() throws Exception {
-        final byte[] buf = new byte[1024];
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    }
-
-    @Test
-    public void testWriteToNullCoverage_test0_decomposed() throws Exception {
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     }
 }

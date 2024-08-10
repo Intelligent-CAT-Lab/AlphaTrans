@@ -43,26 +43,7 @@ public class PureJavaCrc32Test {
     private final CRC32 theirs = new CRC32();
     private final PureJavaCrc32 ours = new PureJavaCrc32();
 
-    @Test
-    public void testCorrectness() throws Exception {
-        checkSame();
-
-        theirs.update(104);
-        ours.update1(104);
-        checkSame();
-
-        checkOnBytes(new byte[] {40, 60, 97, -70}, false);
-
-        checkOnBytes("hello world!".getBytes(StandardCharsets.UTF_8), false);
-
-        final Random random1 = new Random();
-        final Random random2 = new Random();
-        for (int i = 0; i < 10000; i++) {
-            final byte randomBytes[] = new byte[random1.nextInt(2048)];
-            random2.nextBytes(randomBytes);
-            checkOnBytes(randomBytes, false);
-        }
-    }
+    
 
     private void checkOnBytes(final byte[] bytes, final boolean print) {
         theirs.reset();
@@ -408,12 +389,74 @@ public class PureJavaCrc32Test {
     @Test
     public void testCorrectness_test0_decomposed() throws Exception {
         checkSame();
+    }
+
+    @Test
+    public void testCorrectness_test1_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+    }
+
+    @Test
+    public void testCorrectness_test2_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+        ours.update1(104);
+    }
+
+    @Test
+    public void testCorrectness_test3_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+        ours.update1(104);
+        checkSame();
+    }
+
+    @Test
+    public void testCorrectness_test4_decomposed() throws Exception {
+        checkSame();
         theirs.update(104);
         ours.update1(104);
         checkSame();
         checkOnBytes(new byte[] {40, 60, 97, -70}, false);
+    }
+
+    @Test
+    public void testCorrectness_test5_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+        ours.update1(104);
+        checkSame();
+        checkOnBytes(new byte[] {40, 60, 97, -70}, false);
+        "hello world!".getBytes(StandardCharsets.UTF_8);
+    }
+
+    @Test
+    public void testCorrectness_test6_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+        ours.update1(104);
+        checkSame();
+        checkOnBytes(new byte[] {40, 60, 97, -70}, false);
+        "hello world!".getBytes(StandardCharsets.UTF_8);
+        checkOnBytes("hello world!".getBytes(StandardCharsets.UTF_8), false);
+    }
+
+    @Test
+    public void testCorrectness_test7_decomposed() throws Exception {
+        checkSame();
+        theirs.update(104);
+        ours.update1(104);
+        checkSame();
+        checkOnBytes(new byte[] {40, 60, 97, -70}, false);
+        "hello world!".getBytes(StandardCharsets.UTF_8);
         checkOnBytes("hello world!".getBytes(StandardCharsets.UTF_8), false);
         final Random random1 = new Random();
         final Random random2 = new Random();
+        for (int i = 0; i < 10000; i++) {
+            final byte randomBytes[] = new byte[random1.nextInt(2048)];
+            random2.nextBytes(randomBytes);
+            checkOnBytes(randomBytes, false);
+        }
     }
 }

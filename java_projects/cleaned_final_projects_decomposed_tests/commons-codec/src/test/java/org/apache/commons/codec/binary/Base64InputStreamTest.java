@@ -52,16 +52,7 @@ public class Base64InputStreamTest {
      * Tests the bug reported in CODEC-105. Bad interactions with InputStream when reading one byte
      * at a time.
      */
-    @Test
-    public void testCodec105() throws IOException {
-        try (final BaseNCodecInputStream in =
-                Base64InputStream.Base64InputStream2(
-                        new Codec105ErrorInputStream(), true, 0, null)) {
-            for (int i = 0; i < 5; i++) {
-                in.read0();
-            }
-        }
-    }
+    
 
     /**
      * Test for the CODEC-101 bug: InputStream.read(byte[]) should never return 0 because Java's
@@ -69,20 +60,7 @@ public class Base64InputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testCodec101() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        try (final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais)) {
-            final byte[] result = new byte[8192];
-            int c = in.read(result);
-            assertTrue("Codec101: First read successful [c=" + c + "]", c > 0);
-
-            c = in.read(result);
-            assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
-        }
-    }
+    
 
     /**
      * Another test for the CODEC-101 bug: In commons-codec-1.4 this test shows InputStreamReader
@@ -102,18 +80,7 @@ public class Base64InputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testInputStreamReader() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);
-        final InputStreamReader isr = new InputStreamReader(in);
-        try (final BufferedReader br = new BufferedReader(isr)) {
-            final String line = br.readLine();
-            assertNotNull("Codec101:  InputStreamReader works!", line);
-        }
-    }
+    
 
     /**
      * Test the Base64InputStream implementation against the special NPE inducing input identified
@@ -127,39 +94,21 @@ public class Base64InputStreamTest {
      *
      * @throws Throwable for some failure scenarios.
      */
-    @Test
-    public void testAvailable() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
-            assertEquals(1, b64stream.available());
-            assertEquals(6, b64stream.skip(10));
-            assertEquals(0, b64stream.available());
-            assertEquals(-1, b64stream.read0());
-            assertEquals(-1, b64stream.read0());
-            assertEquals(0, b64stream.available());
-        }
-    }
+    
 
     /**
      * Tests the Base64InputStream implementation against empty input.
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64EmptyInputStreamMimeChuckSize() throws Exception {
-        testBase64EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
-    }
+    
 
     /**
      * Tests the Base64InputStream implementation against empty input.
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64EmptyInputStreamPemChuckSize() throws Exception {
-        testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
-    }
+    
 
     private void testBase64EmptyInputStream(final int chuckSize) throws Exception {
         final byte[] emptyEncoded = {};
@@ -293,15 +242,7 @@ public class Base64InputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testMarkSupported() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-        try (final BaseNCodecInputStream in =
-                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {
-            assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
-        }
-    }
+    
 
     /**
      * Tests read using different buffer sizes
@@ -314,8 +255,174 @@ public class Base64InputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
+    
+
+    /**
+     * Tests read with null.
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests read throwing IndexOutOfBoundsException
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping number of characters larger than the internal buffer.
+     *
+     * @throws Throwable for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping as a noop
+     *
+     * @throws Throwable for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping past the end of a stream.
+     *
+     * @throws Throwable for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping to the end of a stream.
+     *
+     * @throws Throwable for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests if negative arguments to skip are handled correctly.
+     *
+     * @throws Throwable for some failure scenarios.
+     */
+    
+
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception for some failure scenarios.
+     */
+
     @Test
-    public void testRead0() throws Exception {
+    public void testCodec105_test0_decomposed() throws IOException {
+        try (final BaseNCodecInputStream in =
+                Base64InputStream.Base64InputStream2(
+                        new Codec105ErrorInputStream(), true, 0, null)) {
+            for (int i = 0; i < 5; i++) {
+                in.read0();
+            }
+        }
+    }
+
+    @Test
+    public void testCodec101_test0_decomposed() throws Exception {
+        final byte[] codec101 =
+                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+    }
+
+    @Test
+    public void testCodec101_test1_decomposed() throws Exception {
+        final byte[] codec101 =
+                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        try (final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais)) {
+            final byte[] result = new byte[8192];
+            int c = in.read(result);
+            assertTrue("Codec101: First read successful [c=" + c + "]", c > 0);
+
+            c = in.read(result);
+            assertTrue("Codec101: Second read should report end-of-stream [c=" + c + "]", c < 0);
+        }
+    }
+
+    @Test
+    public void testInputStreamReader_test0_decomposed() throws Exception {
+        final byte[] codec101 =
+                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+    }
+
+    @Test
+    public void testInputStreamReader_test1_decomposed() throws Exception {
+        final byte[] codec101 =
+                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);
+    }
+
+    @Test
+    public void testInputStreamReader_test2_decomposed() throws Exception {
+        final byte[] codec101 =
+                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
+        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);
+        final InputStreamReader isr = new InputStreamReader(in);
+        try (final BufferedReader br = new BufferedReader(isr)) {
+            final String line = br.readLine();
+            assertNotNull("Codec101:  InputStreamReader works!", line);
+        }
+    }
+
+    @Test
+    public void testAvailable_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
+    @Test
+    public void testAvailable_test1_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+        try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
+            assertEquals(1, b64stream.available());
+            assertEquals(6, b64stream.skip(10));
+            assertEquals(0, b64stream.available());
+            assertEquals(-1, b64stream.read0());
+            assertEquals(-1, b64stream.read0());
+            assertEquals(0, b64stream.available());
+        }
+    }
+
+    @Test
+    public void testBase64EmptyInputStreamMimeChuckSize_test0_decomposed() throws Exception {
+        testBase64EmptyInputStream(BaseNCodec.MIME_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testBase64EmptyInputStreamPemChuckSize_test0_decomposed() throws Exception {
+        testBase64EmptyInputStream(BaseNCodec.PEM_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testMarkSupported_test0_decomposed() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testMarkSupported_test1_decomposed() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
+        try (final BaseNCodecInputStream in =
+                Base64InputStream.Base64InputStream2(bin, true, 4, new byte[] {0, 0, 0})) {
+            assertFalse("Base64InputStream.markSupported() is false", in.markSupported());
+        }
+    }
+
+    @Test
+    public void testRead0_test0_decomposed() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testRead0_test1_decomposed() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         int bytesRead = 0;
@@ -327,13 +434,13 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests read with null.
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testReadNull() throws Exception {
+    public void testReadNull_test0_decomposed() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testReadNull_test1_decomposed() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final BaseNCodecInputStream in =
@@ -344,13 +451,13 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests read throwing IndexOutOfBoundsException
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testReadOutOfBounds() throws Exception {
+    public void testReadOutOfBounds_test0_decomposed() throws Exception {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testReadOutOfBounds_test1_decomposed() throws Exception {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -391,13 +498,14 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping number of characters larger than the internal buffer.
-     *
-     * @throws Throwable for some failure scenarios.
-     */
     @Test
-    public void testSkipBig() throws Throwable {
+    public void testSkipBig_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
+    @Test
+    public void testSkipBig_test1_decomposed() throws Throwable {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
@@ -407,13 +515,14 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping as a noop
-     *
-     * @throws Throwable for some failure scenarios.
-     */
     @Test
-    public void testSkipNone() throws Throwable {
+    public void testSkipNone_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
+    @Test
+    public void testSkipNone_test1_decomposed() throws Throwable {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
@@ -426,13 +535,14 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping past the end of a stream.
-     *
-     * @throws Throwable for some failure scenarios.
-     */
     @Test
-    public void testSkipPastEnd() throws Throwable {
+    public void testSkipPastEnd_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
+    @Test
+    public void testSkipPastEnd_test1_decomposed() throws Throwable {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
@@ -442,13 +552,14 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping to the end of a stream.
-     *
-     * @throws Throwable for some failure scenarios.
-     */
     @Test
-    public void testSkipToEnd() throws Throwable {
+    public void testSkipToEnd_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
+    @Test
+    public void testSkipToEnd_test1_decomposed() throws Throwable {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
@@ -458,134 +569,18 @@ public class Base64InputStreamTest {
         }
     }
 
-    /**
-     * Tests if negative arguments to skip are handled correctly.
-     *
-     * @throws Throwable for some failure scenarios.
-     */
+    @Test
+    public void testSkipWrongArgument_test0_decomposed() throws Throwable {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
+    }
+
     @Test(expected = IllegalArgumentException.class)
-    public void testSkipWrongArgument() throws Throwable {
+    public void testSkipWrongArgument_test1_decomposed() throws Throwable {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
         try (final BaseNCodecInputStream b64stream = Base64InputStream.Base64InputStream0(ins)) {
             b64stream.skip(-10);
         }
-    }
-
-    /**
-     * Test strict decoding.
-     *
-     * @throws Exception for some failure scenarios.
-     */
-
-    @Test
-    public void testCodec101_test0_decomposed() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-    }
-
-    @Test
-    public void testCodec101_test1_decomposed() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-    }
-
-    @Test
-    public void testInputStreamReader_test0_decomposed() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-    }
-
-    @Test
-    public void testInputStreamReader_test1_decomposed() throws Exception {
-        final byte[] codec101 =
-                StringUtils.getBytesUtf8(Base64TestData.CODEC_101_INPUT_LENGTH_IS_MULTIPLE_OF_3);
-        final ByteArrayInputStream bais = new ByteArrayInputStream(codec101);
-        final BaseNCodecInputStream in = Base64InputStream.Base64InputStream0(bais);
-        final InputStreamReader isr = new InputStreamReader(in);
-    }
-
-    @Test
-    public void testAvailable_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-    }
-
-    @Test
-    public void testMarkSupported_test0_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testMarkSupported_test1_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testRead0_test0_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testRead0_test1_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final byte[] buf = new byte[1024];
-        int bytesRead = 0;
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testReadNull_test0_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testReadNull_test1_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testReadOutOfBounds_test0_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testReadOutOfBounds_test1_decomposed() throws Exception {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final byte[] buf = new byte[1024];
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testSkipBig_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-    }
-
-    @Test
-    public void testSkipNone_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-    }
-
-    @Test
-    public void testSkipPastEnd_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-    }
-
-    @Test
-    public void testSkipToEnd_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
-    }
-
-    @Test
-    public void testSkipWrongArgument_test0_decomposed() throws Throwable {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B64));
     }
 }

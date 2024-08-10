@@ -89,7 +89,16 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseAddObject() throws Exception {
+    public void testBaseAddObject_test0_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+    }
+
+    @Test
+    public void testBaseAddObject_test1_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -116,176 +125,6 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseBorrow() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        assertEquals(getNthObject(0), pool.borrowObject());
-        assertEquals(getNthObject(1), pool.borrowObject());
-        assertEquals(getNthObject(2), pool.borrowObject());
-        pool.close();
-    }
-
-    @Test
-    public void testBaseBorrowReturn() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        String obj0 = pool.borrowObject();
-        assertEquals(getNthObject(0), obj0);
-        String obj1 = pool.borrowObject();
-        assertEquals(getNthObject(1), obj1);
-        String obj2 = pool.borrowObject();
-        assertEquals(getNthObject(2), obj2);
-        pool.returnObject(obj2);
-        obj2 = pool.borrowObject();
-        assertEquals(getNthObject(2), obj2);
-        pool.returnObject(obj1);
-        obj1 = pool.borrowObject();
-        assertEquals(getNthObject(1), obj1);
-        pool.returnObject(obj0);
-        pool.returnObject(obj2);
-        obj2 = pool.borrowObject();
-        if (isLifo()) {
-            assertEquals(getNthObject(2), obj2);
-        }
-        if (isFifo()) {
-            assertEquals(getNthObject(0), obj2);
-        }
-
-        obj0 = pool.borrowObject();
-        if (isLifo()) {
-            assertEquals(getNthObject(0), obj0);
-        }
-        if (isFifo()) {
-            assertEquals(getNthObject(2), obj0);
-        }
-        pool.close();
-    }
-
-    @Test
-    public void testBaseClear() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        final String obj0 = pool.borrowObject();
-        final String obj1 = pool.borrowObject();
-        assertEquals(2, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        pool.returnObject(obj1);
-        pool.returnObject(obj0);
-        assertEquals(0, pool.getNumActive());
-        assertEquals(2, pool.getNumIdle());
-        pool.clear();
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        final Object obj2 = pool.borrowObject();
-        assertEquals(getNthObject(2), obj2);
-        pool.close();
-    }
-
-    @Test
-    public void testBaseClosePool() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        final String obj = pool.borrowObject();
-        pool.returnObject(obj);
-
-        pool.close();
-        assertThrows(IllegalStateException.class, pool::borrowObject);
-    }
-
-    @Test
-    public void testBaseInvalidateObject() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        final String obj0 = pool.borrowObject();
-        final String obj1 = pool.borrowObject();
-        assertEquals(2, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        pool.invalidateObject0(obj0);
-        assertEquals(1, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        pool.invalidateObject0(obj1);
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        pool.close();
-    }
-
-    @Test
-    public void testBaseNumActiveNumIdle() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-        assertEquals(0, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        final String obj0 = pool.borrowObject();
-        assertEquals(1, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        final String obj1 = pool.borrowObject();
-        assertEquals(2, pool.getNumActive());
-        assertEquals(0, pool.getNumIdle());
-        pool.returnObject(obj1);
-        assertEquals(1, pool.getNumActive());
-        assertEquals(1, pool.getNumIdle());
-        pool.returnObject(obj0);
-        assertEquals(0, pool.getNumActive());
-        assertEquals(2, pool.getNumIdle());
-        pool.close();
-    }
-
-    @Test
-    public void testClose() {
-        @SuppressWarnings("resource")
-        final ObjectPool<Object> pool = new TestObjectPool();
-
-        pool.close();
-        pool.close(); // should not error as of Pool 2.0.
-    }
-
-    @Test
-    public void testUnsupportedOperations() throws Exception {
-        if (!getClass().equals(TestBaseObjectPool.class)) {
-            return; // skip redundant tests
-        }
-        try (final ObjectPool<Object> pool = new TestObjectPool()) {
-
-            assertTrue(pool.getNumIdle() < 0, "Negative expected.");
-            assertTrue(pool.getNumActive() < 0, "Negative expected.");
-
-            assertThrows(UnsupportedOperationException.class, pool::clear);
-            assertThrows(UnsupportedOperationException.class, pool::addObject);
-        }
-    }
-
-    @Test
-    public void testBaseAddObject_test0_decomposed() throws Exception {
-        try {
-            pool = makeEmptyPool0(3);
-        } catch (final UnsupportedOperationException e) {
-            return; // skip this test if unsupported
-        }
-    }
-
-    @Test
     public void testBaseBorrow_test0_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
@@ -301,9 +140,88 @@ public class TestBaseObjectPool extends TestObjectPool {
         } catch (final UnsupportedOperationException e) {
             return; // skip this test if unsupported
         }
+        getNthObject(0);
+    }
+
+    @Test
+    public void testBaseBorrow_test2_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
         assertEquals(getNthObject(0), pool.borrowObject());
+    }
+
+    @Test
+    public void testBaseBorrow_test3_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
+        assertEquals(getNthObject(0), pool.borrowObject());
+        getNthObject(1);
+    }
+
+    @Test
+    public void testBaseBorrow_test4_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
+        assertEquals(getNthObject(0), pool.borrowObject());
+        getNthObject(1);
         assertEquals(getNthObject(1), pool.borrowObject());
+    }
+
+    @Test
+    public void testBaseBorrow_test5_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
+        assertEquals(getNthObject(0), pool.borrowObject());
+        getNthObject(1);
+        assertEquals(getNthObject(1), pool.borrowObject());
+        getNthObject(2);
+    }
+
+    @Test
+    public void testBaseBorrow_test6_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
+        assertEquals(getNthObject(0), pool.borrowObject());
+        getNthObject(1);
+        assertEquals(getNthObject(1), pool.borrowObject());
+        getNthObject(2);
         assertEquals(getNthObject(2), pool.borrowObject());
+    }
+
+    @Test
+    public void testBaseBorrow_test7_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        getNthObject(0);
+        assertEquals(getNthObject(0), pool.borrowObject());
+        getNthObject(1);
+        assertEquals(getNthObject(1), pool.borrowObject());
+        getNthObject(2);
+        assertEquals(getNthObject(2), pool.borrowObject());
+        pool.close();
     }
 
     @Test
@@ -313,11 +231,31 @@ public class TestBaseObjectPool extends TestObjectPool {
         } catch (final UnsupportedOperationException e) {
             return; // skip this test if unsupported
         }
-        String obj0 = pool.borrowObject();
     }
 
     @Test
     public void testBaseBorrowReturn_test1_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test2_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test3_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -329,7 +267,20 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseBorrowReturn_test2_decomposed() throws Exception {
+    public void testBaseBorrowReturn_test4_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test5_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -343,7 +294,38 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseBorrowReturn_test3_decomposed() throws Exception {
+    public void testBaseBorrowReturn_test6_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test7_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test8_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -360,7 +342,44 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseBorrowReturn_test4_decomposed() throws Exception {
+    public void testBaseBorrowReturn_test9_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test10_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test11_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -380,7 +399,197 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
-    public void testBaseBorrowReturn_test5_decomposed() throws Exception {
+    public void testBaseBorrowReturn_test12_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test13_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test14_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test15_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(2), obj2);
+        }
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test16_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(2), obj2);
+        }
+        if (isFifo()) {
+            assertEquals(getNthObject(0), obj2);
+        }
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test17_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(2), obj2);
+        }
+        if (isFifo()) {
+            assertEquals(getNthObject(0), obj2);
+        }
+        obj0 = pool.borrowObject();
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test18_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(2), obj2);
+        }
+        if (isFifo()) {
+            assertEquals(getNthObject(0), obj2);
+        }
+        obj0 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(0), obj0);
+        }
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test19_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -414,6 +623,44 @@ public class TestBaseObjectPool extends TestObjectPool {
         if (isFifo()) {
             assertEquals(getNthObject(2), obj0);
         }
+    }
+
+    @Test
+    public void testBaseBorrowReturn_test20_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        String obj0 = pool.borrowObject();
+        assertEquals(getNthObject(0), obj0);
+        String obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        String obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.returnObject(obj1);
+        obj1 = pool.borrowObject();
+        assertEquals(getNthObject(1), obj1);
+        pool.returnObject(obj0);
+        pool.returnObject(obj2);
+        obj2 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(2), obj2);
+        }
+        if (isFifo()) {
+            assertEquals(getNthObject(0), obj2);
+        }
+        obj0 = pool.borrowObject();
+        if (isLifo()) {
+            assertEquals(getNthObject(0), obj0);
+        }
+        if (isFifo()) {
+            assertEquals(getNthObject(2), obj0);
+        }
+        pool.close();
     }
 
     @Test
@@ -653,7 +900,62 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
+    public void testBaseClear_test14_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        final String obj0 = pool.borrowObject();
+        final String obj1 = pool.borrowObject();
+        assertEquals(2, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.returnObject(obj1);
+        pool.returnObject(obj0);
+        assertEquals(0, pool.getNumActive());
+        assertEquals(2, pool.getNumIdle());
+        pool.clear();
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        final Object obj2 = pool.borrowObject();
+        assertEquals(getNthObject(2), obj2);
+        pool.close();
+    }
+
+    @Test
     public void testBaseClosePool_test0_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+    }
+
+    @Test
+    public void testBaseClosePool_test1_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        final String obj = pool.borrowObject();
+    }
+
+    @Test
+    public void testBaseClosePool_test2_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        final String obj = pool.borrowObject();
+        pool.returnObject(obj);
+    }
+
+    @Test
+    public void testBaseClosePool_test3_decomposed() throws Exception {
         try {
             pool = makeEmptyPool0(3);
         } catch (final UnsupportedOperationException e) {
@@ -662,6 +964,19 @@ public class TestBaseObjectPool extends TestObjectPool {
         final String obj = pool.borrowObject();
         pool.returnObject(obj);
         pool.close();
+    }
+
+    @Test
+    public void testBaseClosePool_test4_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        final String obj = pool.borrowObject();
+        pool.returnObject(obj);
+        pool.close();
+        assertThrows(IllegalStateException.class, pool::borrowObject);
     }
 
     @Test
@@ -845,6 +1160,28 @@ public class TestBaseObjectPool extends TestObjectPool {
         pool.invalidateObject0(obj1);
         assertEquals(0, pool.getNumActive());
         assertEquals(0, pool.getNumIdle());
+    }
+
+    @Test
+    public void testBaseInvalidateObject_test12_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        final String obj0 = pool.borrowObject();
+        final String obj1 = pool.borrowObject();
+        assertEquals(2, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.invalidateObject0(obj0);
+        assertEquals(1, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.invalidateObject0(obj1);
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.close();
     }
 
     @Test
@@ -1088,9 +1425,40 @@ public class TestBaseObjectPool extends TestObjectPool {
     }
 
     @Test
+    public void testBaseNumActiveNumIdle_test15_decomposed() throws Exception {
+        try {
+            pool = makeEmptyPool0(3);
+        } catch (final UnsupportedOperationException e) {
+            return; // skip this test if unsupported
+        }
+        assertEquals(0, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        final String obj0 = pool.borrowObject();
+        assertEquals(1, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        final String obj1 = pool.borrowObject();
+        assertEquals(2, pool.getNumActive());
+        assertEquals(0, pool.getNumIdle());
+        pool.returnObject(obj1);
+        assertEquals(1, pool.getNumActive());
+        assertEquals(1, pool.getNumIdle());
+        pool.returnObject(obj0);
+        assertEquals(0, pool.getNumActive());
+        assertEquals(2, pool.getNumIdle());
+        pool.close();
+    }
+
+    @Test
     public void testClose_test0_decomposed()  {
         @SuppressWarnings("resource")
         final ObjectPool<Object> pool = new TestObjectPool();
+    }
+
+    @Test
+    public void testClose_test1_decomposed()  {
+        @SuppressWarnings("resource")
+        final ObjectPool<Object> pool = new TestObjectPool();
+        pool.close();
         pool.close();
     }
 
@@ -1098,6 +1466,21 @@ public class TestBaseObjectPool extends TestObjectPool {
     public void testUnsupportedOperations_test0_decomposed() throws Exception {
         if (!getClass().equals(TestBaseObjectPool.class)) {
             return; // skip redundant tests
+        }
+    }
+
+    @Test
+    public void testUnsupportedOperations_test1_decomposed() throws Exception {
+        if (!getClass().equals(TestBaseObjectPool.class)) {
+            return; // skip redundant tests
+        }
+        try (final ObjectPool<Object> pool = new TestObjectPool()) {
+
+            assertTrue(pool.getNumIdle() < 0, "Negative expected.");
+            assertTrue(pool.getNumActive() < 0, "Negative expected.");
+
+            assertThrows(UnsupportedOperationException.class, pool::clear);
+            assertThrows(UnsupportedOperationException.class, pool::addObject);
         }
     }
 }

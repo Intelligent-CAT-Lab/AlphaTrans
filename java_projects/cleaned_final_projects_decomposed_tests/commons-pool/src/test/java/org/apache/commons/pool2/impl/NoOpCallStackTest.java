@@ -24,20 +24,27 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class NoOpCallStackTest {
-    @Test
-    public void printStackTraceIsNoOp() {
-        final CallStack stack = NoOpCallStack.INSTANCE;
-        stack.fillInStackTrace();
-        final StringWriter writer = new StringWriter();
-        stack.printStackTrace(new PrintWriter(writer));
-        assertEquals("", writer.toString());
-    }
 
     @Test
     public void printStackTraceIsNoOp_test0_decomposed()  {
         final CallStack stack = NoOpCallStack.INSTANCE;
         stack.fillInStackTrace();
+    }
+
+    @Test
+    public void printStackTraceIsNoOp_test1_decomposed()  {
+        final CallStack stack = NoOpCallStack.INSTANCE;
+        stack.fillInStackTrace();
         final StringWriter writer = new StringWriter();
         stack.printStackTrace(new PrintWriter(writer));
+    }
+
+    @Test
+    public void printStackTraceIsNoOp_test2_decomposed()  {
+        final CallStack stack = NoOpCallStack.INSTANCE;
+        stack.fillInStackTrace();
+        final StringWriter writer = new StringWriter();
+        stack.printStackTrace(new PrintWriter(writer));
+        assertEquals("", writer.toString());
     }
 }

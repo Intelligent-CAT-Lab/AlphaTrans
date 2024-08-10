@@ -45,12 +45,7 @@ public class RFC1522CodecTest {
         }
     }
 
-    @Test
-    public void testNullInput() throws Exception {
-        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
-        assertNull(testcodec.decodeText(null));
-        assertNull(testcodec.encodeText1(null, CharEncoding.UTF_8));
-    }
+    
 
     private void assertExpectedDecoderException(final String s) throws Exception {
         final RFC1522TestCodec testcodec = new RFC1522TestCodec();
@@ -59,22 +54,6 @@ public class RFC1522CodecTest {
             fail("DecoderException should have been thrown");
         } catch (final DecoderException e) {
         }
-    }
-
-    @Test
-    public void testDecodeInvalid() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-        assertExpectedDecoderException("=?UTF-8?stuff?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff");
-        assertExpectedDecoderException("=??T?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??stuff?=");
-        assertExpectedDecoderException("=?UTF-8?W?stuff?=");
     }
 
     @Test
@@ -89,102 +68,14 @@ public class RFC1522CodecTest {
     }
 
     @Test
+    public void testNullInput_test2_decomposed() throws Exception {
+        final RFC1522TestCodec testcodec = new RFC1522TestCodec();
+        assertNull(testcodec.decodeText(null));
+        assertNull(testcodec.encodeText1(null, CharEncoding.UTF_8));
+    }
+
+    @Test
     public void testDecodeInvalid_test0_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-    }
-
-    @Test
-    public void testDecodeInvalid_test1_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-    }
-
-    @Test
-    public void testDecodeInvalid_test2_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test3_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-    }
-
-    @Test
-    public void testDecodeInvalid_test4_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test5_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test6_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test7_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-        assertExpectedDecoderException("=?UTF-8?stuff?=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test8_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-        assertExpectedDecoderException("=?UTF-8?stuff?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff");
-    }
-
-    @Test
-    public void testDecodeInvalid_test9_decomposed() throws Exception {
-        assertExpectedDecoderException("whatever");
-        assertExpectedDecoderException("=?");
-        assertExpectedDecoderException("?=");
-        assertExpectedDecoderException("==");
-        assertExpectedDecoderException("=??=");
-        assertExpectedDecoderException("=?stuff?=");
-        assertExpectedDecoderException("=?UTF-8??=");
-        assertExpectedDecoderException("=?UTF-8?stuff?=");
-        assertExpectedDecoderException("=?UTF-8?T?stuff");
-        assertExpectedDecoderException("=??T?stuff?=");
-    }
-
-    @Test
-    public void testDecodeInvalid_test10_decomposed() throws Exception {
         assertExpectedDecoderException("whatever");
         assertExpectedDecoderException("=?");
         assertExpectedDecoderException("?=");
@@ -196,5 +87,6 @@ public class RFC1522CodecTest {
         assertExpectedDecoderException("=?UTF-8?T?stuff");
         assertExpectedDecoderException("=??T?stuff?=");
         assertExpectedDecoderException("=?UTF-8??stuff?=");
+        assertExpectedDecoderException("=?UTF-8?W?stuff?=");
     }
 }

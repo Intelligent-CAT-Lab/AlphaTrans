@@ -111,136 +111,6 @@ public class BugCLI162Test {
     }
 
     @Test
-    public void testInfiniteLoop() {
-        final Options options = new Options();
-        options.addOption3("h", "help", false, "This is a looooong description");
-        formatter.printHelp2(
-                new PrintWriter(sw),
-                20,
-                "app",
-                null,
-                options,
-                HelpFormatter.DEFAULT_LEFT_PAD,
-                HelpFormatter.DEFAULT_DESC_PAD,
-                null);
-
-        final String expected =
-                "usage: app"
-                        + CR
-                        + " -h,--help   This is"
-                        + CR
-                        + "             a"
-                        + CR
-                        + "             looooon"
-                        + CR
-                        + "             g"
-                        + CR
-                        + "             descrip"
-                        + CR
-                        + "             tion"
-                        + CR;
-        assertEquals(expected, sw.toString());
-    }
-
-    @Test
-    public void testLongLineChunking() {
-        final Options options = new Options();
-        options.addOption3(
-                "x",
-                "extralongarg",
-                false,
-                "This description has ReallyLongValuesThatAreLongerThanTheWidthOfTheColumns and"
-                    + " also other"
-                    + " ReallyLongValuesThatAreHugerAndBiggerThanTheWidthOfTheColumnsBob, yes. ");
-        formatter.printHelp2(
-                new PrintWriter(sw),
-                35,
-                this.getClass().getName(),
-                "Header",
-                options,
-                0,
-                5,
-                "Footer");
-        final String expected =
-                "usage:"
-                        + CR
-                        + "       org.apache.commons.cli.bug.B"
-                        + CR
-                        + "       ugCLI162Test"
-                        + CR
-                        + "Header"
-                        + CR
-                        + "-x,--extralongarg     This"
-                        + CR
-                        + "                      description"
-                        + CR
-                        + "                      has"
-                        + CR
-                        + "                      ReallyLongVal"
-                        + CR
-                        + "                      uesThatAreLon"
-                        + CR
-                        + "                      gerThanTheWid"
-                        + CR
-                        + "                      thOfTheColumn"
-                        + CR
-                        + "                      s and also"
-                        + CR
-                        + "                      other"
-                        + CR
-                        + "                      ReallyLongVal"
-                        + CR
-                        + "                      uesThatAreHug"
-                        + CR
-                        + "                      erAndBiggerTh"
-                        + CR
-                        + "                      anTheWidthOfT"
-                        + CR
-                        + "                      heColumnsBob,"
-                        + CR
-                        + "                      yes."
-                        + CR
-                        + "Footer"
-                        + CR;
-        assertEquals("Long arguments did not split as expected", expected, sw.toString());
-    }
-
-    @Test
-    public void testLongLineChunkingIndentIgnored() {
-        final Options options = new Options();
-        options.addOption3("x", "extralongarg", false, "This description is Long.");
-        formatter.printHelp2(
-                new PrintWriter(sw),
-                22,
-                this.getClass().getName(),
-                "Header",
-                options,
-                0,
-                5,
-                "Footer");
-        final String expected =
-                "usage:"
-                        + CR
-                        + "       org.apache.comm"
-                        + CR
-                        + "       ons.cli.bug.Bug"
-                        + CR
-                        + "       CLI162Test"
-                        + CR
-                        + "Header"
-                        + CR
-                        + "-x,--extralongarg"
-                        + CR
-                        + " This description is"
-                        + CR
-                        + " Long."
-                        + CR
-                        + "Footer"
-                        + CR;
-        assertEquals("Long arguments did not split as expected", expected, sw.toString());
-    }
-
-    @Test
     public void testInfiniteLoop_test0_decomposed()  {
         final Options options = new Options();
     }
@@ -294,6 +164,7 @@ public class BugCLI162Test {
                         + CR
                         + "             tion"
                         + CR;
+        assertEquals(expected, sw.toString());
     }
 
     @Test
@@ -394,6 +265,7 @@ public class BugCLI162Test {
                         + CR
                         + "Footer"
                         + CR;
+        assertEquals("Long arguments did not split as expected", expected, sw.toString());
     }
 
     @Test
@@ -454,5 +326,6 @@ public class BugCLI162Test {
                         + CR
                         + "Footer"
                         + CR;
+        assertEquals("Long arguments did not split as expected", expected, sw.toString());
     }
 }

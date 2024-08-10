@@ -184,387 +184,73 @@ public class CSVPrinterTest {
         return new String(buf);
     }
 
-    @Test
-    public void testCRComment() throws IOException {
-        final StringWriter sw = new StringWriter();
-        final Object value = "abc";
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
-            printer.print(value);
-            printer.printComment("This is a comment\r\non multiple lines\rthis is next comment\r");
-            assertEquals(
-                    "abc"
-                            + recordSeparator
-                            + "# This is a comment"
-                            + recordSeparator
-                            + "# on multiple lines"
-                            + recordSeparator
-                            + "# this is next comment"
-                            + recordSeparator
-                            + "# "
-                            + recordSeparator,
-                    sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testCSV135() throws IOException {
-        final List<String> list = new LinkedList<>();
-        list.add("\"\""); // ""
-        list.add("\\\\"); // \\
-        list.add("\\\"\\"); // \"\
-        tryFormat(list, null, null, "\"\",\\\\,\\\"\\");
-        tryFormat(list, '"', null, "\"\"\"\"\"\",\\\\,\"\\\"\"\\\"");
-        tryFormat(list, null, '\\', "\"\",\\\\\\\\,\\\\\"\\\\");
-        tryFormat(list, '"', '\\', "\"\\\"\\\"\",\"\\\\\\\\\",\"\\\\\\\"\\\\\"");
-        tryFormat(list, '"', '"', "\"\"\"\"\"\",\\\\,\"\\\"\"\\\"");
-    }
+    
 
-    @Test
-    public void testCSV259() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final Reader reader =
-                        new FileReader(
-                                "src/test/resources/org/apache/commons/csv/CSV-259/sample.txt");
-                final CSVPrinter printer =
-                        new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape0('!').withQuote1(null))) {
-            printer.print(reader);
-            assertEquals("x!,y!,z", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimeterQuoted() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
-            printer.print("a,b,c");
-            printer.print("xyz");
-            assertEquals("'a,b,c',xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimeterQuoteNone() throws IOException {
-        final StringWriter sw = new StringWriter();
-        final CSVFormat format = CSVFormat.DEFAULT.withEscape0('!').withQuoteMode(QuoteMode.NONE);
-        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
-            printer.print("a,b,c");
-            printer.print("xyz");
-            assertEquals("a!,b!,c,xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimeterStringQuoted() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(
-                        sw,
-                        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setQuote0('\'').build())) {
-            printer.print("a[|]b[|]c");
-            printer.print("xyz");
-            assertEquals("'a[|]b[|]c'[|]xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimeterStringQuoteNone() throws IOException {
-        final StringWriter sw = new StringWriter();
-        final CSVFormat format =
-                CSVFormat.DEFAULT
-                        .builder()
-                        .setDelimiter1("[|]")
-                        .setEscape0('!')
-                        .setQuoteMode(QuoteMode.NONE)
-                        .build();
-        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
-            printer.print("a[|]b[|]c");
-            printer.print("xyz");
-            printer.print("a[xy]bc[]");
-            assertEquals("a![!|!]b![!|!]c[|]xyz[|]a[xy]bc[]", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimiterEscaped() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape0('!').withQuote1(null))) {
-            printer.print("a,b,c");
-            printer.print("xyz");
-            assertEquals("a!,b!,c,xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimiterPlain() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
-            printer.print("a,b,c");
-            printer.print("xyz");
-            assertEquals("a,b,c,xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDelimiterStringEscaped() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(
-                        sw,
-                        CSVFormat.DEFAULT
-                                .builder()
-                                .setDelimiter1("|||")
-                                .setEscape0('!')
-                                .setQuote1(null)
-                                .build())) {
-            printer.print("a|||b|||c");
-            printer.print("xyz");
-            assertEquals("a!|!|!|b!|!|!|c|||xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDisabledComment() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printComment("This is a comment");
-            assertEquals("", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testDontQuoteEuroFirstChar() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.RFC4180)) {
-            printer.printRecord1(EURO_CH, "Deux");
-            assertEquals(EURO_CH + ",Deux" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testEolEscaped() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null).withEscape0('!'))) {
-            printer.print("a\rb\nc");
-            printer.print("x\fy\bz");
-            assertEquals("a!rb!nc,x\fy\bz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testEolPlain() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
-            printer.print("a\rb\nc");
-            printer.print("x\fy\bz");
-            assertEquals("a\rb\nc,x\fy\bz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testEolQuoted() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
-            printer.print("a\rb\nc");
-            printer.print("x\by\fz");
-            assertEquals("'a\rb\nc',x\by\fz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testEscapeBackslash1() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
-            printer.print("\\");
-        }
-        assertEquals("\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeBackslash2() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
-            printer.print("\\\r");
-        }
-        assertEquals("'\\\r'", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeBackslash3() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
-            printer.print("X\\\r");
-        }
-        assertEquals("'X\\\r'", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeBackslash4() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
-            printer.print("\\\\");
-        }
-        assertEquals("\\\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeBackslash5() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
-            printer.print("\\\\");
-        }
-        assertEquals("\\\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeNull1() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
-            printer.print("\\");
-        }
-        assertEquals("\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeNull2() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
-            printer.print("\\\r");
-        }
-        assertEquals("\"\\\r\"", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeNull3() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
-            printer.print("X\\\r");
-        }
-        assertEquals("\"X\\\r\"", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeNull4() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
-            printer.print("\\\\");
-        }
-        assertEquals("\\\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testEscapeNull5() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
-            printer.print("\\\\");
-        }
-        assertEquals("\\\\", sw.toString());
-    }
+    
 
-    @Test
-    public void testExcelPrintAllArrayOfArrays() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecords1((Object[]) new String[][] {{"r1c1", "r1c2"}, {"r2c1", "r2c2"}});
-            assertEquals(
-                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testExcelPrintAllArrayOfLists() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecords1(
-                    (Object[])
-                            new List[] {
-                                Arrays.asList("r1c1", "r1c2"), Arrays.asList("r2c1", "r2c2")
-                            });
-            assertEquals(
-                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testExcelPrintAllIterableOfArrays() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecords0(
-                    Arrays.asList(new String[][] {{"r1c1", "r1c2"}, {"r2c1", "r2c2"}}));
-            assertEquals(
-                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testExcelPrintAllIterableOfLists() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecords0(
-                    Arrays.asList(Arrays.asList("r1c1", "r1c2"), Arrays.asList("r2c1", "r2c2")));
-            assertEquals(
-                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testExcelPrinter1() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecord1("a", "b");
-            assertEquals("a,b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testExcelPrinter2() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
-            printer.printRecord1("a,b", "b");
-            assertEquals("\"a,b\",b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testHeaderNotSet() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
-            printer.printRecord1("a", "b", "c");
-            printer.printRecord1("x", "y", "z");
-            assertEquals("a,b,c\r\nx,y,z\r\n", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testInvalidFormat() {
-        assertThrows(IllegalArgumentException.class, () -> CSVFormat.DEFAULT.withDelimiter(CR));
-    }
+    
 
-    @Test
-    public void testJira135_part1() throws IOException {
-        final CSVFormat format =
-                CSVFormat.DEFAULT
-                        .withRecordSeparator0('\n')
-                        .withQuote0(DQUOTE_CHAR)
-                        .withEscape0(BACKSLASH);
-        final StringWriter sw = new StringWriter();
-        final List<String> list = new LinkedList<>();
-        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
-            list.add("\"");
-            printer.printRecord0(list);
-        }
-        final String expected = "\"\\\"\"" + format.getRecordSeparator();
-        assertEquals(expected, sw.toString());
-        final String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(list.toArray(), format), record0);
-    }
+    
 
     @Test
     @Disabled
@@ -586,24 +272,7 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(list.toArray(), format), record0);
     }
 
-    @Test
-    public void testJira135_part3() throws IOException {
-        final CSVFormat format =
-                CSVFormat.DEFAULT
-                        .withRecordSeparator0('\n')
-                        .withQuote0(DQUOTE_CHAR)
-                        .withEscape0(BACKSLASH);
-        final StringWriter sw = new StringWriter();
-        final List<String> list = new LinkedList<>();
-        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
-            list.add("\\");
-            printer.printRecord0(list);
-        }
-        final String expected = "\"\\\\\"" + format.getRecordSeparator();
-        assertEquals(expected, sw.toString());
-        final String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(list.toArray(), format), record0);
-    }
+    
 
     @Test
     @Disabled
@@ -627,264 +296,39 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(list.toArray(), format), record0);
     }
 
-    @Test
-    public void testMongoDbCsvBasic() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
-            printer.printRecord1("a", "b");
-            assertEquals("a,b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbCsvCommaInValue() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
-            printer.printRecord1("a,b", "c");
-            assertEquals("\"a,b\",c" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbCsvDoubleQuoteInValue() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
-            printer.printRecord1("a \"c\" b", "d");
-            assertEquals("\"a \"\"c\"\" b\",d" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbCsvTabInValue() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
-            printer.printRecord1("a\tb", "c");
-            assertEquals("a\tb,c" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbTsvBasic() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
-            printer.printRecord1("a", "b");
-            assertEquals("a\tb" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbTsvCommaInValue() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
-            printer.printRecord1("a,b", "c");
-            assertEquals("a,b\tc" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMongoDbTsvTabInValue() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
-            printer.printRecord1("a\tb", "c");
-            assertEquals("\"a\tb\"\tc" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMultiLineComment() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
-            printer.printComment("This is a comment\non multiple lines");
+    
 
-            assertEquals(
-                    "# This is a comment"
-                            + recordSeparator
-                            + "# on multiple lines"
-                            + recordSeparator,
-                    sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testMySqlNullOutput() throws IOException {
-        Object[] s = new String[] {"NULL", null};
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        String expected = "\"NULL\"\tNULL\n";
-        assertEquals(expected, writer.toString());
-        String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(s, record0);
+    
 
-        s = new String[] {"\\N", null};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"\\N", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"\n", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\n\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\tNULL\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"\\N", "", "\u000e,\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\t\u000e,\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
+    
 
-        s = new String[] {"NULL", "\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "NULL\t\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-
-        s = new String[] {"\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-    }
-
-    @Test
-    public void testMySqlNullStringDefault() {
-        assertEquals("\\N", CSVFormat.MYSQL.getNullString());
-    }
-
-    @Test
-    public void testNewCsvPrinterAppendableNullFormat() {
-        assertThrows(NullPointerException.class, () -> new CSVPrinter(new StringWriter(), null));
-    }
-
-    @Test
-    public void testNewCsvPrinterNullAppendableFormat() {
-        assertThrows(NullPointerException.class, () -> new CSVPrinter(null, CSVFormat.DEFAULT));
-    }
-
-    @Test
-    public void testNotFlushable() throws IOException {
-        final Appendable out = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b", "c");
-            assertEquals("a,b,c" + recordSeparator, out.toString());
-            printer.flush();
-        }
-    }
-
-    @Test
-    public void testParseCustomNullValues() throws IOException {
-        final StringWriter sw = new StringWriter();
-        final CSVFormat format = CSVFormat.DEFAULT.withNullString("NULL");
-        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
-            printer.printRecord1("a", null, "b");
-        }
-        final String csvString = sw.toString();
-        assertEquals("a,NULL,b" + recordSeparator, csvString);
-        try (final CSVParser iterable = format.parse(new StringReader(csvString))) {
-            final Iterator<CSVRecord> iterator = iterable.iterator();
-            final CSVRecord record = iterator.next();
-            assertEquals("a", record.get1(0));
-            assertNull(record.get1(1));
-            assertEquals("b", record.get1(2));
-            assertFalse(iterator.hasNext());
-        }
-    }
-
-    @Test
-    public void testPlainEscaped() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null).withEscape0('!'))) {
-            printer.print("abc");
-            printer.print("xyz");
-            assertEquals("abc,xyz", sw.toString());
-        }
-    }
-
-    @Test
-    public void testPlainPlain() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
-            printer.print("abc");
-            printer.print("xyz");
-            assertEquals("abc,xyz", sw.toString());
-        }
-    }
-
-    @Test
-    public void testPlainQuoted() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
-            printer.print("abc");
-            assertEquals("abc", sw.toString());
-        }
-    }
+    
 
     @Test
     @Disabled
@@ -1100,184 +544,37 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(s, format), record0);
     }
 
-    @Test
-    public void testPostgreSqlNullStringDefaultCsv() {
-        assertEquals("", CSVFormat.POSTGRESQL_CSV.getNullString());
-    }
+    
 
-    @Test
-    public void testPostgreSqlNullStringDefaultText() {
-        assertEquals("\\N", CSVFormat.POSTGRESQL_TEXT.getNullString());
-    }
+    
 
-    @Test
-    public void testPrint() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = CSVFormat.DEFAULT.print0(sw)) {
-            printer.printRecord1("a", "b\\c");
-            assertEquals("a,b\\c" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrintCSVParser() throws IOException {
-        final String code =
-                "a1,b1\n" // 1)
-                        + "a2,b2\n" // 2)
-                        + "a3,b3\n" // 3)
-                        + "a4,b4\n" // 4)
-                ;
-        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
-        final CSVFormat format = CSVFormat.DEFAULT;
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = format.print0(sw);
-                final CSVParser parser = CSVParser.parse4(code, format)) {
-            printer.printRecords0(parser);
-        }
-        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
-            final List<CSVRecord> records = parser.getRecords();
-            assertFalse(records.isEmpty());
-            Utils.compare("Fail", res, records);
-        }
-    }
+    
 
-    @Test
-    public void testPrintCSVRecord() throws IOException {
-        final String code =
-                "a1,b1\n" // 1)
-                        + "a2,b2\n" // 2)
-                        + "a3,b3\n" // 3)
-                        + "a4,b4\n" // 4)
-                ;
-        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
-        final CSVFormat format = CSVFormat.DEFAULT;
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = format.print0(sw);
-                final CSVParser parser = CSVParser.parse4(code, format)) {
-            for (final CSVRecord record : parser) {
-                printer.printRecord0(record);
-            }
-        }
-        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
-            final List<CSVRecord> records = parser.getRecords();
-            assertFalse(records.isEmpty());
-            Utils.compare("Fail", res, records);
-        }
-    }
+    
 
-    @Test
-    public void testPrintCSVRecords() throws IOException {
-        final String code =
-                "a1,b1\n" // 1)
-                        + "a2,b2\n" // 2)
-                        + "a3,b3\n" // 3)
-                        + "a4,b4\n" // 4)
-                ;
-        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
-        final CSVFormat format = CSVFormat.DEFAULT;
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = format.print0(sw);
-                final CSVParser parser = CSVParser.parse4(code, format)) {
-            printer.printRecords0(parser.getRecords());
-        }
-        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
-            final List<CSVRecord> records = parser.getRecords();
-            assertFalse(records.isEmpty());
-            Utils.compare("Fail", res, records);
-        }
-    }
+    
 
-    @Test
-    public void testPrintCustomNullValues() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withNullString("NULL"))) {
-            printer.printRecord1("a", null, "b");
-            assertEquals("a,NULL,b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter1() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b");
-            assertEquals("a,b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter2() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a,b", "b");
-            assertEquals("\"a,b\",b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter3() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a, b", "b ");
-            assertEquals("\"a, b\",\"b \"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter4() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b\"c");
-            assertEquals("a,\"b\"\"c\"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter5() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b\nc");
-            assertEquals("a,\"b\nc\"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter6() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b\r\nc");
-            assertEquals("a,\"b\r\nc\"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrinter7() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", "b\\c");
-            assertEquals("a,b\\c" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrintNullValues() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
-            printer.printRecord1("a", null, "b");
-            assertEquals("a,,b" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testPrintOnePositiveInteger() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.MINIMAL))) {
-            printer.print(Integer.MAX_VALUE);
-            assertEquals(String.valueOf(Integer.MAX_VALUE), sw.toString());
-        }
-    }
+    
 
     /**
      * Test to target the use of {@link IOUtils#copy(java.io.Reader, Appendable)} which directly
@@ -1289,16 +586,7 @@ public class CSVPrinterTest {
      *
      * @throws IOException Not expected to happen
      */
-    @Test
-    public void testPrintReaderWithoutQuoteToAppendable() throws IOException {
-        final StringBuilder sb = new StringBuilder();
-        final String content = "testValue";
-        try (final CSVPrinter printer = new CSVPrinter(sb, CSVFormat.DEFAULT.withQuote1(null))) {
-            final StringReader value = new StringReader(content);
-            printer.print(value);
-        }
-        assertEquals(content, sb.toString());
-    }
+    
 
     /**
      * Test to target the use of {@link IOUtils#copyLarge(java.io.Reader, Writer)} which directly
@@ -1309,90 +597,21 @@ public class CSVPrinterTest {
      *
      * @throws IOException Not expected to happen
      */
-    @Test
-    public void testPrintReaderWithoutQuoteToWriter() throws IOException {
-        final StringWriter sw = new StringWriter();
-        final String content = "testValue";
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
-            final StringReader value = new StringReader(content);
-            printer.print(value);
-        }
-        assertEquals(content, sw.toString());
-    }
+    
 
-    @Test
-    public void testPrintRecordStream() throws IOException {
-        final String code =
-                "a1,b1\n" // 1)
-                        + "a2,b2\n" // 2)
-                        + "a3,b3\n" // 3)
-                        + "a4,b4\n" // 4)
-                ;
-        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
-        final CSVFormat format = CSVFormat.DEFAULT;
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = format.print0(sw);
-                final CSVParser parser = CSVParser.parse4(code, format)) {
-            for (final CSVRecord record : parser) {
-                printer.printRecord2(record.stream());
-            }
-        }
-        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
-            final List<CSVRecord> records = parser.getRecords();
-            assertFalse(records.isEmpty());
-            Utils.compare("Fail", res, records);
-        }
-    }
+    
 
-    @Test
-    public void testPrintToPathWithDefaultCharset() throws IOException {
-        final Path file = createTempPath();
-        try (final CSVPrinter printer = CSVFormat.DEFAULT.print4(file, Charset.defaultCharset())) {
-            printer.printRecord1("a", "b\\c");
-        }
-        assertEquals(
-                "a,b\\c" + recordSeparator,
-                new String(Files.readAllBytes(file), Charset.defaultCharset()));
-    }
+    
 
-    @Test
-    public void testQuoteAll() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.ALL))) {
-            printer.printRecord1("a", "b\nc", "d");
-            assertEquals("\"a\",\"b\nc\",\"d\"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testQuoteCommaFirstChar() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.RFC4180)) {
-            printer.printRecord1(",");
-            assertEquals("\",\"" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testQuoteNonNumeric() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.NON_NUMERIC))) {
-            printer.printRecord1("a", "b\nc", Integer.valueOf(1));
-            assertEquals("\"a\",\"b\nc\",1" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testRandomDefault() throws Exception {
-        doRandom(CSVFormat.DEFAULT, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
-    @Test
-    public void testRandomExcel() throws Exception {
-        doRandom(CSVFormat.EXCEL, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
     @Test
     @Disabled
@@ -1400,10 +619,7 @@ public class CSVPrinterTest {
         doRandom(CSVFormat.MONGODB_CSV, ITERATIONS_FOR_RANDOM_TEST);
     }
 
-    @Test
-    public void testRandomMySql() throws Exception {
-        doRandom(CSVFormat.MYSQL, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
     @Test
     @Disabled
@@ -1417,78 +633,23 @@ public class CSVPrinterTest {
         doRandom(CSVFormat.POSTGRESQL_CSV, ITERATIONS_FOR_RANDOM_TEST);
     }
 
-    @Test
-    public void testRandomPostgreSqlText() throws Exception {
-        doRandom(CSVFormat.POSTGRESQL_TEXT, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
-    @Test
-    public void testRandomRfc4180() throws Exception {
-        doRandom(CSVFormat.RFC4180, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
-    @Test
-    public void testRandomTdf() throws Exception {
-        doRandom(CSVFormat.TDF, ITERATIONS_FOR_RANDOM_TEST);
-    }
+    
 
-    @Test
-    public void testSingleLineComment() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
-            printer.printComment("This is a comment");
-            assertEquals("# This is a comment" + recordSeparator, sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testSingleQuoteQuoted() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
-            printer.print("a'b'c");
-            printer.print("xyz");
-            assertEquals("'a''b''c',xyz", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testTrailingDelimiterOnTwoColumns() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer =
-                new CSVPrinter(sw, CSVFormat.DEFAULT.withTrailingDelimiter0())) {
-            printer.printRecord1("A", "B");
-            assertEquals("A,B,\r\n", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testTrimOffOneColumn() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim1(false))) {
-            printer.print(" A ");
-            assertEquals("\" A \"", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testTrimOnOneColumn() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim0())) {
-            printer.print(" A ");
-            assertEquals("A", sw.toString());
-        }
-    }
+    
 
-    @Test
-    public void testTrimOnTwoColumns() throws IOException {
-        final StringWriter sw = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim0())) {
-            printer.print(" A ");
-            printer.print(" B ");
-            assertEquals("A,B", sw.toString());
-        }
-    }
+    
 
     private String[] toFirstRecordValues(final String expected, final CSVFormat format)
             throws IOException {
@@ -1516,6 +677,23 @@ public class CSVPrinterTest {
     public void testCRComment_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
         final Object value = "abc";
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
+            printer.print(value);
+            printer.printComment("This is a comment\r\non multiple lines\rthis is next comment\r");
+            assertEquals(
+                    "abc"
+                            + recordSeparator
+                            + "# This is a comment"
+                            + recordSeparator
+                            + "# on multiple lines"
+                            + recordSeparator
+                            + "# this is next comment"
+                            + recordSeparator
+                            + "# "
+                            + recordSeparator,
+                    sw.toString());
+        }
     }
 
     @Test
@@ -1525,35 +703,114 @@ public class CSVPrinterTest {
         list.add("\\\\");
         list.add("\\\"\\");
         tryFormat(list, null, null, "\"\",\\\\,\\\"\\");
+    }
+
+    @Test
+    public void testCSV135_test1_decomposed() throws IOException {
+        final List<String> list = new LinkedList<>();
+        list.add("\"\"");
+        list.add("\\\\");
+        list.add("\\\"\\");
+        tryFormat(list, null, null, "\"\",\\\\,\\\"\\");
         tryFormat(list, '"', null, "\"\"\"\"\"\",\\\\,\"\\\"\"\\\"");
         tryFormat(list, null, '\\', "\"\",\\\\\\\\,\\\\\"\\\\");
         tryFormat(list, '"', '\\', "\"\\\"\\\"\",\"\\\\\\\\\",\"\\\\\\\"\\\\\"");
+        tryFormat(list, '"', '"', "\"\"\"\"\"\",\\\\,\"\\\"\"\\\"");
     }
 
     @Test
     public void testCSV259_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final Reader reader =
+                        new FileReader(
+                                "src/test/resources/org/apache/commons/csv/CSV-259/sample.txt");
+                final CSVPrinter printer =
+                        new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape0('!').withQuote1(null))) {
+            printer.print(reader);
+            assertEquals("x!,y!,z", sw.toString());
+        }
     }
 
     @Test
     public void testDelimeterQuoted_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
+            printer.print("a,b,c");
+            printer.print("xyz");
+            assertEquals("'a,b,c',xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDelimeterQuoteNone_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
         CSVFormat.DEFAULT.withEscape0('!');
+    }
+
+    @Test
+    public void testDelimeterQuoteNone_test1_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.withEscape0('!');
         final CSVFormat format = CSVFormat.DEFAULT.withEscape0('!').withQuoteMode(QuoteMode.NONE);
+    }
+
+    @Test
+    public void testDelimeterQuoteNone_test2_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.withEscape0('!');
+        final CSVFormat format = CSVFormat.DEFAULT.withEscape0('!').withQuoteMode(QuoteMode.NONE);
+        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
+            printer.print("a,b,c");
+            printer.print("xyz");
+            assertEquals("a!,b!,c,xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDelimeterStringQuoted_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(
+                        sw,
+                        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setQuote0('\'').build())) {
+            printer.print("a[|]b[|]c");
+            printer.print("xyz");
+            assertEquals("'a[|]b[|]c'[|]xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDelimeterStringQuoteNone_test0_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.builder();
+    }
+
+    @Test
+    public void testDelimeterStringQuoteNone_test1_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.builder();
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]");
+    }
+
+    @Test
+    public void testDelimeterStringQuoteNone_test2_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.builder();
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]");
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setEscape0('!');
+    }
+
+    @Test
+    public void testDelimeterStringQuoteNone_test3_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.builder();
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]");
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setEscape0('!');
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setEscape0('!').setQuoteMode(QuoteMode.NONE);
+    }
+
+    @Test
+    public void testDelimeterStringQuoteNone_test4_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
         CSVFormat.DEFAULT.builder();
         CSVFormat.DEFAULT.builder().setDelimiter1("[|]");
@@ -1569,48 +826,122 @@ public class CSVPrinterTest {
     }
 
     @Test
+    public void testDelimeterStringQuoteNone_test5_decomposed() throws IOException {
+        final StringWriter sw = new StringWriter();
+        CSVFormat.DEFAULT.builder();
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]");
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setEscape0('!');
+        CSVFormat.DEFAULT.builder().setDelimiter1("[|]").setEscape0('!').setQuoteMode(QuoteMode.NONE);
+        final CSVFormat format =
+                CSVFormat.DEFAULT
+                        .builder()
+                        .setDelimiter1("[|]")
+                        .setEscape0('!')
+                        .setQuoteMode(QuoteMode.NONE)
+                        .build();
+        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
+            printer.print("a[|]b[|]c");
+            printer.print("xyz");
+            printer.print("a[xy]bc[]");
+            assertEquals("a![!|!]b![!|!]c[|]xyz[|]a[xy]bc[]", sw.toString());
+        }
+    }
+
+    @Test
     public void testDelimiterEscaped_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape0('!').withQuote1(null))) {
+            printer.print("a,b,c");
+            printer.print("xyz");
+            assertEquals("a!,b!,c,xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDelimiterPlain_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
+            printer.print("a,b,c");
+            printer.print("xyz");
+            assertEquals("a,b,c,xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDelimiterStringEscaped_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(
+                        sw,
+                        CSVFormat.DEFAULT
+                                .builder()
+                                .setDelimiter1("|||")
+                                .setEscape0('!')
+                                .setQuote1(null)
+                                .build())) {
+            printer.print("a|||b|||c");
+            printer.print("xyz");
+            assertEquals("a!|!|!|b!|!|!|c|||xyz", sw.toString());
+        }
     }
 
     @Test
     public void testDisabledComment_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printComment("This is a comment");
+            assertEquals("", sw.toString());
+        }
     }
 
     @Test
     public void testDontQuoteEuroFirstChar_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.RFC4180)) {
+            printer.printRecord1(EURO_CH, "Deux");
+            assertEquals(EURO_CH + ",Deux" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testEolEscaped_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null).withEscape0('!'))) {
+            printer.print("a\rb\nc");
+            printer.print("x\fy\bz");
+            assertEquals("a!rb!nc,x\fy\bz", sw.toString());
+        }
     }
 
     @Test
     public void testEolPlain_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
+            printer.print("a\rb\nc");
+            printer.print("x\fy\bz");
+            assertEquals("a\rb\nc,x\fy\bz", sw.toString());
+        }
     }
 
     @Test
     public void testEolQuoted_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
+            printer.print("a\rb\nc");
+            printer.print("x\by\fz");
+            assertEquals("'a\rb\nc',x\by\fz", sw.toString());
+        }
     }
 
     @Test
     public void testEscapeBackslash1_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
+            printer.print("\\");
+        }
     }
 
     @Test
@@ -1620,11 +951,16 @@ public class CSVPrinterTest {
                 new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
             printer.print("\\");
         }
+        assertEquals("\\", sw.toString());
     }
 
     @Test
     public void testEscapeBackslash2_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
+            printer.print("\\\r");
+        }
     }
 
     @Test
@@ -1634,11 +970,16 @@ public class CSVPrinterTest {
                 new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
             printer.print("\\\r");
         }
+        assertEquals("'\\\r'", sw.toString());
     }
 
     @Test
     public void testEscapeBackslash3_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
+            printer.print("X\\\r");
+        }
     }
 
     @Test
@@ -1648,11 +989,16 @@ public class CSVPrinterTest {
                 new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
             printer.print("X\\\r");
         }
+        assertEquals("'X\\\r'", sw.toString());
     }
 
     @Test
     public void testEscapeBackslash4_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
+            printer.print("\\\\");
+        }
     }
 
     @Test
@@ -1662,11 +1008,16 @@ public class CSVPrinterTest {
                 new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
             printer.print("\\\\");
         }
+        assertEquals("\\\\", sw.toString());
     }
 
     @Test
     public void testEscapeBackslash5_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
+            printer.print("\\\\");
+        }
     }
 
     @Test
@@ -1676,11 +1027,15 @@ public class CSVPrinterTest {
                 new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0(QUOTE_CH))) {
             printer.print("\\\\");
         }
+        assertEquals("\\\\", sw.toString());
     }
 
     @Test
     public void testEscapeNull1_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
+            printer.print("\\");
+        }
     }
 
     @Test
@@ -1689,11 +1044,15 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
             printer.print("\\");
         }
+        assertEquals("\\", sw.toString());
     }
 
     @Test
     public void testEscapeNull2_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
+            printer.print("\\\r");
+        }
     }
 
     @Test
@@ -1702,11 +1061,15 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
             printer.print("\\\r");
         }
+        assertEquals("\"\\\r\"", sw.toString());
     }
 
     @Test
     public void testEscapeNull3_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
+            printer.print("X\\\r");
+        }
     }
 
     @Test
@@ -1715,11 +1078,15 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
             printer.print("X\\\r");
         }
+        assertEquals("\"X\\\r\"", sw.toString());
     }
 
     @Test
     public void testEscapeNull4_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
+            printer.print("\\\\");
+        }
     }
 
     @Test
@@ -1728,11 +1095,15 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
             printer.print("\\\\");
         }
+        assertEquals("\\\\", sw.toString());
     }
 
     @Test
     public void testEscapeNull5_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
+            printer.print("\\\\");
+        }
     }
 
     @Test
@@ -1741,41 +1112,86 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(null))) {
             printer.print("\\\\");
         }
+        assertEquals("\\\\", sw.toString());
     }
 
     @Test
     public void testExcelPrintAllArrayOfArrays_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecords1((Object[]) new String[][] {{"r1c1", "r1c2"}, {"r2c1", "r2c2"}});
+            assertEquals(
+                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testExcelPrintAllArrayOfLists_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecords1(
+                    (Object[])
+                            new List[] {
+                                Arrays.asList("r1c1", "r1c2"), Arrays.asList("r2c1", "r2c2")
+                            });
+            assertEquals(
+                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testExcelPrintAllIterableOfArrays_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecords0(
+                    Arrays.asList(new String[][] {{"r1c1", "r1c2"}, {"r2c1", "r2c2"}}));
+            assertEquals(
+                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testExcelPrintAllIterableOfLists_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecords0(
+                    Arrays.asList(Arrays.asList("r1c1", "r1c2"), Arrays.asList("r2c1", "r2c2")));
+            assertEquals(
+                    "r1c1,r1c2" + recordSeparator + "r2c1,r2c2" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testExcelPrinter1_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecord1("a", "b");
+            assertEquals("a,b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testExcelPrinter2_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.EXCEL)) {
+            printer.printRecord1("a,b", "b");
+            assertEquals("\"a,b\",b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testHeaderNotSet_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
+            printer.printRecord1("a", "b", "c");
+            printer.printRecord1("x", "y", "z");
+            assertEquals("a,b,c\r\nx,y,z\r\n", sw.toString());
+        }
+    }
+
+    @Test
+    public void testInvalidFormat_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> CSVFormat.DEFAULT.withDelimiter(CR));
     }
 
     @Test
@@ -1811,6 +1227,10 @@ public class CSVPrinterTest {
                         .withEscape0(BACKSLASH);
         final StringWriter sw = new StringWriter();
         final List<String> list = new LinkedList<>();
+        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
+            list.add("\"");
+            printer.printRecord0(list);
+        }
     }
 
     @Test
@@ -1828,6 +1248,7 @@ public class CSVPrinterTest {
             list.add("\"");
             printer.printRecord0(list);
         }
+        final String expected = "\"\\\"\"" + format.getRecordSeparator();
     }
 
     @Test
@@ -1846,6 +1267,7 @@ public class CSVPrinterTest {
             printer.printRecord0(list);
         }
         final String expected = "\"\\\"\"" + format.getRecordSeparator();
+        assertEquals(expected, sw.toString());
     }
 
     @Test
@@ -1865,6 +1287,7 @@ public class CSVPrinterTest {
         }
         final String expected = "\"\\\"\"" + format.getRecordSeparator();
         assertEquals(expected, sw.toString());
+        final String[] record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -1885,6 +1308,7 @@ public class CSVPrinterTest {
         final String expected = "\"\\\"\"" + format.getRecordSeparator();
         assertEquals(expected, sw.toString());
         final String[] record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(list.toArray(), format), record0);
     }
 
     @Test
@@ -1920,6 +1344,10 @@ public class CSVPrinterTest {
                         .withEscape0(BACKSLASH);
         final StringWriter sw = new StringWriter();
         final List<String> list = new LinkedList<>();
+        try (final CSVPrinter printer = new CSVPrinter(sw, format)) {
+            list.add("\\");
+            printer.printRecord0(list);
+        }
     }
 
     @Test
@@ -1937,6 +1365,7 @@ public class CSVPrinterTest {
             list.add("\\");
             printer.printRecord0(list);
         }
+        final String expected = "\"\\\\\"" + format.getRecordSeparator();
     }
 
     @Test
@@ -1955,6 +1384,7 @@ public class CSVPrinterTest {
             printer.printRecord0(list);
         }
         final String expected = "\"\\\\\"" + format.getRecordSeparator();
+        assertEquals(expected, sw.toString());
     }
 
     @Test
@@ -1974,6 +1404,7 @@ public class CSVPrinterTest {
         }
         final String expected = "\"\\\\\"" + format.getRecordSeparator();
         assertEquals(expected, sw.toString());
+        final String[] record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -1994,59 +1425,92 @@ public class CSVPrinterTest {
         final String expected = "\"\\\\\"" + format.getRecordSeparator();
         assertEquals(expected, sw.toString());
         final String[] record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(list.toArray(), format), record0);
     }
 
     @Test
     public void testMongoDbCsvBasic_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
+            printer.printRecord1("a", "b");
+            assertEquals("a,b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbCsvCommaInValue_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
+            printer.printRecord1("a,b", "c");
+            assertEquals("\"a,b\",c" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbCsvDoubleQuoteInValue_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
+            printer.printRecord1("a \"c\" b", "d");
+            assertEquals("\"a \"\"c\"\" b\",d" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbCsvTabInValue_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_CSV)) {
+            printer.printRecord1("a\tb", "c");
+            assertEquals("a\tb,c" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbTsvBasic_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
+            printer.printRecord1("a", "b");
+            assertEquals("a\tb" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbTsvCommaInValue_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
+            printer.printRecord1("a,b", "c");
+            assertEquals("a,b\tc" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMongoDbTsvTabInValue_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.MONGODB_TSV)) {
+            printer.printRecord1("a\tb", "c");
+            assertEquals("\"a\tb\"\tc" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testMultiLineComment_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
+            printer.printComment("This is a comment\non multiple lines");
+
+            assertEquals(
+                    "# This is a comment"
+                            + recordSeparator
+                            + "# on multiple lines"
+                            + recordSeparator,
+                    sw.toString());
+        }
     }
 
     @Test
     public void testMySqlNullOutput_test0_decomposed() throws IOException {
         Object[] s = new String[] {"NULL", null};
         CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR);
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR).withNullString("NULL");
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
     }
 
     @Test
@@ -2054,15 +1518,6 @@ public class CSVPrinterTest {
         Object[] s = new String[] {"NULL", null};
         CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR);
         CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR).withNullString("NULL");
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
     }
 
     @Test
@@ -2075,11 +1530,6 @@ public class CSVPrinterTest {
                         .withQuote0(DQUOTE_CHAR)
                         .withNullString("NULL")
                         .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        String expected = "\"NULL\"\tNULL\n";
     }
 
     @Test
@@ -2096,8 +1546,6 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-        String expected = "\"NULL\"\tNULL\n";
-        assertEquals(expected, writer.toString());
     }
 
     @Test
@@ -2116,7 +1564,6 @@ public class CSVPrinterTest {
         }
         String expected = "\"NULL\"\tNULL\n";
         assertEquals(expected, writer.toString());
-        String[] record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -2136,10 +1583,6 @@ public class CSVPrinterTest {
         String expected = "\"NULL\"\tNULL\n";
         assertEquals(expected, writer.toString());
         String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(s, record0);
-        s = new String[] {"\\N", null};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
     }
 
     @Test
@@ -2162,10 +1605,6 @@ public class CSVPrinterTest {
         assertArrayEquals(s, record0);
         s = new String[] {"\\N", null};
         format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
     }
 
     @Test
@@ -2192,7 +1631,6 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-        expected = "\\\\N\t\\N\n";
     }
 
     @Test
@@ -2280,9 +1718,6 @@ public class CSVPrinterTest {
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
         assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
     }
 
     @Test
@@ -2315,10 +1750,6 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(s, format), record0);
         s = new String[] {"\\N", "A"};
         format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
     }
 
     @Test
@@ -2355,7 +1786,6 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-        expected = "\\\\N\tA\n";
     }
 
     @Test
@@ -2473,9 +1903,6 @@ public class CSVPrinterTest {
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
         assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\n", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
     }
 
     @Test
@@ -2518,10 +1945,6 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(s, format), record0);
         s = new String[] {"\n", "A"};
         format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
     }
 
     @Test
@@ -2568,7 +1991,6 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-        expected = "\\n\tA\n";
     }
 
     @Test
@@ -2716,9 +2138,6 @@ public class CSVPrinterTest {
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
         assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
     }
 
     @Test
@@ -2771,10 +2190,6 @@ public class CSVPrinterTest {
         assertArrayEquals(expectNulls(s, format), record0);
         s = new String[] {"", null};
         format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
     }
 
     @Test
@@ -2831,7 +2246,6 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-        expected = "\tNULL\n";
     }
 
     @Test
@@ -3009,9 +2423,6 @@ public class CSVPrinterTest {
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
         assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
     }
 
     @Test
@@ -3145,6 +2556,7 @@ public class CSVPrinterTest {
             printer.printRecord1(s);
         }
         expected = "\t\\N\n";
+        assertEquals(expected, writer.toString());
     }
 
     @Test
@@ -3213,6 +2625,7 @@ public class CSVPrinterTest {
         }
         expected = "\t\\N\n";
         assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -3282,6 +2695,7 @@ public class CSVPrinterTest {
         expected = "\t\\N\n";
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
     }
 
     @Test
@@ -3355,6 +2769,9 @@ public class CSVPrinterTest {
         s = new String[] {"\\N", "", "\u000e,\\\r"};
         format = CSVFormat.MYSQL;
         writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
     }
 
     @Test
@@ -3431,6 +2848,8 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
+        expected = "\\\\N\t\t\u000e,\\\\\\r\n";
+        assertEquals(expected, writer.toString());
     }
 
     @Test
@@ -3508,6 +2927,8 @@ public class CSVPrinterTest {
             printer.printRecord1(s);
         }
         expected = "\\\\N\t\t\u000e,\\\\\\r\n";
+        assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -3586,6 +3007,8 @@ public class CSVPrinterTest {
         }
         expected = "\\\\N\t\t\u000e,\\\\\\r\n";
         assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
     }
 
     @Test
@@ -3665,6 +3088,13 @@ public class CSVPrinterTest {
         expected = "\\\\N\t\t\u000e,\\\\\\r\n";
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
+        s = new String[] {"NULL", "\\\r"};
+        format = CSVFormat.MYSQL;
+        writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
     }
 
     @Test
@@ -3748,6 +3178,11 @@ public class CSVPrinterTest {
         s = new String[] {"NULL", "\\\r"};
         format = CSVFormat.MYSQL;
         writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
+        expected = "NULL\t\\\\\\r\n";
+        assertEquals(expected, writer.toString());
     }
 
     @Test
@@ -3834,6 +3269,9 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
+        expected = "NULL\t\\\\\\r\n";
+        assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -3921,6 +3359,9 @@ public class CSVPrinterTest {
             printer.printRecord1(s);
         }
         expected = "NULL\t\\\\\\r\n";
+        assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
     }
 
     @Test
@@ -4009,6 +3450,14 @@ public class CSVPrinterTest {
         }
         expected = "NULL\t\\\\\\r\n";
         assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
+        s = new String[] {"\\\r"};
+        format = CSVFormat.MYSQL;
+        writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
     }
 
     @Test
@@ -4098,6 +3547,15 @@ public class CSVPrinterTest {
         expected = "NULL\t\\\\\\r\n";
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
+        s = new String[] {"\\\r"};
+        format = CSVFormat.MYSQL;
+        writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
+        expected = "\\\\\\r\n";
+        assertEquals(expected, writer.toString());
     }
 
     @Test
@@ -4191,6 +3649,12 @@ public class CSVPrinterTest {
         s = new String[] {"\\\r"};
         format = CSVFormat.MYSQL;
         writer = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
+            printer.printRecord1(s);
+        }
+        expected = "\\\\\\r\n";
+        assertEquals(expected, writer.toString());
+        record0 = toFirstRecordValues(expected, format);
     }
 
     @Test
@@ -4287,305 +3751,35 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
             printer.printRecord1(s);
         }
-    }
-
-    @Test
-    public void testMySqlNullOutput_test42_decomposed() throws IOException {
-        Object[] s = new String[] {"NULL", null};
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR);
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR).withNullString("NULL");
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        String expected = "\"NULL\"\tNULL\n";
-        assertEquals(expected, writer.toString());
-        String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(s, record0);
-        s = new String[] {"\\N", null};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\n", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\n\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\tNULL\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "", "\u000e,\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\t\u000e,\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"NULL", "\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "NULL\t\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\\\r\n";
-    }
-
-    @Test
-    public void testMySqlNullOutput_test43_decomposed() throws IOException {
-        Object[] s = new String[] {"NULL", null};
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR);
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR).withNullString("NULL");
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        String expected = "\"NULL\"\tNULL\n";
-        assertEquals(expected, writer.toString());
-        String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(s, record0);
-        s = new String[] {"\\N", null};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\n", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\n\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\tNULL\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "", "\u000e,\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\t\u000e,\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"NULL", "\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "NULL\t\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-    }
-
-    @Test
-    public void testMySqlNullOutput_test44_decomposed() throws IOException {
-        Object[] s = new String[] {"NULL", null};
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR);
-        CSVFormat.MYSQL.withQuote0(DQUOTE_CHAR).withNullString("NULL");
-        CSVFormat format =
-                CSVFormat.MYSQL
-                        .withQuote0(DQUOTE_CHAR)
-                        .withNullString("NULL")
-                        .withQuoteMode(QuoteMode.NON_NUMERIC);
-        StringWriter writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        String expected = "\"NULL\"\tNULL\n";
-        assertEquals(expected, writer.toString());
-        String[] record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(s, record0);
-        s = new String[] {"\\N", null};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\n", "A"};
-        format = CSVFormat.MYSQL.withNullString("\\N");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\n\tA\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL.withNullString("NULL");
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\tNULL\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"", null};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\t\\N\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\N", "", "\u000e,\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "\\\\N\t\t\u000e,\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"NULL", "\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
-        expected = "NULL\t\\\\\\r\n";
-        assertEquals(expected, writer.toString());
-        record0 = toFirstRecordValues(expected, format);
-        assertArrayEquals(expectNulls(s, format), record0);
-        s = new String[] {"\\\r"};
-        format = CSVFormat.MYSQL;
-        writer = new StringWriter();
-        try (final CSVPrinter printer = new CSVPrinter(writer, format)) {
-            printer.printRecord1(s);
-        }
         expected = "\\\\\\r\n";
         assertEquals(expected, writer.toString());
         record0 = toFirstRecordValues(expected, format);
+        assertArrayEquals(expectNulls(s, format), record0);
+    }
+
+    @Test
+    public void testMySqlNullStringDefault_test0_decomposed()  {
+        assertEquals("\\N", CSVFormat.MYSQL.getNullString());
+    }
+
+    @Test
+    public void testNewCsvPrinterAppendableNullFormat_test0_decomposed()  {
+        assertThrows(NullPointerException.class, () -> new CSVPrinter(new StringWriter(), null));
+    }
+
+    @Test
+    public void testNewCsvPrinterNullAppendableFormat_test0_decomposed()  {
+        assertThrows(NullPointerException.class, () -> new CSVPrinter(null, CSVFormat.DEFAULT));
     }
 
     @Test
     public void testNotFlushable_test0_decomposed() throws IOException {
         final Appendable out = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b", "c");
+            assertEquals("a,b,c" + recordSeparator, out.toString());
+            printer.flush();
+        }
     }
 
     @Test
@@ -4622,26 +3816,63 @@ public class CSVPrinterTest {
         }
         final String csvString = sw.toString();
         assertEquals("a,NULL,b" + recordSeparator, csvString);
+        try (final CSVParser iterable = format.parse(new StringReader(csvString))) {
+            final Iterator<CSVRecord> iterator = iterable.iterator();
+            final CSVRecord record = iterator.next();
+            assertEquals("a", record.get1(0));
+            assertNull(record.get1(1));
+            assertEquals("b", record.get1(2));
+            assertFalse(iterator.hasNext());
+        }
     }
 
     @Test
     public void testPlainEscaped_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null).withEscape0('!'))) {
+            printer.print("abc");
+            printer.print("xyz");
+            assertEquals("abc,xyz", sw.toString());
+        }
     }
 
     @Test
     public void testPlainPlain_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
+            printer.print("abc");
+            printer.print("xyz");
+            assertEquals("abc,xyz", sw.toString());
+        }
     }
 
     @Test
     public void testPlainQuoted_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
+            printer.print("abc");
+            assertEquals("abc", sw.toString());
+        }
+    }
+
+    @Test
+    public void testPostgreSqlNullStringDefaultCsv_test0_decomposed()  {
+        assertEquals("", CSVFormat.POSTGRESQL_CSV.getNullString());
+    }
+
+    @Test
+    public void testPostgreSqlNullStringDefaultText_test0_decomposed()  {
+        assertEquals("\\N", CSVFormat.POSTGRESQL_TEXT.getNullString());
     }
 
     @Test
     public void testPrint_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = CSVFormat.DEFAULT.print0(sw)) {
+            printer.printRecord1("a", "b\\c");
+            assertEquals("a,b\\c" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
@@ -4658,6 +3889,28 @@ public class CSVPrinterTest {
         try (final CSVPrinter printer = format.print0(sw);
                 final CSVParser parser = CSVParser.parse4(code, format)) {
             printer.printRecords0(parser);
+        }
+    }
+
+    @Test
+    public void testPrintCSVParser_test1_decomposed() throws IOException {
+        final String code =
+                "a1,b1\n" // 1)
+                        + "a2,b2\n" // 2)
+                        + "a3,b3\n" // 3)
+                        + "a4,b4\n" // 4)
+                ;
+        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
+        final CSVFormat format = CSVFormat.DEFAULT;
+        final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = format.print0(sw);
+                final CSVParser parser = CSVParser.parse4(code, format)) {
+            printer.printRecords0(parser);
+        }
+        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
+            final List<CSVRecord> records = parser.getRecords();
+            assertFalse(records.isEmpty());
+            Utils.compare("Fail", res, records);
         }
     }
 
@@ -4681,6 +3934,30 @@ public class CSVPrinterTest {
     }
 
     @Test
+    public void testPrintCSVRecord_test1_decomposed() throws IOException {
+        final String code =
+                "a1,b1\n" // 1)
+                        + "a2,b2\n" // 2)
+                        + "a3,b3\n" // 3)
+                        + "a4,b4\n" // 4)
+                ;
+        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
+        final CSVFormat format = CSVFormat.DEFAULT;
+        final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = format.print0(sw);
+                final CSVParser parser = CSVParser.parse4(code, format)) {
+            for (final CSVRecord record : parser) {
+                printer.printRecord0(record);
+            }
+        }
+        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
+            final List<CSVRecord> records = parser.getRecords();
+            assertFalse(records.isEmpty());
+            Utils.compare("Fail", res, records);
+        }
+    }
+
+    @Test
     public void testPrintCSVRecords_test0_decomposed() throws IOException {
         final String code =
                 "a1,b1\n" // 1)
@@ -4698,59 +3975,127 @@ public class CSVPrinterTest {
     }
 
     @Test
+    public void testPrintCSVRecords_test1_decomposed() throws IOException {
+        final String code =
+                "a1,b1\n" // 1)
+                        + "a2,b2\n" // 2)
+                        + "a3,b3\n" // 3)
+                        + "a4,b4\n" // 4)
+                ;
+        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
+        final CSVFormat format = CSVFormat.DEFAULT;
+        final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = format.print0(sw);
+                final CSVParser parser = CSVParser.parse4(code, format)) {
+            printer.printRecords0(parser.getRecords());
+        }
+        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
+            final List<CSVRecord> records = parser.getRecords();
+            assertFalse(records.isEmpty());
+            Utils.compare("Fail", res, records);
+        }
+    }
+
+    @Test
     public void testPrintCustomNullValues_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withNullString("NULL"))) {
+            printer.printRecord1("a", null, "b");
+            assertEquals("a,NULL,b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter1_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b");
+            assertEquals("a,b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter2_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a,b", "b");
+            assertEquals("\"a,b\",b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter3_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a, b", "b ");
+            assertEquals("\"a, b\",\"b \"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter4_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b\"c");
+            assertEquals("a,\"b\"\"c\"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter5_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b\nc");
+            assertEquals("a,\"b\nc\"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter6_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b\r\nc");
+            assertEquals("a,\"b\r\nc\"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrinter7_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", "b\\c");
+            assertEquals("a,b\\c" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrintNullValues_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT)) {
+            printer.printRecord1("a", null, "b");
+            assertEquals("a,,b" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testPrintOnePositiveInteger_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.MINIMAL))) {
+            printer.print(Integer.MAX_VALUE);
+            assertEquals(String.valueOf(Integer.MAX_VALUE), sw.toString());
+        }
     }
 
     @Test
     public void testPrintReaderWithoutQuoteToAppendable_test0_decomposed() throws IOException {
         final StringBuilder sb = new StringBuilder();
         final String content = "testValue";
+        try (final CSVPrinter printer = new CSVPrinter(sb, CSVFormat.DEFAULT.withQuote1(null))) {
+            final StringReader value = new StringReader(content);
+            printer.print(value);
+        }
     }
 
     @Test
@@ -4761,12 +4106,17 @@ public class CSVPrinterTest {
             final StringReader value = new StringReader(content);
             printer.print(value);
         }
+        assertEquals(content, sb.toString());
     }
 
     @Test
     public void testPrintReaderWithoutQuoteToWriter_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
         final String content = "testValue";
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(null))) {
+            final StringReader value = new StringReader(content);
+            printer.print(value);
+        }
     }
 
     @Test
@@ -4777,6 +4127,7 @@ public class CSVPrinterTest {
             final StringReader value = new StringReader(content);
             printer.print(value);
         }
+        assertEquals(content, sw.toString());
     }
 
     @Test
@@ -4799,7 +4150,36 @@ public class CSVPrinterTest {
     }
 
     @Test
+    public void testPrintRecordStream_test1_decomposed() throws IOException {
+        final String code =
+                "a1,b1\n" // 1)
+                        + "a2,b2\n" // 2)
+                        + "a3,b3\n" // 3)
+                        + "a4,b4\n" // 4)
+                ;
+        final String[][] res = {{"a1", "b1"}, {"a2", "b2"}, {"a3", "b3"}, {"a4", "b4"}};
+        final CSVFormat format = CSVFormat.DEFAULT;
+        final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = format.print0(sw);
+                final CSVParser parser = CSVParser.parse4(code, format)) {
+            for (final CSVRecord record : parser) {
+                printer.printRecord2(record.stream());
+            }
+        }
+        try (final CSVParser parser = CSVParser.parse4(sw.toString(), format)) {
+            final List<CSVRecord> records = parser.getRecords();
+            assertFalse(records.isEmpty());
+            Utils.compare("Fail", res, records);
+        }
+    }
+
+    @Test
     public void testPrintToPathWithDefaultCharset_test0_decomposed() throws IOException {
+        final Path file = createTempPath();
+    }
+
+    @Test
+    public void testPrintToPathWithDefaultCharset_test1_decomposed() throws IOException {
         final Path file = createTempPath();
         try (final CSVPrinter printer = CSVFormat.DEFAULT.print4(file, Charset.defaultCharset())) {
             printer.printRecord1("a", "b\\c");
@@ -4807,47 +4187,130 @@ public class CSVPrinterTest {
     }
 
     @Test
+    public void testPrintToPathWithDefaultCharset_test2_decomposed() throws IOException {
+        final Path file = createTempPath();
+        try (final CSVPrinter printer = CSVFormat.DEFAULT.print4(file, Charset.defaultCharset())) {
+            printer.printRecord1("a", "b\\c");
+        }
+        assertEquals(
+                "a,b\\c" + recordSeparator,
+                new String(Files.readAllBytes(file), Charset.defaultCharset()));
+    }
+
+    @Test
     public void testQuoteAll_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.ALL))) {
+            printer.printRecord1("a", "b\nc", "d");
+            assertEquals("\"a\",\"b\nc\",\"d\"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testQuoteCommaFirstChar_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.RFC4180)) {
+            printer.printRecord1(",");
+            assertEquals("\",\"" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testQuoteNonNumeric_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withQuoteMode(QuoteMode.NON_NUMERIC))) {
+            printer.printRecord1("a", "b\nc", Integer.valueOf(1));
+            assertEquals("\"a\",\"b\nc\",1" + recordSeparator, sw.toString());
+        }
+    }
+
+    @Test
+    public void testRandomDefault_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.DEFAULT, ITERATIONS_FOR_RANDOM_TEST);
+    }
+
+    @Test
+    public void testRandomExcel_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.EXCEL, ITERATIONS_FOR_RANDOM_TEST);
+    }
+
+    @Test
+    public void testRandomMySql_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.MYSQL, ITERATIONS_FOR_RANDOM_TEST);
+    }
+
+    @Test
+    public void testRandomPostgreSqlText_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.POSTGRESQL_TEXT, ITERATIONS_FOR_RANDOM_TEST);
+    }
+
+    @Test
+    public void testRandomRfc4180_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.RFC4180, ITERATIONS_FOR_RANDOM_TEST);
+    }
+
+    @Test
+    public void testRandomTdf_test0_decomposed() throws Exception {
+        doRandom(CSVFormat.TDF, ITERATIONS_FOR_RANDOM_TEST);
     }
 
     @Test
     public void testSingleLineComment_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))) {
+            printer.printComment("This is a comment");
+            assertEquals("# This is a comment" + recordSeparator, sw.toString());
+        }
     }
 
     @Test
     public void testSingleQuoteQuoted_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))) {
+            printer.print("a'b'c");
+            printer.print("xyz");
+            assertEquals("'a''b''c',xyz", sw.toString());
+        }
     }
 
     @Test
     public void testTrailingDelimiterOnTwoColumns_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer =
+                new CSVPrinter(sw, CSVFormat.DEFAULT.withTrailingDelimiter0())) {
+            printer.printRecord1("A", "B");
+            assertEquals("A,B,\r\n", sw.toString());
+        }
     }
 
     @Test
     public void testTrimOffOneColumn_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim1(false))) {
+            printer.print(" A ");
+            assertEquals("\" A \"", sw.toString());
+        }
     }
 
     @Test
     public void testTrimOnOneColumn_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim0())) {
+            printer.print(" A ");
+            assertEquals("A", sw.toString());
+        }
     }
 
     @Test
     public void testTrimOnTwoColumns_test0_decomposed() throws IOException {
         final StringWriter sw = new StringWriter();
+        try (final CSVPrinter printer = new CSVPrinter(sw, CSVFormat.DEFAULT.withTrim0())) {
+            printer.print(" A ");
+            printer.print(" B ");
+            assertEquals("A,B", sw.toString());
+        }
     }
 }

@@ -51,7 +51,12 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeEmpty() throws Exception {
+    public void testEncodeEmpty_test0_decomposed() throws Exception {
+        final Encoder encoder = this.getStringEncoder();
+    }
+
+    @Test
+    public void testEncodeEmpty_test1_decomposed() throws Exception {
         final Encoder encoder = this.getStringEncoder();
         encoder.encode("");
         encoder.encode(" ");
@@ -59,7 +64,12 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeNull() throws Exception {
+    public void testEncodeNull_test0_decomposed() throws Exception {
+        final StringEncoder encoder = this.getStringEncoder();
+    }
+
+    @Test
+    public void testEncodeNull_test1_decomposed() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
         try {
             encoder.encode(null);
@@ -68,7 +78,18 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testEncodeWithInvalidObject() throws Exception {
+    public void testEncodeWithInvalidObject_test0_decomposed() throws Exception {
+        boolean exceptionThrown = false;
+        try {
+            final StringEncoder encoder = this.getStringEncoder();
+            encoder.encode(Float.valueOf(3.4f));
+        } catch (final Exception e) {
+            exceptionThrown = true;
+        }
+    }
+
+    @Test
+    public void testEncodeWithInvalidObject_test1_decomposed() throws Exception {
         boolean exceptionThrown = false;
         try {
             final StringEncoder encoder = this.getStringEncoder();
@@ -82,16 +103,18 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
     }
 
     @Test
-    public void testLocaleIndependence() throws Exception {
+    public void testLocaleIndependence_test0_decomposed() throws Exception {
         final StringEncoder encoder = this.getStringEncoder();
+    }
 
+    @Test
+    public void testLocaleIndependence_test1_decomposed() throws Exception {
+        final StringEncoder encoder = this.getStringEncoder();
         final String[] data = {
             "I", "i",
         };
-
         final Locale orig = Locale.getDefault();
         final Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
-
         try {
             for (final String element : data) {
                 String ref = null;
@@ -113,38 +136,5 @@ public abstract class StringEncoderAbstractTest<T extends StringEncoder> {
         } finally {
             Locale.setDefault(orig);
         }
-    }
-
-    @Test
-    public void testEncodeEmpty_test0_decomposed() throws Exception {
-        final Encoder encoder = this.getStringEncoder();
-        encoder.encode("");
-        encoder.encode(" ");
-    }
-
-    @Test
-    public void testEncodeNull_test0_decomposed() throws Exception {
-        final StringEncoder encoder = this.getStringEncoder();
-    }
-
-    @Test
-    public void testEncodeWithInvalidObject_test0_decomposed() throws Exception {
-        boolean exceptionThrown = false;
-        try {
-            final StringEncoder encoder = this.getStringEncoder();
-            encoder.encode(Float.valueOf(3.4f));
-        } catch (final Exception e) {
-            exceptionThrown = true;
-        }
-    }
-
-    @Test
-    public void testLocaleIndependence_test0_decomposed() throws Exception {
-        final StringEncoder encoder = this.getStringEncoder();
-        final String[] data = {
-            "I", "i",
-        };
-        final Locale orig = Locale.getDefault();
-        final Locale[] locales = {Locale.ENGLISH, new Locale("tr"), Locale.getDefault()};
     }
 }

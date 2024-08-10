@@ -62,14 +62,12 @@ public class JiraCsv290Test {
     }
 
     @Test
-    public void testPostgresqlCsv() throws Exception {
+    public void testPostgresqlCsv_test0_decomposed() throws Exception {
         testHelper("psql.csv", CSVFormat.POSTGRESQL_CSV);
     }
 
     @Test
-    public void testPostgresqlText() throws Exception {
+    public void testPostgresqlText_test0_decomposed() throws Exception {
         testHelper("psql.tsv", CSVFormat.POSTGRESQL_TEXT);
     }
-
-    
 }

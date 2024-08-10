@@ -46,42 +46,21 @@ public class Base64OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testCodec98NPE() throws Exception {
-        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
-        final byte[] codec98_1024 = new byte[1024];
-        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
-        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
-        try (final BaseNCodecOutputStream stream =
-                Base64OutputStream.Base64OutputStream1(data, false)) {
-            stream.write0(codec98_1024, 0, 1024);
-        }
-
-        final byte[] decodedBytes = data.toByteArray();
-        final String decoded = StringUtils.newStringUtf8(decodedBytes);
-        assertEquals(
-                "codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
-    }
+    
 
     /**
      * Test the Base64OutputStream implementation against empty input.
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64EmptyOutputStreamMimeChunkSize() throws Exception {
-        testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
-    }
+    
 
     /**
      * Test the Base64OutputStream implementation against empty input.
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64EmptyOutputStreamPemChunkSize() throws Exception {
-        testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
-    }
+    
 
     private void testBase64EmptyOutputStream(final int chunkSize) throws Exception {
         final byte[] emptyEncoded = {};
@@ -95,66 +74,14 @@ public class Base64OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64OutputStreamByChunk() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-
-        encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[] {(byte) 0};
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-
-        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = BaseNTestData.DECODED;
-        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
-
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
-        encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = BaseNTestData.DECODED;
-        testByChunk(encoded, decoded, 0, LF);
-
-        final BaseNCodec codec = Base64.Base641(0, null, false);
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByChunk(encoded, decoded, 0, LF);
-        }
-    }
+    
 
     /**
      * Test the Base64OutputStream implementation
      *
      * @throws Exception for some failure scenarios.
      */
-    @Test
-    public void testBase64OutputStreamByteByByte() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByteByByte(encoded, decoded, 76, CR_LF);
-
-        encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[] {(byte) 0};
-        testByteByByte(encoded, decoded, 76, CR_LF);
-
-        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = BaseNTestData.DECODED;
-        testByteByByte(encoded, decoded, 64, LF);
-
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
-        encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = BaseNTestData.DECODED;
-        testByteByByte(encoded, decoded, 0, LF);
-
-        final BaseNCodec codec = Base64.Base641(0, null, false);
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByteByByte(encoded, decoded, 0, LF);
-        }
-    }
+    
 
     /**
      * Test method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2.
@@ -267,8 +194,351 @@ public class Base64OutputStreamTest {
      *
      * @throws Exception for some failure scenarios.
      */
+    
+
+    /**
+     * Tests Base64OutputStream.write(null).
+     *
+     * @throws Exception for some failure scenarios.
+     */
+    
+
+    /**
+     * Test strict decoding.
+     *
+     * @throws Exception for some failure scenarios.
+     */
+
     @Test
-    public void testWriteOutOfBounds() throws Exception {
+    public void testCodec98NPE_test0_decomposed() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+    }
+
+    @Test
+    public void testCodec98NPE_test1_decomposed() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+        final byte[] codec98_1024 = new byte[1024];
+        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
+        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
+        try (final BaseNCodecOutputStream stream =
+                Base64OutputStream.Base64OutputStream1(data, false)) {
+            stream.write0(codec98_1024, 0, 1024);
+        }
+    }
+
+    @Test
+    public void testCodec98NPE_test2_decomposed() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+        final byte[] codec98_1024 = new byte[1024];
+        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
+        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
+        try (final BaseNCodecOutputStream stream =
+                Base64OutputStream.Base64OutputStream1(data, false)) {
+            stream.write0(codec98_1024, 0, 1024);
+        }
+        final byte[] decodedBytes = data.toByteArray();
+    }
+
+    @Test
+    public void testCodec98NPE_test3_decomposed() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+        final byte[] codec98_1024 = new byte[1024];
+        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
+        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
+        try (final BaseNCodecOutputStream stream =
+                Base64OutputStream.Base64OutputStream1(data, false)) {
+            stream.write0(codec98_1024, 0, 1024);
+        }
+        final byte[] decodedBytes = data.toByteArray();
+        final String decoded = StringUtils.newStringUtf8(decodedBytes);
+    }
+
+    @Test
+    public void testCodec98NPE_test4_decomposed() throws Exception {
+        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
+        final byte[] codec98_1024 = new byte[1024];
+        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
+        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
+        try (final BaseNCodecOutputStream stream =
+                Base64OutputStream.Base64OutputStream1(data, false)) {
+            stream.write0(codec98_1024, 0, 1024);
+        }
+        final byte[] decodedBytes = data.toByteArray();
+        final String decoded = StringUtils.newStringUtf8(decodedBytes);
+        assertEquals(
+                "codec-98 NPE Base64OutputStream", Base64TestData.CODEC_98_NPE_DECODED, decoded);
+    }
+
+    @Test
+    public void testBase64EmptyOutputStreamMimeChunkSize_test0_decomposed() throws Exception {
+        testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testBase64EmptyOutputStreamPemChunkSize_test0_decomposed() throws Exception {
+        testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test0_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test1_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test2_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test3_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test4_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test5_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test6_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test7_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, 0, LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test8_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, 0, LF);
+        final BaseNCodec codec = Base64.Base641(0, null, false);
+    }
+
+    @Test
+    public void testBase64OutputStreamByChunk_test9_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByChunk(encoded, decoded, 0, LF);
+        final BaseNCodec codec = Base64.Base641(0, null, false);
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByChunk(encoded, decoded, 0, LF);
+        }
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test0_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test1_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test2_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test3_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test4_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test5_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 64, LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test6_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 64, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test7_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 64, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 0, LF);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test8_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 64, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 0, LF);
+        final BaseNCodec codec = Base64.Base641(0, null, false);
+    }
+
+    @Test
+    public void testBase64OutputStreamByteByByte_test9_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8("AA==\r\n");
+        decoded = new byte[] {(byte) 0};
+        testByteByByte(encoded, decoded, 76, CR_LF);
+        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 64, LF);
+        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
+        encoded = StringUtils.getBytesUtf8(singleLine);
+        decoded = BaseNTestData.DECODED;
+        testByteByByte(encoded, decoded, 0, LF);
+        final BaseNCodec codec = Base64.Base641(0, null, false);
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByteByByte(encoded, decoded, 0, LF);
+        }
+    }
+
+    @Test
+    public void testWriteOutOfBounds_test0_decomposed() throws Exception {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {
@@ -307,13 +577,8 @@ public class Base64OutputStreamTest {
         }
     }
 
-    /**
-     * Tests Base64OutputStream.write(null).
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testWriteToNullCoverage() throws Exception {
+    public void testWriteToNullCoverage_test0_decomposed() throws Exception {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {
             out.write0(null, 0, 0);
@@ -322,13 +587,8 @@ public class Base64OutputStreamTest {
         }
     }
 
-    /**
-     * Test strict decoding.
-     *
-     * @throws Exception for some failure scenarios.
-     */
     @Test
-    public void testStrictDecoding() throws Exception {
+    public void testStrictDecoding_test0_decomposed() throws Exception {
         for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {
             final byte[] encoded = StringUtils.getBytesUtf8(s);
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -348,83 +608,5 @@ public class Base64OutputStreamTest {
             } catch (final IllegalArgumentException ex) {
             }
         }
-    }
-
-    @Test
-    public void testCodec98NPE_test0_decomposed() throws Exception {
-        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
-    }
-
-    @Test
-    public void testCodec98NPE_test1_decomposed() throws Exception {
-        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);
-        final byte[] codec98_1024 = new byte[1024];
-        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);
-        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);
-        try (final BaseNCodecOutputStream stream =
-                Base64OutputStream.Base64OutputStream1(data, false)) {
-            stream.write0(codec98_1024, 0, 1024);
-        }
-        final byte[] decodedBytes = data.toByteArray();
-        final String decoded = StringUtils.newStringUtf8(decodedBytes);
-    }
-
-    @Test
-    public void testBase64OutputStreamByChunk_test0_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase64OutputStreamByChunk_test1_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-        encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[] {(byte) 0};
-        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);
-        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = BaseNTestData.DECODED;
-        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
-        encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = BaseNTestData.DECODED;
-        testByChunk(encoded, decoded, 0, LF);
-        final BaseNCodec codec = Base64.Base641(0, null, false);
-    }
-
-    @Test
-    public void testBase64OutputStreamByteByByte_test0_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase64OutputStreamByteByByte_test1_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("SGVsbG8gV29ybGQ=\r\n");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByteByByte(encoded, decoded, 76, CR_LF);
-        encoded = StringUtils.getBytesUtf8("AA==\r\n");
-        decoded = new byte[] {(byte) 0};
-        testByteByByte(encoded, decoded, 76, CR_LF);
-        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);
-        decoded = BaseNTestData.DECODED;
-        testByteByByte(encoded, decoded, 64, LF);
-        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace("\n", "");
-        encoded = StringUtils.getBytesUtf8(singleLine);
-        decoded = BaseNTestData.DECODED;
-        testByteByByte(encoded, decoded, 0, LF);
-        final BaseNCodec codec = Base64.Base641(0, null, false);
-    }
-
-    @Test
-    public void testWriteOutOfBounds_test0_decomposed() throws Exception {
-        final byte[] buf = new byte[1024];
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    }
-
-    @Test
-    public void testWriteToNullCoverage_test0_decomposed() throws Exception {
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     }
 }

@@ -140,42 +140,9 @@ public class FloydWarshallTestCase {
     }
 
     @Test
-    public void testDirectedShortestPath() {
+    public void testDirectedShortestPath_test0_decomposed()  {
         findShortestPathAndVerify(
                 new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>());
-    }
-
-    @Test(expected = PathNotFoundException.class)
-    public void testNotConnectGraph() {
-        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
-                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
-
-        final BaseLabeledVertex a = new BaseLabeledVertex("a");
-        final BaseLabeledVertex b = new BaseLabeledVertex("b");
-        graph.addVertex(a);
-        graph.addVertex(b);
-
-        AllVertexPairsShortestPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> p =
-                findShortestPath(graph)
-                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                        .applyingFloydWarshall(new DoubleWeightBaseOperations());
-
-        p.findShortestPath(a, b);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testNullGraph() {
-        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)
-                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                .from(null)
-                .to(null)
-                .applyingDijkstra(new DoubleWeightBaseOperations());
-    }
-
-    @Test
-    public void testUndirectedShortestPath() {
-        findShortestPathAndVerify(
-                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>());
     }
 
     @Test
@@ -183,11 +150,6 @@ public class FloydWarshallTestCase {
         UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
                 new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         final BaseLabeledVertex a = new BaseLabeledVertex("a");
-        final BaseLabeledVertex b = new BaseLabeledVertex("b");
-        graph.addVertex(a);
-        graph.addVertex(b);
-        findShortestPath(graph);
-        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
     }
 
     @Test
@@ -196,6 +158,47 @@ public class FloydWarshallTestCase {
                 new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         final BaseLabeledVertex a = new BaseLabeledVertex("a");
         final BaseLabeledVertex b = new BaseLabeledVertex("b");
+    }
+
+    @Test
+    public void testNotConnectGraph_test2_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+    }
+
+    @Test
+    public void testNotConnectGraph_test3_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+    }
+
+    @Test
+    public void testNotConnectGraph_test4_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+    }
+
+    @Test
+    public void testNotConnectGraph_test5_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
         graph.addVertex(a);
         graph.addVertex(b);
         findShortestPath(graph);
@@ -204,6 +207,23 @@ public class FloydWarshallTestCase {
                 findShortestPath(graph)
                         .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
                         .applyingFloydWarshall(new DoubleWeightBaseOperations());
+    }
+
+    @Test(expected = PathNotFoundException.class)
+    public void testNotConnectGraph_test6_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        AllVertexPairsShortestPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> p =
+                findShortestPath(graph)
+                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                        .applyingFloydWarshall(new DoubleWeightBaseOperations());
+        p.findShortestPath(a, b);
     }
 
     @Test(expected = NullPointerException.class)
@@ -230,5 +250,24 @@ public class FloydWarshallTestCase {
         findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
         findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
         findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullGraph_test4_decomposed()  {
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)
+                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                .from(null)
+                .to(null)
+                .applyingDijkstra(new DoubleWeightBaseOperations());
+    }
+
+    @Test
+    public void testUndirectedShortestPath_test0_decomposed()  {
+        findShortestPathAndVerify(
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>());
     }
 }

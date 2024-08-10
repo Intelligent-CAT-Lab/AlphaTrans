@@ -37,30 +37,6 @@ public class TestPooledSoftReference {
     }
 
     @Test
-    public void testPooledSoftReference() {
-        assertEquals(REFERENT, ref.getObject());
-
-        SoftReference<String> softRef = ref.getReference();
-        assertEquals(REFERENT, softRef.get());
-        softRef.clear();
-
-        softRef = new SoftReference<>(REFERENT2);
-        ref.setReference(softRef);
-
-        assertEquals(REFERENT2, ref.getObject());
-
-        softRef = ref.getReference();
-        assertEquals(REFERENT2, softRef.get());
-        softRef.clear();
-    }
-
-    @Test
-    public void testToString() {
-        final String expected = "Referenced Object: test, State: IDLE";
-        assertEquals(expected, ref.toString());
-    }
-
-    @Test
     public void testPooledSoftReference_test0_decomposed()  {
         assertEquals(REFERENT, ref.getObject());
     }
@@ -77,8 +53,6 @@ public class TestPooledSoftReference {
         SoftReference<String> softRef = ref.getReference();
         assertEquals(REFERENT, softRef.get());
         softRef.clear();
-        softRef = new SoftReference<>(REFERENT2);
-        ref.setReference(softRef);
     }
 
     @Test
@@ -89,7 +63,6 @@ public class TestPooledSoftReference {
         softRef.clear();
         softRef = new SoftReference<>(REFERENT2);
         ref.setReference(softRef);
-        assertEquals(REFERENT2, ref.getObject());
     }
 
     @Test
@@ -101,7 +74,6 @@ public class TestPooledSoftReference {
         softRef = new SoftReference<>(REFERENT2);
         ref.setReference(softRef);
         assertEquals(REFERENT2, ref.getObject());
-        softRef = ref.getReference();
     }
 
     @Test
@@ -114,11 +86,25 @@ public class TestPooledSoftReference {
         ref.setReference(softRef);
         assertEquals(REFERENT2, ref.getObject());
         softRef = ref.getReference();
+    }
+
+    @Test
+    public void testPooledSoftReference_test6_decomposed()  {
+        assertEquals(REFERENT, ref.getObject());
+        SoftReference<String> softRef = ref.getReference();
+        assertEquals(REFERENT, softRef.get());
+        softRef.clear();
+        softRef = new SoftReference<>(REFERENT2);
+        ref.setReference(softRef);
+        assertEquals(REFERENT2, ref.getObject());
+        softRef = ref.getReference();
         assertEquals(REFERENT2, softRef.get());
+        softRef.clear();
     }
 
     @Test
     public void testToString_test0_decomposed()  {
         final String expected = "Referenced Object: test, State: IDLE";
+        assertEquals(expected, ref.toString());
     }
 }

@@ -39,154 +39,12 @@ public final class DijkstraTestCase {
      * Test Graph and Dijkstra's solution can be seen on <a
      * href="http://en.wikipedia.org/wiki/Dijkstra's_algorithm>Wikipedia</a>
      */
-    @Test
-    public void testFindShortestPathAndVerify() {
-        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
-                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
-
-        BaseLabeledVertex one = new BaseLabeledVertex("1");
-        BaseLabeledVertex two = new BaseLabeledVertex("2");
-        BaseLabeledVertex three = new BaseLabeledVertex("3");
-        BaseLabeledVertex four = new BaseLabeledVertex("4");
-        BaseLabeledVertex five = new BaseLabeledVertex("5");
-        BaseLabeledVertex six = new BaseLabeledVertex("6");
-
-        graph.addVertex(one);
-        graph.addVertex(two);
-        graph.addVertex(three);
-        graph.addVertex(four);
-        graph.addVertex(five);
-        graph.addVertex(six);
-
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
-
-        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
-        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
-
-        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
-        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
-
-        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
-        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
-
-        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
-                new InMemoryWeightedPath<
-                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
-                        one,
-                        five,
-                        new DoubleWeightBaseOperations(),
-                        new BaseWeightedEdge<Double>());
-
-        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
-        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
-        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
-
-        Path<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> actual =
-                findShortestPath(graph)
-                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                        .from(one)
-                        .to(five)
-                        .applyingDijkstra(new DoubleWeightBaseOperations());
-
-        assertEquals(expected, actual);
-    }
-
-    @Test(expected = PathNotFoundException.class)
-    public void testNotConnectGraph() {
-        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
-                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
-
-        final BaseLabeledVertex a = new BaseLabeledVertex("a");
-        final BaseLabeledVertex b = new BaseLabeledVertex("b");
-        graph.addVertex(a);
-        graph.addVertex(b);
-
-        findShortestPath(graph)
-                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                .from(a)
-                .to(b)
-                .applyingDijkstra(new DoubleWeightBaseOperations());
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testNullGraph() {
-        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)
-                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                .from(null)
-                .to(null)
-                .applyingDijkstra(new DoubleWeightBaseOperations());
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testNullMonoid() {
-        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
-                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
-
-        final BaseLabeledVertex a = new BaseLabeledVertex("a");
-        final BaseLabeledVertex b = new BaseLabeledVertex("b");
-        graph.addVertex(a);
-        graph.addVertex(b);
-
-        findShortestPath(graph)
-                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                .from(a)
-                .to(b)
-                .applyingDijkstra(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testNullVertices() {
-        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
-                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
-
-        findShortestPath(graph)
-                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
-                .from(null)
-                .to(null)
-                .applyingDijkstra(new DoubleWeightBaseOperations());
-    }
 
     @Test
     public void testFindShortestPathAndVerify_test0_decomposed()  {
         DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
                 new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         BaseLabeledVertex one = new BaseLabeledVertex("1");
-        BaseLabeledVertex two = new BaseLabeledVertex("2");
-        BaseLabeledVertex three = new BaseLabeledVertex("3");
-        BaseLabeledVertex four = new BaseLabeledVertex("4");
-        BaseLabeledVertex five = new BaseLabeledVertex("5");
-        BaseLabeledVertex six = new BaseLabeledVertex("6");
-        graph.addVertex(one);
-        graph.addVertex(two);
-        graph.addVertex(three);
-        graph.addVertex(four);
-        graph.addVertex(five);
-        graph.addVertex(six);
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
-        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
-        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
-        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
-        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
-        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
-        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
-        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
-        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
-                new InMemoryWeightedPath<
-                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
-                        one,
-                        five,
-                        new DoubleWeightBaseOperations(),
-                        new BaseWeightedEdge<Double>());
-        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
-        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
-        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
-        findShortestPath(graph);
-        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
-        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one);
-        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one).to(five);
     }
 
     @Test
@@ -195,6 +53,331 @@ public final class DijkstraTestCase {
                 new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         BaseLabeledVertex one = new BaseLabeledVertex("1");
         BaseLabeledVertex two = new BaseLabeledVertex("2");
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test2_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test3_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test4_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test5_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test6_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test7_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test8_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test9_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test10_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        findShortestPath(graph);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test11_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test12_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test13_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one).to(five);
+    }
+
+    @Test
+    public void testFindShortestPathAndVerify_test14_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
         BaseLabeledVertex three = new BaseLabeledVertex("3");
         BaseLabeledVertex four = new BaseLabeledVertex("4");
         BaseLabeledVertex five = new BaseLabeledVertex("5");
@@ -237,7 +420,116 @@ public final class DijkstraTestCase {
     }
 
     @Test
+    public void testFindShortestPathAndVerify_test15_decomposed()  {
+        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        BaseLabeledVertex one = new BaseLabeledVertex("1");
+        BaseLabeledVertex two = new BaseLabeledVertex("2");
+        BaseLabeledVertex three = new BaseLabeledVertex("3");
+        BaseLabeledVertex four = new BaseLabeledVertex("4");
+        BaseLabeledVertex five = new BaseLabeledVertex("5");
+        BaseLabeledVertex six = new BaseLabeledVertex("6");
+        graph.addVertex(one);
+        graph.addVertex(two);
+        graph.addVertex(three);
+        graph.addVertex(four);
+        graph.addVertex(five);
+        graph.addVertex(six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 6", 14D), six);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        graph.addEdge(one, new BaseLabeledWeightedEdge<Double>("1 -> 2", 7D), two);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 3", 10D), three);
+        graph.addEdge(two, new BaseLabeledWeightedEdge<Double>("2 -> 4", 15D), four);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        graph.addEdge(three, new BaseLabeledWeightedEdge<Double>("3 -> 4", 11D), four);
+        graph.addEdge(four, new BaseLabeledWeightedEdge<Double>("4 -> 5", 6D), five);
+        graph.addEdge(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        one,
+                        five,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        expected.addConnectionInTail(one, new BaseLabeledWeightedEdge<Double>("1 -> 3", 9D), three);
+        expected.addConnectionInTail(three, new BaseLabeledWeightedEdge<Double>("3 -> 6", 2D), six);
+        expected.addConnectionInTail(six, new BaseLabeledWeightedEdge<Double>("6 -> 5", 9D), five);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(one).to(five);
+        Path<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> actual =
+                findShortestPath(graph)
+                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                        .from(one)
+                        .to(five)
+                        .applyingDijkstra(new DoubleWeightBaseOperations());
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testNotConnectGraph_test0_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+    }
+
+    @Test
+    public void testNotConnectGraph_test1_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+    }
+
+    @Test
+    public void testNotConnectGraph_test2_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+    }
+
+    @Test
+    public void testNotConnectGraph_test3_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+    }
+
+    @Test
+    public void testNotConnectGraph_test4_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+    }
+
+    @Test
+    public void testNotConnectGraph_test5_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a);
+    }
+
+    @Test
+    public void testNotConnectGraph_test6_decomposed()  {
         UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
                 new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         final BaseLabeledVertex a = new BaseLabeledVertex("a");
@@ -248,6 +540,25 @@ public final class DijkstraTestCase {
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a);
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a).to(b);
+    }
+
+    @Test(expected = PathNotFoundException.class)
+    public void testNotConnectGraph_test7_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a).to(b);
+        findShortestPath(graph)
+                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                .from(a)
+                .to(b)
+                .applyingDijkstra(new DoubleWeightBaseOperations());
     }
 
     @Test(expected = NullPointerException.class)
@@ -276,8 +587,82 @@ public final class DijkstraTestCase {
         findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testNullGraph_test4_decomposed()  {
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
+        findShortestPath((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)
+                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                .from(null)
+                .to(null)
+                .applyingDijkstra(new DoubleWeightBaseOperations());
+    }
+
     @Test
     public void testNullMonoid_test0_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+    }
+
+    @Test
+    public void testNullMonoid_test1_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+    }
+
+    @Test
+    public void testNullMonoid_test2_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+    }
+
+    @Test
+    public void testNullMonoid_test3_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+    }
+
+    @Test
+    public void testNullMonoid_test4_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+    }
+
+    @Test
+    public void testNullMonoid_test5_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a);
+    }
+
+    @Test
+    public void testNullMonoid_test6_decomposed()  {
         UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
                 new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         final BaseLabeledVertex a = new BaseLabeledVertex("a");
@@ -291,12 +676,70 @@ public final class DijkstraTestCase {
     }
 
     @Test(expected = NullPointerException.class)
+    public void testNullMonoid_test7_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        final BaseLabeledVertex a = new BaseLabeledVertex("a");
+        final BaseLabeledVertex b = new BaseLabeledVertex("b");
+        graph.addVertex(a);
+        graph.addVertex(b);
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(a).to(b);
+        findShortestPath(graph)
+                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                .from(a)
+                .to(b)
+                .applyingDijkstra(null);
+    }
+
+    @Test
     public void testNullVertices_test0_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        findShortestPath(graph);
+    }
+
+    @Test
+    public void testNullVertices_test1_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullVertices_test2_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullVertices_test3_decomposed()  {
         UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
                 new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
         findShortestPath(graph);
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
         findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullVertices_test4_decomposed()  {
+        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph =
+                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();
+        findShortestPath(graph);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null);
+        findShortestPath(graph).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).from(null).to(null);
+        findShortestPath(graph)
+                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())
+                .from(null)
+                .to(null)
+                .applyingDijkstra(new DoubleWeightBaseOperations());
     }
 }

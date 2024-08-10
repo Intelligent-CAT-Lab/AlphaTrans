@@ -49,400 +49,72 @@ public class TestLinkedBlockingDeque {
         deque = LinkedBlockingDeque.LinkedBlockingDeque3(2);
     }
 
-    @Test
-    public void testAdd() {
-        assertTrue(deque.add(ONE));
-        assertTrue(deque.add(TWO));
-        assertThrows(IllegalStateException.class, () -> deque.add(THREE));
-        assertThrows(NullPointerException.class, () -> deque.add(null));
-    }
+    
 
-    @Test
-    public void testAddFirst() {
-        deque.addFirst(ONE);
-        deque.addFirst(TWO);
-        assertEquals(2, deque.size());
-        assertThrows(IllegalStateException.class, () -> deque.add(THREE));
-        assertEquals(Integer.valueOf(2), deque.pop());
-    }
+    
 
-    @Test
-    public void testAddLast() {
-        deque.addLast(ONE);
-        deque.addLast(TWO);
-        assertEquals(2, deque.size());
-        assertThrows(IllegalStateException.class, () -> deque.add(THREE));
-        assertEquals(Integer.valueOf(1), deque.pop());
-    }
+    
 
-    @Test
-    public void testClear() {
-        deque.add(ONE);
-        deque.add(TWO);
-        deque.clear();
-        deque.add(ONE);
-        assertEquals(1, deque.size());
-    }
+    
 
-    @Test
-    public void testConstructors() {
-        LinkedBlockingDeque<Integer> deque = LinkedBlockingDeque.LinkedBlockingDeque0();
-        assertEquals(Integer.MAX_VALUE, deque.remainingCapacity());
+    
 
-        deque = LinkedBlockingDeque.LinkedBlockingDeque3(2);
-        assertEquals(2, deque.remainingCapacity());
+    
 
-        deque = LinkedBlockingDeque.LinkedBlockingDeque2(Arrays.asList(ONE, TWO));
-        assertEquals(2, deque.size());
+    
 
-        assertThrows(
-                NullPointerException.class,
-                () -> LinkedBlockingDeque.LinkedBlockingDeque2(Arrays.asList(ONE, null)));
-    }
+    
 
-    @Test
-    public void testContains() {
-        deque.add(ONE);
-        assertTrue(deque.contains(ONE));
-        assertFalse(deque.contains(TWO));
-        assertFalse(deque.contains(null));
-        deque.add(TWO);
-        assertTrue(deque.contains(TWO));
-        assertFalse(deque.contains(THREE));
-    }
+    
 
-    @Test
-    public void testDescendingIterator() {
-        assertThrows(NoSuchElementException.class, () -> deque.descendingIterator().next());
-        deque.add(ONE);
-        deque.add(TWO);
-        final Iterator<Integer> iter = deque.descendingIterator();
-        assertEquals(Integer.valueOf(2), iter.next());
-        iter.remove();
-        assertEquals(Integer.valueOf(1), iter.next());
-    }
+    
 
-    @Test
-    public void testDrainTo() {
-        Collection<Integer> c = new ArrayList<>();
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(2, deque.drainTo0(c));
-        assertEquals(2, c.size());
+    
 
-        c = new ArrayList<>();
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(1, deque.drainTo1(c, 1));
-        assertEquals(1, deque.size());
-        assertEquals(1, c.size());
-        assertEquals(Integer.valueOf(1), c.iterator().next());
-    }
+    
 
-    @Test
-    public void testElement() {
-        assertThrows(NoSuchElementException.class, () -> deque.element());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.element());
-    }
+    
 
-    @Test
-    public void testGetFirst() {
-        assertThrows(NoSuchElementException.class, () -> deque.getFirst());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.getFirst());
-    }
+    
 
-    @Test
-    public void testGetLast() {
-        assertThrows(NoSuchElementException.class, () -> deque.getLast());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(2), deque.getLast());
-    }
+    
 
-    @Test
-    public void testIterator() {
-        assertThrows(NoSuchElementException.class, () -> deque.iterator().next());
-        deque.add(ONE);
-        deque.add(TWO);
-        final Iterator<Integer> iter = deque.iterator();
-        assertEquals(Integer.valueOf(1), iter.next());
-        iter.remove();
-        assertEquals(Integer.valueOf(2), iter.next());
-    }
+    
 
-    @Test
-    public void testOffer() {
-        assertTrue(deque.offer(ONE));
-        assertTrue(deque.offer(TWO));
-        assertFalse(deque.offer(THREE));
-        assertThrows(NullPointerException.class, () -> deque.offer(null));
-    }
+    
 
-    @Test
-    public void testOfferFirst() {
-        deque.offerFirst(ONE);
-        deque.offerFirst(TWO);
-        assertEquals(2, deque.size());
-        assertThrows(NullPointerException.class, () -> deque.offerFirst(null));
-        assertEquals(Integer.valueOf(2), deque.pop());
-    }
+    
 
-    @Test
-    public void testOfferFirstWithTimeout() throws InterruptedException {
-        assertThrows(NullPointerException.class, () -> deque.offerFirst1(null, TIMEOUT_50_MILLIS));
-        assertTrue(deque.offerFirst1(ONE, TIMEOUT_50_MILLIS));
-        assertTrue(deque.offerFirst1(TWO, TIMEOUT_50_MILLIS));
-        assertFalse(deque.offerFirst1(THREE, TIMEOUT_50_MILLIS));
-    }
+    
 
-    @Test
-    public void testOfferLast() {
-        deque.offerLast(ONE);
-        deque.offerLast(TWO);
-        assertEquals(2, deque.size());
-        assertThrows(NullPointerException.class, () -> deque.offerLast(null));
-        assertEquals(Integer.valueOf(1), deque.pop());
-    }
+    
 
-    @Test
-    public void testOfferLastWithTimeout() throws InterruptedException {
-        assertThrows(NullPointerException.class, () -> deque.offerLast1(null, TIMEOUT_50_MILLIS));
-        assertTrue(deque.offerLast1(ONE, TIMEOUT_50_MILLIS));
-        assertTrue(deque.offerLast1(TWO, TIMEOUT_50_MILLIS));
-        assertFalse(deque.offerLast1(THREE, TIMEOUT_50_MILLIS));
-    }
+    
 
-    @Test
-    public void testOfferWithTimeout() throws InterruptedException {
-        assertTrue(deque.offer1(ONE, TIMEOUT_50_MILLIS));
-        assertTrue(deque.offer1(TWO, TIMEOUT_50_MILLIS));
-        assertFalse(deque.offer1(THREE, TIMEOUT_50_MILLIS));
-        assertThrows(NullPointerException.class, () -> deque.offer1(null, TIMEOUT_50_MILLIS));
-    }
+    
 
-    @Test
-    public void testPeek() {
-        assertNull(deque.peek());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.peek());
-    }
+    
 
-    @Test
-    public void testPeekFirst() {
-        assertNull(deque.peekFirst());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.peekFirst());
-    }
+    
 
-    @Test
-    public void testPeekLast() {
-        assertNull(deque.peekLast());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(2), deque.peekLast());
-    }
+    
 
-    @Test
-    public void testPollFirst() {
-        assertNull(deque.pollFirst());
-        assertTrue(deque.offerFirst(ONE));
-        assertTrue(deque.offerFirst(TWO));
-        assertEquals(Integer.valueOf(2), deque.pollFirst());
-    }
+    
 
-    @Test
-    public void testPollFirstWithTimeout() throws InterruptedException {
-        assertNull(deque.pollFirst());
-        assertNull(deque.pollFirst1(TIMEOUT_50_MILLIS));
-    }
-
-    @Test
-    public void testPollLast() {
-        assertNull(deque.pollLast());
-        assertTrue(deque.offerFirst(ONE));
-        assertTrue(deque.offerFirst(TWO));
-        assertEquals(Integer.valueOf(1), deque.pollLast());
-    }
-
-    @Test
-    public void testPollLastWithTimeout() throws InterruptedException {
-        assertNull(deque.pollLast());
-        assertNull(deque.pollLast1(TIMEOUT_50_MILLIS));
-    }
-
-    @Test
-    public void testPollWithTimeout() throws InterruptedException {
-        assertNull(deque.poll1(TIMEOUT_50_MILLIS));
-        assertNull(deque.poll1(TIMEOUT_50_MILLIS));
-    }
-
-    @Test
-    public void testPop() {
-        assertThrows(NoSuchElementException.class, () -> deque.pop());
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.pop());
-        assertThrows(
-                NoSuchElementException.class,
-                () -> {
-                    deque.pop();
-                    deque.pop();
-                });
-    }
+    
 
     /*
      * https://issues.apache.org/jira/browse/POOL-281
      *
      * Should complete almost instantly when the issue is fixed.
      */
-    @Test
-    @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
-    public void testPossibleBug() {
-
-        deque = LinkedBlockingDeque.LinkedBlockingDeque0();
-        for (int i = 0; i < 3; i++) {
-            deque.add(Integer.valueOf(i));
-        }
-
-        final Iterator<Integer> iter = deque.iterator();
-        iter.next();
-
-        deque.remove(Integer.valueOf(1));
-        deque.remove(Integer.valueOf(0));
-        deque.remove(Integer.valueOf(2));
-
-        iter.next();
-    }
-
-    @Test
-    public void testPush() {
-        deque.push(ONE);
-        deque.push(TWO);
-        assertEquals(2, deque.size());
-        assertThrows(IllegalStateException.class, () -> deque.push(THREE));
-        assertEquals(Integer.valueOf(2), deque.pop());
-    }
-
-    @Test
-    public void testPut() throws InterruptedException {
-        assertThrows(NullPointerException.class, () -> deque.put(null));
-        deque.put(ONE);
-        deque.put(TWO);
-    }
-
-    @Test
-    public void testPutFirst() throws InterruptedException {
-        assertThrows(NullPointerException.class, () -> deque.putFirst(null));
-        deque.putFirst(ONE);
-        deque.putFirst(TWO);
-        assertEquals(2, deque.size());
-        assertEquals(Integer.valueOf(2), deque.pop());
-    }
-
-    @Test
-    public void testPutLast() throws InterruptedException {
-        assertThrows(NullPointerException.class, () -> deque.putLast(null));
-        deque.putLast(ONE);
-        deque.putLast(TWO);
-        assertEquals(2, deque.size());
-        assertEquals(Integer.valueOf(1), deque.pop());
-    }
-
-    @Test
-    public void testRemove() {
-        assertThrows(NoSuchElementException.class, deque::remove);
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.remove());
-    }
-
-    @Test
-    public void testRemoveFirst() {
-        assertThrows(NoSuchElementException.class, deque::removeFirst);
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(1), deque.removeFirst());
-        assertThrows(
-                NoSuchElementException.class,
-                () -> {
-                    deque.removeFirst();
-                    deque.removeFirst();
-                });
-    }
-
-    @Test
-    public void testRemoveLast() {
-        assertThrows(NoSuchElementException.class, deque::removeLast);
-        deque.add(ONE);
-        deque.add(TWO);
-        assertEquals(Integer.valueOf(2), deque.removeLast());
-        assertThrows(
-                NoSuchElementException.class,
-                () -> {
-                    deque.removeLast();
-                    deque.removeLast();
-                });
-    }
-
-    @Test
-    public void testRemoveLastOccurrence() {
-        assertFalse(deque.removeLastOccurrence(null));
-        assertFalse(deque.removeLastOccurrence(ONE));
-        deque.add(ONE);
-        deque.add(ONE);
-        assertTrue(deque.removeLastOccurrence(ONE));
-        assertEquals(1, deque.size());
-    }
-
-    @Test
-    public void testTake() throws InterruptedException {
-        assertTrue(deque.offerFirst(ONE));
-        assertTrue(deque.offerFirst(TWO));
-        assertEquals(Integer.valueOf(2), deque.take());
-    }
-
-    @Test
-    public void testTakeFirst() throws InterruptedException {
-        assertTrue(deque.offerFirst(ONE));
-        assertTrue(deque.offerFirst(TWO));
-        assertEquals(Integer.valueOf(2), deque.takeFirst());
-    }
-
-    @Test
-    public void testTakeLast() throws InterruptedException {
-        assertTrue(deque.offerFirst(ONE));
-        assertTrue(deque.offerFirst(TWO));
-        assertEquals(Integer.valueOf(1), deque.takeLast());
-    }
-
-    @Test
-    public void testToArray() {
-        deque.add(ONE);
-        deque.add(TWO);
-        Object[] arr = deque.toArray();
-        assertEquals(Integer.valueOf(1), arr[0]);
-        assertEquals(Integer.valueOf(2), arr[1]);
-
-        arr = deque.toArray(new Integer[0]);
-        assertEquals(Integer.valueOf(1), arr[0]);
-        assertEquals(Integer.valueOf(2), arr[1]);
-
-        arr = deque.toArray(new Integer[0]);
-        assertEquals(Integer.valueOf(1), arr[0]);
-        assertEquals(Integer.valueOf(2), arr[1]);
-    }
 
     @Test
     public void testAdd_test0_decomposed()  {
         assertTrue(deque.add(ONE));
         assertTrue(deque.add(TWO));
         assertThrows(IllegalStateException.class, () -> deque.add(THREE));
+        assertThrows(NullPointerException.class, () -> deque.add(null));
     }
 
     @Test
@@ -467,6 +139,15 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testAddFirst_test3_decomposed()  {
+        deque.addFirst(ONE);
+        deque.addFirst(TWO);
+        assertEquals(2, deque.size());
+        assertThrows(IllegalStateException.class, () -> deque.add(THREE));
+        assertEquals(Integer.valueOf(2), deque.pop());
+    }
+
+    @Test
     public void testAddLast_test0_decomposed()  {
         deque.addLast(ONE);
         deque.addLast(TWO);
@@ -488,6 +169,15 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testAddLast_test3_decomposed()  {
+        deque.addLast(ONE);
+        deque.addLast(TWO);
+        assertEquals(2, deque.size());
+        assertThrows(IllegalStateException.class, () -> deque.add(THREE));
+        assertEquals(Integer.valueOf(1), deque.pop());
+    }
+
+    @Test
     public void testClear_test0_decomposed()  {
         deque.add(ONE);
         deque.add(TWO);
@@ -506,6 +196,15 @@ public class TestLinkedBlockingDeque {
         deque.add(TWO);
         deque.clear();
         deque.add(ONE);
+    }
+
+    @Test
+    public void testClear_test3_decomposed()  {
+        deque.add(ONE);
+        deque.add(TWO);
+        deque.clear();
+        deque.add(ONE);
+        assertEquals(1, deque.size());
     }
 
     @Test
@@ -554,6 +253,19 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testConstructors_test6_decomposed()  {
+        LinkedBlockingDeque<Integer> deque = LinkedBlockingDeque.LinkedBlockingDeque0();
+        assertEquals(Integer.MAX_VALUE, deque.remainingCapacity());
+        deque = LinkedBlockingDeque.LinkedBlockingDeque3(2);
+        assertEquals(2, deque.remainingCapacity());
+        deque = LinkedBlockingDeque.LinkedBlockingDeque2(Arrays.asList(ONE, TWO));
+        assertEquals(2, deque.size());
+        assertThrows(
+                NullPointerException.class,
+                () -> LinkedBlockingDeque.LinkedBlockingDeque2(Arrays.asList(ONE, null)));
+    }
+
+    @Test
     public void testContains_test0_decomposed()  {
         deque.add(ONE);
     }
@@ -583,6 +295,7 @@ public class TestLinkedBlockingDeque {
         assertFalse(deque.contains(null));
         deque.add(TWO);
         assertTrue(deque.contains(TWO));
+        assertFalse(deque.contains(THREE));
     }
 
     @Test
@@ -625,10 +338,20 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testDescendingIterator_test5_decomposed()  {
+        assertThrows(NoSuchElementException.class, () -> deque.descendingIterator().next());
+        deque.add(ONE);
+        deque.add(TWO);
+        final Iterator<Integer> iter = deque.descendingIterator();
+        assertEquals(Integer.valueOf(2), iter.next());
+        iter.remove();
+        assertEquals(Integer.valueOf(1), iter.next());
+    }
+
+    @Test
     public void testDrainTo_test0_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
-        deque.add(TWO);
     }
 
     @Test
@@ -636,7 +359,6 @@ public class TestLinkedBlockingDeque {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
-        assertEquals(2, deque.drainTo0(c));
     }
 
     @Test
@@ -645,11 +367,30 @@ public class TestLinkedBlockingDeque {
         deque.add(ONE);
         deque.add(TWO);
         assertEquals(2, deque.drainTo0(c));
-        assertEquals(2, c.size());
     }
 
     @Test
     public void testDrainTo_test3_decomposed()  {
+        Collection<Integer> c = new ArrayList<>();
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(2, deque.drainTo0(c));
+        assertEquals(2, c.size());
+    }
+
+    @Test
+    public void testDrainTo_test4_decomposed()  {
+        Collection<Integer> c = new ArrayList<>();
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(2, deque.drainTo0(c));
+        assertEquals(2, c.size());
+        c = new ArrayList<>();
+        deque.add(ONE);
+    }
+
+    @Test
+    public void testDrainTo_test5_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
@@ -661,7 +402,7 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
-    public void testDrainTo_test4_decomposed()  {
+    public void testDrainTo_test6_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
@@ -674,7 +415,7 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
-    public void testDrainTo_test5_decomposed()  {
+    public void testDrainTo_test7_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
@@ -689,7 +430,7 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
-    public void testDrainTo_test6_decomposed()  {
+    public void testDrainTo_test8_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
@@ -705,7 +446,7 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
-    public void testDrainTo_test7_decomposed()  {
+    public void testDrainTo_test9_decomposed()  {
         Collection<Integer> c = new ArrayList<>();
         deque.add(ONE);
         deque.add(TWO);
@@ -722,6 +463,24 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testDrainTo_test10_decomposed()  {
+        Collection<Integer> c = new ArrayList<>();
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(2, deque.drainTo0(c));
+        assertEquals(2, c.size());
+        c = new ArrayList<>();
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(1, deque.drainTo1(c, 1));
+        assertEquals(1, deque.size());
+        assertEquals(1, c.size());
+        c.iterator();
+        Integer.valueOf(1);
+        assertEquals(Integer.valueOf(1), c.iterator().next());
+    }
+
+    @Test
     public void testElement_test0_decomposed()  {
         assertThrows(NoSuchElementException.class, () -> deque.element());
     }
@@ -731,6 +490,14 @@ public class TestLinkedBlockingDeque {
         assertThrows(NoSuchElementException.class, () -> deque.element());
         deque.add(ONE);
         deque.add(TWO);
+    }
+
+    @Test
+    public void testElement_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, () -> deque.element());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(1), deque.element());
     }
 
     @Test
@@ -746,6 +513,14 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testGetFirst_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, () -> deque.getFirst());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(1), deque.getFirst());
+    }
+
+    @Test
     public void testGetLast_test0_decomposed()  {
         assertThrows(NoSuchElementException.class, () -> deque.getLast());
     }
@@ -755,6 +530,14 @@ public class TestLinkedBlockingDeque {
         assertThrows(NoSuchElementException.class, () -> deque.getLast());
         deque.add(ONE);
         deque.add(TWO);
+    }
+
+    @Test
+    public void testGetLast_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, () -> deque.getLast());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(2), deque.getLast());
     }
 
     @Test
@@ -797,10 +580,22 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testIterator_test5_decomposed()  {
+        assertThrows(NoSuchElementException.class, () -> deque.iterator().next());
+        deque.add(ONE);
+        deque.add(TWO);
+        final Iterator<Integer> iter = deque.iterator();
+        assertEquals(Integer.valueOf(1), iter.next());
+        iter.remove();
+        assertEquals(Integer.valueOf(2), iter.next());
+    }
+
+    @Test
     public void testOffer_test0_decomposed()  {
         assertTrue(deque.offer(ONE));
         assertTrue(deque.offer(TWO));
         assertFalse(deque.offer(THREE));
+        assertThrows(NullPointerException.class, () -> deque.offer(null));
     }
 
     @Test
@@ -825,10 +620,20 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testOfferFirst_test3_decomposed()  {
+        deque.offerFirst(ONE);
+        deque.offerFirst(TWO);
+        assertEquals(2, deque.size());
+        assertThrows(NullPointerException.class, () -> deque.offerFirst(null));
+        assertEquals(Integer.valueOf(2), deque.pop());
+    }
+
+    @Test
     public void testOfferFirstWithTimeout_test0_decomposed() throws InterruptedException {
         assertThrows(NullPointerException.class, () -> deque.offerFirst1(null, TIMEOUT_50_MILLIS));
         assertTrue(deque.offerFirst1(ONE, TIMEOUT_50_MILLIS));
         assertTrue(deque.offerFirst1(TWO, TIMEOUT_50_MILLIS));
+        assertFalse(deque.offerFirst1(THREE, TIMEOUT_50_MILLIS));
     }
 
     @Test
@@ -853,10 +658,20 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testOfferLast_test3_decomposed()  {
+        deque.offerLast(ONE);
+        deque.offerLast(TWO);
+        assertEquals(2, deque.size());
+        assertThrows(NullPointerException.class, () -> deque.offerLast(null));
+        assertEquals(Integer.valueOf(1), deque.pop());
+    }
+
+    @Test
     public void testOfferLastWithTimeout_test0_decomposed() throws InterruptedException {
         assertThrows(NullPointerException.class, () -> deque.offerLast1(null, TIMEOUT_50_MILLIS));
         assertTrue(deque.offerLast1(ONE, TIMEOUT_50_MILLIS));
         assertTrue(deque.offerLast1(TWO, TIMEOUT_50_MILLIS));
+        assertFalse(deque.offerLast1(THREE, TIMEOUT_50_MILLIS));
     }
 
     @Test
@@ -864,6 +679,7 @@ public class TestLinkedBlockingDeque {
         assertTrue(deque.offer1(ONE, TIMEOUT_50_MILLIS));
         assertTrue(deque.offer1(TWO, TIMEOUT_50_MILLIS));
         assertFalse(deque.offer1(THREE, TIMEOUT_50_MILLIS));
+        assertThrows(NullPointerException.class, () -> deque.offer1(null, TIMEOUT_50_MILLIS));
     }
 
     @Test
@@ -879,6 +695,14 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPeek_test2_decomposed()  {
+        assertNull(deque.peek());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(1), deque.peek());
+    }
+
+    @Test
     public void testPeekFirst_test0_decomposed()  {
         assertNull(deque.peekFirst());
     }
@@ -888,6 +712,14 @@ public class TestLinkedBlockingDeque {
         assertNull(deque.peekFirst());
         deque.add(ONE);
         deque.add(TWO);
+    }
+
+    @Test
+    public void testPeekFirst_test2_decomposed()  {
+        assertNull(deque.peekFirst());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(1), deque.peekFirst());
     }
 
     @Test
@@ -903,6 +735,14 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPeekLast_test2_decomposed()  {
+        assertNull(deque.peekLast());
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(2), deque.peekLast());
+    }
+
+    @Test
     public void testPollFirst_test0_decomposed()  {
         assertNull(deque.pollFirst());
     }
@@ -915,8 +755,22 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPollFirst_test2_decomposed()  {
+        assertNull(deque.pollFirst());
+        assertTrue(deque.offerFirst(ONE));
+        assertTrue(deque.offerFirst(TWO));
+        assertEquals(Integer.valueOf(2), deque.pollFirst());
+    }
+
+    @Test
     public void testPollFirstWithTimeout_test0_decomposed() throws InterruptedException {
         assertNull(deque.pollFirst());
+    }
+
+    @Test
+    public void testPollFirstWithTimeout_test1_decomposed() throws InterruptedException {
+        assertNull(deque.pollFirst());
+        assertNull(deque.pollFirst1(TIMEOUT_50_MILLIS));
     }
 
     @Test
@@ -932,12 +786,27 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPollLast_test2_decomposed()  {
+        assertNull(deque.pollLast());
+        assertTrue(deque.offerFirst(ONE));
+        assertTrue(deque.offerFirst(TWO));
+        assertEquals(Integer.valueOf(1), deque.pollLast());
+    }
+
+    @Test
     public void testPollLastWithTimeout_test0_decomposed() throws InterruptedException {
         assertNull(deque.pollLast());
     }
 
     @Test
+    public void testPollLastWithTimeout_test1_decomposed() throws InterruptedException {
+        assertNull(deque.pollLast());
+        assertNull(deque.pollLast1(TIMEOUT_50_MILLIS));
+    }
+
+    @Test
     public void testPollWithTimeout_test0_decomposed() throws InterruptedException {
+        assertNull(deque.poll1(TIMEOUT_50_MILLIS));
         assertNull(deque.poll1(TIMEOUT_50_MILLIS));
     }
 
@@ -959,6 +828,12 @@ public class TestLinkedBlockingDeque {
         deque.add(ONE);
         deque.add(TWO);
         assertEquals(Integer.valueOf(1), deque.pop());
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    deque.pop();
+                    deque.pop();
+                });
     }
 
     @Test
@@ -1007,6 +882,20 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPossibleBug_test5_decomposed()  {
+        deque = LinkedBlockingDeque.LinkedBlockingDeque0();
+        for (int i = 0; i < 3; i++) {
+            deque.add(Integer.valueOf(i));
+        }
+        final Iterator<Integer> iter = deque.iterator();
+        iter.next();
+        deque.remove(Integer.valueOf(1));
+        deque.remove(Integer.valueOf(0));
+        deque.remove(Integer.valueOf(2));
+        iter.next();
+    }
+
+    @Test
     public void testPush_test0_decomposed()  {
         deque.push(ONE);
         deque.push(TWO);
@@ -1028,9 +917,19 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPush_test3_decomposed()  {
+        deque.push(ONE);
+        deque.push(TWO);
+        assertEquals(2, deque.size());
+        assertThrows(IllegalStateException.class, () -> deque.push(THREE));
+        assertEquals(Integer.valueOf(2), deque.pop());
+    }
+
+    @Test
     public void testPut_test0_decomposed() throws InterruptedException {
         assertThrows(NullPointerException.class, () -> deque.put(null));
         deque.put(ONE);
+        deque.put(TWO);
     }
 
     @Test
@@ -1049,6 +948,15 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPutFirst_test2_decomposed() throws InterruptedException {
+        assertThrows(NullPointerException.class, () -> deque.putFirst(null));
+        deque.putFirst(ONE);
+        deque.putFirst(TWO);
+        assertEquals(2, deque.size());
+        assertEquals(Integer.valueOf(2), deque.pop());
+    }
+
+    @Test
     public void testPutLast_test0_decomposed() throws InterruptedException {
         assertThrows(NullPointerException.class, () -> deque.putLast(null));
         deque.putLast(ONE);
@@ -1064,17 +972,39 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testPutLast_test2_decomposed() throws InterruptedException {
+        assertThrows(NullPointerException.class, () -> deque.putLast(null));
+        deque.putLast(ONE);
+        deque.putLast(TWO);
+        assertEquals(2, deque.size());
+        assertEquals(Integer.valueOf(1), deque.pop());
+    }
+
+    @Test
     public void testRemove_test0_decomposed()  {
+        assertThrows(NoSuchElementException.class, deque::remove);
+        deque.add(ONE);
+    }
+
+    @Test
+    public void testRemove_test1_decomposed()  {
         assertThrows(NoSuchElementException.class, deque::remove);
         deque.add(ONE);
         deque.add(TWO);
     }
 
     @Test
+    public void testRemove_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, deque::remove);
+        deque.add(ONE);
+        deque.add(TWO);
+        assertEquals(Integer.valueOf(1), deque.remove());
+    }
+
+    @Test
     public void testRemoveFirst_test0_decomposed()  {
         assertThrows(NoSuchElementException.class, deque::removeFirst);
         deque.add(ONE);
-        deque.add(TWO);
     }
 
     @Test
@@ -1082,14 +1012,26 @@ public class TestLinkedBlockingDeque {
         assertThrows(NoSuchElementException.class, deque::removeFirst);
         deque.add(ONE);
         deque.add(TWO);
+    }
+
+    @Test
+    public void testRemoveFirst_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, deque::removeFirst);
+        deque.add(ONE);
+        deque.add(TWO);
         assertEquals(Integer.valueOf(1), deque.removeFirst());
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    deque.removeFirst();
+                    deque.removeFirst();
+                });
     }
 
     @Test
     public void testRemoveLast_test0_decomposed()  {
         assertThrows(NoSuchElementException.class, deque::removeLast);
         deque.add(ONE);
-        deque.add(TWO);
     }
 
     @Test
@@ -1097,7 +1039,20 @@ public class TestLinkedBlockingDeque {
         assertThrows(NoSuchElementException.class, deque::removeLast);
         deque.add(ONE);
         deque.add(TWO);
+    }
+
+    @Test
+    public void testRemoveLast_test2_decomposed()  {
+        assertThrows(NoSuchElementException.class, deque::removeLast);
+        deque.add(ONE);
+        deque.add(TWO);
         assertEquals(Integer.valueOf(2), deque.removeLast());
+        assertThrows(
+                NoSuchElementException.class,
+                () -> {
+                    deque.removeLast();
+                    deque.removeLast();
+                });
     }
 
     @Test
@@ -1124,9 +1079,26 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testRemoveLastOccurrence_test3_decomposed()  {
+        assertFalse(deque.removeLastOccurrence(null));
+        assertFalse(deque.removeLastOccurrence(ONE));
+        deque.add(ONE);
+        deque.add(ONE);
+        assertTrue(deque.removeLastOccurrence(ONE));
+        assertEquals(1, deque.size());
+    }
+
+    @Test
     public void testTake_test0_decomposed() throws InterruptedException {
         assertTrue(deque.offerFirst(ONE));
         assertTrue(deque.offerFirst(TWO));
+    }
+
+    @Test
+    public void testTake_test1_decomposed() throws InterruptedException {
+        assertTrue(deque.offerFirst(ONE));
+        assertTrue(deque.offerFirst(TWO));
+        assertEquals(Integer.valueOf(2), deque.take());
     }
 
     @Test
@@ -1136,9 +1108,23 @@ public class TestLinkedBlockingDeque {
     }
 
     @Test
+    public void testTakeFirst_test1_decomposed() throws InterruptedException {
+        assertTrue(deque.offerFirst(ONE));
+        assertTrue(deque.offerFirst(TWO));
+        assertEquals(Integer.valueOf(2), deque.takeFirst());
+    }
+
+    @Test
     public void testTakeLast_test0_decomposed() throws InterruptedException {
         assertTrue(deque.offerFirst(ONE));
         assertTrue(deque.offerFirst(TWO));
+    }
+
+    @Test
+    public void testTakeLast_test1_decomposed() throws InterruptedException {
+        assertTrue(deque.offerFirst(ONE));
+        assertTrue(deque.offerFirst(TWO));
+        assertEquals(Integer.valueOf(1), deque.takeLast());
     }
 
     @Test
@@ -1152,6 +1138,7 @@ public class TestLinkedBlockingDeque {
         deque.add(ONE);
         deque.add(TWO);
         Object[] arr = deque.toArray();
+        assertEquals(Integer.valueOf(1), arr[0]);
     }
 
     @Test
@@ -1159,6 +1146,9 @@ public class TestLinkedBlockingDeque {
         deque.add(ONE);
         deque.add(TWO);
         Object[] arr = deque.toArray();
+        assertEquals(Integer.valueOf(1), arr[0]);
+        assertEquals(Integer.valueOf(2), arr[1]);
+        arr = deque.toArray(new Integer[0]);
         assertEquals(Integer.valueOf(1), arr[0]);
     }
 
@@ -1170,6 +1160,10 @@ public class TestLinkedBlockingDeque {
         assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
         arr = deque.toArray(new Integer[0]);
+        assertEquals(Integer.valueOf(1), arr[0]);
+        assertEquals(Integer.valueOf(2), arr[1]);
+        arr = deque.toArray(new Integer[0]);
+        assertEquals(Integer.valueOf(1), arr[0]);
     }
 
     @Test
@@ -1181,32 +1175,9 @@ public class TestLinkedBlockingDeque {
         assertEquals(Integer.valueOf(2), arr[1]);
         arr = deque.toArray(new Integer[0]);
         assertEquals(Integer.valueOf(1), arr[0]);
-    }
-
-    @Test
-    public void testToArray_test5_decomposed()  {
-        deque.add(ONE);
-        deque.add(TWO);
-        Object[] arr = deque.toArray();
-        assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
         arr = deque.toArray(new Integer[0]);
         assertEquals(Integer.valueOf(1), arr[0]);
         assertEquals(Integer.valueOf(2), arr[1]);
-        arr = deque.toArray(new Integer[0]);
-    }
-
-    @Test
-    public void testToArray_test6_decomposed()  {
-        deque.add(ONE);
-        deque.add(TWO);
-        Object[] arr = deque.toArray();
-        assertEquals(Integer.valueOf(1), arr[0]);
-        assertEquals(Integer.valueOf(2), arr[1]);
-        arr = deque.toArray(new Integer[0]);
-        assertEquals(Integer.valueOf(1), arr[0]);
-        assertEquals(Integer.valueOf(2), arr[1]);
-        arr = deque.toArray(new Integer[0]);
-        assertEquals(Integer.valueOf(1), arr[0]);
     }
 }

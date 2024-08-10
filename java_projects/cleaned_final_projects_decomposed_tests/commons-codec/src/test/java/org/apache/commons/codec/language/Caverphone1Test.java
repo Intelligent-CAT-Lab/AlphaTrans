@@ -43,8 +43,32 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
      *
      * @throws EncoderException for some failure scenarios.
      */
+    
+
+    
+
+    /**
+     * Tests some examples from version 2.0 http://caversham.otago.ac.nz/files/working/ctp150804.pdf
+     *
+     * @throws EncoderException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests example from http://caversham.otago.ac.nz/files/working/ctp060902.pdf
+     *
+     * @throws EncoderException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests examples from http://en.wikipedia.org/wiki/Caverphone
+     *
+     * @throws EncoderException for some failure scenarios.
+     */
+
     @Test
-    public void testCaverphoneRevisitedCommonCodeAT1111() throws EncoderException {
+    public void testCaverphoneRevisitedCommonCodeAT1111_test0_decomposed() throws EncoderException {
         this.checkEncodingVariations(
                 "AT1111",
                 new String[] {
@@ -54,51 +78,9 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
     }
 
     @Test
-    public void testEndMb() throws EncoderException {
-        final String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
-        this.checkEncodings(data);
-    }
-
-    /**
-     * Tests some examples from version 2.0 http://caversham.otago.ac.nz/files/working/ctp150804.pdf
-     *
-     * @throws EncoderException for some failure scenarios.
-     */
-    @Test
-    public void testIsCaverphoneEquals() throws EncoderException {
-        final Caverphone1 caverphone = new Caverphone1();
-        Assert.assertFalse(
-                "Caverphone encodings should not be equal",
-                caverphone.isEncodeEqual("Peter", "Stevenson"));
-        Assert.assertTrue(
-                "Caverphone encodings should be equal", caverphone.isEncodeEqual("Peter", "Peady"));
-    }
-
-    /**
-     * Tests example from http://caversham.otago.ac.nz/files/working/ctp060902.pdf
-     *
-     * @throws EncoderException for some failure scenarios.
-     */
-    @Test
-    public void testSpecificationV1Examples() throws EncoderException {
-        final String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
-        this.checkEncodings(data);
-    }
-
-    /**
-     * Tests examples from http://en.wikipedia.org/wiki/Caverphone
-     *
-     * @throws EncoderException for some failure scenarios.
-     */
-    @Test
-    public void testWikipediaExamples() throws EncoderException {
-        final String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
-        this.checkEncodings(data);
-    }
-
-    @Test
     public void testEndMb_test0_decomposed() throws EncoderException {
         final String[][] data = {{"mb", "M11111"}, {"mbmb", "MPM111"}};
+        this.checkEncodings(data);
     }
 
     @Test
@@ -112,15 +94,19 @@ public class Caverphone1Test extends StringEncoderAbstractTest<Caverphone1> {
         Assert.assertFalse(
                 "Caverphone encodings should not be equal",
                 caverphone.isEncodeEqual("Peter", "Stevenson"));
+        Assert.assertTrue(
+                "Caverphone encodings should be equal", caverphone.isEncodeEqual("Peter", "Peady"));
     }
 
     @Test
     public void testSpecificationV1Examples_test0_decomposed() throws EncoderException {
         final String[][] data = {{"David", "TFT111"}, {"Whittle", "WTL111"}};
+        this.checkEncodings(data);
     }
 
     @Test
     public void testWikipediaExamples_test0_decomposed() throws EncoderException {
         final String[][] data = {{"Lee", "L11111"}, {"Thompson", "TMPSN1"}};
+        this.checkEncodings(data);
     }
 }

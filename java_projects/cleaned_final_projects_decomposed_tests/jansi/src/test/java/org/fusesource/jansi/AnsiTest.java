@@ -37,28 +37,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  */
 public class AnsiTest {
-    @Test
-    public void testSetEnabled() throws Exception {
-        Ansi.setEnabled(false);
-        new Thread(() -> assertFalse(Ansi.isEnabled())).run();
-
-        Ansi.setEnabled(true);
-        new Thread(() -> assertTrue(Ansi.isEnabled())).run();
-    }
-
-    @Test
-    public void testClone() throws CloneNotSupportedException {
-        Ansi ansi = Ansi.ansi0().a1("Some text").bg0(Color.BLACK).fg0(Color.WHITE);
-        Ansi clone = Ansi.Ansi1(ansi);
-
-        assertEquals(
-                ansi.a1("test").reset().toString(), clone.a1("test").reset().toString());
-    }
-
-    @Test
-    public void testApply() {
-        assertEquals("test", Ansi.ansi0().apply(ansi -> ansi.a1("test")).toString());
-    }
 
     @ParameterizedTest
     @CsvSource({
@@ -131,47 +109,16 @@ public class AnsiTest {
         assertAnsi(expected, Ansi.Ansi0().cursorMove(x, y));
     }
 
-    @Test
-    public void testCursorDownLine0() {
-        assertAnsi("ESC[E", Ansi.Ansi0().cursorDownLine0());
-    }
-
     @ParameterizedTest
     @CsvSource({"-2,ESC[2F", "-1,ESC[1F", "0,ESC[0E", "1,ESC[1E", "2,ESC[2E"})
     public void testCursorDownLine1(int n, String expected) {
         assertAnsi(expected, Ansi.Ansi0().cursorDownLine1(n));
     }
 
-    @Test
-    public void testCursorUpLine0() {
-        assertAnsi("ESC[F", Ansi.Ansi0().cursorUpLine0());
-    }
-
     @ParameterizedTest
     @CsvSource({"-2,ESC[2E", "-1,ESC[1E", "0,ESC[0F", "1,ESC[1F", "2,ESC[2F"})
     public void testCursorUpLine1(int n, String expected) {
         assertAnsi(expected, Ansi.Ansi0().cursorUpLine1(n));
-    }
-
-    @Test
-    public void testColorDisabled() {
-        Ansi.setEnabled(false);
-        try {
-            assertEquals(
-                    "test",
-                    Ansi.ansi0()
-                            .fg1(32)
-                            .a1("t")
-                            .fgRgb0(0)
-                            .a1("e")
-                            .bg1(24)
-                            .a1("s")
-                            .bgRgb0(100)
-                            .a1("t")
-                            .toString());
-        } finally {
-            Ansi.setEnabled(true);
-        }
     }
 
     @Test
@@ -242,6 +189,16 @@ public class AnsiTest {
     }
 
     @Test
+    public void testSetEnabled_test5_decomposed() throws Exception {
+        Ansi.setEnabled(false);
+        Ansi.isEnabled();
+        new Thread(() -> assertFalse(Ansi.isEnabled())).run();
+        Ansi.setEnabled(true);
+        Ansi.isEnabled();
+        new Thread(() -> assertTrue(Ansi.isEnabled())).run();
+    }
+
+    @Test
     public void testClone_test0_decomposed() throws CloneNotSupportedException {
         Ansi.ansi0();
     }
@@ -301,17 +258,12 @@ public class AnsiTest {
     }
 
     @Test
-    public void testClone_test7_decomposed() throws CloneNotSupportedException {
-        Ansi.ansi0();
-        Ansi.ansi0().a1("Some text");
-        Ansi.ansi0().a1("Some text").bg0(Color.BLACK);
+    public void testClone() throws CloneNotSupportedException {
         Ansi ansi = Ansi.ansi0().a1("Some text").bg0(Color.BLACK).fg0(Color.WHITE);
         Ansi clone = Ansi.Ansi1(ansi);
-        ansi.a1("test");
-        clone.a1("test");
-        ansi.a1("test").reset();
-        clone.a1("test").reset();
-        ansi.a1("test").reset().toString();
+
+        assertEquals(
+                ansi.a1("test").reset().toString(), clone.a1("test").reset().toString());
     }
 
     @Test
@@ -326,8 +278,21 @@ public class AnsiTest {
     }
 
     @Test
+    public void testApply_test2_decomposed() {
+        Ansi.ansi0();
+        Ansi.ansi0().apply(ansi -> ansi.a1("test"));
+        assertEquals("test", Ansi.ansi0().apply(ansi -> ansi.a1("test")).toString());
+    }
+
+    @Test
     public void testCursorDownLine0_test0_decomposed() {
         Ansi.Ansi0();
+    }
+
+    @Test
+    public void testCursorDownLine0_test1_decomposed() {
+        Ansi.Ansi0();
+        assertAnsi("ESC[E", Ansi.Ansi0().cursorDownLine0());
     }
 
     @Test
@@ -336,7 +301,34 @@ public class AnsiTest {
     }
 
     @Test
+    public void testCursorUpLine0_test1_decomposed() {
+        Ansi.Ansi0();
+        assertAnsi("ESC[F", Ansi.Ansi0().cursorUpLine0());
+    }
+
+    @Test
     public void testColorDisabled_test0_decomposed() {
         Ansi.setEnabled(false);
+    }
+
+    @Test
+    public void testColorDisabled_test1_decomposed() {
+        Ansi.setEnabled(false);
+        try {
+            assertEquals(
+                    "test",
+                    Ansi.ansi0()
+                            .fg1(32)
+                            .a1("t")
+                            .fgRgb0(0)
+                            .a1("e")
+                            .bg1(24)
+                            .a1("s")
+                            .bgRgb0(100)
+                            .a1("t")
+                            .toString());
+        } finally {
+            Ansi.setEnabled(true);
+        }
     }
 }

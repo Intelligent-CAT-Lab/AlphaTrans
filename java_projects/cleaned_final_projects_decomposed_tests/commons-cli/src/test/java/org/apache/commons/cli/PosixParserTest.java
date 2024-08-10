@@ -31,709 +31,425 @@ public class PosixParserTest extends ParserTestCase {
         parser = new PosixParser();
     }
 
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testAmbiguousLongWithoutEqualSingleDash() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testAmbiguousPartialLongOption4() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testDoubleDash2() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testLongWithEqualSingleDash() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testLongWithoutEqualSingleDash() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testLongWithUnexpectedArgument1() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser (CLI-184)")
-    public void testNegativeOption() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testShortWithEqual() throws Exception {}
-
-    @Override
-    @Test
-    @Ignore("not supported by the PosixParser")
-    public void testUnambiguousPartialLongOption4() throws Exception {}
-
-    @Test
+    
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test7_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test8_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test9_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test10_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousLongWithoutEqualSingleDash_test11_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test7_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test8_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testAmbiguousPartialLongOption4_test9_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testDoubleDash2_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
+    @Ignore
+    public void testDoubleDash2_test6_decomposed() throws Exception {
+        // Ignored test method
+    }
+
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithEqualSingleDash_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithoutEqualSingleDash_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testLongWithUnexpectedArgument1_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testNegativeOption_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
+    @Ignore
+    public void testNegativeOption_test1_decomposed() throws Exception {
+        // Ignored test method
+    }
+
+@Test
+    @Ignore
+    public void testNegativeOption_test2_decomposed() throws Exception {
+        // Ignored test method
+    }
+
+@Test
     @Ignore
     public void testShortWithEqual_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testShortWithEqual_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test0_decomposed() throws Exception {
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test1_decomposed() throws Exception {
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test2_decomposed() throws Exception {
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test3_decomposed() throws Exception {
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test4_decomposed() throws Exception {
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test5_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test6_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test7_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test8_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test9_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
 
-    @Test
+@Test
     @Ignore
     public void testUnambiguousPartialLongOption4_test10_decomposed() throws Exception {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Ignored test method
     }
+
 }

@@ -1062,169 +1062,32 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         }
     }
 
-    @Test
-    public void testCCedilla() {
-        assertTrue(this.getStringEncoder().isDoubleMetaphoneEqual0("\u00e7", "S")); // c-cedilla
-    }
+    
 
-    @Test
-    public void testCodec184() throws Throwable {
-        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "", false));
-        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "", true));
-        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("aa", "", false));
-        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("aa", "", true));
-        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "aa", false));
-        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "aa", true));
-    }
+    
 
-    @Test
-    public void testDoubleMetaphone() {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
+    
 
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-        assertDoubleMetaphoneAlt("SNHS", "san jose");
-        assertDoubleMetaphoneAlt("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("FKR", "Fokker");
-        assertDoubleMetaphoneAlt("AK", "Joqqi");
-        assertDoubleMetaphoneAlt("HF", "Hovvi");
-        assertDoubleMetaphoneAlt("XRN", "Czerny");
-    }
+    
 
-    @Test
-    public void testEmpty() {
-        assertNull(this.getStringEncoder().doubleMetaphone0(null));
-        assertNull(this.getStringEncoder().doubleMetaphone0(""));
-        assertNull(this.getStringEncoder().doubleMetaphone0(" "));
-        assertNull(this.getStringEncoder().doubleMetaphone0("\t\n\r "));
-    }
-
-    @Test
-    public void testIsDoubleMetaphoneEqualBasic() {
-        final String[][] testFixture = {
-            {"", ""},
-            {"Case", "case"},
-            {"CASE", "Case"},
-            {"caSe", "cAsE"},
-            {"cookie", "quick"},
-            {"quick", "cookie"},
-            {"Brian", "Bryan"},
-            {"Auto", "Otto"},
-            {"Steven", "Stefan"},
-            {"Philipowitz", "Filipowicz"}
-        };
-        doubleMetaphoneEqualTest(testFixture, false);
-        doubleMetaphoneEqualTest(testFixture, true);
-    }
+    
 
     /** Example in the original article but failures in this Java impl: */
-    @Test
-    public void testIsDoubleMetaphoneEqualExtended1() {}
+    
 
-    @Test
-    public void testIsDoubleMetaphoneEqualExtended2() {
-        final String[][] testFixture = {{"Jablonski", "Yablonsky"}};
-        doubleMetaphoneEqualTest(testFixture, true);
-    }
+    
 
     /** Used to generate the MATCHES array and test possible matches from the FIXTURE array. */
-    @Test
-    public void testIsDoubleMetaphoneEqualExtended3() {
-        this.validateFixture(FIXTURE);
-        final StringBuilder failures = new StringBuilder();
-        final StringBuilder matches = new StringBuilder();
-        final String cr = System.lineSeparator();
-        matches.append("private static final String[][] MATCHES = {" + cr);
-        int failCount = 0;
-        for (int i = 0; i < FIXTURE.length; i++) {
-            final String name0 = FIXTURE[i][0];
-            final String name1 = FIXTURE[i][1];
-            final boolean match1 =
-                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, false);
-            final boolean match2 =
-                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, true);
-            if (!match1 && !match2) {
-                final String failMsg = "[" + i + "] " + name0 + " and " + name1 + cr;
-                failures.append(failMsg);
-                failCount++;
-            } else {
-                matches.append("{\"" + name0 + "\", \"" + name1 + "\"}," + cr);
-            }
-        }
-        matches.append("};");
-        if (failCount > 0) {}
-    }
+    
 
-    @Test
-    public void testIsDoubleMetaphoneEqualWithMATCHES() {
-        this.validateFixture(MATCHES);
-        for (int i = 0; i < MATCHES.length; i++) {
-            final String name0 = MATCHES[i][0];
-            final String name1 = MATCHES[i][1];
-            final boolean match1 =
-                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, false);
-            final boolean match2 =
-                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, true);
-            if (!match1 && !match2) {
-                fail("Expected match [" + i + "] " + name0 + " and " + name1);
-            }
-        }
-    }
+    
 
-    @Test
-    public void testIsDoubleMetaphoneNotEqual() {
-        doubleMetaphoneNotEqualTest(false);
-        doubleMetaphoneNotEqualTest(true);
-    }
+    
 
-    @Test
-    public void testNTilde() {
-        assertTrue(this.getStringEncoder().isDoubleMetaphoneEqual0("\u00f1", "N")); // n-tilde
-    }
+    
 
     /** Test setting maximum length */
-    @Test
-    public void testSetMaxCodeLength() {
-        final String value = "jumped";
-
-        final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
-
-        assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
-        assertEquals("Default Primary", "JMPT", doubleMetaphone.doubleMetaphone1(value, false));
-        assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
-
-        doubleMetaphone.setMaxCodeLen(3);
-        assertEquals("Set Max Code Length", 3, doubleMetaphone.getMaxCodeLen());
-        assertEquals("Max=3 Primary", "JMP", doubleMetaphone.doubleMetaphone1(value, false));
-        assertEquals("Max=3 Alternate", "AMP", doubleMetaphone.doubleMetaphone1(value, true));
-    }
+    
 
     public void validateFixture(final String[][] pairs) {
         if (pairs.length == 0) {
@@ -1235,6 +1098,17 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
                 fail("Error in test fixture in the data array at index " + i);
             }
         }
+    }
+
+    @Test
+    public void testCCedilla_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCCedilla_test1_decomposed()  {
+        this.getStringEncoder();
+        assertTrue(this.getStringEncoder().isDoubleMetaphoneEqual0("\u00e7", "S"));
     }
 
     @Test
@@ -1273,738 +1147,37 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
     }
 
     @Test
+    public void testCodec184_test5_decomposed() throws Throwable {
+        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "", false));
+        assertTrue(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "", true));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("aa", "", false));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("aa", "", true));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "aa", false));
+        assertFalse(new DoubleMetaphone().isDoubleMetaphoneEqual1("", "aa", true));
+    }
+
+    @Test
     public void testDoubleMetaphone_test0_decomposed()  {
         assertDoubleMetaphone("TSTN", "testing");
+        assertDoubleMetaphone("0", "The");
+        assertDoubleMetaphone("KK", "quick");
+        assertDoubleMetaphone("PRN", "brown");
+        assertDoubleMetaphone("FKS", "fox");
+        assertDoubleMetaphone("JMPT", "jumped");
+        assertDoubleMetaphone("AFR", "over");
+        assertDoubleMetaphone("0", "the");
+        assertDoubleMetaphone("LS", "lazy");
+        assertDoubleMetaphone("TKS", "dogs");
+        assertDoubleMetaphone("MKFR", "MacCafferey");
+        assertDoubleMetaphone("STFN", "Stephan");
+        assertDoubleMetaphone("KSSK", "Kuczewski");
+        assertDoubleMetaphone("MKLL", "McClelland");
+        assertDoubleMetaphone("SNHS", "san jose");
+        assertDoubleMetaphone("SNFP", "xenophobia");
     }
 
     @Test
     public void testDoubleMetaphone_test1_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test2_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test3_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test4_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test5_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test6_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test7_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test8_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test9_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test10_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test11_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test12_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test13_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test14_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test15_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test16_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test17_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test18_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test19_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test20_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test21_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test22_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test23_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test24_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test25_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test26_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test27_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test28_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test29_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test30_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-        assertDoubleMetaphoneAlt("SNHS", "san jose");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test31_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-        assertDoubleMetaphoneAlt("SNHS", "san jose");
-        assertDoubleMetaphoneAlt("SNFP", "xenophobia");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test32_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-        assertDoubleMetaphoneAlt("SNHS", "san jose");
-        assertDoubleMetaphoneAlt("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("FKR", "Fokker");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test33_decomposed()  {
-        assertDoubleMetaphone("TSTN", "testing");
-        assertDoubleMetaphone("0", "The");
-        assertDoubleMetaphone("KK", "quick");
-        assertDoubleMetaphone("PRN", "brown");
-        assertDoubleMetaphone("FKS", "fox");
-        assertDoubleMetaphone("JMPT", "jumped");
-        assertDoubleMetaphone("AFR", "over");
-        assertDoubleMetaphone("0", "the");
-        assertDoubleMetaphone("LS", "lazy");
-        assertDoubleMetaphone("TKS", "dogs");
-        assertDoubleMetaphone("MKFR", "MacCafferey");
-        assertDoubleMetaphone("STFN", "Stephan");
-        assertDoubleMetaphone("KSSK", "Kuczewski");
-        assertDoubleMetaphone("MKLL", "McClelland");
-        assertDoubleMetaphone("SNHS", "san jose");
-        assertDoubleMetaphone("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("TSTN", "testing");
-        assertDoubleMetaphoneAlt("T", "The");
-        assertDoubleMetaphoneAlt("KK", "quick");
-        assertDoubleMetaphoneAlt("PRN", "brown");
-        assertDoubleMetaphoneAlt("FKS", "fox");
-        assertDoubleMetaphoneAlt("AMPT", "jumped");
-        assertDoubleMetaphoneAlt("AFR", "over");
-        assertDoubleMetaphoneAlt("T", "the");
-        assertDoubleMetaphoneAlt("LS", "lazy");
-        assertDoubleMetaphoneAlt("TKS", "dogs");
-        assertDoubleMetaphoneAlt("MKFR", "MacCafferey");
-        assertDoubleMetaphoneAlt("STFN", "Stephan");
-        assertDoubleMetaphoneAlt("KXFS", "Kutchefski");
-        assertDoubleMetaphoneAlt("MKLL", "McClelland");
-        assertDoubleMetaphoneAlt("SNHS", "san jose");
-        assertDoubleMetaphoneAlt("SNFP", "xenophobia");
-        assertDoubleMetaphoneAlt("FKR", "Fokker");
-        assertDoubleMetaphoneAlt("AK", "Joqqi");
-    }
-
-    @Test
-    public void testDoubleMetaphone_test34_decomposed()  {
         assertDoubleMetaphone("TSTN", "testing");
         assertDoubleMetaphone("0", "The");
         assertDoubleMetaphone("KK", "quick");
@@ -2040,13 +1213,75 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         assertDoubleMetaphoneAlt("FKR", "Fokker");
         assertDoubleMetaphoneAlt("AK", "Joqqi");
         assertDoubleMetaphoneAlt("HF", "Hovvi");
+        assertDoubleMetaphoneAlt("XRN", "Czerny");
     }
 
     @Test
     public void testEmpty_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testEmpty_test1_decomposed()  {
+        this.getStringEncoder();
         assertNull(this.getStringEncoder().doubleMetaphone0(null));
+    }
+
+    @Test
+    public void testEmpty_test2_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testEmpty_test3_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
         assertNull(this.getStringEncoder().doubleMetaphone0(""));
+    }
+
+    @Test
+    public void testEmpty_test4_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(""));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testEmpty_test5_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(""));
+        this.getStringEncoder();
         assertNull(this.getStringEncoder().doubleMetaphone0(" "));
+    }
+
+    @Test
+    public void testEmpty_test6_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(""));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(" "));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testEmpty_test7_decomposed()  {
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(null));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(""));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0(" "));
+        this.getStringEncoder();
+        assertNull(this.getStringEncoder().doubleMetaphone0("\t\n\r "));
     }
 
     @Test
@@ -2067,12 +1302,70 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
     }
 
     @Test
+    public void testIsDoubleMetaphoneEqualBasic_test1_decomposed()  {
+        final String[][] testFixture = {
+            {"", ""},
+            {"Case", "case"},
+            {"CASE", "Case"},
+            {"caSe", "cAsE"},
+            {"cookie", "quick"},
+            {"quick", "cookie"},
+            {"Brian", "Bryan"},
+            {"Auto", "Otto"},
+            {"Steven", "Stefan"},
+            {"Philipowitz", "Filipowicz"}
+        };
+        doubleMetaphoneEqualTest(testFixture, false);
+        doubleMetaphoneEqualTest(testFixture, true);
+    }
+
+    @Test
     public void testIsDoubleMetaphoneEqualExtended2_test0_decomposed()  {
         final String[][] testFixture = {{"Jablonski", "Yablonsky"}};
+        doubleMetaphoneEqualTest(testFixture, true);
     }
 
     @Test
     public void testIsDoubleMetaphoneEqualExtended3_test0_decomposed()  {
+        this.validateFixture(FIXTURE);
+    }
+
+    @Test
+    public void testIsDoubleMetaphoneEqualExtended3_test1_decomposed()  {
+        this.validateFixture(FIXTURE);
+        final StringBuilder failures = new StringBuilder();
+        final StringBuilder matches = new StringBuilder();
+        final String cr = System.lineSeparator();
+        matches.append("private static final String[][] MATCHES = {" + cr);
+    }
+
+    @Test
+    public void testIsDoubleMetaphoneEqualExtended3_test2_decomposed()  {
+        this.validateFixture(FIXTURE);
+        final StringBuilder failures = new StringBuilder();
+        final StringBuilder matches = new StringBuilder();
+        final String cr = System.lineSeparator();
+        matches.append("private static final String[][] MATCHES = {" + cr);
+        int failCount = 0;
+        for (int i = 0; i < FIXTURE.length; i++) {
+            final String name0 = FIXTURE[i][0];
+            final String name1 = FIXTURE[i][1];
+            final boolean match1 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, false);
+            final boolean match2 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, true);
+            if (!match1 && !match2) {
+                final String failMsg = "[" + i + "] " + name0 + " and " + name1 + cr;
+                failures.append(failMsg);
+                failCount++;
+            } else {
+                matches.append("{\"" + name0 + "\", \"" + name1 + "\"}," + cr);
+            }
+        }
+    }
+
+    @Test
+    public void testIsDoubleMetaphoneEqualExtended3_test3_decomposed()  {
         this.validateFixture(FIXTURE);
         final StringBuilder failures = new StringBuilder();
         final StringBuilder matches = new StringBuilder();
@@ -2098,24 +1391,81 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
     }
 
     @Test
+    public void testIsDoubleMetaphoneEqualExtended3_test4_decomposed()  {
+        this.validateFixture(FIXTURE);
+        final StringBuilder failures = new StringBuilder();
+        final StringBuilder matches = new StringBuilder();
+        final String cr = System.lineSeparator();
+        matches.append("private static final String[][] MATCHES = {" + cr);
+        int failCount = 0;
+        for (int i = 0; i < FIXTURE.length; i++) {
+            final String name0 = FIXTURE[i][0];
+            final String name1 = FIXTURE[i][1];
+            final boolean match1 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, false);
+            final boolean match2 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, true);
+            if (!match1 && !match2) {
+                final String failMsg = "[" + i + "] " + name0 + " and " + name1 + cr;
+                failures.append(failMsg);
+                failCount++;
+            } else {
+                matches.append("{\"" + name0 + "\", \"" + name1 + "\"}," + cr);
+            }
+        }
+        matches.append("};");
+        if (failCount > 0) {}
+    }
+
+    @Test
     public void testIsDoubleMetaphoneEqualWithMATCHES_test0_decomposed()  {
         this.validateFixture(MATCHES);
     }
 
     @Test
+    public void testIsDoubleMetaphoneEqualWithMATCHES_test1_decomposed()  {
+        this.validateFixture(MATCHES);
+        for (int i = 0; i < MATCHES.length; i++) {
+            final String name0 = MATCHES[i][0];
+            final String name1 = MATCHES[i][1];
+            final boolean match1 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, false);
+            final boolean match2 =
+                    this.getStringEncoder().isDoubleMetaphoneEqual1(name0, name1, true);
+            if (!match1 && !match2) {
+                fail("Expected match [" + i + "] " + name0 + " and " + name1);
+            }
+        }
+    }
+
+    @Test
     public void testIsDoubleMetaphoneNotEqual_test0_decomposed()  {
         doubleMetaphoneNotEqualTest(false);
+        doubleMetaphoneNotEqualTest(true);
+    }
+
+    @Test
+    public void testNTilde_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testNTilde_test1_decomposed()  {
+        this.getStringEncoder();
+        assertTrue(this.getStringEncoder().isDoubleMetaphoneEqual0("\u00f1", "N"));
     }
 
     @Test
     public void testSetMaxCodeLength_test0_decomposed()  {
         final String value = "jumped";
+        final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
     }
 
     @Test
     public void testSetMaxCodeLength_test1_decomposed()  {
         final String value = "jumped";
         final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
+        assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
     }
 
     @Test
@@ -2123,6 +1473,8 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         final String value = "jumped";
         final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
         assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
+        assertEquals("Default Primary", "JMPT", doubleMetaphone.doubleMetaphone1(value, false));
+        assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
     }
 
     @Test
@@ -2132,6 +1484,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
         assertEquals("Default Primary", "JMPT", doubleMetaphone.doubleMetaphone1(value, false));
         assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
+        doubleMetaphone.setMaxCodeLen(3);
     }
 
     @Test
@@ -2142,6 +1495,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         assertEquals("Default Primary", "JMPT", doubleMetaphone.doubleMetaphone1(value, false));
         assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
         doubleMetaphone.setMaxCodeLen(3);
+        assertEquals("Set Max Code Length", 3, doubleMetaphone.getMaxCodeLen());
     }
 
     @Test
@@ -2153,17 +1507,7 @@ public class DoubleMetaphoneTest extends StringEncoderAbstractTest<DoubleMetapho
         assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
         doubleMetaphone.setMaxCodeLen(3);
         assertEquals("Set Max Code Length", 3, doubleMetaphone.getMaxCodeLen());
-    }
-
-    @Test
-    public void testSetMaxCodeLength_test6_decomposed()  {
-        final String value = "jumped";
-        final DoubleMetaphone doubleMetaphone = new DoubleMetaphone();
-        assertEquals("Default Max Code Length", 4, doubleMetaphone.getMaxCodeLen());
-        assertEquals("Default Primary", "JMPT", doubleMetaphone.doubleMetaphone1(value, false));
-        assertEquals("Default Alternate", "AMPT", doubleMetaphone.doubleMetaphone1(value, true));
-        doubleMetaphone.setMaxCodeLen(3);
-        assertEquals("Set Max Code Length", 3, doubleMetaphone.getMaxCodeLen());
         assertEquals("Max=3 Primary", "JMP", doubleMetaphone.doubleMetaphone1(value, false));
+        assertEquals("Max=3 Alternate", "AMP", doubleMetaphone.doubleMetaphone1(value, true));
     }
 }

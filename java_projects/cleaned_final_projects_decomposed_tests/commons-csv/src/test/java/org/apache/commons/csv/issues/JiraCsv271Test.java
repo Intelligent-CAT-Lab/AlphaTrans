@@ -30,31 +30,13 @@ import java.util.Arrays;
 public class JiraCsv271Test {
 
     @Test
-    public void testJiraCsv271_withArray() throws IOException {
+    public void testJiraCsv271_withArray_test0_decomposed() throws IOException {
         final CSVFormat csvFormat = CSVFormat.DEFAULT;
         final StringWriter stringWriter = new StringWriter();
         try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
             printer.print("a");
             printer.printRecord1("b", "c");
         }
-        assertEquals("a,b,c\r\n", stringWriter.toString());
-    }
-
-    @Test
-    public void testJiraCsv271_withList() throws IOException {
-        final CSVFormat csvFormat = CSVFormat.DEFAULT;
-        final StringWriter stringWriter = new StringWriter();
-        try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
-            printer.print("a");
-            printer.printRecord0(Arrays.asList("b", "c"));
-        }
-        assertEquals("a,b,c\r\n", stringWriter.toString());
-    }
-
-    @Test
-    public void testJiraCsv271_withArray_test0_decomposed() throws IOException {
-        final CSVFormat csvFormat = CSVFormat.DEFAULT;
-        final StringWriter stringWriter = new StringWriter();
     }
 
     @Test
@@ -65,12 +47,17 @@ public class JiraCsv271Test {
             printer.print("a");
             printer.printRecord1("b", "c");
         }
+        assertEquals("a,b,c\r\n", stringWriter.toString());
     }
 
     @Test
     public void testJiraCsv271_withList_test0_decomposed() throws IOException {
         final CSVFormat csvFormat = CSVFormat.DEFAULT;
         final StringWriter stringWriter = new StringWriter();
+        try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
+            printer.print("a");
+            printer.printRecord0(Arrays.asList("b", "c"));
+        }
     }
 
     @Test
@@ -81,5 +68,6 @@ public class JiraCsv271Test {
             printer.print("a");
             printer.printRecord0(Arrays.asList("b", "c"));
         }
+        assertEquals("a,b,c\r\n", stringWriter.toString());
     }
 }

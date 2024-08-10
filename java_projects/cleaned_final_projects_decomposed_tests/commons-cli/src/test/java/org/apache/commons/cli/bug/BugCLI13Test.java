@@ -32,40 +32,9 @@ import org.junit.Test;
 public class BugCLI13Test {
 
     @Test
-    public void testCLI13() throws ParseException {
-        final String debugOpt = "debug";
-        @SuppressWarnings("static-access")
-        final Option debug =
-                OptionBuilder.withArgName(debugOpt)
-                        .withDescription("turn on debugging")
-                        .withLongOpt(debugOpt)
-                        .hasArg0()
-                        .create1('d');
-        final Options options = new Options();
-        options.addOption0(debug);
-        final CommandLine commandLine =
-                new PosixParser().parse0(options, new String[] {"-d", "true"});
-
-        assertEquals("true", commandLine.getOptionValue4(debugOpt));
-        assertEquals("true", commandLine.getOptionValue0('d'));
-        assertTrue(commandLine.hasOption0('d'));
-        assertTrue(commandLine.hasOption2(debugOpt));
-    }
-
-    @Test
     public void testCLI13_test0_decomposed() throws ParseException {
         final String debugOpt = "debug";
         OptionBuilder.withArgName(debugOpt);
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
-        @SuppressWarnings("static-access")
-        final Option debug =
-                OptionBuilder.withArgName(debugOpt)
-                        .withDescription("turn on debugging")
-                        .withLongOpt(debugOpt)
-                        .hasArg0()
-                        .create1('d');
     }
 
     @Test
@@ -73,16 +42,6 @@ public class BugCLI13Test {
         final String debugOpt = "debug";
         OptionBuilder.withArgName(debugOpt);
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
-        @SuppressWarnings("static-access")
-        final Option debug =
-                OptionBuilder.withArgName(debugOpt)
-                        .withDescription("turn on debugging")
-                        .withLongOpt(debugOpt)
-                        .hasArg0()
-                        .create1('d');
-        final Options options = new Options();
     }
 
     @Test
@@ -91,16 +50,6 @@ public class BugCLI13Test {
         OptionBuilder.withArgName(debugOpt);
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
-        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
-        @SuppressWarnings("static-access")
-        final Option debug =
-                OptionBuilder.withArgName(debugOpt)
-                        .withDescription("turn on debugging")
-                        .withLongOpt(debugOpt)
-                        .hasArg0()
-                        .create1('d');
-        final Options options = new Options();
-        options.addOption0(debug);
     }
 
     @Test
@@ -110,17 +59,6 @@ public class BugCLI13Test {
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
         OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
-        @SuppressWarnings("static-access")
-        final Option debug =
-                OptionBuilder.withArgName(debugOpt)
-                        .withDescription("turn on debugging")
-                        .withLongOpt(debugOpt)
-                        .hasArg0()
-                        .create1('d');
-        final Options options = new Options();
-        options.addOption0(debug);
-        final CommandLine commandLine =
-                new PosixParser().parse0(options, new String[] {"-d", "true"});
     }
 
     @Test
@@ -137,11 +75,6 @@ public class BugCLI13Test {
                         .withLongOpt(debugOpt)
                         .hasArg0()
                         .create1('d');
-        final Options options = new Options();
-        options.addOption0(debug);
-        final CommandLine commandLine =
-                new PosixParser().parse0(options, new String[] {"-d", "true"});
-        assertEquals("true", commandLine.getOptionValue4(debugOpt));
     }
 
     @Test
@@ -159,11 +92,6 @@ public class BugCLI13Test {
                         .hasArg0()
                         .create1('d');
         final Options options = new Options();
-        options.addOption0(debug);
-        final CommandLine commandLine =
-                new PosixParser().parse0(options, new String[] {"-d", "true"});
-        assertEquals("true", commandLine.getOptionValue4(debugOpt));
-        assertEquals("true", commandLine.getOptionValue0('d'));
     }
 
     @Test
@@ -182,10 +110,115 @@ public class BugCLI13Test {
                         .create1('d');
         final Options options = new Options();
         options.addOption0(debug);
+    }
+
+    @Test
+    public void testCLI13_test7_decomposed() throws ParseException {
+        final String debugOpt = "debug";
+        OptionBuilder.withArgName(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
+        @SuppressWarnings("static-access")
+        final Option debug =
+                OptionBuilder.withArgName(debugOpt)
+                        .withDescription("turn on debugging")
+                        .withLongOpt(debugOpt)
+                        .hasArg0()
+                        .create1('d');
+        final Options options = new Options();
+        options.addOption0(debug);
+        final CommandLine commandLine =
+                new PosixParser().parse0(options, new String[] {"-d", "true"});
+    }
+
+    @Test
+    public void testCLI13_test8_decomposed() throws ParseException {
+        final String debugOpt = "debug";
+        OptionBuilder.withArgName(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
+        @SuppressWarnings("static-access")
+        final Option debug =
+                OptionBuilder.withArgName(debugOpt)
+                        .withDescription("turn on debugging")
+                        .withLongOpt(debugOpt)
+                        .hasArg0()
+                        .create1('d');
+        final Options options = new Options();
+        options.addOption0(debug);
+        final CommandLine commandLine =
+                new PosixParser().parse0(options, new String[] {"-d", "true"});
+        assertEquals("true", commandLine.getOptionValue4(debugOpt));
+    }
+
+    @Test
+    public void testCLI13_test9_decomposed() throws ParseException {
+        final String debugOpt = "debug";
+        OptionBuilder.withArgName(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
+        @SuppressWarnings("static-access")
+        final Option debug =
+                OptionBuilder.withArgName(debugOpt)
+                        .withDescription("turn on debugging")
+                        .withLongOpt(debugOpt)
+                        .hasArg0()
+                        .create1('d');
+        final Options options = new Options();
+        options.addOption0(debug);
+        final CommandLine commandLine =
+                new PosixParser().parse0(options, new String[] {"-d", "true"});
+        assertEquals("true", commandLine.getOptionValue4(debugOpt));
+        assertEquals("true", commandLine.getOptionValue0('d'));
+    }
+
+    @Test
+    public void testCLI13_test10_decomposed() throws ParseException {
+        final String debugOpt = "debug";
+        OptionBuilder.withArgName(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
+        @SuppressWarnings("static-access")
+        final Option debug =
+                OptionBuilder.withArgName(debugOpt)
+                        .withDescription("turn on debugging")
+                        .withLongOpt(debugOpt)
+                        .hasArg0()
+                        .create1('d');
+        final Options options = new Options();
+        options.addOption0(debug);
         final CommandLine commandLine =
                 new PosixParser().parse0(options, new String[] {"-d", "true"});
         assertEquals("true", commandLine.getOptionValue4(debugOpt));
         assertEquals("true", commandLine.getOptionValue0('d'));
         assertTrue(commandLine.hasOption0('d'));
+    }
+
+    @Test
+    public void testCLI13_test11_decomposed() throws ParseException {
+        final String debugOpt = "debug";
+        OptionBuilder.withArgName(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging");
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt);
+        OptionBuilder.withArgName(debugOpt).withDescription("turn on debugging").withLongOpt(debugOpt).hasArg0();
+        @SuppressWarnings("static-access")
+        final Option debug =
+                OptionBuilder.withArgName(debugOpt)
+                        .withDescription("turn on debugging")
+                        .withLongOpt(debugOpt)
+                        .hasArg0()
+                        .create1('d');
+        final Options options = new Options();
+        options.addOption0(debug);
+        final CommandLine commandLine =
+                new PosixParser().parse0(options, new String[] {"-d", "true"});
+        assertEquals("true", commandLine.getOptionValue4(debugOpt));
+        assertEquals("true", commandLine.getOptionValue0('d'));
+        assertTrue(commandLine.hasOption0('d'));
+        assertTrue(commandLine.hasOption2(debugOpt));
     }
 }

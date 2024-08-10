@@ -120,22 +120,6 @@ public class PhoneticEnginePerformanceTest {
     private static final int LOOP = 80000;
 
     @Test
-    public void test() {
-        final PhoneticEngine engine =
-                PhoneticEngine.PhoneticEngine0(NameType.GENERIC, RuleType.APPROX, true);
-        final String input = "Angelo";
-        final long startMillis = System.currentTimeMillis();
-        for (int i = 0; i < LOOP; i++) {
-            engine.encode0(input);
-        }
-        final long totalMillis = System.currentTimeMillis() - startMillis;
-        System.out.println(
-                String.format(
-                        "Time for encoding %,d times the input '%s': %,d millis.",
-                        LOOP, input, totalMillis));
-    }
-
-    @Test
     public void test_test0_decomposed()  {
         final PhoneticEngine engine =
                 PhoneticEngine.PhoneticEngine0(NameType.GENERIC, RuleType.APPROX, true);
@@ -150,6 +134,21 @@ public class PhoneticEnginePerformanceTest {
         for (int i = 0; i < LOOP; i++) {
             engine.encode0(input);
         }
+    }
+
+    @Test
+    public void test_test2_decomposed()  {
+        final PhoneticEngine engine =
+                PhoneticEngine.PhoneticEngine0(NameType.GENERIC, RuleType.APPROX, true);
+        final String input = "Angelo";
+        final long startMillis = System.currentTimeMillis();
+        for (int i = 0; i < LOOP; i++) {
+            engine.encode0(input);
+        }
         final long totalMillis = System.currentTimeMillis() - startMillis;
+        System.out.println(
+                String.format(
+                        "Time for encoding %,d times the input '%s': %,d millis.",
+                        LOOP, input, totalMillis));
     }
 }

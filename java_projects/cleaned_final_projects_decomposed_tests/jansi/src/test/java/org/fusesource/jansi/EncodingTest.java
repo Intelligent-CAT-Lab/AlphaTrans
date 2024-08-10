@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EncodingTest {
 
     @Test
-    public void testEncoding8859() throws UnsupportedEncodingException {
+    public void testEncoding8859_test0_decomposed() throws UnsupportedEncodingException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final AtomicReference<String> newLabel = new AtomicReference<>();
         PrintStream ansi = new AnsiPrintStream(
@@ -52,45 +52,6 @@ public class EncodingTest {
                         false),
                 true,
                 "ISO-8859-1");
-
-        ansi.print("\033]0;un bon café\007");
-        ansi.flush();
-        assertEquals("un bon café", newLabel.get());
-    }
-
-    @Test
-    public void testEncodingUtf8() throws UnsupportedEncodingException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final AtomicReference<String> newLabel = new AtomicReference<>();
-        PrintStream ansi = new PrintStream(
-                new AnsiOutputStream(
-                        baos,
-                        null,
-                        AnsiMode.Default,
-                        new AnsiProcessor(baos) {
-                            @Override
-                            protected void processChangeWindowTitle(String label) {
-                                newLabel.set(label);
-                            }
-                        },
-                        AnsiType.Emulation,
-                        AnsiColors.TrueColor,
-                        StandardCharsets.UTF_8,
-                        null,
-                        null,
-                        false),
-                true,
-                "UTF-8");
-
-        ansi.print("\033]0;ひらがな\007");
-        ansi.flush();
-        assertEquals("ひらがな", newLabel.get());
-    }
-
-    @Test
-    public void testEncoding8859_test0_decomposed() throws UnsupportedEncodingException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final AtomicReference<String> newLabel = new AtomicReference<>();
     }
 
     @Test
@@ -116,6 +77,7 @@ public class EncodingTest {
                         false),
                 true,
                 "ISO-8859-1");
+        ansi.print("\033]0;un bon café\007");
     }
 
     @Test
@@ -146,6 +108,34 @@ public class EncodingTest {
     }
 
     @Test
+    public void testEncoding8859_test3_decomposed() throws UnsupportedEncodingException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final AtomicReference<String> newLabel = new AtomicReference<>();
+        PrintStream ansi = new AnsiPrintStream(
+                new AnsiOutputStream(
+                        baos,
+                        null,
+                        AnsiMode.Default,
+                        new AnsiProcessor(baos) {
+                            @Override
+                            protected void processChangeWindowTitle(String label) {
+                                newLabel.set(label);
+                            }
+                        },
+                        AnsiType.Emulation,
+                        AnsiColors.TrueColor,
+                        StandardCharsets.ISO_8859_1,
+                        null,
+                        null,
+                        false),
+                true,
+                "ISO-8859-1");
+        ansi.print("\033]0;un bon café\007");
+        ansi.flush();
+        assertEquals("un bon café", newLabel.get());
+    }
+
+    @Test
     public void testEncodingUtf8_test0_decomposed() throws UnsupportedEncodingException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final AtomicReference<String> newLabel = new AtomicReference<>();
@@ -169,6 +159,60 @@ public class EncodingTest {
                 true,
                 "UTF-8");
         ansi.print("\033]0;ひらがな\007");
+    }
+
+    @Test
+    public void testEncodingUtf8_test1_decomposed() throws UnsupportedEncodingException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final AtomicReference<String> newLabel = new AtomicReference<>();
+        PrintStream ansi = new PrintStream(
+                new AnsiOutputStream(
+                        baos,
+                        null,
+                        AnsiMode.Default,
+                        new AnsiProcessor(baos) {
+                            @Override
+                            protected void processChangeWindowTitle(String label) {
+                                newLabel.set(label);
+                            }
+                        },
+                        AnsiType.Emulation,
+                        AnsiColors.TrueColor,
+                        StandardCharsets.UTF_8,
+                        null,
+                        null,
+                        false),
+                true,
+                "UTF-8");
+        ansi.print("\033]0;ひらがな\007");
         ansi.flush();
+    }
+
+    @Test
+    public void testEncodingUtf8_test2_decomposed() throws UnsupportedEncodingException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final AtomicReference<String> newLabel = new AtomicReference<>();
+        PrintStream ansi = new PrintStream(
+                new AnsiOutputStream(
+                        baos,
+                        null,
+                        AnsiMode.Default,
+                        new AnsiProcessor(baos) {
+                            @Override
+                            protected void processChangeWindowTitle(String label) {
+                                newLabel.set(label);
+                            }
+                        },
+                        AnsiType.Emulation,
+                        AnsiColors.TrueColor,
+                        StandardCharsets.UTF_8,
+                        null,
+                        null,
+                        false),
+                true,
+                "UTF-8");
+        ansi.print("\033]0;ひらがな\007");
+        ansi.flush();
+        assertEquals("ひらがな", newLabel.get());
     }
 }

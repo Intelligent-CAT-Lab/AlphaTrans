@@ -44,7 +44,7 @@ public class LexerTest {
     }
 
     @Test
-    public void testEscapingAtEOF() throws Exception {
+    public void testEscapingAtEOF_test0_decomposed() throws Exception {
         final String code = "escaping at EOF is evil\\";
         try (final Lexer lexer = createLexer(code, formatWithEscaping)) {
             assertThrows(IOException.class, () -> lexer.nextToken(new Token()));
@@ -52,7 +52,7 @@ public class LexerTest {
     }
 
     @Test
-    public void testIsMetaCharCommentStart() throws IOException {
+    public void testIsMetaCharCommentStart_test0_decomposed() throws IOException {
         try (final Lexer lexer = createLexer("#", CSVFormat.DEFAULT.withCommentMarker0('#'))) {
             final int ch = lexer.readEscape();
             assertEquals('#', ch);
@@ -60,7 +60,7 @@ public class LexerTest {
     }
 
     @Test
-    public void testReadEscapeBackspace() throws IOException {
+    public void testReadEscapeBackspace_test0_decomposed() throws IOException {
         try (final Lexer lexer = createLexer("b", CSVFormat.DEFAULT.withEscape0('\b'))) {
             final int ch = lexer.readEscape();
             assertEquals(BACKSPACE, ch);
@@ -68,15 +68,10 @@ public class LexerTest {
     }
 
     @Test
-    public void testReadEscapeFF() throws IOException {
+    public void testReadEscapeFF_test0_decomposed() throws IOException {
         try (final Lexer lexer = createLexer("f", CSVFormat.DEFAULT.withEscape0('\f'))) {
             final int ch = lexer.readEscape();
             assertEquals(FF, ch);
         }
-    }
-
-    @Test
-    public void testEscapingAtEOF_test0_decomposed() throws Exception {
-        final String code = "escaping at EOF is evil\\";
     }
 }

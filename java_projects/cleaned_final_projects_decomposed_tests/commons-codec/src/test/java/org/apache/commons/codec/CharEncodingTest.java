@@ -24,40 +24,39 @@ import org.junit.Test;
 public class CharEncodingTest {
 
     /** We could make the constructor private in the future, it's a matter a style. */
+
     @Test
-    public void testConstructor() {
+    public void testConstructor_test0_decomposed()  {
         new CharEncoding();
     }
 
     @Test
-    public void testIso8859_1() {
+    public void testIso8859_1_test0_decomposed()  {
         Assert.assertEquals("ISO-8859-1", CharEncoding.ISO_8859_1);
     }
 
     @Test
-    public void testUsAscii() {
+    public void testUsAscii_test0_decomposed()  {
         Assert.assertEquals("US-ASCII", CharEncoding.US_ASCII);
     }
 
     @Test
-    public void testUtf16() {
+    public void testUtf16_test0_decomposed()  {
         Assert.assertEquals("UTF-16", CharEncoding.UTF_16);
     }
 
     @Test
-    public void testUtf16Be() {
+    public void testUtf16Be_test0_decomposed()  {
         Assert.assertEquals("UTF-16BE", CharEncoding.UTF_16BE);
     }
 
     @Test
-    public void testUtf16Le() {
+    public void testUtf16Le_test0_decomposed()  {
         Assert.assertEquals("UTF-16LE", CharEncoding.UTF_16LE);
     }
 
     @Test
-    public void testUtf8() {
+    public void testUtf8_test0_decomposed()  {
         Assert.assertEquals("UTF-8", CharEncoding.UTF_8);
     }
-
-    
 }

@@ -51,252 +51,14 @@ public class ValueTest {
     }
 
     @Test
-    public void testLongNoArg() {
-        assertTrue(cl.hasOption2("c"));
-        assertNull(cl.getOptionValue4("c"));
-    }
-
-    @Test
-    public void testLongNoArgWithOption() {
-        assertTrue(cl.hasOption1(opts.getOption("c")));
-        assertNull(cl.getOptionValue2(opts.getOption("c")));
-    }
-
-    @Test
-    public void testLongOptionalArgValue() throws Exception {
-        final String[] args = {"--fish", "face"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("fish"));
-        assertEquals("face", cmd.getOptionValue4("fish"));
-    }
-
-    @Test
-    public void testLongOptionalArgValues() throws Exception {
-        final String[] args = {"--gravy", "gold", "garden"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("gravy"));
-        assertEquals("gold", cmd.getOptionValue4("gravy"));
-        assertEquals("gold", cmd.getOptionValues2("gravy")[0]);
-        assertEquals("garden", cmd.getOptionValues2("gravy")[1]);
-        assertEquals(cmd.getArgs().length, 0);
-    }
-
-    @Test
-    public void testLongOptionalArgValuesWithOption() throws Exception {
-        final String[] args = {"--gravy", "gold", "garden"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("gravy")));
-        assertEquals("gold", cmd.getOptionValue2(opts.getOption("gravy")));
-        assertEquals("gold", cmd.getOptionValues1(opts.getOption("gravy"))[0]);
-        assertEquals("garden", cmd.getOptionValues1(opts.getOption("gravy"))[1]);
-        assertEquals(cmd.getArgs().length, 0);
-    }
-
-    @Test
-    public void testLongOptionalArgValueWithOption() throws Exception {
-        final String[] args = {"--fish", "face"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("fish")));
-        assertEquals("face", cmd.getOptionValue2(opts.getOption("fish")));
-    }
-
-    @Test
-    public void testLongOptionalNArgValues() throws Exception {
-        final String[] args = {"--hide", "house", "hair", "head"};
-
-        final Parser parser = new PosixParser();
-
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("hide"));
-        assertEquals("house", cmd.getOptionValue4("hide"));
-        assertEquals("house", cmd.getOptionValues2("hide")[0]);
-        assertEquals("hair", cmd.getOptionValues2("hide")[1]);
-        assertEquals(cmd.getArgs().length, 1);
-        assertEquals("head", cmd.getArgs()[0]);
-    }
-
-    @Test
-    public void testLongOptionalNArgValuesWithOption() throws Exception {
-        final String[] args = {"--hide", "house", "hair", "head"};
-
-        final Parser parser = new PosixParser();
-
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("hide")));
-        assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
-        assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
-        assertEquals("hair", cmd.getOptionValues1(opts.getOption("hide"))[1]);
-        assertEquals(cmd.getArgs().length, 1);
-        assertEquals("head", cmd.getArgs()[0]);
-    }
-
-    @Test
-    public void testLongOptionalNoValue() throws Exception {
-        final String[] args = {"--fish"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("fish"));
-        assertNull(cmd.getOptionValue4("fish"));
-    }
-
-    @Test
-    public void testLongOptionalNoValueWithOption() throws Exception {
-        final String[] args = {"--fish"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("fish")));
-        assertNull(cmd.getOptionValue2(opts.getOption("fish")));
-    }
-
-    @Test
-    public void testLongWithArg() {
-        assertTrue(cl.hasOption2("d"));
-        assertNotNull(cl.getOptionValue4("d"));
-        assertEquals(cl.getOptionValue4("d"), "bar");
-    }
-
-    @Test
-    public void testLongWithArgWithOption() {
-        assertTrue(cl.hasOption1(opts.getOption("d")));
-        assertNotNull(cl.getOptionValue2(opts.getOption("d")));
-        assertEquals(cl.getOptionValue2(opts.getOption("d")), "bar");
-    }
-
-    @Test
-    public void testShortNoArg() {
-        assertTrue(cl.hasOption2("a"));
-        assertNull(cl.getOptionValue4("a"));
-    }
-
-    @Test
-    public void testShortNoArgWithOption() {
-        assertTrue(cl.hasOption1(opts.getOption("a")));
-        assertNull(cl.getOptionValue2(opts.getOption("a")));
-    }
-
-    @Test
-    public void testShortOptionalArgNoValue() throws Exception {
-        final String[] args = {"-e"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("e"));
-        assertNull(cmd.getOptionValue4("e"));
-    }
-
-    @Test
-    public void testShortOptionalArgNoValueWithOption() throws Exception {
-        final String[] args = {"-e"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("e")));
-        assertNull(cmd.getOptionValue2(opts.getOption("e")));
-    }
-
-    @Test
-    public void testShortOptionalArgValue() throws Exception {
-        final String[] args = {"-e", "everything"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("e"));
-        assertEquals("everything", cmd.getOptionValue4("e"));
-    }
-
-    @Test
-    public void testShortOptionalArgValues() throws Exception {
-        final String[] args = {"-j", "ink", "idea"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("j"));
-        assertEquals("ink", cmd.getOptionValue4("j"));
-        assertEquals("ink", cmd.getOptionValues2("j")[0]);
-        assertEquals("idea", cmd.getOptionValues2("j")[1]);
-        assertEquals(cmd.getArgs().length, 0);
-    }
-
-    @Test
-    public void testShortOptionalArgValuesWithOption() throws Exception {
-        final String[] args = {"-j", "ink", "idea"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("j")));
-        assertEquals("ink", cmd.getOptionValue2(opts.getOption("j")));
-        assertEquals("ink", cmd.getOptionValues1(opts.getOption("j"))[0]);
-        assertEquals("idea", cmd.getOptionValues1(opts.getOption("j"))[1]);
-        assertEquals(cmd.getArgs().length, 0);
-    }
-
-    @Test
-    public void testShortOptionalArgValueWithOption() throws Exception {
-        final String[] args = {"-e", "everything"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption1(opts.getOption("e")));
-        assertEquals("everything", cmd.getOptionValue2(opts.getOption("e")));
-    }
-
-    @Test
-    public void testShortOptionalNArgValues() throws Exception {
-        final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("i"));
-        assertEquals("ink", cmd.getOptionValue4("i"));
-        assertEquals("ink", cmd.getOptionValues2("i")[0]);
-        assertEquals("idea", cmd.getOptionValues2("i")[1]);
-        assertEquals(cmd.getArgs().length, 2);
-        assertEquals("isotope", cmd.getArgs()[0]);
-        assertEquals("ice", cmd.getArgs()[1]);
-    }
-
-    @Test
-    public void testShortOptionalNArgValuesWithOption() throws Exception {
-        final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
-
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("i"));
-        assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
-        assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
-        assertEquals("idea", cmd.getOptionValues1(opts.getOption("i"))[1]);
-        assertEquals(cmd.getArgs().length, 2);
-        assertEquals("isotope", cmd.getArgs()[0]);
-        assertEquals("ice", cmd.getArgs()[1]);
-    }
-
-    @Test
-    public void testShortWithArg() {
-        assertTrue(cl.hasOption2("b"));
-        assertNotNull(cl.getOptionValue4("b"));
-        assertEquals(cl.getOptionValue4("b"), "foo");
-    }
-
-    @Test
-    public void testShortWithArgWithOption() {
-        assertTrue(cl.hasOption1(opts.getOption("b")));
-        assertNotNull(cl.getOptionValue2(opts.getOption("b")));
-        assertEquals(cl.getOptionValue2(opts.getOption("b")), "foo");
-    }
-
-    @Test
     public void testLongNoArg_test0_decomposed()  {
         assertTrue(cl.hasOption2("c"));
+    }
+
+    @Test
+    public void testLongNoArg_test1_decomposed()  {
+        assertTrue(cl.hasOption2("c"));
+        assertNull(cl.getOptionValue4("c"));
     }
 
     @Test
@@ -318,14 +80,24 @@ public class ValueTest {
     }
 
     @Test
+    public void testLongNoArgWithOption_test3_decomposed()  {
+        opts.getOption("c");
+        assertTrue(cl.hasOption1(opts.getOption("c")));
+        opts.getOption("c");
+        assertNull(cl.getOptionValue2(opts.getOption("c")));
+    }
+
+    @Test
     public void testLongOptionalArgValue_test0_decomposed() throws Exception {
         final String[] args = {"--fish", "face"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalArgValue_test1_decomposed() throws Exception {
         final String[] args = {"--fish", "face"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -333,6 +105,7 @@ public class ValueTest {
         final String[] args = {"--fish", "face"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("fish"));
     }
 
     @Test
@@ -341,17 +114,20 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("fish"));
+        assertEquals("face", cmd.getOptionValue4("fish"));
     }
 
     @Test
     public void testLongOptionalArgValues_test0_decomposed() throws Exception {
         final String[] args = {"--gravy", "gold", "garden"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalArgValues_test1_decomposed() throws Exception {
         final String[] args = {"--gravy", "gold", "garden"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -359,6 +135,7 @@ public class ValueTest {
         final String[] args = {"--gravy", "gold", "garden"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("gravy"));
     }
 
     @Test
@@ -367,6 +144,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("gravy"));
+        assertEquals("gold", cmd.getOptionValue4("gravy"));
     }
 
     @Test
@@ -376,6 +154,8 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("gravy"));
         assertEquals("gold", cmd.getOptionValue4("gravy"));
+        assertEquals("gold", cmd.getOptionValues2("gravy")[0]);
+        assertEquals("garden", cmd.getOptionValues2("gravy")[1]);
     }
 
     @Test
@@ -387,17 +167,20 @@ public class ValueTest {
         assertEquals("gold", cmd.getOptionValue4("gravy"));
         assertEquals("gold", cmd.getOptionValues2("gravy")[0]);
         assertEquals("garden", cmd.getOptionValues2("gravy")[1]);
+        assertEquals(cmd.getArgs().length, 0);
     }
 
     @Test
     public void testLongOptionalArgValuesWithOption_test0_decomposed() throws Exception {
         final String[] args = {"--gravy", "gold", "garden"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalArgValuesWithOption_test1_decomposed() throws Exception {
         final String[] args = {"--gravy", "gold", "garden"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -405,6 +188,7 @@ public class ValueTest {
         final String[] args = {"--gravy", "gold", "garden"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("gravy");
     }
 
     @Test
@@ -413,6 +197,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("gravy");
+        assertTrue(cmd.hasOption1(opts.getOption("gravy")));
     }
 
     @Test
@@ -422,6 +207,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("gravy");
         assertTrue(cmd.hasOption1(opts.getOption("gravy")));
+        opts.getOption("gravy");
     }
 
     @Test
@@ -432,6 +218,7 @@ public class ValueTest {
         opts.getOption("gravy");
         assertTrue(cmd.hasOption1(opts.getOption("gravy")));
         opts.getOption("gravy");
+        assertEquals("gold", cmd.getOptionValue2(opts.getOption("gravy")));
     }
 
     @Test
@@ -443,6 +230,7 @@ public class ValueTest {
         assertTrue(cmd.hasOption1(opts.getOption("gravy")));
         opts.getOption("gravy");
         assertEquals("gold", cmd.getOptionValue2(opts.getOption("gravy")));
+        opts.getOption("gravy");
     }
 
     @Test
@@ -455,6 +243,7 @@ public class ValueTest {
         opts.getOption("gravy");
         assertEquals("gold", cmd.getOptionValue2(opts.getOption("gravy")));
         opts.getOption("gravy");
+        assertEquals("gold", cmd.getOptionValues1(opts.getOption("gravy"))[0]);
     }
 
     @Test
@@ -468,6 +257,7 @@ public class ValueTest {
         assertEquals("gold", cmd.getOptionValue2(opts.getOption("gravy")));
         opts.getOption("gravy");
         assertEquals("gold", cmd.getOptionValues1(opts.getOption("gravy"))[0]);
+        opts.getOption("gravy");
     }
 
     @Test
@@ -482,6 +272,7 @@ public class ValueTest {
         opts.getOption("gravy");
         assertEquals("gold", cmd.getOptionValues1(opts.getOption("gravy"))[0]);
         opts.getOption("gravy");
+        assertEquals("garden", cmd.getOptionValues1(opts.getOption("gravy"))[1]);
     }
 
     @Test
@@ -497,17 +288,20 @@ public class ValueTest {
         assertEquals("gold", cmd.getOptionValues1(opts.getOption("gravy"))[0]);
         opts.getOption("gravy");
         assertEquals("garden", cmd.getOptionValues1(opts.getOption("gravy"))[1]);
+        assertEquals(cmd.getArgs().length, 0);
     }
 
     @Test
     public void testLongOptionalArgValueWithOption_test0_decomposed() throws Exception {
         final String[] args = {"--fish", "face"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalArgValueWithOption_test1_decomposed() throws Exception {
         final String[] args = {"--fish", "face"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -515,6 +309,7 @@ public class ValueTest {
         final String[] args = {"--fish", "face"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("fish");
     }
 
     @Test
@@ -523,6 +318,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("fish");
+        assertTrue(cmd.hasOption1(opts.getOption("fish")));
     }
 
     @Test
@@ -532,6 +328,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("fish");
         assertTrue(cmd.hasOption1(opts.getOption("fish")));
+        opts.getOption("fish");
     }
 
     @Test
@@ -542,17 +339,20 @@ public class ValueTest {
         opts.getOption("fish");
         assertTrue(cmd.hasOption1(opts.getOption("fish")));
         opts.getOption("fish");
+        assertEquals("face", cmd.getOptionValue2(opts.getOption("fish")));
     }
 
     @Test
     public void testLongOptionalNArgValues_test0_decomposed() throws Exception {
         final String[] args = {"--hide", "house", "hair", "head"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalNArgValues_test1_decomposed() throws Exception {
         final String[] args = {"--hide", "house", "hair", "head"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -560,6 +360,7 @@ public class ValueTest {
         final String[] args = {"--hide", "house", "hair", "head"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("hide"));
     }
 
     @Test
@@ -568,6 +369,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("hide"));
+        assertEquals("house", cmd.getOptionValue4("hide"));
     }
 
     @Test
@@ -577,6 +379,8 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("hide"));
         assertEquals("house", cmd.getOptionValue4("hide"));
+        assertEquals("house", cmd.getOptionValues2("hide")[0]);
+        assertEquals("hair", cmd.getOptionValues2("hide")[1]);
     }
 
     @Test
@@ -588,29 +392,21 @@ public class ValueTest {
         assertEquals("house", cmd.getOptionValue4("hide"));
         assertEquals("house", cmd.getOptionValues2("hide")[0]);
         assertEquals("hair", cmd.getOptionValues2("hide")[1]);
-    }
-
-    @Test
-    public void testLongOptionalNArgValues_test6_decomposed() throws Exception {
-        final String[] args = {"--hide", "house", "hair", "head"};
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("hide"));
-        assertEquals("house", cmd.getOptionValue4("hide"));
-        assertEquals("house", cmd.getOptionValues2("hide")[0]);
-        assertEquals("hair", cmd.getOptionValues2("hide")[1]);
         assertEquals(cmd.getArgs().length, 1);
+        assertEquals("head", cmd.getArgs()[0]);
     }
 
     @Test
     public void testLongOptionalNArgValuesWithOption_test0_decomposed() throws Exception {
         final String[] args = {"--hide", "house", "hair", "head"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalNArgValuesWithOption_test1_decomposed() throws Exception {
         final String[] args = {"--hide", "house", "hair", "head"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -618,6 +414,7 @@ public class ValueTest {
         final String[] args = {"--hide", "house", "hair", "head"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("hide");
     }
 
     @Test
@@ -626,6 +423,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("hide");
+        assertTrue(cmd.hasOption1(opts.getOption("hide")));
     }
 
     @Test
@@ -635,6 +433,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("hide");
         assertTrue(cmd.hasOption1(opts.getOption("hide")));
+        opts.getOption("hide");
     }
 
     @Test
@@ -645,6 +444,7 @@ public class ValueTest {
         opts.getOption("hide");
         assertTrue(cmd.hasOption1(opts.getOption("hide")));
         opts.getOption("hide");
+        assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
     }
 
     @Test
@@ -656,6 +456,7 @@ public class ValueTest {
         assertTrue(cmd.hasOption1(opts.getOption("hide")));
         opts.getOption("hide");
         assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
+        opts.getOption("hide");
     }
 
     @Test
@@ -668,6 +469,7 @@ public class ValueTest {
         opts.getOption("hide");
         assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
         opts.getOption("hide");
+        assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
     }
 
     @Test
@@ -681,6 +483,7 @@ public class ValueTest {
         assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
         opts.getOption("hide");
         assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
+        opts.getOption("hide");
     }
 
     @Test
@@ -695,6 +498,7 @@ public class ValueTest {
         opts.getOption("hide");
         assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
         opts.getOption("hide");
+        assertEquals("hair", cmd.getOptionValues1(opts.getOption("hide"))[1]);
     }
 
     @Test
@@ -710,33 +514,21 @@ public class ValueTest {
         assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
         opts.getOption("hide");
         assertEquals("hair", cmd.getOptionValues1(opts.getOption("hide"))[1]);
-    }
-
-    @Test
-    public void testLongOptionalNArgValuesWithOption_test11_decomposed() throws Exception {
-        final String[] args = {"--hide", "house", "hair", "head"};
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        opts.getOption("hide");
-        assertTrue(cmd.hasOption1(opts.getOption("hide")));
-        opts.getOption("hide");
-        assertEquals("house", cmd.getOptionValue2(opts.getOption("hide")));
-        opts.getOption("hide");
-        assertEquals("house", cmd.getOptionValues1(opts.getOption("hide"))[0]);
-        opts.getOption("hide");
-        assertEquals("hair", cmd.getOptionValues1(opts.getOption("hide"))[1]);
         assertEquals(cmd.getArgs().length, 1);
+        assertEquals("head", cmd.getArgs()[0]);
     }
 
     @Test
     public void testLongOptionalNoValue_test0_decomposed() throws Exception {
         final String[] args = {"--fish"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalNoValue_test1_decomposed() throws Exception {
         final String[] args = {"--fish"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -744,6 +536,7 @@ public class ValueTest {
         final String[] args = {"--fish"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("fish"));
     }
 
     @Test
@@ -752,17 +545,20 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("fish"));
+        assertNull(cmd.getOptionValue4("fish"));
     }
 
     @Test
     public void testLongOptionalNoValueWithOption_test0_decomposed() throws Exception {
         final String[] args = {"--fish"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testLongOptionalNoValueWithOption_test1_decomposed() throws Exception {
         final String[] args = {"--fish"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -770,6 +566,7 @@ public class ValueTest {
         final String[] args = {"--fish"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("fish");
     }
 
     @Test
@@ -778,6 +575,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("fish");
+        assertTrue(cmd.hasOption1(opts.getOption("fish")));
     }
 
     @Test
@@ -787,6 +585,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("fish");
         assertTrue(cmd.hasOption1(opts.getOption("fish")));
+        opts.getOption("fish");
     }
 
     @Test
@@ -797,6 +596,7 @@ public class ValueTest {
         opts.getOption("fish");
         assertTrue(cmd.hasOption1(opts.getOption("fish")));
         opts.getOption("fish");
+        assertNull(cmd.getOptionValue2(opts.getOption("fish")));
     }
 
     @Test
@@ -808,6 +608,7 @@ public class ValueTest {
     public void testLongWithArg_test1_decomposed()  {
         assertTrue(cl.hasOption2("d"));
         assertNotNull(cl.getOptionValue4("d"));
+        assertEquals(cl.getOptionValue4("d"), "bar");
     }
 
     @Test
@@ -846,8 +647,24 @@ public class ValueTest {
     }
 
     @Test
+    public void testLongWithArgWithOption_test5_decomposed()  {
+        opts.getOption("d");
+        assertTrue(cl.hasOption1(opts.getOption("d")));
+        opts.getOption("d");
+        assertNotNull(cl.getOptionValue2(opts.getOption("d")));
+        opts.getOption("d");
+        assertEquals(cl.getOptionValue2(opts.getOption("d")), "bar");
+    }
+
+    @Test
     public void testShortNoArg_test0_decomposed()  {
         assertTrue(cl.hasOption2("a"));
+    }
+
+    @Test
+    public void testShortNoArg_test1_decomposed()  {
+        assertTrue(cl.hasOption2("a"));
+        assertNull(cl.getOptionValue4("a"));
     }
 
     @Test
@@ -869,14 +686,24 @@ public class ValueTest {
     }
 
     @Test
+    public void testShortNoArgWithOption_test3_decomposed()  {
+        opts.getOption("a");
+        assertTrue(cl.hasOption1(opts.getOption("a")));
+        opts.getOption("a");
+        assertNull(cl.getOptionValue2(opts.getOption("a")));
+    }
+
+    @Test
     public void testShortOptionalArgNoValue_test0_decomposed() throws Exception {
         final String[] args = {"-e"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgNoValue_test1_decomposed() throws Exception {
         final String[] args = {"-e"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -884,6 +711,7 @@ public class ValueTest {
         final String[] args = {"-e"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("e"));
     }
 
     @Test
@@ -892,17 +720,20 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("e"));
+        assertNull(cmd.getOptionValue4("e"));
     }
 
     @Test
     public void testShortOptionalArgNoValueWithOption_test0_decomposed() throws Exception {
         final String[] args = {"-e"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgNoValueWithOption_test1_decomposed() throws Exception {
         final String[] args = {"-e"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -910,6 +741,7 @@ public class ValueTest {
         final String[] args = {"-e"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("e");
     }
 
     @Test
@@ -918,6 +750,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("e");
+        assertTrue(cmd.hasOption1(opts.getOption("e")));
     }
 
     @Test
@@ -927,6 +760,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("e");
         assertTrue(cmd.hasOption1(opts.getOption("e")));
+        opts.getOption("e");
     }
 
     @Test
@@ -937,17 +771,20 @@ public class ValueTest {
         opts.getOption("e");
         assertTrue(cmd.hasOption1(opts.getOption("e")));
         opts.getOption("e");
+        assertNull(cmd.getOptionValue2(opts.getOption("e")));
     }
 
     @Test
     public void testShortOptionalArgValue_test0_decomposed() throws Exception {
         final String[] args = {"-e", "everything"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgValue_test1_decomposed() throws Exception {
         final String[] args = {"-e", "everything"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -955,6 +792,7 @@ public class ValueTest {
         final String[] args = {"-e", "everything"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("e"));
     }
 
     @Test
@@ -963,17 +801,20 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("e"));
+        assertEquals("everything", cmd.getOptionValue4("e"));
     }
 
     @Test
     public void testShortOptionalArgValues_test0_decomposed() throws Exception {
         final String[] args = {"-j", "ink", "idea"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgValues_test1_decomposed() throws Exception {
         final String[] args = {"-j", "ink", "idea"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -981,6 +822,7 @@ public class ValueTest {
         final String[] args = {"-j", "ink", "idea"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("j"));
     }
 
     @Test
@@ -989,6 +831,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("j"));
+        assertEquals("ink", cmd.getOptionValue4("j"));
     }
 
     @Test
@@ -998,6 +841,8 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("j"));
         assertEquals("ink", cmd.getOptionValue4("j"));
+        assertEquals("ink", cmd.getOptionValues2("j")[0]);
+        assertEquals("idea", cmd.getOptionValues2("j")[1]);
     }
 
     @Test
@@ -1009,17 +854,20 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValue4("j"));
         assertEquals("ink", cmd.getOptionValues2("j")[0]);
         assertEquals("idea", cmd.getOptionValues2("j")[1]);
+        assertEquals(cmd.getArgs().length, 0);
     }
 
     @Test
     public void testShortOptionalArgValuesWithOption_test0_decomposed() throws Exception {
         final String[] args = {"-j", "ink", "idea"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgValuesWithOption_test1_decomposed() throws Exception {
         final String[] args = {"-j", "ink", "idea"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -1027,6 +875,7 @@ public class ValueTest {
         final String[] args = {"-j", "ink", "idea"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("j");
     }
 
     @Test
@@ -1035,6 +884,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("j");
+        assertTrue(cmd.hasOption1(opts.getOption("j")));
     }
 
     @Test
@@ -1044,6 +894,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("j");
         assertTrue(cmd.hasOption1(opts.getOption("j")));
+        opts.getOption("j");
     }
 
     @Test
@@ -1054,6 +905,7 @@ public class ValueTest {
         opts.getOption("j");
         assertTrue(cmd.hasOption1(opts.getOption("j")));
         opts.getOption("j");
+        assertEquals("ink", cmd.getOptionValue2(opts.getOption("j")));
     }
 
     @Test
@@ -1065,6 +917,7 @@ public class ValueTest {
         assertTrue(cmd.hasOption1(opts.getOption("j")));
         opts.getOption("j");
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("j")));
+        opts.getOption("j");
     }
 
     @Test
@@ -1077,6 +930,7 @@ public class ValueTest {
         opts.getOption("j");
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("j")));
         opts.getOption("j");
+        assertEquals("ink", cmd.getOptionValues1(opts.getOption("j"))[0]);
     }
 
     @Test
@@ -1090,6 +944,7 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("j")));
         opts.getOption("j");
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("j"))[0]);
+        opts.getOption("j");
     }
 
     @Test
@@ -1104,6 +959,7 @@ public class ValueTest {
         opts.getOption("j");
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("j"))[0]);
         opts.getOption("j");
+        assertEquals("idea", cmd.getOptionValues1(opts.getOption("j"))[1]);
     }
 
     @Test
@@ -1119,17 +975,20 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("j"))[0]);
         opts.getOption("j");
         assertEquals("idea", cmd.getOptionValues1(opts.getOption("j"))[1]);
+        assertEquals(cmd.getArgs().length, 0);
     }
 
     @Test
     public void testShortOptionalArgValueWithOption_test0_decomposed() throws Exception {
         final String[] args = {"-e", "everything"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalArgValueWithOption_test1_decomposed() throws Exception {
         final String[] args = {"-e", "everything"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -1137,6 +996,7 @@ public class ValueTest {
         final String[] args = {"-e", "everything"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        opts.getOption("e");
     }
 
     @Test
@@ -1145,6 +1005,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("e");
+        assertTrue(cmd.hasOption1(opts.getOption("e")));
     }
 
     @Test
@@ -1154,6 +1015,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         opts.getOption("e");
         assertTrue(cmd.hasOption1(opts.getOption("e")));
+        opts.getOption("e");
     }
 
     @Test
@@ -1164,17 +1026,20 @@ public class ValueTest {
         opts.getOption("e");
         assertTrue(cmd.hasOption1(opts.getOption("e")));
         opts.getOption("e");
+        assertEquals("everything", cmd.getOptionValue2(opts.getOption("e")));
     }
 
     @Test
     public void testShortOptionalNArgValues_test0_decomposed() throws Exception {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalNArgValues_test1_decomposed() throws Exception {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -1182,6 +1047,7 @@ public class ValueTest {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("i"));
     }
 
     @Test
@@ -1190,6 +1056,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("i"));
+        assertEquals("ink", cmd.getOptionValue4("i"));
     }
 
     @Test
@@ -1199,6 +1066,8 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("i"));
         assertEquals("ink", cmd.getOptionValue4("i"));
+        assertEquals("ink", cmd.getOptionValues2("i")[0]);
+        assertEquals("idea", cmd.getOptionValues2("i")[1]);
     }
 
     @Test
@@ -1210,30 +1079,22 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValue4("i"));
         assertEquals("ink", cmd.getOptionValues2("i")[0]);
         assertEquals("idea", cmd.getOptionValues2("i")[1]);
-    }
-
-    @Test
-    public void testShortOptionalNArgValues_test6_decomposed() throws Exception {
-        final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("i"));
-        assertEquals("ink", cmd.getOptionValue4("i"));
-        assertEquals("ink", cmd.getOptionValues2("i")[0]);
-        assertEquals("idea", cmd.getOptionValues2("i")[1]);
         assertEquals(cmd.getArgs().length, 2);
         assertEquals("isotope", cmd.getArgs()[0]);
+        assertEquals("ice", cmd.getArgs()[1]);
     }
 
     @Test
     public void testShortOptionalNArgValuesWithOption_test0_decomposed() throws Exception {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
+        final Parser parser = new PosixParser();
     }
 
     @Test
     public void testShortOptionalNArgValuesWithOption_test1_decomposed() throws Exception {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
         final Parser parser = new PosixParser();
+        final CommandLine cmd = parser.parse0(opts, args);
     }
 
     @Test
@@ -1241,6 +1102,7 @@ public class ValueTest {
         final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
+        assertTrue(cmd.hasOption2("i"));
     }
 
     @Test
@@ -1249,6 +1111,7 @@ public class ValueTest {
         final Parser parser = new PosixParser();
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("i"));
+        opts.getOption("i");
     }
 
     @Test
@@ -1258,6 +1121,7 @@ public class ValueTest {
         final CommandLine cmd = parser.parse0(opts, args);
         assertTrue(cmd.hasOption2("i"));
         opts.getOption("i");
+        assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
     }
 
     @Test
@@ -1268,6 +1132,7 @@ public class ValueTest {
         assertTrue(cmd.hasOption2("i"));
         opts.getOption("i");
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
+        opts.getOption("i");
     }
 
     @Test
@@ -1279,6 +1144,7 @@ public class ValueTest {
         opts.getOption("i");
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
         opts.getOption("i");
+        assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
     }
 
     @Test
@@ -1291,6 +1157,7 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
         opts.getOption("i");
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
+        opts.getOption("i");
     }
 
     @Test
@@ -1304,6 +1171,7 @@ public class ValueTest {
         opts.getOption("i");
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
         opts.getOption("i");
+        assertEquals("idea", cmd.getOptionValues1(opts.getOption("i"))[1]);
     }
 
     @Test
@@ -1318,22 +1186,9 @@ public class ValueTest {
         assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
         opts.getOption("i");
         assertEquals("idea", cmd.getOptionValues1(opts.getOption("i"))[1]);
-    }
-
-    @Test
-    public void testShortOptionalNArgValuesWithOption_test10_decomposed() throws Exception {
-        final String[] args = {"-i", "ink", "idea", "isotope", "ice"};
-        final Parser parser = new PosixParser();
-        final CommandLine cmd = parser.parse0(opts, args);
-        assertTrue(cmd.hasOption2("i"));
-        opts.getOption("i");
-        assertEquals("ink", cmd.getOptionValue2(opts.getOption("i")));
-        opts.getOption("i");
-        assertEquals("ink", cmd.getOptionValues1(opts.getOption("i"))[0]);
-        opts.getOption("i");
-        assertEquals("idea", cmd.getOptionValues1(opts.getOption("i"))[1]);
         assertEquals(cmd.getArgs().length, 2);
         assertEquals("isotope", cmd.getArgs()[0]);
+        assertEquals("ice", cmd.getArgs()[1]);
     }
 
     @Test
@@ -1345,6 +1200,7 @@ public class ValueTest {
     public void testShortWithArg_test1_decomposed()  {
         assertTrue(cl.hasOption2("b"));
         assertNotNull(cl.getOptionValue4("b"));
+        assertEquals(cl.getOptionValue4("b"), "foo");
     }
 
     @Test
@@ -1380,5 +1236,15 @@ public class ValueTest {
         opts.getOption("b");
         assertNotNull(cl.getOptionValue2(opts.getOption("b")));
         opts.getOption("b");
+    }
+
+    @Test
+    public void testShortWithArgWithOption_test5_decomposed()  {
+        opts.getOption("b");
+        assertTrue(cl.hasOption1(opts.getOption("b")));
+        opts.getOption("b");
+        assertNotNull(cl.getOptionValue2(opts.getOption("b")));
+        opts.getOption("b");
+        assertEquals(cl.getOptionValue2(opts.getOption("b")), "foo");
     }
 }

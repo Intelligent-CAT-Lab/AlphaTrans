@@ -34,56 +34,6 @@ import org.junit.Test;
 public final class EloTestCase {
 
     @Test
-    public void testPerformElo() {
-        DirectedGraph<String, GameResult> tournament =
-                newDirectedMutableGraph(
-                        new AbstractGraphConnection<String, GameResult>() {
-
-                            @Override
-                            public void connect0() {
-                                String zenio = addVertex("Zenio");
-                                String marineking = addVertex("Marineking");
-                                String hongun = addVertex("Hongun");
-                                String nestea = addVertex("Nestea");
-                                String tester = addVertex("Tester");
-                                String nada = addVertex("Nada");
-                                String rainbow = addVertex("Rainbow");
-                                String thewind = addVertex("Thewind");
-                                String inka = addVertex("Inka");
-                                String maka = addVertex("Maka");
-                                String ensnare = addVertex("Ensnare");
-                                String kyrix = addVertex("Kyrix");
-                                String killer = addVertex("Killer");
-                                String slayersboxer = addVertex("Slayersboxer");
-                                String fruitdealer = addVertex("Fruitdealer");
-                                String genius = addVertex("Genius");
-
-                                addEdge(WIN).from(zenio).to(marineking);
-                                addEdge(WIN).from(fruitdealer).to(hongun);
-                                addEdge(WIN).from(genius).to(nestea);
-                                addEdge(WIN).from(tester).to(nada);
-                                addEdge(WIN).from(thewind).to(rainbow);
-                                addEdge(WIN).from(maka).to(inka);
-                                addEdge(WIN).from(kyrix).to(ensnare);
-                                addEdge(WIN).from(slayersboxer).to(killer);
-                                addEdge(WIN).from(marineking).to(fruitdealer);
-                                addEdge(WIN).from(tester).to(genius);
-                                addEdge(WIN).from(thewind).to(maka);
-                                addEdge(WIN).from(kyrix).to(slayersboxer);
-                                addEdge(WIN).from(marineking).to(tester);
-                                addEdge(WIN).from(kyrix).to(thewind);
-                                addEdge(WIN).from(kyrix).to(marineking);
-                            }
-                        });
-
-        PlayersRank<String> playersRank = new SimplePlayersRank();
-
-        eloRate(tournament).wherePlayersAreRankedIn(playersRank).withKFactor(80);
-
-        System.out.println(playersRank);
-    }
-
-    @Test
     public void testPerformElo_test0_decomposed()  {
         DirectedGraph<String, GameResult> tournament =
                 newDirectedMutableGraph(
@@ -170,8 +120,195 @@ public final class EloTestCase {
                             }
                         });
         PlayersRank<String> playersRank = new SimplePlayersRank();
+    }
+
+    @Test
+    public void testPerformElo_test2_decomposed()  {
+        DirectedGraph<String, GameResult> tournament =
+                newDirectedMutableGraph(
+                        new AbstractGraphConnection<String, GameResult>() {
+
+                            @Override
+                            public void connect0() {
+                                String zenio = addVertex("Zenio");
+                                String marineking = addVertex("Marineking");
+                                String hongun = addVertex("Hongun");
+                                String nestea = addVertex("Nestea");
+                                String tester = addVertex("Tester");
+                                String nada = addVertex("Nada");
+                                String rainbow = addVertex("Rainbow");
+                                String thewind = addVertex("Thewind");
+                                String inka = addVertex("Inka");
+                                String maka = addVertex("Maka");
+                                String ensnare = addVertex("Ensnare");
+                                String kyrix = addVertex("Kyrix");
+                                String killer = addVertex("Killer");
+                                String slayersboxer = addVertex("Slayersboxer");
+                                String fruitdealer = addVertex("Fruitdealer");
+                                String genius = addVertex("Genius");
+
+                                addEdge(WIN).from(zenio).to(marineking);
+                                addEdge(WIN).from(fruitdealer).to(hongun);
+                                addEdge(WIN).from(genius).to(nestea);
+                                addEdge(WIN).from(tester).to(nada);
+                                addEdge(WIN).from(thewind).to(rainbow);
+                                addEdge(WIN).from(maka).to(inka);
+                                addEdge(WIN).from(kyrix).to(ensnare);
+                                addEdge(WIN).from(slayersboxer).to(killer);
+                                addEdge(WIN).from(marineking).to(fruitdealer);
+                                addEdge(WIN).from(tester).to(genius);
+                                addEdge(WIN).from(thewind).to(maka);
+                                addEdge(WIN).from(kyrix).to(slayersboxer);
+                                addEdge(WIN).from(marineking).to(tester);
+                                addEdge(WIN).from(kyrix).to(thewind);
+                                addEdge(WIN).from(kyrix).to(marineking);
+                            }
+                        });
+        PlayersRank<String> playersRank = new SimplePlayersRank();
+        eloRate(tournament);
+    }
+
+    @Test
+    public void testPerformElo_test3_decomposed()  {
+        DirectedGraph<String, GameResult> tournament =
+                newDirectedMutableGraph(
+                        new AbstractGraphConnection<String, GameResult>() {
+
+                            @Override
+                            public void connect0() {
+                                String zenio = addVertex("Zenio");
+                                String marineking = addVertex("Marineking");
+                                String hongun = addVertex("Hongun");
+                                String nestea = addVertex("Nestea");
+                                String tester = addVertex("Tester");
+                                String nada = addVertex("Nada");
+                                String rainbow = addVertex("Rainbow");
+                                String thewind = addVertex("Thewind");
+                                String inka = addVertex("Inka");
+                                String maka = addVertex("Maka");
+                                String ensnare = addVertex("Ensnare");
+                                String kyrix = addVertex("Kyrix");
+                                String killer = addVertex("Killer");
+                                String slayersboxer = addVertex("Slayersboxer");
+                                String fruitdealer = addVertex("Fruitdealer");
+                                String genius = addVertex("Genius");
+
+                                addEdge(WIN).from(zenio).to(marineking);
+                                addEdge(WIN).from(fruitdealer).to(hongun);
+                                addEdge(WIN).from(genius).to(nestea);
+                                addEdge(WIN).from(tester).to(nada);
+                                addEdge(WIN).from(thewind).to(rainbow);
+                                addEdge(WIN).from(maka).to(inka);
+                                addEdge(WIN).from(kyrix).to(ensnare);
+                                addEdge(WIN).from(slayersboxer).to(killer);
+                                addEdge(WIN).from(marineking).to(fruitdealer);
+                                addEdge(WIN).from(tester).to(genius);
+                                addEdge(WIN).from(thewind).to(maka);
+                                addEdge(WIN).from(kyrix).to(slayersboxer);
+                                addEdge(WIN).from(marineking).to(tester);
+                                addEdge(WIN).from(kyrix).to(thewind);
+                                addEdge(WIN).from(kyrix).to(marineking);
+                            }
+                        });
+        PlayersRank<String> playersRank = new SimplePlayersRank();
+        eloRate(tournament);
+        eloRate(tournament).wherePlayersAreRankedIn(playersRank);
+    }
+
+    @Test
+    public void testPerformElo_test4_decomposed()  {
+        DirectedGraph<String, GameResult> tournament =
+                newDirectedMutableGraph(
+                        new AbstractGraphConnection<String, GameResult>() {
+
+                            @Override
+                            public void connect0() {
+                                String zenio = addVertex("Zenio");
+                                String marineking = addVertex("Marineking");
+                                String hongun = addVertex("Hongun");
+                                String nestea = addVertex("Nestea");
+                                String tester = addVertex("Tester");
+                                String nada = addVertex("Nada");
+                                String rainbow = addVertex("Rainbow");
+                                String thewind = addVertex("Thewind");
+                                String inka = addVertex("Inka");
+                                String maka = addVertex("Maka");
+                                String ensnare = addVertex("Ensnare");
+                                String kyrix = addVertex("Kyrix");
+                                String killer = addVertex("Killer");
+                                String slayersboxer = addVertex("Slayersboxer");
+                                String fruitdealer = addVertex("Fruitdealer");
+                                String genius = addVertex("Genius");
+
+                                addEdge(WIN).from(zenio).to(marineking);
+                                addEdge(WIN).from(fruitdealer).to(hongun);
+                                addEdge(WIN).from(genius).to(nestea);
+                                addEdge(WIN).from(tester).to(nada);
+                                addEdge(WIN).from(thewind).to(rainbow);
+                                addEdge(WIN).from(maka).to(inka);
+                                addEdge(WIN).from(kyrix).to(ensnare);
+                                addEdge(WIN).from(slayersboxer).to(killer);
+                                addEdge(WIN).from(marineking).to(fruitdealer);
+                                addEdge(WIN).from(tester).to(genius);
+                                addEdge(WIN).from(thewind).to(maka);
+                                addEdge(WIN).from(kyrix).to(slayersboxer);
+                                addEdge(WIN).from(marineking).to(tester);
+                                addEdge(WIN).from(kyrix).to(thewind);
+                                addEdge(WIN).from(kyrix).to(marineking);
+                            }
+                        });
+        PlayersRank<String> playersRank = new SimplePlayersRank();
         eloRate(tournament);
         eloRate(tournament).wherePlayersAreRankedIn(playersRank);
         eloRate(tournament).wherePlayersAreRankedIn(playersRank).withKFactor(80);
+    }
+
+    @Test
+    public void testPerformElo_test5_decomposed()  {
+        DirectedGraph<String, GameResult> tournament =
+                newDirectedMutableGraph(
+                        new AbstractGraphConnection<String, GameResult>() {
+
+                            @Override
+                            public void connect0() {
+                                String zenio = addVertex("Zenio");
+                                String marineking = addVertex("Marineking");
+                                String hongun = addVertex("Hongun");
+                                String nestea = addVertex("Nestea");
+                                String tester = addVertex("Tester");
+                                String nada = addVertex("Nada");
+                                String rainbow = addVertex("Rainbow");
+                                String thewind = addVertex("Thewind");
+                                String inka = addVertex("Inka");
+                                String maka = addVertex("Maka");
+                                String ensnare = addVertex("Ensnare");
+                                String kyrix = addVertex("Kyrix");
+                                String killer = addVertex("Killer");
+                                String slayersboxer = addVertex("Slayersboxer");
+                                String fruitdealer = addVertex("Fruitdealer");
+                                String genius = addVertex("Genius");
+
+                                addEdge(WIN).from(zenio).to(marineking);
+                                addEdge(WIN).from(fruitdealer).to(hongun);
+                                addEdge(WIN).from(genius).to(nestea);
+                                addEdge(WIN).from(tester).to(nada);
+                                addEdge(WIN).from(thewind).to(rainbow);
+                                addEdge(WIN).from(maka).to(inka);
+                                addEdge(WIN).from(kyrix).to(ensnare);
+                                addEdge(WIN).from(slayersboxer).to(killer);
+                                addEdge(WIN).from(marineking).to(fruitdealer);
+                                addEdge(WIN).from(tester).to(genius);
+                                addEdge(WIN).from(thewind).to(maka);
+                                addEdge(WIN).from(kyrix).to(slayersboxer);
+                                addEdge(WIN).from(marineking).to(tester);
+                                addEdge(WIN).from(kyrix).to(thewind);
+                                addEdge(WIN).from(kyrix).to(marineking);
+                            }
+                        });
+        PlayersRank<String> playersRank = new SimplePlayersRank();
+        eloRate(tournament);
+        eloRate(tournament).wherePlayersAreRankedIn(playersRank);
+        eloRate(tournament).wherePlayersAreRankedIn(playersRank).withKFactor(80);
+        System.out.println(playersRank);
     }
 }

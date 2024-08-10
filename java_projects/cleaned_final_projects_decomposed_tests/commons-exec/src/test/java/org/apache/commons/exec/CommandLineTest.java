@@ -32,433 +32,117 @@ import org.junit.jupiter.api.Test;
  */
 public class CommandLineTest {
 
-    @Test
-    public void testAddArgument() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+    
 
-        cmdl.addArgument0("foo");
-        cmdl.addArgument0("bar");
-        assertEquals("[test, foo, bar]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArguments() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArguments0("foo bar");
-        assertEquals("[test, foo, bar]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentsArray() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArguments2(new String[] { "foo", "bar" });
-        assertEquals("[test, foo, bar]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentsArrayNull() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArguments2((String[]) null);
-        assertEquals("[test]", cmdl.toString());
-        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentsWithQuotes() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArguments0("'foo' \"bar\"");
-        assertEquals("[test, foo, bar]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentsWithQuotesAndSpaces() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArguments0("'fo o' \"ba r\"");
-        assertEquals("[test, \"fo o\", \"ba r\"]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "\"fo o\"", "\"ba r\"" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentWithBothQuotes() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        assertThrows(IllegalArgumentException.class, () -> cmdl.addArgument0("b\"a'r"));
-    }
+    
 
-    @Test
-    public void testAddArgumentWithQuote() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArgument0("foo");
-        cmdl.addArgument0("ba\"r");
-        assertEquals("[test, foo, 'ba\"r']", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "'ba\"r'" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentWithQuotesAround() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArgument0("\'foo\'");
-        cmdl.addArgument0("\"bar\"");
-        cmdl.addArgument0("\"fe z\"");
-        assertEquals("[test, foo, bar, \"fe z\"]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar", "\"fe z\"" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testAddArgumentWithSingleQuote() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+    
 
-        cmdl.addArgument0("foo");
-        cmdl.addArgument0("ba'r");
-        assertEquals("[test, foo, \"ba'r\"]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "\"ba\'r\"" }, cmdl.toStrings());
-    }
-
-    @Test
-    public void testAddArgumentWithSpace() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        cmdl.addArgument0("foo");
-        cmdl.addArgument0("ba r");
-        assertEquals("[test, foo, \"ba r\"]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "\"ba r\"" }, cmdl.toStrings());
-    }
-
-    @Test
-    public void testAddNullArgument() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-
-        cmdl.addArgument0(null);
-        assertEquals("[test]", cmdl.toString());
-        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
-    }
+    
 
     /**
      * A little example how to add two command line arguments in one line, e.g. to make commenting out some options less error prone.
      */
-    @Test
-    public void testAddTwoArguments() {
-
-        final CommandLine userAddCL1 = new CommandLine(2, null, null, "useradd");
-        userAddCL1.addArgument0("-g");
-        userAddCL1.addArgument0("tomcat");
-        userAddCL1.addArgument0("foo");
-
-        final CommandLine userAddCL2 = new CommandLine(2, null, null, "useradd");
-        userAddCL2.addArgument0("-g").addArgument0("tomcat");
-        userAddCL2.addArgument0("foo");
-
-        assertEquals(userAddCL1.toString(), userAddCL2.toString());
-    }
+    
 
     /**
      * Test expanding the command line based on a user-supplied map.
      */
-    @Test
-    public void testCommandLineParsingWithExpansion1() {
-
-        CommandLine cmdl;
-
-        final HashMap<String, Object> substitutionMap = new HashMap<>();
-        substitutionMap.put("JAVA_HOME", "/usr/local/java");
-        substitutionMap.put("appMainClass", "foo.bar.Main");
-        substitutionMap.put("file1", new File("./pom.xml"));
-        substitutionMap.put("file2", new File(".\\temp\\READ ME.txt"));
-
-        final HashMap<String, String> incompleteMap = new HashMap<>();
-        incompleteMap.put("JAVA_HOME", "/usr/local/java");
-
-        // do not pass substitution map
-        cmdl = CommandLine.parse0("${JAVA_HOME}/bin/java ${appMainClass}");
-        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") == 0);
-        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
-
-        // pass arguments with an empty map
-        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", new HashMap<>());
-        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") == 0);
-        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
-
-        // pass an complete substitution map
-        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", substitutionMap);
-        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") < 0);
-        assertTrue(cmdl.getExecutable().indexOf("local") > 0);
-        assertArrayEquals(new String[] { "foo.bar.Main" }, cmdl.getArguments());
-
-        // pass an incomplete substitution map resulting in unresolved variables
-        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", incompleteMap);
-        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") < 0);
-        assertTrue(cmdl.getExecutable().indexOf("local") > 0);
-        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
-
-        // pass a file
-        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass} ${file1} ${file2}", substitutionMap);
-        assertTrue(cmdl.getExecutable().indexOf("${file}") < 0);
-    }
+    
 
     /**
      * Test expanding the command line based on a user-supplied map. The main goal of the test is to setup a command line using macros and reuse it multiple
      * times.
      */
-    @Test
-    public void testCommandLineParsingWithExpansion2() {
+    
 
-        CommandLine cmdl;
-        String[] result;
-
-        // build the user supplied parameters
-        final HashMap<String, String> substitutionMap = new HashMap<>();
-        substitutionMap.put("JAVA_HOME", "C:\\Programme\\jdk1.5.0_12");
-        substitutionMap.put("appMainClass", "foo.bar.Main");
-
-        // build the command line
-        cmdl = new CommandLine(2, null, null, "${JAVA_HOME}\\bin\\java");
-        cmdl.addArgument0("-class");
-        cmdl.addArgument0("${appMainClass}");
-        cmdl.addArgument0("${file}");
-
-        // build the first command line
-        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432431.pdf");
-        cmdl.setSubstitutionMap(substitutionMap);
-        result = cmdl.toStrings();
-
-        // verify the first command line
-        // please note - the executable argument is changed to using platform specific file separator char
-        // whereas all other variable substitution are not touched
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
-        assertEquals("-class", result[1]);
-        assertEquals("foo.bar.Main", result[2]);
-        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", result[3]);
-
-        // verify the first command line again but by
-        // accessing the executable and arguments directly
-        final String executable = cmdl.getExecutable();
-        final String[] arguments = cmdl.getArguments();
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), executable);
-        assertEquals("-class", arguments[0]);
-        assertEquals("foo.bar.Main", arguments[1]);
-        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", arguments[2]);
-
-        // build the second command line with updated parameters resulting in a different command line
-        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
-        result = cmdl.toStrings();
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
-        assertEquals("-class", result[1]);
-        assertEquals("foo.bar.Main", result[2]);
-        assertEquals("\"C:\\Document And Settings\\documents\\432432.pdf\"", result[3]);
-    }
-
-    @Test
-    public void testCommandLineParsingWithExpansion3() {
-        final CommandLine cmdl = CommandLine.parse0("AcroRd32.exe");
-        cmdl.addArgument0("/p");
-        cmdl.addArgument0("/h");
-        cmdl.addArgument1("${file}", false);
-        final HashMap<String, String> params = new HashMap<>();
-        params.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
-        cmdl.setSubstitutionMap(params);
-        final String[] result = cmdl.toStrings();
-        assertEquals("AcroRd32.exe", result[0]);
-        assertEquals("/p", result[1]);
-        assertEquals("/h", result[2]);
-        assertEquals("C:\\Document And Settings\\documents\\432432.pdf", result[3]);
-
-    }
+    
 
     /**
      * Create a command line with pre-quoted strings to test SANDBOX-192, e.g. "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC",
      * "\"-XX:ParallelGCThreads=2\""
      */
-    @Test
-    public void testComplexAddArgument() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
-        cmdl.addArgument1("10", false);
-        cmdl.addArgument1("30", false);
-        cmdl.addArgument1("-XX:+UseParallelGC", false);
-        cmdl.addArgument1("\"-XX:ParallelGCThreads=2\"", false);
-        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
-    }
+    
 
     /**
      * Create a command line with pre-quoted strings to test SANDBOX-192, e.g. "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC",
      * "\"-XX:ParallelGCThreads=2\""
      */
-    @Test
-    public void testComplexAddArguments1() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
-        cmdl.addArguments3(new String[] { "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, false);
-        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
-    }
+    
 
     /**
      * Create a command line with pre-quoted strings to test SANDBOX-192, e.g. "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC",
      * "\"-XX:ParallelGCThreads=2\"" Please not that we re forced to add additional single quotes to get the test working - don't know if this is a bug or a
      * feature.
      */
-    @Test
-    public void testComplexAddArguments2() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
-        cmdl.addArguments1("10 30 -XX:+UseParallelGC '\"-XX:ParallelGCThreads=2\"'", false);
-        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testCopyConstructor() {
-        final Map<String, String> map = new HashMap<>();
-        map.put("bar", "bar");
-        final CommandLine other = new CommandLine(2, null, null, "test");
-        other.addArgument0("foo");
-        other.setSubstitutionMap(map);
+    
 
-        final CommandLine cmdl = new CommandLine(0, other, null, null);
-        assertEquals(other.getExecutable(), cmdl.getExecutable());
-        assertArrayEquals(other.getArguments(), cmdl.getArguments());
-        assertEquals(other.isFile(), cmdl.isFile());
-        assertEquals(other.getSubstitutionMap(), cmdl.getSubstitutionMap());
+    
 
-    }
+    
 
-    @Test
-    public void testExecutable() {
-        final CommandLine cmdl = new CommandLine(2, null, null, "test");
-        assertEquals("[test]", cmdl.toString());
-        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
-        assertEquals("test", cmdl.getExecutable());
-        assertTrue(cmdl.getArguments().length == 0);
-    }
+    
 
-    @Test
-    public void testExecutableWhitespaceString() {
-        assertThrows(IllegalArgumentException.class, () -> new CommandLine(2, null, null, "   "));
-    }
+    
 
-    @Test
-    public void testExecutableZeroLengthString() {
-        assertThrows(IllegalArgumentException.class, () -> new CommandLine(2, null, null, ""));
-    }
+    
 
-    @Test
-    public void testNullExecutable() {
-        assertThrows(NullPointerException.class, () -> new CommandLine(2, null, null, (String) null));
-    }
+    
 
-    @Test
-    public void testParseCommandLine() {
-        final CommandLine cmdl = CommandLine.parse0("test foo bar");
-        assertEquals("[test, foo, bar]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
-    }
+    
 
-    @Test
-    public void testParseCommandLineWithNull() {
-        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0(null));
-    }
+    
 
-    @Test
-    public void testParseCommandLineWithOnlyWhitespace() {
-        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0("  "));
-    }
-
-    @Test
-    public void testParseCommandLineWithQuotes() {
-        final CommandLine cmdl = CommandLine.parse0("test \"foo\" \'ba r\'");
-        assertEquals("[test, foo, \"ba r\"]", cmdl.toString());
-        assertArrayEquals(new String[] { "test", "foo", "\"ba r\"" }, cmdl.toStrings());
-    }
-
-    @Test
-    public void testParseCommandLineWithUnevenQuotes() {
-        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0("test \"foo bar"), "IllegalArgumentException must be thrown due to uneven quotes");
-    }
+    
 
     /**
      * A command line parsing puzzle from Tino Schoellhorn - ImageMagix expects a "500x>" parameter (including quotes) and it is simply not possible to do that
      * without adding a space, e.g. "500x> ".
      */
-    @Test
-    public void testParseComplexCommandLine1() {
-        final HashMap<String, String> substitutionMap = new HashMap<>();
-        substitutionMap.put("in", "source.jpg");
-        substitutionMap.put("out", "target.jpg");
-        final CommandLine cmdl = CommandLine.parse1("cmd /C convert ${in} -resize \"\'500x> \'\" ${out}", substitutionMap);
-        assertEquals("[cmd, /C, convert, source.jpg, -resize, \"500x> \", target.jpg]", cmdl.toString());
-    }
+    
 
     /**
      * Another command line parsing puzzle from Kai Hu - as far as I understand it there is no way to express that in a one-line command string.
      */
-    @Test
-    public void testParseComplexCommandLine2() {
-        final String commandline = "./script/jrake cruise:publish_installers " + "INSTALLER_VERSION=unstable_2_1 "
-                + "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\" " + "INSTALLER_DOWNLOAD_SERVER=\'something\' " + "WITHOUT_HELP_DOC=true";
-        final CommandLine cmdl = CommandLine.parse0(commandline);
-        final String[] args = cmdl.getArguments();
-        assertEquals(args[0], "cruise:publish_installers");
-        assertEquals(args[1], "INSTALLER_VERSION=unstable_2_1");
-        // assertEquals(args[2], "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\"");
-        // assertEquals(args[3], "INSTALLER_DOWNLOAD_SERVER='something'");
-        assertEquals(args[4], "WITHOUT_HELP_DOC=true");
-    }
+    
 
     /**
      * Test the following command line
      *
      * cmd.exe /C c:\was51\Web Sphere\AppServer\bin\versionInfo.bat
      */
-    @Test
-    public void testParseRealLifeCommandLine_1() {
-
-        final String commandline = "cmd.exe /C \"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"";
-
-        final CommandLine cmdl = CommandLine.parse0(commandline);
-        final String[] args = cmdl.getArguments();
-        assertEquals("/C", args[0]);
-        assertEquals("\"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"", args[1]);
-    }
+    
 
     /**
      * Test the toString() method.
      *
      * @throws Exception the test failed
      */
-    @Test
-    public void testToString() throws Exception {
-        CommandLine cmdl;
-        final HashMap<String, String> params = new HashMap<>();
-
-        // use no arguments
-        cmdl = CommandLine.parse1("AcroRd32.exe", params);
-        assertEquals("[AcroRd32.exe]", cmdl.toString());
-
-        // use an argument containing spaces
-        params.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
-        cmdl = CommandLine.parse1("AcroRd32.exe /p /h '${file}'", params);
-        assertEquals("[AcroRd32.exe, /p, /h, \"C:\\Document And Settings\\documents\\432432.pdf\"]", cmdl.toString());
-
-        // use an argument without spaces
-        params.put("file", "C:\\documents\\432432.pdf");
-        cmdl = CommandLine.parse1("AcroRd32.exe /p /h '${file}'", params);
-        assertEquals("[AcroRd32.exe, /p, /h, C:\\documents\\432432.pdf]", cmdl.toString());
-    }
+    
 
     /**
      * Test that toString() produces output that is useful for troubleshooting.
      *
      * @throws Exception the test failed
      */
-    @Test
-    public void testToStringTroubleshooting() throws Exception {
-        System.out.println("testToStringTroubleshooting");
-        // On HP-UX quotes handling leads to errors,
-        // also usage of quotes isn't mandatory on other platforms too
-        // so it probably should work correctly either way.
-        final CommandLine cmd1 = new CommandLine(2, null, null, "sh").addArgument0("-c").addArgument1("echo 1", false);
-        final CommandLine cmd2 = new CommandLine(2, null, null, "sh").addArgument0("-c").addArgument0("echo").addArgument0("1");
-        System.out.println("cmd1: " + cmd1.toString());
-        System.out.println("cmd2: " + cmd2.toString());
-        assertTrue(!cmd1.toString().equals(cmd2.toString()), "toString() is useful for troubleshooting");
-    }
 
     @Test
     public void testAddArgument_test0_decomposed()  {
@@ -481,6 +165,15 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgument_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0("foo");
+        cmdl.addArgument0("bar");
+        assertEquals("[test, foo, bar]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddArguments_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
     }
@@ -496,6 +189,14 @@ public class CommandLineTest {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
         cmdl.addArguments0("foo bar");
         assertEquals("[test, foo, bar]", cmdl.toString());
+    }
+
+    @Test
+    public void testAddArguments_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArguments0("foo bar");
+        assertEquals("[test, foo, bar]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
     }
 
     @Test
@@ -517,6 +218,14 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgumentsArray_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArguments2(new String[] { "foo", "bar" });
+        assertEquals("[test, foo, bar]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddArgumentsArrayNull_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
     }
@@ -532,6 +241,14 @@ public class CommandLineTest {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
         cmdl.addArguments2((String[]) null);
         assertEquals("[test]", cmdl.toString());
+    }
+
+    @Test
+    public void testAddArgumentsArrayNull_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArguments2((String[]) null);
+        assertEquals("[test]", cmdl.toString());
+        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
     }
 
     @Test
@@ -553,6 +270,14 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgumentsWithQuotes_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArguments0("'foo' \"bar\"");
+        assertEquals("[test, foo, bar]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddArgumentsWithQuotesAndSpaces_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
     }
@@ -571,8 +296,22 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgumentsWithQuotesAndSpaces_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArguments0("'fo o' \"ba r\"");
+        assertEquals("[test, \"fo o\", \"ba r\"]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "\"fo o\"", "\"ba r\"" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddArgumentWithBothQuotes_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
+    }
+
+    @Test
+    public void testAddArgumentWithBothQuotes_test1_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        assertThrows(IllegalArgumentException.class, () -> cmdl.addArgument0("b\"a'r"));
     }
 
     @Test
@@ -593,6 +332,15 @@ public class CommandLineTest {
         cmdl.addArgument0("foo");
         cmdl.addArgument0("ba\"r");
         assertEquals("[test, foo, 'ba\"r']", cmdl.toString());
+    }
+
+    @Test
+    public void testAddArgumentWithQuote_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0("foo");
+        cmdl.addArgument0("ba\"r");
+        assertEquals("[test, foo, 'ba\"r']", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "'ba\"r'" }, cmdl.toStrings());
     }
 
     @Test
@@ -618,6 +366,16 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgumentWithQuotesAround_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0("\'foo\'");
+        cmdl.addArgument0("\"bar\"");
+        cmdl.addArgument0("\"fe z\"");
+        assertEquals("[test, foo, bar, \"fe z\"]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar", "\"fe z\"" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddArgumentWithSingleQuote_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
     }
@@ -635,6 +393,15 @@ public class CommandLineTest {
         cmdl.addArgument0("foo");
         cmdl.addArgument0("ba'r");
         assertEquals("[test, foo, \"ba'r\"]", cmdl.toString());
+    }
+
+    @Test
+    public void testAddArgumentWithSingleQuote_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0("foo");
+        cmdl.addArgument0("ba'r");
+        assertEquals("[test, foo, \"ba'r\"]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "\"ba\'r\"" }, cmdl.toStrings());
     }
 
     @Test
@@ -658,6 +425,15 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testAddArgumentWithSpace_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0("foo");
+        cmdl.addArgument0("ba r");
+        assertEquals("[test, foo, \"ba r\"]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "\"ba r\"" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testAddNullArgument_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
     }
@@ -673,6 +449,14 @@ public class CommandLineTest {
         final CommandLine cmdl = new CommandLine(2, null, null, "test");
         cmdl.addArgument0(null);
         assertEquals("[test]", cmdl.toString());
+    }
+
+    @Test
+    public void testAddNullArgument_test3_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        cmdl.addArgument0(null);
+        assertEquals("[test]", cmdl.toString());
+        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
     }
 
     @Test
@@ -706,6 +490,18 @@ public class CommandLineTest {
         final CommandLine userAddCL2 = new CommandLine(2, null, null, "useradd");
         userAddCL2.addArgument0("-g").addArgument0("tomcat");
         userAddCL2.addArgument0("foo");
+    }
+
+    @Test
+    public void testAddTwoArguments_test4_decomposed()  {
+        final CommandLine userAddCL1 = new CommandLine(2, null, null, "useradd");
+        userAddCL1.addArgument0("-g");
+        userAddCL1.addArgument0("tomcat");
+        userAddCL1.addArgument0("foo");
+        final CommandLine userAddCL2 = new CommandLine(2, null, null, "useradd");
+        userAddCL2.addArgument0("-g").addArgument0("tomcat");
+        userAddCL2.addArgument0("foo");
+        assertEquals(userAddCL1.toString(), userAddCL2.toString());
     }
 
     @Test
@@ -965,12 +761,41 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testCommandLineParsingWithExpansion1_test13_decomposed()  {
+        CommandLine cmdl;
+        final HashMap<String, Object> substitutionMap = new HashMap<>();
+        substitutionMap.put("JAVA_HOME", "/usr/local/java");
+        substitutionMap.put("appMainClass", "foo.bar.Main");
+        substitutionMap.put("file1", new File("./pom.xml"));
+        substitutionMap.put("file2", new File(".\\temp\\READ ME.txt"));
+        final HashMap<String, String> incompleteMap = new HashMap<>();
+        incompleteMap.put("JAVA_HOME", "/usr/local/java");
+        cmdl = CommandLine.parse0("${JAVA_HOME}/bin/java ${appMainClass}");
+        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") == 0);
+        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
+        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", new HashMap<>());
+        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") == 0);
+        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
+        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", substitutionMap);
+        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") < 0);
+        assertTrue(cmdl.getExecutable().indexOf("local") > 0);
+        assertArrayEquals(new String[] { "foo.bar.Main" }, cmdl.getArguments());
+        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass}", incompleteMap);
+        assertTrue(cmdl.getExecutable().indexOf("${JAVA_HOME}") < 0);
+        assertTrue(cmdl.getExecutable().indexOf("local") > 0);
+        assertArrayEquals(new String[] { "${appMainClass}" }, cmdl.getArguments());
+        cmdl = CommandLine.parse1("${JAVA_HOME}/bin/java ${appMainClass} ${file1} ${file2}", substitutionMap);
+        assertTrue(cmdl.getExecutable().indexOf("${file}") < 0);
+    }
+
+    @Test
     public void testCommandLineParsingWithExpansion2_test0_decomposed()  {
         CommandLine cmdl;
         String[] result;
         final HashMap<String, String> substitutionMap = new HashMap<>();
         substitutionMap.put("JAVA_HOME", "C:\\Programme\\jdk1.5.0_12");
         substitutionMap.put("appMainClass", "foo.bar.Main");
+        cmdl = new CommandLine(2, null, null, "${JAVA_HOME}\\bin\\java");
     }
 
     @Test
@@ -981,6 +806,9 @@ public class CommandLineTest {
         substitutionMap.put("JAVA_HOME", "C:\\Programme\\jdk1.5.0_12");
         substitutionMap.put("appMainClass", "foo.bar.Main");
         cmdl = new CommandLine(2, null, null, "${JAVA_HOME}\\bin\\java");
+        cmdl.addArgument0("-class");
+        cmdl.addArgument0("${appMainClass}");
+        cmdl.addArgument0("${file}");
     }
 
     @Test
@@ -994,6 +822,8 @@ public class CommandLineTest {
         cmdl.addArgument0("-class");
         cmdl.addArgument0("${appMainClass}");
         cmdl.addArgument0("${file}");
+        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432431.pdf");
+        cmdl.setSubstitutionMap(substitutionMap);
     }
 
     @Test
@@ -1045,6 +875,7 @@ public class CommandLineTest {
         result = cmdl.toStrings();
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
         assertEquals("-class", result[1]);
+        assertEquals("foo.bar.Main", result[2]);
     }
 
     @Test
@@ -1064,6 +895,8 @@ public class CommandLineTest {
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
         assertEquals("-class", result[1]);
         assertEquals("foo.bar.Main", result[2]);
+        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", result[3]);
+        final String executable = cmdl.getExecutable();
     }
 
     @Test
@@ -1133,6 +966,7 @@ public class CommandLineTest {
         final String[] arguments = cmdl.getArguments();
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), executable);
         assertEquals("-class", arguments[0]);
+        assertEquals("foo.bar.Main", arguments[1]);
     }
 
     @Test
@@ -1158,6 +992,9 @@ public class CommandLineTest {
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), executable);
         assertEquals("-class", arguments[0]);
         assertEquals("foo.bar.Main", arguments[1]);
+        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", arguments[2]);
+        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
+        result = cmdl.toStrings();
     }
 
     @Test
@@ -1186,6 +1023,7 @@ public class CommandLineTest {
         assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", arguments[2]);
         substitutionMap.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
         result = cmdl.toStrings();
+        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
     }
 
     @Test
@@ -1215,6 +1053,8 @@ public class CommandLineTest {
         substitutionMap.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
         result = cmdl.toStrings();
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
+        assertEquals("-class", result[1]);
+        assertEquals("foo.bar.Main", result[2]);
     }
 
     @Test
@@ -1245,37 +1085,8 @@ public class CommandLineTest {
         result = cmdl.toStrings();
         assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
         assertEquals("-class", result[1]);
-    }
-
-    @Test
-    public void testCommandLineParsingWithExpansion2_test14_decomposed()  {
-        CommandLine cmdl;
-        String[] result;
-        final HashMap<String, String> substitutionMap = new HashMap<>();
-        substitutionMap.put("JAVA_HOME", "C:\\Programme\\jdk1.5.0_12");
-        substitutionMap.put("appMainClass", "foo.bar.Main");
-        cmdl = new CommandLine(2, null, null, "${JAVA_HOME}\\bin\\java");
-        cmdl.addArgument0("-class");
-        cmdl.addArgument0("${appMainClass}");
-        cmdl.addArgument0("${file}");
-        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432431.pdf");
-        cmdl.setSubstitutionMap(substitutionMap);
-        result = cmdl.toStrings();
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
-        assertEquals("-class", result[1]);
         assertEquals("foo.bar.Main", result[2]);
-        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", result[3]);
-        final String executable = cmdl.getExecutable();
-        final String[] arguments = cmdl.getArguments();
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), executable);
-        assertEquals("-class", arguments[0]);
-        assertEquals("foo.bar.Main", arguments[1]);
-        assertEquals("\"C:\\Document And Settings\\documents\\432431.pdf\"", arguments[2]);
-        substitutionMap.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
-        result = cmdl.toStrings();
-        assertEquals(StringUtils.fixFileSeparatorChar("C:\\Programme\\jdk1.5.0_12\\bin\\java"), result[0]);
-        assertEquals("-class", result[1]);
-        assertEquals("foo.bar.Main", result[2]);
+        assertEquals("\"C:\\Document And Settings\\documents\\432432.pdf\"", result[3]);
     }
 
     @Test
@@ -1307,7 +1118,6 @@ public class CommandLineTest {
         final HashMap<String, String> params = new HashMap<>();
         params.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
         cmdl.setSubstitutionMap(params);
-        final String[] result = cmdl.toStrings();
     }
 
     @Test
@@ -1320,7 +1130,6 @@ public class CommandLineTest {
         params.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
         cmdl.setSubstitutionMap(params);
         final String[] result = cmdl.toStrings();
-        assertEquals("AcroRd32.exe", result[0]);
     }
 
     @Test
@@ -1350,6 +1159,7 @@ public class CommandLineTest {
         assertEquals("AcroRd32.exe", result[0]);
         assertEquals("/p", result[1]);
         assertEquals("/h", result[2]);
+        assertEquals("C:\\Document And Settings\\documents\\432432.pdf", result[3]);
     }
 
     @Test
@@ -1367,6 +1177,16 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testComplexAddArgument_test2_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
+        cmdl.addArgument1("10", false);
+        cmdl.addArgument1("30", false);
+        cmdl.addArgument1("-XX:+UseParallelGC", false);
+        cmdl.addArgument1("\"-XX:ParallelGCThreads=2\"", false);
+        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testComplexAddArguments1_test0_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
     }
@@ -1375,6 +1195,13 @@ public class CommandLineTest {
     public void testComplexAddArguments1_test1_decomposed()  {
         final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
         cmdl.addArguments3(new String[] { "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, false);
+    }
+
+    @Test
+    public void testComplexAddArguments1_test2_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
+        cmdl.addArguments3(new String[] { "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, false);
+        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
     }
 
     @Test
@@ -1389,9 +1216,17 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testComplexAddArguments2_test2_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "runMemorySud.cmd");
+        cmdl.addArguments1("10 30 -XX:+UseParallelGC '\"-XX:ParallelGCThreads=2\"'", false);
+        assertArrayEquals(new String[] { "runMemorySud.cmd", "10", "30", "-XX:+UseParallelGC", "\"-XX:ParallelGCThreads=2\"" }, cmdl.toStrings());
+    }
+
+    @Test
     public void testCopyConstructor_test0_decomposed()  {
         final Map<String, String> map = new HashMap<>();
         map.put("bar", "bar");
+        final CommandLine other = new CommandLine(2, null, null, "test");
     }
 
     @Test
@@ -1399,6 +1234,7 @@ public class CommandLineTest {
         final Map<String, String> map = new HashMap<>();
         map.put("bar", "bar");
         final CommandLine other = new CommandLine(2, null, null, "test");
+        other.addArgument0("foo");
     }
 
     @Test
@@ -1407,6 +1243,7 @@ public class CommandLineTest {
         map.put("bar", "bar");
         final CommandLine other = new CommandLine(2, null, null, "test");
         other.addArgument0("foo");
+        other.setSubstitutionMap(map);
     }
 
     @Test
@@ -1416,6 +1253,7 @@ public class CommandLineTest {
         final CommandLine other = new CommandLine(2, null, null, "test");
         other.addArgument0("foo");
         other.setSubstitutionMap(map);
+        final CommandLine cmdl = new CommandLine(0, other, null, null);
     }
 
     @Test
@@ -1426,6 +1264,7 @@ public class CommandLineTest {
         other.addArgument0("foo");
         other.setSubstitutionMap(map);
         final CommandLine cmdl = new CommandLine(0, other, null, null);
+        assertEquals(other.getExecutable(), cmdl.getExecutable());
     }
 
     @Test
@@ -1437,6 +1276,7 @@ public class CommandLineTest {
         other.setSubstitutionMap(map);
         final CommandLine cmdl = new CommandLine(0, other, null, null);
         assertEquals(other.getExecutable(), cmdl.getExecutable());
+        assertArrayEquals(other.getArguments(), cmdl.getArguments());
     }
 
     @Test
@@ -1449,6 +1289,7 @@ public class CommandLineTest {
         final CommandLine cmdl = new CommandLine(0, other, null, null);
         assertEquals(other.getExecutable(), cmdl.getExecutable());
         assertArrayEquals(other.getArguments(), cmdl.getArguments());
+        assertEquals(other.isFile(), cmdl.isFile());
     }
 
     @Test
@@ -1462,6 +1303,7 @@ public class CommandLineTest {
         assertEquals(other.getExecutable(), cmdl.getExecutable());
         assertArrayEquals(other.getArguments(), cmdl.getArguments());
         assertEquals(other.isFile(), cmdl.isFile());
+        assertEquals(other.getSubstitutionMap(), cmdl.getSubstitutionMap());
     }
 
     @Test
@@ -1491,6 +1333,30 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testExecutable_test4_decomposed()  {
+        final CommandLine cmdl = new CommandLine(2, null, null, "test");
+        assertEquals("[test]", cmdl.toString());
+        assertArrayEquals(new String[] { "test" }, cmdl.toStrings());
+        assertEquals("test", cmdl.getExecutable());
+        assertTrue(cmdl.getArguments().length == 0);
+    }
+
+    @Test
+    public void testExecutableWhitespaceString_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> new CommandLine(2, null, null, "   "));
+    }
+
+    @Test
+    public void testExecutableZeroLengthString_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> new CommandLine(2, null, null, ""));
+    }
+
+    @Test
+    public void testNullExecutable_test0_decomposed()  {
+        assertThrows(NullPointerException.class, () -> new CommandLine(2, null, null, (String) null));
+    }
+
+    @Test
     public void testParseCommandLine_test0_decomposed()  {
         final CommandLine cmdl = CommandLine.parse0("test foo bar");
     }
@@ -1499,6 +1365,23 @@ public class CommandLineTest {
     public void testParseCommandLine_test1_decomposed()  {
         final CommandLine cmdl = CommandLine.parse0("test foo bar");
         assertEquals("[test, foo, bar]", cmdl.toString());
+    }
+
+    @Test
+    public void testParseCommandLine_test2_decomposed()  {
+        final CommandLine cmdl = CommandLine.parse0("test foo bar");
+        assertEquals("[test, foo, bar]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "bar" }, cmdl.toStrings());
+    }
+
+    @Test
+    public void testParseCommandLineWithNull_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0(null));
+    }
+
+    @Test
+    public void testParseCommandLineWithOnlyWhitespace_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0("  "));
     }
 
     @Test
@@ -1513,6 +1396,18 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testParseCommandLineWithQuotes_test2_decomposed()  {
+        final CommandLine cmdl = CommandLine.parse0("test \"foo\" \'ba r\'");
+        assertEquals("[test, foo, \"ba r\"]", cmdl.toString());
+        assertArrayEquals(new String[] { "test", "foo", "\"ba r\"" }, cmdl.toStrings());
+    }
+
+    @Test
+    public void testParseCommandLineWithUnevenQuotes_test0_decomposed()  {
+        assertThrows(IllegalArgumentException.class, () -> CommandLine.parse0("test \"foo bar"), "IllegalArgumentException must be thrown due to uneven quotes");
+    }
+
+    @Test
     public void testParseComplexCommandLine1_test0_decomposed()  {
         final HashMap<String, String> substitutionMap = new HashMap<>();
         substitutionMap.put("in", "source.jpg");
@@ -1521,11 +1416,19 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testParseComplexCommandLine1_test1_decomposed()  {
+        final HashMap<String, String> substitutionMap = new HashMap<>();
+        substitutionMap.put("in", "source.jpg");
+        substitutionMap.put("out", "target.jpg");
+        final CommandLine cmdl = CommandLine.parse1("cmd /C convert ${in} -resize \"\'500x> \'\" ${out}", substitutionMap);
+        assertEquals("[cmd, /C, convert, source.jpg, -resize, \"500x> \", target.jpg]", cmdl.toString());
+    }
+
+    @Test
     public void testParseComplexCommandLine2_test0_decomposed()  {
         final String commandline = "./script/jrake cruise:publish_installers " + "INSTALLER_VERSION=unstable_2_1 "
                 + "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\" " + "INSTALLER_DOWNLOAD_SERVER=\'something\' " + "WITHOUT_HELP_DOC=true";
         final CommandLine cmdl = CommandLine.parse0(commandline);
-        final String[] args = cmdl.getArguments();
     }
 
     @Test
@@ -1534,7 +1437,6 @@ public class CommandLineTest {
                 + "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\" " + "INSTALLER_DOWNLOAD_SERVER=\'something\' " + "WITHOUT_HELP_DOC=true";
         final CommandLine cmdl = CommandLine.parse0(commandline);
         final String[] args = cmdl.getArguments();
-        assertEquals(args[0], "cruise:publish_installers");
     }
 
     @Test
@@ -1548,10 +1450,20 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testParseComplexCommandLine2_test3_decomposed()  {
+        final String commandline = "./script/jrake cruise:publish_installers " + "INSTALLER_VERSION=unstable_2_1 "
+                + "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\" " + "INSTALLER_DOWNLOAD_SERVER=\'something\' " + "WITHOUT_HELP_DOC=true";
+        final CommandLine cmdl = CommandLine.parse0(commandline);
+        final String[] args = cmdl.getArguments();
+        assertEquals(args[0], "cruise:publish_installers");
+        assertEquals(args[1], "INSTALLER_VERSION=unstable_2_1");
+        assertEquals(args[4], "WITHOUT_HELP_DOC=true");
+    }
+
+    @Test
     public void testParseRealLifeCommandLine_1_test0_decomposed()  {
         final String commandline = "cmd.exe /C \"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"";
         final CommandLine cmdl = CommandLine.parse0(commandline);
-        final String[] args = cmdl.getArguments();
     }
 
     @Test
@@ -1559,7 +1471,15 @@ public class CommandLineTest {
         final String commandline = "cmd.exe /C \"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"";
         final CommandLine cmdl = CommandLine.parse0(commandline);
         final String[] args = cmdl.getArguments();
+    }
+
+    @Test
+    public void testParseRealLifeCommandLine_1_test2_decomposed()  {
+        final String commandline = "cmd.exe /C \"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"";
+        final CommandLine cmdl = CommandLine.parse0(commandline);
+        final String[] args = cmdl.getArguments();
         assertEquals("/C", args[0]);
+        assertEquals("\"c:\\was51\\Web Sphere\\AppServer\\bin\\versionInfo.bat\"", args[1]);
     }
 
     @Test
@@ -1612,6 +1532,20 @@ public class CommandLineTest {
     }
 
     @Test
+    public void testToString_test5_decomposed() throws Exception {
+        CommandLine cmdl;
+        final HashMap<String, String> params = new HashMap<>();
+        cmdl = CommandLine.parse1("AcroRd32.exe", params);
+        assertEquals("[AcroRd32.exe]", cmdl.toString());
+        params.put("file", "C:\\Document And Settings\\documents\\432432.pdf");
+        cmdl = CommandLine.parse1("AcroRd32.exe /p /h '${file}'", params);
+        assertEquals("[AcroRd32.exe, /p, /h, \"C:\\Document And Settings\\documents\\432432.pdf\"]", cmdl.toString());
+        params.put("file", "C:\\documents\\432432.pdf");
+        cmdl = CommandLine.parse1("AcroRd32.exe /p /h '${file}'", params);
+        assertEquals("[AcroRd32.exe, /p, /h, C:\\documents\\432432.pdf]", cmdl.toString());
+    }
+
+    @Test
     public void testToStringTroubleshooting_test0_decomposed() throws Exception {
         System.out.println("testToStringTroubleshooting");
         new CommandLine(2, null, null, "sh").addArgument0("-c");
@@ -1640,5 +1574,6 @@ public class CommandLineTest {
         final CommandLine cmd2 = new CommandLine(2, null, null, "sh").addArgument0("-c").addArgument0("echo").addArgument0("1");
         System.out.println("cmd1: " + cmd1.toString());
         System.out.println("cmd2: " + cmd2.toString());
+        assertTrue(!cmd1.toString().equals(cmd2.toString()), "toString() is useful for troubleshooting");
     }
 }

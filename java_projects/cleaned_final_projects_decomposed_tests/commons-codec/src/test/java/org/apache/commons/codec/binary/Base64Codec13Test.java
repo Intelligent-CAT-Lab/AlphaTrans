@@ -1489,18 +1489,7 @@ public class Base64Codec13Test {
      *
      * @throws EncoderException problem
      */
-    @Test
-    public void testEncoder() throws EncoderException {
-        final Encoder enc = Base64.Base645();
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, (byte[]) enc.encode(binary));
-                assertTrue("Encoder test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.Decoder interface
@@ -1508,18 +1497,7 @@ public class Base64Codec13Test {
      *
      * @throws DecoderException problem
      */
-    @Test
-    public void testDecoder() throws DecoderException {
-        final Decoder dec = Base64.Base645();
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, (byte[]) dec.decode(base64));
-                assertTrue("Decoder test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.BinaryEncoder
@@ -1527,18 +1505,7 @@ public class Base64Codec13Test {
      *
      * @throws EncoderException problem
      */
-    @Test
-    public void testBinaryEncoder() throws EncoderException {
-        final BinaryEncoder enc = Base64.Base645();
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, enc.encode(binary));
-                assertTrue("BinaryEncoder test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of the org.apache.commons.codec.BinaryDecoder
@@ -1546,18 +1513,7 @@ public class Base64Codec13Test {
      *
      * @throws DecoderException problem
      */
-    @Test
-    public void testBinaryDecoder() throws DecoderException {
-        final BinaryDecoder dec = Base64.Base645();
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, dec.decode(base64));
-                assertTrue("BinaryDecoder test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of Base64.encodeBase64() static method is behaving
@@ -1565,17 +1521,7 @@ public class Base64Codec13Test {
      *
      * @throws EncoderException problem
      */
-    @Test
-    public void testStaticEncode() throws EncoderException {
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64, Base64.encodeBase640(binary));
-                assertTrue("static Base64.encodeBase64() test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of Base64.decodeBase64() static method is behaving
@@ -1583,17 +1529,7 @@ public class Base64Codec13Test {
      *
      * @throws DecoderException problem
      */
-    @Test
-    public void testStaticDecode() throws DecoderException {
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64 = utf8(STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, Base64.decodeBase640(base64));
-                assertTrue("static Base64.decodeBase64() test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of Base64.encodeBase64Chunked() static method is
@@ -1601,17 +1537,7 @@ public class Base64Codec13Test {
      *
      * @throws EncoderException problem
      */
-    @Test
-    public void testStaticEncodeChunked() throws EncoderException {
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(base64Chunked, Base64.encodeBase64Chunked(binary));
-                assertTrue("static Base64.encodeBase64Chunked() test-" + i, b);
-            }
-        }
-    }
+    
 
     /**
      * Tests to make sure Base64's implementation of Base64.decodeBase64() static method is behaving
@@ -1619,17 +1545,7 @@ public class Base64Codec13Test {
      *
      * @throws DecoderException problem
      */
-    @Test
-    public void testStaticDecodeChunked() throws DecoderException {
-        for (int i = 0; i < STRINGS.length; i++) {
-            if (STRINGS[i] != null) {
-                final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
-                final byte[] binary = BYTES[i];
-                final boolean b = Arrays.equals(binary, Base64.decodeBase640(base64Chunked));
-                assertTrue("static Base64.decodeBase64Chunked() test-" + i, b);
-            }
-        }
-    }
+    
 
     private static byte[] utf8(final String s) {
 
@@ -1642,8 +1558,34 @@ public class Base64Codec13Test {
     }
 
     @Test
+    public void testEncoder_test1_decomposed() throws EncoderException {
+        final Encoder enc = Base64.Base645();
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(base64, (byte[]) enc.encode(binary));
+                assertTrue("Encoder test-" + i, b);
+            }
+        }
+    }
+
+    @Test
     public void testDecoder_test0_decomposed() throws DecoderException {
         final Decoder dec = Base64.Base645();
+    }
+
+    @Test
+    public void testDecoder_test1_decomposed() throws DecoderException {
+        final Decoder dec = Base64.Base645();
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(binary, (byte[]) dec.decode(base64));
+                assertTrue("Decoder test-" + i, b);
+            }
+        }
     }
 
     @Test
@@ -1652,7 +1594,81 @@ public class Base64Codec13Test {
     }
 
     @Test
+    public void testBinaryEncoder_test1_decomposed() throws EncoderException {
+        final BinaryEncoder enc = Base64.Base645();
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(base64, enc.encode(binary));
+                assertTrue("BinaryEncoder test-" + i, b);
+            }
+        }
+    }
+
+    @Test
     public void testBinaryDecoder_test0_decomposed() throws DecoderException {
         final BinaryDecoder dec = Base64.Base645();
+    }
+
+    @Test
+    public void testBinaryDecoder_test1_decomposed() throws DecoderException {
+        final BinaryDecoder dec = Base64.Base645();
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(binary, dec.decode(base64));
+                assertTrue("BinaryDecoder test-" + i, b);
+            }
+        }
+    }
+
+    @Test
+    public void testStaticEncode_test0_decomposed() throws EncoderException {
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(base64, Base64.encodeBase640(binary));
+                assertTrue("static Base64.encodeBase64() test-" + i, b);
+            }
+        }
+    }
+
+    @Test
+    public void testStaticDecode_test0_decomposed() throws DecoderException {
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64 = utf8(STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(binary, Base64.decodeBase640(base64));
+                assertTrue("static Base64.decodeBase64() test-" + i, b);
+            }
+        }
+    }
+
+    @Test
+    public void testStaticEncodeChunked_test0_decomposed() throws EncoderException {
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(base64Chunked, Base64.encodeBase64Chunked(binary));
+                assertTrue("static Base64.encodeBase64Chunked() test-" + i, b);
+            }
+        }
+    }
+
+    @Test
+    public void testStaticDecodeChunked_test0_decomposed() throws DecoderException {
+        for (int i = 0; i < STRINGS.length; i++) {
+            if (STRINGS[i] != null) {
+                final byte[] base64Chunked = utf8(CHUNKED_STRINGS[i]);
+                final byte[] binary = BYTES[i];
+                final boolean b = Arrays.equals(binary, Base64.decodeBase640(base64Chunked));
+                assertTrue("static Base64.decodeBase64Chunked() test-" + i, b);
+            }
+        }
     }
 }

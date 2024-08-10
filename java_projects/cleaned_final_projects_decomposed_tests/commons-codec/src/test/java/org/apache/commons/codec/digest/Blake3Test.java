@@ -22,13 +22,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 public class Blake3Test {
-    @Test
-    public void shouldThrowIllegalArgumentExceptionWhenIncorrectKeySize() {
-        for (int i = 0; i < 32; i++) {
-            assertThrowsProperExceptionWithKeySize(i);
-        }
-        assertThrowsProperExceptionWithKeySize(33);
-    }
+    
 
     private static void assertThrowsProperExceptionWithKeySize(final int keySize) {
         try {
@@ -44,5 +38,6 @@ public class Blake3Test {
         for (int i = 0; i < 32; i++) {
             assertThrowsProperExceptionWithKeySize(i);
         }
+        assertThrowsProperExceptionWithKeySize(33);
     }
 }

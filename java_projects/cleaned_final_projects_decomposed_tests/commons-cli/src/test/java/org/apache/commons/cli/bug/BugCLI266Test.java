@@ -72,28 +72,6 @@ public class BugCLI266Test {
     }
 
     @Test
-    public void testOptionComparatorDefaultOrder() {
-        final HelpFormatter formatter = new HelpFormatter();
-        final List<Option> options = new ArrayList<>(getOptions().getOptions());
-        Collections.sort(options, formatter.getOptionComparator());
-        int i = 0;
-        for (final Option o : options) {
-            Assert.assertEquals(o.getOpt(), sortOrder.get(i));
-            i++;
-        }
-    }
-
-    @Test
-    public void testOptionComparatorInsertedOrder() {
-        final Collection<Option> options = getOptions().getOptions();
-        int i = 0;
-        for (final Option o : options) {
-            Assert.assertEquals(o.getOpt(), insertedOrder.get(i));
-            i++;
-        }
-    }
-
-    @Test
     public void testOptionComparatorDefaultOrder_test0_decomposed()  {
         final HelpFormatter formatter = new HelpFormatter();
     }
@@ -117,6 +95,10 @@ public class BugCLI266Test {
         final List<Option> options = new ArrayList<>(getOptions().getOptions());
         Collections.sort(options, formatter.getOptionComparator());
         int i = 0;
+        for (final Option o : options) {
+            Assert.assertEquals(o.getOpt(), sortOrder.get(i));
+            i++;
+        }
     }
 
     @Test
@@ -128,5 +110,9 @@ public class BugCLI266Test {
     public void testOptionComparatorInsertedOrder_test1_decomposed()  {
         final Collection<Option> options = getOptions().getOptions();
         int i = 0;
+        for (final Option o : options) {
+            Assert.assertEquals(o.getOpt(), insertedOrder.get(i));
+            i++;
+        }
     }
 }
