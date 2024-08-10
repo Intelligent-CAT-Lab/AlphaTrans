@@ -34,8 +34,15 @@ public class ExtendedBufferedReaderTest {
         return new ExtendedBufferedReader(new StringReader(s));
     }
 
+    
+
+    /*
+     * Test to illustrate https://issues.apache.org/jira/browse/CSV-75
+     *
+     */
+
     @Test
-    public void testEmptyInput() throws Exception {
+    public void testEmptyInput_test0_decomposed() throws Exception {
         try (final ExtendedBufferedReader br = createBufferedReader("")) {
             assertEquals(END_OF_STREAM, br.read0());
             assertEquals(END_OF_STREAM, br.lookAhead0());
@@ -45,172 +52,24 @@ public class ExtendedBufferedReaderTest {
         }
     }
 
-    /*
-     * Test to illustrate https://issues.apache.org/jira/browse/CSV-75
-     *
-     */
     @Test
-    public void testReadChar() throws Exception {
+    public void testReadChar_test0_decomposed() throws Exception {
         final String LF = "\n";
         final String CR = "\r";
         final String CRLF = CR + LF;
-        final String LFCR = LF + CR; // easier to read the string below
+        final String LFCR = LF + CR;
         final String test =
                 "a" + LF + "b" + CR + "c" + LF + LF + "d" + CR + CR + "e" + LFCR + "f " + CRLF;
         final int EOLeolct = 9;
-
         try (final ExtendedBufferedReader br = createBufferedReader(test)) {
             assertEquals(0, br.getCurrentLineNumber());
             while (br.readLine() != null) {}
             assertEquals(EOLeolct, br.getCurrentLineNumber());
         }
-        try (final ExtendedBufferedReader br = createBufferedReader(test)) {
-            assertEquals(0, br.getCurrentLineNumber());
-            while (br.read0() != -1) {}
-            assertEquals(EOLeolct, br.getCurrentLineNumber());
-        }
-        try (final ExtendedBufferedReader br = createBufferedReader(test)) {
-            assertEquals(0, br.getCurrentLineNumber());
-            final char[] buff = new char[10];
-            while (br.read1(buff, 0, 3) != -1) {}
-            assertEquals(EOLeolct, br.getCurrentLineNumber());
-        }
     }
 
     @Test
-    public void testReadingInDifferentBuffer() throws Exception {
-        final char[] tmp1 = new char[2], tmp2 = new char[4];
-        try (ExtendedBufferedReader reader = createBufferedReader("1\r\n2\r\n")) {
-            reader.read1(tmp1, 0, 2);
-            reader.read1(tmp2, 2, 2);
-            assertEquals(2, reader.getCurrentLineNumber());
-        }
-    }
-
-    @Test
-    public void testReadLine() throws Exception {
-        try (final ExtendedBufferedReader br = createBufferedReader("")) {
-            assertNull(br.readLine());
-        }
-        try (final ExtendedBufferedReader br = createBufferedReader("\n")) {
-            assertEquals("", br.readLine());
-            assertNull(br.readLine());
-        }
-        try (final ExtendedBufferedReader br = createBufferedReader("foo\n\nhello")) {
-            assertEquals(0, br.getCurrentLineNumber());
-            assertEquals("foo", br.readLine());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals("", br.readLine());
-            assertEquals(2, br.getCurrentLineNumber());
-            assertEquals("hello", br.readLine());
-            assertEquals(3, br.getCurrentLineNumber());
-            assertNull(br.readLine());
-            assertEquals(3, br.getCurrentLineNumber());
-        }
-        try (final ExtendedBufferedReader br = createBufferedReader("foo\n\nhello")) {
-            assertEquals('f', br.read0());
-            assertEquals('o', br.lookAhead0());
-            assertEquals("oo", br.readLine());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('\n', br.lookAhead0());
-            assertEquals("", br.readLine());
-            assertEquals(2, br.getCurrentLineNumber());
-            assertEquals('h', br.lookAhead0());
-            assertEquals("hello", br.readLine());
-            assertNull(br.readLine());
-            assertEquals(3, br.getCurrentLineNumber());
-        }
-        try (final ExtendedBufferedReader br = createBufferedReader("foo\rbaar\r\nfoo")) {
-            assertEquals("foo", br.readLine());
-            assertEquals('b', br.lookAhead0());
-            assertEquals("baar", br.readLine());
-            assertEquals('f', br.lookAhead0());
-            assertEquals("foo", br.readLine());
-            assertNull(br.readLine());
-        }
-    }
-
-    @Test
-    public void testReadLookahead1() throws Exception {
-        try (final ExtendedBufferedReader br = createBufferedReader("1\n2\r3\n")) {
-            assertEquals(0, br.getCurrentLineNumber());
-            assertEquals('1', br.lookAhead0());
-            assertEquals(UNDEFINED, br.getLastChar());
-            assertEquals(0, br.getCurrentLineNumber());
-            assertEquals('1', br.read0()); // Start line 1
-            assertEquals('1', br.getLastChar());
-
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('\n', br.lookAhead0());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('1', br.getLastChar());
-            assertEquals('\n', br.read0());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('\n', br.getLastChar());
-            assertEquals(1, br.getCurrentLineNumber());
-
-            assertEquals('2', br.lookAhead0());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('\n', br.getLastChar());
-            assertEquals(1, br.getCurrentLineNumber());
-            assertEquals('2', br.read0()); // Start line 2
-            assertEquals(2, br.getCurrentLineNumber());
-            assertEquals('2', br.getLastChar());
-
-            assertEquals('\r', br.lookAhead0());
-            assertEquals(2, br.getCurrentLineNumber());
-            assertEquals('2', br.getLastChar());
-            assertEquals('\r', br.read0());
-            assertEquals('\r', br.getLastChar());
-            assertEquals(2, br.getCurrentLineNumber());
-
-            assertEquals('3', br.lookAhead0());
-            assertEquals('\r', br.getLastChar());
-            assertEquals('3', br.read0()); // Start line 3
-            assertEquals('3', br.getLastChar());
-            assertEquals(3, br.getCurrentLineNumber());
-
-            assertEquals('\n', br.lookAhead0());
-            assertEquals(3, br.getCurrentLineNumber());
-            assertEquals('3', br.getLastChar());
-            assertEquals('\n', br.read0());
-            assertEquals(3, br.getCurrentLineNumber());
-            assertEquals('\n', br.getLastChar());
-            assertEquals(3, br.getCurrentLineNumber());
-
-            assertEquals(END_OF_STREAM, br.lookAhead0());
-            assertEquals('\n', br.getLastChar());
-            assertEquals(END_OF_STREAM, br.read0());
-            assertEquals(END_OF_STREAM, br.getLastChar());
-            assertEquals(END_OF_STREAM, br.read0());
-            assertEquals(END_OF_STREAM, br.lookAhead0());
-            assertEquals(3, br.getCurrentLineNumber());
-        }
-    }
-
-    @Test
-    public void testReadLookahead2() throws Exception {
-        final char[] ref = new char[5];
-        final char[] res = new char[5];
-
-        try (final ExtendedBufferedReader br = createBufferedReader("abcdefg")) {
-            ref[0] = 'a';
-            ref[1] = 'b';
-            ref[2] = 'c';
-            assertEquals(3, br.read1(res, 0, 3));
-            assertArrayEquals(ref, res);
-            assertEquals('c', br.getLastChar());
-
-            assertEquals('d', br.lookAhead0());
-            ref[4] = 'd';
-            assertEquals(1, br.read1(res, 4, 1));
-            assertArrayEquals(ref, res);
-            assertEquals('d', br.getLastChar());
-        }
-    }
-
-    @Test
-    public void testReadChar_test0_decomposed() throws Exception {
+    public void testReadChar_test1_decomposed() throws Exception {
         final String LF = "\n";
         final String CR = "\r";
         final String CRLF = CR + LF;
@@ -231,8 +90,40 @@ public class ExtendedBufferedReaderTest {
     }
 
     @Test
+    public void testReadChar_test2_decomposed() throws Exception {
+        final String LF = "\n";
+        final String CR = "\r";
+        final String CRLF = CR + LF;
+        final String LFCR = LF + CR;
+        final String test =
+                "a" + LF + "b" + CR + "c" + LF + LF + "d" + CR + CR + "e" + LFCR + "f " + CRLF;
+        final int EOLeolct = 9;
+        try (final ExtendedBufferedReader br = createBufferedReader(test)) {
+            assertEquals(0, br.getCurrentLineNumber());
+            while (br.readLine() != null) {}
+            assertEquals(EOLeolct, br.getCurrentLineNumber());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader(test)) {
+            assertEquals(0, br.getCurrentLineNumber());
+            while (br.read0() != -1) {}
+            assertEquals(EOLeolct, br.getCurrentLineNumber());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader(test)) {
+            assertEquals(0, br.getCurrentLineNumber());
+            final char[] buff = new char[10];
+            while (br.read1(buff, 0, 3) != -1) {}
+            assertEquals(EOLeolct, br.getCurrentLineNumber());
+        }
+    }
+
+    @Test
     public void testReadingInDifferentBuffer_test0_decomposed() throws Exception {
         final char[] tmp1 = new char[2], tmp2 = new char[4];
+        try (ExtendedBufferedReader reader = createBufferedReader("1\r\n2\r\n")) {
+            reader.read1(tmp1, 0, 2);
+            reader.read1(tmp2, 2, 2);
+            assertEquals(2, reader.getCurrentLineNumber());
+        }
     }
 
     @Test
@@ -304,8 +195,123 @@ public class ExtendedBufferedReaderTest {
     }
 
     @Test
+    public void testReadLine_test3_decomposed() throws Exception {
+        try (final ExtendedBufferedReader br = createBufferedReader("")) {
+            assertNull(br.readLine());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader("\n")) {
+            assertEquals("", br.readLine());
+            assertNull(br.readLine());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader("foo\n\nhello")) {
+            assertEquals(0, br.getCurrentLineNumber());
+            assertEquals("foo", br.readLine());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals("", br.readLine());
+            assertEquals(2, br.getCurrentLineNumber());
+            assertEquals("hello", br.readLine());
+            assertEquals(3, br.getCurrentLineNumber());
+            assertNull(br.readLine());
+            assertEquals(3, br.getCurrentLineNumber());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader("foo\n\nhello")) {
+            assertEquals('f', br.read0());
+            assertEquals('o', br.lookAhead0());
+            assertEquals("oo", br.readLine());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('\n', br.lookAhead0());
+            assertEquals("", br.readLine());
+            assertEquals(2, br.getCurrentLineNumber());
+            assertEquals('h', br.lookAhead0());
+            assertEquals("hello", br.readLine());
+            assertNull(br.readLine());
+            assertEquals(3, br.getCurrentLineNumber());
+        }
+        try (final ExtendedBufferedReader br = createBufferedReader("foo\rbaar\r\nfoo")) {
+            assertEquals("foo", br.readLine());
+            assertEquals('b', br.lookAhead0());
+            assertEquals("baar", br.readLine());
+            assertEquals('f', br.lookAhead0());
+            assertEquals("foo", br.readLine());
+            assertNull(br.readLine());
+        }
+    }
+
+    @Test
+    public void testReadLookahead1_test0_decomposed() throws Exception {
+        try (final ExtendedBufferedReader br = createBufferedReader("1\n2\r3\n")) {
+            assertEquals(0, br.getCurrentLineNumber());
+            assertEquals('1', br.lookAhead0());
+            assertEquals(UNDEFINED, br.getLastChar());
+            assertEquals(0, br.getCurrentLineNumber());
+            assertEquals('1', br.read0()); // Start line 1
+            assertEquals('1', br.getLastChar());
+
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('\n', br.lookAhead0());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('1', br.getLastChar());
+            assertEquals('\n', br.read0());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('\n', br.getLastChar());
+            assertEquals(1, br.getCurrentLineNumber());
+
+            assertEquals('2', br.lookAhead0());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('\n', br.getLastChar());
+            assertEquals(1, br.getCurrentLineNumber());
+            assertEquals('2', br.read0()); // Start line 2
+            assertEquals(2, br.getCurrentLineNumber());
+            assertEquals('2', br.getLastChar());
+
+            assertEquals('\r', br.lookAhead0());
+            assertEquals(2, br.getCurrentLineNumber());
+            assertEquals('2', br.getLastChar());
+            assertEquals('\r', br.read0());
+            assertEquals('\r', br.getLastChar());
+            assertEquals(2, br.getCurrentLineNumber());
+
+            assertEquals('3', br.lookAhead0());
+            assertEquals('\r', br.getLastChar());
+            assertEquals('3', br.read0()); // Start line 3
+            assertEquals('3', br.getLastChar());
+            assertEquals(3, br.getCurrentLineNumber());
+
+            assertEquals('\n', br.lookAhead0());
+            assertEquals(3, br.getCurrentLineNumber());
+            assertEquals('3', br.getLastChar());
+            assertEquals('\n', br.read0());
+            assertEquals(3, br.getCurrentLineNumber());
+            assertEquals('\n', br.getLastChar());
+            assertEquals(3, br.getCurrentLineNumber());
+
+            assertEquals(END_OF_STREAM, br.lookAhead0());
+            assertEquals('\n', br.getLastChar());
+            assertEquals(END_OF_STREAM, br.read0());
+            assertEquals(END_OF_STREAM, br.getLastChar());
+            assertEquals(END_OF_STREAM, br.read0());
+            assertEquals(END_OF_STREAM, br.lookAhead0());
+            assertEquals(3, br.getCurrentLineNumber());
+        }
+    }
+
+    @Test
     public void testReadLookahead2_test0_decomposed() throws Exception {
         final char[] ref = new char[5];
         final char[] res = new char[5];
+        try (final ExtendedBufferedReader br = createBufferedReader("abcdefg")) {
+            ref[0] = 'a';
+            ref[1] = 'b';
+            ref[2] = 'c';
+            assertEquals(3, br.read1(res, 0, 3));
+            assertArrayEquals(ref, res);
+            assertEquals('c', br.getLastChar());
+
+            assertEquals('d', br.lookAhead0());
+            ref[4] = 'd';
+            assertEquals(1, br.read1(res, 4, 1));
+            assertArrayEquals(ref, res);
+            assertEquals('d', br.getLastChar());
+        }
     }
 }

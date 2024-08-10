@@ -44,77 +44,60 @@ public class TestLongAs2IntsCodec {
 		}
 	}
 
-	@Test
-	public void testCodec_Zero() {
-		checkConsistency(codec, new long[] { 0 });
-	}
+    @Test
+    public void testCodec_Zero_test0_decomposed()  {
+        checkConsistency(codec, new long[] { 0 });
+    }
 
-	@Test
-	public void testCodec_Minus1() {
-		checkConsistency(codec, new long[] { -1 });
-	}
+    @Test
+    public void testCodec_Minus1_test0_decomposed()  {
+        checkConsistency(codec, new long[] { -1 });
+    }
 
-	@Test
-	public void testCodec_ZeroTimes8Minus1() {
-		checkConsistency(codec, new long[] { 0, 0, 0, 0, 0, 0, 0, 0, -1 });
-	}
-
-	@Test
-	public void testCodec_ZeroTimes127Minus1() {
-		long[] array = LongStream.concat(LongStream.range(0, 127).map(l -> 0), LongStream.of(-1)).toArray();
-
-		checkConsistency(codec, array);
-	}
-
-	@Test
-	public void testCodec_ZeroTimes128Minus1() {
-		long[] array = LongStream.concat(LongStream.range(0, 128).map(l -> 0), LongStream.of(-1)).toArray();
-
-		checkConsistency(codec, array);
-	}
-
-	@Test
-	public void testCodec_MinValue() {
-		checkConsistency(codec, new long[] { Long.MIN_VALUE });
-	}
-
-	@Test
-	public void testCodec_ZeroMinValue() {
-		checkConsistency(codec, new long[] { 0, Long.MIN_VALUE });
-	}
-
-	@Test
-	public void testCodec_allPowerOfTwo() {
-		checkConsistency(codec, new long[] { 1L << 42 });
-		for (int i = 0; i < 64; i++) {
-			checkConsistency(codec, new long[] { 1L << i });
-		}
-	}
-
-	@Test
-	public void testCodec_ZeroThenAllPowerOfTwo() {
-		for (int i = 0; i < 64; i++) {
-			checkConsistency(codec, new long[] { 0, 1L << i });
-		}
-	}
-
-	@Test
-	public void testCodec_intermediateHighPowerOfTwo() {
-		Assert.assertEquals(3, LongTestUtils.compress1((LongCODEC) codec, new long[] { 1L << 42 }).length);
-	}
+    @Test
+    public void testCodec_ZeroTimes8Minus1_test0_decomposed()  {
+        checkConsistency(codec, new long[] { 0, 0, 0, 0, 0, 0, 0, 0, -1 });
+    }
 
     @Test
     public void testCodec_ZeroTimes127Minus1_test0_decomposed()  {
         long[] array = LongStream.concat(LongStream.range(0, 127).map(l -> 0), LongStream.of(-1)).toArray();
+        checkConsistency(codec, array);
     }
 
     @Test
     public void testCodec_ZeroTimes128Minus1_test0_decomposed()  {
         long[] array = LongStream.concat(LongStream.range(0, 128).map(l -> 0), LongStream.of(-1)).toArray();
+        checkConsistency(codec, array);
+    }
+
+    @Test
+    public void testCodec_MinValue_test0_decomposed()  {
+        checkConsistency(codec, new long[] { Long.MIN_VALUE });
+    }
+
+    @Test
+    public void testCodec_ZeroMinValue_test0_decomposed()  {
+        checkConsistency(codec, new long[] { 0, Long.MIN_VALUE });
     }
 
     @Test
     public void testCodec_allPowerOfTwo_test0_decomposed()  {
         checkConsistency(codec, new long[] { 1L << 42 });
+        for (int i = 0; i < 64; i++) {
+			checkConsistency(codec, new long[] { 1L << i });
+		}
+    }
+
+    @Test
+    public void testCodec_ZeroThenAllPowerOfTwo_test0_decomposed()  {
+        for (int i = 0; i < 64; i++) {
+			checkConsistency(codec, new long[] { 0, 1L << i });
+		}
+    }
+
+    @Test
+    public void testCodec_intermediateHighPowerOfTwo_test0_decomposed()  {
+        Assert.assertEquals(3, LongTestUtils.compress1((LongCODEC) codec, new long[] { 1L << 42 }).length);
     }
 }

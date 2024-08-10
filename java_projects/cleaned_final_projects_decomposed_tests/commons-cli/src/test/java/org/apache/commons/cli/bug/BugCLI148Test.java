@@ -40,24 +40,6 @@ public class BugCLI148Test {
     }
 
     @Test
-    public void testWorkaround1() throws Exception {
-        final CommandLineParser parser = new PosixParser();
-        final String[] args = {"-t-something"};
-
-        final CommandLine commandLine = parser.parse0(options, args);
-        assertEquals("-something", commandLine.getOptionValue0('t'));
-    }
-
-    @Test
-    public void testWorkaround2() throws Exception {
-        final CommandLineParser parser = new PosixParser();
-        final String[] args = {"-t", "\"-something\""};
-
-        final CommandLine commandLine = parser.parse0(options, args);
-        assertEquals("-something", commandLine.getOptionValue0('t'));
-    }
-
-    @Test
     public void testWorkaround1_test0_decomposed() throws Exception {
         final CommandLineParser parser = new PosixParser();
     }
@@ -70,6 +52,14 @@ public class BugCLI148Test {
     }
 
     @Test
+    public void testWorkaround1_test2_decomposed() throws Exception {
+        final CommandLineParser parser = new PosixParser();
+        final String[] args = {"-t-something"};
+        final CommandLine commandLine = parser.parse0(options, args);
+        assertEquals("-something", commandLine.getOptionValue0('t'));
+    }
+
+    @Test
     public void testWorkaround2_test0_decomposed() throws Exception {
         final CommandLineParser parser = new PosixParser();
     }
@@ -79,5 +69,13 @@ public class BugCLI148Test {
         final CommandLineParser parser = new PosixParser();
         final String[] args = {"-t", "\"-something\""};
         final CommandLine commandLine = parser.parse0(options, args);
+    }
+
+    @Test
+    public void testWorkaround2_test2_decomposed() throws Exception {
+        final CommandLineParser parser = new PosixParser();
+        final String[] args = {"-t", "\"-something\""};
+        final CommandLine commandLine = parser.parse0(options, args);
+        assertEquals("-something", commandLine.getOptionValue0('t'));
     }
 }

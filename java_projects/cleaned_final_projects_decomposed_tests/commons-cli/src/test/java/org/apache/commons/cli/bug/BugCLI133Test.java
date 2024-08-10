@@ -28,15 +28,6 @@ import org.junit.Test;
 
 @SuppressWarnings("deprecation") // tests some deprecated classes
 public class BugCLI133Test {
-    @Test
-    public void testOrder() throws ParseException {
-        final Option optionA = Option.Option1("a", "first");
-        final Options opts = new Options();
-        opts.addOption0(optionA);
-        final PosixParser posixParser = new PosixParser();
-        final CommandLine line = posixParser.parse0(opts, null);
-        assertFalse(line.hasOption2((String) null));
-    }
 
     @Test
     public void testOrder_test0_decomposed() throws ParseException {
@@ -71,5 +62,15 @@ public class BugCLI133Test {
         opts.addOption0(optionA);
         final PosixParser posixParser = new PosixParser();
         final CommandLine line = posixParser.parse0(opts, null);
+    }
+
+    @Test
+    public void testOrder_test5_decomposed() throws ParseException {
+        final Option optionA = Option.Option1("a", "first");
+        final Options opts = new Options();
+        opts.addOption0(optionA);
+        final PosixParser posixParser = new PosixParser();
+        final CommandLine line = posixParser.parse0(opts, null);
+        assertFalse(line.hasOption2((String) null));
     }
 }

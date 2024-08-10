@@ -43,32 +43,14 @@ public class Base16InputStreamTest {
      *
      * @throws IOException for some failure scenarios.
      */
-    @Test
-    public void testAvailable() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-        try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
-            assertEquals(1, b16Stream.available());
-            assertEquals(6, b16Stream.skip(10));
-            assertEquals(0, b16Stream.available());
-            assertEquals(-1, b16Stream.read0());
-            assertEquals(-1, b16Stream.read0());
-            assertEquals(0, b16Stream.available());
-        }
-    }
+    
 
     /**
      * Tests the Base16InputStream implementation against empty input.
      *
      * @throws IOException for some failure scenarios.
      */
-    @Test
-    public void testBase16EmptyInputStream() throws IOException {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte0(emptyEncoded, emptyDecoded);
-        testByChunk0(emptyEncoded, emptyDecoded);
-    }
+    
 
     /**
      * Tests the Base16InputStream implementation.
@@ -225,8 +207,105 @@ public class Base16InputStreamTest {
      *
      * @throws IOException for some failure scenarios.
      */
+    
+
+    /**
+     * Tests read returning 0
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests read with null.
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests read throwing IndexOutOfBoundsException
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping number of characters larger than the internal buffer.
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping as a noop
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping past the end of a stream.
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests skipping to the end of a stream.
+     *
+     * @throws IOException for some failure scenarios.
+     */
+    
+
+    /**
+     * Tests if negative arguments to skip are handled correctly.
+     *
+     * @throws IOException for some failure scenarios.
+     */
+
     @Test
-    public void testMarkSupported() throws IOException {
+    public void testAvailable_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
+    @Test
+    public void testAvailable_test1_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+        try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
+            assertEquals(1, b16Stream.available());
+            assertEquals(6, b16Stream.skip(10));
+            assertEquals(0, b16Stream.available());
+            assertEquals(-1, b16Stream.read0());
+            assertEquals(-1, b16Stream.read0());
+            assertEquals(0, b16Stream.available());
+        }
+    }
+
+    @Test
+    public void testBase16EmptyInputStream_test0_decomposed() throws IOException {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte0(emptyEncoded, emptyDecoded);
+    }
+
+    @Test
+    public void testBase16EmptyInputStream_test1_decomposed() throws IOException {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte0(emptyEncoded, emptyDecoded);
+        testByChunk0(emptyEncoded, emptyDecoded);
+    }
+
+    @Test
+    public void testMarkSupported_test0_decomposed() throws IOException {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testMarkSupported_test1_decomposed() throws IOException {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = Base16InputStream.Base16InputStream2(bin, true)) {
@@ -234,13 +313,13 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests read returning 0
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testRead0() throws IOException {
+    public void testRead0_test0_decomposed() throws IOException {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testRead0_test1_decomposed() throws IOException {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         int bytesRead = 0;
@@ -251,13 +330,13 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests read with null.
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testReadNull() throws IOException {
+    public void testReadNull_test0_decomposed() throws IOException {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testReadNull_test1_decomposed() throws IOException {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
         try (final Base16InputStream in = Base16InputStream.Base16InputStream2(bin, true)) {
@@ -267,13 +346,13 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests read throwing IndexOutOfBoundsException
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testReadOutOfBounds() throws IOException {
+    public void testReadOutOfBounds_test0_decomposed() throws IOException {
+        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testReadOutOfBounds_test1_decomposed() throws IOException {
         final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
         final byte[] buf = new byte[1024];
         final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
@@ -313,13 +392,14 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping number of characters larger than the internal buffer.
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testSkipBig() throws IOException {
+    public void testSkipBig_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
+    @Test
+    public void testSkipBig_test1_decomposed() throws IOException {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
@@ -329,13 +409,14 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping as a noop
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testSkipNone() throws IOException {
+    public void testSkipNone_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
+    @Test
+    public void testSkipNone_test1_decomposed() throws IOException {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
@@ -351,13 +432,14 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping past the end of a stream.
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testSkipPastEnd() throws IOException {
+    public void testSkipPastEnd_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
+    @Test
+    public void testSkipPastEnd_test1_decomposed() throws IOException {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
@@ -367,13 +449,14 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests skipping to the end of a stream.
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testSkipToEnd() throws IOException {
+    public void testSkipToEnd_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
+    @Test
+    public void testSkipToEnd_test1_decomposed() throws IOException {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
@@ -383,107 +466,18 @@ public class Base16InputStreamTest {
         }
     }
 
-    /**
-     * Tests if negative arguments to skip are handled correctly.
-     *
-     * @throws IOException for some failure scenarios.
-     */
+    @Test
+    public void testSkipWrongArgument_test0_decomposed() throws IOException {
+        final InputStream ins =
+                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
+    }
+
     @Test(expected = IllegalArgumentException.class)
-    public void testSkipWrongArgument() throws IOException {
+    public void testSkipWrongArgument_test1_decomposed() throws IOException {
         final InputStream ins =
                 new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
         try (final Base16InputStream b16Stream = Base16InputStream.Base16InputStream3(ins)) {
             b16Stream.skip(-10);
         }
-    }
-
-    @Test
-    public void testAvailable_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-    }
-
-    @Test
-    public void testBase16EmptyInputStream_test0_decomposed() throws IOException {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte0(emptyEncoded, emptyDecoded);
-    }
-
-    @Test
-    public void testMarkSupported_test0_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testMarkSupported_test1_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testRead0_test0_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testRead0_test1_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final byte[] buf = new byte[1024];
-        int bytesRead = 0;
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testReadNull_test0_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testReadNull_test1_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testReadOutOfBounds_test0_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testReadOutOfBounds_test1_decomposed() throws IOException {
-        final byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        final byte[] buf = new byte[1024];
-        final ByteArrayInputStream bin = new ByteArrayInputStream(decoded);
-    }
-
-    @Test
-    public void testSkipBig_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-    }
-
-    @Test
-    public void testSkipNone_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-    }
-
-    @Test
-    public void testSkipPastEnd_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-    }
-
-    @Test
-    public void testSkipToEnd_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
-    }
-
-    @Test
-    public void testSkipWrongArgument_test0_decomposed() throws IOException {
-        final InputStream ins =
-                new ByteArrayInputStream(StringUtils.getBytesIso8859_1(ENCODED_B16));
     }
 }

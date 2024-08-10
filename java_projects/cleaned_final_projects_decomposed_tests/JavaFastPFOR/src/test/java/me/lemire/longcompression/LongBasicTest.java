@@ -34,116 +34,16 @@ public class LongBasicTest {
 	/**
      * This tests with a compressed array with various offset
      */
-	@Test
-	public void saulTest() {
-		for (LongCODEC C : codecs) {
-			for (int x = 0; x < 50; ++x) {
-				long[] a = { 2, 3, 4, 5 };
-				long[] b = new long[90];
-				long[] c = new long[a.length];
-
-				IntWrapper aOffset = new IntWrapper(0);
-				IntWrapper bOffset = new IntWrapper(x);
-				C.compress0(a, aOffset, a.length, b, bOffset);
-				int len = bOffset.get() - x;
-
-				bOffset.set(x);
-				IntWrapper cOffset = new IntWrapper(0);
-				C.uncompress1(b, bOffset, len, c, cOffset);
-				if(!Arrays.equals(a, c)) {
-					System.out.println("Problem with "+C);
-				}
-				assertArrayEquals(a, c);
-
-			}
-		}
-	}
+	
     /**
      * 
      */
-    @Test
-    public void varyingLengthTest() {
-        int N = 4096;
-        long[] data = new long[N];
-        for (int k = 0; k < N; ++k)
-            data[k] = k;
-        for (LongCODEC c : codecs) {
-            System.out.println("[BasicTest.varyingLengthTest] codec = " + c);
-            for (int L = 1; L <= 128; L++) {
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-                for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
-                        throw new RuntimeException("bug");
-            }
-            for (int L = 128; L <= N; L *= 2) {
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-                for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k]) {
-                        System.out.println(Arrays.toString(Arrays.copyOf(
-                                answer, L)));
-                        System.out.println(Arrays.toString(Arrays.copyOf(data,
-                                L)));
-                        throw new RuntimeException("bug");
-                    }
-            }
-
-        }
-    }
+    
 
     /**
      * 
      */
-    @Test
-    public void varyingLengthTest2() {
-        int N = 128;
-        long[] data = new long[N];
-        data[127] = -1;
-        for (LongCODEC c : codecs) {
-            System.out.println("[BasicTest.varyingLengthTest2] codec = " + c);
-            try {
-                // CODEC Simple9 is limited to "small" integers.
-                if (c.getClass().equals(
-                        Class.forName("me.lemire.integercompression.Simple9")))
-                    continue;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                // CODEC Simple16 is limited to "small" integers.
-                if (c.getClass().equals(
-                        Class.forName("me.lemire.integercompression.Simple16")))
-                    continue;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                // CODEC GroupSimple9 is limited to "small" integers.
-                if (c.getClass().equals(
-                        Class.forName("me.lemire.integercompression.GroupSimple9")))
-                    continue;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            for (int L = 1; L <= 128; L++) {
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-                for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
-                        throw new RuntimeException("bug");
-            }
-            for (int L = 128; L <= N; L *= 2) {
-                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
-                long[] answer = LongTestUtils.uncompress0(c, comp, L);
-                for (int k = 0; k < L; ++k)
-                    if (answer[k] != data[k])
-                        throw new RuntimeException("bug");
-            }
-
-        }
-    }
+    
 
     /**
      * 
@@ -289,10 +189,121 @@ public class LongBasicTest {
     /**
          * 
          */
+    
+
+    /**
+     * 
+     */
+
     @Test
-    public void fastPforTest() {
-        // proposed by Stefan Ackermann (https://github.com/Stivo)
-    	for (LongCODEC codec : codecs) {
+    public void saulTest_test0_decomposed()  {
+        for (LongCODEC C : codecs) {
+			for (int x = 0; x < 50; ++x) {
+				long[] a = { 2, 3, 4, 5 };
+				long[] b = new long[90];
+				long[] c = new long[a.length];
+
+				IntWrapper aOffset = new IntWrapper(0);
+				IntWrapper bOffset = new IntWrapper(x);
+				C.compress0(a, aOffset, a.length, b, bOffset);
+				int len = bOffset.get() - x;
+
+				bOffset.set(x);
+				IntWrapper cOffset = new IntWrapper(0);
+				C.uncompress1(b, bOffset, len, c, cOffset);
+				if(!Arrays.equals(a, c)) {
+					System.out.println("Problem with "+C);
+				}
+				assertArrayEquals(a, c);
+
+			}
+		}
+    }
+
+    @Test
+    public void varyingLengthTest_test0_decomposed()  {
+        int N = 4096;
+        long[] data = new long[N];
+        for (int k = 0; k < N; ++k)
+            data[k] = k;
+        for (LongCODEC c : codecs) {
+            System.out.println("[BasicTest.varyingLengthTest] codec = " + c);
+            for (int L = 1; L <= 128; L++) {
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
+            for (int L = 128; L <= N; L *= 2) {
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k]) {
+                        System.out.println(Arrays.toString(Arrays.copyOf(
+                                answer, L)));
+                        System.out.println(Arrays.toString(Arrays.copyOf(data,
+                                L)));
+                        throw new RuntimeException("bug");
+                    }
+            }
+
+        }
+    }
+
+    @Test
+    public void varyingLengthTest2_test0_decomposed()  {
+        int N = 128;
+        long[] data = new long[N];
+        data[127] = -1;
+        for (LongCODEC c : codecs) {
+            System.out.println("[BasicTest.varyingLengthTest2] codec = " + c);
+            try {
+                // CODEC Simple9 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.Simple9")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                // CODEC Simple16 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.Simple16")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                // CODEC GroupSimple9 is limited to "small" integers.
+                if (c.getClass().equals(
+                        Class.forName("me.lemire.integercompression.GroupSimple9")))
+                    continue;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            for (int L = 1; L <= 128; L++) {
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
+            for (int L = 128; L <= N; L *= 2) {
+                long[] comp = LongTestUtils.compress1(c, Arrays.copyOf(data, L));
+                long[] answer = LongTestUtils.uncompress0(c, comp, L);
+                for (int k = 0; k < L; ++k)
+                    if (answer[k] != data[k])
+                        throw new RuntimeException("bug");
+            }
+
+        }
+    }
+
+    @Test
+    public void fastPforTest_test0_decomposed()  {
+        for (LongCODEC codec : codecs) {
 	        int N = FastPFOR.BLOCK_SIZE;
 	        long[] data = new long[N];
 	        for (int i = 0; i < N; i++)
@@ -307,13 +318,9 @@ public class LongBasicTest {
     	}
     }
 
-    /**
-     * 
-     */
     @Test
-    public void fastPfor128Test() {
-        // proposed by Stefan Ackermann (https://github.com/Stivo)
-    	for (LongCODEC codec : codecs) {
+    public void fastPfor128Test_test0_decomposed()  {
+        for (LongCODEC codec : codecs) {
 	        int N = FastPFOR128.BLOCK_SIZE;
 	        long[] data = new long[N];
 	        for (int i = 0; i < N; i++)
@@ -326,20 +333,5 @@ public class LongBasicTest {
 	                throw new RuntimeException("bug " + k + " " + answer[k]
 	                        + " != " + data[k]);
     	}
-    }
-
-    @Test
-    public void varyingLengthTest_test0_decomposed()  {
-        int N = 4096;
-        long[] data = new long[N];
-        for (int k = 0; k < N; ++k)
-            data[k] = k;
-    }
-
-    @Test
-    public void varyingLengthTest2_test0_decomposed()  {
-        int N = 128;
-        long[] data = new long[N];
-        data[127] = -1;
     }
 }

@@ -113,99 +113,100 @@ public class GraphSerializationTestCase {
     }
 
     @Test
-    public void testSerializeDirectedGraph() throws Exception {
-        MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
-                newDirectedMutableGraph(buildGraphConnections());
-
-        checkSerialization(g);
-    }
-
-    @Test
-    public void testSerializeDirectedWeightdGraph() throws Exception {
-        MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
-                newDirectedMutableGraph(buildWeightedGraphConnections());
-
-        checkSerialization(g);
-    }
-
-    @Test
-    public void testSerializePath() throws Exception {
-        BaseLabeledVertex start = new BaseLabeledVertex("start");
-        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
-        BaseLabeledVertex a = new BaseLabeledVertex("a");
-        BaseLabeledVertex b = new BaseLabeledVertex("b");
-        BaseLabeledVertex c = new BaseLabeledVertex("c");
-
-        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> g =
-                new InMemoryWeightedPath<
-                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
-                        start,
-                        goal,
-                        new DoubleWeightBaseOperations(),
-                        new BaseWeightedEdge<Double>());
-
-        g.addConnectionInTail(start, new BaseLabeledWeightedEdge<Double>("start <-> a", 1.5D), a);
-        g.addConnectionInTail(a, new BaseLabeledWeightedEdge<Double>("a <-> b", 2D), b);
-        g.addConnectionInTail(b, new BaseLabeledWeightedEdge<Double>("b <-> c", 3D), c);
-        g.addConnectionInTail(c, new BaseLabeledWeightedEdge<Double>("c <-> goal", 3D), goal);
-
-        checkSerialization(g);
-    }
-
-    @Test
-    public void testSerializeSpanningTree() throws Exception {
-        final MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>
-                spanningTree =
-                        new MutableSpanningTree<
-                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
-                                new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());
-
-        populate(spanningTree).withConnections(buildWeightedGraphConnections());
-
-        checkSerialization(spanningTree);
-    }
-
-    @Test
-    public void testSerializeSyncronyzedDirectedWeightdGraph() throws Exception {
-        Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
-                synchronize2(
-                        (MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>)
-                                newDirectedMutableGraph(buildWeightedGraphConnections()));
-
-        checkSerialization(g);
-    }
-
-    @Test
-    public void testSerializeUndirectedGraph() throws Exception {
-        MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
-                newUndirectedMutableGraph(buildGraphConnections());
-
-        checkSerialization(g);
-    }
-
-    @Test
-    public void testSerializeUndirectedWeightdGraph() throws Exception {
-        MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
-                newUndirectedMutableGraph(buildWeightedGraphConnections());
-
-        checkSerialization(g);
-    }
-
-    @Test
     public void testSerializeDirectedGraph_test0_decomposed() throws Exception {
+        buildGraphConnections();
+    }
+
+    @Test
+    public void testSerializeDirectedGraph_test1_decomposed() throws Exception {
+        buildGraphConnections();
         MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
                 newDirectedMutableGraph(buildGraphConnections());
+    }
+
+    @Test
+    public void testSerializeDirectedGraph_test2_decomposed() throws Exception {
+        buildGraphConnections();
+        MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
+                newDirectedMutableGraph(buildGraphConnections());
+        checkSerialization(g);
     }
 
     @Test
     public void testSerializeDirectedWeightdGraph_test0_decomposed() throws Exception {
+        buildWeightedGraphConnections();
+    }
+
+    @Test
+    public void testSerializeDirectedWeightdGraph_test1_decomposed() throws Exception {
+        buildWeightedGraphConnections();
         MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
                 newDirectedMutableGraph(buildWeightedGraphConnections());
+    }
+
+    @Test
+    public void testSerializeDirectedWeightdGraph_test2_decomposed() throws Exception {
+        buildWeightedGraphConnections();
+        MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
+                newDirectedMutableGraph(buildWeightedGraphConnections());
+        checkSerialization(g);
     }
 
     @Test
     public void testSerializePath_test0_decomposed() throws Exception {
         BaseLabeledVertex start = new BaseLabeledVertex("start");
+    }
+
+    @Test
+    public void testSerializePath_test1_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+    }
+
+    @Test
+    public void testSerializePath_test2_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+        BaseLabeledVertex a = new BaseLabeledVertex("a");
+    }
+
+    @Test
+    public void testSerializePath_test3_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+        BaseLabeledVertex a = new BaseLabeledVertex("a");
+        BaseLabeledVertex b = new BaseLabeledVertex("b");
+    }
+
+    @Test
+    public void testSerializePath_test4_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+        BaseLabeledVertex a = new BaseLabeledVertex("a");
+        BaseLabeledVertex b = new BaseLabeledVertex("b");
+        BaseLabeledVertex c = new BaseLabeledVertex("c");
+    }
+
+    @Test
+    public void testSerializePath_test5_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+        BaseLabeledVertex a = new BaseLabeledVertex("a");
+        BaseLabeledVertex b = new BaseLabeledVertex("b");
+        BaseLabeledVertex c = new BaseLabeledVertex("c");
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> g =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        start,
+                        goal,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        g.addConnectionInTail(start, new BaseLabeledWeightedEdge<Double>("start <-> a", 1.5D), a);
+    }
+
+    @Test
+    public void testSerializePath_test6_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
         BaseLabeledVertex goal = new BaseLabeledVertex("goal");
         BaseLabeledVertex a = new BaseLabeledVertex("a");
         BaseLabeledVertex b = new BaseLabeledVertex("b");
@@ -221,6 +222,27 @@ public class GraphSerializationTestCase {
         g.addConnectionInTail(a, new BaseLabeledWeightedEdge<Double>("a <-> b", 2D), b);
         g.addConnectionInTail(b, new BaseLabeledWeightedEdge<Double>("b <-> c", 3D), c);
         g.addConnectionInTail(c, new BaseLabeledWeightedEdge<Double>("c <-> goal", 3D), goal);
+    }
+
+    @Test
+    public void testSerializePath_test7_decomposed() throws Exception {
+        BaseLabeledVertex start = new BaseLabeledVertex("start");
+        BaseLabeledVertex goal = new BaseLabeledVertex("goal");
+        BaseLabeledVertex a = new BaseLabeledVertex("a");
+        BaseLabeledVertex b = new BaseLabeledVertex("b");
+        BaseLabeledVertex c = new BaseLabeledVertex("c");
+        InMemoryWeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> g =
+                new InMemoryWeightedPath<
+                        BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                        start,
+                        goal,
+                        new DoubleWeightBaseOperations(),
+                        new BaseWeightedEdge<Double>());
+        g.addConnectionInTail(start, new BaseLabeledWeightedEdge<Double>("start <-> a", 1.5D), a);
+        g.addConnectionInTail(a, new BaseLabeledWeightedEdge<Double>("a <-> b", 2D), b);
+        g.addConnectionInTail(b, new BaseLabeledWeightedEdge<Double>("b <-> c", 3D), c);
+        g.addConnectionInTail(c, new BaseLabeledWeightedEdge<Double>("c <-> goal", 3D), goal);
+        checkSerialization(g);
     }
 
     @Test
@@ -231,8 +253,42 @@ public class GraphSerializationTestCase {
                                 BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
                                 new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());
         populate(spanningTree);
+    }
+
+    @Test
+    public void testSerializeSpanningTree_test1_decomposed() throws Exception {
+        final MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>
+                spanningTree =
+                        new MutableSpanningTree<
+                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                                new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());
+        populate(spanningTree);
+        buildWeightedGraphConnections();
+    }
+
+    @Test
+    public void testSerializeSpanningTree_test2_decomposed() throws Exception {
+        final MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>
+                spanningTree =
+                        new MutableSpanningTree<
+                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                                new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());
+        populate(spanningTree);
         buildWeightedGraphConnections();
         populate(spanningTree).withConnections(buildWeightedGraphConnections());
+    }
+
+    @Test
+    public void testSerializeSpanningTree_test3_decomposed() throws Exception {
+        final MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>
+                spanningTree =
+                        new MutableSpanningTree<
+                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(
+                                new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());
+        populate(spanningTree);
+        buildWeightedGraphConnections();
+        populate(spanningTree).withConnections(buildWeightedGraphConnections());
+        checkSerialization(spanningTree);
     }
 
     @Test
@@ -257,14 +313,53 @@ public class GraphSerializationTestCase {
     }
 
     @Test
+    public void testSerializeSyncronyzedDirectedWeightdGraph_test3_decomposed() throws Exception {
+        buildWeightedGraphConnections();
+        newDirectedMutableGraph(buildWeightedGraphConnections());
+        Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
+                synchronize2(
+                        (MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>)
+                                newDirectedMutableGraph(buildWeightedGraphConnections()));
+        checkSerialization(g);
+    }
+
+    @Test
     public void testSerializeUndirectedGraph_test0_decomposed() throws Exception {
+        buildGraphConnections();
+    }
+
+    @Test
+    public void testSerializeUndirectedGraph_test1_decomposed() throws Exception {
+        buildGraphConnections();
         MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
                 newUndirectedMutableGraph(buildGraphConnections());
     }
 
     @Test
+    public void testSerializeUndirectedGraph_test2_decomposed() throws Exception {
+        buildGraphConnections();
+        MutableGraph<BaseLabeledVertex, BaseLabeledEdge> g =
+                newUndirectedMutableGraph(buildGraphConnections());
+        checkSerialization(g);
+    }
+
+    @Test
     public void testSerializeUndirectedWeightdGraph_test0_decomposed() throws Exception {
+        buildWeightedGraphConnections();
+    }
+
+    @Test
+    public void testSerializeUndirectedWeightdGraph_test1_decomposed() throws Exception {
+        buildWeightedGraphConnections();
         MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
                 newUndirectedMutableGraph(buildWeightedGraphConnections());
+    }
+
+    @Test
+    public void testSerializeUndirectedWeightdGraph_test2_decomposed() throws Exception {
+        buildWeightedGraphConnections();
+        MutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> g =
+                newUndirectedMutableGraph(buildWeightedGraphConnections());
+        checkSerialization(g);
     }
 }

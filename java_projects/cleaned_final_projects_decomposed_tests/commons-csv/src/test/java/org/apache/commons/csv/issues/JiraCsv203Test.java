@@ -30,116 +30,6 @@ import org.junit.jupiter.api.Test;
 public class JiraCsv203Test {
 
     @Test
-    public void testQuoteModeAll() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.ALL)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals("\"N/A\",\"Hello\",\"N/A\",\"World\"\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testQuoteModeAllNonNull() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.ALL_NON_NULL)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals("N/A,\"Hello\",N/A,\"World\"\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testQuoteModeMinimal() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.MINIMAL)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals("N/A,Hello,N/A,World\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testQuoteModeNonNumeric() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.NON_NUMERIC)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals("N/A,\"Hello\",N/A,\"World\"\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testWithEmptyValues() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.ALL)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1("", "Hello", "", "World");
-        }
-        assertEquals("\"\",\"Hello\",\"\",\"World\"\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testWithoutNullString() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setIgnoreSurroundingSpaces(true)
-                        .setQuoteMode(QuoteMode.ALL)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals(",\"Hello\",,\"World\"\r\n", buffer.toString());
-    }
-
-    @Test
-    public void testWithoutQuoteMode() throws Exception {
-        final CSVFormat format =
-                CSVFormat.EXCEL
-                        .builder()
-                        .setNullString("N/A")
-                        .setIgnoreSurroundingSpaces(true)
-                        .build();
-        final StringBuilder buffer = new StringBuilder();
-        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
-            printer.printRecord1(null, "Hello", null, "World");
-        }
-        assertEquals("N/A,Hello,N/A,World\r\n", buffer.toString());
-    }
-
-    @Test
     public void testQuoteModeAll_test0_decomposed() throws Exception {
         CSVFormat.EXCEL.builder();
     }
@@ -194,6 +84,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.ALL)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -213,6 +106,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals("\"N/A\",\"Hello\",\"N/A\",\"World\"\r\n", buffer.toString());
     }
 
     @Test
@@ -270,6 +164,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.ALL_NON_NULL)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -289,6 +186,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals("N/A,\"Hello\",N/A,\"World\"\r\n", buffer.toString());
     }
 
     @Test
@@ -346,6 +244,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.MINIMAL)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -365,6 +266,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals("N/A,Hello,N/A,World\r\n", buffer.toString());
     }
 
     @Test
@@ -422,6 +324,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.NON_NUMERIC)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -441,6 +346,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals("N/A,\"Hello\",N/A,\"World\"\r\n", buffer.toString());
     }
 
     @Test
@@ -498,6 +404,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.ALL)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1("", "Hello", "", "World");
+        }
     }
 
     @Test
@@ -517,6 +426,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1("", "Hello", "", "World");
         }
+        assertEquals("\"\",\"Hello\",\"\",\"World\"\r\n", buffer.toString());
     }
 
     @Test
@@ -562,6 +472,9 @@ public class JiraCsv203Test {
                         .setQuoteMode(QuoteMode.ALL)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -579,6 +492,7 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals(",\"Hello\",,\"World\"\r\n", buffer.toString());
     }
 
     @Test
@@ -624,6 +538,9 @@ public class JiraCsv203Test {
                         .setIgnoreSurroundingSpaces(true)
                         .build();
         final StringBuilder buffer = new StringBuilder();
+        try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
+            printer.printRecord1(null, "Hello", null, "World");
+        }
     }
 
     @Test
@@ -641,5 +558,6 @@ public class JiraCsv203Test {
         try (final CSVPrinter printer = new CSVPrinter(buffer, format)) {
             printer.printRecord1(null, "Hello", null, "World");
         }
+        assertEquals("N/A,Hello,N/A,World\r\n", buffer.toString());
     }
 }

@@ -32,50 +32,16 @@ public class MapUtilTest {
     /**
      * Test copying of map
      */
-    @Test
-    public void testCopyMap() throws Exception {
-
-        final HashMap<String, String> procEnvironment = new HashMap<>();
-        procEnvironment.put("JAVA_HOME", "/usr/opt/java");
-
-        final Map<String, String> result = MapUtils.copy(procEnvironment);
-        assertEquals(1, result.size());
-        assertEquals(1, procEnvironment.size());
-        assertEquals("/usr/opt/java", result.get("JAVA_HOME"));
-
-        result.remove("JAVA_HOME");
-        assertTrue(result.isEmpty());
-        assertEquals(1, procEnvironment.size());
-    }
+    
 
     /**
      * Test merging of maps
      */
-    @Test
-    public void testMergeMap() throws Exception {
-
-        final Map<String, String> procEnvironment = EnvironmentUtils.getProcEnvironment();
-        final HashMap<String, String> applicationEnvironment = new HashMap<>();
-
-        applicationEnvironment.put("appMainClass", "foo.bar.Main");
-        final Map<String, String> result = MapUtils.merge(procEnvironment, applicationEnvironment);
-        assertEquals(procEnvironment.size() + applicationEnvironment.size(), result.size());
-        assertEquals("foo.bar.Main", result.get("appMainClass"));
-    }
+    
 
     /**
      * Test prefixing of map
      */
-    @Test
-    public void testPrefixMap() throws Exception {
-
-        final HashMap<String, String> procEnvironment = new HashMap<>();
-        procEnvironment.put("JAVA_HOME", "/usr/opt/java");
-
-        final Map<String, String> result = MapUtils.prefix(procEnvironment, "env");
-        assertEquals(procEnvironment.size(), result.size());
-        assertEquals("/usr/opt/java", result.get("env.JAVA_HOME"));
-    }
 
     @Test
     public void testCopyMap_test0_decomposed() throws Exception {
@@ -127,6 +93,19 @@ public class MapUtilTest {
     }
 
     @Test
+    public void testCopyMap_test5_decomposed() throws Exception {
+        final HashMap<String, String> procEnvironment = new HashMap<>();
+        procEnvironment.put("JAVA_HOME", "/usr/opt/java");
+        final Map<String, String> result = MapUtils.copy(procEnvironment);
+        assertEquals(1, result.size());
+        assertEquals(1, procEnvironment.size());
+        assertEquals("/usr/opt/java", result.get("JAVA_HOME"));
+        result.remove("JAVA_HOME");
+        assertTrue(result.isEmpty());
+        assertEquals(1, procEnvironment.size());
+    }
+
+    @Test
     public void testMergeMap_test0_decomposed() throws Exception {
         final Map<String, String> procEnvironment = EnvironmentUtils.getProcEnvironment();
     }
@@ -149,6 +128,16 @@ public class MapUtilTest {
     }
 
     @Test
+    public void testMergeMap_test3_decomposed() throws Exception {
+        final Map<String, String> procEnvironment = EnvironmentUtils.getProcEnvironment();
+        final HashMap<String, String> applicationEnvironment = new HashMap<>();
+        applicationEnvironment.put("appMainClass", "foo.bar.Main");
+        final Map<String, String> result = MapUtils.merge(procEnvironment, applicationEnvironment);
+        assertEquals(procEnvironment.size() + applicationEnvironment.size(), result.size());
+        assertEquals("foo.bar.Main", result.get("appMainClass"));
+    }
+
+    @Test
     public void testPrefixMap_test0_decomposed() throws Exception {
         final HashMap<String, String> procEnvironment = new HashMap<>();
         procEnvironment.put("JAVA_HOME", "/usr/opt/java");
@@ -161,5 +150,14 @@ public class MapUtilTest {
         procEnvironment.put("JAVA_HOME", "/usr/opt/java");
         final Map<String, String> result = MapUtils.prefix(procEnvironment, "env");
         assertEquals(procEnvironment.size(), result.size());
+    }
+
+    @Test
+    public void testPrefixMap_test2_decomposed() throws Exception {
+        final HashMap<String, String> procEnvironment = new HashMap<>();
+        procEnvironment.put("JAVA_HOME", "/usr/opt/java");
+        final Map<String, String> result = MapUtils.prefix(procEnvironment, "env");
+        assertEquals(procEnvironment.size(), result.size());
+        assertEquals("/usr/opt/java", result.get("env.JAVA_HOME"));
     }
 }

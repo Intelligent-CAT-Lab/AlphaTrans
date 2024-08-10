@@ -23,49 +23,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class DisablePartialMatchingTest {
-    @Test
-    public void testDisablePartialMatching() throws Exception {
-        final CommandLineParser parser = new DefaultParser(0, false, null);
-
-        final Options options = new Options();
-
-        options.addOption0(new Option(0, "d", "debug", "Turn on debug.", false, null));
-        options.addOption0(new Option(0, "e", "extract", "Turn on extract.", false, null));
-        options.addOption0(
-                new Option(0, "o", "option", "Turn on option with argument.", true, null));
-
-        final CommandLine line = parser.parse0(options, new String[] {"-de", "--option=foobar"});
-
-        assertTrue("There should be an option debug in any case...", line.hasOption2("debug"));
-        assertTrue(
-                "There should be an extract option because partial matching is off",
-                line.hasOption2("extract"));
-        assertTrue(
-                "There should be an option option with a argument value",
-                line.hasOption2("option"));
-    }
-
-    @Test
-    public void testRegularPartialMatching() throws Exception {
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-
-        final Options options = new Options();
-
-        options.addOption0(new Option(0, "d", "debug", "Turn on debug.", false, null));
-        options.addOption0(new Option(0, "e", "extract", "Turn on extract.", false, null));
-        options.addOption0(
-                new Option(0, "o", "option", "Turn on option with argument.", true, null));
-
-        final CommandLine line = parser.parse0(options, new String[] {"-de", "--option=foobar"});
-
-        assertTrue("There should be an option debug in any case...", line.hasOption2("debug"));
-        assertFalse(
-                "There should not be an extract option because partial matching only selects debug",
-                line.hasOption2("extract"));
-        assertTrue(
-                "There should be an option option with a argument value",
-                line.hasOption2("option"));
-    }
 
     @Test
     public void testDisablePartialMatching_test0_decomposed() throws Exception {
@@ -127,6 +84,9 @@ public class DisablePartialMatchingTest {
         assertTrue(
                 "There should be an extract option because partial matching is off",
                 line.hasOption2("extract"));
+        assertTrue(
+                "There should be an option option with a argument value",
+                line.hasOption2("option"));
     }
 
     @Test
@@ -189,5 +149,8 @@ public class DisablePartialMatchingTest {
         assertFalse(
                 "There should not be an extract option because partial matching only selects debug",
                 line.hasOption2("extract"));
+        assertTrue(
+                "There should be an option option with a argument value",
+                line.hasOption2("option"));
     }
 }

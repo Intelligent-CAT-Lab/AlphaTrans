@@ -21,18 +21,7 @@ import org.junit.Test;
 
 public class CacheSubSequencePerformanceTest {
 
-    @Test
-    public void test0() {
-        final int times = 10000000;
-        System.out.print("Test with String : ");
-        test1("Angelo", times);
-        System.out.print("Test with StringBuilder : ");
-        test1(new StringBuilder("Angelo"), times);
-        System.out.print("Test with cached String : ");
-        test1(cacheSubSequence("Angelo"), times);
-        System.out.print("Test with cached StringBuilder : ");
-        test1(cacheSubSequence(new StringBuilder("Angelo")), times);
-    }
+    
 
     private void test1(final CharSequence input, final int times) {
         final long beginTimeMillis = System.currentTimeMillis();
@@ -83,10 +72,66 @@ public class CacheSubSequencePerformanceTest {
         final int times = 10000000;
         System.out.print("Test with String : ");
         test1("Angelo", times);
+    }
+
+    @Test
+    public void test0_test1_decomposed()  {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test1("Angelo", times);
+        System.out.print("Test with StringBuilder : ");
+        test1(new StringBuilder("Angelo"), times);
+    }
+
+    @Test
+    public void test0_test2_decomposed()  {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test1("Angelo", times);
         System.out.print("Test with StringBuilder : ");
         test1(new StringBuilder("Angelo"), times);
         System.out.print("Test with cached String : ");
+        cacheSubSequence("Angelo");
+    }
+
+    @Test
+    public void test0_test3_decomposed()  {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test1("Angelo", times);
+        System.out.print("Test with StringBuilder : ");
+        test1(new StringBuilder("Angelo"), times);
+        System.out.print("Test with cached String : ");
+        cacheSubSequence("Angelo");
+        test1(cacheSubSequence("Angelo"), times);
+    }
+
+    @Test
+    public void test0_test4_decomposed()  {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test1("Angelo", times);
+        System.out.print("Test with StringBuilder : ");
+        test1(new StringBuilder("Angelo"), times);
+        System.out.print("Test with cached String : ");
+        cacheSubSequence("Angelo");
         test1(cacheSubSequence("Angelo"), times);
         System.out.print("Test with cached StringBuilder : ");
+        cacheSubSequence(new StringBuilder("Angelo"));
+    }
+
+    @Test
+    public void test0_test5_decomposed()  {
+        final int times = 10000000;
+        System.out.print("Test with String : ");
+        test1("Angelo", times);
+        System.out.print("Test with StringBuilder : ");
+        test1(new StringBuilder("Angelo"), times);
+        System.out.print("Test with cached String : ");
+        cacheSubSequence("Angelo");
+        test1(cacheSubSequence("Angelo"), times);
+        System.out.print("Test with cached StringBuilder : ");
+        cacheSubSequence(new StringBuilder("Angelo"));
+        test1(cacheSubSequence(new StringBuilder("Angelo")), times);
     }
 }

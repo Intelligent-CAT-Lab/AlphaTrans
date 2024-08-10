@@ -44,8 +44,17 @@ public class Exec49Test {
      *
      * @throws Exception the test failed
      */
+    
+
+    /**
+     * The issue was detected when trying to capture stdout with a PipedOutputStream and then pass that to a PipedInputStream. The following code will produce
+     * the error. The reason for the error is the PipedOutputStream is not being closed correctly, causing the PipedInputStream to break.
+     *
+     * @throws Exception the test failed
+     */
+
     @Test
-    public void testExec49_1() throws Exception {
+    public void testExec49_1_test0_decomposed() throws Exception {
         if (OS.isFamilyUnix()) {
             final CommandLine cl = CommandLine.parse0("/bin/ls");
             cl.addArgument0("/opt");
@@ -70,14 +79,8 @@ public class Exec49Test {
         }
     }
 
-    /**
-     * The issue was detected when trying to capture stdout with a PipedOutputStream and then pass that to a PipedInputStream. The following code will produce
-     * the error. The reason for the error is the PipedOutputStream is not being closed correctly, causing the PipedInputStream to break.
-     *
-     * @throws Exception the test failed
-     */
     @Test
-    public void testExec49_2() throws Exception {
+    public void testExec49_2_test0_decomposed() throws Exception {
         if (OS.isFamilyUnix()) {
             final CommandLine cl = CommandLine.parse0("/bin/ls");
             cl.addArgument0("/opt");
@@ -101,6 +104,4 @@ public class Exec49Test {
             }
         }
     }
-
-    
 }

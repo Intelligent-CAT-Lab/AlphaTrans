@@ -24,9 +24,7 @@ import org.junit.Test;
 public class Sha2CryptTest {
 
     @Test
-    public void testCtor() {
+    public void testCtor_test0_decomposed()  {
         assertNotNull(new Sha2Crypt());
     }
-
-    
 }

@@ -81,20 +81,10 @@ public class BoundaryTest {
 
     /**
      */
-    @Test
-    public void testIntegratedComposition() {
-        IntegratedComposition c = new IntegratedComposition(
-                new IntegratedBinaryPacking(), new IntegratedVariableByte());
-        testBoundary(c);
-    }
+    
 
     /**
      */
-    @Test
-    public void testComposition()  {
-        Composition c = new Composition(new BinaryPacking(), new VariableByte());
-        testBoundary(c);
-    }
 
     @Test
     public void testIntegratedComposition_test0_decomposed()  {
@@ -103,7 +93,20 @@ public class BoundaryTest {
     }
 
     @Test
+    public void testIntegratedComposition_test1_decomposed()  {
+        IntegratedComposition c = new IntegratedComposition(
+                new IntegratedBinaryPacking(), new IntegratedVariableByte());
+        testBoundary(c);
+    }
+
+    @Test
     public void testComposition_test0_decomposed()  {
         Composition c = new Composition(new BinaryPacking(), new VariableByte());
+    }
+
+    @Test
+    public void testComposition_test1_decomposed()  {
+        Composition c = new Composition(new BinaryPacking(), new VariableByte());
+        testBoundary(c);
     }
 }

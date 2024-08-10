@@ -122,8 +122,15 @@ public class CharSequenceUtilsTest {
         }
     }
 
+    
+
+    /**
+     * Test the constructor exists. This is here for code coverage. The class ideally should be
+     * package private, marked as final and have a private constructor to prevent instances.
+     */
+
     @Test
-    public void testRegionMatches() {
+    public void testRegionMatches_test0_decomposed()  {
         for (final TestData data : TEST_DATA) {
             new RunTest() {
                 @Override
@@ -159,15 +166,8 @@ public class CharSequenceUtilsTest {
         }
     }
 
-    /**
-     * Test the constructor exists. This is here for code coverage. The class ideally should be
-     * package private, marked as final and have a private constructor to prevent instances.
-     */
-    @SuppressWarnings("unused")
     @Test
-    public void testConstructor() {
+    public void testConstructor_test0_decomposed()  {
         new CharSequenceUtils();
     }
-
-    
 }

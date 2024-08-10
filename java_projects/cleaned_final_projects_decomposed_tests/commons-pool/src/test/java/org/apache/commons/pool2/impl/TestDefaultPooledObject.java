@@ -35,12 +35,73 @@ public class TestDefaultPooledObject {
      *
      * @throws Exception May occur in some failure modes
      */
+
     @Test
-    public void testGetIdleTimeMillis() throws Exception {
+    public void testGetIdleTimeMillis_test0_decomposed() throws Exception {
         final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
         final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
         final ExecutorService executor =
                 Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test1_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test2_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test3_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test4_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test5_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
         final Runnable allocateAndDeallocateTask =
                 () -> {
                     for (int i1 = 0; i1 < 10000; i1++) {
@@ -62,6 +123,197 @@ public class TestDefaultPooledObject {
                     }
                     dpo.deallocate();
                 };
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test6_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable allocateAndDeallocateTask =
+                () -> {
+                    for (int i1 = 0; i1 < 10000; i1++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.allocate();
+                    for (int i2 = 0; i2 < 10000; i2++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.deallocate();
+                };
+        dpo.getIdleTime();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test7_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable allocateAndDeallocateTask =
+                () -> {
+                    for (int i1 = 0; i1 < 10000; i1++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.allocate();
+                    for (int i2 = 0; i2 < 10000; i2++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.deallocate();
+                };
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test8_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable allocateAndDeallocateTask =
+                () -> {
+                    for (int i1 = 0; i1 < 10000; i1++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.allocate();
+                    for (int i2 = 0; i2 < 10000; i2++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.deallocate();
+                };
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test9_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable allocateAndDeallocateTask =
+                () -> {
+                    for (int i1 = 0; i1 < 10000; i1++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.allocate();
+                    for (int i2 = 0; i2 < 10000; i2++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.deallocate();
+                };
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable getIdleTimeTask =
+                () -> {
+                    for (int i = 0; i < 10000; i++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                };
+    }
+
+    @Test
+    public void testGetIdleTimeMillis_test10_decomposed() throws Exception {
+        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
+        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
+        final ExecutorService executor =
+                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);
+        dpo.allocate();
+        dpo.deallocate();
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
+        final Runnable allocateAndDeallocateTask =
+                () -> {
+                    for (int i1 = 0; i1 < 10000; i1++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.allocate();
+                    for (int i2 = 0; i2 < 10000; i2++) {
+                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {
+                            negativeIdleTimeReturned.set(true);
+                            break;
+                        }
+                    }
+                    dpo.deallocate();
+                };
+        dpo.getIdleTime();
+        dpo.getIdleDuration();
+        dpo.getIdleTime().isNegative();
         final Runnable getIdleTimeTask =
                 () -> {
                     for (int i = 0; i < 10000; i++) {
@@ -80,16 +332,10 @@ public class TestDefaultPooledObject {
                             : getIdleTimeTask;
             futures.add(executor.submit(randomTask));
         }
-        for (final Future<?> future : futures) {
-            future.get();
-        }
-        assertFalse(
-                negativeIdleTimeReturned.get(),
-                "DefaultPooledObject.getIdleTimeMillis() returned a negative value");
     }
 
     @Test
-    public void testGetIdleTimeMillis_test0_decomposed() throws Exception {
+    public void testGetIdleTimeMillis_test11_decomposed() throws Exception {
         final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());
         final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);
         final ExecutorService executor =
@@ -144,5 +390,8 @@ public class TestDefaultPooledObject {
         for (final Future<?> future : futures) {
             future.get();
         }
+        assertFalse(
+                negativeIdleTimeReturned.get(),
+                "DefaultPooledObject.getIdleTimeMillis() returned a negative value");
     }
 }

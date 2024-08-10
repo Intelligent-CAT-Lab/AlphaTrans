@@ -33,25 +33,6 @@ import java.util.List;
 public class JiraCsv249Test {
 
     @Test
-    public void testJiraCsv249() throws IOException {
-        final CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setEscape0('\\').build();
-        final StringWriter stringWriter = new StringWriter();
-        try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
-            printer.printRecord1("foo \\", "bar");
-        }
-        final StringReader stringReader = new StringReader(stringWriter.toString());
-        final List<CSVRecord> records;
-        try (CSVParser parser = CSVParser.CSVParser1(stringReader, csvFormat)) {
-            records = parser.getRecords();
-        }
-        records.forEach(
-                record -> {
-                    assertEquals("foo \\", record.get1(0));
-                    assertEquals("bar", record.get1(1));
-                });
-    }
-
-    @Test
     public void testJiraCsv249_test0_decomposed() throws IOException {
         CSVFormat.DEFAULT.builder();
     }
@@ -75,6 +56,9 @@ public class JiraCsv249Test {
         CSVFormat.DEFAULT.builder().setEscape0('\\');
         final CSVFormat csvFormat = CSVFormat.DEFAULT.builder().setEscape0('\\').build();
         final StringWriter stringWriter = new StringWriter();
+        try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
+            printer.printRecord1("foo \\", "bar");
+        }
     }
 
     @Test
@@ -86,6 +70,7 @@ public class JiraCsv249Test {
         try (CSVPrinter printer = new CSVPrinter(stringWriter, csvFormat)) {
             printer.printRecord1("foo \\", "bar");
         }
+        final StringReader stringReader = new StringReader(stringWriter.toString());
     }
 
     @Test
@@ -98,6 +83,10 @@ public class JiraCsv249Test {
             printer.printRecord1("foo \\", "bar");
         }
         final StringReader stringReader = new StringReader(stringWriter.toString());
+        final List<CSVRecord> records;
+        try (CSVParser parser = CSVParser.CSVParser1(stringReader, csvFormat)) {
+            records = parser.getRecords();
+        }
     }
 
     @Test
@@ -114,5 +103,10 @@ public class JiraCsv249Test {
         try (CSVParser parser = CSVParser.CSVParser1(stringReader, csvFormat)) {
             records = parser.getRecords();
         }
+        records.forEach(
+                record -> {
+                    assertEquals("foo \\", record.get1(0));
+                    assertEquals("bar", record.get1(1));
+                });
     }
 }

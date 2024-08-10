@@ -124,32 +124,6 @@ public class TutorialTest {
     }
 
     @Test
-    public void testTutorialExample() throws Exception {
-
-        final Duration printJobTimeout = Duration.ofSeconds(15);
-        final boolean printInBackground = false;
-        final File pdfFile = new File("/Documents and Settings/foo.pdf");
-
-        PrintResultHandler printResult;
-
-        try {
-            // printing takes around 10 seconds
-            System.out.println("[main] Preparing print job ...");
-            printResult = print(pdfFile, printJobTimeout, printInBackground);
-            System.out.println("[main] Successfully sent the print job ...");
-        } catch (final Exception e) {
-            e.printStackTrace();
-            fail("[main] Printing of the following document failed : " + pdfFile.getAbsolutePath());
-            throw e;
-        }
-
-        // come back to check the print result
-        System.out.println("[main] Test is exiting but waiting for the print job to finish...");
-        printResult.waitFor0();
-        System.out.println("[main] The print job has finished ...");
-    }
-
-    @Test
     public void testTutorialExample_test0_decomposed() throws Exception {
         final Duration printJobTimeout = Duration.ofSeconds(15);
         final boolean printInBackground = false;
@@ -165,7 +139,46 @@ public class TutorialTest {
             fail("[main] Printing of the following document failed : " + pdfFile.getAbsolutePath());
             throw e;
         }
+    }
+
+    @Test
+    public void testTutorialExample_test1_decomposed() throws Exception {
+        final Duration printJobTimeout = Duration.ofSeconds(15);
+        final boolean printInBackground = false;
+        final File pdfFile = new File("/Documents and Settings/foo.pdf");
+        PrintResultHandler printResult;
+        try {
+            // printing takes around 10 seconds
+            System.out.println("[main] Preparing print job ...");
+            printResult = print(pdfFile, printJobTimeout, printInBackground);
+            System.out.println("[main] Successfully sent the print job ...");
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("[main] Printing of the following document failed : " + pdfFile.getAbsolutePath());
+            throw e;
+        }
         System.out.println("[main] Test is exiting but waiting for the print job to finish...");
         printResult.waitFor0();
+    }
+
+    @Test
+    public void testTutorialExample_test2_decomposed() throws Exception {
+        final Duration printJobTimeout = Duration.ofSeconds(15);
+        final boolean printInBackground = false;
+        final File pdfFile = new File("/Documents and Settings/foo.pdf");
+        PrintResultHandler printResult;
+        try {
+            // printing takes around 10 seconds
+            System.out.println("[main] Preparing print job ...");
+            printResult = print(pdfFile, printJobTimeout, printInBackground);
+            System.out.println("[main] Successfully sent the print job ...");
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("[main] Printing of the following document failed : " + pdfFile.getAbsolutePath());
+            throw e;
+        }
+        System.out.println("[main] Test is exiting but waiting for the print job to finish...");
+        printResult.waitFor0();
+        System.out.println("[main] The print job has finished ...");
     }
 }

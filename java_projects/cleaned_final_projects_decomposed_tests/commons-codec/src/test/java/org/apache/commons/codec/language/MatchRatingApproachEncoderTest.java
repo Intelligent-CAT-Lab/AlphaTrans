@@ -36,34 +36,258 @@ import org.junit.Test;
 public class MatchRatingApproachEncoderTest
         extends StringEncoderAbstractTest<MatchRatingApproachEncoder> {
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    @Override
+    protected MatchRatingApproachEncoder createStringEncoder() {
+        return new MatchRatingApproachEncoder();
+    }
+
     @Test
-    public final void testAccentRemoval_AllLower_SuccessfullyRemoved() {
+    public void testAccentRemoval_AllLower_SuccessfullyRemoved_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_AllLower_SuccessfullyRemoved_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("aeiou", this.getStringEncoder().removeAccents("áéíóú"));
     }
 
     @Test
-    public final void testAccentRemoval_WithSpaces_SuccessfullyRemovedAndSpacesInvariant() {
+    public void testAccentRemoval_WithSpaces_SuccessfullyRemovedAndSpacesInvariant_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_WithSpaces_SuccessfullyRemovedAndSpacesInvariant_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("ae io  u", this.getStringEncoder().removeAccents("áé íó  ú"));
     }
 
     @Test
-    public final void testAccentRemoval_UpperandLower_SuccessfullyRemovedAndCaseInvariant() {
+    public void testAccentRemoval_UpperandLower_SuccessfullyRemovedAndCaseInvariant_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_UpperandLower_SuccessfullyRemovedAndCaseInvariant_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("AeiOuu", this.getStringEncoder().removeAccents("ÁeíÓuu"));
     }
 
     @Test
-    public final void
-            testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualcharactersInvariant() {
+    public void testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualcharactersInvariant_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_MixedWithUnusualChars_SuccessfullyRemovedAndUnusualcharactersInvariant_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("A-e'i.,o&u", this.getStringEncoder().removeAccents("Á-e'í.,ó&ú"));
     }
 
     @Test
-    public final void testAccentRemoval_GerSpanFrenMix_SuccessfullyRemoved() {
+    public void testAccentRemoval_GerSpanFrenMix_SuccessfullyRemoved_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_GerSpanFrenMix_SuccessfullyRemoved_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("aeoußAEOUnNa", this.getStringEncoder().removeAccents("äëöüßÄËÖÜñÑà"));
     }
 
     @Test
-    public final void testAccentRemoval_ComprehensiveAccentMix_AllSuccessfullyRemoved() {
+    public void testAccentRemoval_ComprehensiveAccentMix_AllSuccessfullyRemoved_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_ComprehensiveAccentMix_AllSuccessfullyRemoved_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(
                 "E,E,E,E,U,U,I,I,A,A,O,e,e,e,e,u,u,i,i,a,a,o,c",
                 this.getStringEncoder()
@@ -71,74 +295,158 @@ public class MatchRatingApproachEncoderTest
     }
 
     @Test
-    public final void testAccentRemovalNormalString_NoChange() {
+    public void testAccentRemovalNormalString_NoChange_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemovalNormalString_NoChange_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(
                 "Colorless green ideas sleep furiously",
                 this.getStringEncoder().removeAccents("Colorless green ideas sleep furiously"));
     }
 
     @Test
-    public final void testAccentRemoval_NINO_NoChange() {
+    public void testAccentRemoval_NINO_NoChange_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_NINO_NoChange_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().removeAccents(""));
     }
 
     @Test
-    public final void testAccentRemoval_NullValue_ReturnNullSuccessfully() {
+    public void testAccentRemoval_NullValue_ReturnNullSuccessfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testAccentRemoval_NullValue_ReturnNullSuccessfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertNull(this.getStringEncoder().removeAccents(null));
     }
 
     @Test
-    public final void testRemoveSingleDoubleConsonants_BUBLE_RemovedSuccessfully() {
+    public void testRemoveSingleDoubleConsonants_BUBLE_RemovedSuccessfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveSingleDoubleConsonants_BUBLE_RemovedSuccessfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("BUBLE", this.getStringEncoder().removeDoubleConsonants("BUBBLE"));
     }
 
     @Test
-    public final void testRemoveDoubleConsonants_MISSISSIPPI_RemovedSuccessfully() {
+    public void testRemoveDoubleConsonants_MISSISSIPPI_RemovedSuccessfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveDoubleConsonants_MISSISSIPPI_RemovedSuccessfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("MISISIPI", this.getStringEncoder().removeDoubleConsonants("MISSISSIPPI"));
     }
 
     @Test
-    public final void testRemoveDoubleDoubleVowel_BEETLE_NotRemoved() {
+    public void testRemoveDoubleDoubleVowel_BEETLE_NotRemoved_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveDoubleDoubleVowel_BEETLE_NotRemoved_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("BEETLE", this.getStringEncoder().removeDoubleConsonants("BEETLE"));
     }
 
     @Test
-    public final void testIsVowel_CapitalA_ReturnsTrue() {
+    public void testIsVowel_CapitalA_ReturnsTrue_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testIsVowel_CapitalA_ReturnsTrue_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isVowel("A"));
     }
 
     @Test
-    public final void testIsVowel_SmallD_ReturnsFalse() {
+    public void testIsVowel_SmallD_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testIsVowel_SmallD_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isVowel("d"));
     }
 
     @Test
-    public final void testRemoveVowel_ALESSANDRA_Returns_ALSSNDR() {
+    public void testRemoveVowel_ALESSANDRA_Returns_ALSSNDR_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveVowel_ALESSANDRA_Returns_ALSSNDR_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("ALSSNDR", this.getStringEncoder().removeVowels("ALESSANDRA"));
     }
 
     @Test
-    public final void testRemoveVowel__AIDAN_Returns_ADN() {
+    public void testRemoveVowel__AIDAN_Returns_ADN_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveVowel__AIDAN_Returns_ADN_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("ADN", this.getStringEncoder().removeVowels("AIDAN"));
     }
 
     @Test
-    public final void testRemoveVowel__DECLAN_Returns_DCLN() {
+    public void testRemoveVowel__DECLAN_Returns_DCLN_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testRemoveVowel__DECLAN_Returns_DCLN_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("DCLN", this.getStringEncoder().removeVowels("DECLAN"));
     }
 
     @Test
-    public final void testGetFirstLast3__ALEXANDER_Returns_Aleder() {
+    public void testGetFirstLast3__ALEXANDER_Returns_Aleder_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetFirstLast3__ALEXANDER_Returns_Aleder_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("Aleder", this.getStringEncoder().getFirst3Last3("Alexzander"));
     }
 
     @Test
-    public final void testGetFirstLast3_PETE_Returns_PETE() {
+    public void testGetFirstLast3_PETE_Returns_PETE_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetFirstLast3_PETE_Returns_PETE_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("PETE", this.getStringEncoder().getFirst3Last3("PETE"));
     }
 
     @Test
-    public final void testleftTorightThenRightToLeft_ALEXANDER_ALEXANDRA_Returns4() {
+    public void testleftTorightThenRightToLeft_ALEXANDER_ALEXANDRA_Returns4_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testleftTorightThenRightToLeft_ALEXANDER_ALEXANDRA_Returns4_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(
                 4,
                 this.getStringEncoder()
@@ -146,7 +454,13 @@ public class MatchRatingApproachEncoderTest
     }
 
     @Test
-    public final void testleftTorightThenRightToLeft_EINSTEIN_MICHAELA_Returns0() {
+    public void testleftTorightThenRightToLeft_EINSTEIN_MICHAELA_Returns0_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testleftTorightThenRightToLeft_EINSTEIN_MICHAELA_Returns0_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(
                 0,
                 this.getStringEncoder()
@@ -154,366 +468,785 @@ public class MatchRatingApproachEncoderTest
     }
 
     @Test
-    public final void testGetMinRating_7_Return4_Successfully() {
+    public void testGetMinRating_7_Return4_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetMinRating_7_Return4_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(4, this.getStringEncoder().getMinRating(7));
     }
 
     @Test
-    public final void testGetMinRating_1_Returns5_Successfully() {
+    public void testGetMinRating_1_Returns5_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetMinRating_1_Returns5_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(5, this.getStringEncoder().getMinRating(1));
     }
 
     @Test
-    public final void testGetMinRating_2_Returns5_Successfully() {
+    public void testGetMinRating_2_Returns5_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetMinRating_2_Returns5_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(5, this.getStringEncoder().getMinRating(2));
     }
 
     @Test
-    public final void testgetMinRating_5_Returns4_Successfully() {
+    public void testgetMinRating_5_Returns4_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_5_Returns4_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(4, this.getStringEncoder().getMinRating(5));
     }
 
     @Test
-    public final void testgetMinRating_5_Returns4_Successfully2() {
+    public void testgetMinRating_5_Returns4_Successfully2_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_5_Returns4_Successfully2_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(4, this.getStringEncoder().getMinRating(5));
     }
 
     @Test
-    public final void testgetMinRating_6_Returns4_Successfully() {
+    public void testgetMinRating_6_Returns4_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_6_Returns4_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(4, this.getStringEncoder().getMinRating(6));
     }
 
     @Test
-    public final void testgetMinRating_7_Returns4_Successfully() {
+    public void testgetMinRating_7_Returns4_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_7_Returns4_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(4, this.getStringEncoder().getMinRating(7));
     }
 
     @Test
-    public final void testgetMinRating_8_Returns3_Successfully() {
+    public void testgetMinRating_8_Returns3_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_8_Returns3_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(3, this.getStringEncoder().getMinRating(8));
     }
 
     @Test
-    public final void testgetMinRating_10_Returns3_Successfully() {
+    public void testgetMinRating_10_Returns3_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_10_Returns3_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(3, this.getStringEncoder().getMinRating(10));
     }
 
     @Test
-    public final void testgetMinRating_11_Returns_3_Successfully() {
+    public void testgetMinRating_11_Returns_3_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testgetMinRating_11_Returns_3_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(3, this.getStringEncoder().getMinRating(11));
     }
 
     @Test
-    public final void testGetMinRating_13_Returns_1_Successfully() {
+    public void testGetMinRating_13_Returns_1_Successfully_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetMinRating_13_Returns_1_Successfully_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals(1, this.getStringEncoder().getMinRating(13));
     }
 
     @Test
-    public final void testcleanName_SuccessfullyClean() {
+    public void testcleanName_SuccessfullyClean_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testcleanName_SuccessfullyClean_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("THISISATEST", this.getStringEncoder().cleanName("This-ís   a t.,es &t"));
     }
 
     @Test
-    public final void testisVowel_SingleVowel_ReturnsTrue() {
+    public void testisVowel_SingleVowel_ReturnsTrue_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisVowel_SingleVowel_ReturnsTrue_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isVowel(("I")));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_SecondNameNothing_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("test", ""));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_FirstNameNothing_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("", "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_SecondNameJustSpace_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("test", " "));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_FirstNameJustSpace_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals(" ", "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_SecondNameNull_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("test", null));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_FirstNameNull_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals(null, "test"));
     }
 
     @Test
-    public final void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse() {
+    public void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEquals_CornerCase_FirstNameJust1Letter_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("t", "test"));
     }
 
     @Test
-    public final void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse() {
+    public void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testisEncodeEqualsSecondNameJust1Letter_ReturnsFalse_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("test", "t"));
     }
 
     @Test
-    public final void testGetEncoding_HARPER_HRPR() {
+    public void testGetEncoding_HARPER_HRPR_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_HARPER_HRPR_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("HRPR", this.getStringEncoder().encode1("HARPER"));
     }
 
     @Test
-    public final void testGetEncoding_SMITH_to_SMTH() {
+    public void testGetEncoding_SMITH_to_SMTH_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_SMITH_to_SMTH_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("SMTH", this.getStringEncoder().encode1("Smith"));
     }
 
     @Test
-    public final void testGetEncoding_SMYTH_to_SMYTH() {
+    public void testGetEncoding_SMYTH_to_SMYTH_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_SMYTH_to_SMYTH_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("SMYTH", this.getStringEncoder().encode1("Smyth"));
     }
 
     @Test
-    public final void testGetEncoding_Space_to_Nothing() {
+    public void testGetEncoding_Space_to_Nothing_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_Space_to_Nothing_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().encode1(" "));
     }
 
     @Test
-    public final void testGetEncoding_NoSpace_to_Nothing() {
+    public void testGetEncoding_NoSpace_to_Nothing_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_NoSpace_to_Nothing_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().encode1(""));
     }
 
     @Test
-    public final void testGetEncoding_Null_to_Nothing() {
+    public void testGetEncoding_Null_to_Nothing_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_Null_to_Nothing_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().encode1(null));
     }
 
     @Test
-    public final void testGetEncoding_One_Letter_to_Nothing() {
+    public void testGetEncoding_One_Letter_to_Nothing_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testGetEncoding_One_Letter_to_Nothing_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().encode1("E"));
     }
 
     @Test
-    public final void testCompareNameNullSpace_ReturnsFalseSuccessfully() {
+    public void testCompareNameNullSpace_ReturnsFalseSuccessfully_test0_decomposed()  {
+        getStringEncoder();
+    }
+
+    @Test
+    public void testCompareNameNullSpace_ReturnsFalseSuccessfully_test1_decomposed()  {
+        getStringEncoder();
         assertFalse(getStringEncoder().isEncodeEquals(null, " "));
     }
 
     @Test
-    public final void testCompareNameSameNames_ReturnsFalseSuccessfully() {
+    public void testCompareNameSameNames_ReturnsFalseSuccessfully_test0_decomposed()  {
+        getStringEncoder();
+    }
+
+    @Test
+    public void testCompareNameSameNames_ReturnsFalseSuccessfully_test1_decomposed()  {
+        getStringEncoder();
         assertTrue(getStringEncoder().isEncodeEquals("John", "John"));
     }
 
     @Test
-    public final void testCompare_SMITH_SMYTH_SuccessfullyMatched() {
+    public void testCompare_SMITH_SMYTH_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SMITH_SMYTH_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("smith", "smyth"));
     }
 
     @Test
-    public final void testCompare_BURNS_BOURNE_SuccessfullyMatched() {
+    public void testCompare_BURNS_BOURNE_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_BURNS_BOURNE_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Burns", "Bourne"));
     }
 
     @Test
-    public final void testCompare_ShortNames_AL_ED_WorksButNoMatch() {
+    public void testCompare_ShortNames_AL_ED_WorksButNoMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_ShortNames_AL_ED_WorksButNoMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Al", "Ed"));
     }
 
     @Test
-    public final void testCompare_CATHERINE_KATHRYN_SuccessfullyMatched() {
+    public void testCompare_CATHERINE_KATHRYN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_CATHERINE_KATHRYN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Catherine", "Kathryn"));
     }
 
     @Test
-    public final void testCompare_BRIAN_BRYAN_SuccessfullyMatched() {
+    public void testCompare_BRIAN_BRYAN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_BRIAN_BRYAN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Brian", "Bryan"));
     }
 
     @Test
-    public final void testCompare_SEAN_SHAUN_SuccessfullyMatched() {
+    public void testCompare_SEAN_SHAUN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SEAN_SHAUN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Séan", "Shaun"));
     }
 
     @Test
-    public final void testCompare_COLM_COLIN_WithAccentsAndSymbolsAndSpaces_SuccessfullyMatched() {
+    public void testCompare_COLM_COLIN_WithAccentsAndSymbolsAndSpaces_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_COLM_COLIN_WithAccentsAndSymbolsAndSpaces_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Cólm.   ", "C-olín"));
     }
 
     @Test
-    public final void testCompare_STEPHEN_STEVEN_SuccessfullyMatched() {
+    public void testCompare_STEPHEN_STEVEN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_STEPHEN_STEVEN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Stephen", "Steven"));
     }
 
     @Test
-    public final void testCompare_STEVEN_STEFAN_SuccessfullyMatched() {
+    public void testCompare_STEVEN_STEFAN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_STEVEN_STEFAN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Steven", "Stefan"));
     }
 
     @Test
-    public final void testCompare_STEPHEN_STEFAN_SuccessfullyMatched() {
+    public void testCompare_STEPHEN_STEFAN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_STEPHEN_STEFAN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Stephen", "Stefan"));
     }
 
     @Test
-    public final void testCompare_SAM_SAMUEL_SuccessfullyMatched() {
+    public void testCompare_SAM_SAMUEL_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SAM_SAMUEL_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Sam", "Samuel"));
     }
 
     @Test
-    public final void testCompare_MICKY_MICHAEL_SuccessfullyMatched() {
+    public void testCompare_MICKY_MICHAEL_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_MICKY_MICHAEL_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Micky", "Michael"));
     }
 
     @Test
-    public final void testCompare_OONA_OONAGH_SuccessfullyMatched() {
+    public void testCompare_OONA_OONAGH_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_OONA_OONAGH_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Oona", "Oonagh"));
     }
 
     @Test
-    public final void testCompare_SOPHIE_SOFIA_SuccessfullyMatched() {
+    public void testCompare_SOPHIE_SOFIA_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SOPHIE_SOFIA_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Sophie", "Sofia"));
     }
 
     @Test
-    public final void testCompare_FRANCISZEK_FRANCES_SuccessfullyMatched() {
+    public void testCompare_FRANCISZEK_FRANCES_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_FRANCISZEK_FRANCES_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Franciszek", "Frances"));
     }
 
     @Test
-    public final void testCompare_TOMASZ_TOM_SuccessfullyMatched() {
+    public void testCompare_TOMASZ_TOM_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_TOMASZ_TOM_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Tomasz", "tom"));
     }
 
     @Test
-    public final void testCompare_SmallInput_CARK_Kl_SuccessfullyMatched() {
+    public void testCompare_SmallInput_CARK_Kl_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SmallInput_CARK_Kl_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Kl", "Karl"));
     }
 
     @Test
-    public final void testCompareNameToSingleLetter_KARL_C_DoesNotMatch() {
+    public void testCompareNameToSingleLetter_KARL_C_DoesNotMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompareNameToSingleLetter_KARL_C_DoesNotMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Karl", "C"));
     }
 
     @Test
-    public final void testCompare_ZACH_ZAKARIA_SuccessfullyMatched() {
+    public void testCompare_ZACH_ZAKARIA_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_ZACH_ZAKARIA_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Zach", "Zacharia"));
     }
 
     @Test
-    public final void testCompare_KARL_ALESSANDRO_DoesNotMatch() {
+    public void testCompare_KARL_ALESSANDRO_DoesNotMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_KARL_ALESSANDRO_DoesNotMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Karl", "Alessandro"));
     }
 
     @Test
-    public final void testCompare_Forenames_UNA_OONAGH_ShouldSuccessfullyMatchButDoesNot() {
-        assertFalse(this.getStringEncoder().isEncodeEquals("Úna", "Oonagh")); // Disappointing
+    public void testCompare_Forenames_UNA_OONAGH_ShouldSuccessfullyMatchButDoesNot_test0_decomposed()  {
+        this.getStringEncoder();
     }
 
     @Test
-    public final void testCompare_Surname_OSULLIVAN_OSUILLEABHAIN_SuccessfulMatch() {
+    public void testCompare_Forenames_UNA_OONAGH_ShouldSuccessfullyMatchButDoesNot_test1_decomposed()  {
+        this.getStringEncoder();
+        assertFalse(this.getStringEncoder().isEncodeEquals("Úna", "Oonagh"));
+    }
+
+    @Test
+    public void testCompare_Surname_OSULLIVAN_OSUILLEABHAIN_SuccessfulMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_OSULLIVAN_OSUILLEABHAIN_SuccessfulMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("O'Sullivan", "Ó ' Súilleabháin"));
     }
 
     @Test
-    public final void testCompare_LongSurnames_MORIARTY_OMUIRCHEARTAIGH_DoesNotSuccessfulMatch() {
+    public void testCompare_LongSurnames_MORIARTY_OMUIRCHEARTAIGH_DoesNotSuccessfulMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_LongSurnames_MORIARTY_OMUIRCHEARTAIGH_DoesNotSuccessfulMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Moriarty", "OMuircheartaigh"));
     }
 
     @Test
-    public final void testCompare_LongSurnames_OMUIRCHEARTAIGH_OMIREADHAIGH_SuccessfulMatch() {
+    public void testCompare_LongSurnames_OMUIRCHEARTAIGH_OMIREADHAIGH_SuccessfulMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_LongSurnames_OMUIRCHEARTAIGH_OMIREADHAIGH_SuccessfulMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("o'muireadhaigh", "Ó 'Muircheartaigh "));
     }
 
     @Test
-    public final void testCompare_Surname_COOPERFLYNN_SUPERLYN_SuccessfullyMatched() {
+    public void testCompare_Surname_COOPERFLYNN_SUPERLYN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_COOPERFLYNN_SUPERLYN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Cooper-Flynn", "Super-Lyn"));
     }
 
     @Test
-    public final void testCompare_Surname_HAILEY_HALLEY_SuccessfullyMatched() {
+    public void testCompare_Surname_HAILEY_HALLEY_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_HAILEY_HALLEY_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Hailey", "Halley"));
     }
 
     @Test
-    public final void testCompare_Surname_AUERBACH_UHRBACH_SuccessfullyMatched() {
+    public void testCompare_Surname_AUERBACH_UHRBACH_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_AUERBACH_UHRBACH_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Auerbach", "Uhrbach"));
     }
 
     @Test
-    public final void testCompare_Surname_MOSKOWITZ_MOSKOVITZ_SuccessfullyMatched() {
+    public void testCompare_Surname_MOSKOWITZ_MOSKOVITZ_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_MOSKOWITZ_MOSKOVITZ_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Moskowitz", "Moskovitz"));
     }
 
     @Test
-    public final void testCompare_Surname_LIPSHITZ_LIPPSZYC_SuccessfullyMatched() {
+    public void testCompare_Surname_LIPSHITZ_LIPPSZYC_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_LIPSHITZ_LIPPSZYC_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("LIPSHITZ", "LIPPSZYC"));
     }
 
     @Test
-    public final void testCompare_Surname_LEWINSKY_LEVINSKI_SuccessfullyMatched() {
+    public void testCompare_Surname_LEWINSKY_LEVINSKI_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_LEWINSKY_LEVINSKI_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("LEWINSKY", "LEVINSKI"));
     }
 
     @Test
-    public final void testCompare_Surname_SZLAMAWICZ_SHLAMOVITZ_SuccessfullyMatched() {
+    public void testCompare_Surname_SZLAMAWICZ_SHLAMOVITZ_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_SZLAMAWICZ_SHLAMOVITZ_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("SZLAMAWICZ", "SHLAMOVITZ"));
     }
 
     @Test
-    public final void testCompare_Surname_ROSOCHOWACIEC_ROSOKHOVATSETS_SuccessfullyMatched() {
+    public void testCompare_Surname_ROSOCHOWACIEC_ROSOKHOVATSETS_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_ROSOCHOWACIEC_ROSOKHOVATSETS_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(
                 this.getStringEncoder()
                         .isEncodeEquals("R o s o ch o w a c ie c", " R o s o k ho v a ts e ts"));
     }
 
     @Test
-    public final void testCompare_Surname_PRZEMYSL_PSHEMESHIL_SuccessfullyMatched() {
+    public void testCompare_Surname_PRZEMYSL_PSHEMESHIL_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surname_PRZEMYSL_PSHEMESHIL_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals(" P rz e m y s l", " P sh e m e sh i l"));
     }
 
     @Test
-    public final void testCompare_PETERSON_PETERS_SuccessfullyMatched() {
+    public void testCompare_PETERSON_PETERS_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_PETERSON_PETERS_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Peterson", "Peters"));
     }
 
     @Test
-    public final void testCompare_MCGOWAN_MCGEOGHEGAN_SuccessfullyMatched() {
+    public void testCompare_MCGOWAN_MCGEOGHEGAN_SuccessfullyMatched_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_MCGOWAN_MCGEOGHEGAN_SuccessfullyMatched_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("McGowan", "Mc Geoghegan"));
     }
 
     @Test
-    public final void testCompare_SurnamesCornerCase_MURPHY_Space_NoMatch() {
+    public void testCompare_SurnamesCornerCase_MURPHY_Space_NoMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SurnamesCornerCase_MURPHY_Space_NoMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Murphy", " "));
     }
 
     @Test
-    public final void testCompare_SurnamesCornerCase_MURPHY_NoSpace_NoMatch() {
+    public void testCompare_SurnamesCornerCase_MURPHY_NoSpace_NoMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SurnamesCornerCase_MURPHY_NoSpace_NoMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Murphy", ""));
     }
 
     @Test
-    public final void testCompare_SurnameCornerCase_Nulls_NoMatch() {
+    public void testCompare_SurnameCornerCase_Nulls_NoMatch_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_SurnameCornerCase_Nulls_NoMatch_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals(null, null));
     }
 
     @Test
-    public final void testCompare_Surnames_MURPHY_LYNCH_NoMatchExpected() {
+    public void testCompare_Surnames_MURPHY_LYNCH_NoMatchExpected_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Surnames_MURPHY_LYNCH_NoMatchExpected_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Murphy", "Lynch"));
     }
 
     @Test
-    public final void testCompare_Forenames_SEAN_JOHN_MatchExpected() {
+    public void testCompare_Forenames_SEAN_JOHN_MatchExpected_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Forenames_SEAN_JOHN_MatchExpected_test1_decomposed()  {
+        this.getStringEncoder();
         assertTrue(this.getStringEncoder().isEncodeEquals("Sean", "John"));
     }
 
     @Test
-    public final void testCompare_Forenames_SEAN_PETE_NoMatchExpected() {
+    public void testCompare_Forenames_SEAN_PETE_NoMatchExpected_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testCompare_Forenames_SEAN_PETE_NoMatchExpected_test1_decomposed()  {
+        this.getStringEncoder();
         assertFalse(this.getStringEncoder().isEncodeEquals("Sean", "Pete"));
     }
-
-    @Override
-    protected MatchRatingApproachEncoder createStringEncoder() {
-        return new MatchRatingApproachEncoder();
-    }
-
-    
 }

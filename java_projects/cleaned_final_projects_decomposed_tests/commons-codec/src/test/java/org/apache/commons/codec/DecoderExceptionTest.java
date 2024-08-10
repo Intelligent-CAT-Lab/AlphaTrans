@@ -30,34 +30,6 @@ public class DecoderExceptionTest {
     private static final Throwable t = new Exception();
 
     @Test
-    public void testConstructor0() {
-        final DecoderException e = new DecoderException(null, null);
-        assertNull(e.getMessage());
-        assertNull(e.getCause());
-    }
-
-    @Test
-    public void testConstructorString() {
-        final DecoderException e = new DecoderException(MSG, null);
-        assertEquals(MSG, e.getMessage());
-        assertNull(e.getCause());
-    }
-
-    @Test
-    public void testConstructorStringThrowable() {
-        final DecoderException e = new DecoderException(MSG, t);
-        assertEquals(MSG, e.getMessage());
-        assertEquals(t, e.getCause());
-    }
-
-    @Test
-    public void testConstructorThrowable() {
-        final DecoderException e = new DecoderException("java.lang.Exception", t);
-        assertEquals(t.getClass().getName(), e.getMessage());
-        assertEquals(t, e.getCause());
-    }
-
-    @Test
     public void testConstructor0_test0_decomposed()  {
         final DecoderException e = new DecoderException(null, null);
     }
@@ -66,6 +38,7 @@ public class DecoderExceptionTest {
     public void testConstructor0_test1_decomposed()  {
         final DecoderException e = new DecoderException(null, null);
         assertNull(e.getMessage());
+        assertNull(e.getCause());
     }
 
     @Test
@@ -77,6 +50,7 @@ public class DecoderExceptionTest {
     public void testConstructorString_test1_decomposed()  {
         final DecoderException e = new DecoderException(MSG, null);
         assertEquals(MSG, e.getMessage());
+        assertNull(e.getCause());
     }
 
     @Test
@@ -88,6 +62,7 @@ public class DecoderExceptionTest {
     public void testConstructorStringThrowable_test1_decomposed()  {
         final DecoderException e = new DecoderException(MSG, t);
         assertEquals(MSG, e.getMessage());
+        assertEquals(t, e.getCause());
     }
 
     @Test
@@ -99,5 +74,12 @@ public class DecoderExceptionTest {
     public void testConstructorThrowable_test1_decomposed()  {
         final DecoderException e = new DecoderException("java.lang.Exception", t);
         assertEquals(t.getClass().getName(), e.getMessage());
+    }
+
+    @Test
+    public void testConstructorThrowable_test2_decomposed()  {
+        final DecoderException e = new DecoderException("java.lang.Exception", t);
+        assertEquals(t.getClass().getName(), e.getMessage());
+        assertEquals(t, e.getCause());
     }
 }

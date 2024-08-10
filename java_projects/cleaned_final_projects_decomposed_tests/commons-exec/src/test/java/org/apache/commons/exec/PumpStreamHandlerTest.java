@@ -29,20 +29,6 @@ import org.junit.jupiter.api.Test;
 public class PumpStreamHandlerTest {
 
     @Test
-    public void testSetStopTimeout() {
-        final PumpStreamHandler handler = PumpStreamHandler.PumpStreamHandler0();
-        assertEquals(Duration.ZERO, handler.getStopTimeout());
-        handler.setStopTimeout0(Duration.ofMinutes(1));
-        assertEquals(Duration.ofMinutes(1), handler.getStopTimeout());
-        handler.setStopTimeout1(0);
-        assertEquals(Duration.ZERO, handler.getStopTimeout());
-        handler.setStopTimeout1(60_001);
-        assertEquals(Duration.ofMillis(60_001), handler.getStopTimeout());
-        handler.setStopTimeout0(null);
-        assertEquals(Duration.ZERO, handler.getStopTimeout());
-    }
-
-    @Test
     public void testSetStopTimeout_test0_decomposed()  {
         final PumpStreamHandler handler = PumpStreamHandler.PumpStreamHandler0();
     }
@@ -121,5 +107,19 @@ public class PumpStreamHandlerTest {
         handler.setStopTimeout1(60_001);
         assertEquals(Duration.ofMillis(60_001), handler.getStopTimeout());
         handler.setStopTimeout0(null);
+    }
+
+    @Test
+    public void testSetStopTimeout_test9_decomposed()  {
+        final PumpStreamHandler handler = PumpStreamHandler.PumpStreamHandler0();
+        assertEquals(Duration.ZERO, handler.getStopTimeout());
+        handler.setStopTimeout0(Duration.ofMinutes(1));
+        assertEquals(Duration.ofMinutes(1), handler.getStopTimeout());
+        handler.setStopTimeout1(0);
+        assertEquals(Duration.ZERO, handler.getStopTimeout());
+        handler.setStopTimeout1(60_001);
+        assertEquals(Duration.ofMillis(60_001), handler.getStopTimeout());
+        handler.setStopTimeout0(null);
+        assertEquals(Duration.ZERO, handler.getStopTimeout());
     }
 }

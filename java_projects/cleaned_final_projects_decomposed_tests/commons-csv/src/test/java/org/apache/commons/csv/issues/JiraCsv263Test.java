@@ -31,48 +31,6 @@ import java.io.StringReader;
 public class JiraCsv263Test {
 
     @Test
-    public void testPrintFromReaderWithQuotes() throws IOException {
-        final CSVFormat format =
-                CSVFormat.RFC4180
-                        .builder()
-                        .setDelimiter0(',')
-                        .setQuote0('"')
-                        .setEscape0('?')
-                        .setQuoteMode(QuoteMode.NON_NUMERIC)
-                        .build();
-        final StringBuilder out = new StringBuilder();
-
-        final Reader atStartOnly = new StringReader("\"a,b,c\r\nx,y,z");
-        format.print2(atStartOnly, out, true);
-        assertEquals("\"\"\"a,b,c\r\nx,y,z\"", out.toString());
-
-        final Reader atEndOnly = new StringReader("a,b,c\r\nx,y,z\"");
-        out.setLength(0);
-        format.print2(atEndOnly, out, true);
-        assertEquals("\"a,b,c\r\nx,y,z\"\"\"", out.toString());
-
-        final Reader atBeginEnd = new StringReader("\"a,b,c\r\nx,y,z\"");
-        out.setLength(0);
-        format.print2(atBeginEnd, out, true);
-        assertEquals("\"\"\"a,b,c\r\nx,y,z\"\"\"", out.toString());
-
-        final Reader embeddedBeginMiddle = new StringReader("\"a\",b,c\r\nx,\"y\",z");
-        out.setLength(0);
-        format.print2(embeddedBeginMiddle, out, true);
-        assertEquals("\"\"\"a\"\",b,c\r\nx,\"\"y\"\",z\"", out.toString());
-
-        final Reader embeddedMiddleEnd = new StringReader("a,\"b\",c\r\nx,y,\"z\"");
-        out.setLength(0);
-        format.print2(embeddedMiddleEnd, out, true);
-        assertEquals("\"a,\"\"b\"\",c\r\nx,y,\"\"z\"\"\"", out.toString());
-
-        final Reader nested = new StringReader("a,\"b \"and\" c\",d");
-        out.setLength(0);
-        format.print2(nested, out, true);
-        assertEquals("\"a,\"\"b \"\"and\"\" c\"\",d\"", out.toString());
-    }
-
-    @Test
     public void testPrintFromReaderWithQuotes_test0_decomposed() throws IOException {
         CSVFormat.RFC4180.builder();
     }
@@ -447,5 +405,46 @@ public class JiraCsv263Test {
         final Reader nested = new StringReader("a,\"b \"and\" c\",d");
         out.setLength(0);
         format.print2(nested, out, true);
+    }
+
+    @Test
+    public void testPrintFromReaderWithQuotes_test17_decomposed() throws IOException {
+        CSVFormat.RFC4180.builder();
+        CSVFormat.RFC4180.builder().setDelimiter0(',');
+        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('"');
+        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('"').setEscape0('?');
+        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);
+        final CSVFormat format =
+                CSVFormat.RFC4180
+                        .builder()
+                        .setDelimiter0(',')
+                        .setQuote0('"')
+                        .setEscape0('?')
+                        .setQuoteMode(QuoteMode.NON_NUMERIC)
+                        .build();
+        final StringBuilder out = new StringBuilder();
+        final Reader atStartOnly = new StringReader("\"a,b,c\r\nx,y,z");
+        format.print2(atStartOnly, out, true);
+        assertEquals("\"\"\"a,b,c\r\nx,y,z\"", out.toString());
+        final Reader atEndOnly = new StringReader("a,b,c\r\nx,y,z\"");
+        out.setLength(0);
+        format.print2(atEndOnly, out, true);
+        assertEquals("\"a,b,c\r\nx,y,z\"\"\"", out.toString());
+        final Reader atBeginEnd = new StringReader("\"a,b,c\r\nx,y,z\"");
+        out.setLength(0);
+        format.print2(atBeginEnd, out, true);
+        assertEquals("\"\"\"a,b,c\r\nx,y,z\"\"\"", out.toString());
+        final Reader embeddedBeginMiddle = new StringReader("\"a\",b,c\r\nx,\"y\",z");
+        out.setLength(0);
+        format.print2(embeddedBeginMiddle, out, true);
+        assertEquals("\"\"\"a\"\",b,c\r\nx,\"\"y\"\",z\"", out.toString());
+        final Reader embeddedMiddleEnd = new StringReader("a,\"b\",c\r\nx,y,\"z\"");
+        out.setLength(0);
+        format.print2(embeddedMiddleEnd, out, true);
+        assertEquals("\"a,\"\"b\"\",c\r\nx,y,\"\"z\"\"\"", out.toString());
+        final Reader nested = new StringReader("a,\"b \"and\" c\",d");
+        out.setLength(0);
+        format.print2(nested, out, true);
+        assertEquals("\"a,\"\"b \"\"and\"\" c\"\",d\"", out.toString());
     }
 }

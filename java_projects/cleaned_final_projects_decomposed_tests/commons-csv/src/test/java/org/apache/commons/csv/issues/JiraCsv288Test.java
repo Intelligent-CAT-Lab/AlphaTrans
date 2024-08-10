@@ -38,7 +38,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithABADelimiter() throws Exception {
+    public void testParseWithABADelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a|~|b|~|c|~|d|~||~|f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -53,7 +53,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithDoublePipeDelimiter() throws Exception {
+    public void testParseWithDoublePipeDelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a||b||c||d||||f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -68,7 +68,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithDoublePipeDelimiterDoubleCharValue() throws Exception {
+    public void testParseWithDoublePipeDelimiterDoubleCharValue_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a||bb||cc||dd||f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -83,7 +83,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithDoublePipeDelimiterEndsWithDelimiter() throws Exception {
+    public void testParseWithDoublePipeDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a||b||c||d||||f||");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -98,7 +98,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithDoublePipeDelimiterQuoted() throws Exception {
+    public void testParseWithDoublePipeDelimiterQuoted_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a||\"b||c\"||d||||f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -113,7 +113,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithSinglePipeDelimiterEndsWithDelimiter() throws Exception {
+    public void testParseWithSinglePipeDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a|b|c|d||f|");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -128,7 +128,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTriplePipeDelimiter() throws Exception {
+    public void testParseWithTriplePipeDelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a|||b|||c|||d||||||f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -143,7 +143,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTwoCharDelimiter1() throws Exception {
+    public void testParseWithTwoCharDelimiter1_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a~|b~|c~|d~|~|f");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -158,7 +158,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTwoCharDelimiter2() throws Exception {
+    public void testParseWithTwoCharDelimiter2_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a~|b~|c~|d~|~|f~");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -173,7 +173,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTwoCharDelimiter3() throws Exception {
+    public void testParseWithTwoCharDelimiter3_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a~|b~|c~|d~|~|f|");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -188,7 +188,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTwoCharDelimiter4() throws Exception {
+    public void testParseWithTwoCharDelimiter4_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a~|b~|c~|d~|~|f~~||g");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -203,7 +203,7 @@ public class JiraCsv288Test {
     }
 
     @Test
-    public void testParseWithTwoCharDelimiterEndsWithDelimiter() throws Exception {
+    public void testParseWithTwoCharDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
         final Reader in = new StringReader("a~|b~|c~|d~|~|f~|");
         final StringBuilder stringBuilder = new StringBuilder();
         try (CSVPrinter csvPrinter = new CSVPrinter(stringBuilder, CSVFormat.EXCEL);
@@ -215,77 +215,5 @@ public class JiraCsv288Test {
                 assertEquals("a,b,c,d,,f,", stringBuilder.toString());
             }
         }
-    }
-
-    @Test
-    public void testParseWithABADelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a|~|b|~|c|~|d|~||~|f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithDoublePipeDelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a||b||c||d||||f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithDoublePipeDelimiterDoubleCharValue_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a||bb||cc||dd||f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithDoublePipeDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a||b||c||d||||f||");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithDoublePipeDelimiterQuoted_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a||\"b||c\"||d||||f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithSinglePipeDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a|b|c|d||f|");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTriplePipeDelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a|||b|||c|||d||||||f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTwoCharDelimiter1_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a~|b~|c~|d~|~|f");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTwoCharDelimiter2_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a~|b~|c~|d~|~|f~");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTwoCharDelimiter3_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a~|b~|c~|d~|~|f|");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTwoCharDelimiter4_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a~|b~|c~|d~|~|f~~||g");
-        final StringBuilder stringBuilder = new StringBuilder();
-    }
-
-    @Test
-    public void testParseWithTwoCharDelimiterEndsWithDelimiter_test0_decomposed() throws Exception {
-        final Reader in = new StringReader("a~|b~|c~|d~|~|f~|");
-        final StringBuilder stringBuilder = new StringBuilder();
     }
 }

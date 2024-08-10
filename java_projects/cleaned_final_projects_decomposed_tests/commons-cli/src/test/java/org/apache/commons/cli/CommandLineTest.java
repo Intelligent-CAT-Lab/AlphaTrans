@@ -29,155 +29,6 @@ import java.util.Properties;
 public class CommandLineTest {
 
     @Test
-    public void testBuilder() {
-        final CommandLine.Builder builder = new CommandLine.Builder();
-        builder.addArg("foo").addArg("bar");
-        builder.addOption(Option.builder1("T").build());
-        final CommandLine cmd = builder.build();
-
-        assertEquals("foo", cmd.getArgs()[0]);
-        assertEquals("bar", cmd.getArgList().get(1));
-        assertEquals("T", cmd.getOptions()[0].getOpt());
-    }
-
-    @Test
-    public void testGetOptionProperties() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-
-        final Options options = new Options();
-        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
-        options.addOption0(
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
-
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-
-        final Properties props = cl.getOptionProperties1("D");
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-        assertEquals("property 4", "value4", props.getProperty("param4"));
-
-        assertEquals(
-                "property with long format",
-                "bar",
-                cl.getOptionProperties1("property").getProperty("foo"));
-    }
-
-    @Test
-    public void testGetOptionPropertiesWithOption() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-
-        final Options options = new Options();
-        final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        final Option optionProperty =
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(optionD);
-        options.addOption0(optionProperty);
-
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-
-        final Properties props = cl.getOptionProperties0(optionD);
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-        assertEquals("property 4", "value4", props.getProperty("param4"));
-
-        assertEquals(
-                "property with long format",
-                "bar",
-                cl.getOptionProperties0(optionProperty).getProperty("foo"));
-    }
-
-    @Test
-    public void testGetOptions() {
-        final CommandLine cmd = new CommandLine();
-        assertNotNull(cmd.getOptions());
-        assertEquals(0, cmd.getOptions().length);
-
-        cmd.addOption(Option.Option1("a", null));
-        cmd.addOption(Option.Option1("b", null));
-        cmd.addOption(Option.Option1("c", null));
-
-        assertEquals(3, cmd.getOptions().length);
-    }
-
-    @Test
-    public void testGetParsedOptionValue() throws Exception {
-        final Options options = new Options();
-        options.addOption0(OptionBuilder.hasArg0().withType0(Number.class).create2("i"));
-        options.addOption0(OptionBuilder.hasArg0().create2("f"));
-
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue2("i")).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue2("f"));
-    }
-
-    @Test
-    public void testGetParsedOptionValueWithChar() throws Exception {
-        final Options options = new Options();
-        options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
-        options.addOption0(Option.builder1("f").hasArg0().build());
-
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue0('i')).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue0('f'));
-    }
-
-    @Test
-    public void testGetParsedOptionValueWithOption() throws Exception {
-        final Options options = new Options();
-        final Option optI = Option.builder1("i").hasArg0().type(Number.class).build();
-        final Option optF = Option.builder1("f").hasArg0().build();
-        options.addOption0(optI);
-        options.addOption0(optF);
-
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
-
-        assertEquals(123, ((Number) cmd.getParsedOptionValue1(optI)).intValue());
-        assertEquals("foo", cmd.getParsedOptionValue1(optF));
-    }
-
-    @Test
-    public void testNullhOption() throws Exception {
-        final Options options = new Options();
-        final Option optI = Option.builder1("i").hasArg0().type(Number.class).build();
-        final Option optF = Option.builder1("f").hasArg0().build();
-        options.addOption0(optI);
-        options.addOption0(optF);
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
-        assertNull(cmd.getOptionValue2((Option) null));
-        assertNull(cmd.getParsedOptionValue1((Option) null));
-    }
-
-    @Test
     public void testBuilder_test0_decomposed()  {
         final CommandLine.Builder builder = new CommandLine.Builder();
     }
@@ -193,7 +44,6 @@ public class CommandLineTest {
         final CommandLine.Builder builder = new CommandLine.Builder();
         builder.addArg("foo").addArg("bar");
         Option.builder1("T");
-        Option.builder1("T").build();
     }
 
     @Test
@@ -202,7 +52,6 @@ public class CommandLineTest {
         builder.addArg("foo").addArg("bar");
         Option.builder1("T");
         Option.builder1("T").build();
-        builder.addOption(Option.builder1("T").build());
     }
 
     @Test
@@ -212,7 +61,6 @@ public class CommandLineTest {
         Option.builder1("T");
         Option.builder1("T").build();
         builder.addOption(Option.builder1("T").build());
-        final CommandLine cmd = builder.build();
     }
 
     @Test
@@ -223,7 +71,6 @@ public class CommandLineTest {
         Option.builder1("T").build();
         builder.addOption(Option.builder1("T").build());
         final CommandLine cmd = builder.build();
-        assertEquals("foo", cmd.getArgs()[0]);
     }
 
     @Test
@@ -235,7 +82,6 @@ public class CommandLineTest {
         builder.addOption(Option.builder1("T").build());
         final CommandLine cmd = builder.build();
         assertEquals("foo", cmd.getArgs()[0]);
-        assertEquals("bar", cmd.getArgList().get(1));
     }
 
     @Test
@@ -248,7 +94,33 @@ public class CommandLineTest {
         final CommandLine cmd = builder.build();
         assertEquals("foo", cmd.getArgs()[0]);
         assertEquals("bar", cmd.getArgList().get(1));
+    }
+
+    @Test
+    public void testBuilder_test8_decomposed()  {
+        final CommandLine.Builder builder = new CommandLine.Builder();
+        builder.addArg("foo").addArg("bar");
+        Option.builder1("T");
+        Option.builder1("T").build();
+        builder.addOption(Option.builder1("T").build());
+        final CommandLine cmd = builder.build();
+        assertEquals("foo", cmd.getArgs()[0]);
+        assertEquals("bar", cmd.getArgList().get(1));
         cmd.getOptions();
+    }
+
+    @Test
+    public void testBuilder_test9_decomposed()  {
+        final CommandLine.Builder builder = new CommandLine.Builder();
+        builder.addArg("foo").addArg("bar");
+        Option.builder1("T");
+        Option.builder1("T").build();
+        builder.addOption(Option.builder1("T").build());
+        final CommandLine cmd = builder.build();
+        assertEquals("foo", cmd.getArgs()[0]);
+        assertEquals("bar", cmd.getArgList().get(1));
+        cmd.getOptions();
+        assertEquals("T", cmd.getOptions()[0].getOpt());
     }
 
     @Test
@@ -262,6 +134,7 @@ public class CommandLineTest {
             "--property",
             "foo=bar"
         };
+        final Options options = new Options();
     }
 
     @Test
@@ -276,6 +149,7 @@ public class CommandLineTest {
             "foo=bar"
         };
         final Options options = new Options();
+        OptionBuilder.withValueSeparator0();
     }
 
     @Test
@@ -291,6 +165,7 @@ public class CommandLineTest {
         };
         final Options options = new Options();
         OptionBuilder.withValueSeparator0();
+        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
     }
 
     @Test
@@ -307,6 +182,7 @@ public class CommandLineTest {
         final Options options = new Options();
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
+        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
     }
 
     @Test
@@ -324,6 +200,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
+        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
     }
 
     @Test
@@ -342,6 +219,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
         options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
+        OptionBuilder.withValueSeparator0();
     }
 
     @Test
@@ -361,6 +239,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
         options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
         OptionBuilder.withValueSeparator0();
+        OptionBuilder.withValueSeparator0().hasArgs1(2);
     }
 
     @Test
@@ -381,6 +260,7 @@ public class CommandLineTest {
         options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasArgs1(2);
+        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
     }
 
     @Test
@@ -402,6 +282,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasArgs1(2);
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
+        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
     }
 
     @Test
@@ -424,6 +305,8 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasArgs1(2);
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
+        options.addOption0(
+                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
     }
 
     @Test
@@ -448,6 +331,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
         options.addOption0(
                 OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
+        final Parser parser = new GnuParser();
     }
 
     @Test
@@ -473,6 +357,7 @@ public class CommandLineTest {
         options.addOption0(
                 OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
         final Parser parser = new GnuParser();
+        final CommandLine cl = parser.parse0(options, args);
     }
 
     @Test
@@ -499,6 +384,7 @@ public class CommandLineTest {
                 OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
         final Parser parser = new GnuParser();
         final CommandLine cl = parser.parse0(options, args);
+        final Properties props = cl.getOptionProperties1("D");
     }
 
     @Test
@@ -526,6 +412,8 @@ public class CommandLineTest {
         final Parser parser = new GnuParser();
         final CommandLine cl = parser.parse0(options, args);
         final Properties props = cl.getOptionProperties1("D");
+        assertNotNull("null properties", props);
+        assertEquals("number of properties in " + props, 4, props.size());
     }
 
     @Test
@@ -554,6 +442,9 @@ public class CommandLineTest {
         final CommandLine cl = parser.parse0(options, args);
         final Properties props = cl.getOptionProperties1("D");
         assertNotNull("null properties", props);
+        assertEquals("number of properties in " + props, 4, props.size());
+        assertEquals("property 1", "value1", props.getProperty("param1"));
+        assertEquals("property 2", "value2", props.getProperty("param2"));
     }
 
     @Test
@@ -583,6 +474,10 @@ public class CommandLineTest {
         final Properties props = cl.getOptionProperties1("D");
         assertNotNull("null properties", props);
         assertEquals("number of properties in " + props, 4, props.size());
+        assertEquals("property 1", "value1", props.getProperty("param1"));
+        assertEquals("property 2", "value2", props.getProperty("param2"));
+        assertEquals("property 3", "true", props.getProperty("param3"));
+        assertEquals("property 4", "value4", props.getProperty("param4"));
     }
 
     @Test
@@ -613,102 +508,13 @@ public class CommandLineTest {
         assertNotNull("null properties", props);
         assertEquals("number of properties in " + props, 4, props.size());
         assertEquals("property 1", "value1", props.getProperty("param1"));
-    }
-
-    @Test
-    public void testGetOptionProperties_test17_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties1("D");
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-    }
-
-    @Test
-    public void testGetOptionProperties_test18_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties1("D");
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-    }
-
-    @Test
-    public void testGetOptionProperties_test19_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        options.addOption0(OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D'));
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0());
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties1("D");
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
         assertEquals("property 2", "value2", props.getProperty("param2"));
         assertEquals("property 3", "true", props.getProperty("param3"));
         assertEquals("property 4", "value4", props.getProperty("param4"));
+        assertEquals(
+                "property with long format",
+                "bar",
+                cl.getOptionProperties1("property").getProperty("foo"));
     }
 
     @Test
@@ -722,6 +528,7 @@ public class CommandLineTest {
             "--property",
             "foo=bar"
         };
+        final Options options = new Options();
     }
 
     @Test
@@ -736,6 +543,7 @@ public class CommandLineTest {
             "foo=bar"
         };
         final Options options = new Options();
+        OptionBuilder.withValueSeparator0();
     }
 
     @Test
@@ -751,6 +559,7 @@ public class CommandLineTest {
         };
         final Options options = new Options();
         OptionBuilder.withValueSeparator0();
+        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
     }
 
     @Test
@@ -767,6 +576,7 @@ public class CommandLineTest {
         final Options options = new Options();
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
+        final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
     }
 
     @Test
@@ -784,6 +594,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
         final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
+        OptionBuilder.withValueSeparator0();
     }
 
     @Test
@@ -802,6 +613,7 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
         final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
         OptionBuilder.withValueSeparator0();
+        OptionBuilder.withValueSeparator0().hasArgs1(2);
     }
 
     @Test
@@ -821,6 +633,7 @@ public class CommandLineTest {
         final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasArgs1(2);
+        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
     }
 
     @Test
@@ -841,6 +654,8 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0();
         OptionBuilder.withValueSeparator0().hasArgs1(2);
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
+        final Option optionProperty =
+                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
     }
 
     @Test
@@ -863,6 +678,8 @@ public class CommandLineTest {
         OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
         final Option optionProperty =
                 OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
+        options.addOption0(optionD);
+        options.addOption0(optionProperty);
     }
 
     @Test
@@ -887,6 +704,7 @@ public class CommandLineTest {
                 OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
         options.addOption0(optionD);
         options.addOption0(optionProperty);
+        final Parser parser = new GnuParser();
     }
 
     @Test
@@ -912,6 +730,7 @@ public class CommandLineTest {
         options.addOption0(optionD);
         options.addOption0(optionProperty);
         final Parser parser = new GnuParser();
+        final CommandLine cl = parser.parse0(options, args);
     }
 
     @Test
@@ -938,6 +757,7 @@ public class CommandLineTest {
         options.addOption0(optionProperty);
         final Parser parser = new GnuParser();
         final CommandLine cl = parser.parse0(options, args);
+        final Properties props = cl.getOptionProperties0(optionD);
     }
 
     @Test
@@ -965,6 +785,8 @@ public class CommandLineTest {
         final Parser parser = new GnuParser();
         final CommandLine cl = parser.parse0(options, args);
         final Properties props = cl.getOptionProperties0(optionD);
+        assertNotNull("null properties", props);
+        assertEquals("number of properties in " + props, 4, props.size());
     }
 
     @Test
@@ -993,6 +815,9 @@ public class CommandLineTest {
         final CommandLine cl = parser.parse0(options, args);
         final Properties props = cl.getOptionProperties0(optionD);
         assertNotNull("null properties", props);
+        assertEquals("number of properties in " + props, 4, props.size());
+        assertEquals("property 1", "value1", props.getProperty("param1"));
+        assertEquals("property 2", "value2", props.getProperty("param2"));
     }
 
     @Test
@@ -1022,6 +847,10 @@ public class CommandLineTest {
         final Properties props = cl.getOptionProperties0(optionD);
         assertNotNull("null properties", props);
         assertEquals("number of properties in " + props, 4, props.size());
+        assertEquals("property 1", "value1", props.getProperty("param1"));
+        assertEquals("property 2", "value2", props.getProperty("param2"));
+        assertEquals("property 3", "true", props.getProperty("param3"));
+        assertEquals("property 4", "value4", props.getProperty("param4"));
     }
 
     @Test
@@ -1052,102 +881,13 @@ public class CommandLineTest {
         assertNotNull("null properties", props);
         assertEquals("number of properties in " + props, 4, props.size());
         assertEquals("property 1", "value1", props.getProperty("param1"));
-    }
-
-    @Test
-    public void testGetOptionPropertiesWithOption_test16_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        final Option optionProperty =
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(optionD);
-        options.addOption0(optionProperty);
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties0(optionD);
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-    }
-
-    @Test
-    public void testGetOptionPropertiesWithOption_test17_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        final Option optionProperty =
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(optionD);
-        options.addOption0(optionProperty);
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties0(optionD);
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
-        assertEquals("property 2", "value2", props.getProperty("param2"));
-        assertEquals("property 3", "true", props.getProperty("param3"));
-    }
-
-    @Test
-    public void testGetOptionPropertiesWithOption_test18_decomposed() throws Exception {
-        final String[] args = {
-            "-Dparam1=value1",
-            "-Dparam2=value2",
-            "-Dparam3",
-            "-Dparam4=value4",
-            "-D",
-            "--property",
-            "foo=bar"
-        };
-        final Options options = new Options();
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasOptionalArgs1(2);
-        final Option optionD = OptionBuilder.withValueSeparator0().hasOptionalArgs1(2).create1('D');
-        OptionBuilder.withValueSeparator0();
-        OptionBuilder.withValueSeparator0().hasArgs1(2);
-        OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property");
-        final Option optionProperty =
-                OptionBuilder.withValueSeparator0().hasArgs1(2).withLongOpt("property").create0();
-        options.addOption0(optionD);
-        options.addOption0(optionProperty);
-        final Parser parser = new GnuParser();
-        final CommandLine cl = parser.parse0(options, args);
-        final Properties props = cl.getOptionProperties0(optionD);
-        assertNotNull("null properties", props);
-        assertEquals("number of properties in " + props, 4, props.size());
-        assertEquals("property 1", "value1", props.getProperty("param1"));
         assertEquals("property 2", "value2", props.getProperty("param2"));
         assertEquals("property 3", "true", props.getProperty("param3"));
         assertEquals("property 4", "value4", props.getProperty("param4"));
+        assertEquals(
+                "property with long format",
+                "bar",
+                cl.getOptionProperties0(optionProperty).getProperty("foo"));
     }
 
     @Test
@@ -1223,6 +963,20 @@ public class CommandLineTest {
         cmd.addOption(Option.Option1("b", null));
         Option.Option1("c",null);
         cmd.addOption(Option.Option1("c", null));
+    }
+
+    @Test
+    public void testGetOptions_test8_decomposed()  {
+        final CommandLine cmd = new CommandLine();
+        assertNotNull(cmd.getOptions());
+        assertEquals(0, cmd.getOptions().length);
+        Option.Option1("a",null);
+        cmd.addOption(Option.Option1("a", null));
+        Option.Option1("b",null);
+        cmd.addOption(Option.Option1("b", null));
+        Option.Option1("c",null);
+        cmd.addOption(Option.Option1("c", null));
+        assertEquals(3, cmd.getOptions().length);
     }
 
     @Test
@@ -1333,6 +1087,7 @@ public class CommandLineTest {
         final CommandLineParser parser = new DefaultParser(2, false, null);
         final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
         assertEquals(123, ((Number) cmd.getParsedOptionValue2("i")).intValue());
+        assertEquals("foo", cmd.getParsedOptionValue2("f"));
     }
 
     @Test
@@ -1359,7 +1114,6 @@ public class CommandLineTest {
         Option.builder1("i");
         Option.builder1("i").hasArg0();
         Option.builder1("i").hasArg0().type(Number.class);
-        Option.builder1("i").hasArg0().type(Number.class).build();
     }
 
     @Test
@@ -1369,7 +1123,6 @@ public class CommandLineTest {
         Option.builder1("i").hasArg0();
         Option.builder1("i").hasArg0().type(Number.class);
         Option.builder1("i").hasArg0().type(Number.class).build();
-        options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
     }
 
     @Test
@@ -1380,7 +1133,6 @@ public class CommandLineTest {
         Option.builder1("i").hasArg0().type(Number.class);
         Option.builder1("i").hasArg0().type(Number.class).build();
         options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
-        Option.builder1("f");
     }
 
     @Test
@@ -1392,8 +1144,6 @@ public class CommandLineTest {
         Option.builder1("i").hasArg0().type(Number.class).build();
         options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
         Option.builder1("f");
-        Option.builder1("f").hasArg0();
-        Option.builder1("f").hasArg0().build();
     }
 
     @Test
@@ -1406,8 +1156,6 @@ public class CommandLineTest {
         options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
         Option.builder1("f");
         Option.builder1("f").hasArg0();
-        Option.builder1("f").hasArg0().build();
-        options.addOption0(Option.builder1("f").hasArg0().build());
     }
 
     @Test
@@ -1421,8 +1169,6 @@ public class CommandLineTest {
         Option.builder1("f");
         Option.builder1("f").hasArg0();
         Option.builder1("f").hasArg0().build();
-        options.addOption0(Option.builder1("f").hasArg0().build());
-        final CommandLineParser parser = new DefaultParser(2, false, null);
     }
 
     @Test
@@ -1437,8 +1183,6 @@ public class CommandLineTest {
         Option.builder1("f").hasArg0();
         Option.builder1("f").hasArg0().build();
         options.addOption0(Option.builder1("f").hasArg0().build());
-        final CommandLineParser parser = new DefaultParser(2, false, null);
-        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
     }
 
     @Test
@@ -1454,8 +1198,40 @@ public class CommandLineTest {
         Option.builder1("f").hasArg0().build();
         options.addOption0(Option.builder1("f").hasArg0().build());
         final CommandLineParser parser = new DefaultParser(2, false, null);
+    }
+
+    @Test
+    public void testGetParsedOptionValueWithChar_test11_decomposed() throws Exception {
+        final Options options = new Options();
+        Option.builder1("i");
+        Option.builder1("i").hasArg0();
+        Option.builder1("i").hasArg0().type(Number.class);
+        Option.builder1("i").hasArg0().type(Number.class).build();
+        options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
+        Option.builder1("f");
+        Option.builder1("f").hasArg0();
+        Option.builder1("f").hasArg0().build();
+        options.addOption0(Option.builder1("f").hasArg0().build());
+        final CommandLineParser parser = new DefaultParser(2, false, null);
+        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
+    }
+
+    @Test
+    public void testGetParsedOptionValueWithChar_test12_decomposed() throws Exception {
+        final Options options = new Options();
+        Option.builder1("i");
+        Option.builder1("i").hasArg0();
+        Option.builder1("i").hasArg0().type(Number.class);
+        Option.builder1("i").hasArg0().type(Number.class).build();
+        options.addOption0(Option.builder1("i").hasArg0().type(Number.class).build());
+        Option.builder1("f");
+        Option.builder1("f").hasArg0();
+        Option.builder1("f").hasArg0().build();
+        options.addOption0(Option.builder1("f").hasArg0().build());
+        final CommandLineParser parser = new DefaultParser(2, false, null);
         final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
         assertEquals(123, ((Number) cmd.getParsedOptionValue0('i')).intValue());
+        assertEquals("foo", cmd.getParsedOptionValue0('f'));
     }
 
     @Test
@@ -1586,6 +1362,7 @@ public class CommandLineTest {
         final CommandLineParser parser = new DefaultParser(2, false, null);
         final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
         assertEquals(123, ((Number) cmd.getParsedOptionValue1(optI)).intValue());
+        assertEquals("foo", cmd.getParsedOptionValue1(optF));
     }
 
     @Test
@@ -1716,5 +1493,23 @@ public class CommandLineTest {
         final CommandLineParser parser = new DefaultParser(2, false, null);
         final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
         assertNull(cmd.getOptionValue2((Option) null));
+    }
+
+    @Test
+    public void testNullhOption_test12_decomposed() throws Exception {
+        final Options options = new Options();
+        Option.builder1("i");
+        Option.builder1("i").hasArg0();
+        Option.builder1("i").hasArg0().type(Number.class);
+        final Option optI = Option.builder1("i").hasArg0().type(Number.class).build();
+        Option.builder1("f");
+        Option.builder1("f").hasArg0();
+        final Option optF = Option.builder1("f").hasArg0().build();
+        options.addOption0(optI);
+        options.addOption0(optF);
+        final CommandLineParser parser = new DefaultParser(2, false, null);
+        final CommandLine cmd = parser.parse0(options, new String[] {"-i", "123", "-f", "foo"});
+        assertNull(cmd.getOptionValue2((Option) null));
+        assertNull(cmd.getParsedOptionValue1((Option) null));
     }
 }

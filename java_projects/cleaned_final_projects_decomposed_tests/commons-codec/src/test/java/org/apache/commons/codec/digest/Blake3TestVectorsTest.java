@@ -285,43 +285,6 @@ public class Blake3TestVectorsTest {
     }
 
     @Test
-    public void hashArbitraryOutputLength() {
-        hasher.update0(input);
-        final byte[] actual = hasher.doFinalize2(hash.length);
-        assertArrayEquals(hash, actual);
-    }
-
-    @Test
-    public void hashTruncatedOutput() {
-        final byte[] actual = Blake3.hash(input);
-        assertArrayEquals(Arrays.copyOf(this.hash, 32), actual);
-    }
-
-    @Test
-    public void keyedHashArbitraryOutputLength() {
-        keyedHasher.update0(input);
-        final byte[] actual = keyedHasher.doFinalize2(keyedHash.length);
-        assertArrayEquals(keyedHash, actual);
-    }
-
-    @Test
-    public void keyedHashTruncatedOutput() {
-        final byte[] actual = Blake3.keyedHash(KEY, input);
-        assertArrayEquals(Arrays.copyOf(keyedHash, 32), actual);
-    }
-
-    @Test
-    public void keyDerivation() {
-        kdfHasher.update0(input);
-        final byte[] actual = kdfHasher.doFinalize2(deriveKey.length);
-        assertArrayEquals(deriveKey, actual);
-        kdfHasher.reset();
-        kdfHasher.update0(input);
-        final byte[] truncated = kdfHasher.doFinalize2(32);
-        assertArrayEquals(Arrays.copyOf(deriveKey, 32), truncated);
-    }
-
-    @Test
     public void hashArbitraryOutputLength_test0_decomposed()  {
         hasher.update0(input);
     }
@@ -333,8 +296,21 @@ public class Blake3TestVectorsTest {
     }
 
     @Test
+    public void hashArbitraryOutputLength_test2_decomposed()  {
+        hasher.update0(input);
+        final byte[] actual = hasher.doFinalize2(hash.length);
+        assertArrayEquals(hash, actual);
+    }
+
+    @Test
     public void hashTruncatedOutput_test0_decomposed()  {
         final byte[] actual = Blake3.hash(input);
+    }
+
+    @Test
+    public void hashTruncatedOutput_test1_decomposed()  {
+        final byte[] actual = Blake3.hash(input);
+        assertArrayEquals(Arrays.copyOf(this.hash, 32), actual);
     }
 
     @Test
@@ -349,8 +325,21 @@ public class Blake3TestVectorsTest {
     }
 
     @Test
+    public void keyedHashArbitraryOutputLength_test2_decomposed()  {
+        keyedHasher.update0(input);
+        final byte[] actual = keyedHasher.doFinalize2(keyedHash.length);
+        assertArrayEquals(keyedHash, actual);
+    }
+
+    @Test
     public void keyedHashTruncatedOutput_test0_decomposed()  {
         final byte[] actual = Blake3.keyedHash(KEY, input);
+    }
+
+    @Test
+    public void keyedHashTruncatedOutput_test1_decomposed()  {
+        final byte[] actual = Blake3.keyedHash(KEY, input);
+        assertArrayEquals(Arrays.copyOf(keyedHash, 32), actual);
     }
 
     @Test
@@ -370,7 +359,35 @@ public class Blake3TestVectorsTest {
         final byte[] actual = kdfHasher.doFinalize2(deriveKey.length);
         assertArrayEquals(deriveKey, actual);
         kdfHasher.reset();
+    }
+
+    @Test
+    public void keyDerivation_test3_decomposed()  {
+        kdfHasher.update0(input);
+        final byte[] actual = kdfHasher.doFinalize2(deriveKey.length);
+        assertArrayEquals(deriveKey, actual);
+        kdfHasher.reset();
+        kdfHasher.update0(input);
+    }
+
+    @Test
+    public void keyDerivation_test4_decomposed()  {
+        kdfHasher.update0(input);
+        final byte[] actual = kdfHasher.doFinalize2(deriveKey.length);
+        assertArrayEquals(deriveKey, actual);
+        kdfHasher.reset();
         kdfHasher.update0(input);
         final byte[] truncated = kdfHasher.doFinalize2(32);
+    }
+
+    @Test
+    public void keyDerivation_test5_decomposed()  {
+        kdfHasher.update0(input);
+        final byte[] actual = kdfHasher.doFinalize2(deriveKey.length);
+        assertArrayEquals(deriveKey, actual);
+        kdfHasher.reset();
+        kdfHasher.update0(input);
+        final byte[] truncated = kdfHasher.doFinalize2(32);
+        assertArrayEquals(Arrays.copyOf(deriveKey, 32), truncated);
     }
 }

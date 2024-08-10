@@ -125,265 +125,44 @@ public class Base32Test {
         {"foobar", "MZXW6YTBOI%%%%%%"},
     };
 
-    @Test
-    public void testBase32Chunked() throws Exception {
-        final Base32 codec = Base32.Base324(20);
-        for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
-            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
-        }
-    }
+    
 
-    @Test
-    public void testBase32HexSamples() throws Exception {
-        final Base32 codec = Base32.Base321(true);
-        for (final String[] element : BASE32HEX_TEST_CASES) {
-            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
-        }
-    }
+    
 
-    @Test
-    public void testBase32HexSamplesReverse() throws Exception {
-        final Base32 codec = Base32.Base321(true);
-        for (final String[] element : BASE32HEX_TEST_CASES) {
-            assertEquals(element[0], new String(codec.decode3(element[1]), CHARSET_UTF8));
-        }
-    }
+    
 
-    @Test
-    public void testBase32HexSamplesReverseLowercase() throws Exception {
-        final Base32 codec = Base32.Base321(true);
-        for (final String[] element : BASE32HEX_TEST_CASES) {
-            assertEquals(
-                    element[0], new String(codec.decode3(element[1].toLowerCase()), CHARSET_UTF8));
-        }
-    }
+    
 
-    @Test
-    public void testBase32Samples() throws Exception {
-        final Base32 codec = Base32.Base320();
-        for (final String[] element : BASE32_TEST_CASES) {
-            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
-        }
-    }
+    
 
-    @Test
-    public void testBase32BinarySamples() throws Exception {
-        final Base32 codec = Base32.Base320();
-        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            final String expected;
-            if (element.length > 2) {
-                expected = (String) element[2];
-            } else {
-                expected = (String) element[1];
-            }
-            assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[]) element[0]));
-        }
-    }
+    
 
-    @Test
-    public void testBase32BinarySamplesReverse() throws Exception {
-        final Base32 codec = Base32.Base320();
-        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
-            assertArrayEquals((byte[]) element[0], codec.decode3((String) element[1]));
-        }
-    }
+    
 
-    @Test
-    public void testBase32SamplesNonDefaultPadding() throws Exception {
-        final Base32 codec = Base32.Base323((byte) 0x25); // '%' <=> 0x25
+    
 
-        for (final String[] element : BASE32_PAD_TEST_CASES) {
-            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
-        }
-    }
+    
 
-    @Test
-    public void testCodec200() {
-        final Base32 codec = Base32.Base322(true, (byte) 'W'); // should be allowed
-        assertNotNull(codec);
-    }
-
-    @Test
-    public void testConstructors() {
-        Base32 base32;
-        base32 = Base32.Base320();
-        base32 = Base32.Base324(-1);
-        base32 = Base32.Base325(-1, new byte[] {});
-        base32 = Base32.Base325(32, new byte[] {});
-        base32 = Base32.Base326(32, new byte[] {}, false);
-        base32 = Base32.Base325(-1, new byte[] {'A'});
-        try {
-            base32 = Base32.Base325(32, null);
-            fail("Should have rejected null line separator");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        try {
-            base32 = Base32.Base325(32, new byte[] {'A'});
-            fail("Should have rejected attempt to use 'A' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        try {
-            base32 = Base32.Base325(32, new byte[] {'='});
-            fail("Should have rejected attempt to use '=' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        base32 = Base32.Base325(32, new byte[] {'$'}); // OK
-        try {
-            base32 = Base32.Base325(32, new byte[] {'A', '$'});
-            fail("Should have rejected attempt to use 'A$' as a line separator");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        try {
-            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) 'A');
-            fail("Should have rejected attempt to use 'A' as padding");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        try {
-            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) ' ');
-            fail("Should have rejected attempt to use ' ' as padding");
-        } catch (final IllegalArgumentException ignored) {
-        }
-        base32 = Base32.Base325(32, new byte[] {' ', '$', '\n', '\r', '\t'}); // OK
-        assertNotNull(base32);
-    }
+    
 
     /** Test encode and decode of empty byte array. */
-    @Test
-    public void testEmptyBase32() {
-        byte[] empty = {};
-        byte[] result = Base32.Base320().encode0(empty);
-        assertEquals("empty Base32 encode", 0, result.length);
-        assertNull("empty Base32 encode", Base32.Base320().encode0(null));
-        result = Base32.Base320().encode1(empty, 0, 1);
-        assertEquals("empty Base32 encode with offset", 0, result.length);
-        assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
+    
 
-        empty = new byte[0];
-        result = Base32.Base320().decode0(empty);
-        assertEquals("empty Base32 decode", 0, result.length);
-        assertNull("empty Base32 encode", Base32.Base320().decode0((byte[]) null));
-    }
+    
 
-    @Test
-    public void testIsInAlphabet() {
-        Base32 b32 = Base32.Base321(true);
-        assertFalse(b32.isInAlphabet0((byte) 0));
-        assertFalse(b32.isInAlphabet0((byte) 1));
-        assertFalse(b32.isInAlphabet0((byte) -1));
-        assertFalse(b32.isInAlphabet0((byte) -15));
-        assertFalse(b32.isInAlphabet0((byte) -32));
-        assertFalse(b32.isInAlphabet0((byte) 127));
-        assertFalse(b32.isInAlphabet0((byte) 128));
-        assertFalse(b32.isInAlphabet0((byte) 255));
+    
 
-        b32 = Base32.Base321(false);
-        for (char c = '2'; c <= '7'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        for (char c = 'A'; c <= 'Z'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        for (char c = 'a'; c <= 'z'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        assertFalse(b32.isInAlphabet0((byte) ('1')));
-        assertFalse(b32.isInAlphabet0((byte) ('8')));
-        assertFalse(b32.isInAlphabet0((byte) ('A' - 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('Z' + 1)));
+    
 
-        b32 = Base32.Base321(true);
-        for (char c = '0'; c <= '9'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        for (char c = 'A'; c <= 'V'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        for (char c = 'a'; c <= 'v'; c++) {
-            assertTrue(b32.isInAlphabet0((byte) c));
-        }
-        assertFalse(b32.isInAlphabet0((byte) ('0' - 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('9' + 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('A' - 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('V' + 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('a' - 1)));
-        assertFalse(b32.isInAlphabet0((byte) ('v' + 1)));
-    }
+    
 
-    @Test
-    public void testRandomBytes() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = Base32.Base320();
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(
-                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
-        }
-    }
+    
 
-    @Test
-    public void testRandomBytesChunked() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = Base32.Base324(10);
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(
-                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
-        }
-    }
+    
 
-    @Test
-    public void testRandomBytesHex() {
-        for (int i = 0; i < 20; i++) {
-            final Base32 codec = Base32.Base321(true);
-            final byte[][] b = BaseNTestData.randomData(codec, i);
-            assertEquals(
-                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
-        }
-    }
+    
 
-    @Test
-    public void testSingleCharEncoding() {
-        for (int i = 0; i < 20; i++) {
-            Base32 codec = Base32.Base320();
-            final BaseNCodec.Context context = new BaseNCodec.Context();
-            final byte unencoded[] = new byte[i];
-            final byte allInOne[] = codec.encode0(unencoded);
-            codec = Base32.Base320();
-            for (int j = 0; j < unencoded.length; j++) {
-                codec.encode2(unencoded, j, 1, context);
-            }
-            codec.encode2(unencoded, 0, -1, context);
-            final byte singly[] = new byte[allInOne.length];
-            codec.readResults(singly, 0, 100, context);
-            if (!Arrays.equals(allInOne, singly)) {
-                fail();
-            }
-        }
-    }
-
-    @Test
-    public void testBase32ImpossibleSamples() {
-        testImpossibleCases(
-                new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-                BASE32_IMPOSSIBLE_CASES);
-    }
-
-    @Test
-    public void testBase32ImpossibleChunked() {
-        testImpossibleCases(
-                new Base32(
-                        20,
-                        BaseNCodec.CHUNK_SEPARATOR,
-                        false,
-                        BaseNCodec.PAD_DEFAULT,
-                        CodecPolicy.STRICT),
-                BASE32_IMPOSSIBLE_CASES_CHUNKED);
-    }
-
-    @Test
-    public void testBase32HexImpossibleSamples() {
-        testImpossibleCases(
-                new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
-                BASE32HEX_IMPOSSIBLE_CASES);
-    }
+    
 
     private void testImpossibleCases(final Base32 codec, final String[] impossible_cases) {
         for (final String impossible : impossible_cases) {
@@ -395,40 +174,19 @@ public class Base32Test {
         }
     }
 
-    @Test
-    public void testBase32DecodingOfTrailing5Bits() {
-        assertBase32DecodingOfTrailingBits(5);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing10Bits() {
-        assertBase32DecodingOfTrailingBits(10);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing15Bits() {
-        assertBase32DecodingOfTrailingBits(15);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing20Bits() {
-        assertBase32DecodingOfTrailingBits(20);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing25Bits() {
-        assertBase32DecodingOfTrailingBits(25);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing30Bits() {
-        assertBase32DecodingOfTrailingBits(30);
-    }
+    
 
-    @Test
-    public void testBase32DecodingOfTrailing35Bits() {
-        assertBase32DecodingOfTrailingBits(35);
-    }
+    
 
     /**
      * Test base 32 decoding of the final trailing bits. Trailing encoded bytes cannot fit exactly
@@ -481,8 +239,24 @@ public class Base32Test {
     }
 
     @Test
+    public void testBase32Chunked_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base324(20);
+        for (final String[] element : BASE32_TEST_CASES_CHUNKED) {
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+        }
+    }
+
+    @Test
     public void testBase32HexSamples_test0_decomposed() throws Exception {
         final Base32 codec = Base32.Base321(true);
+    }
+
+    @Test
+    public void testBase32HexSamples_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base321(true);
+        for (final String[] element : BASE32HEX_TEST_CASES) {
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+        }
     }
 
     @Test
@@ -491,8 +265,25 @@ public class Base32Test {
     }
 
     @Test
+    public void testBase32HexSamplesReverse_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base321(true);
+        for (final String[] element : BASE32HEX_TEST_CASES) {
+            assertEquals(element[0], new String(codec.decode3(element[1]), CHARSET_UTF8));
+        }
+    }
+
+    @Test
     public void testBase32HexSamplesReverseLowercase_test0_decomposed() throws Exception {
         final Base32 codec = Base32.Base321(true);
+    }
+
+    @Test
+    public void testBase32HexSamplesReverseLowercase_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base321(true);
+        for (final String[] element : BASE32HEX_TEST_CASES) {
+            assertEquals(
+                    element[0], new String(codec.decode3(element[1].toLowerCase()), CHARSET_UTF8));
+        }
     }
 
     @Test
@@ -501,8 +292,30 @@ public class Base32Test {
     }
 
     @Test
+    public void testBase32Samples_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base320();
+        for (final String[] element : BASE32_TEST_CASES) {
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+        }
+    }
+
+    @Test
     public void testBase32BinarySamples_test0_decomposed() throws Exception {
         final Base32 codec = Base32.Base320();
+    }
+
+    @Test
+    public void testBase32BinarySamples_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base320();
+        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
+            final String expected;
+            if (element.length > 2) {
+                expected = (String) element[2];
+            } else {
+                expected = (String) element[1];
+            }
+            assertEquals(expected.toUpperCase(), codec.encodeAsString((byte[]) element[0]));
+        }
     }
 
     @Test
@@ -511,8 +324,24 @@ public class Base32Test {
     }
 
     @Test
+    public void testBase32BinarySamplesReverse_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base320();
+        for (final Object[] element : BASE32_BINARY_TEST_CASES) {
+            assertArrayEquals((byte[]) element[0], codec.decode3((String) element[1]));
+        }
+    }
+
+    @Test
     public void testBase32SamplesNonDefaultPadding_test0_decomposed() throws Exception {
         final Base32 codec = Base32.Base323((byte) 0x25);
+    }
+
+    @Test
+    public void testBase32SamplesNonDefaultPadding_test1_decomposed() throws Exception {
+        final Base32 codec = Base32.Base323((byte) 0x25);
+        for (final String[] element : BASE32_PAD_TEST_CASES) {
+            assertEquals(element[1], codec.encodeAsString(element[0].getBytes(CHARSET_UTF8)));
+        }
     }
 
     @Test
@@ -521,7 +350,119 @@ public class Base32Test {
     }
 
     @Test
+    public void testCodec200_test1_decomposed()  {
+        final Base32 codec = Base32.Base322(true, (byte) 'W');
+        assertNotNull(codec);
+    }
+
+    @Test
     public void testConstructors_test0_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+    }
+
+    @Test
+    public void testConstructors_test1_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+    }
+
+    @Test
+    public void testConstructors_test2_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+        base32 = Base32.Base325(-1, new byte[] {});
+        base32 = Base32.Base325(32, new byte[] {});
+    }
+
+    @Test
+    public void testConstructors_test3_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+        base32 = Base32.Base325(-1, new byte[] {});
+        base32 = Base32.Base325(32, new byte[] {});
+        base32 = Base32.Base326(32, new byte[] {}, false);
+    }
+
+    @Test
+    public void testConstructors_test4_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+        base32 = Base32.Base325(-1, new byte[] {});
+        base32 = Base32.Base325(32, new byte[] {});
+        base32 = Base32.Base326(32, new byte[] {}, false);
+        base32 = Base32.Base325(-1, new byte[] {'A'});
+        try {
+            base32 = Base32.Base325(32, null);
+            fail("Should have rejected null line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'='});
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        base32 = Base32.Base325(32, new byte[] {'$'});
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A', '$'});
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+    }
+
+    @Test
+    public void testConstructors_test5_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+        base32 = Base32.Base325(-1, new byte[] {});
+        base32 = Base32.Base325(32, new byte[] {});
+        base32 = Base32.Base326(32, new byte[] {}, false);
+        base32 = Base32.Base325(-1, new byte[] {'A'});
+        try {
+            base32 = Base32.Base325(32, null);
+            fail("Should have rejected null line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'='});
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        base32 = Base32.Base325(32, new byte[] {'$'});
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A', '$'});
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) 'A');
+            fail("Should have rejected attempt to use 'A' as padding");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) ' ');
+            fail("Should have rejected attempt to use ' ' as padding");
+        } catch (final IllegalArgumentException ignored) {
+        }
+    }
+
+    @Test
+    public void testConstructors_test6_decomposed()  {
         Base32 base32;
         base32 = Base32.Base320();
         base32 = Base32.Base324(-1);
@@ -564,10 +505,53 @@ public class Base32Test {
     }
 
     @Test
+    public void testConstructors_test7_decomposed()  {
+        Base32 base32;
+        base32 = Base32.Base320();
+        base32 = Base32.Base324(-1);
+        base32 = Base32.Base325(-1, new byte[] {});
+        base32 = Base32.Base325(32, new byte[] {});
+        base32 = Base32.Base326(32, new byte[] {}, false);
+        base32 = Base32.Base325(-1, new byte[] {'A'});
+        try {
+            base32 = Base32.Base325(32, null);
+            fail("Should have rejected null line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A'});
+            fail("Should have rejected attempt to use 'A' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base325(32, new byte[] {'='});
+            fail("Should have rejected attempt to use '=' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        base32 = Base32.Base325(32, new byte[] {'$'});
+        try {
+            base32 = Base32.Base325(32, new byte[] {'A', '$'});
+            fail("Should have rejected attempt to use 'A$' as a line separator");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) 'A');
+            fail("Should have rejected attempt to use 'A' as padding");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        try {
+            base32 = Base32.Base327(32, new byte[] {'\n'}, false, (byte) ' ');
+            fail("Should have rejected attempt to use ' ' as padding");
+        } catch (final IllegalArgumentException ignored) {
+        }
+        base32 = Base32.Base325(32, new byte[] {' ', '$', '\n', '\r', '\t'});
+        assertNotNull(base32);
+    }
+
+    @Test
     public void testEmptyBase32_test0_decomposed()  {
         byte[] empty = {};
         Base32.Base320();
-        byte[] result = Base32.Base320().encode0(empty);
     }
 
     @Test
@@ -575,8 +559,6 @@ public class Base32Test {
         byte[] empty = {};
         Base32.Base320();
         byte[] result = Base32.Base320().encode0(empty);
-        assertEquals("empty Base32 encode", 0, result.length);
-        Base32.Base320();
     }
 
     @Test
@@ -586,7 +568,6 @@ public class Base32Test {
         byte[] result = Base32.Base320().encode0(empty);
         assertEquals("empty Base32 encode", 0, result.length);
         Base32.Base320();
-        assertNull("empty Base32 encode", Base32.Base320().encode0(null));
     }
 
     @Test
@@ -597,7 +578,6 @@ public class Base32Test {
         assertEquals("empty Base32 encode", 0, result.length);
         Base32.Base320();
         assertNull("empty Base32 encode", Base32.Base320().encode0(null));
-        Base32.Base320();
     }
 
     @Test
@@ -609,7 +589,6 @@ public class Base32Test {
         Base32.Base320();
         assertNull("empty Base32 encode", Base32.Base320().encode0(null));
         Base32.Base320();
-        result = Base32.Base320().encode1(empty, 0, 1);
     }
 
     @Test
@@ -622,8 +601,6 @@ public class Base32Test {
         assertNull("empty Base32 encode", Base32.Base320().encode0(null));
         Base32.Base320();
         result = Base32.Base320().encode1(empty, 0, 1);
-        assertEquals("empty Base32 encode with offset", 0, result.length);
-        Base32.Base320();
     }
 
     @Test
@@ -638,7 +615,6 @@ public class Base32Test {
         result = Base32.Base320().encode1(empty, 0, 1);
         assertEquals("empty Base32 encode with offset", 0, result.length);
         Base32.Base320();
-        assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
     }
 
     @Test
@@ -654,9 +630,6 @@ public class Base32Test {
         assertEquals("empty Base32 encode with offset", 0, result.length);
         Base32.Base320();
         assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
-        empty = new byte[0];
-        Base32.Base320();
-        result = Base32.Base320().decode0(empty);
     }
 
     @Test
@@ -674,9 +647,65 @@ public class Base32Test {
         assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
         empty = new byte[0];
         Base32.Base320();
+    }
+
+    @Test
+    public void testEmptyBase32_test9_decomposed()  {
+        byte[] empty = {};
+        Base32.Base320();
+        byte[] result = Base32.Base320().encode0(empty);
+        assertEquals("empty Base32 encode", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode", Base32.Base320().encode0(null));
+        Base32.Base320();
+        result = Base32.Base320().encode1(empty, 0, 1);
+        assertEquals("empty Base32 encode with offset", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
+        empty = new byte[0];
+        Base32.Base320();
+        result = Base32.Base320().decode0(empty);
+    }
+
+    @Test
+    public void testEmptyBase32_test10_decomposed()  {
+        byte[] empty = {};
+        Base32.Base320();
+        byte[] result = Base32.Base320().encode0(empty);
+        assertEquals("empty Base32 encode", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode", Base32.Base320().encode0(null));
+        Base32.Base320();
+        result = Base32.Base320().encode1(empty, 0, 1);
+        assertEquals("empty Base32 encode with offset", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
+        empty = new byte[0];
+        Base32.Base320();
         result = Base32.Base320().decode0(empty);
         assertEquals("empty Base32 decode", 0, result.length);
         Base32.Base320();
+    }
+
+    @Test
+    public void testEmptyBase32_test11_decomposed()  {
+        byte[] empty = {};
+        Base32.Base320();
+        byte[] result = Base32.Base320().encode0(empty);
+        assertEquals("empty Base32 encode", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode", Base32.Base320().encode0(null));
+        Base32.Base320();
+        result = Base32.Base320().encode1(empty, 0, 1);
+        assertEquals("empty Base32 encode with offset", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode with offset", Base32.Base320().encode0(null));
+        empty = new byte[0];
+        Base32.Base320();
+        result = Base32.Base320().decode0(empty);
+        assertEquals("empty Base32 decode", 0, result.length);
+        Base32.Base320();
+        assertNull("empty Base32 encode", Base32.Base320().decode0((byte[]) null));
     }
 
     @Test
@@ -806,5 +835,117 @@ public class Base32Test {
         assertFalse(b32.isInAlphabet0((byte) ('A' - 1)));
         assertFalse(b32.isInAlphabet0((byte) ('V' + 1)));
         assertFalse(b32.isInAlphabet0((byte) ('a' - 1)));
+        assertFalse(b32.isInAlphabet0((byte) ('v' + 1)));
+    }
+
+    @Test
+    public void testRandomBytes_test0_decomposed()  {
+        for (int i = 0; i < 20; i++) {
+            final Base32 codec = Base32.Base320();
+            final byte[][] b = BaseNTestData.randomData(codec, i);
+            assertEquals(
+                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
+        }
+    }
+
+    @Test
+    public void testRandomBytesChunked_test0_decomposed()  {
+        for (int i = 0; i < 20; i++) {
+            final Base32 codec = Base32.Base324(10);
+            final byte[][] b = BaseNTestData.randomData(codec, i);
+            assertEquals(
+                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
+        }
+    }
+
+    @Test
+    public void testRandomBytesHex_test0_decomposed()  {
+        for (int i = 0; i < 20; i++) {
+            final Base32 codec = Base32.Base321(true);
+            final byte[][] b = BaseNTestData.randomData(codec, i);
+            assertEquals(
+                    "" + i + " " + codec.lineLength, b[1].length, codec.getEncodedLength(b[0]));
+        }
+    }
+
+    @Test
+    public void testSingleCharEncoding_test0_decomposed()  {
+        for (int i = 0; i < 20; i++) {
+            Base32 codec = Base32.Base320();
+            final BaseNCodec.Context context = new BaseNCodec.Context();
+            final byte unencoded[] = new byte[i];
+            final byte allInOne[] = codec.encode0(unencoded);
+            codec = Base32.Base320();
+            for (int j = 0; j < unencoded.length; j++) {
+                codec.encode2(unencoded, j, 1, context);
+            }
+            codec.encode2(unencoded, 0, -1, context);
+            final byte singly[] = new byte[allInOne.length];
+            codec.readResults(singly, 0, 100, context);
+            if (!Arrays.equals(allInOne, singly)) {
+                fail();
+            }
+        }
+    }
+
+    @Test
+    public void testBase32ImpossibleSamples_test0_decomposed()  {
+        testImpossibleCases(
+                new Base32(0, null, false, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+                BASE32_IMPOSSIBLE_CASES);
+    }
+
+    @Test
+    public void testBase32ImpossibleChunked_test0_decomposed()  {
+        testImpossibleCases(
+                new Base32(
+                        20,
+                        BaseNCodec.CHUNK_SEPARATOR,
+                        false,
+                        BaseNCodec.PAD_DEFAULT,
+                        CodecPolicy.STRICT),
+                BASE32_IMPOSSIBLE_CASES_CHUNKED);
+    }
+
+    @Test
+    public void testBase32HexImpossibleSamples_test0_decomposed()  {
+        testImpossibleCases(
+                new Base32(0, null, true, BaseNCodec.PAD_DEFAULT, CodecPolicy.STRICT),
+                BASE32HEX_IMPOSSIBLE_CASES);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing5Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(5);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing10Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(10);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing15Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(15);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing20Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(20);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing25Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(25);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing30Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(30);
+    }
+
+    @Test
+    public void testBase32DecodingOfTrailing35Bits_test0_decomposed()  {
+        assertBase32DecodingOfTrailingBits(35);
     }
 }

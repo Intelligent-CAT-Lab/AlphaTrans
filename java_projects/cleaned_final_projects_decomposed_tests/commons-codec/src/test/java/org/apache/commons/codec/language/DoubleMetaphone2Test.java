@@ -1277,16 +1277,17 @@ public class DoubleMetaphone2Test extends StringEncoderAbstractTest<DoubleMetaph
     }
 
     /** Test alternative encoding. */
+    
+
+    /** Test primary encoding. */
+
     @Test
-    public void testDoubleMetaphoneAlternate() {
+    public void testDoubleMetaphoneAlternate_test0_decomposed()  {
         this.checkDoubleMetaphone(ALTERNATE_INDEX, true);
     }
 
-    /** Test primary encoding. */
     @Test
-    public void testDoubleMetaphonePrimary() {
+    public void testDoubleMetaphonePrimary_test0_decomposed()  {
         this.checkDoubleMetaphone(PRIMARY_INDEX, false);
     }
-
-    
 }

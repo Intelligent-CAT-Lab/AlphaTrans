@@ -28,31 +28,14 @@ public class XXHash32OverflowTest {
      * If this is not handled correctly then the code throws an exception when it copies more data
      * into the unprocessed bytes array.
      */
-    @Test
-    public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray() {
-        final int bufferSize = 16;
-        final int unprocessedSize = bufferSize - 1;
-        final int hugeLength = Integer.MAX_VALUE - (unprocessedSize - 1);
-        Assert.assertTrue(
-                "This should overflow to negative", unprocessedSize + hugeLength < bufferSize);
-
-        byte[] bytes = null;
-        try {
-            bytes = new byte[hugeLength];
-        } catch (final OutOfMemoryError ignore) {
-        }
-        Assume.assumeTrue("Cannot allocate array of length " + hugeLength, bytes != null);
-
-        final XXHash32 inc = XXHash32.XXHash321();
-        inc.update1(bytes, 0, unprocessedSize);
-        inc.update1(bytes, 0, hugeLength);
-    }
 
     @Test
     public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test0_decomposed()  {
         final int bufferSize = 16;
         final int unprocessedSize = bufferSize - 1;
         final int hugeLength = Integer.MAX_VALUE - (unprocessedSize - 1);
+        Assert.assertTrue(
+                "This should overflow to negative", unprocessedSize + hugeLength < bufferSize);
     }
 
     @Test
@@ -69,6 +52,23 @@ public class XXHash32OverflowTest {
         }
         Assume.assumeTrue("Cannot allocate array of length " + hugeLength, bytes != null);
         final XXHash32 inc = XXHash32.XXHash321();
+    }
+
+    @Test
+    public void testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test2_decomposed()  {
+        final int bufferSize = 16;
+        final int unprocessedSize = bufferSize - 1;
+        final int hugeLength = Integer.MAX_VALUE - (unprocessedSize - 1);
+        Assert.assertTrue(
+                "This should overflow to negative", unprocessedSize + hugeLength < bufferSize);
+        byte[] bytes = null;
+        try {
+            bytes = new byte[hugeLength];
+        } catch (final OutOfMemoryError ignore) {
+        }
+        Assume.assumeTrue("Cannot allocate array of length " + hugeLength, bytes != null);
+        final XXHash32 inc = XXHash32.XXHash321();
         inc.update1(bytes, 0, unprocessedSize);
+        inc.update1(bytes, 0, hugeLength);
     }
 }

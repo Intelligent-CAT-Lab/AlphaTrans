@@ -27,40 +27,6 @@ import java.io.StringWriter;
 
 /** https://issues.apache.org/jira/browse/CLI-18 */
 public class BugCLI18Test {
-    @Test
-    public void testCLI18() {
-        final Options options = new Options();
-        options.addOption0(new Option(0, "a", "aaa", "aaaaaaa", false, null));
-        options.addOption0(
-                new Option(
-                        0,
-                        null,
-                        "bbb",
-                        "bbbbbbb dksh fkshd fkhs dkfhsdk fhskd hksdks dhfowehfsdhfkjshf skfhkshf sf"
-                                + " jkshfk sfh skfh skf f",
-                        false,
-                        null));
-        options.addOption0(new Option(0, "c", null, "ccccccc", false, null));
-
-        final HelpFormatter formatter = new HelpFormatter();
-        final StringWriter out = new StringWriter();
-
-        formatter.printHelp3(
-                new PrintWriter(out),
-                80,
-                "foobar",
-                "dsfkfsh kdh hsd hsdh fkshdf ksdh fskdh fsdh fkshfk sfdkjhskjh fkjh fkjsh khsdkj"
-                        + " hfskdhf skjdfh ksf khf s",
-                options,
-                2,
-                2,
-                "blort j jgj j jg jhghjghjgjhgjhg jgjhgj jhg jhg hjg jgjhghjg jhg hjg jhgjg"
-                        + " jgjhghjg jg jgjhgjgjg jhg jhgjh"
-                        + '\r'
-                        + '\n'
-                        + "rarrr",
-                true);
-    }
 
     @Test
     public void testCLI18_test0_decomposed()  {
@@ -137,5 +103,20 @@ public class BugCLI18Test {
         options.addOption0(new Option(0, "c", null, "ccccccc", false, null));
         final HelpFormatter formatter = new HelpFormatter();
         final StringWriter out = new StringWriter();
+        formatter.printHelp3(
+                new PrintWriter(out),
+                80,
+                "foobar",
+                "dsfkfsh kdh hsd hsdh fkshdf ksdh fskdh fsdh fkshfk sfdkjhskjh fkjh fkjsh khsdkj"
+                        + " hfskdhf skjdfh ksf khf s",
+                options,
+                2,
+                2,
+                "blort j jgj j jg jhghjghjgjhgjhg jgjhgj jhg jhg hjg jgjhghjg jhg hjg jhgjg"
+                        + " jgjhghjg jg jgjhgjgjg jhg jhgjh"
+                        + '\r'
+                        + '\n'
+                        + "rarrr",
+                true);
     }
 }

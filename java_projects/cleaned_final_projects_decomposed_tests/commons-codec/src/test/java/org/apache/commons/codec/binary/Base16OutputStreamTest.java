@@ -38,61 +38,21 @@ public class Base16OutputStreamTest {
      *
      * @throws IOException for some failure scenarios..
      */
-    @Test
-    public void testBase16EmptyOutputStream() throws IOException {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte0(emptyEncoded, emptyDecoded);
-        testByChunk0(emptyEncoded, emptyDecoded);
-    }
+    
 
     /**
      * Test the Base16OutputStream implementation
      *
      * @throws IOException for some failure scenarios.
      */
-    @Test
-    public void testBase16OutputStreamByChunk() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByChunk0(encoded, decoded);
-
-        encoded = StringUtils.getBytesUtf8("41");
-        decoded = new byte[] {(byte) 0x41};
-        testByChunk0(encoded, decoded);
-
-        final BaseNCodec codec = Base16.Base161(true);
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByChunk1(encoded, decoded, true);
-        }
-    }
+    
 
     /**
      * Test the Base16OutputStream implementation
      *
      * @throws IOException for some failure scenarios.
      */
-    @Test
-    public void testBase16OutputStreamByteByByte() throws IOException {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByteByByte0(encoded, decoded);
-
-        encoded = StringUtils.getBytesUtf8("41");
-        decoded = new byte[] {(byte) 0x41};
-        testByteByByte0(encoded, decoded);
-
-        final BaseNCodec codec = Base16.Base161(true);
-        for (int i = 0; i <= 150; i++) {
-            final byte[][] randomData = BaseNTestData.randomData(codec, i);
-            encoded = randomData[1];
-            decoded = randomData[0];
-            testByteByByte1(encoded, decoded, true);
-        }
-    }
+    
 
     /**
      * Test method does three tests on the supplied data: 1. encoded ---[DECODE]--> decoded 2.
@@ -232,8 +192,149 @@ public class Base16OutputStreamTest {
      *
      * @throws IOException for some failure scenarios.
      */
+    
+
+    /**
+     * Tests Base16OutputStream.write(null).
+     *
+     * @throws IOException for some failure scenarios.
+     */
+
     @Test
-    public void testWriteOutOfBounds() throws IOException {
+    public void testBase16EmptyOutputStream_test0_decomposed() throws IOException {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte0(emptyEncoded, emptyDecoded);
+    }
+
+    @Test
+    public void testBase16EmptyOutputStream_test1_decomposed() throws IOException {
+        final byte[] emptyEncoded = {};
+        final byte[] emptyDecoded = {};
+        testByteByByte0(emptyEncoded, emptyDecoded);
+        testByChunk0(emptyEncoded, emptyDecoded);
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test0_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test1_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk0(encoded, decoded);
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test2_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test3_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByChunk0(encoded, decoded);
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test4_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByChunk0(encoded, decoded);
+        final BaseNCodec codec = Base16.Base161(true);
+    }
+
+    @Test
+    public void testBase16OutputStreamByChunk_test5_decomposed() throws Exception {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByChunk0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByChunk0(encoded, decoded);
+        final BaseNCodec codec = Base16.Base161(true);
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByChunk1(encoded, decoded, true);
+        }
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test0_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test1_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte0(encoded, decoded);
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test2_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test3_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByteByByte0(encoded, decoded);
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test4_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByteByByte0(encoded, decoded);
+        final BaseNCodec codec = Base16.Base161(true);
+    }
+
+    @Test
+    public void testBase16OutputStreamByteByByte_test5_decomposed() throws IOException {
+        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
+        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
+        testByteByByte0(encoded, decoded);
+        encoded = StringUtils.getBytesUtf8("41");
+        decoded = new byte[] {(byte) 0x41};
+        testByteByByte0(encoded, decoded);
+        final BaseNCodec codec = Base16.Base161(true);
+        for (int i = 0; i <= 150; i++) {
+            final byte[][] randomData = BaseNTestData.randomData(codec, i);
+            encoded = randomData[1];
+            decoded = randomData[0];
+            testByteByByte1(encoded, decoded, true);
+        }
+    }
+
+    @Test
+    public void testWriteOutOfBounds_test0_decomposed() throws IOException {
         final byte[] buf = new byte[1024];
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = Base16OutputStream.Base16OutputStream3(bout)) {
@@ -272,70 +373,13 @@ public class Base16OutputStreamTest {
         }
     }
 
-    /**
-     * Tests Base16OutputStream.write(null).
-     *
-     * @throws IOException for some failure scenarios.
-     */
     @Test
-    public void testWriteToNullCoverage() throws IOException {
+    public void testWriteToNullCoverage_test0_decomposed() throws IOException {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final Base16OutputStream out = Base16OutputStream.Base16OutputStream3(bout)) {
             out.write0(null, 0, 0);
             fail("Expcted Base16OutputStream.write(null) to throw a NullPointerException");
         } catch (final NullPointerException e) {
         }
-    }
-
-    @Test
-    public void testBase16EmptyOutputStream_test0_decomposed() throws IOException {
-        final byte[] emptyEncoded = {};
-        final byte[] emptyDecoded = {};
-        testByteByByte0(emptyEncoded, emptyDecoded);
-    }
-
-    @Test
-    public void testBase16OutputStreamByChunk_test0_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase16OutputStreamByChunk_test1_decomposed() throws Exception {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByChunk0(encoded, decoded);
-        encoded = StringUtils.getBytesUtf8("41");
-        decoded = new byte[] {(byte) 0x41};
-        testByChunk0(encoded, decoded);
-        final BaseNCodec codec = Base16.Base161(true);
-    }
-
-    @Test
-    public void testBase16OutputStreamByteByByte_test0_decomposed() throws IOException {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-    }
-
-    @Test
-    public void testBase16OutputStreamByteByByte_test1_decomposed() throws IOException {
-        byte[] encoded = StringUtils.getBytesUtf8("48656C6C6F20576F726C64");
-        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);
-        testByteByByte0(encoded, decoded);
-        encoded = StringUtils.getBytesUtf8("41");
-        decoded = new byte[] {(byte) 0x41};
-        testByteByByte0(encoded, decoded);
-        final BaseNCodec codec = Base16.Base161(true);
-    }
-
-    @Test
-    public void testWriteOutOfBounds_test0_decomposed() throws IOException {
-        final byte[] buf = new byte[1024];
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    }
-
-    @Test
-    public void testWriteToNullCoverage_test0_decomposed() throws IOException {
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     }
 }

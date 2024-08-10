@@ -69,17 +69,6 @@ public class ExportTestCase {
     }
 
     @Test
-    public void testShouldPrintDotFormat() throws Exception {
-        export(actual)
-                .withName("DotFormatGraph")
-                .usingDotNotation()
-                .withVertexLabels(new VertexLabelMapper())
-                .withEdgeWeights(new EdgeWeightMapper())
-                .withEdgeLabels(new EdgeLabelMapper())
-                .to1(System.out);
-    }
-
-    @Test
     public void testShouldPrintDotFormat_test0_decomposed() throws Exception {
         export(actual);
     }
@@ -122,5 +111,22 @@ public class ExportTestCase {
         export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper());
         export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper()).withEdgeWeights(new EdgeWeightMapper());
         export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper()).withEdgeWeights(new EdgeWeightMapper()).withEdgeLabels(new EdgeLabelMapper());
+    }
+
+    @Test
+    public void testShouldPrintDotFormat_test6_decomposed() throws Exception {
+        export(actual);
+        export(actual).withName("DotFormatGraph");
+        export(actual).withName("DotFormatGraph").usingDotNotation();
+        export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper());
+        export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper()).withEdgeWeights(new EdgeWeightMapper());
+        export(actual).withName("DotFormatGraph").usingDotNotation().withVertexLabels(new VertexLabelMapper()).withEdgeWeights(new EdgeWeightMapper()).withEdgeLabels(new EdgeLabelMapper());
+        export(actual)
+                .withName("DotFormatGraph")
+                .usingDotNotation()
+                .withVertexLabels(new VertexLabelMapper())
+                .withEdgeWeights(new EdgeWeightMapper())
+                .withEdgeLabels(new EdgeLabelMapper())
+                .to1(System.out);
     }
 }

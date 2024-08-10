@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AnsiOutputStreamTest {
 
     @Test
-    void canHandleSgrsWithMultipleOptions() throws IOException {
+    public void canHandleSgrsWithMultipleOptions_test0_decomposed() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final AnsiOutputStream ansiOutput = new AnsiOutputStream(
                 baos,
@@ -42,14 +42,6 @@ class AnsiOutputStreamTest {
                 null,
                 null,
                 false);
-        ansiOutput.write(
-                ("\u001B[33mbanana_1  |\u001B[0m 19:59:14.353\u001B[0;38m [debug] A message\u001B[0m\n").getBytes());
-        assertEquals("banana_1  | 19:59:14.353 [debug] A message\n", baos.toString());
-    }
-
-    @Test
-    public void canHandleSgrsWithMultipleOptions_test0_decomposed() throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     }
 
     @Test
@@ -66,6 +58,8 @@ class AnsiOutputStreamTest {
                 null,
                 null,
                 false);
+        ansiOutput.write(
+                ("\u001B[33mbanana_1  |\u001B[0m 19:59:14.353\u001B[0;38m [debug] A message\u001B[0m\n").getBytes());
     }
 
     @Test
@@ -84,5 +78,6 @@ class AnsiOutputStreamTest {
                 false);
         ansiOutput.write(
                 ("\u001B[33mbanana_1  |\u001B[0m 19:59:14.353\u001B[0;38m [debug] A message\u001B[0m\n").getBytes());
+        assertEquals("banana_1  | 19:59:14.353 [debug] A message\n", baos.toString());
     }
 }

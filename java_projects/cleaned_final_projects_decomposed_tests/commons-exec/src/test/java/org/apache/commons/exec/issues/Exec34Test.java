@@ -47,43 +47,13 @@ public class Exec34Test {
      *
      * @throws Exception the test failed
      */
-    @Test
-    public void testExec34_1() throws Exception {
-
-        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);
-        cmdLine.addArgument0("10"); // sleep 10 seconds
-
-        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(Integer.MAX_VALUE);
-        final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
-        exec.setWatchdog(watchdog);
-        exec.execute1(cmdLine, handler);
-        assertTrue(watchdog.isWatching());
-        watchdog.destroyProcess();
-        assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
-        assertFalse(watchdog.isWatching(), "Watchdog is no longer watching the process");
-    }
+    
 
     /**
      * Some user waited for an asynchronous process using watchdog.isWatching() which is now properly implemented using {@code DefaultExecuteResultHandler}.
      *
      * @throws Exception the test failed
      */
-    @Test
-    public void testExec34_2() throws Exception {
-
-        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);
-        cmdLine.addArgument0("10"); // sleep 10 seconds
-
-        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(5000);
-        final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
-        exec.setWatchdog(watchdog);
-        exec.execute1(cmdLine, handler);
-        handler.waitFor0();
-        assertTrue(handler.hasResult(), "Process has exited");
-        assertNotNull(handler.getException(), "Process was aborted");
-        assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
-        assertFalse(watchdog.isWatching(), "Watchdog is no longer watching the process");
-    }
 
     @Test
     public void testExec34_1_test0_decomposed() throws Exception {
@@ -164,6 +134,20 @@ public class Exec34Test {
         assertTrue(watchdog.isWatching());
         watchdog.destroyProcess();
         assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
+    }
+
+    @Test
+    public void testExec34_1_test9_decomposed() throws Exception {
+        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);
+        cmdLine.addArgument0("10");
+        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(Integer.MAX_VALUE);
+        final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
+        exec.setWatchdog(watchdog);
+        exec.execute1(cmdLine, handler);
+        assertTrue(watchdog.isWatching());
+        watchdog.destroyProcess();
+        assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
+        assertFalse(watchdog.isWatching(), "Watchdog is no longer watching the process");
     }
 
     @Test
@@ -259,5 +243,20 @@ public class Exec34Test {
         assertTrue(handler.hasResult(), "Process has exited");
         assertNotNull(handler.getException(), "Process was aborted");
         assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
+    }
+
+    @Test
+    public void testExec34_2_test10_decomposed() throws Exception {
+        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);
+        cmdLine.addArgument0("10");
+        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(5000);
+        final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
+        exec.setWatchdog(watchdog);
+        exec.execute1(cmdLine, handler);
+        handler.waitFor0();
+        assertTrue(handler.hasResult(), "Process has exited");
+        assertNotNull(handler.getException(), "Process was aborted");
+        assertTrue(watchdog.killedProcess(), "Watchdog should have killed the process");
+        assertFalse(watchdog.isWatching(), "Watchdog is no longer watching the process");
     }
 }

@@ -33,23 +33,25 @@ public class BugCLI252Test {
         return options;
     }
 
-    @Test(expected = AmbiguousOptionException.class)
-    public void testAmbiquousOptionName() throws ParseException {
-        new DefaultParser(2, false, null).parse0(getOptions(), new String[] {"--pref"});
-    }
-
-    @Test
-    public void testExactOptionNameMatch() throws ParseException {
-        new DefaultParser(2, false, null).parse0(getOptions(), new String[] {"--prefix"});
-    }
-
     @Test
     public void testAmbiquousOptionName_test0_decomposed() throws ParseException {
         getOptions();
     }
 
+    @Test(expected = AmbiguousOptionException.class)
+    public void testAmbiquousOptionName_test1_decomposed() throws ParseException {
+        getOptions();
+        new DefaultParser(2, false, null).parse0(getOptions(), new String[] {"--pref"});
+    }
+
     @Test
     public void testExactOptionNameMatch_test0_decomposed() throws ParseException {
         getOptions();
+    }
+
+    @Test
+    public void testExactOptionNameMatch_test1_decomposed() throws ParseException {
+        getOptions();
+        new DefaultParser(2, false, null).parse0(getOptions(), new String[] {"--prefix"});
     }
 }

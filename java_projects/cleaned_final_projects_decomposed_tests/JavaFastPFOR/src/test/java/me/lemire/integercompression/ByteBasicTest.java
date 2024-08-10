@@ -31,9 +31,19 @@ public class ByteBasicTest {
 	/**
      * 
      */
-	@Test
-	public void saulTest() {
-		for (ByteIntegerCODEC C : codecs) {
+	
+    /**
+     * 
+     */
+    
+
+    /**
+     * 
+     */
+
+    @Test
+    public void saulTest_test0_decomposed()  {
+        for (ByteIntegerCODEC C : codecs) {
 			for (int x = 0; x < 50 * 4; ++x) {
 				int[] a = { 2, 3, 4, 5 };
 				byte[] b = new byte[90*4];
@@ -53,12 +63,10 @@ public class ByteBasicTest {
 				assertArrayEquals(a, c);
 			}
 		}
-	}
-    /**
-     * 
-     */
+    }
+
     @Test
-    public void varyingLengthTest() {
+    public void varyingLengthTest_test0_decomposed()  {
         int N = 4096;
         int[] data = new int[N];
         for (int k = 0; k < N; ++k)
@@ -82,11 +90,8 @@ public class ByteBasicTest {
         }
     }
 
-    /**
-     * 
-     */
     @Test
-    public void varyingLengthTest2() {
+    public void varyingLengthTest2_test0_decomposed()  {
         int N = 128;
         int[] data = new int[N];
         data[127] = -1;
@@ -115,20 +120,5 @@ public class ByteBasicTest {
             }
 
         }
-    }
-
-    @Test
-    public void varyingLengthTest_test0_decomposed()  {
-        int N = 4096;
-        int[] data = new int[N];
-        for (int k = 0; k < N; ++k)
-            data[k] = k;
-    }
-
-    @Test
-    public void varyingLengthTest2_test0_decomposed()  {
-        int N = 128;
-        int[] data = new int[N];
-        data[127] = -1;
     }
 }

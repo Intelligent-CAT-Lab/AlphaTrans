@@ -54,45 +54,6 @@ public class BugCLI71Test {
     }
 
     @Test
-    public void testBasic() throws Exception {
-        final String[] args = {"-a", "Caesar", "-k", "A"};
-        final CommandLine line = parser.parse0(options, args);
-        assertEquals("Caesar", line.getOptionValue4("a"));
-        assertEquals("A", line.getOptionValue4("k"));
-    }
-
-    @Test
-    public void testGetsDefaultIfOptional() throws Exception {
-        final String[] args = {"-k", "-a", "Caesar"};
-        options.getOption("k").setOptionalArg(true);
-        final CommandLine line = parser.parse0(options, args);
-
-        assertEquals("Caesar", line.getOptionValue4("a"));
-        assertEquals("a", line.getOptionValue1('k', "a"));
-    }
-
-    @Test
-    public void testLackOfError() throws Exception {
-        final String[] args = {"-k", "-a", "Caesar"};
-        try {
-            parser.parse0(options, args);
-            fail("MissingArgumentException expected");
-        } catch (final MissingArgumentException e) {
-            assertEquals("option missing an argument", "k", e.getOption().getOpt());
-        }
-    }
-
-    @Test
-    public void testMistakenArgument() throws Exception {
-        String[] args = {"-a", "Caesar", "-k", "A"};
-        CommandLine line = parser.parse0(options, args);
-        args = new String[] {"-a", "Caesar", "-k", "a"};
-        line = parser.parse0(options, args);
-        assertEquals("Caesar", line.getOptionValue4("a"));
-        assertEquals("a", line.getOptionValue4("k"));
-    }
-
-    @Test
     public void testBasic_test0_decomposed() throws Exception {
         final String[] args = {"-a", "Caesar", "-k", "A"};
         final CommandLine line = parser.parse0(options, args);
@@ -103,10 +64,24 @@ public class BugCLI71Test {
         final String[] args = {"-a", "Caesar", "-k", "A"};
         final CommandLine line = parser.parse0(options, args);
         assertEquals("Caesar", line.getOptionValue4("a"));
+        assertEquals("A", line.getOptionValue4("k"));
     }
 
     @Test
     public void testGetsDefaultIfOptional_test0_decomposed() throws Exception {
+        final String[] args = {"-k", "-a", "Caesar"};
+        options.getOption("k");
+    }
+
+    @Test
+    public void testGetsDefaultIfOptional_test1_decomposed() throws Exception {
+        final String[] args = {"-k", "-a", "Caesar"};
+        options.getOption("k");
+        options.getOption("k").setOptionalArg(true);
+    }
+
+    @Test
+    public void testGetsDefaultIfOptional_test2_decomposed() throws Exception {
         final String[] args = {"-k", "-a", "Caesar"};
         options.getOption("k");
         options.getOption("k").setOptionalArg(true);
@@ -114,7 +89,7 @@ public class BugCLI71Test {
     }
 
     @Test
-    public void testGetsDefaultIfOptional_test1_decomposed() throws Exception {
+    public void testGetsDefaultIfOptional_test3_decomposed() throws Exception {
         final String[] args = {"-k", "-a", "Caesar"};
         options.getOption("k");
         options.getOption("k").setOptionalArg(true);
@@ -123,16 +98,30 @@ public class BugCLI71Test {
     }
 
     @Test
+    public void testGetsDefaultIfOptional_test4_decomposed() throws Exception {
+        final String[] args = {"-k", "-a", "Caesar"};
+        options.getOption("k");
+        options.getOption("k").setOptionalArg(true);
+        final CommandLine line = parser.parse0(options, args);
+        assertEquals("Caesar", line.getOptionValue4("a"));
+        assertEquals("a", line.getOptionValue1('k', "a"));
+    }
+
+    @Test
     public void testLackOfError_test0_decomposed() throws Exception {
         final String[] args = {"-k", "-a", "Caesar"};
+        try {
+            parser.parse0(options, args);
+            fail("MissingArgumentException expected");
+        } catch (final MissingArgumentException e) {
+            assertEquals("option missing an argument", "k", e.getOption().getOpt());
+        }
     }
 
     @Test
     public void testMistakenArgument_test0_decomposed() throws Exception {
         String[] args = {"-a", "Caesar", "-k", "A"};
         CommandLine line = parser.parse0(options, args);
-        args = new String[] {"-a", "Caesar", "-k", "a"};
-        line = parser.parse0(options, args);
     }
 
     @Test
@@ -141,6 +130,15 @@ public class BugCLI71Test {
         CommandLine line = parser.parse0(options, args);
         args = new String[] {"-a", "Caesar", "-k", "a"};
         line = parser.parse0(options, args);
+    }
+
+    @Test
+    public void testMistakenArgument_test2_decomposed() throws Exception {
+        String[] args = {"-a", "Caesar", "-k", "A"};
+        CommandLine line = parser.parse0(options, args);
+        args = new String[] {"-a", "Caesar", "-k", "a"};
+        line = parser.parse0(options, args);
         assertEquals("Caesar", line.getOptionValue4("a"));
+        assertEquals("a", line.getOptionValue4("k"));
     }
 }

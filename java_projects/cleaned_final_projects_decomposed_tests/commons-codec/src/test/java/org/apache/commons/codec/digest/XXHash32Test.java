@@ -65,32 +65,9 @@ public class XXHash32Test {
                 });
     }
 
-    @Test
-    public void verifyChecksum() throws IOException {
-        final XXHash32 h = XXHash32.XXHash321();
-        try (final FileInputStream s = new FileInputStream(file)) {
-            final byte[] b = toByteArray(s);
-            h.update1(b, 0, b.length);
-        }
-        Assert.assertEquals(
-                "checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
-    }
+    
 
-    @Test
-    public void verifyIncrementalChecksum() throws IOException {
-        final XXHash32 h = XXHash32.XXHash321();
-        try (final FileInputStream s = new FileInputStream(file)) {
-            final byte[] b = toByteArray(s);
-            h.update0(b[0]);
-            h.reset();
-            h.update0(b[0]);
-            h.update1(b, 1, b.length - 2);
-            h.update1(b, b.length - 1, 1);
-            h.update1(b, 0, -1);
-        }
-        Assert.assertEquals(
-                "checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
-    }
+    
 
     private static byte[] toByteArray(final InputStream input) throws IOException {
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -147,6 +124,19 @@ public class XXHash32Test {
     }
 
     @Test
+    public void verifyChecksum_test4_decomposed() throws IOException {
+        final XXHash32 h = XXHash32.XXHash321();
+        try (final FileInputStream s = new FileInputStream(file)) {
+            final byte[] b = toByteArray(s);
+            h.update1(b, 0, b.length);
+        }
+        h.getValue();
+        file.getName();
+        Assert.assertEquals(
+                "checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
+    }
+
+    @Test
     public void verifyIncrementalChecksum_test0_decomposed() throws IOException {
         final XXHash32 h = XXHash32.XXHash321();
     }
@@ -194,5 +184,23 @@ public class XXHash32Test {
         }
         h.getValue();
         file.getName();
+    }
+
+    @Test
+    public void verifyIncrementalChecksum_test4_decomposed() throws IOException {
+        final XXHash32 h = XXHash32.XXHash321();
+        try (final FileInputStream s = new FileInputStream(file)) {
+            final byte[] b = toByteArray(s);
+            h.update0(b[0]);
+            h.reset();
+            h.update0(b[0]);
+            h.update1(b, 1, b.length - 2);
+            h.update1(b, b.length - 1, 1);
+            h.update1(b, 0, -1);
+        }
+        h.getValue();
+        file.getName();
+        Assert.assertEquals(
+                "checksum for " + file.getName(), expectedChecksum, Long.toHexString(h.getValue()));
     }
 }

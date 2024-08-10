@@ -56,40 +56,138 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
         return new Metaphone();
     }
 
-    @Test
-    public void testIsMetaphoneEqual1() {
-        this.assertMetaphoneEqual(
-                new String[][] {
-                    {"Case", "case"}, {"CASE", "Case"}, {"caSe", "cAsE"}, {"quick", "cookie"}
-                });
-    }
+    
 
     /** Matches computed from http://www.lanw.com/java/phonetic/default.htm */
-    @Test
-    public void testIsMetaphoneEqual2() {
-        this.assertMetaphoneEqual(
-                new String[][] {
-                    {"Lawrence", "Lorenza"}, {"Gary", "Cahra"},
-                });
-    }
+    
 
     /**
      * Initial AE case.
      *
      * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
-    @Test
-    public void testIsMetaphoneEqualAero() {
-        this.assertIsMetaphoneEqual("Aero", new String[] {"Eure"});
-    }
+    
 
     /**
      * Initial WH case.
      *
      * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
      */
+    
+
+    /**
+     * Initial A, not followed by an E case.
+     *
+     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /**
+     * Initial KN case.
+     *
+     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    /**
+     * Initial WR case.
+     *
+     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
+     */
+    
+
+    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
+    
+
+    
+
+    
+
+    
+
+    /**
+     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word
+     * "why"
+     */
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    public void validateFixture(final String[][] pairs) {
+        if (pairs.length == 0) {
+            fail("Test fixture is empty");
+        }
+        for (int i = 0; i < pairs.length; i++) {
+            if (pairs[i].length != 2) {
+                fail("Error in test fixture in the data array at index " + i);
+            }
+        }
+    }
+
     @Test
-    public void testIsMetaphoneEqualWhite() {
+    public void testIsMetaphoneEqual1_test0_decomposed()  {
+        this.assertMetaphoneEqual(
+                new String[][] {
+                    {"Case", "case"}, {"CASE", "Case"}, {"caSe", "cAsE"}, {"quick", "cookie"}
+                });
+    }
+
+    @Test
+    public void testIsMetaphoneEqual2_test0_decomposed()  {
+        this.assertMetaphoneEqual(
+                new String[][] {
+                    {"Lawrence", "Lorenza"}, {"Gary", "Cahra"},
+                });
+    }
+
+    @Test
+    public void testIsMetaphoneEqualAero_test0_decomposed()  {
+        this.assertIsMetaphoneEqual("Aero", new String[] {"Eure"});
+    }
+
+    @Test
+    public void testIsMetaphoneEqualWhite_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "White",
                 new String[] {
@@ -98,20 +196,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /**
-     * Initial A, not followed by an E case.
-     *
-     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
-     */
     @Test
-    public void testIsMetaphoneEqualAlbert() {
+    public void testIsMetaphoneEqualAlbert_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Albert", new String[] {"Ailbert", "Alberik", "Albert", "Alberto", "Albrecht"});
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualGary() {
+    public void testIsMetaphoneEqualGary_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Gary",
                 new String[] {
@@ -123,9 +215,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualJohn() {
+    public void testIsMetaphoneEqualJohn_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "John",
                 new String[] {
@@ -139,13 +230,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /**
-     * Initial KN case.
-     *
-     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
-     */
     @Test
-    public void testIsMetaphoneEqualKnight() {
+    public void testIsMetaphoneEqualKnight_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Knight",
                 new String[] {
@@ -154,9 +240,8 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualMary() {
+    public void testIsMetaphoneEqualMary_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Mary",
                 new String[] {
@@ -166,16 +251,14 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualParis() {
+    public void testIsMetaphoneEqualParis_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Paris", new String[] {"Pearcy", "Perris", "Piercy", "Pierz", "Pryse"});
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualPeter() {
+    public void testIsMetaphoneEqualPeter_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Peter",
                 new String[] {
@@ -184,15 +267,13 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualRay() {
+    public void testIsMetaphoneEqualRay_test0_decomposed()  {
         this.assertIsMetaphoneEqual("Ray", new String[] {"Ray", "Rey", "Roi", "Roy", "Ruy"});
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualSusan() {
+    public void testIsMetaphoneEqualSusan_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Susan",
                 new String[] {
@@ -211,19 +292,13 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
                 });
     }
 
-    /**
-     * Initial WR case.
-     *
-     * <p>Match data computed from http://www.lanw.com/java/phonetic/default.htm
-     */
     @Test
-    public void testIsMetaphoneEqualWright() {
+    public void testIsMetaphoneEqualWright_test0_decomposed()  {
         this.assertIsMetaphoneEqual("Wright", new String[] {"Rota", "Rudd", "Ryde"});
     }
 
-    /** Match data computed from http://www.lanw.com/java/phonetic/default.htm */
     @Test
-    public void testIsMetaphoneEqualXalan() {
+    public void testIsMetaphoneEqualXalan_test0_decomposed()  {
         this.assertIsMetaphoneEqual(
                 "Xalan",
                 new String[] {
@@ -233,190 +308,765 @@ public class MetaphoneTest extends StringEncoderAbstractTest<Metaphone> {
     }
 
     @Test
-    public void testMetaphone() {
+    public void testMetaphone_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+    }
+
+    @Test
+    public void testMetaphone_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
         assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+    }
+
+    @Test
+    public void testMetaphone_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
         assertEquals("0", this.getStringEncoder().metaphone("The"));
+    }
+
+    @Test
+    public void testMetaphone_test6_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test7_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
         assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+    }
+
+    @Test
+    public void testMetaphone_test8_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test9_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
         assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+    }
+
+    @Test
+    public void testMetaphone_test10_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test11_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
         assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+    }
+
+    @Test
+    public void testMetaphone_test12_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test13_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
         assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+    }
+
+    @Test
+    public void testMetaphone_test14_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test15_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
         assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+    }
+
+    @Test
+    public void testMetaphone_test16_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test17_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
         assertEquals("0", this.getStringEncoder().metaphone("the"));
+    }
+
+    @Test
+    public void testMetaphone_test18_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("the"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test19_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("the"));
+        this.getStringEncoder();
         assertEquals("LS", this.getStringEncoder().metaphone("lazy"));
+    }
+
+    @Test
+    public void testMetaphone_test20_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("the"));
+        this.getStringEncoder();
+        assertEquals("LS", this.getStringEncoder().metaphone("lazy"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testMetaphone_test21_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
+        this.getStringEncoder();
+        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("The"));
+        this.getStringEncoder();
+        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
+        this.getStringEncoder();
+        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
+        this.getStringEncoder();
+        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
+        this.getStringEncoder();
+        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
+        this.getStringEncoder();
+        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
+        this.getStringEncoder();
+        assertEquals("0", this.getStringEncoder().metaphone("the"));
+        this.getStringEncoder();
+        assertEquals("LS", this.getStringEncoder().metaphone("lazy"));
+        this.getStringEncoder();
         assertEquals("TKS", this.getStringEncoder().metaphone("dogs"));
     }
 
     @Test
-    public void testWordEndingInMB() {
+    public void testWordEndingInMB_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testWordEndingInMB_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
+    }
+
+    @Test
+    public void testWordEndingInMB_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testWordEndingInMB_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
+        this.getStringEncoder();
         assertEquals("TM", this.getStringEncoder().metaphone("TOMB"));
+    }
+
+    @Test
+    public void testWordEndingInMB_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
+        this.getStringEncoder();
+        assertEquals("TM", this.getStringEncoder().metaphone("TOMB"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testWordEndingInMB_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
+        this.getStringEncoder();
+        assertEquals("TM", this.getStringEncoder().metaphone("TOMB"));
+        this.getStringEncoder();
         assertEquals("WM", this.getStringEncoder().metaphone("WOMB"));
     }
 
     @Test
-    public void testDiscardOfSCEOrSCIOrSCY() {
+    public void testDiscardOfSCEOrSCIOrSCY_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSCEOrSCIOrSCY_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
+    }
+
+    @Test
+    public void testDiscardOfSCEOrSCIOrSCY_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSCEOrSCIOrSCY_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
+        this.getStringEncoder();
         assertEquals("SN", this.getStringEncoder().metaphone("SCENE"));
+    }
+
+    @Test
+    public void testDiscardOfSCEOrSCIOrSCY_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
+        this.getStringEncoder();
+        assertEquals("SN", this.getStringEncoder().metaphone("SCENE"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSCEOrSCIOrSCY_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
+        this.getStringEncoder();
+        assertEquals("SN", this.getStringEncoder().metaphone("SCENE"));
+        this.getStringEncoder();
         assertEquals("S", this.getStringEncoder().metaphone("SCY"));
     }
 
-    /**
-     * Tests (CODEC-57) Metaphone.metaphone(String) returns an empty string when passed the word
-     * "why"
-     */
     @Test
-    public void testWhy() {
+    public void testWhy_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testWhy_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("", this.getStringEncoder().metaphone("WHY"));
     }
 
     @Test
-    public void testWordsWithCIA() {
+    public void testWordsWithCIA_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testWordsWithCIA_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("XP", this.getStringEncoder().metaphone("CIAPO"));
     }
 
     @Test
-    public void testTranslateOfSCHAndCH() {
-        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
-        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+    public void testTranslateOfSCHAndCH_test0_decomposed()  {
+        this.getStringEncoder();
+    }
 
+    @Test
+    public void testTranslateOfSCHAndCH_test1_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+        this.getStringEncoder();
         assertEquals("KRKT", this.getStringEncoder().metaphone("CHARACTER"));
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test6_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+        this.getStringEncoder();
+        assertEquals("KRKT", this.getStringEncoder().metaphone("CHARACTER"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateOfSCHAndCH_test7_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
+        this.getStringEncoder();
+        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
+        this.getStringEncoder();
+        assertEquals("KRKT", this.getStringEncoder().metaphone("CHARACTER"));
+        this.getStringEncoder();
         assertEquals("TX", this.getStringEncoder().metaphone("TEACH"));
     }
 
     @Test
-    public void testTranslateToJOfDGEOrDGIOrDGY() {
+    public void testTranslateToJOfDGEOrDGIOrDGY_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateToJOfDGEOrDGIOrDGY_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
+    }
+
+    @Test
+    public void testTranslateToJOfDGEOrDGIOrDGY_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateToJOfDGEOrDGIOrDGY_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
+        this.getStringEncoder();
         assertEquals("TJ", this.getStringEncoder().metaphone("DODGE"));
+    }
+
+    @Test
+    public void testTranslateToJOfDGEOrDGIOrDGY_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGE"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTranslateToJOfDGEOrDGIOrDGY_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
+        this.getStringEncoder();
+        assertEquals("TJ", this.getStringEncoder().metaphone("DODGE"));
+        this.getStringEncoder();
         assertEquals("AJMT", this.getStringEncoder().metaphone("ADGIEMTI"));
     }
 
     @Test
-    public void testDiscardOfSilentHAfterG() {
+    public void testDiscardOfSilentHAfterG_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSilentHAfterG_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("KNT", this.getStringEncoder().metaphone("GHENT"));
+    }
+
+    @Test
+    public void testDiscardOfSilentHAfterG_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KNT", this.getStringEncoder().metaphone("GHENT"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSilentHAfterG_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("KNT", this.getStringEncoder().metaphone("GHENT"));
+        this.getStringEncoder();
         assertEquals("B", this.getStringEncoder().metaphone("BAUGH"));
     }
 
     @Test
-    public void testDiscardOfSilentGN() {
-        assertEquals("N", this.getStringEncoder().metaphone("GNU"));
+    public void testDiscardOfSilentGN_test0_decomposed()  {
+        this.getStringEncoder();
+    }
 
+    @Test
+    public void testDiscardOfSilentGN_test1_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("N", this.getStringEncoder().metaphone("GNU"));
+    }
+
+    @Test
+    public void testDiscardOfSilentGN_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("N", this.getStringEncoder().metaphone("GNU"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testDiscardOfSilentGN_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("N", this.getStringEncoder().metaphone("GNU"));
+        this.getStringEncoder();
         assertEquals("SNT", this.getStringEncoder().metaphone("SIGNED"));
     }
 
     @Test
-    public void testPHTOF() {
+    public void testPHTOF_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testPHTOF_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("FX", this.getStringEncoder().metaphone("PHISH"));
     }
 
     @Test
-    public void testSHAndSIOAndSIAToX() {
+    public void testSHAndSIOAndSIAToX_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testSHAndSIOAndSIAToX_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
+    }
+
+    @Test
+    public void testSHAndSIOAndSIAToX_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testSHAndSIOAndSIAToX_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
+        this.getStringEncoder();
         assertEquals("OTXN", this.getStringEncoder().metaphone("ODSIAN"));
+    }
+
+    @Test
+    public void testSHAndSIOAndSIAToX_test4_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
+        this.getStringEncoder();
+        assertEquals("OTXN", this.getStringEncoder().metaphone("ODSIAN"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testSHAndSIOAndSIAToX_test5_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
+        this.getStringEncoder();
+        assertEquals("OTXN", this.getStringEncoder().metaphone("ODSIAN"));
+        this.getStringEncoder();
         assertEquals("PLXN", this.getStringEncoder().metaphone("PULSION"));
     }
 
     @Test
-    public void testTIOAndTIAToX() {
+    public void testTIOAndTIAToX_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTIOAndTIAToX_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("OX", this.getStringEncoder().metaphone("OTIA"));
+    }
+
+    @Test
+    public void testTIOAndTIAToX_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("OX", this.getStringEncoder().metaphone("OTIA"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTIOAndTIAToX_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("OX", this.getStringEncoder().metaphone("OTIA"));
+        this.getStringEncoder();
         assertEquals("PRXN", this.getStringEncoder().metaphone("PORTION"));
     }
 
     @Test
-    public void testTCH() {
+    public void testTCH_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTCH_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("RX", this.getStringEncoder().metaphone("RETCH"));
+    }
+
+    @Test
+    public void testTCH_test2_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("RX", this.getStringEncoder().metaphone("RETCH"));
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testTCH_test3_decomposed()  {
+        this.getStringEncoder();
+        assertEquals("RX", this.getStringEncoder().metaphone("RETCH"));
+        this.getStringEncoder();
         assertEquals("WX", this.getStringEncoder().metaphone("WATCH"));
     }
 
     @Test
-    public void testExceedLength() {
+    public void testExceedLength_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testExceedLength_test1_decomposed()  {
+        this.getStringEncoder();
         assertEquals("AKSK", this.getStringEncoder().metaphone("AXEAXE"));
     }
 
     @Test
-    public void testSetMaxLengthWithTruncation() {
-        this.getStringEncoder().setMaxCodeLen(6);
-        assertEquals("AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE"));
-    }
-
-    public void validateFixture(final String[][] pairs) {
-        if (pairs.length == 0) {
-            fail("Test fixture is empty");
-        }
-        for (int i = 0; i < pairs.length; i++) {
-            if (pairs[i].length != 2) {
-                fail("Error in test fixture in the data array at index " + i);
-            }
-        }
-    }
-
-    @Test
-    public void testMetaphone_test0_decomposed()  {
-        assertEquals("HL", this.getStringEncoder().metaphone("howl"));
-        assertEquals("TSTN", this.getStringEncoder().metaphone("testing"));
-        assertEquals("0", this.getStringEncoder().metaphone("The"));
-        assertEquals("KK", this.getStringEncoder().metaphone("quick"));
-        assertEquals("BRN", this.getStringEncoder().metaphone("brown"));
-        assertEquals("FKS", this.getStringEncoder().metaphone("fox"));
-        assertEquals("JMPT", this.getStringEncoder().metaphone("jumped"));
-        assertEquals("OFR", this.getStringEncoder().metaphone("over"));
-        assertEquals("0", this.getStringEncoder().metaphone("the"));
-        assertEquals("LS", this.getStringEncoder().metaphone("lazy"));
-    }
-
-    @Test
-    public void testWordEndingInMB_test0_decomposed()  {
-        assertEquals("KM", this.getStringEncoder().metaphone("COMB"));
-        assertEquals("TM", this.getStringEncoder().metaphone("TOMB"));
-    }
-
-    @Test
-    public void testDiscardOfSCEOrSCIOrSCY_test0_decomposed()  {
-        assertEquals("SNS", this.getStringEncoder().metaphone("SCIENCE"));
-        assertEquals("SN", this.getStringEncoder().metaphone("SCENE"));
-    }
-
-    @Test
-    public void testTranslateOfSCHAndCH_test0_decomposed()  {
-        assertEquals("SKTL", this.getStringEncoder().metaphone("SCHEDULE"));
-        assertEquals("SKMT", this.getStringEncoder().metaphone("SCHEMATIC"));
-        assertEquals("KRKT", this.getStringEncoder().metaphone("CHARACTER"));
-    }
-
-    @Test
-    public void testTranslateToJOfDGEOrDGIOrDGY_test0_decomposed()  {
-        assertEquals("TJ", this.getStringEncoder().metaphone("DODGY"));
-        assertEquals("TJ", this.getStringEncoder().metaphone("DODGE"));
-    }
-
-    @Test
-    public void testDiscardOfSilentHAfterG_test0_decomposed()  {
-        assertEquals("KNT", this.getStringEncoder().metaphone("GHENT"));
-    }
-
-    @Test
-    public void testDiscardOfSilentGN_test0_decomposed()  {
-        assertEquals("N", this.getStringEncoder().metaphone("GNU"));
-    }
-
-    @Test
-    public void testSHAndSIOAndSIAToX_test0_decomposed()  {
-        assertEquals("XT", this.getStringEncoder().metaphone("SHOT"));
-        assertEquals("OTXN", this.getStringEncoder().metaphone("ODSIAN"));
-    }
-
-    @Test
-    public void testTIOAndTIAToX_test0_decomposed()  {
-        assertEquals("OX", this.getStringEncoder().metaphone("OTIA"));
-    }
-
-    @Test
-    public void testTCH_test0_decomposed()  {
-        assertEquals("RX", this.getStringEncoder().metaphone("RETCH"));
-    }
-
-    @Test
     public void testSetMaxLengthWithTruncation_test0_decomposed()  {
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testSetMaxLengthWithTruncation_test1_decomposed()  {
+        this.getStringEncoder();
         this.getStringEncoder().setMaxCodeLen(6);
+    }
+
+    @Test
+    public void testSetMaxLengthWithTruncation_test2_decomposed()  {
+        this.getStringEncoder();
+        this.getStringEncoder().setMaxCodeLen(6);
+        this.getStringEncoder();
+    }
+
+    @Test
+    public void testSetMaxLengthWithTruncation_test3_decomposed()  {
+        this.getStringEncoder();
+        this.getStringEncoder().setMaxCodeLen(6);
+        this.getStringEncoder();
+        assertEquals("AKSKSK", this.getStringEncoder().metaphone("AXEAXEAXE"));
     }
 }

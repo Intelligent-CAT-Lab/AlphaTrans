@@ -60,133 +60,6 @@ public class BCodecTest {
     }
 
     @Test
-    public void testNullInput() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        assertNull(bcodec.doDecoding(null));
-        assertNull(bcodec.doEncoding(null));
-    }
-
-    @Test
-    public void testUTF8RoundTrip() throws Exception {
-
-        final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
-        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
-
-        final BCodec bcodec = BCodec.BCodec2(CharEncoding.UTF_8);
-
-        assertEquals("=?UTF-8?B?0JLRgdC10Lxf0L/RgNC40LLQtdGC?=", bcodec.encode2(ru_msg));
-        assertEquals("=?UTF-8?B?R3LDvGV6aV96w6Rtw6Q=?=", bcodec.encode2(ch_msg));
-
-        assertEquals(ru_msg, bcodec.decode0(bcodec.encode2(ru_msg)));
-        assertEquals(ch_msg, bcodec.decode0(bcodec.encode2(ch_msg)));
-    }
-
-    @Test
-    public void testBasicEncodeDecode() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        final String plain = "Hello there";
-        final String encoded = bcodec.encode2(plain);
-        assertEquals("Basic B encoding test", "=?UTF-8?B?SGVsbG8gdGhlcmU=?=", encoded);
-        assertEquals("Basic B decoding test", plain, bcodec.decode0(encoded));
-    }
-
-    @Test
-    public void testEncodeDecodeNull() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        assertNull("Null string B encoding test", bcodec.encode2((String) null));
-        assertNull("Null string B decoding test", bcodec.decode0((String) null));
-    }
-
-    @Test
-    public void testEncodeStringWithNull() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        final String test = null;
-        final String result = bcodec.encode1(test, "charset");
-        assertNull("Result should be null", result);
-    }
-
-    @Test
-    public void testDecodeStringWithNull() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        final String test = null;
-        final String result = bcodec.decode0(test);
-        assertNull("Result should be null", result);
-    }
-
-    @Test
-    public void testEncodeObjects() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        final String plain = "what not";
-        final String encoded = (String) bcodec.encode3((Object) plain);
-
-        assertEquals("Basic B encoding test", "=?UTF-8?B?d2hhdCBub3Q=?=", encoded);
-
-        final Object result = bcodec.encode3((Object) null);
-        assertNull("Encoding a null Object should return null", result);
-
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            bcodec.encode3(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (final EncoderException ee) {
-        }
-    }
-
-    @Test(expected = UnsupportedCharsetException.class)
-    public void testInvalidEncoding() {
-        BCodec.BCodec2("NONSENSE");
-    }
-
-    @Test
-    public void testDecodeObjects() throws Exception {
-        final BCodec bcodec = BCodec.BCodec0();
-        final String decoded = "=?UTF-8?B?d2hhdCBub3Q=?=";
-        final String plain = (String) bcodec.decode1((Object) decoded);
-        assertEquals("Basic B decoding test", "what not", plain);
-
-        final Object result = bcodec.decode1((Object) null);
-        assertNull("Decoding a null Object should return null", result);
-
-        try {
-            final Object dObj = Double.valueOf(3.0d);
-            bcodec.decode1(dObj);
-            fail("Trying to url encode a Double object should cause an exception.");
-        } catch (final DecoderException ee) {
-        }
-    }
-
-    @Test
-    public void testBase64ImpossibleSamplesDefault() throws DecoderException {
-        final BCodec codec = BCodec.BCodec0();
-        Assert.assertFalse(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            codec.decode0(s);
-        }
-    }
-
-    @Test
-    public void testBase64ImpossibleSamplesLenient() throws DecoderException {
-        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
-        Assert.assertFalse(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            codec.decode0(s);
-        }
-    }
-
-    @Test
-    public void testBase64ImpossibleSamplesStrict() throws DecoderException {
-        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
-        Assert.assertTrue(codec.isStrictDecoding());
-        for (final String s : BASE64_IMPOSSIBLE_CASES) {
-            try {
-                codec.decode0(s);
-                fail("Expected an exception for impossible case");
-            } catch (final DecoderException ex) {
-            }
-        }
-    }
-
-    @Test
     public void testNullInput_test0_decomposed() throws Exception {
         final BCodec bcodec = BCodec.BCodec0();
     }
@@ -198,10 +71,16 @@ public class BCodecTest {
     }
 
     @Test
+    public void testNullInput_test2_decomposed() throws Exception {
+        final BCodec bcodec = BCodec.BCodec0();
+        assertNull(bcodec.doDecoding(null));
+        assertNull(bcodec.doEncoding(null));
+    }
+
+    @Test
     public void testUTF8RoundTrip_test0_decomposed() throws Exception {
         final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
         final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
-        final BCodec bcodec = BCodec.BCodec2(CharEncoding.UTF_8);
     }
 
     @Test
@@ -209,8 +88,6 @@ public class BCodecTest {
         final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
         final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
         final BCodec bcodec = BCodec.BCodec2(CharEncoding.UTF_8);
-        assertEquals("=?UTF-8?B?0JLRgdC10Lxf0L/RgNC40LLQtdGC?=", bcodec.encode2(ru_msg));
-        assertEquals("=?UTF-8?B?R3LDvGV6aV96w6Rtw6Q=?=", bcodec.encode2(ch_msg));
     }
 
     @Test
@@ -247,6 +124,19 @@ public class BCodecTest {
     }
 
     @Test
+    public void testUTF8RoundTrip_test5_decomposed() throws Exception {
+        final String ru_msg = constructString(RUSSIAN_STUFF_UNICODE);
+        final String ch_msg = constructString(SWISS_GERMAN_STUFF_UNICODE);
+        final BCodec bcodec = BCodec.BCodec2(CharEncoding.UTF_8);
+        assertEquals("=?UTF-8?B?0JLRgdC10Lxf0L/RgNC40LLQtdGC?=", bcodec.encode2(ru_msg));
+        assertEquals("=?UTF-8?B?R3LDvGV6aV96w6Rtw6Q=?=", bcodec.encode2(ch_msg));
+        bcodec.encode2(ru_msg);
+        assertEquals(ru_msg, bcodec.decode0(bcodec.encode2(ru_msg)));
+        bcodec.encode2(ch_msg);
+        assertEquals(ch_msg, bcodec.decode0(bcodec.encode2(ch_msg)));
+    }
+
+    @Test
     public void testBasicEncodeDecode_test0_decomposed() throws Exception {
         final BCodec bcodec = BCodec.BCodec0();
     }
@@ -264,6 +154,7 @@ public class BCodecTest {
         final String plain = "Hello there";
         final String encoded = bcodec.encode2(plain);
         assertEquals("Basic B encoding test", "=?UTF-8?B?SGVsbG8gdGhlcmU=?=", encoded);
+        assertEquals("Basic B decoding test", plain, bcodec.decode0(encoded));
     }
 
     @Test
@@ -275,6 +166,13 @@ public class BCodecTest {
     public void testEncodeDecodeNull_test1_decomposed() throws Exception {
         final BCodec bcodec = BCodec.BCodec0();
         assertNull("Null string B encoding test", bcodec.encode2((String) null));
+    }
+
+    @Test
+    public void testEncodeDecodeNull_test2_decomposed() throws Exception {
+        final BCodec bcodec = BCodec.BCodec0();
+        assertNull("Null string B encoding test", bcodec.encode2((String) null));
+        assertNull("Null string B decoding test", bcodec.decode0((String) null));
     }
 
     @Test
@@ -290,6 +188,14 @@ public class BCodecTest {
     }
 
     @Test
+    public void testEncodeStringWithNull_test2_decomposed() throws Exception {
+        final BCodec bcodec = BCodec.BCodec0();
+        final String test = null;
+        final String result = bcodec.encode1(test, "charset");
+        assertNull("Result should be null", result);
+    }
+
+    @Test
     public void testDecodeStringWithNull_test0_decomposed() throws Exception {
         final BCodec bcodec = BCodec.BCodec0();
     }
@@ -299,6 +205,14 @@ public class BCodecTest {
         final BCodec bcodec = BCodec.BCodec0();
         final String test = null;
         final String result = bcodec.decode0(test);
+    }
+
+    @Test
+    public void testDecodeStringWithNull_test2_decomposed() throws Exception {
+        final BCodec bcodec = BCodec.BCodec0();
+        final String test = null;
+        final String result = bcodec.decode0(test);
+        assertNull("Result should be null", result);
     }
 
     @Test
@@ -330,6 +244,17 @@ public class BCodecTest {
         assertEquals("Basic B encoding test", "=?UTF-8?B?d2hhdCBub3Q=?=", encoded);
         final Object result = bcodec.encode3((Object) null);
         assertNull("Encoding a null Object should return null", result);
+        try {
+            final Object dObj = Double.valueOf(3.0d);
+            bcodec.encode3(dObj);
+            fail("Trying to url encode a Double object should cause an exception.");
+        } catch (final EncoderException ee) {
+        }
+    }
+
+    @Test(expected = UnsupportedCharsetException.class)
+    public void testInvalidEncoding_test0_decomposed()  {
+        BCodec.BCodec2("NONSENSE");
     }
 
     @Test
@@ -361,6 +286,12 @@ public class BCodecTest {
         assertEquals("Basic B decoding test", "what not", plain);
         final Object result = bcodec.decode1((Object) null);
         assertNull("Decoding a null Object should return null", result);
+        try {
+            final Object dObj = Double.valueOf(3.0d);
+            bcodec.decode1(dObj);
+            fail("Trying to url encode a Double object should cause an exception.");
+        } catch (final DecoderException ee) {
+        }
     }
 
     @Test
@@ -375,6 +306,15 @@ public class BCodecTest {
     }
 
     @Test
+    public void testBase64ImpossibleSamplesDefault_test2_decomposed() throws DecoderException {
+        final BCodec codec = BCodec.BCodec0();
+        Assert.assertFalse(codec.isStrictDecoding());
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
+            codec.decode0(s);
+        }
+    }
+
+    @Test
     public void testBase64ImpossibleSamplesLenient_test0_decomposed() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
     }
@@ -386,6 +326,15 @@ public class BCodecTest {
     }
 
     @Test
+    public void testBase64ImpossibleSamplesLenient_test2_decomposed() throws DecoderException {
+        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.LENIENT);
+        Assert.assertFalse(codec.isStrictDecoding());
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
+            codec.decode0(s);
+        }
+    }
+
+    @Test
     public void testBase64ImpossibleSamplesStrict_test0_decomposed() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
     }
@@ -394,5 +343,18 @@ public class BCodecTest {
     public void testBase64ImpossibleSamplesStrict_test1_decomposed() throws DecoderException {
         final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
         Assert.assertTrue(codec.isStrictDecoding());
+    }
+
+    @Test
+    public void testBase64ImpossibleSamplesStrict_test2_decomposed() throws DecoderException {
+        final BCodec codec = new BCodec(StandardCharsets.UTF_8, CodecPolicy.STRICT);
+        Assert.assertTrue(codec.isStrictDecoding());
+        for (final String s : BASE64_IMPOSSIBLE_CASES) {
+            try {
+                codec.decode0(s);
+                fail("Expected an exception for impossible case");
+            } catch (final DecoderException ex) {
+            }
+        }
     }
 }
