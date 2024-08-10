@@ -322,6 +322,12 @@ public final class IntegrationUtils {{
 
     // handle python classes
     if (isPythonClass(value)) {{
+      // first see if it is a package class
+      if (value.hasMember("javaClz")) {{
+        return value.getMember("javaClz").asHostObject();
+      }}
+
+      // now handle other builtin classes
       String className = value.getMember("__name__").asString();
       switch (className) {{
         case "str":
