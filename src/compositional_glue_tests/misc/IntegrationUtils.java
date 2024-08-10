@@ -434,6 +434,10 @@ public final class IntegrationUtils {{
     return obj.getClass().equals(Class.class);
   }}
 
+  public static Value createDefaultPythonObject(Value clz) {{
+    return JavaHandler.invokeMember("createDefaultPythonObject", clz);
+  }}
+
   public static boolean hasTypeMismatch(String classDescriptor, Object obj) {{
     if (classDescriptor.endsWith("[]") && !obj.getClass().isArray()) {{
       return true;

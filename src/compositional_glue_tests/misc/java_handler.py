@@ -223,6 +223,9 @@ class JavaHandler:
     def putObjectsToMaps(javaObj, pyObj):
         return JavaHandler.IntegrationUtils.putObjectsToMaps(javaObj, pyObj)
 
+    def createDefaultPythonObject(cls):
+        return getattr(cls, '__new__')(cls)
+
 
 class ExceptionHandler:
     exception_map = {exception_map} # type: ignore
