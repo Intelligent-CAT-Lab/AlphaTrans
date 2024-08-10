@@ -232,19 +232,17 @@ def add_obj_to_clone_method(method_content: str, class_obj: dict) -> str:
         if not return_value.startswith("(" + class_obj["name"]):
             # and if not, perform the cast
             return_value = f"({class_obj['name']}) " + return_value
-        
-        # enclose in parentheses
-        return_value = f"({return_value})"
 
-        handling_code = f"""if ({return_value} != null) {{
-            {return_value}.setPythonObject({class_obj['classref']}.invokeMember("getDefaultInstance"));
-            {return_value}.jToPy();
+        handling_code = f"""{class_obj['name']} cloneResult = {return_value};
+        if (cloneResult != null) {{
+            cloneResult.setPythonObject(IntegrationUtils.createDefaultPythonObject({class_obj['classref']}));
+            cloneResult.jToPy();
         }}"""
 
         clone_method_content.extend([
             method_content[:return_statement_start_pos],
             handling_code,
-            return_statement,
+            "return cloneResult;",
             method_content[return_statement_end_pos:]
         ])
 

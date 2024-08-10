@@ -207,14 +207,7 @@ class Project:
                     # skip instrumenting classes that are enclosed in methods
                     if not Schema.is_class_enclosed_in_method(_class, schema_data):
                         python_file_contents.append(f"    javaClz = java.type(\"{schema_object.full_package_name}.{class_name_for_import}\")")
-            
-                        # add default constructor
-                        python_file_contents.append("\n".join([
-                            f"    @staticmethod",
-                            f"    def getDefaultInstance():",
-                            f"        return {_class}.__new__({_class})",
-                        ]))
-                        
+
                         # modify __getattr__ method to handle cases like 
                         # static field access from 'self'
                         python_file_contents.append("\n".join([
@@ -223,7 +216,7 @@ class Project:
                             f"            return object.__getattribute__(self, name)",
                             f"        except AttributeError:",
                             f"            pass",
-                            f"        return getattr(self.javaClz, name)"
+                            f"        return getattr(self.javaClz, name)" # TODO: type casting?
                         ]))
                     else:
                         python_file_contents.append("    pass") # in case there is no method to add!
@@ -1038,7 +1031,7 @@ class Schema:
         if not is_interface:            
             value_fields += [
                 # 'transient' so that it is not part of serialization
-                f"private transient Value obj = {class_obj['classref']}.invokeMember(\"getDefaultInstance\");"
+                f"private transient Value obj = IntegrationUtils.createDefaultPythonObject({class_obj['classref']});",
             ]
 
             # add getPythonObject() and setPythonObject() methods
