@@ -23,14 +23,10 @@ def split_with_nested_commas(s):
     return result
 
 
-def get_dependency_path(dependent_class, project_name, is_evosuite):
+def get_dependency_path(dependent_class, project_name, suffix):
 
-    src_fname = f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
-    test_fname = f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
-
-    if is_evosuite:
-        src_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
-        test_fname = f'java_projects/cleaned_final_projects_evosuite/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
+    src_fname = f'java_projects/cleaned_final_projects{suffix}/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'
+    test_fname = f'java_projects/cleaned_final_projects{suffix}/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'
 
     if os.path.exists(src_fname):
         return f'src.main.{dependent_class}'
@@ -78,14 +74,14 @@ def get_dependency_cycle(dependencies):
     return cycles, class_path
 
 
-def has_child_parent_dept(dependent_files, class_path, project_name, is_evosuite=False):
+def has_child_parent_dept(dependent_files, class_path, project_name, suffix):
     verified_dependent_files = []
     for class_1, class_2 in dependent_files:
-        class_1_path = get_dependency_path(class_path[class_1], project_name, is_evosuite)
-        class_2_path = get_dependency_path(class_path[class_2], project_name, is_evosuite)
+        class_1_path = get_dependency_path(class_path[class_1], project_name, suffix)
+        class_2_path = get_dependency_path(class_path[class_2], project_name, suffix)
 
-        class_1_schema_name = f'data/schemas/{project_name}/{project_name}.{class_1_path}.json'
-        class_2_schema_name = f'data/schemas/{project_name}/{project_name}.{class_2_path}.json'
+        class_1_schema_name = f'data/schemas{suffix}/{project_name}/{project_name}.{class_1_path}.json'
+        class_2_schema_name = f'data/schemas{suffix}/{project_name}/{project_name}.{class_2_path}.json'
 
         class_1_schema = {}
         with open(class_1_schema_name, 'r') as f:
@@ -124,28 +120,26 @@ def main(args):
     
     extracted_types = {k.split('.')[-1]: v for k, v in extracted_types.items()}
 
-    schemas = os.listdir(f'data/schemas/{args.project_name}')
+    schemas = os.listdir(f'data/schemas{args.suffix}/{args.project_name}')
 
-    dependencies_dir = 'data/dependencies'
-    if args.evosuite:
-        dependencies_dir = 'data/dependencies-evosuite'
+    dependencies_dir = f'data/dependencies{args.suffix}'
 
     dependencies = {}
     with open(f'{dependencies_dir}/{args.project_name}/dependencies.json', 'r') as f:
         dependencies = json.load(f)
 
     dependent_files, class_path = get_dependency_cycle(dependencies)
-    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name, args.evosuite)
+    verified_dependent_files = has_child_parent_dept(dependent_files, class_path, args.project_name, args.suffix)
 
     for schema_fname in schemas:
 
-        if args.evosuite and not schema_fname.endswith('ESTest.json'):
+        if args.suffix == '_evosuite' and not schema_fname.endswith('ESTest.json'):
             continue
 
-        if not args.evosuite and 'ESTest' in schema_fname:
+        if args.suffix != '_evosuite' and 'ESTest' in schema_fname:
             continue
 
-        schema_path = f'data/schemas/{args.project_name}/{schema_fname}'
+        schema_path = f'data/schemas{args.suffix}/{args.project_name}/{schema_fname}'
         
         schema = {}
         with open(schema_path, 'r') as f:
@@ -474,7 +468,7 @@ def main(args):
                 if len(dependent_class) != 2:
                     continue
 
-                path = get_dependency_path(dependent_class[1], args.project_name, args.evosuite)
+                path = get_dependency_path(dependent_class[1], args.project_name, args.suffix)
                 skip = False
                 for class_1, class_1_schema_name, class_2, class_2_schema_name, is_child in verified_dependent_files:
                     if is_child == 1 and schema_fname == class_2_schema_name.split('/')[-1] and class_1 in path:
@@ -536,8 +530,8 @@ def main(args):
         with open(fp, 'w') as f:
             f.write('')
 
-        os.makedirs(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}', exist_ok=True)
-        with open(f'data/schemas/translations/{args.model_name}/{args.type}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
+        os.makedirs(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.project_name}', exist_ok=True)
+        with open(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
     # find all .py files in a given directory
@@ -559,7 +553,7 @@ if __name__ == '__main__':
     parser.add_argument('--project_name', type=str, dest='project_name', help='name of the project')
     parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
     parser.add_argument('--type', type=str, dest='type', help='prompt type signature/body')
-    parser.add_argument('--evosuite', action='store_true', dest='evosuite', help='use evosuite dependencies')
+    parser.add_argument('--suffix', type=str, dest='suffix', help='suffix')
     args = parser.parse_args()
     
     main(args)
