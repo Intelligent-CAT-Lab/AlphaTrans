@@ -17,10 +17,10 @@ class JiraCsv290Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testPostgresqlText(self) -> None:
+    def testPostgresqlText_test0_decomposed(self) -> None:
         pass
 
-    def testPostgresqlCsv(self) -> None:
+    def testPostgresqlCsv_test0_decomposed(self) -> None:
         pass
 
     def __testHelper(self, filename: str, format_: CSVFormat) -> None:

@@ -29,10 +29,31 @@ class Exec36Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testExec36_2(self) -> None:
+    def testExec36_2_test7_decomposed(self) -> None:
         pass
 
-    def testExec36_1(self) -> None:
+    def testExec36_2_test6_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test5_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test4_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test3_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test2_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test1_decomposed(self) -> None:
+        pass
+
+    def testExec36_2_test0_decomposed(self) -> None:
+        pass
+
+    def testExec36_1_test0_decomposed(self) -> None:
         pass
 
     def tearDown(self) -> None:

@@ -20,6 +20,7 @@ from src.main.me.lemire.integercompression.FastPFOR128 import *
 from src.main.me.lemire.integercompression.FastPFOR import *
 from src.main.me.lemire.integercompression.BinaryPacking import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -34,7 +35,16 @@ class ResourcedTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def IntCompressorTest(self) -> None:
+    def IntCompressorTest_test3_decomposed(self) -> None:
+        pass
+
+    def IntCompressorTest_test2_decomposed(self) -> None:
+        pass
+
+    def IntCompressorTest_test1_decomposed(self) -> None:
+        pass
+
+    def IntCompressorTest_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

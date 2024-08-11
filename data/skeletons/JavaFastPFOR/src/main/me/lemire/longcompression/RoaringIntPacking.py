@@ -43,4 +43,7 @@ class RoaringIntPacking:
     def high(id_: int) -> int:
         pass
 
+    def __init__(self) -> None:
+        pass
+
     # Class Methods End

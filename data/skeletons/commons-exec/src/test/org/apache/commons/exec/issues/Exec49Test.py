@@ -10,6 +10,7 @@ from src.main.org.apache.commons.exec.DefaultExecutor import *
 from src.main.org.apache.commons.exec.DefaultExecuteResultHandler import *
 from src.main.org.apache.commons.exec.CommandLine import *
 import unittest
+import os
 import datetime
 import io
 
@@ -24,10 +25,10 @@ class Exec49Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testExec49_2(self) -> None:
+    def testExec49_2_test0_decomposed(self) -> None:
         pass
 
-    def testExec49_1(self) -> None:
+    def testExec49_1_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

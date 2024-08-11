@@ -11,6 +11,7 @@ from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -25,58 +26,137 @@ class BeiderMorseEncoderTest(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSpeedCheck3(self) -> None:
+    def testSpeedCheck3_test1_decomposed(self) -> None:
         pass
 
-    def testSpeedCheck2(self) -> None:
+    def testSpeedCheck3_test0_decomposed(self) -> None:
         pass
 
-    def testSpeedCheck(self) -> None:
+    def testSpeedCheck2_test1_decomposed(self) -> None:
         pass
 
-    def testSetRuleTypeToRulesIllegalArgumentException(self) -> None:
+    def testSpeedCheck2_test0_decomposed(self) -> None:
         pass
 
-    def testSetRuleTypeExact(self) -> None:
+    def testSpeedCheck_test2_decomposed(self) -> None:
         pass
 
-    def testSetNameTypeAsh(self) -> None:
+    def testSpeedCheck_test1_decomposed(self) -> None:
         pass
 
-    def testSetConcat(self) -> None:
+    def testSpeedCheck_test0_decomposed(self) -> None:
         pass
 
-    def testOOM(self) -> None:
+    def testSetRuleTypeToRulesIllegalArgumentException_test1_decomposed(self) -> None:
         pass
 
-    def testNegativeIndexForRuleMatchIndexOutOfBoundsException(self) -> None:
+    def testSetRuleTypeToRulesIllegalArgumentException_test0_decomposed(self) -> None:
         pass
 
-    def testLongestEnglishSurname(self) -> None:
+    def testSetRuleTypeExact_test2_decomposed(self) -> None:
         pass
 
-    def testInvalidLanguageIllegalArgumentException(self) -> None:
+    def testSetRuleTypeExact_test1_decomposed(self) -> None:
         pass
 
-    def testInvalidLangIllegalStateException(self) -> None:
+    def testSetRuleTypeExact_test0_decomposed(self) -> None:
         pass
 
-    def testInvalidLangIllegalArgumentException(self) -> None:
+    def testSetNameTypeAsh_test2_decomposed(self) -> None:
         pass
 
-    def testEncodeGna(self) -> None:
+    def testSetNameTypeAsh_test1_decomposed(self) -> None:
         pass
 
-    def testEncodeAtzNotEmpty(self) -> None:
+    def testSetNameTypeAsh_test0_decomposed(self) -> None:
         pass
 
-    def testAsciiEncodeNotEmpty2Letters(self) -> None:
+    def testSetConcat_test2_decomposed(self) -> None:
         pass
 
-    def testAsciiEncodeNotEmpty1Letter(self) -> None:
+    def testSetConcat_test1_decomposed(self) -> None:
         pass
 
-    def testAllChars(self) -> None:
+    def testSetConcat_test0_decomposed(self) -> None:
+        pass
+
+    def testOOM_test6_decomposed(self) -> None:
+        pass
+
+    def testOOM_test5_decomposed(self) -> None:
+        pass
+
+    def testOOM_test4_decomposed(self) -> None:
+        pass
+
+    def testOOM_test3_decomposed(self) -> None:
+        pass
+
+    def testOOM_test2_decomposed(self) -> None:
+        pass
+
+    def testOOM_test1_decomposed(self) -> None:
+        pass
+
+    def testOOM_test0_decomposed(self) -> None:
+        pass
+
+    def testNegativeIndexForRuleMatchIndexOutOfBoundsException_test1_decomposed(
+        self,
+    ) -> None:
+        pass
+
+    def testNegativeIndexForRuleMatchIndexOutOfBoundsException_test0_decomposed(
+        self,
+    ) -> None:
+        pass
+
+    def testLongestEnglishSurname_test1_decomposed(self) -> None:
+        pass
+
+    def testLongestEnglishSurname_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidLanguageIllegalArgumentException_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidLangIllegalStateException_test1_decomposed(self) -> None:
+        pass
+
+    def testInvalidLangIllegalStateException_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidLangIllegalArgumentException_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeGna_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeGna_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeAtzNotEmpty_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeAtzNotEmpty_test0_decomposed(self) -> None:
+        pass
+
+    def testAsciiEncodeNotEmpty2Letters_test1_decomposed(self) -> None:
+        pass
+
+    def testAsciiEncodeNotEmpty2Letters_test0_decomposed(self) -> None:
+        pass
+
+    def testAsciiEncodeNotEmpty1Letter_test1_decomposed(self) -> None:
+        pass
+
+    def testAsciiEncodeNotEmpty1Letter_test0_decomposed(self) -> None:
+        pass
+
+    def testAllChars_test1_decomposed(self) -> None:
+        pass
+
+    def testAllChars_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> StringEncoder:

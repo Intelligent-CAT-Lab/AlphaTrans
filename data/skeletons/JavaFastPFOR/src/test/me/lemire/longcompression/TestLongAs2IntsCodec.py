@@ -7,6 +7,7 @@ from src.main.me.lemire.longcompression.LongCODEC import *
 from src.main.me.lemire.longcompression.LongAs2IntsCodec import *
 from src.main.me.lemire.longcompression.ByteLongCODEC import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,34 +22,34 @@ class TestLongAs2IntsCodec(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testCodec_intermediateHighPowerOfTwo(self) -> None:
+    def testCodec_intermediateHighPowerOfTwo_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_ZeroThenAllPowerOfTwo(self) -> None:
+    def testCodec_ZeroThenAllPowerOfTwo_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_allPowerOfTwo(self) -> None:
+    def testCodec_allPowerOfTwo_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_ZeroMinValue(self) -> None:
+    def testCodec_ZeroMinValue_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_MinValue(self) -> None:
+    def testCodec_MinValue_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_ZeroTimes128Minus1(self) -> None:
+    def testCodec_ZeroTimes128Minus1_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_ZeroTimes127Minus1(self) -> None:
+    def testCodec_ZeroTimes127Minus1_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_ZeroTimes8Minus1(self) -> None:
+    def testCodec_ZeroTimes8Minus1_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_Minus1(self) -> None:
+    def testCodec_Minus1_test0_decomposed(self) -> None:
         pass
 
-    def testCodec_Zero(self) -> None:
+    def testCodec_Zero_test0_decomposed(self) -> None:
         pass
 
     def __checkConsistency(self, codec: LongCODEC, array: typing.List[int]) -> None:

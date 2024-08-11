@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.binary.StringUtils import *
 from src.test.org.apache.commons.codec.binary.BaseNTestData import *
 from src.main.org.apache.commons.codec.binary.Base16InputStream import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,37 +21,70 @@ class Base16InputStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSkipWrongArgument(self) -> None:
+    def testSkipWrongArgument_test1_decomposed(self) -> None:
         pass
 
-    def testSkipToEnd(self) -> None:
+    def testSkipWrongArgument_test0_decomposed(self) -> None:
         pass
 
-    def testSkipPastEnd(self) -> None:
+    def testSkipToEnd_test1_decomposed(self) -> None:
         pass
 
-    def testSkipNone(self) -> None:
+    def testSkipToEnd_test0_decomposed(self) -> None:
         pass
 
-    def testSkipBig(self) -> None:
+    def testSkipPastEnd_test1_decomposed(self) -> None:
         pass
 
-    def testReadOutOfBounds(self) -> None:
+    def testSkipPastEnd_test0_decomposed(self) -> None:
         pass
 
-    def testReadNull(self) -> None:
+    def testSkipNone_test1_decomposed(self) -> None:
         pass
 
-    def testRead0(self) -> None:
+    def testSkipNone_test0_decomposed(self) -> None:
         pass
 
-    def testMarkSupported(self) -> None:
+    def testSkipBig_test1_decomposed(self) -> None:
         pass
 
-    def testBase16EmptyInputStream(self) -> None:
+    def testSkipBig_test0_decomposed(self) -> None:
         pass
 
-    def testAvailable(self) -> None:
+    def testReadOutOfBounds_test1_decomposed(self) -> None:
+        pass
+
+    def testReadOutOfBounds_test0_decomposed(self) -> None:
+        pass
+
+    def testReadNull_test1_decomposed(self) -> None:
+        pass
+
+    def testReadNull_test0_decomposed(self) -> None:
+        pass
+
+    def testRead0_test1_decomposed(self) -> None:
+        pass
+
+    def testRead0_test0_decomposed(self) -> None:
+        pass
+
+    def testMarkSupported_test1_decomposed(self) -> None:
+        pass
+
+    def testMarkSupported_test0_decomposed(self) -> None:
+        pass
+
+    def testBase16EmptyInputStream_test1_decomposed(self) -> None:
+        pass
+
+    def testBase16EmptyInputStream_test0_decomposed(self) -> None:
+        pass
+
+    def testAvailable_test1_decomposed(self) -> None:
+        pass
+
+    def testAvailable_test0_decomposed(self) -> None:
         pass
 
     def __testByteByByte1(

@@ -6,6 +6,7 @@ from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,37 +22,37 @@ class ColognePhoneticTest(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSpecialCharsBetweenSameLetters(self) -> None:
+    def testSpecialCharsBetweenSameLetters_test0_decomposed(self) -> None:
         pass
 
-    def testVariationsMeyer(self) -> None:
+    def testVariationsMeyer_test0_decomposed(self) -> None:
         pass
 
-    def testVariationsMella(self) -> None:
+    def testVariationsMella_test0_decomposed(self) -> None:
         pass
 
-    def testIsEncodeEquals(self) -> None:
+    def testIsEncodeEquals_test0_decomposed(self) -> None:
         pass
 
-    def testHyphen(self) -> None:
+    def testHyphen_test0_decomposed(self) -> None:
         pass
 
-    def testExamples(self) -> None:
+    def testExamples_test0_decomposed(self) -> None:
         pass
 
-    def testEdgeCases(self) -> None:
+    def testEdgeCases_test0_decomposed(self) -> None:
         pass
 
-    def testAychlmajrForCodec122(self) -> None:
+    def testAychlmajrForCodec122_test0_decomposed(self) -> None:
         pass
 
-    def testAaclan(self) -> None:
+    def testAaclan_test0_decomposed(self) -> None:
         pass
 
-    def testAabjoe(self) -> None:
+    def testAabjoe_test0_decomposed(self) -> None:
         pass
 
-    def testCanFail(self) -> None:
+    def testCanFail_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> ColognePhonetic:

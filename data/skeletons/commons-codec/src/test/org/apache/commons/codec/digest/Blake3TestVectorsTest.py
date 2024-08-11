@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.digest.Blake3 import *
 from src.main.org.apache.commons.codec.binary.Hex import *
 from src.main.org.apache.commons.codec.DecoderException import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -27,19 +28,52 @@ class Blake3TestVectorsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def keyDerivation(self) -> None:
+    def keyDerivation_test5_decomposed(self) -> None:
         pass
 
-    def keyedHashTruncatedOutput(self) -> None:
+    def keyDerivation_test4_decomposed(self) -> None:
         pass
 
-    def keyedHashArbitraryOutputLength(self) -> None:
+    def keyDerivation_test3_decomposed(self) -> None:
         pass
 
-    def hashTruncatedOutput(self) -> None:
+    def keyDerivation_test2_decomposed(self) -> None:
         pass
 
-    def hashArbitraryOutputLength(self) -> None:
+    def keyDerivation_test1_decomposed(self) -> None:
+        pass
+
+    def keyDerivation_test0_decomposed(self) -> None:
+        pass
+
+    def keyedHashTruncatedOutput_test1_decomposed(self) -> None:
+        pass
+
+    def keyedHashTruncatedOutput_test0_decomposed(self) -> None:
+        pass
+
+    def keyedHashArbitraryOutputLength_test2_decomposed(self) -> None:
+        pass
+
+    def keyedHashArbitraryOutputLength_test1_decomposed(self) -> None:
+        pass
+
+    def keyedHashArbitraryOutputLength_test0_decomposed(self) -> None:
+        pass
+
+    def hashTruncatedOutput_test1_decomposed(self) -> None:
+        pass
+
+    def hashTruncatedOutput_test0_decomposed(self) -> None:
+        pass
+
+    def hashArbitraryOutputLength_test2_decomposed(self) -> None:
+        pass
+
+    def hashArbitraryOutputLength_test1_decomposed(self) -> None:
+        pass
+
+    def hashArbitraryOutputLength_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

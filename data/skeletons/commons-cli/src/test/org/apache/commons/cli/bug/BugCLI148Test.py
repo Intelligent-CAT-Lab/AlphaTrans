@@ -8,6 +8,7 @@ from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -20,10 +21,22 @@ class BugCLI148Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testWorkaround2(self) -> None:
+    def testWorkaround2_test2_decomposed(self) -> None:
         pass
 
-    def testWorkaround1(self) -> None:
+    def testWorkaround2_test1_decomposed(self) -> None:
+        pass
+
+    def testWorkaround2_test0_decomposed(self) -> None:
+        pass
+
+    def testWorkaround1_test2_decomposed(self) -> None:
+        pass
+
+    def testWorkaround1_test1_decomposed(self) -> None:
+        pass
+
+    def testWorkaround1_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

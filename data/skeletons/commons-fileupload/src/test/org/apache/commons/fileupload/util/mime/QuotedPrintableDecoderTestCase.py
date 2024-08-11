@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -15,37 +16,37 @@ class QuotedPrintableDecoderTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def truncatedEscape(self) -> None:
+    def truncatedEscape_test0_decomposed(self) -> None:
         pass
 
-    def invalidSoftBreak2(self) -> None:
+    def invalidSoftBreak2_test0_decomposed(self) -> None:
         pass
 
-    def invalidSoftBreak1(self) -> None:
+    def invalidSoftBreak1_test0_decomposed(self) -> None:
         pass
 
-    def softLineBreakDecode(self) -> None:
+    def softLineBreakDecode_test0_decomposed(self) -> None:
         pass
 
-    def invalidCharDecode(self) -> None:
+    def invalidCharDecode_test0_decomposed(self) -> None:
         pass
 
-    def unsafeDecodeLowerCase(self) -> None:
+    def unsafeDecodeLowerCase_test0_decomposed(self) -> None:
         pass
 
-    def unsafeDecode(self) -> None:
+    def unsafeDecode_test0_decomposed(self) -> None:
         pass
 
-    def invalidQuotedPrintableEncoding(self) -> None:
+    def invalidQuotedPrintableEncoding_test0_decomposed(self) -> None:
         pass
 
-    def basicEncodeDecode(self) -> None:
+    def basicEncodeDecode_test0_decomposed(self) -> None:
         pass
 
-    def plainDecode(self) -> None:
+    def plainDecode_test0_decomposed(self) -> None:
         pass
 
-    def emptyDecode(self) -> None:
+    def emptyDecode_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.codec.digest.MurmurHash3 import *
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,85 +21,167 @@ class MurmurHash3Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray(self) -> None:
+    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test3_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testIncrementalHash32x86(self) -> None:
+    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test2_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testIncrementalHash32(self) -> None:
+    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test1_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testHash128x64WithOffsetLengthAndNegativeSeed(self) -> None:
+    def testIncrementalHashWithUnprocessedBytesAndHugeLengthArray_test0_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testHash128x64WithOffsetLengthAndSeed(self) -> None:
+    def testIncrementalHash32x86_test0_decomposed(self) -> None:
         pass
 
-    def testHash128x64(self) -> None:
+    def testIncrementalHash32_test0_decomposed(self) -> None:
         pass
 
-    def testHash128String(self) -> None:
+    def testHash128x64WithOffsetLengthAndNegativeSeed_test0_decomposed(self) -> None:
         pass
 
-    def testHash128WithOffsetLengthAndNegativeSeed(self) -> None:
+    def testHash128x64WithOffsetLengthAndSeed_test0_decomposed(self) -> None:
         pass
 
-    def testHash128WithOffsetLengthAndSeed(self) -> None:
+    def testHash128x64_test1_decomposed(self) -> None:
         pass
 
-    def testHash128(self) -> None:
+    def testHash128x64_test0_decomposed(self) -> None:
         pass
 
-    def testHash64InNotEqualToHash128(self) -> None:
+    def testHash128String_test0_decomposed(self) -> None:
         pass
 
-    def testHash64WithPrimitives(self) -> None:
+    def testHash128WithOffsetLengthAndNegativeSeed_test0_decomposed(self) -> None:
         pass
 
-    def testHash64WithOffsetAndLength(self) -> None:
+    def testHash128WithOffsetLengthAndSeed_test0_decomposed(self) -> None:
         pass
 
-    def testHash64(self) -> None:
+    def testHash128_test1_decomposed(self) -> None:
         pass
 
-    def testHash32x86WithTrailingNegativeSignedBytes(self) -> None:
+    def testHash128_test0_decomposed(self) -> None:
         pass
 
-    def testHash32x86WithOffsetLengthAndSeed(self) -> None:
+    def testHash64InNotEqualToHash128_test0_decomposed(self) -> None:
         pass
 
-    def testhash32x86(self) -> None:
+    def testHash64WithPrimitives_test2_decomposed(self) -> None:
         pass
 
-    def testHash32WithTrailingNegativeSignedBytesIsInvalid(self) -> None:
+    def testHash64WithPrimitives_test1_decomposed(self) -> None:
         pass
 
-    def testHash32String(self) -> None:
+    def testHash64WithPrimitives_test0_decomposed(self) -> None:
         pass
 
-    def testHash32WithOffsetLengthAndSeed(self) -> None:
+    def testHash64WithOffsetAndLength_test3_decomposed(self) -> None:
         pass
 
-    def testHash32WithLengthAndSeed(self) -> None:
+    def testHash64WithOffsetAndLength_test2_decomposed(self) -> None:
         pass
 
-    def testHash32WithLength(self) -> None:
+    def testHash64WithOffsetAndLength_test1_decomposed(self) -> None:
         pass
 
-    def testHash32(self) -> None:
+    def testHash64WithOffsetAndLength_test0_decomposed(self) -> None:
         pass
 
-    def testHash32LongSeed(self) -> None:
+    def testHash64_test2_decomposed(self) -> None:
         pass
 
-    def testHash32Long(self) -> None:
+    def testHash64_test1_decomposed(self) -> None:
         pass
 
-    def testHash32LongLongSeed(self) -> None:
+    def testHash64_test0_decomposed(self) -> None:
         pass
 
-    def testHash32LongLong(self) -> None:
+    def testHash32x86WithTrailingNegativeSignedBytes_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32x86WithOffsetLengthAndSeed_test0_decomposed(self) -> None:
+        pass
+
+    def testhash32x86_test1_decomposed(self) -> None:
+        pass
+
+    def testhash32x86_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32WithTrailingNegativeSignedBytesIsInvalid_test0_decomposed(
+        self,
+    ) -> None:
+        pass
+
+    def testHash32String_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32WithOffsetLengthAndSeed_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32WithLengthAndSeed_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32WithLengthAndSeed_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32WithLength_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32WithLength_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32LongSeed_test2_decomposed(self) -> None:
+        pass
+
+    def testHash32LongSeed_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32LongSeed_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32Long_test2_decomposed(self) -> None:
+        pass
+
+    def testHash32Long_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32Long_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLongSeed_test2_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLongSeed_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLongSeed_test0_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLong_test2_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLong_test1_decomposed(self) -> None:
+        pass
+
+    def testHash32LongLong_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

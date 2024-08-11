@@ -9,6 +9,7 @@ from src.main.org.apache.commons.codec.Decoder import *
 from src.main.org.apache.commons.codec.BinaryEncoder import *
 from src.main.org.apache.commons.codec.BinaryDecoder import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -25,28 +26,40 @@ class Base64Codec13Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testStaticDecodeChunked(self) -> None:
+    def testStaticDecodeChunked_test0_decomposed(self) -> None:
         pass
 
-    def testStaticEncodeChunked(self) -> None:
+    def testStaticEncodeChunked_test0_decomposed(self) -> None:
         pass
 
-    def testStaticDecode(self) -> None:
+    def testStaticDecode_test0_decomposed(self) -> None:
         pass
 
-    def testStaticEncode(self) -> None:
+    def testStaticEncode_test0_decomposed(self) -> None:
         pass
 
-    def testBinaryDecoder(self) -> None:
+    def testBinaryDecoder_test1_decomposed(self) -> None:
         pass
 
-    def testBinaryEncoder(self) -> None:
+    def testBinaryDecoder_test0_decomposed(self) -> None:
         pass
 
-    def testDecoder(self) -> None:
+    def testBinaryEncoder_test1_decomposed(self) -> None:
         pass
 
-    def testEncoder(self) -> None:
+    def testBinaryEncoder_test0_decomposed(self) -> None:
+        pass
+
+    def testDecoder_test1_decomposed(self) -> None:
+        pass
+
+    def testDecoder_test0_decomposed(self) -> None:
+        pass
+
+    def testEncoder_test1_decomposed(self) -> None:
+        pass
+
+    def testEncoder_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

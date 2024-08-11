@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.pool2.proxy.ProxySource import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
 import unittest
+import os
 import datetime
 import io
 from io import StringIO
@@ -54,22 +55,91 @@ class BaseTestProxiedKeyedObjectPool(ABC, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testUsageTracking(self) -> None:
+    def testUsageTracking_test4_decomposed(self) -> None:
         pass
 
-    def testPassThroughMethods02(self) -> None:
+    def testUsageTracking_test3_decomposed(self) -> None:
         pass
 
-    def testPassThroughMethods01(self) -> None:
+    def testUsageTracking_test2_decomposed(self) -> None:
         pass
 
-    def testBorrowObject(self) -> None:
+    def testUsageTracking_test1_decomposed(self) -> None:
         pass
 
-    def testAccessAfterReturn(self) -> None:
+    def testUsageTracking_test0_decomposed(self) -> None:
         pass
 
-    def testAccessAfterInvalidate(self) -> None:
+    def testPassThroughMethods02_test1_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods02_test0_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test7_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test6_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test5_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test4_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test3_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test2_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test1_decomposed(self) -> None:
+        pass
+
+    def testPassThroughMethods01_test0_decomposed(self) -> None:
+        pass
+
+    def testBorrowObject_test3_decomposed(self) -> None:
+        pass
+
+    def testBorrowObject_test2_decomposed(self) -> None:
+        pass
+
+    def testBorrowObject_test1_decomposed(self) -> None:
+        pass
+
+    def testBorrowObject_test0_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterReturn_test4_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterReturn_test3_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterReturn_test2_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterReturn_test1_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterReturn_test0_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterInvalidate_test4_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterInvalidate_test3_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterInvalidate_test2_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterInvalidate_test1_decomposed(self) -> None:
+        pass
+
+    def testAccessAfterInvalidate_test0_decomposed(self) -> None:
         pass
 
     def _getproxySource(self) -> ProxySource[TestObject]:

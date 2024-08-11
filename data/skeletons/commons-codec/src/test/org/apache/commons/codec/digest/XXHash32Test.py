@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.XXHash32 import *
 import unittest
+import os
 import typing
 from typing import *
 from io import BytesIO
@@ -21,10 +22,34 @@ class XXHash32Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def verifyIncrementalChecksum(self) -> None:
+    def verifyIncrementalChecksum_test4_decomposed(self) -> None:
         pass
 
-    def verifyChecksum(self) -> None:
+    def verifyIncrementalChecksum_test3_decomposed(self) -> None:
+        pass
+
+    def verifyIncrementalChecksum_test2_decomposed(self) -> None:
+        pass
+
+    def verifyIncrementalChecksum_test1_decomposed(self) -> None:
+        pass
+
+    def verifyIncrementalChecksum_test0_decomposed(self) -> None:
+        pass
+
+    def verifyChecksum_test4_decomposed(self) -> None:
+        pass
+
+    def verifyChecksum_test3_decomposed(self) -> None:
+        pass
+
+    def verifyChecksum_test2_decomposed(self) -> None:
+        pass
+
+    def verifyChecksum_test1_decomposed(self) -> None:
+        pass
+
+    def verifyChecksum_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

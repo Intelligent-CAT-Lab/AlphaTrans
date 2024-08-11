@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
+import os
 import io
 from io import StringIO
 
@@ -53,13 +54,40 @@ class BugCLI162Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testLongLineChunkingIndentIgnored(self) -> None:
+    def testLongLineChunkingIndentIgnored_test3_decomposed(self) -> None:
         pass
 
-    def testLongLineChunking(self) -> None:
+    def testLongLineChunkingIndentIgnored_test2_decomposed(self) -> None:
         pass
 
-    def testInfiniteLoop(self) -> None:
+    def testLongLineChunkingIndentIgnored_test1_decomposed(self) -> None:
+        pass
+
+    def testLongLineChunkingIndentIgnored_test0_decomposed(self) -> None:
+        pass
+
+    def testLongLineChunking_test3_decomposed(self) -> None:
+        pass
+
+    def testLongLineChunking_test2_decomposed(self) -> None:
+        pass
+
+    def testLongLineChunking_test1_decomposed(self) -> None:
+        pass
+
+    def testLongLineChunking_test0_decomposed(self) -> None:
+        pass
+
+    def testInfiniteLoop_test3_decomposed(self) -> None:
+        pass
+
+    def testInfiniteLoop_test2_decomposed(self) -> None:
+        pass
+
+    def testInfiniteLoop_test1_decomposed(self) -> None:
+        pass
+
+    def testInfiniteLoop_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

@@ -16,6 +16,7 @@ from src.main.me.lemire.integercompression.FastPFOR import *
 from src.main.me.lemire.integercompression.Composition import *
 from src.main.me.lemire.integercompression.BinaryPacking import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -27,22 +28,43 @@ class AdhocTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def biggerCompressedArray2(self) -> None:
+    def biggerCompressedArray2_test3_decomposed(self) -> None:
         pass
 
-    def biggerCompressedArray1(self) -> None:
+    def biggerCompressedArray2_test2_decomposed(self) -> None:
         pass
 
-    def biggerCompressedArray0(self) -> None:
+    def biggerCompressedArray2_test1_decomposed(self) -> None:
         pass
 
-    def testIssue41(self) -> None:
+    def biggerCompressedArray2_test0_decomposed(self) -> None:
         pass
 
-    def testIssue29b(self) -> None:
+    def biggerCompressedArray1_test1_decomposed(self) -> None:
         pass
 
-    def testIssue29(self) -> None:
+    def biggerCompressedArray1_test0_decomposed(self) -> None:
+        pass
+
+    def biggerCompressedArray0_test3_decomposed(self) -> None:
+        pass
+
+    def biggerCompressedArray0_test2_decomposed(self) -> None:
+        pass
+
+    def biggerCompressedArray0_test1_decomposed(self) -> None:
+        pass
+
+    def biggerCompressedArray0_test0_decomposed(self) -> None:
+        pass
+
+    def testIssue41_test0_decomposed(self) -> None:
+        pass
+
+    def testIssue29b_test0_decomposed(self) -> None:
+        pass
+
+    def testIssue29_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

@@ -23,10 +23,16 @@ class BoundaryTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testComposition(self) -> None:
+    def testComposition_test1_decomposed(self) -> None:
         pass
 
-    def testIntegratedComposition(self) -> None:
+    def testComposition_test0_decomposed(self) -> None:
+        pass
+
+    def testIntegratedComposition_test1_decomposed(self) -> None:
+        pass
+
+    def testIntegratedComposition_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

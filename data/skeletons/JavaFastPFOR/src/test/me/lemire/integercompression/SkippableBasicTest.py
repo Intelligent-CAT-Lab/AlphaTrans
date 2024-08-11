@@ -19,6 +19,7 @@ from src.main.me.lemire.integercompression.FastPFOR128 import *
 from src.main.me.lemire.integercompression.FastPFOR import *
 from src.main.me.lemire.integercompression.BinaryPacking import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -33,13 +34,13 @@ class SkippableBasicTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def varyingLengthTest2(self) -> None:
+    def varyingLengthTest2_test0_decomposed(self) -> None:
         pass
 
-    def varyingLengthTest(self) -> None:
+    def varyingLengthTest_test0_decomposed(self) -> None:
         pass
 
-    def consistentTest(self) -> None:
+    def consistentTest_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

@@ -6,6 +6,7 @@ from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -17,31 +18,40 @@ class Caverphone2Test(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSpecificationExamples(self) -> None:
+    def testSpecificationExamples_test0_decomposed(self) -> None:
         pass
 
-    def testIsCaverphoneEquals(self) -> None:
+    def testIsCaverphoneEquals_test1_decomposed(self) -> None:
         pass
 
-    def testEndMb(self) -> None:
+    def testIsCaverphoneEquals_test0_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedRandomWords(self) -> None:
+    def testEndMb_test0_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedRandomNameTTA1111111(self) -> None:
+    def testCaverphoneRevisitedRandomWords_test2_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedRandomNameTN11111111(self) -> None:
+    def testCaverphoneRevisitedRandomWords_test1_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedRandomNameKLN1111111(self) -> None:
+    def testCaverphoneRevisitedRandomWords_test0_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedExamples(self) -> None:
+    def testCaverphoneRevisitedRandomNameTTA1111111_test0_decomposed(self) -> None:
         pass
 
-    def testCaverphoneRevisitedCommonCodeAT11111111(self) -> None:
+    def testCaverphoneRevisitedRandomNameTN11111111_test0_decomposed(self) -> None:
+        pass
+
+    def testCaverphoneRevisitedRandomNameKLN1111111_test0_decomposed(self) -> None:
+        pass
+
+    def testCaverphoneRevisitedExamples_test0_decomposed(self) -> None:
+        pass
+
+    def testCaverphoneRevisitedCommonCodeAT11111111_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> Caverphone2:

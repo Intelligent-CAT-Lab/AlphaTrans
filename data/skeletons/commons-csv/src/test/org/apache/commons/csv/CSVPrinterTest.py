@@ -30,31 +30,517 @@ class CSVPrinterTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testTrimOnTwoColumns(self) -> None:
+    def testTrimOnTwoColumns_test0_decomposed(self) -> None:
         pass
 
-    def testTrimOnOneColumn(self) -> None:
+    def testTrimOnOneColumn_test0_decomposed(self) -> None:
         pass
 
-    def testTrimOffOneColumn(self) -> None:
+    def testTrimOffOneColumn_test0_decomposed(self) -> None:
         pass
 
-    def testTrailingDelimiterOnTwoColumns(self) -> None:
+    def testTrailingDelimiterOnTwoColumns_test0_decomposed(self) -> None:
         pass
 
-    def testSingleQuoteQuoted(self) -> None:
+    def testSingleQuoteQuoted_test0_decomposed(self) -> None:
         pass
 
-    def testSingleLineComment(self) -> None:
+    def testSingleLineComment_test0_decomposed(self) -> None:
         pass
 
-    def testRandomTdf(self) -> None:
+    def testRandomTdf_test0_decomposed(self) -> None:
         pass
 
-    def testRandomRfc4180(self) -> None:
+    def testRandomRfc4180_test0_decomposed(self) -> None:
         pass
 
-    def testRandomPostgreSqlText(self) -> None:
+    def testRandomPostgreSqlText_test0_decomposed(self) -> None:
+        pass
+
+    def testRandomMySql_test0_decomposed(self) -> None:
+        pass
+
+    def testRandomExcel_test0_decomposed(self) -> None:
+        pass
+
+    def testRandomDefault_test0_decomposed(self) -> None:
+        pass
+
+    def testQuoteNonNumeric_test0_decomposed(self) -> None:
+        pass
+
+    def testQuoteCommaFirstChar_test0_decomposed(self) -> None:
+        pass
+
+    def testQuoteAll_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintToPathWithDefaultCharset_test2_decomposed(self) -> None:
+        pass
+
+    def testPrintToPathWithDefaultCharset_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintToPathWithDefaultCharset_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintRecordStream_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintRecordStream_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintReaderWithoutQuoteToWriter_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintReaderWithoutQuoteToWriter_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintReaderWithoutQuoteToAppendable_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintReaderWithoutQuoteToAppendable_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintOnePositiveInteger_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintNullValues_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter7_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter6_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter5_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter4_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter3_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter2_test0_decomposed(self) -> None:
+        pass
+
+    def testPrinter1_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintCustomNullValues_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVRecords_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVRecords_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVRecord_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVRecord_test0_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVParser_test1_decomposed(self) -> None:
+        pass
+
+    def testPrintCSVParser_test0_decomposed(self) -> None:
+        pass
+
+    def testPrint_test0_decomposed(self) -> None:
+        pass
+
+    def testPostgreSqlNullStringDefaultText_test0_decomposed(self) -> None:
+        pass
+
+    def testPostgreSqlNullStringDefaultCsv_test0_decomposed(self) -> None:
+        pass
+
+    def testPlainQuoted_test0_decomposed(self) -> None:
+        pass
+
+    def testPlainPlain_test0_decomposed(self) -> None:
+        pass
+
+    def testPlainEscaped_test0_decomposed(self) -> None:
+        pass
+
+    def testParseCustomNullValues_test3_decomposed(self) -> None:
+        pass
+
+    def testParseCustomNullValues_test2_decomposed(self) -> None:
+        pass
+
+    def testParseCustomNullValues_test1_decomposed(self) -> None:
+        pass
+
+    def testParseCustomNullValues_test0_decomposed(self) -> None:
+        pass
+
+    def testNotFlushable_test0_decomposed(self) -> None:
+        pass
+
+    def testNewCsvPrinterNullAppendableFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testNewCsvPrinterAppendableNullFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullStringDefault_test0_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test41_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test40_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test39_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test38_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test37_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test36_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test35_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test34_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test33_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test32_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test31_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test30_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test29_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test28_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test27_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test26_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test25_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test24_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test23_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test22_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test21_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test20_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test19_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test18_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test17_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test16_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test15_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test14_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test13_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test12_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test11_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test10_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test9_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test8_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test7_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test6_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test5_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test4_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test3_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test2_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test1_decomposed(self) -> None:
+        pass
+
+    def testMySqlNullOutput_test0_decomposed(self) -> None:
+        pass
+
+    def testMultiLineComment_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbTsvTabInValue_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbTsvCommaInValue_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbTsvBasic_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbCsvTabInValue_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbCsvDoubleQuoteInValue_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbCsvCommaInValue_test0_decomposed(self) -> None:
+        pass
+
+    def testMongoDbCsvBasic_test0_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test7_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test6_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test5_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test4_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test3_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test2_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test1_decomposed(self) -> None:
+        pass
+
+    def testJira135_part3_test0_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test7_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test6_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test5_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test4_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test3_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test2_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test1_decomposed(self) -> None:
+        pass
+
+    def testJira135_part1_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testHeaderNotSet_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrinter2_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrinter1_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrintAllIterableOfLists_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrintAllIterableOfArrays_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrintAllArrayOfLists_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelPrintAllArrayOfArrays_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull5_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull5_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull4_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull4_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull3_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull3_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull2_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull2_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull1_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeNull1_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash5_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash5_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash4_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash4_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash3_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash3_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash2_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash2_test0_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash1_test1_decomposed(self) -> None:
+        pass
+
+    def testEscapeBackslash1_test0_decomposed(self) -> None:
+        pass
+
+    def testEolQuoted_test0_decomposed(self) -> None:
+        pass
+
+    def testEolPlain_test0_decomposed(self) -> None:
+        pass
+
+    def testEolEscaped_test0_decomposed(self) -> None:
+        pass
+
+    def testDontQuoteEuroFirstChar_test0_decomposed(self) -> None:
+        pass
+
+    def testDisabledComment_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimiterStringEscaped_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimiterPlain_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimiterEscaped_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test5_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test4_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test3_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test2_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test1_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoteNone_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimeterStringQuoted_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimeterQuoteNone_test2_decomposed(self) -> None:
+        pass
+
+    def testDelimeterQuoteNone_test1_decomposed(self) -> None:
+        pass
+
+    def testDelimeterQuoteNone_test0_decomposed(self) -> None:
+        pass
+
+    def testDelimeterQuoted_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV259_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV135_test1_decomposed(self) -> None:
+        pass
+
+    def testCSV135_test0_decomposed(self) -> None:
+        pass
+
+    def testCRComment_test0_decomposed(self) -> None:
         pass
 
     def testRandomPostgreSqlCsv(self) -> None:
@@ -63,85 +549,7 @@ class CSVPrinterTest(unittest.TestCase):
     def testRandomOracle(self) -> None:
         pass
 
-    def testRandomMySql(self) -> None:
-        pass
-
     def testRandomMongoDbCsv(self) -> None:
-        pass
-
-    def testRandomExcel(self) -> None:
-        pass
-
-    def testRandomDefault(self) -> None:
-        pass
-
-    def testQuoteNonNumeric(self) -> None:
-        pass
-
-    def testQuoteCommaFirstChar(self) -> None:
-        pass
-
-    def testQuoteAll(self) -> None:
-        pass
-
-    def testPrintToPathWithDefaultCharset(self) -> None:
-        pass
-
-    def testPrintRecordStream(self) -> None:
-        pass
-
-    def testPrintReaderWithoutQuoteToWriter(self) -> None:
-        pass
-
-    def testPrintReaderWithoutQuoteToAppendable(self) -> None:
-        pass
-
-    def testPrintOnePositiveInteger(self) -> None:
-        pass
-
-    def testPrintNullValues(self) -> None:
-        pass
-
-    def testPrinter7(self) -> None:
-        pass
-
-    def testPrinter6(self) -> None:
-        pass
-
-    def testPrinter5(self) -> None:
-        pass
-
-    def testPrinter4(self) -> None:
-        pass
-
-    def testPrinter3(self) -> None:
-        pass
-
-    def testPrinter2(self) -> None:
-        pass
-
-    def testPrinter1(self) -> None:
-        pass
-
-    def testPrintCustomNullValues(self) -> None:
-        pass
-
-    def testPrintCSVRecords(self) -> None:
-        pass
-
-    def testPrintCSVRecord(self) -> None:
-        pass
-
-    def testPrintCSVParser(self) -> None:
-        pass
-
-    def testPrint(self) -> None:
-        pass
-
-    def testPostgreSqlNullStringDefaultText(self) -> None:
-        pass
-
-    def testPostgreSqlNullStringDefaultCsv(self) -> None:
         pass
 
     def testPostgreSqlCsvTextOutput(self) -> None:
@@ -150,166 +558,10 @@ class CSVPrinterTest(unittest.TestCase):
     def testPostgreSqlCsvNullOutput(self) -> None:
         pass
 
-    def testPlainQuoted(self) -> None:
-        pass
-
-    def testPlainPlain(self) -> None:
-        pass
-
-    def testPlainEscaped(self) -> None:
-        pass
-
-    def testParseCustomNullValues(self) -> None:
-        pass
-
-    def testNotFlushable(self) -> None:
-        pass
-
-    def testNewCsvPrinterNullAppendableFormat(self) -> None:
-        pass
-
-    def testNewCsvPrinterAppendableNullFormat(self) -> None:
-        pass
-
-    def testMySqlNullStringDefault(self) -> None:
-        pass
-
-    def testMySqlNullOutput(self) -> None:
-        pass
-
-    def testMultiLineComment(self) -> None:
-        pass
-
-    def testMongoDbTsvTabInValue(self) -> None:
-        pass
-
-    def testMongoDbTsvCommaInValue(self) -> None:
-        pass
-
-    def testMongoDbTsvBasic(self) -> None:
-        pass
-
-    def testMongoDbCsvTabInValue(self) -> None:
-        pass
-
-    def testMongoDbCsvDoubleQuoteInValue(self) -> None:
-        pass
-
-    def testMongoDbCsvCommaInValue(self) -> None:
-        pass
-
-    def testMongoDbCsvBasic(self) -> None:
-        pass
-
     def testJira135All(self) -> None:
         pass
 
-    def testJira135_part3(self) -> None:
-        pass
-
     def testJira135_part2(self) -> None:
-        pass
-
-    def testJira135_part1(self) -> None:
-        pass
-
-    def testInvalidFormat(self) -> None:
-        pass
-
-    def testHeaderNotSet(self) -> None:
-        pass
-
-    def testExcelPrinter2(self) -> None:
-        pass
-
-    def testExcelPrinter1(self) -> None:
-        pass
-
-    def testExcelPrintAllIterableOfLists(self) -> None:
-        pass
-
-    def testExcelPrintAllIterableOfArrays(self) -> None:
-        pass
-
-    def testExcelPrintAllArrayOfLists(self) -> None:
-        pass
-
-    def testExcelPrintAllArrayOfArrays(self) -> None:
-        pass
-
-    def testEscapeNull5(self) -> None:
-        pass
-
-    def testEscapeNull4(self) -> None:
-        pass
-
-    def testEscapeNull3(self) -> None:
-        pass
-
-    def testEscapeNull2(self) -> None:
-        pass
-
-    def testEscapeNull1(self) -> None:
-        pass
-
-    def testEscapeBackslash5(self) -> None:
-        pass
-
-    def testEscapeBackslash4(self) -> None:
-        pass
-
-    def testEscapeBackslash3(self) -> None:
-        pass
-
-    def testEscapeBackslash2(self) -> None:
-        pass
-
-    def testEscapeBackslash1(self) -> None:
-        pass
-
-    def testEolQuoted(self) -> None:
-        pass
-
-    def testEolPlain(self) -> None:
-        pass
-
-    def testEolEscaped(self) -> None:
-        pass
-
-    def testDontQuoteEuroFirstChar(self) -> None:
-        pass
-
-    def testDisabledComment(self) -> None:
-        pass
-
-    def testDelimiterStringEscaped(self) -> None:
-        pass
-
-    def testDelimiterPlain(self) -> None:
-        pass
-
-    def testDelimiterEscaped(self) -> None:
-        pass
-
-    def testDelimeterStringQuoteNone(self) -> None:
-        pass
-
-    def testDelimeterStringQuoted(self) -> None:
-        pass
-
-    def testDelimeterQuoteNone(self) -> None:
-        pass
-
-    def testDelimeterQuoted(self) -> None:
-        pass
-
-    def testCSV259(self) -> None:
-        pass
-
-    def testCSV135(self) -> None:
-        pass
-
-    def testCRComment(self) -> None:
         pass
 
     def __tryFormat(

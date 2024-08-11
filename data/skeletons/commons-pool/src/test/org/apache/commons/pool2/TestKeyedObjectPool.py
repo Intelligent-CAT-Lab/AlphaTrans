@@ -7,6 +7,7 @@ from src.test.org.apache.commons.pool2.MethodCall import *
 from src.main.org.apache.commons.pool2.KeyedPooledObjectFactory import *
 from src.main.org.apache.commons.pool2.KeyedObjectPool import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -98,25 +99,382 @@ class TestKeyedObjectPool(ABC, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testBaseNumActiveNumIdle2(self) -> None:
+    def testBaseNumActiveNumIdle2_test36_decomposed(self) -> None:
         pass
 
-    def testBaseNumActiveNumIdle(self) -> None:
+    def testBaseNumActiveNumIdle2_test35_decomposed(self) -> None:
         pass
 
-    def testBaseInvalidateObject(self) -> None:
+    def testBaseNumActiveNumIdle2_test34_decomposed(self) -> None:
         pass
 
-    def testBaseClear(self) -> None:
+    def testBaseNumActiveNumIdle2_test33_decomposed(self) -> None:
         pass
 
-    def testBaseBorrowReturn(self) -> None:
+    def testBaseNumActiveNumIdle2_test32_decomposed(self) -> None:
         pass
 
-    def testBaseBorrow(self) -> None:
+    def testBaseNumActiveNumIdle2_test31_decomposed(self) -> None:
         pass
 
-    def testBaseAddObject(self) -> None:
+    def testBaseNumActiveNumIdle2_test30_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test29_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test28_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test27_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test26_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test25_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test24_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test23_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test22_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test21_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test20_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test19_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test18_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test17_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test16_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test15_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test14_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle2_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test18_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test17_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test16_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test15_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test14_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseNumActiveNumIdle_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseInvalidateObject_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test15_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test14_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseClear_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test21_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test20_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test19_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test18_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test17_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test16_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test15_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test14_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrowReturn_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test14_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test13_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test12_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test11_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test10_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test9_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test8_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test7_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test6_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test5_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test4_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test3_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseBorrow_test0_decomposed(self) -> None:
+        pass
+
+    def testBaseAddObject_test2_decomposed(self) -> None:
+        pass
+
+    def testBaseAddObject_test1_decomposed(self) -> None:
+        pass
+
+    def testBaseAddObject_test0_decomposed(self) -> None:
         pass
 
     def tearDown(self) -> None:

@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.digest.PureJavaCrc32 import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -102,7 +103,28 @@ class PureJavaCrc32Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testCorrectness(self) -> None:
+    def testCorrectness_test7_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test6_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test5_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test4_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test3_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test2_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test1_decomposed(self) -> None:
+        pass
+
+    def testCorrectness_test0_decomposed(self) -> None:
         pass
 
     def __checkSame(self) -> None:

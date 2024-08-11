@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.bm.NameType import *
 from src.main.org.apache.commons.codec.language.bm.Languages import *
 from src.main.org.apache.commons.codec.language.bm.Lang import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,7 +22,10 @@ class LanguageGuessingTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testLanguageGuessing(self) -> None:
+    def testLanguageGuessing_test1_decomposed(self) -> None:
+        pass
+
+    def testLanguageGuessing_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

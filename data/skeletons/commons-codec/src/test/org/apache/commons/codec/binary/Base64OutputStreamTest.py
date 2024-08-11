@@ -11,6 +11,7 @@ from src.main.org.apache.commons.codec.binary.Base64OutputStream import *
 from src.main.org.apache.commons.codec.binary.Base64 import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -27,28 +28,94 @@ class Base64OutputStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testStrictDecoding(self) -> None:
+    def testStrictDecoding_test0_decomposed(self) -> None:
         pass
 
-    def testWriteToNullCoverage(self) -> None:
+    def testWriteToNullCoverage_test0_decomposed(self) -> None:
         pass
 
-    def testWriteOutOfBounds(self) -> None:
+    def testWriteOutOfBounds_test0_decomposed(self) -> None:
         pass
 
-    def testBase64OutputStreamByteByByte(self) -> None:
+    def testBase64OutputStreamByteByByte_test9_decomposed(self) -> None:
         pass
 
-    def testBase64OutputStreamByChunk(self) -> None:
+    def testBase64OutputStreamByteByByte_test8_decomposed(self) -> None:
         pass
 
-    def testBase64EmptyOutputStreamPemChunkSize(self) -> None:
+    def testBase64OutputStreamByteByByte_test7_decomposed(self) -> None:
         pass
 
-    def testBase64EmptyOutputStreamMimeChunkSize(self) -> None:
+    def testBase64OutputStreamByteByByte_test6_decomposed(self) -> None:
         pass
 
-    def testCodec98NPE(self) -> None:
+    def testBase64OutputStreamByteByByte_test5_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByteByByte_test4_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByteByByte_test3_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByteByByte_test2_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByteByByte_test1_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByteByByte_test0_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test9_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test8_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test7_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test6_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test5_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test4_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test3_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test2_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test1_decomposed(self) -> None:
+        pass
+
+    def testBase64OutputStreamByChunk_test0_decomposed(self) -> None:
+        pass
+
+    def testBase64EmptyOutputStreamPemChunkSize_test0_decomposed(self) -> None:
+        pass
+
+    def testBase64EmptyOutputStreamMimeChunkSize_test0_decomposed(self) -> None:
+        pass
+
+    def testCodec98NPE_test4_decomposed(self) -> None:
+        pass
+
+    def testCodec98NPE_test3_decomposed(self) -> None:
+        pass
+
+    def testCodec98NPE_test2_decomposed(self) -> None:
+        pass
+
+    def testCodec98NPE_test1_decomposed(self) -> None:
+        pass
+
+    def testCodec98NPE_test0_decomposed(self) -> None:
         pass
 
     def __testByteByByte(

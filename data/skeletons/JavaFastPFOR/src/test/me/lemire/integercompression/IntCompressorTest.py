@@ -12,6 +12,7 @@ from src.main.me.lemire.integercompression.SkippableComposition import *
 from src.main.me.lemire.integercompression.IntCompressor import *
 from src.main.me.lemire.integercompression.BinaryPacking import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -27,13 +28,22 @@ class IntCompressorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def basicIntegratedTest(self) -> None:
+    def basicIntegratedTest_test0_decomposed(self) -> None:
         pass
 
-    def superSimpleExample(self) -> None:
+    def superSimpleExample_test3_decomposed(self) -> None:
         pass
 
-    def basicTest(self) -> None:
+    def superSimpleExample_test2_decomposed(self) -> None:
+        pass
+
+    def superSimpleExample_test1_decomposed(self) -> None:
+        pass
+
+    def superSimpleExample_test0_decomposed(self) -> None:
+        pass
+
+    def basicTest_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

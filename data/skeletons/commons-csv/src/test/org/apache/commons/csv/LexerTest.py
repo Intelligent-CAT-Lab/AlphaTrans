@@ -7,6 +7,7 @@ from src.main.org.apache.commons.csv.ExtendedBufferedReader import *
 from src.main.org.apache.commons.csv.Constants import *
 from src.main.org.apache.commons.csv.CSVFormat import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -19,16 +20,16 @@ class LexerTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testReadEscapeFF(self) -> None:
+    def testReadEscapeFF_test0_decomposed(self) -> None:
         pass
 
-    def testReadEscapeBackspace(self) -> None:
+    def testReadEscapeBackspace_test0_decomposed(self) -> None:
         pass
 
-    def testIsMetaCharCommentStart(self) -> None:
+    def testIsMetaCharCommentStart_test0_decomposed(self) -> None:
         pass
 
-    def testEscapingAtEOF(self) -> None:
+    def testEscapingAtEOF_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

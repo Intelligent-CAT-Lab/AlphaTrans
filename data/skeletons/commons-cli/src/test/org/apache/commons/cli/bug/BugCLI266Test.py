@@ -6,6 +6,7 @@ from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,10 +22,22 @@ class BugCLI266Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testOptionComparatorInsertedOrder(self) -> None:
+    def testOptionComparatorInsertedOrder_test1_decomposed(self) -> None:
         pass
 
-    def testOptionComparatorDefaultOrder(self) -> None:
+    def testOptionComparatorInsertedOrder_test0_decomposed(self) -> None:
+        pass
+
+    def testOptionComparatorDefaultOrder_test3_decomposed(self) -> None:
+        pass
+
+    def testOptionComparatorDefaultOrder_test2_decomposed(self) -> None:
+        pass
+
+    def testOptionComparatorDefaultOrder_test1_decomposed(self) -> None:
+        pass
+
+    def testOptionComparatorDefaultOrder_test0_decomposed(self) -> None:
         pass
 
     def __getOptions(self) -> Options:

@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.DecoderException import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -16,16 +17,31 @@ class DecoderExceptionTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testConstructorThrowable(self) -> None:
+    def testConstructorThrowable_test2_decomposed(self) -> None:
         pass
 
-    def testConstructorStringThrowable(self) -> None:
+    def testConstructorThrowable_test1_decomposed(self) -> None:
         pass
 
-    def testConstructorString(self) -> None:
+    def testConstructorThrowable_test0_decomposed(self) -> None:
         pass
 
-    def testConstructor0(self) -> None:
+    def testConstructorStringThrowable_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructorStringThrowable_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructorString_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructorString_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructor0_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructor0_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

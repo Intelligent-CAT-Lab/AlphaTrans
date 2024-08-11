@@ -24,40 +24,121 @@ class BCodecTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testBase64ImpossibleSamplesStrict(self) -> None:
+    def testBase64ImpossibleSamplesStrict_test2_decomposed(self) -> None:
         pass
 
-    def testBase64ImpossibleSamplesLenient(self) -> None:
+    def testBase64ImpossibleSamplesStrict_test1_decomposed(self) -> None:
         pass
 
-    def testBase64ImpossibleSamplesDefault(self) -> None:
+    def testBase64ImpossibleSamplesStrict_test0_decomposed(self) -> None:
         pass
 
-    def testDecodeObjects(self) -> None:
+    def testBase64ImpossibleSamplesLenient_test2_decomposed(self) -> None:
         pass
 
-    def testInvalidEncoding(self) -> None:
+    def testBase64ImpossibleSamplesLenient_test1_decomposed(self) -> None:
         pass
 
-    def testEncodeObjects(self) -> None:
+    def testBase64ImpossibleSamplesLenient_test0_decomposed(self) -> None:
         pass
 
-    def testDecodeStringWithNull(self) -> None:
+    def testBase64ImpossibleSamplesDefault_test2_decomposed(self) -> None:
         pass
 
-    def testEncodeStringWithNull(self) -> None:
+    def testBase64ImpossibleSamplesDefault_test1_decomposed(self) -> None:
         pass
 
-    def testEncodeDecodeNull(self) -> None:
+    def testBase64ImpossibleSamplesDefault_test0_decomposed(self) -> None:
         pass
 
-    def testBasicEncodeDecode(self) -> None:
+    def testDecodeObjects_test3_decomposed(self) -> None:
         pass
 
-    def testUTF8RoundTrip(self) -> None:
+    def testDecodeObjects_test2_decomposed(self) -> None:
         pass
 
-    def testNullInput(self) -> None:
+    def testDecodeObjects_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodeObjects_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidEncoding_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeObjects_test3_decomposed(self) -> None:
+        pass
+
+    def testEncodeObjects_test2_decomposed(self) -> None:
+        pass
+
+    def testEncodeObjects_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeObjects_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodeStringWithNull_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodeStringWithNull_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodeStringWithNull_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeStringWithNull_test2_decomposed(self) -> None:
+        pass
+
+    def testEncodeStringWithNull_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeStringWithNull_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeDecodeNull_test2_decomposed(self) -> None:
+        pass
+
+    def testEncodeDecodeNull_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeDecodeNull_test0_decomposed(self) -> None:
+        pass
+
+    def testBasicEncodeDecode_test2_decomposed(self) -> None:
+        pass
+
+    def testBasicEncodeDecode_test1_decomposed(self) -> None:
+        pass
+
+    def testBasicEncodeDecode_test0_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test5_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test4_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test3_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test2_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test1_decomposed(self) -> None:
+        pass
+
+    def testUTF8RoundTrip_test0_decomposed(self) -> None:
+        pass
+
+    def testNullInput_test2_decomposed(self) -> None:
+        pass
+
+    def testNullInput_test1_decomposed(self) -> None:
+        pass
+
+    def testNullInput_test0_decomposed(self) -> None:
         pass
 
     def __constructString(self, unicodeChars: typing.List[int]) -> str:

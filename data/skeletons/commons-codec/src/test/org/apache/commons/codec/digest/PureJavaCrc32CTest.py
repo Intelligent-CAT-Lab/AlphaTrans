@@ -19,16 +19,22 @@ class PureJavaCrc32CTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testDecreasing(self) -> None:
+    def testDecreasing_test0_decomposed(self) -> None:
         pass
 
-    def testIncreasing(self) -> None:
+    def testIncreasing_test0_decomposed(self) -> None:
         pass
 
-    def testOnes(self) -> None:
+    def testOnes_test1_decomposed(self) -> None:
         pass
 
-    def testZeros(self) -> None:
+    def testOnes_test0_decomposed(self) -> None:
+        pass
+
+    def testZeros_test1_decomposed(self) -> None:
+        pass
+
+    def testZeros_test0_decomposed(self) -> None:
         pass
 
     def __check(self, expected: int) -> None:

@@ -6,6 +6,7 @@ from src.main.org.apache.commons.validator.routines.RegexValidator import *
 from src.main.org.apache.commons.validator.routines.DomainValidator import *
 from src.test.org.apache.commons.validator.ResultPair import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -17,8 +18,6 @@ import pathlib
 class UrlValidatorTest(unittest.TestCase):
 
     # Class Fields Begin
-    __printStatus: bool = None
-    __printIndex: bool = None
     testUrlScheme: typing.List[ResultPair] = None
     testUrlAuthority: typing.List[ResultPair] = None
     testUrlPort: typing.List[ResultPair] = None
@@ -30,106 +29,243 @@ class UrlValidatorTest(unittest.TestCase):
     testPartsIndex: typing.List[int] = None
     __schemes: typing.List[typing.List[str]] = None
     testScheme: typing.List[ResultPair] = None
+    __printStatus: bool = None
+    __printIndex: bool = None
     # Class Fields End
 
     # Class Methods Begin
-    def testFragments(self) -> None:
+    def testFragments_test3_decomposed(self) -> None:
         pass
 
-    def testValidator283(self) -> None:
+    def testFragments_test2_decomposed(self) -> None:
         pass
 
-    def testValidator467(self) -> None:
+    def testFragments_test1_decomposed(self) -> None:
         pass
 
-    def testValidator420(self) -> None:
+    def testFragments_test0_decomposed(self) -> None:
         pass
 
-    def testValidator380(self) -> None:
+    def testValidator283_test1_decomposed(self) -> None:
         pass
 
-    def testValidator382(self) -> None:
+    def testValidator283_test0_decomposed(self) -> None:
         pass
 
-    def testValidator353(self) -> None:
+    def testValidator467_test1_decomposed(self) -> None:
         pass
 
-    def testValidator375(self) -> None:
+    def testValidator467_test0_decomposed(self) -> None:
         pass
 
-    def testValidator363(self) -> None:
+    def testValidator420_test1_decomposed(self) -> None:
         pass
 
-    def testValidator361(self) -> None:
+    def testValidator420_test0_decomposed(self) -> None:
         pass
 
-    def testValidator290(self) -> None:
+    def testValidator380_test1_decomposed(self) -> None:
         pass
 
-    def testValidateUrl(self) -> None:
+    def testValidator380_test0_decomposed(self) -> None:
         pass
 
-    def testValidator473_3(self) -> None:
+    def testValidator382_test1_decomposed(self) -> None:
         pass
 
-    def testValidator473_2(self) -> None:
+    def testValidator382_test0_decomposed(self) -> None:
         pass
 
-    def testValidator473_1(self) -> None:
+    def testValidator353_test1_decomposed(self) -> None:
         pass
 
-    def testValidator452(self) -> None:
+    def testValidator353_test0_decomposed(self) -> None:
         pass
 
-    def testValidator464(self) -> None:
+    def testValidator375_test3_decomposed(self) -> None:
         pass
 
-    def testValidator411(self) -> None:
+    def testValidator375_test2_decomposed(self) -> None:
         pass
 
-    def testValidator342(self) -> None:
+    def testValidator375_test1_decomposed(self) -> None:
         pass
 
-    def testValidator339IDN(self) -> None:
+    def testValidator375_test0_decomposed(self) -> None:
         pass
 
-    def testValidator339(self) -> None:
+    def testValidator363_test1_decomposed(self) -> None:
         pass
 
-    def testValidator309(self) -> None:
+    def testValidator363_test0_decomposed(self) -> None:
         pass
 
-    def testValidator391FAILS(self) -> None:
+    def testValidator361_test1_decomposed(self) -> None:
         pass
 
-    def testValidator391OK(self) -> None:
+    def testValidator361_test0_decomposed(self) -> None:
         pass
 
-    def testValidator276(self) -> None:
+    def testValidator290_test1_decomposed(self) -> None:
         pass
 
-    def testValidator288(self) -> None:
+    def testValidator290_test0_decomposed(self) -> None:
         pass
 
-    def testValidator248(self) -> None:
+    def testValidateUrl_test0_decomposed(self) -> None:
         pass
 
-    def testValidator235(self) -> None:
+    def testValidator473_3_test0_decomposed(self) -> None:
         pass
 
-    def testValidator218(self) -> None:
+    def testValidator473_2_test0_decomposed(self) -> None:
         pass
 
-    def testValidator204(self) -> None:
+    def testValidator473_1_test0_decomposed(self) -> None:
         pass
 
-    def testValidator202(self) -> None:
+    def testValidator452_test1_decomposed(self) -> None:
         pass
 
-    def testIsValidScheme(self) -> None:
+    def testValidator452_test0_decomposed(self) -> None:
         pass
 
-    def testIsValid0(self) -> None:
+    def testValidator464_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator464_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator411_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator411_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator342_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator342_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator339IDN_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator339IDN_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator339_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator339_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator309_test3_decomposed(self) -> None:
+        pass
+
+    def testValidator309_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator309_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator309_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator391FAILS_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator391FAILS_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator391OK_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator391OK_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator276_test3_decomposed(self) -> None:
+        pass
+
+    def testValidator276_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator276_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator276_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator288_test3_decomposed(self) -> None:
+        pass
+
+    def testValidator288_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator288_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator288_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator248_test4_decomposed(self) -> None:
+        pass
+
+    def testValidator248_test3_decomposed(self) -> None:
+        pass
+
+    def testValidator248_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator248_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator248_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator235_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator235_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator235_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator218_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator218_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator204_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator204_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator202_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator202_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

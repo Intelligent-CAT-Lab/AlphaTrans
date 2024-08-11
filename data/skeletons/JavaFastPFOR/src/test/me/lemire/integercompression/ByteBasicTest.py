@@ -7,6 +7,7 @@ from src.test.me.lemire.integercompression.TestUtils import *
 from src.main.me.lemire.integercompression.IntWrapper import *
 from src.main.me.lemire.integercompression.ByteIntegerCODEC import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,13 +22,13 @@ class ByteBasicTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def varyingLengthTest2(self) -> None:
+    def varyingLengthTest2_test0_decomposed(self) -> None:
         pass
 
-    def varyingLengthTest(self) -> None:
+    def varyingLengthTest_test0_decomposed(self) -> None:
         pass
 
-    def saulTest(self) -> None:
+    def saulTest_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

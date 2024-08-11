@@ -7,6 +7,7 @@ from src.main.me.lemire.integercompression.IntegerCODEC import *
 from src.main.me.lemire.integercompression.IntWrapper import *
 from src.main.me.lemire.integercompression.ByteIntegerCODEC import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,10 +21,10 @@ class TestUtils(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testPackingw(self) -> None:
+    def testPackingw_test0_decomposed(self) -> None:
         pass
 
-    def testPacking(self) -> None:
+    def testPacking_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

@@ -34,208 +34,304 @@ class CSVParserTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testStream(self) -> None:
+    def testStream_test0_decomposed(self) -> None:
+        pass
+
+    def testRoundtrip_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithQuoteWithEscape_test2_decomposed(self) -> None:
+        pass
+
+    def testParseWithQuoteWithEscape_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithQuoteWithEscape_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithQuoteThrowsException_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithQuoteThrowsException_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterWithQuote_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterWithQuote_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterWithEscape_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterWithEscape_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithQuote_test4_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithQuote_test3_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithQuote_test2_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithQuote_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithQuote_test0_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithEscape_test4_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithEscape_test3_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithEscape_test2_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithEscape_test1_decomposed(self) -> None:
+        pass
+
+    def testParseWithDelimiterStringWithEscape_test0_decomposed(self) -> None:
+        pass
+
+    def testParseUrlCharsetNullFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseStringNullFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParserUrlNullCharsetFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseNullUrlCharsetFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseNullStringFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseNullPathFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseNullFileFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testParseFileNullFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testNotValueCSV_test1_decomposed(self) -> None:
+        pass
+
+    def testNotValueCSV_test0_decomposed(self) -> None:
+        pass
+
+    def testNoHeaderMap_test0_decomposed(self) -> None:
+        pass
+
+    def testNewCSVParserReaderNullFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testNewCSVParserNullReaderFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testMultipleIterators_test0_decomposed(self) -> None:
+        pass
+
+    def testLineFeedEndings_test0_decomposed(self) -> None:
+        pass
+
+    def testIteratorSequenceBreaking_test2_decomposed(self) -> None:
+        pass
+
+    def testIteratorSequenceBreaking_test1_decomposed(self) -> None:
+        pass
+
+    def testIteratorSequenceBreaking_test0_decomposed(self) -> None:
+        pass
+
+    def testIterator_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testIgnoreEmptyLines_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordWithMultiLineValues_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecords_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordPositionWithLF_test1_decomposed(self) -> None:
+        pass
+
+    def testGetRecordPositionWithLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordPositionWithCRLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordNumberWithLF_test1_decomposed(self) -> None:
+        pass
+
+    def testGetRecordNumberWithLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordNumberWithCRLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetRecordNumberWithCR_test1_decomposed(self) -> None:
+        pass
+
+    def testGetRecordNumberWithCR_test0_decomposed(self) -> None:
+        pass
+
+    def testGetOneLineOneParser_test0_decomposed(self) -> None:
+        pass
+
+    def testGetOneLine_test0_decomposed(self) -> None:
+        pass
+
+    def testGetLineNumberWithLF_test1_decomposed(self) -> None:
+        pass
+
+    def testGetLineNumberWithLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetLineNumberWithCRLF_test0_decomposed(self) -> None:
+        pass
+
+    def testGetLineNumberWithCR_test1_decomposed(self) -> None:
+        pass
+
+    def testGetLineNumberWithCR_test0_decomposed(self) -> None:
+        pass
+
+    def testGetLine_test0_decomposed(self) -> None:
+        pass
+
+    def testForEach_test0_decomposed(self) -> None:
+        pass
+
+    def testFirstEndOfLineLf_test0_decomposed(self) -> None:
+        pass
+
+    def testFirstEndOfLineCrLf_test0_decomposed(self) -> None:
+        pass
+
+    def testFirstEndOfLineCr_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelFormat2_test0_decomposed(self) -> None:
+        pass
+
+    def testExcelFormat1_test0_decomposed(self) -> None:
+        pass
+
+    def testEndOfFileBehaviorExcel_test0_decomposed(self) -> None:
+        pass
+
+    def testEndOfFileBehaviorCSV_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyString_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyLineBehaviorExcel_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyLineBehaviorCSV_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyFile_test0_decomposed(self) -> None:
+        pass
+
+    def testDefaultFormat_test2_decomposed(self) -> None:
+        pass
+
+    def testDefaultFormat_test1_decomposed(self) -> None:
+        pass
+
+    def testDefaultFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV57_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV235_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141RFC4180_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141CSVFormat_POSTGRESQL_CSV_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141CSVFormat_ORACLE_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141CSVFormat_INFORMIX_UNLOAD_CSV_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141CSVFormat_INFORMIX_UNLOAD_test0_decomposed(self) -> None:
+        pass
+
+    def testCSV141CSVFormat_DEFAULT_test0_decomposed(self) -> None:
+        pass
+
+    def testCarriageReturnLineFeedEndings_test0_decomposed(self) -> None:
+        pass
+
+    def testCarriageReturnEndings_test0_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping2_test4_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping2_test3_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping2_test2_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping2_test1_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping2_test0_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test5_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test4_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test3_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test2_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test1_decomposed(self) -> None:
+        pass
+
+    def testBackslashEscaping_test0_decomposed(self) -> None:
         pass
 
     def testStartWithEmptyLinesThenHeaders(self) -> None:
         pass
 
-    def testRoundtrip(self) -> None:
-        pass
-
-    def testParseWithQuoteWithEscape(self) -> None:
-        pass
-
-    def testParseWithQuoteThrowsException(self) -> None:
-        pass
-
-    def testParseWithDelimiterWithQuote(self) -> None:
-        pass
-
-    def testParseWithDelimiterWithEscape(self) -> None:
-        pass
-
-    def testParseWithDelimiterStringWithQuote(self) -> None:
-        pass
-
-    def testParseWithDelimiterStringWithEscape(self) -> None:
-        pass
-
-    def testParseUrlCharsetNullFormat(self) -> None:
-        pass
-
-    def testParseStringNullFormat(self) -> None:
-        pass
-
-    def testParserUrlNullCharsetFormat(self) -> None:
-        pass
-
-    def testParseNullUrlCharsetFormat(self) -> None:
-        pass
-
-    def testParseNullStringFormat(self) -> None:
-        pass
-
-    def testParseNullPathFormat(self) -> None:
-        pass
-
-    def testParseNullFileFormat(self) -> None:
-        pass
-
-    def testParseFileNullFormat(self) -> None:
-        pass
-
-    def testNotValueCSV(self) -> None:
-        pass
-
-    def testNoHeaderMap(self) -> None:
-        pass
-
-    def testNewCSVParserReaderNullFormat(self) -> None:
-        pass
-
-    def testNewCSVParserNullReaderFormat(self) -> None:
-        pass
-
-    def testMultipleIterators(self) -> None:
-        pass
-
     def testMongoDbCsv(self) -> None:
-        pass
-
-    def testLineFeedEndings(self) -> None:
-        pass
-
-    def testIteratorSequenceBreaking(self) -> None:
-        pass
-
-    def testIterator(self) -> None:
-        pass
-
-    def testInvalidFormat(self) -> None:
-        pass
-
-    def testIgnoreEmptyLines(self) -> None:
-        pass
-
-    def testGetRecordWithMultiLineValues(self) -> None:
-        pass
-
-    def testGetRecords(self) -> None:
-        pass
-
-    def testGetRecordPositionWithLF(self) -> None:
-        pass
-
-    def testGetRecordPositionWithCRLF(self) -> None:
-        pass
-
-    def testGetRecordNumberWithLF(self) -> None:
-        pass
-
-    def testGetRecordNumberWithCRLF(self) -> None:
-        pass
-
-    def testGetRecordNumberWithCR(self) -> None:
-        pass
-
-    def testGetOneLineOneParser(self) -> None:
-        pass
-
-    def testGetOneLine(self) -> None:
-        pass
-
-    def testGetLineNumberWithLF(self) -> None:
-        pass
-
-    def testGetLineNumberWithCRLF(self) -> None:
-        pass
-
-    def testGetLineNumberWithCR(self) -> None:
-        pass
-
-    def testGetLine(self) -> None:
-        pass
-
-    def testForEach(self) -> None:
-        pass
-
-    def testFirstEndOfLineLf(self) -> None:
-        pass
-
-    def testFirstEndOfLineCrLf(self) -> None:
-        pass
-
-    def testFirstEndOfLineCr(self) -> None:
-        pass
-
-    def testExcelFormat2(self) -> None:
-        pass
-
-    def testExcelFormat1(self) -> None:
-        pass
-
-    def testEndOfFileBehaviorExcel(self) -> None:
-        pass
-
-    def testEndOfFileBehaviorCSV(self) -> None:
-        pass
-
-    def testEmptyString(self) -> None:
-        pass
-
-    def testEmptyLineBehaviorExcel(self) -> None:
-        pass
-
-    def testEmptyLineBehaviorCSV(self) -> None:
-        pass
-
-    def testEmptyFile(self) -> None:
-        pass
-
-    def testDefaultFormat(self) -> None:
-        pass
-
-    def testCSV57(self) -> None:
-        pass
-
-    def testCSV235(self) -> None:
-        pass
-
-    def testCSV141RFC4180(self) -> None:
         pass
 
     def testCSV141Excel(self) -> None:
         pass
 
-    def testCSV141CSVFormat_POSTGRESQL_CSV(self) -> None:
-        pass
-
-    def testCSV141CSVFormat_ORACLE(self) -> None:
-        pass
-
-    def testCSV141CSVFormat_INFORMIX_UNLOAD_CSV(self) -> None:
-        pass
-
-    def testCSV141CSVFormat_INFORMIX_UNLOAD(self) -> None:
-        pass
-
-    def testCSV141CSVFormat_DEFAULT(self) -> None:
-        pass
-
-    def testCarriageReturnLineFeedEndings(self) -> None:
-        pass
-
-    def testCarriageReturnEndings(self) -> None:
-        pass
-
     def testBackslashEscapingOld(self) -> None:
-        pass
-
-    def testBackslashEscaping2(self) -> None:
-        pass
-
-    def testBackslashEscaping(self) -> None:
         pass
 
     def __validateRecordPosition(self, lineSeparator: str) -> None:

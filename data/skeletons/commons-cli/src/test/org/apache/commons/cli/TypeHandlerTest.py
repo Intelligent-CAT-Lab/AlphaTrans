@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.cli.TypeHandler import *
 from src.main.org.apache.commons.cli.PatternOptionBuilder import *
 import unittest
+import os
 import typing
 from typing import *
 import numbers
@@ -41,55 +42,67 @@ class TypeHandlerTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testCreateValueURL_malformed(self) -> None:
+    def testCreateValueURL_malformed_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueURL(self) -> None:
+    def testCreateValueURL_test1_decomposed(self) -> None:
         pass
 
-    def testCreateValueString(self) -> None:
+    def testCreateValueURL_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueObject_unknownClass(self) -> None:
+    def testCreateValueString_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueObject_notInstantiableClass(self) -> None:
+    def testCreateValueObject_unknownClass_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueObject_InstantiableClass(self) -> None:
+    def testCreateValueObject_notInstantiableClass_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueNumber_noNumber(self) -> None:
+    def testCreateValueObject_InstantiableClass_test1_decomposed(self) -> None:
         pass
 
-    def testCreateValueNumber_Long(self) -> None:
+    def testCreateValueObject_InstantiableClass_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueNumber_Double(self) -> None:
+    def testCreateValueNumber_noNumber_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueInteger_failure(self) -> None:
+    def testCreateValueNumber_Long_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueFiles(self) -> None:
+    def testCreateValueNumber_Double_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueFile(self) -> None:
+    def testCreateValueInteger_failure_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueExistingFile_nonExistingFile(self) -> None:
+    def testCreateValueFiles_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueExistingFile(self) -> None:
+    def testCreateValueFile_test1_decomposed(self) -> None:
         pass
 
-    def testCreateValueDate(self) -> None:
+    def testCreateValueFile_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueClass_notFound(self) -> None:
+    def testCreateValueExistingFile_nonExistingFile_test0_decomposed(self) -> None:
         pass
 
-    def testCreateValueClass(self) -> None:
+    def testCreateValueExistingFile_test0_decomposed(self) -> None:
+        pass
+
+    def testCreateValueDate_test0_decomposed(self) -> None:
+        pass
+
+    def testCreateValueClass_notFound_test0_decomposed(self) -> None:
+        pass
+
+    def testCreateValueClass_test1_decomposed(self) -> None:
+        pass
+
+    def testCreateValueClass_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

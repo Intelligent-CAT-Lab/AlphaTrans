@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.StringUtils import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,70 +21,181 @@ class StringUtilsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testByteBufferUtf8(self) -> None:
+    def testByteBufferUtf8_test2_decomposed(self) -> None:
         pass
 
-    def testEqualsCS2(self) -> None:
+    def testByteBufferUtf8_test1_decomposed(self) -> None:
         pass
 
-    def testEqualsCS1(self) -> None:
+    def testByteBufferUtf8_test0_decomposed(self) -> None:
         pass
 
-    def testEqualsString(self) -> None:
+    def testEqualsCS2_test0_decomposed(self) -> None:
         pass
 
-    def testNewStringUtf8(self) -> None:
+    def testEqualsCS1_test0_decomposed(self) -> None:
         pass
 
-    def testNewStringUtf16Le(self) -> None:
+    def testEqualsString_test0_decomposed(self) -> None:
         pass
 
-    def testNewStringUtf16Be(self) -> None:
+    def testNewStringUtf8_test2_decomposed(self) -> None:
         pass
 
-    def testNewStringUtf16(self) -> None:
+    def testNewStringUtf8_test1_decomposed(self) -> None:
         pass
 
-    def testNewStringUsAscii(self) -> None:
+    def testNewStringUtf8_test0_decomposed(self) -> None:
         pass
 
-    def testNewStringIso8859_1(self) -> None:
+    def testNewStringUtf16Le_test2_decomposed(self) -> None:
         pass
 
-    def testNewStringNullInput_CODEC229(self) -> None:
+    def testNewStringUtf16Le_test1_decomposed(self) -> None:
         pass
 
-    def testNewStringNullInput(self) -> None:
+    def testNewStringUtf16Le_test0_decomposed(self) -> None:
         pass
 
-    def testNewStringBadEnc(self) -> None:
+    def testNewStringUtf16Be_test2_decomposed(self) -> None:
         pass
 
-    def testGetBytesUncheckedNullInput(self) -> None:
+    def testNewStringUtf16Be_test1_decomposed(self) -> None:
         pass
 
-    def testGetBytesUncheckedBadName(self) -> None:
+    def testNewStringUtf16Be_test0_decomposed(self) -> None:
         pass
 
-    def testGetBytesUtf8(self) -> None:
+    def testNewStringUtf16_test2_decomposed(self) -> None:
         pass
 
-    def testGetBytesUtf16Le(self) -> None:
+    def testNewStringUtf16_test1_decomposed(self) -> None:
         pass
 
-    def testGetBytesUtf16Be(self) -> None:
+    def testNewStringUtf16_test0_decomposed(self) -> None:
         pass
 
-    def testGetBytesUtf16(self) -> None:
+    def testNewStringUsAscii_test2_decomposed(self) -> None:
         pass
 
-    def testGetBytesUsAscii(self) -> None:
+    def testNewStringUsAscii_test1_decomposed(self) -> None:
         pass
 
-    def testGetBytesIso8859_1(self) -> None:
+    def testNewStringUsAscii_test0_decomposed(self) -> None:
         pass
 
-    def testConstructor(self) -> None:
+    def testNewStringIso8859_1_test2_decomposed(self) -> None:
+        pass
+
+    def testNewStringIso8859_1_test1_decomposed(self) -> None:
+        pass
+
+    def testNewStringIso8859_1_test0_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test5_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test4_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test3_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test2_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test1_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_CODEC229_test0_decomposed(self) -> None:
+        pass
+
+    def testNewStringNullInput_test0_decomposed(self) -> None:
+        pass
+
+    def testNewStringBadEnc_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUncheckedNullInput_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUncheckedBadName_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf8_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf8_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf8_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf8_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Le_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Le_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Le_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Le_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Be_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Be_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Be_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16Be_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUtf16_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUsAscii_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUsAscii_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUsAscii_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesUsAscii_test0_decomposed(self) -> None:
+        pass
+
+    def testGetBytesIso8859_1_test3_decomposed(self) -> None:
+        pass
+
+    def testGetBytesIso8859_1_test2_decomposed(self) -> None:
+        pass
+
+    def testGetBytesIso8859_1_test1_decomposed(self) -> None:
+        pass
+
+    def testGetBytesIso8859_1_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructor_test0_decomposed(self) -> None:
         pass
 
     def __testNewString(self, charsetName: str) -> None:

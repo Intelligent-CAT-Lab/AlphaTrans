@@ -11,6 +11,7 @@ from src.main.org.apache.commons.codec.binary.Base32OutputStream import *
 from src.main.org.apache.commons.codec.binary.Base32 import *
 from src.main.org.apache.commons.codec.CodecPolicy import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -26,25 +27,43 @@ class Base32OutputStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testStrictDecoding(self) -> None:
+    def testStrictDecoding_test0_decomposed(self) -> None:
         pass
 
-    def testWriteToNullCoverage(self) -> None:
+    def testWriteToNullCoverage_test0_decomposed(self) -> None:
         pass
 
-    def testWriteOutOfBounds(self) -> None:
+    def testWriteOutOfBounds_test0_decomposed(self) -> None:
         pass
 
-    def testBase32OutputStreamByteByByte(self) -> None:
+    def testBase32OutputStreamByteByByte_test3_decomposed(self) -> None:
         pass
 
-    def testBase32OutputStreamByChunk(self) -> None:
+    def testBase32OutputStreamByteByByte_test2_decomposed(self) -> None:
         pass
 
-    def testBase32EmptyOutputStreamPemChunkSize(self) -> None:
+    def testBase32OutputStreamByteByByte_test1_decomposed(self) -> None:
         pass
 
-    def testBase32EmptyOutputStreamMimeChunkSize(self) -> None:
+    def testBase32OutputStreamByteByByte_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32OutputStreamByChunk_test3_decomposed(self) -> None:
+        pass
+
+    def testBase32OutputStreamByChunk_test2_decomposed(self) -> None:
+        pass
+
+    def testBase32OutputStreamByChunk_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32OutputStreamByChunk_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32EmptyOutputStreamPemChunkSize_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32EmptyOutputStreamMimeChunkSize_test0_decomposed(self) -> None:
         pass
 
     def __testByteByByte(

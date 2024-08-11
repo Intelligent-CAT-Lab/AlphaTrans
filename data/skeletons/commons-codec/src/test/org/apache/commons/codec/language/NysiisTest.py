@@ -6,6 +6,7 @@ from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,61 +21,70 @@ class NysiisTest(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testTrueVariant(self) -> None:
+    def testTrueVariant_test3_decomposed(self) -> None:
         pass
 
-    def testTranan(self) -> None:
+    def testTrueVariant_test2_decomposed(self) -> None:
         pass
 
-    def testSpecialBranches(self) -> None:
+    def testTrueVariant_test1_decomposed(self) -> None:
         pass
 
-    def testSnat(self) -> None:
+    def testTrueVariant_test0_decomposed(self) -> None:
         pass
 
-    def testSnad(self) -> None:
+    def testTranan_test0_decomposed(self) -> None:
         pass
 
-    def testRule7(self) -> None:
+    def testSpecialBranches_test0_decomposed(self) -> None:
         pass
 
-    def testRule6(self) -> None:
+    def testSnat_test0_decomposed(self) -> None:
         pass
 
-    def testRule5(self) -> None:
+    def testSnad_test0_decomposed(self) -> None:
         pass
 
-    def testRule4Dot2(self) -> None:
+    def testRule7_test0_decomposed(self) -> None:
         pass
 
-    def testRule4Dot1(self) -> None:
+    def testRule6_test0_decomposed(self) -> None:
         pass
 
-    def testRule2(self) -> None:
+    def testRule5_test0_decomposed(self) -> None:
         pass
 
-    def testRule1(self) -> None:
+    def testRule4Dot2_test0_decomposed(self) -> None:
         pass
 
-    def testOthers(self) -> None:
+    def testRule4Dot1_test0_decomposed(self) -> None:
         pass
 
-    def testFal(self) -> None:
+    def testRule2_test0_decomposed(self) -> None:
         pass
 
-    def testDropBy(self) -> None:
+    def testRule1_test0_decomposed(self) -> None:
         pass
 
-    def testDan(self) -> None:
+    def testOthers_test0_decomposed(self) -> None:
         pass
 
-    def testDad(self) -> None:
+    def testFal_test0_decomposed(self) -> None:
         pass
 
-    def testCap(self) -> None:
+    def testDropBy_test0_decomposed(self) -> None:
         pass
 
-    def testBran(self) -> None:
+    def testDan_test0_decomposed(self) -> None:
+        pass
+
+    def testDad_test0_decomposed(self) -> None:
+        pass
+
+    def testCap_test0_decomposed(self) -> None:
+        pass
+
+    def testBran_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> Nysiis:

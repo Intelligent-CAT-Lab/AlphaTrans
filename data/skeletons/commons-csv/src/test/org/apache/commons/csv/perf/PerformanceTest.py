@@ -9,6 +9,7 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -26,10 +27,22 @@ class PerformanceTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testReadBigFile(self) -> None:
+    def testReadBigFile_test2_decomposed(self) -> None:
         pass
 
-    def testParseBigFileRepeat(self) -> None:
+    def testReadBigFile_test1_decomposed(self) -> None:
+        pass
+
+    def testReadBigFile_test0_decomposed(self) -> None:
+        pass
+
+    def testParseBigFileRepeat_test2_decomposed(self) -> None:
+        pass
+
+    def testParseBigFileRepeat_test1_decomposed(self) -> None:
+        pass
+
+    def testParseBigFileRepeat_test0_decomposed(self) -> None:
         pass
 
     def testParseBigFile(self, traverseColumns: bool) -> int:

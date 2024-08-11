@@ -15,7 +15,16 @@ class AnsiStringTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testCursorPosition(self) -> None:
+    def testCursorPosition_test3_decomposed(self) -> None:
+        pass
+
+    def testCursorPosition_test2_decomposed(self) -> None:
+        pass
+
+    def testCursorPosition_test1_decomposed(self) -> None:
+        pass
+
+    def testCursorPosition_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

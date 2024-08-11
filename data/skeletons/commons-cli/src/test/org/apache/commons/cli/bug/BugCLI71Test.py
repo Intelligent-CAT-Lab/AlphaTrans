@@ -8,6 +8,7 @@ from src.main.org.apache.commons.cli.MissingArgumentException import *
 from src.main.org.apache.commons.cli.CommandLineParser import *
 from src.main.org.apache.commons.cli.CommandLine import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -21,16 +22,37 @@ class BugCLI71Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testMistakenArgument(self) -> None:
+    def testMistakenArgument_test2_decomposed(self) -> None:
         pass
 
-    def testLackOfError(self) -> None:
+    def testMistakenArgument_test1_decomposed(self) -> None:
         pass
 
-    def testGetsDefaultIfOptional(self) -> None:
+    def testMistakenArgument_test0_decomposed(self) -> None:
         pass
 
-    def testBasic(self) -> None:
+    def testLackOfError_test0_decomposed(self) -> None:
+        pass
+
+    def testGetsDefaultIfOptional_test4_decomposed(self) -> None:
+        pass
+
+    def testGetsDefaultIfOptional_test3_decomposed(self) -> None:
+        pass
+
+    def testGetsDefaultIfOptional_test2_decomposed(self) -> None:
+        pass
+
+    def testGetsDefaultIfOptional_test1_decomposed(self) -> None:
+        pass
+
+    def testGetsDefaultIfOptional_test0_decomposed(self) -> None:
+        pass
+
+    def testBasic_test1_decomposed(self) -> None:
+        pass
+
+    def testBasic_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

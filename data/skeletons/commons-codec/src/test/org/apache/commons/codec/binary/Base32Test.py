@@ -32,82 +32,178 @@ class Base32Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testBase32DecodingOfTrailing35Bits(self) -> None:
+    def testBase32DecodingOfTrailing35Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing30Bits(self) -> None:
+    def testBase32DecodingOfTrailing30Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing25Bits(self) -> None:
+    def testBase32DecodingOfTrailing25Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing20Bits(self) -> None:
+    def testBase32DecodingOfTrailing20Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing15Bits(self) -> None:
+    def testBase32DecodingOfTrailing15Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing10Bits(self) -> None:
+    def testBase32DecodingOfTrailing10Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32DecodingOfTrailing5Bits(self) -> None:
+    def testBase32DecodingOfTrailing5Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase32HexImpossibleSamples(self) -> None:
+    def testBase32HexImpossibleSamples_test0_decomposed(self) -> None:
         pass
 
-    def testBase32ImpossibleChunked(self) -> None:
+    def testBase32ImpossibleChunked_test0_decomposed(self) -> None:
         pass
 
-    def testBase32ImpossibleSamples(self) -> None:
+    def testBase32ImpossibleSamples_test0_decomposed(self) -> None:
         pass
 
-    def testSingleCharEncoding(self) -> None:
+    def testSingleCharEncoding_test0_decomposed(self) -> None:
         pass
 
-    def testRandomBytesHex(self) -> None:
+    def testRandomBytesHex_test0_decomposed(self) -> None:
         pass
 
-    def testRandomBytesChunked(self) -> None:
+    def testRandomBytesChunked_test0_decomposed(self) -> None:
         pass
 
-    def testRandomBytes(self) -> None:
+    def testRandomBytes_test0_decomposed(self) -> None:
         pass
 
-    def testIsInAlphabet(self) -> None:
+    def testIsInAlphabet_test5_decomposed(self) -> None:
         pass
 
-    def testEmptyBase32(self) -> None:
+    def testIsInAlphabet_test4_decomposed(self) -> None:
         pass
 
-    def testConstructors(self) -> None:
+    def testIsInAlphabet_test3_decomposed(self) -> None:
         pass
 
-    def testCodec200(self) -> None:
+    def testIsInAlphabet_test2_decomposed(self) -> None:
         pass
 
-    def testBase32SamplesNonDefaultPadding(self) -> None:
+    def testIsInAlphabet_test1_decomposed(self) -> None:
         pass
 
-    def testBase32BinarySamplesReverse(self) -> None:
+    def testIsInAlphabet_test0_decomposed(self) -> None:
         pass
 
-    def testBase32BinarySamples(self) -> None:
+    def testEmptyBase32_test11_decomposed(self) -> None:
         pass
 
-    def testBase32Samples(self) -> None:
+    def testEmptyBase32_test10_decomposed(self) -> None:
         pass
 
-    def testBase32HexSamplesReverseLowercase(self) -> None:
+    def testEmptyBase32_test9_decomposed(self) -> None:
         pass
 
-    def testBase32HexSamplesReverse(self) -> None:
+    def testEmptyBase32_test8_decomposed(self) -> None:
         pass
 
-    def testBase32HexSamples(self) -> None:
+    def testEmptyBase32_test7_decomposed(self) -> None:
         pass
 
-    def testBase32Chunked(self) -> None:
+    def testEmptyBase32_test6_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test5_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test4_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test3_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test2_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test1_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase32_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test7_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test6_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test5_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test4_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test3_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test2_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test0_decomposed(self) -> None:
+        pass
+
+    def testCodec200_test1_decomposed(self) -> None:
+        pass
+
+    def testCodec200_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32SamplesNonDefaultPadding_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32SamplesNonDefaultPadding_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32BinarySamplesReverse_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32BinarySamplesReverse_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32BinarySamples_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32BinarySamples_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32Samples_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32Samples_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamplesReverseLowercase_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamplesReverseLowercase_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamplesReverse_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamplesReverse_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamples_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32HexSamples_test0_decomposed(self) -> None:
+        pass
+
+    def testBase32Chunked_test1_decomposed(self) -> None:
+        pass
+
+    def testBase32Chunked_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

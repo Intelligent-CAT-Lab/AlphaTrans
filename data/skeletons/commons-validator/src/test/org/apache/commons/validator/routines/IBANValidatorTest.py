@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit im
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.main.org.apache.commons.validator.routines.IBANValidator import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -23,40 +24,58 @@ class IBANValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSorted(self) -> None:
+    def testSorted_test2_decomposed(self) -> None:
         pass
 
-    def testSetValidatorLen_1(self) -> None:
+    def testSorted_test1_decomposed(self) -> None:
         pass
 
-    def testSetValidatorLen35(self) -> None:
+    def testSorted_test0_decomposed(self) -> None:
         pass
 
-    def testSetValidatorLen7(self) -> None:
+    def testSetValidatorLen_1_test1_decomposed(self) -> None:
         pass
 
-    def testSetValidatorLC(self) -> None:
+    def testSetValidatorLen_1_test0_decomposed(self) -> None:
         pass
 
-    def testSetDefaultValidator2(self) -> None:
+    def testSetValidatorLen35_test1_decomposed(self) -> None:
         pass
 
-    def testSetDefaultValidator1(self) -> None:
+    def testSetValidatorLen35_test0_decomposed(self) -> None:
         pass
 
-    def testGetValidator(self) -> None:
+    def testSetValidatorLen7_test1_decomposed(self) -> None:
         pass
 
-    def testHasValidator(self) -> None:
+    def testSetValidatorLen7_test0_decomposed(self) -> None:
         pass
 
-    def testNull(self) -> None:
+    def testSetValidatorLC_test1_decomposed(self) -> None:
         pass
 
-    def testInValid(self) -> None:
+    def testSetValidatorLC_test0_decomposed(self) -> None:
         pass
 
-    def testValid(self) -> None:
+    def testSetDefaultValidator2_test0_decomposed(self) -> None:
+        pass
+
+    def testSetDefaultValidator1_test0_decomposed(self) -> None:
+        pass
+
+    def testGetValidator_test0_decomposed(self) -> None:
+        pass
+
+    def testHasValidator_test0_decomposed(self) -> None:
+        pass
+
+    def testNull_test0_decomposed(self) -> None:
+        pass
+
+    def testInValid_test0_decomposed(self) -> None:
+        pass
+
+    def testValid_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

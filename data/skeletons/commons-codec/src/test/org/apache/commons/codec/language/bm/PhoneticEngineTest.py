@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.bm.RuleType import *
 from src.main.org.apache.commons.codec.language.bm.PhoneticEngine import *
 from src.main.org.apache.commons.codec.language.bm.NameType import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -25,7 +26,13 @@ class PhoneticEngineTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testEncode(self) -> None:
+    def testEncode_test2_decomposed(self) -> None:
+        pass
+
+    def testEncode_test1_decomposed(self) -> None:
+        pass
+
+    def testEncode_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

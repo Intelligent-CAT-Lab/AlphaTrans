@@ -18,31 +18,31 @@ class DaitchMokotoffSoundexTest(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSpecialRomanianCharacters(self) -> None:
+    def testSpecialRomanianCharacters_test0_decomposed(self) -> None:
         pass
 
-    def testSoundexBasic3(self) -> None:
+    def testSoundexBasic3_test0_decomposed(self) -> None:
         pass
 
-    def testSoundexBasic2(self) -> None:
+    def testSoundexBasic2_test0_decomposed(self) -> None:
         pass
 
-    def testSoundexBasic(self) -> None:
+    def testSoundexBasic_test0_decomposed(self) -> None:
         pass
 
-    def testEncodeIgnoreTrimmable(self) -> None:
+    def testEncodeIgnoreTrimmable_test0_decomposed(self) -> None:
         pass
 
-    def testEncodeIgnoreHyphens(self) -> None:
+    def testEncodeIgnoreHyphens_test0_decomposed(self) -> None:
         pass
 
-    def testEncodeIgnoreApostrophes(self) -> None:
+    def testEncodeIgnoreApostrophes_test0_decomposed(self) -> None:
         pass
 
-    def testAdjacentCodes(self) -> None:
+    def testAdjacentCodes_test0_decomposed(self) -> None:
         pass
 
-    def testAccentedCharacterFolding(self) -> None:
+    def testAccentedCharacterFolding_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> DaitchMokotoffSoundex:

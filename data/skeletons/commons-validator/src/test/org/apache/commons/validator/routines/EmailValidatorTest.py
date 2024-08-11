@@ -23,79 +23,106 @@ class EmailValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testValidator473_4(self) -> None:
+    def testValidator473_4_test3_decomposed(self) -> None:
         pass
 
-    def testValidator473_3(self) -> None:
+    def testValidator473_4_test2_decomposed(self) -> None:
         pass
 
-    def testValidator473_2(self) -> None:
+    def testValidator473_4_test1_decomposed(self) -> None:
         pass
 
-    def testValidator473_1(self) -> None:
+    def testValidator473_4_test0_decomposed(self) -> None:
         pass
 
-    def testValidator374(self) -> None:
+    def testValidator473_3_test0_decomposed(self) -> None:
         pass
 
-    def testValidator359(self) -> None:
+    def testValidator473_2_test0_decomposed(self) -> None:
         pass
 
-    def testEmailAtTLD(self) -> None:
+    def testValidator473_1_test0_decomposed(self) -> None:
         pass
 
-    def testValidator365(self) -> None:
+    def testValidator374_test0_decomposed(self) -> None:
         pass
 
-    def testValidator293(self) -> None:
+    def testValidator359_test1_decomposed(self) -> None:
         pass
 
-    def testEmailFromPerl(self) -> None:
+    def testValidator359_test0_decomposed(self) -> None:
         pass
 
-    def testEmailUserName(self) -> None:
+    def testEmailAtTLD_test1_decomposed(self) -> None:
         pass
 
-    def testEmailWithSlashes(self) -> None:
+    def testEmailAtTLD_test0_decomposed(self) -> None:
         pass
 
-    def testEmailLocalhost(self) -> None:
+    def testValidator365_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithControlChars(self) -> None:
+    def testValidator293_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithSpaces(self) -> None:
+    def testEmailFromPerl_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithCommas(self) -> None:
+    def testEmailUserName_test0_decomposed(self) -> None:
         pass
 
-    def testValidator235(self) -> None:
+    def testEmailWithSlashes_test0_decomposed(self) -> None:
         pass
 
-    def testVALIDATOR_278(self) -> None:
+    def testEmailLocalhost_test2_decomposed(self) -> None:
         pass
 
-    def testVALIDATOR_315(self) -> None:
+    def testEmailLocalhost_test1_decomposed(self) -> None:
         pass
 
-    def testEmailWithBogusCharacter(self) -> None:
+    def testEmailLocalhost_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithDotEnd(self) -> None:
+    def testEmailWithControlChars_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithDash(self) -> None:
+    def testEmailWithSpaces_test0_decomposed(self) -> None:
         pass
 
-    def testEmailExtension(self) -> None:
+    def testEmailWithCommas_test0_decomposed(self) -> None:
         pass
 
-    def testEmailWithNumericAddress(self) -> None:
+    def testValidator235_test2_decomposed(self) -> None:
         pass
 
-    def testEmail(self) -> None:
+    def testValidator235_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator235_test0_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_278_test0_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_315_test0_decomposed(self) -> None:
+        pass
+
+    def testEmailWithBogusCharacter_test0_decomposed(self) -> None:
+        pass
+
+    def testEmailWithDotEnd_test0_decomposed(self) -> None:
+        pass
+
+    def testEmailWithDash_test0_decomposed(self) -> None:
+        pass
+
+    def testEmailExtension_test0_decomposed(self) -> None:
+        pass
+
+    def testEmailWithNumericAddress_test0_decomposed(self) -> None:
+        pass
+
+    def testEmail_test0_decomposed(self) -> None:
         pass
 
     def setUp(self) -> None:

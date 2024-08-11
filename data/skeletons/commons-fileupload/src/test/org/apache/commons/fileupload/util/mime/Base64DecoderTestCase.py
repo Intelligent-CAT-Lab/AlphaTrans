@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -15,43 +16,43 @@ class Base64DecoderTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def nonASCIIcharacter(self) -> None:
+    def nonASCIIcharacter_test0_decomposed(self) -> None:
         pass
 
-    def badLength(self) -> None:
+    def badLength_test0_decomposed(self) -> None:
         pass
 
-    def badPaddingLeading2(self) -> None:
+    def badPaddingLeading2_test0_decomposed(self) -> None:
         pass
 
-    def badPaddingLeading1(self) -> None:
+    def badPaddingLeading1_test0_decomposed(self) -> None:
         pass
 
-    def badPadding(self) -> None:
+    def badPadding_test0_decomposed(self) -> None:
         pass
 
-    def decodeTrailing3(self) -> None:
+    def decodeTrailing3_test0_decomposed(self) -> None:
         pass
 
-    def decodeTrailing2(self) -> None:
+    def decodeTrailing2_test0_decomposed(self) -> None:
         pass
 
-    def decodeTrailing1(self) -> None:
+    def decodeTrailing1_test0_decomposed(self) -> None:
         pass
 
-    def decodeTrailingJunk(self) -> None:
+    def decodeTrailingJunk_test0_decomposed(self) -> None:
         pass
 
-    def truncatedString(self) -> None:
+    def truncatedString_test0_decomposed(self) -> None:
         pass
 
-    def nonBase64Bytes(self) -> None:
+    def nonBase64Bytes_test0_decomposed(self) -> None:
         pass
 
-    def decodeWithInnerPad(self) -> None:
+    def decodeWithInnerPad_test0_decomposed(self) -> None:
         pass
 
-    def rfc4648Section10Decode(self) -> None:
+    def rfc4648Section10Decode_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

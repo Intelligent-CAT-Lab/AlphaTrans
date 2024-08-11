@@ -6,6 +6,7 @@ from src.main.org.apache.commons.csv.CSVPrinter import *
 from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -17,40 +18,44 @@ class JiraCsv288Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testParseWithTwoCharDelimiterEndsWithDelimiter(self) -> None:
+    def testParseWithTwoCharDelimiterEndsWithDelimiter_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithTwoCharDelimiter4(self) -> None:
+    def testParseWithTwoCharDelimiter4_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithTwoCharDelimiter3(self) -> None:
+    def testParseWithTwoCharDelimiter3_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithTwoCharDelimiter2(self) -> None:
+    def testParseWithTwoCharDelimiter2_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithTwoCharDelimiter1(self) -> None:
+    def testParseWithTwoCharDelimiter1_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithTriplePipeDelimiter(self) -> None:
+    def testParseWithTriplePipeDelimiter_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithSinglePipeDelimiterEndsWithDelimiter(self) -> None:
+    def testParseWithSinglePipeDelimiterEndsWithDelimiter_test0_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testParseWithDoublePipeDelimiterQuoted(self) -> None:
+    def testParseWithDoublePipeDelimiterQuoted_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithDoublePipeDelimiterEndsWithDelimiter(self) -> None:
+    def testParseWithDoublePipeDelimiterEndsWithDelimiter_test0_decomposed(
+        self,
+    ) -> None:
         pass
 
-    def testParseWithDoublePipeDelimiterDoubleCharValue(self) -> None:
+    def testParseWithDoublePipeDelimiterDoubleCharValue_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithDoublePipeDelimiter(self) -> None:
+    def testParseWithDoublePipeDelimiter_test0_decomposed(self) -> None:
         pass
 
-    def testParseWithABADelimiter(self) -> None:
+    def testParseWithABADelimiter_test0_decomposed(self) -> None:
         pass
 
     def __print_(self, csvRecord: CSVRecord, csvPrinter: CSVPrinter) -> None:

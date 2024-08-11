@@ -6,6 +6,7 @@ from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,40 +22,115 @@ class DoubleMetaphoneTest(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSetMaxCodeLength(self) -> None:
+    def testSetMaxCodeLength_test5_decomposed(self) -> None:
         pass
 
-    def testNTilde(self) -> None:
+    def testSetMaxCodeLength_test4_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneNotEqual(self) -> None:
+    def testSetMaxCodeLength_test3_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneEqualWithMATCHES(self) -> None:
+    def testSetMaxCodeLength_test2_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneEqualExtended3(self) -> None:
+    def testSetMaxCodeLength_test1_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneEqualExtended2(self) -> None:
+    def testSetMaxCodeLength_test0_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneEqualExtended1(self) -> None:
+    def testNTilde_test1_decomposed(self) -> None:
         pass
 
-    def testIsDoubleMetaphoneEqualBasic(self) -> None:
+    def testNTilde_test0_decomposed(self) -> None:
         pass
 
-    def testEmpty(self) -> None:
+    def testIsDoubleMetaphoneNotEqual_test0_decomposed(self) -> None:
         pass
 
-    def testDoubleMetaphone(self) -> None:
+    def testIsDoubleMetaphoneEqualWithMATCHES_test1_decomposed(self) -> None:
         pass
 
-    def testCodec184(self) -> None:
+    def testIsDoubleMetaphoneEqualWithMATCHES_test0_decomposed(self) -> None:
         pass
 
-    def testCCedilla(self) -> None:
+    def testIsDoubleMetaphoneEqualExtended3_test4_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualExtended3_test3_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualExtended3_test2_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualExtended3_test1_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualExtended3_test0_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualExtended2_test0_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualBasic_test1_decomposed(self) -> None:
+        pass
+
+    def testIsDoubleMetaphoneEqualBasic_test0_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test7_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test6_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test5_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test4_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test3_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test2_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test1_decomposed(self) -> None:
+        pass
+
+    def testEmpty_test0_decomposed(self) -> None:
+        pass
+
+    def testDoubleMetaphone_test1_decomposed(self) -> None:
+        pass
+
+    def testDoubleMetaphone_test0_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test5_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test4_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test3_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test2_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test1_decomposed(self) -> None:
+        pass
+
+    def testCodec184_test0_decomposed(self) -> None:
+        pass
+
+    def testCCedilla_test1_decomposed(self) -> None:
+        pass
+
+    def testCCedilla_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> DoubleMetaphone:

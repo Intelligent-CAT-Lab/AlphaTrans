@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.StringEncoder import *
 from src.main.org.apache.commons.codec.EncoderException import *
 from src.main.org.apache.commons.codec.Encoder import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -20,16 +21,28 @@ class StringEncoderAbstractTest(ABC, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testLocaleIndependence(self) -> None:
+    def testLocaleIndependence_test1_decomposed(self) -> None:
         pass
 
-    def testEncodeWithInvalidObject(self) -> None:
+    def testLocaleIndependence_test0_decomposed(self) -> None:
         pass
 
-    def testEncodeNull(self) -> None:
+    def testEncodeWithInvalidObject_test1_decomposed(self) -> None:
         pass
 
-    def testEncodeEmpty(self) -> None:
+    def testEncodeWithInvalidObject_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeNull_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeNull_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeEmpty_test1_decomposed(self) -> None:
+        pass
+
+    def testEncodeEmpty_test0_decomposed(self) -> None:
         pass
 
     def getStringEncoder(self) -> typing.Any:

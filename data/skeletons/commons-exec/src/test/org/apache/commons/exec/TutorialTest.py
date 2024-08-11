@@ -10,6 +10,7 @@ from src.main.org.apache.commons.exec.ExecuteResultHandler import *
 from src.main.org.apache.commons.exec.DefaultExecutor import *
 from src.main.org.apache.commons.exec.CommandLine import *
 import unittest
+import os
 import datetime
 import io
 import pathlib
@@ -46,7 +47,13 @@ class TutorialTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testTutorialExample(self) -> None:
+    def testTutorialExample_test2_decomposed(self) -> None:
+        pass
+
+    def testTutorialExample_test1_decomposed(self) -> None:
+        pass
+
+    def testTutorialExample_test0_decomposed(self) -> None:
         pass
 
     def print_(

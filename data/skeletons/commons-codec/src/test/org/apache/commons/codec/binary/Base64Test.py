@@ -30,178 +30,781 @@ class Base64Test(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testCodec265(self) -> None:
+    def testCodec265_test2_decomposed(self) -> None:
         pass
 
-    def testBase64DecodingOfTrailing18Bits(self) -> None:
+    def testCodec265_test1_decomposed(self) -> None:
         pass
 
-    def testBase64DecodingOfTrailing12Bits(self) -> None:
+    def testCodec265_test0_decomposed(self) -> None:
         pass
 
-    def testBase64DecodingOfTrailing6Bits(self) -> None:
+    def testBase64DecodingOfTrailing18Bits_test0_decomposed(self) -> None:
         pass
 
-    def testBase64ImpossibleSamples(self) -> None:
+    def testBase64DecodingOfTrailing12Bits_test0_decomposed(self) -> None:
         pass
 
-    def testHugeLineSeparator(self) -> None:
+    def testBase64DecodingOfTrailing6Bits_test0_decomposed(self) -> None:
         pass
 
-    def testStringToByteVariations(self) -> None:
+    def testBase64ImpossibleSamples_test1_decomposed(self) -> None:
         pass
 
-    def testByteToStringVariations(self) -> None:
+    def testBase64ImpossibleSamples_test0_decomposed(self) -> None:
         pass
 
-    def testUUID(self) -> None:
+    def testHugeLineSeparator_test4_decomposed(self) -> None:
         pass
 
-    def testUrlSafe(self) -> None:
+    def testHugeLineSeparator_test3_decomposed(self) -> None:
         pass
 
-    def testTripletsChunked(self) -> None:
+    def testHugeLineSeparator_test2_decomposed(self) -> None:
         pass
 
-    def testTriplets(self) -> None:
+    def testHugeLineSeparator_test1_decomposed(self) -> None:
         pass
 
-    def testSingletonsChunked(self) -> None:
+    def testHugeLineSeparator_test0_decomposed(self) -> None:
         pass
 
-    def testSingletons(self) -> None:
+    def testStringToByteVariations_test17_decomposed(self) -> None:
         pass
 
-    def testRfc4648Section10EncodeDecode(self) -> None:
+    def testStringToByteVariations_test16_decomposed(self) -> None:
         pass
 
-    def testRfc4648Section10DecodeEncode(self) -> None:
+    def testStringToByteVariations_test15_decomposed(self) -> None:
         pass
 
-    def testRfc4648Section10Encode(self) -> None:
+    def testStringToByteVariations_test14_decomposed(self) -> None:
         pass
 
-    def testRfc4648Section10DecodeWithCrLf(self) -> None:
+    def testStringToByteVariations_test13_decomposed(self) -> None:
         pass
 
-    def testRfc4648Section10Decode(self) -> None:
+    def testStringToByteVariations_test12_decomposed(self) -> None:
         pass
 
-    def testRfc1421Section6Dot8ChunkSizeDefinition(self) -> None:
+    def testStringToByteVariations_test11_decomposed(self) -> None:
         pass
 
-    def testRfc2045Section6Dot8ChunkSizeDefinition(self) -> None:
+    def testStringToByteVariations_test10_decomposed(self) -> None:
         pass
 
-    def testRfc2045Section2Dot1CrLfDefinition(self) -> None:
+    def testStringToByteVariations_test9_decomposed(self) -> None:
         pass
 
-    def testPairs(self) -> None:
+    def testStringToByteVariations_test8_decomposed(self) -> None:
         pass
 
-    def testObjectEncode(self) -> None:
+    def testStringToByteVariations_test7_decomposed(self) -> None:
         pass
 
-    def testObjectEncodeWithValidParameter(self) -> None:
+    def testStringToByteVariations_test6_decomposed(self) -> None:
         pass
 
-    def testObjectEncodeWithInvalidParameter(self) -> None:
+    def testStringToByteVariations_test5_decomposed(self) -> None:
         pass
 
-    def testObjectDecodeWithValidParameter(self) -> None:
+    def testStringToByteVariations_test4_decomposed(self) -> None:
         pass
 
-    def testObjectDecodeWithInvalidParameter(self) -> None:
+    def testStringToByteVariations_test3_decomposed(self) -> None:
         pass
 
-    def testNonBase64Test(self) -> None:
+    def testStringToByteVariations_test2_decomposed(self) -> None:
         pass
 
-    def testKnownEncodings(self) -> None:
+    def testStringToByteVariations_test1_decomposed(self) -> None:
         pass
 
-    def testKnownDecodings(self) -> None:
+    def testStringToByteVariations_test0_decomposed(self) -> None:
         pass
 
-    def testIsUrlSafe(self) -> None:
+    def testByteToStringVariations_test11_decomposed(self) -> None:
         pass
 
-    def testIsArrayByteBase64(self) -> None:
+    def testByteToStringVariations_test10_decomposed(self) -> None:
         pass
 
-    def testIgnoringNonBase64InDecode(self) -> None:
+    def testByteToStringVariations_test9_decomposed(self) -> None:
         pass
 
-    def testCodec112(self) -> None:
+    def testByteToStringVariations_test8_decomposed(self) -> None:
         pass
 
-    def testEncodeOverMaxSize0(self) -> None:
+    def testByteToStringVariations_test7_decomposed(self) -> None:
         pass
 
-    def testEncodeDecodeSmall(self) -> None:
+    def testByteToStringVariations_test6_decomposed(self) -> None:
         pass
 
-    def testEncodeDecodeRandom(self) -> None:
+    def testByteToStringVariations_test5_decomposed(self) -> None:
         pass
 
-    def testEmptyBase64(self) -> None:
+    def testByteToStringVariations_test4_decomposed(self) -> None:
         pass
 
-    def testDecodeWithWhitespace(self) -> None:
+    def testByteToStringVariations_test3_decomposed(self) -> None:
         pass
 
-    def testDecodePadOnlyChunked(self) -> None:
+    def testByteToStringVariations_test2_decomposed(self) -> None:
         pass
 
-    def testDecodePadOnly(self) -> None:
+    def testByteToStringVariations_test1_decomposed(self) -> None:
         pass
 
-    def testDecodePadMarkerIndex3(self) -> None:
+    def testByteToStringVariations_test0_decomposed(self) -> None:
         pass
 
-    def testDecodePadMarkerIndex2(self) -> None:
+    def testUUID_test10_decomposed(self) -> None:
         pass
 
-    def testConstructor_Int_ByteArray_Boolean_UrlSafe(self) -> None:
+    def testUUID_test9_decomposed(self) -> None:
         pass
 
-    def testConstructor_Int_ByteArray_Boolean(self) -> None:
+    def testUUID_test8_decomposed(self) -> None:
         pass
 
-    def testConstructors(self) -> None:
+    def testUUID_test7_decomposed(self) -> None:
         pass
 
-    def testCodeIntegerNull(self) -> None:
+    def testUUID_test6_decomposed(self) -> None:
         pass
 
-    def testCodeIntegerEdgeCases(self) -> None:
+    def testUUID_test5_decomposed(self) -> None:
         pass
 
-    def testCodeInteger4(self) -> None:
+    def testUUID_test4_decomposed(self) -> None:
         pass
 
-    def testCodeInteger3(self) -> None:
+    def testUUID_test3_decomposed(self) -> None:
         pass
 
-    def testCodeInteger2(self) -> None:
+    def testUUID_test2_decomposed(self) -> None:
         pass
 
-    def testCodeInteger1(self) -> None:
+    def testUUID_test1_decomposed(self) -> None:
         pass
 
-    def testCodec68(self) -> None:
+    def testUUID_test0_decomposed(self) -> None:
         pass
 
-    def testChunkedEncodeMultipleOf76(self) -> None:
+    def testUrlSafe_test1_decomposed(self) -> None:
         pass
 
-    def testDecodeWithInnerPad(self) -> None:
+    def testUrlSafe_test0_decomposed(self) -> None:
         pass
 
-    def testBase64(self) -> None:
+    def testTripletsChunked_test0_decomposed(self) -> None:
         pass
 
-    def testIsStringBase64(self) -> None:
+    def testTriplets_test0_decomposed(self) -> None:
+        pass
+
+    def testSingletonsChunked_test0_decomposed(self) -> None:
+        pass
+
+    def testSingletons_test1_decomposed(self) -> None:
+        pass
+
+    def testSingletons_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10EncodeDecode_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeEncode_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test13_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test12_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test11_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test10_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test9_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test8_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test7_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test6_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test5_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test4_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test3_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test2_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test1_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Encode_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test14_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test13_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test12_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test11_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test10_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test9_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test8_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test7_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test6_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test5_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test4_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test3_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test2_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test1_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10DecodeWithCrLf_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test13_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test12_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test11_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test10_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test9_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test8_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test7_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test6_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test5_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test4_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test3_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test2_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test1_decomposed(self) -> None:
+        pass
+
+    def testRfc4648Section10Decode_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc1421Section6Dot8ChunkSizeDefinition_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc2045Section6Dot8ChunkSizeDefinition_test0_decomposed(self) -> None:
+        pass
+
+    def testRfc2045Section2Dot1CrLfDefinition_test0_decomposed(self) -> None:
+        pass
+
+    def testPairs_test1_decomposed(self) -> None:
+        pass
+
+    def testPairs_test0_decomposed(self) -> None:
+        pass
+
+    def testObjectEncode_test2_decomposed(self) -> None:
+        pass
+
+    def testObjectEncode_test1_decomposed(self) -> None:
+        pass
+
+    def testObjectEncode_test0_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithValidParameter_test4_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithValidParameter_test3_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithValidParameter_test2_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithValidParameter_test1_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithValidParameter_test0_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithInvalidParameter_test1_decomposed(self) -> None:
+        pass
+
+    def testObjectEncodeWithInvalidParameter_test0_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithValidParameter_test4_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithValidParameter_test3_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithValidParameter_test2_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithValidParameter_test1_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithValidParameter_test0_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithInvalidParameter_test1_decomposed(self) -> None:
+        pass
+
+    def testObjectDecodeWithInvalidParameter_test0_decomposed(self) -> None:
+        pass
+
+    def testNonBase64Test_test1_decomposed(self) -> None:
+        pass
+
+    def testNonBase64Test_test0_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test13_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test12_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test11_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test10_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test9_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test8_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test7_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test6_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test5_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test4_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test3_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test2_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test1_decomposed(self) -> None:
+        pass
+
+    def testKnownEncodings_test0_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test11_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test10_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test9_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test8_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test7_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test6_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test5_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test4_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test3_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test2_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test1_decomposed(self) -> None:
+        pass
+
+    def testKnownDecodings_test0_decomposed(self) -> None:
+        pass
+
+    def testIsUrlSafe_test2_decomposed(self) -> None:
+        pass
+
+    def testIsUrlSafe_test1_decomposed(self) -> None:
+        pass
+
+    def testIsUrlSafe_test0_decomposed(self) -> None:
+        pass
+
+    def testIsArrayByteBase64_test0_decomposed(self) -> None:
+        pass
+
+    def testIgnoringNonBase64InDecode_test1_decomposed(self) -> None:
+        pass
+
+    def testIgnoringNonBase64InDecode_test0_decomposed(self) -> None:
+        pass
+
+    def testCodec112_test1_decomposed(self) -> None:
+        pass
+
+    def testCodec112_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeOverMaxSize0_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeDecodeSmall_test0_decomposed(self) -> None:
+        pass
+
+    def testEncodeDecodeRandom_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test7_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test6_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test5_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test4_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test3_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test2_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test1_decomposed(self) -> None:
+        pass
+
+    def testEmptyBase64_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test5_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test4_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test3_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithWhitespace_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test11_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test10_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test9_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test8_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test7_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test6_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test5_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test4_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test3_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnlyChunked_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test11_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test10_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test9_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test8_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test7_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test6_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test5_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test4_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test3_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodePadOnly_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex3_test3_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex3_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex3_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex3_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex2_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodePadMarkerIndex2_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_UrlSafe_test3_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_UrlSafe_test2_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_UrlSafe_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_UrlSafe_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_test3_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_test2_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructor_Int_ByteArray_Boolean_test0_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test3_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test2_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test1_decomposed(self) -> None:
+        pass
+
+    def testConstructors_test0_decomposed(self) -> None:
+        pass
+
+    def testCodeIntegerNull_test0_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger4_test2_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger4_test1_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger4_test0_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger3_test2_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger3_test1_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger3_test0_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger2_test2_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger2_test1_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger2_test0_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger1_test2_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger1_test1_decomposed(self) -> None:
+        pass
+
+    def testCodeInteger1_test0_decomposed(self) -> None:
+        pass
+
+    def testCodec68_test0_decomposed(self) -> None:
+        pass
+
+    def testChunkedEncodeMultipleOf76_test2_decomposed(self) -> None:
+        pass
+
+    def testChunkedEncodeMultipleOf76_test1_decomposed(self) -> None:
+        pass
+
+    def testChunkedEncodeMultipleOf76_test0_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithInnerPad_test2_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithInnerPad_test1_decomposed(self) -> None:
+        pass
+
+    def testDecodeWithInnerPad_test0_decomposed(self) -> None:
+        pass
+
+    def testBase64_test13_decomposed(self) -> None:
+        pass
+
+    def testBase64_test12_decomposed(self) -> None:
+        pass
+
+    def testBase64_test11_decomposed(self) -> None:
+        pass
+
+    def testBase64_test10_decomposed(self) -> None:
+        pass
+
+    def testBase64_test9_decomposed(self) -> None:
+        pass
+
+    def testBase64_test8_decomposed(self) -> None:
+        pass
+
+    def testBase64_test7_decomposed(self) -> None:
+        pass
+
+    def testBase64_test6_decomposed(self) -> None:
+        pass
+
+    def testBase64_test5_decomposed(self) -> None:
+        pass
+
+    def testBase64_test4_decomposed(self) -> None:
+        pass
+
+    def testBase64_test3_decomposed(self) -> None:
+        pass
+
+    def testBase64_test2_decomposed(self) -> None:
+        pass
+
+    def testBase64_test1_decomposed(self) -> None:
+        pass
+
+    def testBase64_test0_decomposed(self) -> None:
+        pass
+
+    def testIsStringBase64_test1_decomposed(self) -> None:
+        pass
+
+    def testIsStringBase64_test0_decomposed(self) -> None:
         pass
 
     def getRandom(self) -> random.Random:

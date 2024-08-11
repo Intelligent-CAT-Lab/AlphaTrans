@@ -5,6 +5,7 @@ from src.main.org.apache.commons.codec.language.DoubleMetaphone import *
 from src.test.org.apache.commons.codec.StringEncoderAbstractTest import *
 from src.main.org.apache.commons.codec.StringEncoder import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,10 +22,10 @@ class DoubleMetaphone2Test(StringEncoderAbstractTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testDoubleMetaphonePrimary(self) -> None:
+    def testDoubleMetaphonePrimary_test0_decomposed(self) -> None:
         pass
 
-    def testDoubleMetaphoneAlternate(self) -> None:
+    def testDoubleMetaphoneAlternate_test0_decomposed(self) -> None:
         pass
 
     def _createStringEncoder(self) -> DoubleMetaphone:

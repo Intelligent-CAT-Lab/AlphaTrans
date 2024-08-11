@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.CharSequenceUtils import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -67,10 +68,10 @@ class CharSequenceUtilsTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testConstructor(self) -> None:
+    def testConstructor_test0_decomposed(self) -> None:
         pass
 
-    def testRegionMatches(self) -> None:
+    def testRegionMatches_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

@@ -16,34 +16,34 @@ class CSVFormatPredefinedTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testTDF(self) -> None:
+    def testTDF_test0_decomposed(self) -> None:
         pass
 
-    def testRFC4180(self) -> None:
+    def testRFC4180_test0_decomposed(self) -> None:
         pass
 
-    def testPostgreSqlText(self) -> None:
+    def testPostgreSqlText_test0_decomposed(self) -> None:
         pass
 
-    def testPostgreSqlCsv(self) -> None:
+    def testPostgreSqlCsv_test0_decomposed(self) -> None:
         pass
 
-    def testOracle(self) -> None:
+    def testOracle_test0_decomposed(self) -> None:
         pass
 
-    def testMySQL(self) -> None:
+    def testMySQL_test0_decomposed(self) -> None:
         pass
 
-    def testMongoDbTsv(self) -> None:
+    def testMongoDbTsv_test0_decomposed(self) -> None:
         pass
 
-    def testMongoDbCsv(self) -> None:
+    def testMongoDbCsv_test0_decomposed(self) -> None:
         pass
 
-    def testExcel(self) -> None:
+    def testExcel_test0_decomposed(self) -> None:
         pass
 
-    def testDefault(self) -> None:
+    def testDefault_test0_decomposed(self) -> None:
         pass
 
     def __test(self, format_: CSVFormat, enumName: str) -> None:

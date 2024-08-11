@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.me.lemire.integercompression.DeltaZigzagEncoding import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -13,8 +14,8 @@ import io
 class SpotChecker:
 
     # Class Fields Begin
-    __decoder: Decoder = None
     __encoder: Encoder = None
+    __decoder: Decoder = None
     # Class Fields End
 
     # Class Methods Begin
@@ -30,19 +31,34 @@ class DeltaZigzagEncodingTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def checkSpots(self) -> None:
+    def checkSpots_test1_decomposed(self) -> None:
         pass
 
-    def checkDecodeSimple(self) -> None:
+    def checkSpots_test0_decomposed(self) -> None:
         pass
 
-    def checkEncodeSimple(self) -> None:
+    def checkDecodeSimple_test1_decomposed(self) -> None:
         pass
 
-    def checkZigzagDecoder(self) -> None:
+    def checkDecodeSimple_test0_decomposed(self) -> None:
         pass
 
-    def checkZigzagEncode(self) -> None:
+    def checkEncodeSimple_test1_decomposed(self) -> None:
+        pass
+
+    def checkEncodeSimple_test0_decomposed(self) -> None:
+        pass
+
+    def checkZigzagDecoder_test1_decomposed(self) -> None:
+        pass
+
+    def checkZigzagDecoder_test0_decomposed(self) -> None:
+        pass
+
+    def checkZigzagEncode_test1_decomposed(self) -> None:
+        pass
+
+    def checkZigzagEncode_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

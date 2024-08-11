@@ -5,6 +5,7 @@ from src.main.me.lemire.integercompression.differential.XorBinaryPacking import 
 from src.test.me.lemire.integercompression.TestUtils import *
 from src.main.me.lemire.integercompression.IntegerCODEC import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -18,22 +19,22 @@ class XorBinaryPackingTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def compressAndUncompress5(self) -> None:
+    def compressAndUncompress5_test0_decomposed(self) -> None:
         pass
 
-    def compressAndUncompress4(self) -> None:
+    def compressAndUncompress4_test0_decomposed(self) -> None:
         pass
 
-    def compressAndUncompress3(self) -> None:
+    def compressAndUncompress3_test0_decomposed(self) -> None:
         pass
 
-    def compressAndUncompress2(self) -> None:
+    def compressAndUncompress2_test0_decomposed(self) -> None:
         pass
 
-    def compressAndUncompress1(self) -> None:
+    def compressAndUncompress1_test0_decomposed(self) -> None:
         pass
 
-    def compressAndUncompress0(self) -> None:
+    def compressAndUncompress0_test0_decomposed(self) -> None:
         pass
 
     def __init__(self) -> None:

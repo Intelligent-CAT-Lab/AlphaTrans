@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.fileupload.ProgressListener import *
 from src.main.org.apache.commons.fileupload.MultipartStream import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -16,13 +17,19 @@ class MultipartStreamTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testTwoParamConstructor(self) -> None:
+    def testTwoParamConstructor_test1_decomposed(self) -> None:
         pass
 
-    def testSmallBuffer(self) -> None:
+    def testTwoParamConstructor_test0_decomposed(self) -> None:
         pass
 
-    def testThreeParamConstructor(self) -> None:
+    def testSmallBuffer_test0_decomposed(self) -> None:
+        pass
+
+    def testThreeParamConstructor_test1_decomposed(self) -> None:
+        pass
+
+    def testThreeParamConstructor_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End
