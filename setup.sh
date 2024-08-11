@@ -170,12 +170,8 @@ function create_database_java() {
     mkdir -p databases;
     main=`pwd`;
 
-    # projects_dir=java_projects/original_projects;
-    projects_dir=java_projects/cleaned_final_projects;    
-    # projects_dir=java_projects/cleaned_final_projects_evosuite;
-    
-    suffix='';
-    # suffix=-evosuite;
+    suffix=_decomposed_tests;
+    projects_dir=java_projects/cleaned_final_projects${suffix};
 
     cd $projects_dir/commons-fileupload;
     codeql database create ../../../databases/commons-fileupload$suffix --language=java --overwrite;
@@ -205,37 +201,37 @@ function create_database_java() {
     codeql database create ../../../databases/commons-graph$suffix --language=java --overwrite;
     cd $main;
 
-    cd $projects_dir/joda-money;
-    codeql database create ../../../databases/joda-money$suffix --language=java --overwrite;
-    cd $main;
+    # cd $projects_dir/joda-money;
+    # codeql database create ../../../databases/joda-money$suffix --language=java --overwrite;
+    # cd $main;
 
-    cd $projects_dir/joda-convert;
-    codeql database create ../../../databases/joda-convert$suffix --language=java --overwrite;
-    cd $main;
+    # cd $projects_dir/joda-convert;
+    # codeql database create ../../../databases/joda-convert$suffix --language=java --overwrite;
+    # cd $main;
 
     cd $projects_dir/commons-exec;
     codeql database create ../../../databases/commons-exec$suffix --language=java --overwrite;
     cd $main;
 
-    cd $projects_dir/jackson-core;
-    codeql database create ../../../databases/jackson-core$suffix --language=java --overwrite;
-    cd $main;
+    # cd $projects_dir/jackson-core;
+    # codeql database create ../../../databases/jackson-core$suffix --language=java --overwrite;
+    # cd $main;
 
     cd $projects_dir/jansi;
     codeql database create ../../../databases/jansi$suffix --language=java --overwrite;
     cd $main;
 
-    cd $projects_dir/JSON-java;
-    codeql database create ../../../databases/JSON-java$suffix --language=java --overwrite;
+    cd $projects_dir/JavaFastPFOR;
+    codeql database create ../../../databases/JavaFastPFOR$suffix --language=java --overwrite;
     cd $main;
 
-    cd $projects_dir/aismessages;
-    codeql database create ../../../databases/aismessages$suffix --language=java --overwrite;
-    cd $main;
+    # cd $projects_dir/aismessages;
+    # codeql database create ../../../databases/aismessages$suffix --language=java --overwrite;
+    # cd $main;
 
-    cd $projects_dir/javaewah;
-    codeql database create ../../../databases/javaewah$suffix --language=java --overwrite;
-    cd $main;
+    # cd $projects_dir/javaewah;
+    # codeql database create ../../../databases/javaewah$suffix --language=java --overwrite;
+    # cd $main;
 }
 
 function install_graal() {
