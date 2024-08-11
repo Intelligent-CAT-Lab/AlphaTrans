@@ -41,13 +41,11 @@ def detect_and_remove_cycles(graph):
     return topological_order
 
 
-def parse_dependencies(project_name):
-    dependencies_dir = 'data/dependencies'
-    # dependencies_dir = 'data/dependencies-evosuite'
+def parse_dependencies(project_name, suffix):
+    dependencies_dir = f'data/dependencies{suffix}'
     os.makedirs(f'{dependencies_dir}/{project_name}', exist_ok=True)
 
-    project_dir = f'java_projects/cleaned_final_projects'
-    # project_dir = f'java_projects/cleaned_final_projects_evosuite'
+    project_dir = f'java_projects/cleaned_final_projects{suffix}'
 
     class_dependencies = {}
     java_files = []
@@ -141,7 +139,7 @@ def parse_dependencies(project_name):
 def main(args):
     function_name = args.function
     if function_name == 'parse_dependencies':
-        parse_dependencies(args.project_name)
+        parse_dependencies(args.project_name, args.suffix)
     else:
         raise NotImplementedError(f'function {function_name} not implemented')
 
@@ -150,6 +148,7 @@ def parse_args():
     parser = argparse.ArgumentParser("utilities")
     parser.add_argument('--project_name', type=str, default='java_projects', help='project name', required=True)
     parser.add_argument('--function', type=str, default='parse_dependencies', help='function name in utility', required=True)
+    parser.add_argument('--suffix', type=str, default='', help='suffix for output files')
     return parser.parse_args()
 
 
