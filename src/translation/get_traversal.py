@@ -4,14 +4,22 @@ import json
 
 def order_fragments(project_traversal):
 
-    ordered_project_traversal = []
+    field_order = []
+    test_methods_order = []
     for fragment in project_traversal.copy():
         if fragment['fragment_type'] in ['field', 'static_initializer']:
-            ordered_project_traversal.append(fragment)
+            field_order.append(fragment)
+            project_traversal.remove(fragment)
+            continue
+        if fragment['fragment_type'] == 'method' and 'src.test' in fragment['schema_name']:
+            if fragment['is_test_method']:
+                test_methods_order.append(fragment)
+            else:
+                test_methods_order.insert(0, fragment)
             project_traversal.remove(fragment)
             continue
     
-    return ordered_project_traversal + project_traversal
+    return field_order + project_traversal + test_methods_order
 
 
 def process_waiting_queue(waiting_queue, processed_fragments, project_traversal):
@@ -27,11 +35,11 @@ def process_waiting_queue(waiting_queue, processed_fragments, project_traversal)
         for waiting_fragment in list(waiting_queue.keys()):
             waiting_dependent_fragments = [x for x in waiting_queue[waiting_fragment][0]]
             if all([x in processed_fragments for x in waiting_dependent_fragments]):
-                _, waiting_schema, waiting_class, waiting_method = waiting_queue[waiting_fragment]
+                _, waiting_schema, waiting_class, waiting_method, is_test_method = waiting_queue[waiting_fragment]
 
                 processed_fragments.append(waiting_fragment)
                 del waiting_queue[waiting_fragment]
-                project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method'})
+                project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method', 'is_test_method': is_test_method})
                 threshold = 10
         
         threshold -= 1
@@ -42,7 +50,7 @@ def process_waiting_queue(waiting_queue, processed_fragments, project_traversal)
 def get_traversal(args):
     project_traversal = []
 
-    schemas = os.listdir(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}')
+    schemas = os.listdir(args.translation_dir)
 
     # extract all fields and static initializers
     waiting_queue = {}
@@ -60,7 +68,7 @@ def get_traversal(args):
         if not args.translate_evosuite and 'ESTest' in schema:
             continue
 
-        path_ = f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}'
+        path_ = f'{args.translation_dir}/{schema}'
         with open(path_, 'r') as f:
             data = json.load(f)
 
@@ -89,14 +97,14 @@ def get_traversal(args):
                         field_order.append(field)
 
             for field_ in field_order:
-                project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': field_, 'fragment_type': 'field'})
+                project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': field_, 'fragment_type': 'field', 'is_test_method': False})
 
             if 'static_initializers' in data['classes'][class_]:
 
                 assert 1 == len(data['classes'][class_]['static_initializers']), f"Found more than one static initializer for class {class_} @ schema {schema_base_name}"
                 
                 for static_initializer in data['classes'][class_]['static_initializers']:
-                    project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': static_initializer, 'fragment_type': 'static_initializer'})
+                    project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': static_initializer, 'fragment_type': 'static_initializer', 'is_test_method': False})
             
             for method_ in data['classes'][class_]['methods']:
 
@@ -106,23 +114,27 @@ def get_traversal(args):
                 full_fragment_name = f'{schema_base_name}|{class_}|{method_}'
                 dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
 
+                is_test_method = False
+                if any(['Test' in x for x in data['classes'][class_]['methods'][method_]['annotations']]):
+                    is_test_method = True
+
                 if any([x not in processed_fragments for x in dependent_fragments]) and not args.translate_evosuite:
-                    waiting_queue[full_fragment_name] = [dependent_fragments, schema_base_name, class_, method_]
+                    waiting_queue[full_fragment_name] = [dependent_fragments, schema_base_name, class_, method_, is_test_method]
                     continue
 
                 processed_fragments.append(full_fragment_name)
-                project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': method_, 'fragment_type': 'method'})
-                                
+                project_traversal.append({'schema_name': schema_base_name, 'class_name': class_, 'fragment_name': method_, 'fragment_type': 'method', 'is_test_method': is_test_method})
+
                 # check if a waiting fragment is now ready to be processed
                 for waiting_fragment in list(waiting_queue.keys()):
                     waiting_dependent_fragments = [x for x in waiting_queue[waiting_fragment][0]]
                     if all([x in processed_fragments for x in waiting_dependent_fragments]):
-                        _, waiting_schema, waiting_class, waiting_method = waiting_queue[waiting_fragment]
+                        _, waiting_schema, waiting_class, waiting_method, is_test_method = waiting_queue[waiting_fragment]
 
                         processed_fragments.append(waiting_fragment)
                         del waiting_queue[waiting_fragment]
 
-                        project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method'})
+                        project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method', 'is_test_method': is_test_method})
 
     # further checking the waiting queue to see if any fragment can be processed
     waiting_queue, processed_fragments, project_traversal = process_waiting_queue(waiting_queue, processed_fragments, project_traversal)
@@ -133,7 +145,7 @@ def get_traversal(args):
     # finding cycles
     cycles = []
     for k in waiting_queue:
-        waiting_dependent_fragments, waiting_schema, waiting_class, waiting_method = waiting_queue[k]
+        waiting_dependent_fragments, waiting_schema, waiting_class, waiting_method, is_test_method = waiting_queue[k]
 
         for df in waiting_dependent_fragments:
             if df not in waiting_queue:
@@ -145,12 +157,12 @@ def get_traversal(args):
     # translating elements of cycles one by one
     for cycle in cycles:
         for cycle_fragment in cycle:
-            waiting_dependent_fragments, waiting_schema, waiting_class, waiting_method = waiting_queue[cycle_fragment]
+            waiting_dependent_fragments, waiting_schema, waiting_class, waiting_method, is_test_method = waiting_queue[cycle_fragment]
 
             processed_fragments.append(cycle_fragment)
             del waiting_queue[cycle_fragment]
 
-            project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method'})
+            project_traversal.append({'schema_name': waiting_schema, 'class_name': waiting_class, 'fragment_name': waiting_method, 'fragment_type': 'method', 'is_test_method': is_test_method})
 
     # further checking the waiting queue to see if any fragment can be processed
     waiting_queue, processed_fragments, project_traversal = process_waiting_queue(waiting_queue, processed_fragments, project_traversal)
