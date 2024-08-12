@@ -4,6 +4,7 @@ from src.main.org.apache.commons.cli.Options import *
 from src.main.org.apache.commons.cli.OptionGroup import *
 from src.main.org.apache.commons.cli.Option import *
 from src.main.org.apache.commons.cli.HelpFormatter import *
+import functools
 import unittest
 from typing import *
 
@@ -61,7 +62,7 @@ class BugCLI266Test(unittest.TestCase):
     def testOptionComparatorDefaultOrder(self) -> None:
         formatter = HelpFormatter()
         options = list(self.__getOptions().getOptions())
-        options.sort(key=formatter.getOptionComparator())
+        options.sort(key=functools.cmp_to_key(formatter.getOptionComparator()))
         i = 0
         for o in options:
             self.assertEqual(o.getOpt(), self.__sortOrder[i])
