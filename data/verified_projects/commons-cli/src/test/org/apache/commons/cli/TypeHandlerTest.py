@@ -8,22 +8,23 @@ from urllib.parse import ParseResult, SplitResult, DefragResult, urlunparse
 from typing import *
 
 
+class Instantiable:
+    pass
+
+class NotInstantiable:
+    def __init__(self) -> None:
+        raise AssertionError("This class should not be instantiated.")
+
 class TypeHandlerTest(unittest.TestCase):
-
-    class Instantiable:
-        pass
-
-    class NotInstantiable:
-        def __init__(self) -> None:
-            raise AssertionError("This class should not be instantiated.")
-
     
     @pytest.mark.test
     def testCreateValueClass(self) -> None:
         try:
             clazz = TypeHandler.createValue0(
-                self.Instantiable.__name__, PatternOptionBuilder.CLASS_VALUE)
-            self.assertEqual(self.Instantiable, clazz)
+                TypeHandlerTest.Instantiable.__name__,
+                PatternOptionBuilder.CLASS_VALUE
+            )
+            self.assertEqual(TypeHandlerTest.Instantiable, clazz)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
 
@@ -131,8 +132,10 @@ class TypeHandlerTest(unittest.TestCase):
     def testCreateValueObject_InstantiableClass(self) -> None:
         try:
             result = TypeHandler.createValue0(
-                self.Instantiable.__name__, PatternOptionBuilder.OBJECT_VALUE)
-            self.assertIsInstance(result, self.Instantiable)
+                TypeHandlerTest.Instantiable.__name__,
+                PatternOptionBuilder.OBJECT_VALUE
+            )
+            self.assertIsInstance(result, TypeHandlerTest.Instantiable)
         except Exception as e:
             self.fail(f"An exception occurred: {e}")
     
@@ -185,3 +188,7 @@ class TypeHandlerTest(unittest.TestCase):
                 TypeHandler.createValue0("malformed-url", PatternOptionBuilder.URL_VALUE)
         except Exception as e:
             self.fail(f"Incorrect exception raised - Expected ParseException, got: {e}")
+
+
+TypeHandlerTest.Instantiable = Instantiable
+TypeHandlerTest.NotInstantiable = NotInstantiable
