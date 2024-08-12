@@ -21,7 +21,7 @@ class BugCLI13Test(unittest.TestCase):
                 .hasArg0()\
                 .create1('d')
             options = Options()
-            options.add_option0(debug)
+            options.addOption0(debug)
             commandLine = PosixParser().parse0(options, ["-d", "true"])
 
             self.assertEqual(commandLine.getOptionValue4(debugOpt), "true")
