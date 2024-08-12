@@ -224,7 +224,7 @@ class BugsTest(unittest.TestCase):
                 bytesIO = io.BytesIO()
                 printStream = io.TextIOWrapper(bytesIO, encoding='utf-8')
 
-                printStream.write('')
+                printStream.write(os.linesep)
                 printStream.flush()
                 eol = bytesIO.getvalue().decode()
                 bytesIO.seek(0)
