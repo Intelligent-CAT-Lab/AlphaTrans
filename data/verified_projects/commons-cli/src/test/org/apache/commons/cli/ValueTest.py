@@ -139,7 +139,7 @@ class ValueTest(unittest.TestCase):
 
             cmd = parser.parse0(self.__opts, args)
 
-            self.assertTrue(cmd.hasOption1(self.opts.getOption("hide")))
+            self.assertTrue(cmd.hasOption1(self.__opts.getOption("hide")))
             self.assertEqual("house", cmd.getOptionValue2(self.__opts.getOption("hide")))
             self.assertEqual("house", cmd.getOptionValues1(self.__opts.getOption("hide"))[0])
             self.assertEqual("hair", cmd.getOptionValues1(self.__opts.getOption("hide"))[1])
