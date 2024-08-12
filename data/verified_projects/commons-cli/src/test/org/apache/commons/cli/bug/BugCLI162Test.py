@@ -137,7 +137,7 @@ class BugCLI162Test(unittest.TestCase):
         self.__formatter.printHelp2(
             self.__sw,
             35,
-            type(self).__name__,
+            __name__.split('src.test.')[1],
             "Header",
             options,
             0,
@@ -196,7 +196,7 @@ class BugCLI162Test(unittest.TestCase):
         self.__formatter.printHelp2(
             self.__sw,
             22,
-            type(self).__name__,
+            __name__.split('src.test.')[1],
             "Header",
             options,
             0,
@@ -205,7 +205,9 @@ class BugCLI162Test(unittest.TestCase):
         )
         expected = "usage:" +\
                     BugCLI162Test.__CR +\
-                    "       org.apache.commons.cli.bug.Bug" +\
+                    "       org.apache.comm" +\
+                    BugCLI162Test.__CR +\
+                    "       ons.cli.bug.Bug" +\
                     BugCLI162Test.__CR +\
                     "       CLI162Test" +\
                     BugCLI162Test.__CR +\
