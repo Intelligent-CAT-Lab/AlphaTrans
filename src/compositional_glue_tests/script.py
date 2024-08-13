@@ -5,7 +5,7 @@ import keyword
 import builtins
 import xml.etree.ElementTree as ET
  
-from src.compositional_glue_tests.utils import IMMUTABLES, add_obj_to_clone_method, get_enum_field_body, get_method_parameter_types, publicize_methods_of_anoymous_classes, schema_filter, write_to_file, pre_order_traversal, exception_handling, type_mapping, get_java_class_declaration
+from src.compositional_glue_tests.utils import IMMUTABLES, add_obj_to_clone_method, get_enum_field_body, get_method_parameter_types, pre_order_traversal, publicize_methods_of_anoymous_classes, schema_filter, topological_sort, write_to_file, exception_handling, type_mapping, get_java_class_declaration
 from src.compositional_glue_tests.constants import *
 
 ERROR = "error"
@@ -1410,26 +1410,27 @@ class Schema:
         """
         Get the order of classes in the schema based on inheritance.
         """
-        class_order = []
-        while len(class_order) != len(self.schema_data['classes']):
-            for class_ in self.schema_data['classes']:
-                if class_ in class_order:
-                    continue
-
-                if not set(self.schema_data['classes'][class_]['extends']).issubset(set(class_order)) and all([x in self.schema_data['classes'].keys() for x in self.schema_data['classes'][class_]['extends']]):
-                    continue
-                
-                if not set(self.schema_data['classes'][class_]['implements']).issubset(set(class_order)) and all([x in self.schema_data['classes'].keys() for x in self.schema_data['classes'][class_]['implements']]):
-                    continue                                                                                                                       
-                
-                if self.schema_data['classes'][class_]['nests'] == []:
-                    class_order.append(class_)
-                    continue
-
-                if all([x in class_order for x in self.schema_data['classes'][class_]['nests']]):
-                    class_order.append(class_)
+        dependency_graph = set() # set of (dependent, dependency) pairs
         
-        return class_order
+        for class_ in self.schema_data['classes']:
+            if self.schema_data['classes'][class_]['extends']:
+                if self.schema_data['classes'][class_]['extends'][0] in self.schema_data['classes']:
+                    dependency_graph.add((class_, self.schema_data['classes'][class_]['extends'][0]))
+                
+            if self.schema_data['classes'][class_]['implements']:
+                for interface in self.schema_data['classes'][class_]['implements']:
+                    if interface in self.schema_data['classes']:
+                        dependency_graph.add((class_, interface))
+            
+            if self.schema_data['classes'][class_]['nested_inside']:
+                dependency_graph.add((class_, self.schema_data['classes'][class_]['nested_inside']))
+                
+        class_list = topological_sort(dependency_graph)[::-1]
+        
+        # check for any classes that were not included in the dependency graph
+        class_list += [clz for clz in self.schema_data['classes'] if clz not in class_list]
+
+        return class_list
 
     def __add_tests_to_execute(self, method_name: str, class_name: str):
         """
@@ -1445,7 +1446,10 @@ class Schema:
 
         for test_class in self.project.test_dependencies:
             for test_method in self.project.test_dependencies[test_class]:
-                if proper_method_name in self.project.test_dependencies[test_class][test_method][fully_qualified_class_name]:
+                if (
+                    fully_qualified_class_name in self.project.test_dependencies[test_class][test_method] and
+                    proper_method_name in self.project.test_dependencies[test_class][test_method][fully_qualified_class_name]
+                ):
                     test_class_name = test_class.split('.')[-1]
                     relevant_tests.add((test_class_name, test_method))
 
