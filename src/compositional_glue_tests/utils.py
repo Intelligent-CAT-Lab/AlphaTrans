@@ -51,6 +51,7 @@ with open('src/compositional_glue_tests/type_handling.json') as f:
 with open('src/compositional_glue_tests/exception_handling.json') as f:
     exception_handling = json.load(f)
 
+
 def write_to_file(file, content):
     with open(file, "w") as f:
         f.write(content)
@@ -61,6 +62,54 @@ def write_to_file(file, content):
             subprocess.run(['java', '-jar', 'src/compositional_glue_tests/google-java-format-1.20.0-all-deps.jar', '--skip-removing-unused-imports', '-r', file], check=True)
         except Exception as e:
             print(f"Error formatting {file}: {e}")
+
+
+def topological_sort(graph: list[tuple[str, str]]) -> list[str]:
+    """
+    Provides a topological sort of the graph.
+
+    Args:
+        graph: A list of tuples where each tuple contains two strings representing the source and target nodes.
+
+    Returns:
+        A list of strings representing the nodes in topological order.
+    """
+    # create a dictionary with the nodes as keys and their dependencies as values
+    graph_dict = {}
+    for edge in graph:
+        if edge[0] not in graph_dict:
+            graph_dict[edge[0]] = []
+        graph_dict[edge[0]].append(edge[1])
+
+    # create a dictionary with the nodes as keys and their indegree as values
+    indegree_dict = {}
+    for edge in graph:
+        if edge[1] not in indegree_dict:
+            indegree_dict[edge[1]] = 0
+        if edge[0] not in indegree_dict:
+            indegree_dict[edge[0]] = 0
+        indegree_dict[edge[1]] += 1
+
+    # create a list of nodes with indegree 0
+    zero_indegree = [node for node in indegree_dict if indegree_dict[node] == 0]
+
+    # create a list to store the sorted nodes
+    sorted_nodes = []
+
+    # loop over the nodes with indegree 0
+    while zero_indegree:
+        node = zero_indegree.pop()
+        sorted_nodes.append(node)
+
+        # loop over the nodes that depend on the current node
+        if node in graph_dict:
+            for dependent_node in graph_dict[node]:
+                indegree_dict[dependent_node] -= 1
+                if indegree_dict[dependent_node] == 0:
+                    zero_indegree.append(dependent_node)
+
+    return sorted_nodes
+
 
 def pre_order_traversal(relation: list[tuple[str, str | None]]) -> list[str]:
     """
