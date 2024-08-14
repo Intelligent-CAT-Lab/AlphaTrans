@@ -33,7 +33,7 @@ class CLDKQueries:
         src_classes = []
         all_classes = self.analysis.get_classes()
         for class_name in all_classes:
-            source_file_path = self.preprocessor.ns_preprocessor.get_java_file(class_name)
+            source_file_path = self.analysis.get_java_file(class_name)
             if self.test_root in source_file_path:
                 src_classes.append(class_name)
         return src_classes
