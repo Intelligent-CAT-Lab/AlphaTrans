@@ -53,4 +53,13 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
     status = output['status']
     feedback = output['feedback']
 
+    if status == 'failure':
+        feedback_message = 'Executing the tests failed with the following reasons:\n'
+        for failed_test, reason in feedback.items():
+            feedback_message += f'{failed_test}: {reason}\n'
+        
+        feedback = feedback_message
+    else:
+        feedback = None
+
     return status, feedback

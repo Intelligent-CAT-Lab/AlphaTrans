@@ -3,16 +3,19 @@ import subprocess
 from subprocess import Popen
 
 
-def execution_validation(fragment, args):
+def field_exercise_validation(fragment, args):
 
+    prefix_path = f"data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}"
+    os.makedirs(prefix_path, exist_ok=True)
+    
     os.system(f"python3 src/postprocessing/recompose.py --project_name={args.project_name} \
                                                         --model_name={args.model_name} \
                                                         --output_dir=data/recomposed_projects \
                                                         --type={args.prompt_type} \
-                                                        --fragment_name={fragment['fragment_name']}")
+                                                        --fragment_name={fragment['fragment_name']} \
+                                                        --suffix={args.suffix}")
 
     current_path = os.getcwd()
-    prefix_path = f"data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}"
     os.chdir(prefix_path)
     relative_file_path = f"{'/'.join(fragment['schema_name'].split('.')[1:])}.py"
     assert os.path.exists(relative_file_path), f"File {relative_file_path} does not exist"

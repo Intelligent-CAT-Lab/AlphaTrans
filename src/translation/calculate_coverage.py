@@ -74,7 +74,7 @@ def calculate_method_coverage(args, project_root):
                     print(f'{method_name} not found in schema {py_file_path}::{class_name}')
                     continue
 
-                covered_methods.append({'file': py_file_path, 'class': class_name, 'method': method_name})
+                covered_methods.append({'file': py_file_path[py_file_path.index(args.project_name):].replace('.py', '').replace('/', '.'), 'class': class_name, 'method': method_name})
 
     return covered_methods
 
