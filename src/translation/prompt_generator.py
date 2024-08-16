@@ -10,7 +10,7 @@ class PromptGenerator:
         self.prompt = ''
         self.feedback = feedback
         self.prompt_status = 'success'
-        # TODO: make ICL example adaptive. for instance, tests should have their own ICL example. pool of assertions.
+
         self.meta_data = {
                             'persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
                             'icl': {
@@ -20,8 +20,11 @@ class PromptGenerator:
                                 'feedback': "Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```" + "\n\nIncorrect Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        return a + c\n```\n\nExecution feedback:\n```\n  File \"script.py\", line 5, in add\n    return a + c\nNameError: name 'c' is not defined\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```",
                             }
                         }
+
+        self.assert_map = json.load(open('data/type_resolution/assert_map.json', 'r'))
         
         self.load_fragment(fragment_details)
+        self.construct_adaptive_icl()
         self.build_base_prompt()
     
     def build_base_prompt(self):
@@ -32,10 +35,7 @@ class PromptGenerator:
         self.double_line_break()
 
         # add in-context learning example
-        if self.is_feedback:
-            self.prompt += self.meta_data['icl']['feedback']
-        else:
-            self.prompt += self.meta_data['icl'][self.fragment_type]
+        self.prompt += self.adaptive_icl
 
         self.double_line_break()
 
@@ -62,6 +62,35 @@ class PromptGenerator:
 
         # add target translation
         self.add_target_translation()
+
+    def construct_adaptive_icl(self):
+        used_assertions = []
+        for source_assert in self.assert_map:
+            if source_assert in self.source_fragment_body:
+                used_assertions.append(source_assert)
+
+        source_statements = ''
+        target_statements = ''
+        for source_assert in self.assert_map:
+            if source_assert not in used_assertions:
+                continue
+            for i in range(2):
+                source_statements += self.assert_map[source_assert][i]['java'] + ';\n        '
+                target_statements += 'self.' + self.assert_map[source_assert][i]['python'] + '\n        '
+
+        test_icl = 'Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        ' + source_statements.rstrip() + '\n    ' + '}\n}\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        ' + target_statements.rstrip() + '\n```\n'
+        test_icl = test_icl.replace('self.pytest.', 'pytest.')
+
+        if self.is_feedback:
+            if used_assertions:
+                self.adaptive_icl = test_icl
+            else:
+                self.adaptive_icl = self.meta_data['icl']['feedback']
+        else:
+            if used_assertions:
+                self.adaptive_icl = test_icl
+            else:
+                self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
 
     def load_fragment(self, fragment_details):
         self.schema_name = fragment_details['schema_name']
