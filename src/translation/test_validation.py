@@ -48,6 +48,7 @@ def test_validation(args, eligible_tests):
                 [
                     'pytest', f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{test_path}::{test_class}::{test_method}',
                     '--cov=src.main',
+                    '--cov=src.test',
                     '--cov-report=term-missing',
                     f'--cov-report=xml:{args.project_name}-{args.model_name}-coverage.xml',
                     f'--junitxml={args.project_name}-{args.model_name}-pytest-report.xml'

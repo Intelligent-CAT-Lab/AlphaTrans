@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import tqdm
 import os
 import time
+import re
 import math
 import datetime
 from syntactic_validation import syntactic_validation
@@ -223,6 +224,53 @@ def is_test_parseable(test, args):
     return False
 
 
+def get_test_fragment(test, executable_eligible_tests):
+    test_fragment = {}
+    for test_ in executable_eligible_tests:
+        test_schema = test.split('::')[0].replace('/', '.').replace('.py', '')
+        test_class = test.split('::')[1]
+        test_method = test.split('::')[2]
+
+        if test_schema == test_['schema_name'] and test_class == test_['class_name'] and test_method == test_['fragment_name'].split(':')[1]:
+            test_fragment = test_
+            break
+    
+    return test_fragment
+
+
+def test_has_attribute_error(test_execution_details):
+    # Regular expression to match the AttributeError
+    error_regex = r"AttributeError: (.+)"
+    method_regex = r"File \"(.+)\", line \d+, in (\w+)"
+    
+    error_message = None
+    filepath = None
+    method_name = None
+    traceback_str = test_execution_details['feedback']
+
+    lines = traceback_str.strip().splitlines()
+    
+    for i, line in enumerate(lines):
+        # Match the error message
+        error_match = re.search(error_regex, line)
+        if error_match:
+            error_message = "AttributeError: " + error_match.group(1)
+        
+        # Match the method name and file path
+        method_match = re.search(method_regex, line)
+        if method_match:
+            filepath = method_match.group(1)
+            method_name = method_match.group(2)
+    
+    if '_decomposed' not in method_name or 'test' not in method_name:
+        return False
+
+    if 'src/test' in filepath and (error_message and 'AttributeError' in error_message):
+        return True
+    
+    return False
+
+
 def translate(fragment, args, processed_fragments, feedback=None, recursion_depth=4):
 
     if recursion_depth == 0:
@@ -360,7 +408,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                         executable_eligible_tests.append(test)
                         continue
 
-                    translate(test, args, processed_fragments, recursion_depth=recursion_depth-1)
+                    translate(test, args, processed_fragments, recursion_depth=recursion_depth)
 
                     if not is_test_parseable(test, args):
                         continue
@@ -376,6 +424,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
         # after eligible tests are translated, validate the main method fragment with test validation
         test_execution_details = test_validation(args, executable_eligible_tests)
 
+        requires_reprompt = False
         for test in test_execution_details:
 
             if test_execution_details[test]['test_outcome'] == 'exercised-success':
@@ -387,8 +436,20 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                     update_labels(args=args, fragment={'schema_name': covered_method_file, 'class_name': covered_method_class, 'fragment_name': covered_method_name, 'fragment_type': 'method'}, translation=[], translation_status=[], syntactic_validation=[], field_exercise=[], graal_validation=[], test_execution={test: test_execution_details[test]}, elapsed_time=0, update_test_execution=True)
                 continue
 
-            # TODO: see if stacktrace can be used to identify test method translation error
-            # TODO: what to do if covered methods are empty... definitely test translation should be re-done
+            requires_reprompt = True
+            
+            # heuristic 1: if no methods are covered and test fails, the problem is guaranteed to be in the test method. re-prompt the test method.
+            # heuristic 2: if stacktrace shows an AttributeError in the test method, re-prompt the test method only
+            if test_execution_details[test]['covered_methods'] == [] or test_has_attribute_error(test_execution_details[test]):
+                if args.debug:
+                    print('=======================TEST VALIDATION FAILED - REPROMPTING=======================', flush=True)
+
+                test_fragment = get_test_fragment(test, executable_eligible_tests)
+                if test_fragment == {}:
+                    continue
+                
+                translate(test_fragment, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth)
+                continue
 
             suspicious_methods = {}
             for covered_method in test_execution_details[test]['covered_methods']:
@@ -419,7 +480,11 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
             for suspicious_method in suspicious_methods:
                 suspicious_method = {'schema_name': suspicious_method.split('|')[0], 'class_name': suspicious_method.split('|')[1], 'fragment_name': suspicious_method.split('|')[2], 'fragment_type': 'method', 'is_test_method': True if 'test' in suspicious_method.split('|')[2] else False}
                 translate(suspicious_method, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
-        
+
+        if requires_reprompt:
+            BUDGET[current_budget] -= 1
+            continue
+
         break
         ############################ </TEST EXECUTION> ############################
 

@@ -78,8 +78,12 @@ class PromptGenerator:
                 source_statements += self.assert_map[source_assert][i]['java'] + ';\n        '
                 target_statements += 'self.' + self.assert_map[source_assert][i]['python'] + '\n        '
 
-        test_icl = 'Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        ' + source_statements.rstrip() + '\n    ' + '}\n}\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        ' + target_statements.rstrip() + '\n```\n'
-        test_icl = test_icl.replace('self.pytest.', 'pytest.')
+        if self.is_feedback:
+            test_icl = "Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        List<String> inputList = Arrays.asList(\"apple\", \"banana\", \"cherry\");\n        assertEquals(\"inputList size does not match expected size = 3\", 3, inputList.size());\n    " + "}\n}\n```\n\nIncorrect Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        inputList = [\"apple\", \"banana\", \"cherry\"]\n        self.assertEqual(\"inputList size does not match expected size = 3\", 3, len(inputList))\n```\n\nExecution feedback:\n```\n  File \"TestClass.py\", line 4, in testMethod\n    self.assertEqual(\"inputList size does not match expected size = 3\", 3, len(inputList))\nAssertionError: 'inputList size does not match expected size = 3' != 3 : 2\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        inputList = [\"apple\", \"banana\", \"cherry\"]\n        self.assertEqual(3, len(inputList), \"inputList size does not match expected size = 3\")\n```"
+            test_icl = test_icl.replace('self.pytest.', 'pytest.')
+        else:
+            test_icl = 'Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        ' + source_statements.rstrip() + '\n    ' + '}\n}\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        ' + target_statements.rstrip() + '\n```\n'
+            test_icl = test_icl.replace('self.pytest.', 'pytest.')
 
         if self.is_feedback:
             if used_assertions:
