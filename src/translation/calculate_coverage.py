@@ -40,7 +40,7 @@ def calculate_method_coverage(args, project_root):
                 assert class_name is not None
 
                 covered_method_schema_data = {}
-                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{py_file_path[py_file_path.index(args.project_name):].replace(".py", "").replace("/", ".")}_python_partial.json', 'r') as f:
+                with open(f'{args.translation_dir}/{py_file_path[py_file_path.index(args.project_name):].replace(".py", "").replace("/", ".")}_python_partial.json', 'r') as f:
                     covered_method_schema_data = json.load(f)
                 
                 method_name = method.name
