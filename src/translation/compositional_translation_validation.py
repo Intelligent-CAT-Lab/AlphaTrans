@@ -408,7 +408,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                         executable_eligible_tests.append(test)
                         continue
 
-                    translate(test, args, processed_fragments, recursion_depth=recursion_depth)
+                    translate(test, args, processed_fragments, recursion_depth=recursion_depth-1)
 
                     if not is_test_parseable(test, args):
                         continue
@@ -437,18 +437,19 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                 continue
 
             requires_reprompt = True
-            
+
+            if args.debug:
+                print('=======================TEST VALIDATION FAILED - REPROMPTING=======================', flush=True)
+
             # heuristic 1: if no methods are covered and test fails, the problem is guaranteed to be in the test method. re-prompt the test method.
             # heuristic 2: if stacktrace shows an AttributeError in the test method, re-prompt the test method only
             if test_execution_details[test]['covered_methods'] == [] or test_has_attribute_error(test_execution_details[test]):
-                if args.debug:
-                    print('=======================TEST VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
                 test_fragment = get_test_fragment(test, executable_eligible_tests)
                 if test_fragment == {}:
                     continue
                 
-                translate(test_fragment, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth)
+                translate(test_fragment, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
                 continue
 
             suspicious_methods = {}
@@ -473,9 +474,6 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
             
             # extract top-k methods with highest suspiciousness score. make k a hyperparameter later.
             suspicious_methods = {k: v for k, v in sorted(suspicious_methods.items(), key=lambda item: item[1], reverse=True)}
-
-            if args.debug:
-                print('=======================TEST VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
             for suspicious_method in suspicious_methods:
                 suspicious_method = {'schema_name': suspicious_method.split('|')[0], 'class_name': suspicious_method.split('|')[1], 'fragment_name': suspicious_method.split('|')[2], 'fragment_type': 'method', 'is_test_method': True if 'test' in suspicious_method.split('|')[2] else False}
