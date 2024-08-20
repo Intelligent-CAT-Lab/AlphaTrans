@@ -248,6 +248,37 @@ public final class IntegrationUtils {{
       return list;
     }}
 
+    // handle sets
+    if (primaryClassName.equals("Set")) {{
+      String innerClassName = "";
+      if (classDescriptor.contains("<")) {{
+        innerClassName =
+            classDescriptor.substring(
+                classDescriptor.indexOf("<") + 1, classDescriptor.lastIndexOf(">"));
+      }}
+      java.util.Set<Object> set = new java.util.HashSet<>();
+
+      if (targetObject != null) {{
+        set = (java.util.Set<Object>) targetObject;
+
+        try {{
+          set.clear();
+        }} catch (UnsupportedOperationException e) {{
+          // the set is unmodifiable and so we return as it is
+          putObjectsToMaps(set, value);
+          return set;
+        }}
+      }}
+
+      idMap.put(id, set);
+      for (int i = 0; i < pythonSetToPythonList(value).getArraySize(); i++) {{
+        set.add(valueToObject(pythonSetToPythonList(value).getArrayElement(i), innerClassName, idMap));
+      }}
+
+      putObjectsToMaps(set, value);
+      return set;
+    }}
+
     // handle Properties
     if (value.hasHashEntries() && primaryClassName.equals("Properties")) {{
       Properties properties = new Properties();
@@ -456,8 +487,24 @@ public final class IntegrationUtils {{
     return obj.getClass().equals(Class.class);
   }}
 
+  public static boolean isJavaList(Object obj) {{
+    return obj instanceof List;
+  }}
+
+  public static boolean isJavaSet(Object obj) {{
+    return obj instanceof java.util.Set;
+  }}
+
+  public static boolean isJavaMap(Object obj) {{
+    return obj instanceof Map;
+  }}
+
   public static Value createDefaultPythonObject(Value clz) {{
     return JavaHandler.invokeMember("createDefaultPythonObject", clz);
+  }}
+
+  public static Value pythonSetToPythonList(Value pySet) {{
+    return JavaHandler.invokeMember("pythonSetToPythonList", pySet);
   }}
 
   public static boolean hasTypeMismatch(String classDescriptor, Object obj) {{
