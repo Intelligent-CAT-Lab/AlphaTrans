@@ -163,6 +163,25 @@ public final class IntegrationUtils {{
         sb.append(str);
         return sb;
       }}
+      if (classDescriptor.equals("Charset")) {{
+        String charsetName = value.asString();
+        switch (charsetName) {{
+          case "UTF-8":
+            return java.nio.charset.StandardCharsets.UTF_8;
+          case "UTF-16":
+            return java.nio.charset.StandardCharsets.UTF_16;
+          case "UTF-16BE":
+            return java.nio.charset.StandardCharsets.UTF_16BE;
+          case "UTF-16LE":
+            return java.nio.charset.StandardCharsets.UTF_16LE;
+          case "US-ASCII":
+            return java.nio.charset.StandardCharsets.US_ASCII;
+          case "ISO-8859-1":
+            return java.nio.charset.StandardCharsets.ISO_8859_1;
+          default:
+            break;
+        }}
+      }}
 
       // Default to "String"
       return value.asString();
@@ -177,6 +196,9 @@ public final class IntegrationUtils {{
       if (classDescriptor.equals("int")) {{
         return (int) value.asLong();
       }}
+      if (classDescriptor.equals("byte")) {{
+        return (byte) value.asLong();
+      }}
       return value.as(Number.class);
     }}
 
@@ -185,15 +207,15 @@ public final class IntegrationUtils {{
       String innerClassName = classDescriptor.substring(0, classDescriptor.length() - 2);
 
       int length = (int) value.getArraySize();
-      T[] result = (T[]) Array.newInstance(clazz, length);
+      Object result = Array.newInstance(clazz, length);
 
       if (targetObject != null && targetObject.getClass().isArray()) {{
-        result = (T[]) targetObject;
+        result = targetObject;
       }}
 
       if (!skipMap) idMap.put(id, result);
       for (int i = 0; i < length; i++) {{
-        result[i] = (T) valueToObject(value.getArrayElement(i), innerClassName, idMap);
+        setArrayElement(result, i, valueToObject(value.getArrayElement(i), innerClassName, idMap, clazz), clazz);
       }}
 
       if (!skipMap) putObjectsToMaps(result, value);
@@ -361,7 +383,7 @@ public final class IntegrationUtils {{
     if (ValueTypeName.equals("Pattern")) {{
       String pattern = value.getMember("pattern").asString();
       int flags = value.getMember("flags").asInt();
-      Pattern compiledPattern = Pattern.compile(pattern, flags); 
+      Pattern compiledPattern = Pattern.compile(pattern, flags);
       if (targetObject != null) {{
         compiledPattern = (Pattern) targetObject;
       }}
@@ -446,5 +468,29 @@ public final class IntegrationUtils {{
       return true;
     }}
     return false;
+  }}
+
+  public static <T> void setArrayElement(Object array, int index, Object value, Class<T> clazz) {{
+    if (!clazz.isPrimitive()) {{
+      ((T[]) array)[index] = (T) value;
+    }} else {{
+      if (clazz.equals(int.class)) {{
+        ((int[]) array)[index] = (int) value;
+      }} else if (clazz.equals(long.class)) {{
+        ((long[]) array)[index] = (long) value;
+      }} else if (clazz.equals(short.class)) {{
+        ((short[]) array)[index] = (short) value;
+      }} else if (clazz.equals(byte.class)) {{
+        ((byte[]) array)[index] = (byte) value;
+      }} else if (clazz.equals(char.class)) {{
+        ((char[]) array)[index] = (char) value;
+      }} else if (clazz.equals(float.class)) {{
+        ((float[]) array)[index] = (float) value;
+      }} else if (clazz.equals(double.class)) {{
+        ((double[]) array)[index] = (double) value;
+      }} else if (clazz.equals(boolean.class)) {{
+        ((boolean[]) array)[index] = (boolean) value;
+      }} // TODO: handle other primitive types (if any)
+    }}
   }}
 }}

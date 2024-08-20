@@ -100,6 +100,10 @@ class JavaHandler:
         # Pattern
         if x.getClass().getName() == "java.util.regex.Pattern":
             return JavaHandler.pattern_to_pattern(x, id_map, target_object)
+
+        # Charset
+        if "sun.nio.cs." in x.getClass().getName():
+            return JavaHandler.charset_to_string(x)
         
         print("[JavaHandler.mapping] Unhandled Java object type: " + repr(x))
         return x # return untranslated object
@@ -195,6 +199,24 @@ class JavaHandler:
         id = JavaHandler.getJavaId(x)
         id_map[id] = P
         return P
+
+    def charset_to_string(x):
+        charsetName = x.getClass().getName().split(".")[-1]
+        if charsetName == "UTF_8":
+            return "UTF-8"
+        if charsetName == "UTF_16":
+            return "UTF-16"
+        if charsetName == "UTF_16BE":
+            return "UTF-16BE"
+        if charsetName == "UTF_16LE":
+            return "UTF-16LE"
+        if charsetName == "US_ASCII":
+            return "US-ASCII"
+        if charsetName == "ISO_8859_1":
+            return "ISO-8859-1"
+
+        # handle other charsets with a generic rule
+        return charsetName.replace("_", "-")
 
     def getPythonId(obj):
         return id(obj)
