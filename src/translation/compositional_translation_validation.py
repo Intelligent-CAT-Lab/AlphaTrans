@@ -1,24 +1,11 @@
 import argparse
 import json
-# from dotenv import load_dotenv
-# import torch
 import tqdm
 import os
-import subprocess
 import time
-import datetime
-# from transformers import AutoTokenizer, AutoModelForCausalLM
 from src.compositional_glue_tests.utils import topological_sort
 from syntactic_validation import l0_validation
 from src.translation.graal_validation import graal_validation
-
-# from genai.client import Client
-# from genai.credentials import Credentials
-# from genai.schema import (
-#     DecodingMethod,
-#     TextGenerationParameters,
-#     TextGenerationReturnOptions,
-# )
 
 # subprocess.run(['git', 'checkout', 'data/schemas/'])
 i = 0
@@ -49,66 +36,6 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
 
             print(prompt, flush=True)
             print('=======================GENERATING=======================', flush=True)
-
-            # if use_bam:
-            #     client = Client(credentials=Credentials.from_env())
-            #     model_id = "deepseek-ai/deepseek-coder-33b-instruct"
-
-            #     total_tokens = 0
-            #     for response in client.text.tokenization.create(model_id=model_id, input=prompt):
-            #         total_tokens = response.results[0].token_count
-                
-            #     if total_tokens > 16384:
-            #         return None, -1
-
-            #     max_new_tokens = 16384 - total_tokens
-
-            #     if fragment == 'field':
-            #         max_new_tokens = min(max_new_tokens, 1024)
-            #         # max_new_tokens = 1024
-            #     elif fragment == 'method':
-            #         max_new_tokens = min(max_new_tokens, 4096)
-            #         # max_new_tokens = 4096
-
-            #     parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-            #                                             min_new_tokens=1,
-            #                                             max_new_tokens=max_new_tokens,
-            #                                             return_options=TextGenerationReturnOptions(
-            #                                                 input_text=True,
-            #                                             ),
-            #                                             time_limit=60000,
-            #                                         )
-
-            #     for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-            #         generation = response.results[0].input_text + response.results[0].generated_text
-            
-            # else:
-
-            #     input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
-
-            #     if input_tokens.shape[1] > 16384:
-            #         return None, -1
-
-            #     max_new_tokens = 16384 - input_tokens.shape[1]
-            #     if fragment == 'field':
-            #         max_new_tokens = min(max_new_tokens, 1024)
-            #         # max_new_tokens = 1024
-            #     elif fragment == 'method':
-            #         max_new_tokens = min(max_new_tokens, 4096)
-            #         # max_new_tokens = 4096
-
-            #     raw_output = model.generate(
-            #         input_tokens,
-            #         max_new_tokens=max_new_tokens,
-            #         do_sample=False,
-            #         output_scores=True,
-            #         return_dict_in_generate=True,
-            #         pad_token_id=tokenizer.eos_token_id,
-            #     )
-
-            #     generation = tokenizer.decode(raw_output.sequences[0], skip_special_tokens=True)
-
-            # generation = generation[generation.find('### Response:')+13:]
             
             # open the schema file
             with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
@@ -182,7 +109,6 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         return None, 0
 
     elapsed_time = time.time() - start_time
-    print("...returning")
     return functionally_validated_members, elapsed_time
 
 
