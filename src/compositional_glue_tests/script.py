@@ -783,6 +783,7 @@ class CompositionalTest:
                     timeout=60*10 # 10 minutes
                 )
             except subprocess.TimeoutExpired:
+                print("Error: Timeout in running the tests.")
                 return {
                     "status": ERROR, # timeout
                     "feedback": dict()
@@ -801,6 +802,7 @@ class CompositionalTest:
             feedback = self.__get_feedback_from_surefire()
             
             if failure_flag and not feedback:
+                print("Error: Error in running the tests.")
                 return {
                     "status": ERROR, # error in running the tests
                     "feedback": dict()
@@ -814,6 +816,7 @@ class CompositionalTest:
                 "[ExceptionHandler] Unhandled exception type"
             ]
             if feedback and any(x in stdout for x in unsupported_operation_keywords):
+                print("Error: Unsupported operation encountered.")
                 return {
                     "status": ERROR, # unsupported operation encountered
                     "feedback": dict()
@@ -1450,8 +1453,7 @@ class Schema:
                     fully_qualified_class_name in self.project.test_dependencies[test_class][test_method] and
                     proper_method_name in self.project.test_dependencies[test_class][test_method][fully_qualified_class_name]
                 ):
-                    test_class_name = test_class.split('.')[-1]
-                    relevant_tests.add((test_class_name, test_method))
+                    relevant_tests.add((test_class, test_method))
 
         self.tests_to_execute.update(relevant_tests)
     
