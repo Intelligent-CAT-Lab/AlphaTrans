@@ -216,7 +216,7 @@ class Project:
                             f"            return object.__getattribute__(self, name)",
                             f"        except AttributeError:",
                             f"            pass",
-                            f"        return getattr(self.javaClz, name)" # TODO: type casting?
+                            f"        return JavaHandler.mapping(getattr(self.javaClz, StaticFieldRedirector.unmangle_name(name)))"
                         ]))
                     else:
                         python_file_contents.append("    pass") # in case there is no method to add!
