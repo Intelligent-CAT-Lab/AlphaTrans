@@ -11,6 +11,7 @@ from src.compositional_glue_tests.constants import *
 ERROR = "error"
 SUCCESS = "success"
 FAILURE = "failure"
+NOT_EXERCISED = "not_exercised"
 
 
 class Project:
@@ -746,8 +747,13 @@ class CompositionalTest:
                 subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
 
             if not tests_to_run and not self.test_items:
-                # run all tests
-                test_selection_specification = "*"
+                # was: run all tests
+                # was: test_selection_specification = "*"
+                print("Not Exercised: No tests to run.")
+                return {
+                    "status": NOT_EXERCISED,
+                    "feedback": dict()
+                }
             else:
                 if not tests_to_run:
                     tests_to_run = dict()
