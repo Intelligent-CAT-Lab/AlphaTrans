@@ -1,6 +1,6 @@
 import json
 import typing
-from src.compositional_glue_tests.script import Project
+from src.compositional_glue_tests.script import Project, ERROR
 
 project = None
 
@@ -47,7 +47,7 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
 
     test = project.derive_compositional_tests(components, debug=True)
     if test is None:
-        return "error", dict()
+        return ERROR, dict()
 
     output = test.run()
     status = output['status']
