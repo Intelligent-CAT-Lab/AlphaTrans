@@ -168,13 +168,9 @@ class Project:
                             # add StaticFieldRedirector as a metaclass
                             inherited_classes.append("metaclass=StaticFieldRedirector")
 
-                            # filter out the typing module classes
-                            # TODO: this is a temporary fix and should eventually be made at the translation level
-                            filtered_inherited_classes = list(filter(lambda x: not x.startswith("typing."), inherited_classes))
-
                             class_declaration_suffix = "".join([
                                 class_declaration_suffix[:bracket_left+1],
-                                ", ".join(filtered_inherited_classes),
+                                ", ".join(inherited_classes),
                                 class_declaration_suffix[bracket_right:]
                             ])
                             
