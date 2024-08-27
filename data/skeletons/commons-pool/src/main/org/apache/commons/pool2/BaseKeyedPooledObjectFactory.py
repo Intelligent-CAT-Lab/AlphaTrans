@@ -33,9 +33,6 @@ class BaseKeyedPooledObjectFactory(KeyedPooledObjectFactory, BaseObject, ABC):
     def activateObject(self, key: typing.Any, p: PooledObject[typing.Any]) -> None:
         pass
 
-    def __init__(self) -> None:
-        pass
-
     def wrap(self, value: typing.Any) -> PooledObject[typing.Any]:
         pass
 

@@ -18,6 +18,7 @@ from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import typing
 import unittest
+import os
 import numbers
 import io
 
@@ -31,34 +32,154 @@ class GraphColoringTestCase(AbstractColoringTest, unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSudoku(self) -> None:
+    def testSudoku_test5_decomposed(self) -> None:
         pass
 
-    def testNullGraph(self) -> None:
+    def testSudoku_test4_decomposed(self) -> None:
         pass
 
-    def testNullColorGraph(self) -> None:
+    def testSudoku_test3_decomposed(self) -> None:
         pass
 
-    def testNotEnoughtColorGreedyGraph(self) -> None:
+    def testSudoku_test2_decomposed(self) -> None:
         pass
 
-    def testEmptyGraph(self) -> None:
+    def testSudoku_test1_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberSparseGraph(self) -> None:
+    def testSudoku_test0_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberComplete(self) -> None:
+    def testNullGraph_test2_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberBiparted(self) -> None:
+    def testNullGraph_test1_decomposed(self) -> None:
         pass
 
-    def testCromaticNumber(self) -> None:
+    def testNullGraph_test0_decomposed(self) -> None:
         pass
 
-    def testCrawnGraph(self) -> None:
+    def testNullColorGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNullColorGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNullColorGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test5_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGreedyGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test0_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

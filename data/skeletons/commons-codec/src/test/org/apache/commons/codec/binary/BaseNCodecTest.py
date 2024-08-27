@@ -2,7 +2,6 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.codec.binary.BaseNCodec import *
-from src.main.org.apache.commons.codec.CodecPolicy import *
 import unittest
 import os
 import typing

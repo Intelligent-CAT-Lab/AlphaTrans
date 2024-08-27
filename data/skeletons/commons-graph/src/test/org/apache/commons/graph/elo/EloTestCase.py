@@ -14,6 +14,7 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.DirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -25,7 +26,22 @@ class EloTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testPerformElo(self) -> None:
+    def testPerformElo_test5_decomposed(self) -> None:
+        pass
+
+    def testPerformElo_test4_decomposed(self) -> None:
+        pass
+
+    def testPerformElo_test3_decomposed(self) -> None:
+        pass
+
+    def testPerformElo_test2_decomposed(self) -> None:
+        pass
+
+    def testPerformElo_test1_decomposed(self) -> None:
+        pass
+
+    def testPerformElo_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

@@ -22,7 +22,9 @@ class PatternOptionBuilder:
     NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = None
     DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = None
     CLASS_VALUE: typing.Type[typing.Any] = None
-    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader]] = None
+    EXISTING_FILE_VALUE: typing.Type[
+        typing.Union[io.FileIO, io.BufferedReader, io.TextIOWrapper]
+    ] = None
     FILE_VALUE: typing.Type[pathlib.Path] = None
     FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = None
     URL_VALUE: typing.Type[

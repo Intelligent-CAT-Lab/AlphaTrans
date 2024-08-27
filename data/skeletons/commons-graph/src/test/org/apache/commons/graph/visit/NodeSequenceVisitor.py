@@ -26,4 +26,7 @@ class NodeSequenceVisitor:
     def discoverVertex(self, vertex: BaseLabeledVertex) -> VisitState:
         pass
 
+    def __init__(self) -> None:
+        pass
+
     # Class Methods End

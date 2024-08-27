@@ -18,6 +18,7 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.UndirectedGraph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import numbers
 import io
 
@@ -30,37 +31,238 @@ class GraphColoringBackTrackingTestCase(AbstractColoringTest, unittest.TestCase)
     # Class Fields End
 
     # Class Methods Begin
-    def testSudokuWithConstraints(self) -> None:
+    def testSudokuWithConstraints_test12_decomposed(self) -> None:
         pass
 
-    def testSudoku(self) -> None:
+    def testSudokuWithConstraints_test11_decomposed(self) -> None:
         pass
 
-    def testNullGraph(self) -> None:
+    def testSudokuWithConstraints_test10_decomposed(self) -> None:
         pass
 
-    def testNullColorGraph(self) -> None:
+    def testSudokuWithConstraints_test9_decomposed(self) -> None:
         pass
 
-    def testNotEnoughtColorGraph(self) -> None:
+    def testSudokuWithConstraints_test8_decomposed(self) -> None:
         pass
 
-    def testEmptyGraph(self) -> None:
+    def testSudokuWithConstraints_test7_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberSparseGraph(self) -> None:
+    def testSudokuWithConstraints_test6_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberComplete(self) -> None:
+    def testSudokuWithConstraints_test5_decomposed(self) -> None:
         pass
 
-    def testCromaticNumberBiparted(self) -> None:
+    def testSudokuWithConstraints_test4_decomposed(self) -> None:
         pass
 
-    def testCromaticNumber(self) -> None:
+    def testSudokuWithConstraints_test3_decomposed(self) -> None:
         pass
 
-    def testCrawnGraph(self) -> None:
+    def testSudokuWithConstraints_test2_decomposed(self) -> None:
+        pass
+
+    def testSudokuWithConstraints_test1_decomposed(self) -> None:
+        pass
+
+    def testSudokuWithConstraints_test0_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test9_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test8_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test7_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test6_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test5_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test4_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test3_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test2_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test1_decomposed(self) -> None:
+        pass
+
+    def testSudoku_test0_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testNullColorGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNullColorGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNullColorGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test5_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNotEnoughtColorGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test6_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberSparseGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test6_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberComplete_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test6_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumberBiparted_test0_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test9_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test8_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test7_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test6_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test5_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test4_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test3_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test2_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test1_decomposed(self) -> None:
+        pass
+
+    def testCromaticNumber_test0_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test6_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test5_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test4_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testCrawnGraph_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End
