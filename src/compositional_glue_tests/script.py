@@ -11,7 +11,7 @@ from src.compositional_glue_tests.constants import *
 ERROR = "error"
 SUCCESS = "success"
 FAILURE = "failure"
-NOT_EXERCISED = "not_exercised"
+NOT_EXERCISED = "not-exercised"
 
 
 class Project:

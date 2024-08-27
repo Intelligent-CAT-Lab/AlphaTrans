@@ -17,8 +17,8 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
     global project
     project_name = args.project_name
 
-    schema_dir = f'data/schemas/translations/{args.model_name}/{args.prompt_type}'
-    
+    schema_dir = '/'.join(args.translation_dir.split('/')[:-1])
+
     if not project:
         project = Project(project_name, schema_dir)
         
