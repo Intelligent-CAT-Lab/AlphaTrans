@@ -289,6 +289,24 @@ def test_has_attribute_error(test_execution_details):
     return False
 
 
+def get_suspiciousness_score(fragment):
+    
+    schema_data = {}
+    with open(f'{args.translation_dir}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+        schema_data = json.load(f)
+    
+    total_tests = 0
+    failed_tests = 0
+
+    if isinstance(schema_data['classes'][fragment['class_name']]['methods'][fragment['fragment_name']]['test_execution'], dict):
+        for test in schema_data['classes'][fragment['class_name']]['methods'][fragment['fragment_name']]['test_execution']:
+            total_tests += 1
+            if schema_data['classes'][fragment['class_name']]['methods'][fragment['fragment_name']]['test_execution'][test]['test_outcome'] == 'exercised-failed':
+                failed_tests += 1
+    
+    return failed_tests / total_tests
+
+
 def translate(fragment, args, processed_fragments, budget={}, feedback=None, recursion_depth=2):
 
     if recursion_depth == 0:
@@ -507,11 +525,12 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
                     if covered_method_schema_data['classes'][covered_method_class]['methods'][covered_method_name]['graal_validation'] in ['success', 'not-exercised']:
                         continue
 
-                # suspiciousness score = 1 (for now)
-                suspicious_methods[f'{covered_method_file}|{covered_method_class}|{covered_method_name}'] = 1
+                # suspiciousness score = total number of failed tests / total number of tests
+                suspicious_methods[f'{covered_method_file}|{covered_method_class}|{covered_method_name}'] = get_suspiciousness_score(fragment={'schema_name': covered_method_file, 'class_name': covered_method_class, 'fragment_name': covered_method_name, 'fragment_type': 'method'})
             
             # extract top-k methods with highest suspiciousness score. make k a hyperparameter later.
-            suspicious_methods = {k: v for k, v in sorted(suspicious_methods.items(), key=lambda item: item[1], reverse=True)}
+            k = 3
+            suspicious_methods = {k: v for k, v in sorted(suspicious_methods.items(), key=lambda item: item[1], reverse=True)[:k]}
 
             for suspicious_method in suspicious_methods:
                 suspicious_method = {'schema_name': suspicious_method.split('|')[0], 'class_name': suspicious_method.split('|')[1], 'fragment_name': suspicious_method.split('|')[2], 'fragment_type': 'method', 'is_test_method': True if 'test' in suspicious_method.split('|')[2] else False}
