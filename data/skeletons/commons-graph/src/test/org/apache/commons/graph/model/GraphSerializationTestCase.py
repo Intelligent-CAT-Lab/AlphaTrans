@@ -21,6 +21,7 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -36,25 +37,88 @@ class GraphSerializationTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testSerializeUndirectedWeightdGraph(self) -> None:
+    def testSerializeUndirectedWeightdGraph_test2_decomposed(self) -> None:
         pass
 
-    def testSerializeUndirectedGraph(self) -> None:
+    def testSerializeUndirectedWeightdGraph_test1_decomposed(self) -> None:
         pass
 
-    def testSerializeSyncronyzedDirectedWeightdGraph(self) -> None:
+    def testSerializeUndirectedWeightdGraph_test0_decomposed(self) -> None:
         pass
 
-    def testSerializeSpanningTree(self) -> None:
+    def testSerializeUndirectedGraph_test2_decomposed(self) -> None:
         pass
 
-    def testSerializePath(self) -> None:
+    def testSerializeUndirectedGraph_test1_decomposed(self) -> None:
         pass
 
-    def testSerializeDirectedWeightdGraph(self) -> None:
+    def testSerializeUndirectedGraph_test0_decomposed(self) -> None:
         pass
 
-    def testSerializeDirectedGraph(self) -> None:
+    def testSerializeSyncronyzedDirectedWeightdGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testSerializeSyncronyzedDirectedWeightdGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testSerializeSyncronyzedDirectedWeightdGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testSerializeSyncronyzedDirectedWeightdGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testSerializeSpanningTree_test3_decomposed(self) -> None:
+        pass
+
+    def testSerializeSpanningTree_test2_decomposed(self) -> None:
+        pass
+
+    def testSerializeSpanningTree_test1_decomposed(self) -> None:
+        pass
+
+    def testSerializeSpanningTree_test0_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test7_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test6_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test5_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test4_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test3_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test2_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test1_decomposed(self) -> None:
+        pass
+
+    def testSerializePath_test0_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedWeightdGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedWeightdGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedWeightdGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testSerializeDirectedGraph_test0_decomposed(self) -> None:
         pass
 
     def cleanUp(self) -> None:

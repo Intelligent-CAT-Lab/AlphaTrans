@@ -6,6 +6,7 @@ import os
 import typing
 from typing import *
 import io
+from io import StringIO
 from abc import ABC
 
 # Imports End
@@ -177,7 +178,7 @@ class Ansi:
     def newline(self) -> Ansi:
         pass
 
-    def a13(self, value: str) -> Ansi:
+    def a13(self, value: io.StringIO) -> Ansi:
         pass
 
     def a12(self, value: typing.Any) -> Ansi:

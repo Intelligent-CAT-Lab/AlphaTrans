@@ -87,13 +87,13 @@ class HelpFormatter:
         pass
 
     def _renderWrappedText(
-        self, sb: str, width: int, nextLineTabStop: int, text: str
-    ) -> str:
+        self, sb: io.StringIO, width: int, nextLineTabStop: int, text: str
+    ) -> io.StringIO:
         pass
 
     def _renderOptions(
-        self, sb: str, width: int, options: Options, leftPad: int, descPad: int
-    ) -> str:
+        self, sb: io.StringIO, width: int, options: Options, leftPad: int, descPad: int
+    ) -> io.StringIO:
         pass
 
     def printWrapped1(
@@ -238,14 +238,14 @@ class HelpFormatter:
         pass
 
     def __renderWrappedTextBlock(
-        self, sb: str, width: int, nextLineTabStop: int, text: str
+        self, sb: io.StringIO, width: int, nextLineTabStop: int, text: str
     ) -> typing.Union[typing.List, io.TextIOBase]:
         pass
 
-    def __appendOptionGroup(self, buff: str, group: OptionGroup) -> None:
+    def __appendOptionGroup(self, buff: io.StringIO, group: OptionGroup) -> None:
         pass
 
-    def __appendOption(self, buff: str, option: Option, required: bool) -> None:
+    def __appendOption(self, buff: io.StringIO, option: Option, required: bool) -> None:
         pass
 
     # Class Methods End
