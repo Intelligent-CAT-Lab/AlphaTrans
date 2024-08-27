@@ -121,6 +121,19 @@ def update_labels(args, fragment, translation, translation_status, syntactic_val
         os.fsync(f.fileno())
 
 
+def update_budget(fragment, args, budget, type_='original'):
+    schema_data = {}
+    with open(f'{args.translation_dir}/{fragment["schema_name"]}_python_partial.json', 'r') as f:
+        schema_data = json.load(f)
+    
+    schema_data['classes'][fragment['class_name']][f'{fragment["fragment_type"]}s'][fragment['fragment_name']][f'{type_}_budget'] = budget
+
+    with open(f'{args.translation_dir}/{fragment["schema_name"]}_python_partial.json', 'w') as f:
+        json.dump(schema_data, f, indent=4)
+        f.flush()
+        os.fsync(f.fileno())
+
+
 def is_field_already_translated(fragment, args):
     """
     Check if a field is already deterministically translated
@@ -128,6 +141,8 @@ def is_field_already_translated(fragment, args):
     prompt_generator = PromptGenerator(is_feedback=False, args=args, fragment_details=fragment)
 
     if fragment['fragment_type'] == 'field' and prompt_generator.prompt_status == 'translated':
+        update_budget(fragment, args, budget={'syntactic': -1, 'field_exercise': -1, 'graal': -1, 'test_execution': -1}, type_='original')
+        update_budget(fragment, args, budget={'syntactic': -1, 'field_exercise': -1, 'graal': -1, 'test_execution': -1}, type_='final')
         update_labels(args=args, fragment=fragment, translation=f'<{prompt_generator.prompt_status}>', translation_status='attempted', syntactic_validation='parseable', field_exercise='success', graal_validation='pending', test_execution='pending', elapsed_time=0)
         return True
     
@@ -136,19 +151,19 @@ def is_field_already_translated(fragment, args):
 
 def is_test_already_translated(test, args):
     """
-    Check if a test is already deterministically translated
+    Check if a test is already translated and syntactically correct
     """
     test_schema_data = {}
     with open(f'{args.translation_dir}/{test["schema_name"]}_python_partial.json', 'r') as f:
         test_schema_data = json.load(f)
 
-    if test_schema_data['classes'][test['class_name']]['methods'][test['fragment_name']]['translation_status'] == 'attempted':
+    if test_schema_data['classes'][test['class_name']]['methods'][test['fragment_name']]['syntactic_validation'] == 'parseable':
         return True
 
     return False
 
 
-def get_adaptive_budget(fragment, args):
+def get_adaptive_budget(fragment, args, feedback=False):
     """
     Get adaptive budget for translation based on dynamic analysis
     1. Fields and static initializers: 3 attempts
@@ -156,9 +171,9 @@ def get_adaptive_budget(fragment, args):
     3. Main methods: 10% of total executed tests
     """
     if fragment['fragment_type'] in ['field', 'static_initializer']:
-        return 3
+        return 2 if not feedback else 1
     elif fragment['fragment_type'] == 'method' and fragment['is_test_method']:
-        return 3
+        return 2 if not feedback else 1
     
     method_coverage = {}
     with open(f'data/source_test_execution{args.suffix}/{args.project_name}/coverage.json', 'r') as f:
@@ -179,8 +194,11 @@ def get_adaptive_budget(fragment, args):
                     total_covered += 1 if main_method_name in method_coverage[test_class][test_method][main_class_name] else 0
 
     assert total_covered < total_executed_tests
-    max_budget = max(math.ceil(10 * (total_covered / total_executed_tests)), 3)
-    return min(10, max_budget)
+    max_budget = max(math.ceil(5 * (total_covered / total_executed_tests)), 2)
+    if not feedback:
+        return min(5, max_budget)
+    else:
+        return 1
 
 
 def get_total_input_tokens(prompt, client, model_info):
@@ -271,7 +289,7 @@ def test_has_attribute_error(test_execution_details):
     return False
 
 
-def translate(fragment, args, processed_fragments, feedback=None, recursion_depth=4):
+def translate(fragment, args, processed_fragments, budget={}, feedback=None, recursion_depth=2):
 
     if recursion_depth == 0:
         return
@@ -283,16 +301,21 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                 }
     client = Client(credentials=Credentials.from_env())
 
-    adaptive_budget = get_adaptive_budget(fragment, args)
-    BUDGET = {'syntactic': adaptive_budget, 'field_exercise': adaptive_budget, 'graal': adaptive_budget, 'test_execution': adaptive_budget}
-    current_budget = 'syntactic'
+    if budget == {}:
+        adaptive_budget = get_adaptive_budget(fragment, args)
+        budget = {'syntactic': adaptive_budget, 'field_exercise': adaptive_budget, 'graal': adaptive_budget, 'test_execution': adaptive_budget}
+        adaptive_budget_feedback = get_adaptive_budget(fragment, args, feedback=True)
+        feedback_budget = {'syntactic': adaptive_budget_feedback, 'field_exercise': adaptive_budget_feedback, 'graal': adaptive_budget_feedback, 'test_execution': adaptive_budget_feedback}
 
+        update_budget(fragment, args, budget, type_='original')
+
+    current_budget = 'syntactic'
     start_time = time.time()
     extracted_eligible_tests = False
     eligible_tests = []
     executable_eligible_tests = []
 
-    while BUDGET[current_budget] > 0:
+    while budget[current_budget] > 0:
 
         ############################ <TRANSLATION> ############################
         prompt = PromptGenerator(is_feedback=True if feedback else False, args=args, fragment_details=fragment, feedback=feedback).generate_prompt()
@@ -307,6 +330,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
         # if prompt size exceeds model token limit, mark translation out_of_context and move on to next fragment
         if total_input_tokens >= model_info[args.model_name]['total']:
             update_labels(args=args, fragment=fragment, translation=[], translation_status='out_of_context', syntactic_validation='pending', field_exercise='pending', graal_validation='pending', test_execution='pending', elapsed_time=0)
+            update_budget(fragment, args, budget, type_='final')
             break
 
         generation = prompt_model(model_info, client, prompt, total_input_tokens, args)
@@ -322,18 +346,20 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
         status, generation, feedback = syntactic_validation(generation, fragment, args)
 
         if not status:
-            if BUDGET[current_budget] - 1 == 0:
-                # if syntactic validation fails after all syntactic BUDGET attempts, mark translation as non-parseable
+            if budget[current_budget] - 1 == 0:
+                # if syntactic validation fails after all syntactic budget attempts, mark translation as non-parseable
                 update_labels(args=args, fragment=fragment, translation=[], translation_status='attempted', syntactic_validation='non-parseable', field_exercise='pending', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
                 break
 
             if args.debug:
                 print('=======================SYNTACTIC VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
-            BUDGET[current_budget] -= 1
+            budget[current_budget] -= 1
             continue
 
         update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+        update_budget(fragment, args, budget, type_='final')
         ############################ </SYNTACTIC VALIDATION> ############################
 
         if fragment['is_test_method']:
@@ -345,19 +371,21 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
             status, feedback = field_exercise_validation(fragment, args)
             # if execution validation fails, re-prompt the model
             if not status:
-                # if execution validation fails after all field_exercise BUDGET attempts, mark field_exercise status as failed
-                if BUDGET[current_budget] - 1 == 0:
+                # if execution validation fails after all field_exercise budget attempts, mark field_exercise status as failed
+                if budget[current_budget] - 1 == 0:
                     update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='failed', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+                    update_budget(fragment, args, budget, type_='final')
                     break
                 
                 if args.debug:
                     print('=======================EXECUTION VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
-                BUDGET[current_budget] -= 1
+                budget[current_budget] -= 1
                 continue
 
             # immediately store execution validation status and end the loop
             update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='success', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+            update_budget(fragment, args, budget, type_='final')
             break
         ############################ </FIELD EXERCISE VALIDATION> ############################
 
@@ -366,25 +394,33 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
         ############################ <GRAAL VALIDATION> ############################
         current_budget = 'graal'
         graal_status = 'pending'
-        if args.validate_by_graal:
+        if args.validate_by_graal and 'src.main' in fragment['schema_name']:
             status, feedback = graal_validation(generation, fragment, args)
 
-            if status == 'error':
+            if status == 'not-exercised':
+                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='not-exercised', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
+                graal_status = 'not-exercised'
+
+            elif status == 'error':
                 update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='error', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
                 graal_status = 'error'
 
             elif status == 'failure':
                 update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='failed', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
                 graal_status = 'failed'
                 
                 if args.debug:
                     print('=======================GRAAL VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
-                BUDGET[current_budget] -= 1
+                budget[current_budget] -= 1
                 continue
             
             elif status == 'success':
                 update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='success', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
                 graal_status = 'success'
         ############################ </GRAAL VALIDATION> ############################
 
@@ -398,6 +434,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
             # if there are no tests ready to be executed, end the loop and mark the fragment as not-exercised
             if eligible_tests == []:
                 update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation=graal_status, test_execution='not-exercised', elapsed_time=time.time() - start_time)
+                update_budget(fragment, args, budget, type_='final')
                 break
 
             # if there are tests ready to be executed, translate them first
@@ -417,8 +454,9 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                     executable_eligible_tests.append(test)
 
                 # if no tests are executable / syntactically correct, end the loop and mark the fragment as not-exercised
-                if executable_eligible_tests == []:                    
+                if executable_eligible_tests == []:
                     update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation=graal_status, test_execution='not-exercised', elapsed_time=time.time() - start_time)
+                    update_budget(fragment, args, budget, type_='final')
                     break
 
         # after eligible tests are translated, validate the main method fragment with test validation
@@ -449,8 +487,8 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                 if test_fragment == {}:
                     continue
                 
-                translate(test_fragment, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
-                continue
+                translate(test_fragment, args, processed_fragments, budget=feedback_budget if recursion_depth==2 else budget, feedback=test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
+                continue            
 
             suspicious_methods = {}
             for covered_method in test_execution_details[test]['covered_methods']:
@@ -466,7 +504,7 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
                     with open(f'{args.translation_dir}/{covered_method_file}_python_partial.json', 'r') as f:
                         covered_method_schema_data = json.load(f)
                     
-                    if covered_method_schema_data['classes'][covered_method_class]['methods'][covered_method_name]['graal_validation'] == 'success':
+                    if covered_method_schema_data['classes'][covered_method_class]['methods'][covered_method_name]['graal_validation'] in ['success', 'not-exercised']:
                         continue
 
                 # suspiciousness score = 1 (for now)
@@ -477,10 +515,15 @@ def translate(fragment, args, processed_fragments, feedback=None, recursion_dept
 
             for suspicious_method in suspicious_methods:
                 suspicious_method = {'schema_name': suspicious_method.split('|')[0], 'class_name': suspicious_method.split('|')[1], 'fragment_name': suspicious_method.split('|')[2], 'fragment_type': 'method', 'is_test_method': True if 'test' in suspicious_method.split('|')[2] else False}
-                translate(suspicious_method, args, processed_fragments, test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
+                translate(suspicious_method, args, processed_fragments, budget=feedback_budget if recursion_depth==2 else budget, feedback=test_execution_details[test]['feedback'], recursion_depth=recursion_depth-1)
+
+        if args.debug:
+            print('=======================TEST VALIDATION FAILED - REPROMPTING=======================', flush=True)
+            print('recursion_depth:', recursion_depth, flush=True)
+            print('budget:', budget, flush=True)
 
         if requires_reprompt:
-            BUDGET[current_budget] -= 1
+            budget[current_budget] -= 1
             continue
 
         break
@@ -509,7 +552,7 @@ def main(args):
             continue
         
         # if a fragment requires translation, translate it with LLM
-        translate(fragment, args, processed_fragments, recursion_depth=4)
+        translate(fragment, args, processed_fragments, recursion_depth=args.recursion_depth)
         processed_fragments.append(f'{fragment["schema_name"]}|{fragment["class_name"]}|{fragment["fragment_name"]}')
 
 
@@ -526,5 +569,6 @@ if __name__ == '__main__':
     parser_.add_argument('--translate_evosuite', action='store_true', help='translate evosuite generated tests')
     parser_.add_argument('--debug', action='store_true', help='debug mode')
     parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix for the translated files')
+    parser_.add_argument('--recursion_depth', type=int, dest='recursion_depth', help='depth of recursion for translation')
     args = parser_.parse_args()
     main(args)

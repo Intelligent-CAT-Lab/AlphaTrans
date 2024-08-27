@@ -65,6 +65,9 @@ def calculate_method_coverage(args, project_root):
                         if f"__{method_.split(':')[1]}" == method_name:
                             method_name = method_
                             break
+                    elif method_name.startswith('test') and method_name[4:] == method_.split(':')[1]:
+                        method_name = method_
+                        break
                     else:
                         if method_.split(':')[1] == method_name:
                             method_name = method_
