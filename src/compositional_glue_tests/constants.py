@@ -1,13 +1,10 @@
-suffix = "_decomposed_tests"
-# suffix = ""
+USE_DECOMPOSED_TESTS = True
 
+suffix = "_decomposed_tests" if USE_DECOMPOSED_TESTS else ""
 ORIGINAL_DIR = f"java_projects/cleaned_final_projects{suffix}"
 OUTPUT_DIR = "java_projects/compositional_glue_tests"
 OVERRIDES_DIR = "java_projects/overrides"
-TRANSLATION_DIR = "data/translated_projects" # was: "data/verified_projects"
-SKELETON_DIR = "data/skeletons"
-SCHEMAS_DIR = f"data/schemas{suffix}"
-CALLGRAPH_DIR = "data/call_graphs"
+TRANSLATION_DIR = "data/translated_projects"
 COVERAGE_DIR = f"data/source_test_execution{suffix}"
 
 DIR_DEPTH = "../" * (len(list(filter(None, ORIGINAL_DIR.split("/")))) + 1) # the depth of a glued project from the root directory of this repository
