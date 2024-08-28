@@ -206,7 +206,8 @@ if __name__ == '__main__':
     parser_.add_argument('--class', type=str, dest='class_', default=None, required=False)
     parser_.add_argument('--method', type=str, dest='method', default=None, required=False)
     parser_.add_argument('--record', action='store_true', help='record all')
-    
+    parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix for the translated files', default='')
+
     args = parser_.parse_args()
     
     args.model_name = None
@@ -219,6 +220,7 @@ if __name__ == '__main__':
     args.dump_syntactically_validated_fragments = False
     args.model_name = "deepseek-coder-33b-instruct"
     args.prompt_type = "body"
+    args.suffix = "_decomposed_tests" # change to "" if not using decomposed tests
     
     SCHEMA_BREAK = f'.{args.schema}_' if args.schema else None
     CLASS_BREAK = args.class_
