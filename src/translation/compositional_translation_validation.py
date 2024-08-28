@@ -59,9 +59,12 @@ def get_eligible_tests(fragment, processed_fragments, args):
             if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test.split('|')[1]]['methods'][test.split('|')[2]]['annotations']]:
                 continue
 
+            if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test.split('|')[1]]['methods'][test.split('|')[2]]['annotations']]:
+                continue
+
             executable_tests.append({'schema_name': test_schema, 'class_name': test.split('|')[1], 'fragment_name': test.split('|')[2], 'fragment_type': 'method', 'is_test_method': True})
     
-    executable_tests = sorted(executable_tests, key=lambda x: int(x['fragment_name'].split('_')[1][4:]))
+    executable_tests = sorted(executable_tests, key=lambda x: int(x['fragment_name'].split('_')[-2][4:]))
     return executable_tests
 
 
