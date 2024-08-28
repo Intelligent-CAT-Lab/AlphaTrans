@@ -391,25 +391,33 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
 
         ############################ <FIELD EXERCISE VALIDATION> ############################
         current_budget = 'field_exercise'
-        if fragment['fragment_type'] in ['field', 'static_initializer']:
-            status, feedback = field_exercise_validation(fragment, args)
-            # if execution validation fails, re-prompt the model
-            if not status:
-                # if execution validation fails after all field_exercise budget attempts, mark field_exercise status as failed
-                if budget[current_budget] - 1 == 0:
+        status, feedback = field_exercise_validation(fragment, args)
+        # if execution validation fails, re-prompt the model
+        if not status:
+            # if execution validation fails after all field_exercise budget attempts, mark field_exercise status as failed
+            if budget[current_budget] - 1 == 0:
+                if fragment['fragment_type'] == 'method':
+                    update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='non-parseable', field_exercise='pending', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+                else:
                     update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='failed', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
-                    update_budget(fragment, args, budget, type_='final')
-                    break
-                
-                if args.debug:
-                    print('=======================EXECUTION VALIDATION FAILED - REPROMPTING=======================', flush=True)
+                    
+                update_budget(fragment, args, budget, type_='final')
+                break
+            
+            if args.debug:
+                print('=======================EXECUTION VALIDATION FAILED - REPROMPTING=======================', flush=True)
 
-                budget[current_budget] -= 1
-                continue
+            budget[current_budget] -= 1
+            continue
 
-            # immediately store execution validation status and end the loop
+        # immediately store execution validation status and end the loop
+        if fragment['fragment_type'] == 'method':
+            update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
+        else:
             update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='success', graal_validation='pending', test_execution='pending', elapsed_time=time.time() - start_time)
-            update_budget(fragment, args, budget, type_='final')
+        update_budget(fragment, args, budget, type_='final')
+
+        if fragment['fragment_type'] in ['field', 'static_initializer']:
             break
         ############################ </FIELD EXERCISE VALIDATION> ############################
 
