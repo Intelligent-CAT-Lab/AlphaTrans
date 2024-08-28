@@ -64,7 +64,10 @@ def get_eligible_tests(fragment, processed_fragments, args):
 
             executable_tests.append({'schema_name': test_schema, 'class_name': test.split('|')[1], 'fragment_name': test.split('|')[2], 'fragment_type': 'method', 'is_test_method': True})
     
+    non_decomposed_tests = [x for x in executable_tests if '_decomposed' not in x['fragment_name']]
+    executable_tests = [x for x in executable_tests if '_decomposed' in x['fragment_name']]
     executable_tests = sorted(executable_tests, key=lambda x: int(x['fragment_name'].split('_')[-2][4:]))
+    executable_tests = executable_tests + non_decomposed_tests
     return executable_tests
 
 
