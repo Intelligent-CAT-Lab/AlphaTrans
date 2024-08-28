@@ -1,0 +1,2930 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/util/mime/MimeUtility.java",
+    "imports": {
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "19-19:import ByteArrayOutputStream": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "21-21:import UnsupportedEncodingException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "24-24:import Map": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "22-22:import HashMap": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MimeUtility": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "79-145:decodeText": {
+                    "start": 79,
+                    "end": 145,
+                    "body": [
+                        "    public static String decodeText(String text) throws UnsupportedEncodingException {\n",
+                        "        if (text.indexOf(ENCODED_TOKEN_MARKER) < 0) {\n",
+                        "            return text;\n",
+                        "        }\n",
+                        "\n",
+                        "        int offset = 0;\n",
+                        "        int endOffset = text.length();\n",
+                        "\n",
+                        "        int startWhiteSpace = -1;\n",
+                        "        int endWhiteSpace = -1;\n",
+                        "\n",
+                        "        StringBuilder decodedText = new StringBuilder(text.length());\n",
+                        "\n",
+                        "        boolean previousTokenEncoded = false;\n",
+                        "\n",
+                        "        while (offset < endOffset) {\n",
+                        "            char ch = text.charAt(offset);\n",
+                        "\n",
+                        "            if (LINEAR_WHITESPACE.indexOf(ch) != -1) { // whitespace found\n",
+                        "                startWhiteSpace = offset;\n",
+                        "                while (offset < endOffset) {\n",
+                        "                    ch = text.charAt(offset);\n",
+                        "                    if (LINEAR_WHITESPACE.indexOf(ch) != -1) { // whitespace found\n",
+                        "                        offset++;\n",
+                        "                    } else {\n",
+                        "                        endWhiteSpace = offset;\n",
+                        "                        break;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                int wordStart = offset;\n",
+                        "\n",
+                        "                while (offset < endOffset) {\n",
+                        "                    ch = text.charAt(offset);\n",
+                        "                    if (LINEAR_WHITESPACE.indexOf(ch) == -1) { // not white space\n",
+                        "                        offset++;\n",
+                        "                    } else {\n",
+                        "                        break;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                String word = text.substring(wordStart, offset);\n",
+                        "                if (word.startsWith(ENCODED_TOKEN_MARKER)) {\n",
+                        "                    try {\n",
+                        "                        String decodedWord = decodeWord(word);\n",
+                        "\n",
+                        "                        if (!previousTokenEncoded && startWhiteSpace != -1) {\n",
+                        "                            decodedText.append(text.substring(startWhiteSpace, endWhiteSpace));\n",
+                        "                            startWhiteSpace = -1;\n",
+                        "                        }\n",
+                        "                        previousTokenEncoded = true;\n",
+                        "                        decodedText.append(decodedWord);\n",
+                        "                        continue;\n",
+                        "\n",
+                        "                    } catch (ParseException e) {\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                if (startWhiteSpace != -1) {\n",
+                        "                    decodedText.append(text.substring(startWhiteSpace, endWhiteSpace));\n",
+                        "                    startWhiteSpace = -1;\n",
+                        "                }\n",
+                        "                previousTokenEncoded = false;\n",
+                        "                decodedText.append(word);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return decodedText.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeText(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "158-208:decodeWord"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decodeText(text: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def decodeText(text: str) -> str:",
+                        "        ",
+                        "        if text.find(MimeUtility.__ENCODED_TOKEN_MARKER) < 0:",
+                        "            return text",
+                        "",
+                        "        offset = 0",
+                        "        endOffset = len(text)",
+                        "",
+                        "        startWhiteSpace = -1",
+                        "        endWhiteSpace = -1",
+                        "",
+                        "        decodedText = []",
+                        "",
+                        "        previousTokenEncoded = False",
+                        "",
+                        "        while offset < endOffset:",
+                        "            ch = text[offset]",
+                        "",
+                        "            if MimeUtility.__LINEAR_WHITESPACE.find(ch) != -1:  # whitespace found",
+                        "                startWhiteSpace = offset",
+                        "                while offset < endOffset:",
+                        "                    ch = text[offset]",
+                        "                    if MimeUtility.__LINEAR_WHITESPACE.find(ch) != -1:  # whitespace found",
+                        "                        offset += 1",
+                        "                    else:",
+                        "                        endWhiteSpace = offset",
+                        "                        break",
+                        "            else:",
+                        "                wordStart = offset",
+                        "",
+                        "                while offset < endOffset:",
+                        "                    ch = text[offset]",
+                        "                    if MimeUtility.__LINEAR_WHITESPACE.find(ch) == -1:  # not white space",
+                        "                        offset += 1",
+                        "                    else:",
+                        "                        break",
+                        "                word = text[wordStart:offset]",
+                        "                if word.startswith(MimeUtility.__ENCODED_TOKEN_MARKER):",
+                        "                    try:",
+                        "                        decodedWord = MimeUtility.__decodeWord(word)",
+                        "",
+                        "                        if not previousTokenEncoded and startWhiteSpace != -1:",
+                        "                            decodedText.append(text[startWhiteSpace:endWhiteSpace])",
+                        "                            startWhiteSpace = -1",
+                        "                        previousTokenEncoded = True",
+                        "                        decodedText.append(decodedWord)",
+                        "                        continue",
+                        "",
+                        "                    except ParseException:",
+                        "                        pass",
+                        "                if startWhiteSpace != -1:",
+                        "                    decodedText.append(text[startWhiteSpace:endWhiteSpace])",
+                        "                    startWhiteSpace = -1",
+                        "                previousTokenEncoded = False",
+                        "                decodedText.append(word)",
+                        "",
+                        "        return ''.join(decodedText)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": {
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeInvalidEncoding_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "81-83:decodeInvalidEncoding_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsingEscapedChars_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "305-309:testParsingEscapedChars_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "46-50:testParsing_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsingEscapedChars_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "312-318:testParsingEscapedChars_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testContentTypeParsing_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "181-183:setLowerCaseNames"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "282-287:testContentTypeParsing_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "53-61:testParsing_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsingEscapedChars_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "321-329:testParsingEscapedChars_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testContentTypeParsing_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "181-183:setLowerCaseNames"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "290-296:testContentTypeParsing_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsingEscapedChars_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "332-342:testParsingEscapedChars_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsingEscapedChars_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "345-356:testParsingEscapedChars_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "432-439:fileUpload199_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "364-368:testFileUpload139_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py\", line 24, in testfileUpload199_test2_decomposed\n    self.assertEqual(\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 845, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 1226, in assertMultiLineEqual\n    self.fail(self._formatMessage(msg, standardMsg))\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 675, in fail\n    raise self.failureException(msg)\nAssertionError: 'If you can read this you understand the example.' != '=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaX[58 chars]==?='\n- If you can read this you understand the example.\n+ =?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?= =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "442-450:fileUpload199_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "371-376:testFileUpload139_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "379-386:testFileUpload139_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "64-73:testParsing_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "389-397:testFileUpload139_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "76-89:testParsing_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "400-410:testFileUpload139_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "92-107:testParsing_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testFileUpload139_test6_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "413-424:testFileUpload139_test6_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test6_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "110-129:testParsing_test6_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test7_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "132-153:testParsing_test7_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test8_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "156-178:testParsing_test8_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test9_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "181-205:testParsing_test9_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test10_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "208-235:testParsing_test10_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testParsing_test11_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "238-266:testParsing_test11_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: B\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 27, in testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "73-78:decodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64Encoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: B\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 40, in testdecodeIso88591Base64Encoded_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "65-70:decodeIso88591Base64Encoded_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeUtf8QuotedPrintableEncoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: Q\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 41, in testdecodeUtf8QuotedPrintableEncoded_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "53-57:decodeUtf8QuotedPrintableEncoded_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 43.55121660232544,
+                    "generation_timestamp": "2024-08-27T11:22:51.213362",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "216-226:javaCharset": {
+                    "start": 216,
+                    "end": 226,
+                    "body": [
+                        "    private static String javaCharset(String charset) {\n",
+                        "        if (charset == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        String mappedCharset = MIME2JAVA.get(charset.toLowerCase(Locale.ENGLISH));\n",
+                        "        if (mappedCharset == null) {\n",
+                        "            return charset;\n",
+                        "        }\n",
+                        "        return mappedCharset;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "javaCharset(String)",
+                    "parameters": [
+                        "charset"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __javaCharset(charset: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __javaCharset(charset: str) -> str:",
+                        "         if charset is None:",
+                        "            return None",
+                        "",
+                        "         mappedCharset = MimeUtility.__MIME2JAVA.get(charset.lower())",
+                        "         if mappedCharset is None:",
+                        "            return charset",
+                        "         return mappedCharset"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 37.903671741485596,
+                    "generation_timestamp": "2024-08-27T10:36:10.609533",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "158-208:decodeWord": {
+                    "start": 158,
+                    "end": 208,
+                    "body": [
+                        "    private static String decodeWord(String word)\n",
+                        "            throws ParseException, UnsupportedEncodingException {\n",
+                        "\n",
+                        "        if (!word.startsWith(ENCODED_TOKEN_MARKER)) {\n",
+                        "            throw new ParseException(\"Invalid RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        int charsetPos = word.indexOf('?', 2);\n",
+                        "        if (charsetPos == -1) {\n",
+                        "            throw new ParseException(\"Missing charset in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String charset = word.substring(2, charsetPos).toLowerCase(Locale.ENGLISH);\n",
+                        "\n",
+                        "        int encodingPos = word.indexOf('?', charsetPos + 1);\n",
+                        "        if (encodingPos == -1) {\n",
+                        "            throw new ParseException(\"Missing encoding in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String encoding = word.substring(charsetPos + 1, encodingPos);\n",
+                        "\n",
+                        "        int encodedTextPos = word.indexOf(ENCODED_TOKEN_FINISHER, encodingPos + 1);\n",
+                        "        if (encodedTextPos == -1) {\n",
+                        "            throw new ParseException(\"Missing encoded text in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String encodedText = word.substring(encodingPos + 1, encodedTextPos);\n",
+                        "\n",
+                        "        if (encodedText.length() == 0) {\n",
+                        "            return \"\";\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            ByteArrayOutputStream out = new ByteArrayOutputStream(encodedText.length());\n",
+                        "\n",
+                        "            byte[] encodedData = encodedText.getBytes(US_ASCII_CHARSET);\n",
+                        "\n",
+                        "            if (encoding.equals(BASE64_ENCODING_MARKER)) {\n",
+                        "                Base64Decoder.decode(encodedData, out);\n",
+                        "            } else if (encoding.equals(\n",
+                        "                    QUOTEDPRINTABLE_ENCODING_MARKER)) { // maybe quoted printable.\n",
+                        "                QuotedPrintableDecoder.decode(encodedData, out);\n",
+                        "            } else {\n",
+                        "                throw new UnsupportedEncodingException(\"Unknown RFC 2047 encoding: \" + encoding);\n",
+                        "            }\n",
+                        "            byte[] decodedData = out.toByteArray();\n",
+                        "            return new String(decodedData, javaCharset(charset));\n",
+                        "        } catch (IOException e) {\n",
+                        "            throw new UnsupportedEncodingException(\"Invalid RFC 2047 encoding\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeWord(String)",
+                    "parameters": [
+                        "word"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.ParseException",
+                            "ParseException",
+                            "32-34:ParseException"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                            "Base64Decoder",
+                            "138-181:decode"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder",
+                            "QuotedPrintableDecoder",
+                            "44-82:decode"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "216-226:javaCharset"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __decodeWord(word: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __decodeWord(word: str) -> str:",
+                        "        ",
+                        "        if not word.startswith(MimeUtility.__ENCODED_TOKEN_MARKER):",
+                        "            raise ParseException(\"Invalid RFC 2047 encoded-word: \" + word)",
+                        "",
+                        "        charsetPos = word.find('?', 2)",
+                        "        if charsetPos == -1:",
+                        "            raise ParseException(\"Missing charset in RFC 2047 encoded-word: \" + word)",
+                        "",
+                        "        charset = word[2:charsetPos].lower()",
+                        "",
+                        "        encodingPos = word.find('?', charsetPos + 1)",
+                        "        if encodingPos == -1:",
+                        "            raise ParseException(\"Missing encoding in RFC 2047 encoded-word: \" + word)",
+                        "",
+                        "        encoding = word[charsetPos + 1:encodingPos]",
+                        "",
+                        "        encodedTextPos = word.find(MimeUtility.__ENCODED_TOKEN_FINISHER, encodingPos + 1)",
+                        "        if encodedTextPos == -1:",
+                        "            raise ParseException(\"Missing encoded text in RFC 2047 encoded-word: \" + word)",
+                        "",
+                        "        encodedText = word[encodingPos + 1:encodedTextPos]",
+                        "",
+                        "        if len(encodedText) == 0:",
+                        "            return \"\"",
+                        "",
+                        "        try:",
+                        "            out = io.BytesIO()",
+                        "",
+                        "            encodedData = encodedText.encode(MimeUtility.__US_ASCII_CHARSET)",
+                        "",
+                        "            if encoding.lower() == MimeUtility.__BASE64_ENCODING_MARKER:",
+                        "                Base64Decoder.decode(encodedData, out)",
+                        "            elif encoding.lower() == MimeUtility.__QUOTEDPRINTABLE_ENCODING_MARKER:",
+                        "                QuotedPrintableDecoder.decode(encodedData, out)",
+                        "            else:",
+                        "                raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)",
+                        "",
+                        "            decodedData = out.getvalue()",
+                        "            return decodedData.decode(MimeUtility.__javaCharset(charset))",
+                        "        except Exception as e:",
+                        "            raise ValueError(\"Invalid RFC 2047 encoding\") from e"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "failed",
+                    "test_execution": {
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeInvalidEncoding_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "81-83:decodeInvalidEncoding_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test1_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "432-439:fileUpload199_test1_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py::ParameterParserTest::testfileUpload199_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/ParameterParserTest.py\", line 24, in testfileUpload199_test2_decomposed\n    self.assertEqual(\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 845, in assertEqual\n    assertion_func(first, second, msg=msg)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 1226, in assertMultiLineEqual\n    self.fail(self._formatMessage(msg, standardMsg))\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 675, in fail\n    raise self.failureException(msg)\nAssertionError: 'If you can read this you understand the example.' != '=?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaX[58 chars]==?='\n- If you can read this you understand the example.\n+ =?ISO-8859-1?B?SWYgeW91IGNhbiByZWFkIHRoaXMgeW8=?= =?ISO-8859-2?B?dSB1bmRlcnN0YW5kIHRoZSBleGFtcGxlLg==?=",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "250-289:parse3"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "233-238:parse2"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "218-223:parse1"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "193-209:parse0"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "55-57:ParameterParser"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "142-161:parseQuotedToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "119-132:parseToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "101-110:isOneOf"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "75-91:getToken"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                                    "class": "ParameterParser",
+                                    "method": "64-66:hasChar"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.ParameterParserTest",
+                                    "class": "ParameterParserTest",
+                                    "method": "442-450:fileUpload199_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: B\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 27, in testdecodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "73-78:decodeIso88591Base64EncodedWithWhiteSpace_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeIso88591Base64Encoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: B\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 40, in testdecodeIso88591Base64Encoded_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "65-70:decodeIso88591Base64Encoded_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py::MimeUtilityTestCase::testdecodeUtf8QuotedPrintableEncoded_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 153, in __decodeWord\n    raise ValueError(\"Unknown RFC 2047 encoding: \" + encoding)\nValueError: Unknown RFC 2047 encoding: Q\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/test/org/apache/commons/fileupload/util/mime/MimeUtilityTestCase.py\", line 41, in testdecodeUtf8QuotedPrintableEncoded_test0_decomposed\n    self.assertEqual(expected, MimeUtility.decodeText(encoded))\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 83, in decodeText\n    decodedWord = MimeUtility.__decodeWord(word)\n  File \"/home/ali/Documents/graal_alphatrans/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-fileupload/src/main/org/apache/commons/fileupload/util/mime/MimeUtility.py\", line 158, in __decodeWord\n    raise ValueError(\"Invalid RFC 2047 encoding\") from e\nValueError: Invalid RFC 2047 encoding",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "79-145:decodeText"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                                    "class": "MimeUtility",
+                                    "method": "158-208:decodeWord"
+                                },
+                                {
+                                    "file": "commons-fileupload.src.test.org.apache.commons.fileupload.util.mime.MimeUtilityTestCase",
+                                    "class": "MimeUtilityTestCase",
+                                    "method": "53-57:decodeUtf8QuotedPrintableEncoded_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 68.37044835090637,
+                    "generation_timestamp": "2024-08-27T12:04:18.840686",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -2,
+                        "test_execution": -2
+                    }
+                },
+                "68-68:MimeUtility": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private MimeUtility() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MimeUtility()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 17.2555992603302,
+                    "generation_timestamp": "2024-08-27T10:36:27.872725",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "52-52:MIME2JAVA": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final Map<String, String> MIME2JAVA = new HashMap<String, String>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MIME2JAVA: typing.Dict[str, str] = {}",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MIME2JAVA: typing.Dict[str, str] = {}",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-27T10:22:11.436264",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "49-49:LINEAR_WHITESPACE": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private static final String LINEAR_WHITESPACE = \" \\t\\r\\n\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LINEAR_WHITESPACE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LINEAR_WHITESPACE: str = \" \\t\\r\\n\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.268087387084961,
+                    "generation_timestamp": "2024-08-27T10:22:18.708989",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "46-46:ENCODED_TOKEN_FINISHER": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final String ENCODED_TOKEN_FINISHER = \"?=\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ENCODED_TOKEN_FINISHER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ENCODED_TOKEN_FINISHER: str = \"?=\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.396183490753174,
+                    "generation_timestamp": "2024-08-27T10:22:26.111893",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "43-43:ENCODED_TOKEN_MARKER": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final String ENCODED_TOKEN_MARKER = \"=?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ENCODED_TOKEN_MARKER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ENCODED_TOKEN_MARKER: str = \"=?\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.206174373626709,
+                    "generation_timestamp": "2024-08-27T10:22:33.327486",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "40-40:QUOTEDPRINTABLE_ENCODING_MARKER": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final String QUOTEDPRINTABLE_ENCODING_MARKER = \"Q\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __QUOTEDPRINTABLE_ENCODING_MARKER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __QUOTEDPRINTABLE_ENCODING_MARKER: str = \"Q\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.440650224685669,
+                    "generation_timestamp": "2024-08-27T10:22:40.780597",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "37-37:BASE64_ENCODING_MARKER": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final String BASE64_ENCODING_MARKER = \"B\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BASE64_ENCODING_MARKER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BASE64_ENCODING_MARKER: str = \"B\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.116369247436523,
+                    "generation_timestamp": "2024-08-27T10:22:47.910250",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "34-34:US_ASCII_CHARSET": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final String US_ASCII_CHARSET = \"US-ASCII\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __US_ASCII_CHARSET: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __US_ASCII_CHARSET: str = \"US-ASCII\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.09906530380249,
+                    "generation_timestamp": "2024-08-27T10:22:55.022081",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "static_initializers": {
+                "54-65:run_static_init": {
+                    "start": 54,
+                    "end": 65,
+                    "body": [
+                        "    static {\n",
+                        "        MIME2JAVA.put(\"iso-2022-cn\", \"ISO2022CN\");\n",
+                        "        MIME2JAVA.put(\"iso-2022-kr\", \"ISO2022KR\");\n",
+                        "        MIME2JAVA.put(\"utf-8\", \"UTF8\");\n",
+                        "        MIME2JAVA.put(\"utf8\", \"UTF8\");\n",
+                        "        MIME2JAVA.put(\"ja_jp.iso2022-7\", \"ISO2022JP\");\n",
+                        "        MIME2JAVA.put(\"ja_jp.eucjp\", \"EUCJIS\");\n",
+                        "        MIME2JAVA.put(\"euc-kr\", \"KSC5601\");\n",
+                        "        MIME2JAVA.put(\"euckr\", \"KSC5601\");\n",
+                        "        MIME2JAVA.put(\"us-ascii\", \"ISO-8859-1\");\n",
+                        "        MIME2JAVA.put(\"x-us-ascii\", \"ISO-8859-1\");\n",
+                        "    }\n"
+                    ],
+                    "partial_translation": [],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def run_static_init():",
+                        "         MimeUtility.__MIME2JAVA = {",
+                        "            \"iso-2022-cn\": \"ISO2022CN\",",
+                        "            \"iso-2022-kr\": \"ISO2022KR\",",
+                        "            \"utf-8\": \"UTF8\",",
+                        "            \"utf8\": \"UTF8\",",
+                        "            \"ja_jp.iso2022-7\": \"ISO2022JP\",",
+                        "            \"ja_jp.eucjp\": \"EUCJIS\",",
+                        "            \"euc-kr\": \"KSC5601\",",
+                        "            \"euckr\": \"KSC5601\",",
+                        "            \"us-ascii\": \"ISO-8859-1\",",
+                        "            \"x-us-ascii\": \"ISO-8859-1\"",
+                        "        }"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.424657821655273,
+                    "generation_timestamp": "2024-08-27T10:23:07.459632",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class MimeUtility:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.fileupload.util.mime.Base64Decoder import *",
+        "from src.main.org.apache.commons.fileupload.util.mime.ParseException import *",
+        "from src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder import *"
+    ]
+}
