@@ -865,7 +865,7 @@ class CompositionalTest:
         
         # no support for non-static nested classes
         if 'static' not in class_declaration and class_data['nested_inside']:
-            raise NotImplementedError("Static nested classes are not supported.")
+            raise NotImplementedError("Non-static nested classes are not supported.")
 
     @staticmethod
     def __check_if_supported_method(method_data: dict):
