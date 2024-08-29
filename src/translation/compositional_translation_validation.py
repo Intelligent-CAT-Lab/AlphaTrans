@@ -7,6 +7,7 @@ import time
 import re
 import math
 import datetime
+from src.compositional_glue_tests.script import NOT_EXERCISED, SUCCESS, ERROR, FAILURE
 from syntactic_validation import syntactic_validation
 from field_exercise_validation import field_exercise_validation
 from test_validation import test_validation
@@ -427,21 +428,17 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
         current_budget = 'graal'
         graal_status = 'pending'
         if args.validate_by_graal and 'src.main' in fragment['schema_name']:
-            status, feedback = graal_validation(generation, fragment, args)
+            status, feedback, message = graal_validation(generation, fragment, args)
+            update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation={'outcome': status, 'message': message}, test_execution='pending', elapsed_time=time.time() - start_time)
+            update_budget(fragment, args, budget, type_='final')
 
-            if status == 'not-exercised':
-                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='not-exercised', test_execution='pending', elapsed_time=time.time() - start_time)
-                update_budget(fragment, args, budget, type_='final')
+            if status == NOT_EXERCISED:
                 graal_status = 'not-exercised'
 
-            elif status == 'error':
-                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='error', test_execution='pending', elapsed_time=time.time() - start_time)
-                update_budget(fragment, args, budget, type_='final')
+            elif status == ERROR:
                 graal_status = 'error'
 
-            elif status == 'failure':
-                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation={'graal_outcome': 'failed', 'feedback': feedback}, test_execution='pending', elapsed_time=time.time() - start_time)
-                update_budget(fragment, args, budget, type_='final')
+            elif status == FAILURE:
                 graal_status = 'failed'
                 
                 if args.debug:
@@ -450,9 +447,7 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
                 budget[current_budget] -= 1
                 continue
             
-            elif status == 'success':
-                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='success', test_execution='pending', elapsed_time=time.time() - start_time)
-                update_budget(fragment, args, budget, type_='final')
+            elif status == SUCCESS:
                 graal_status = 'success'
         ############################ </GRAAL VALIDATION> ############################
 
