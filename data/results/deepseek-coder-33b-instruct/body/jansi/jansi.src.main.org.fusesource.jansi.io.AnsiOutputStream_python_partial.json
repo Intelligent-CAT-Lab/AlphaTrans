@@ -1,0 +1,3353 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/io/AnsiOutputStream.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import OutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "18-18:import FilterOutputStream": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.FilterOutputStream;\n"
+            ]
+        },
+        "21-21:import Charset": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "22-22:import ArrayList": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "24-24:import AnsiColors": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.fusesource.jansi.AnsiColors;\n"
+            ]
+        },
+        "25-25:import AnsiMode": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.fusesource.jansi.AnsiMode;\n"
+            ]
+        },
+        "26-26:import AnsiType": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.fusesource.jansi.AnsiType;\n"
+            ]
+        },
+        "28-28:import static StandardCharsets.US_ASCII": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import static java.nio.charset.StandardCharsets.US_ASCII;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AnsiOutputStream": {
+            "start": 41,
+            "end": 41,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "ZeroWidthSupplier",
+                "IoRunnable",
+                "WidthSupplier"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "355-358:close": {
+                    "start": 355,
+                    "end": 358,
+                    "body": [
+                        "    public void close() throws IOException {\n",
+                        "        uninstall();\n",
+                        "        super.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "343-352:uninstall"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def close(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def close(self) -> None:",
+                        "         self.uninstall()",
+                        "         super().close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 33.370015382766724,
+                    "generation_timestamp": "2024-08-28T23:45:14.743023",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "157-293:write": {
+                    "start": 157,
+                    "end": 293,
+                    "body": [
+                        "    public void write(int data) throws IOException {\n",
+                        "        switch (state) {\n",
+                        "            case LOOKING_FOR_FIRST_ESC_CHAR:\n",
+                        "                if (data == FIRST_ESC_CHAR) {\n",
+                        "                    buffer[pos++] = (byte) data;\n",
+                        "                    state = LOOKING_FOR_SECOND_ESC_CHAR;\n",
+                        "                } else {\n",
+                        "                    out.write(data);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_SECOND_ESC_CHAR:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if (data == SECOND_ESC_CHAR) {\n",
+                        "                    state = LOOKING_FOR_NEXT_ARG;\n",
+                        "                } else if (data == SECOND_OSC_CHAR) {\n",
+                        "                    state = LOOKING_FOR_OSC_COMMAND;\n",
+                        "                } else if (data == SECOND_CHARSET0_CHAR) {\n",
+                        "                    options.add(0);\n",
+                        "                    state = LOOKING_FOR_CHARSET;\n",
+                        "                } else if (data == SECOND_CHARSET1_CHAR) {\n",
+                        "                    options.add(1);\n",
+                        "                    state = LOOKING_FOR_CHARSET;\n",
+                        "                } else {\n",
+                        "                    reset(false);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_NEXT_ARG:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if ('\"' == data) {\n",
+                        "                    startOfValue = pos - 1;\n",
+                        "                    state = LOOKING_FOR_STR_ARG_END;\n",
+                        "                } else if ('0' <= data && data <= '9') {\n",
+                        "                    startOfValue = pos - 1;\n",
+                        "                    state = LOOKING_FOR_INT_ARG_END;\n",
+                        "                } else if (';' == data) {\n",
+                        "                    options.add(null);\n",
+                        "                } else if ('?' == data) {\n",
+                        "                    options.add('?');\n",
+                        "                } else if ('=' == data) {\n",
+                        "                    options.add('=');\n",
+                        "                } else {\n",
+                        "                    processEscapeCommand(data);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "            default:\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_INT_ARG_END:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if (!('0' <= data && data <= '9')) {\n",
+                        "                    String strValue = new String(buffer, startOfValue, (pos - 1) - startOfValue);\n",
+                        "                    Integer value = Integer.valueOf(strValue);\n",
+                        "                    options.add(value);\n",
+                        "                    if (data == ';') {\n",
+                        "                        state = LOOKING_FOR_NEXT_ARG;\n",
+                        "                    } else {\n",
+                        "                        processEscapeCommand(data);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_STR_ARG_END:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if ('\"' != data) {\n",
+                        "                    String value = new String(buffer, startOfValue, (pos - 1) - startOfValue, cs);\n",
+                        "                    options.add(value);\n",
+                        "                    if (data == ';') {\n",
+                        "                        state = LOOKING_FOR_NEXT_ARG;\n",
+                        "                    } else {\n",
+                        "                        processEscapeCommand(data);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_OSC_COMMAND:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if ('0' <= data && data <= '9') {\n",
+                        "                    startOfValue = pos - 1;\n",
+                        "                    state = LOOKING_FOR_OSC_COMMAND_END;\n",
+                        "                } else {\n",
+                        "                    reset(false);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_OSC_COMMAND_END:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if (';' == data) {\n",
+                        "                    String strValue = new String(buffer, startOfValue, (pos - 1) - startOfValue);\n",
+                        "                    Integer value = Integer.valueOf(strValue);\n",
+                        "                    options.add(value);\n",
+                        "                    startOfValue = pos;\n",
+                        "                    state = LOOKING_FOR_OSC_PARAM;\n",
+                        "                } else if ('0' <= data && data <= '9') {\n",
+                        "                    // already pushed digit to buffer, just keep looking\n",
+                        "                } else {\n",
+                        "                    // oops, did not expect this\n",
+                        "                    reset(false);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_OSC_PARAM:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if (BEL == data) {\n",
+                        "                    String value = new String(buffer, startOfValue, (pos - 1) - startOfValue, cs);\n",
+                        "                    options.add(value);\n",
+                        "                    processOperatingSystemCommand();\n",
+                        "                } else if (FIRST_ESC_CHAR == data) {\n",
+                        "                    state = LOOKING_FOR_ST;\n",
+                        "                } else {\n",
+                        "                    // just keep looking while adding text\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_ST:\n",
+                        "                buffer[pos++] = (byte) data;\n",
+                        "                if (SECOND_ST_CHAR == data) {\n",
+                        "                    String value = new String(buffer, startOfValue, (pos - 2) - startOfValue, cs);\n",
+                        "                    options.add(value);\n",
+                        "                    processOperatingSystemCommand();\n",
+                        "                } else {\n",
+                        "                    state = LOOKING_FOR_OSC_PARAM;\n",
+                        "                }\n",
+                        "                break;\n",
+                        "\n",
+                        "            case LOOKING_FOR_CHARSET:\n",
+                        "                options.add((char) data);\n",
+                        "                processCharsetSelect();\n",
+                        "                break;\n",
+                        "        }\n",
+                        "\n",
+                        "        // Is it just too long?\n",
+                        "        if (pos >= buffer.length) {\n",
+                        "            reset(false);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write(int)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "327-335:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "313-320:processEscapeCommand"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "304-311:processOperatingSystemCommand"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "295-302:processCharsetSelect"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def write(self, data: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def write(self, data: int) -> None:",
+                        "        ",
+                        "        if self.__state == self.__LOOKING_FOR_FIRST_ESC_CHAR:",
+                        "            if data == self.__FIRST_ESC_CHAR:",
+                        "                self.__buffer[self.__pos] = data",
+                        "                self.__pos += 1",
+                        "                self.__state = self.__LOOKING_FOR_SECOND_ESC_CHAR",
+                        "            else:",
+                        "                self._os.write(bytes([data]))",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_SECOND_ESC_CHAR:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data == self.__SECOND_ESC_CHAR:",
+                        "                self.__state = self.__LOOKING_FOR_NEXT_ARG",
+                        "            elif data == self.__SECOND_OSC_CHAR:",
+                        "                self.__state = self.__LOOKING_FOR_OSC_COMMAND",
+                        "            elif data == self.__SECOND_CHARSET0_CHAR:",
+                        "                self.__options.append(0)",
+                        "                self.__state = self.__LOOKING_FOR_CHARSET",
+                        "            elif data == self.__SECOND_CHARSET1_CHAR:",
+                        "                self.__options.append(1)",
+                        "                self.__state = self.__LOOKING_FOR_CHARSET",
+                        "            else:",
+                        "                self.__reset(False)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_NEXT_ARG:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data == ord('\"'):",
+                        "                self.__startOfValue = self.__pos - 1",
+                        "                self.__state = self.__LOOKING_FOR_STR_ARG_END",
+                        "            elif '0' <= chr(data) <= '9':",
+                        "                self.__startOfValue = self.__pos - 1",
+                        "                self.__state = self.__LOOKING_FOR_INT_ARG_END",
+                        "            elif data == ord(';'):",
+                        "                self.__options.append(None)",
+                        "            elif data == ord('?'):",
+                        "                self.__options.append('?')",
+                        "            elif data == ord('='):",
+                        "                self.__options.append('=')",
+                        "            else:",
+                        "                self.__processEscapeCommand(data)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_INT_ARG_END:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if not ('0' <= chr(data) <= '9'):",
+                        "                str_value = self.__buffer[self.__startOfValue:self.__pos - 1].decode(self.__cs)",
+                        "                value = int(str_value)",
+                        "                self.__options.append(value)",
+                        "                if data == ord(';'):",
+                        "                    self.__state = self.__LOOKING_FOR_NEXT_ARG",
+                        "                else:",
+                        "                    self.__processEscapeCommand(data)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_STR_ARG_END:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data != ord('\"'):",
+                        "                value = self.__buffer[self.__startOfValue:self.__pos - 1].decode(self.__cs)",
+                        "                self.__options.append(value)",
+                        "                if data == ord(';'):",
+                        "                    self.__state = self.__LOOKING_FOR_NEXT_ARG",
+                        "                else:",
+                        "                    self.__processEscapeCommand(data)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_OSC_COMMAND:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if '0' <= chr(data) <= '9':",
+                        "                self.__startOfValue = self.__pos - 1",
+                        "                self.__state = self.__LOOKING_FOR_OSC_COMMAND_END",
+                        "            else:",
+                        "                self.__reset(False)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_OSC_COMMAND_END:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data == ord(';'):",
+                        "                str_value = self.__buffer[self.__startOfValue:self.__pos - 1].decode(self.__cs)",
+                        "                value = int(str_value)",
+                        "                self.__options.append(value)",
+                        "                self.__startOfValue = self.__pos",
+                        "                self.__state = self.__LOOKING_FOR_OSC_PARAM",
+                        "            elif '0' <= chr(data) <= '9':",
+                        "                # already pushed digit to buffer, just keep looking",
+                        "                pass",
+                        "            else:",
+                        "                # oops, did not expect this",
+                        "                self.__reset(False)",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_OSC_PARAM:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data == self.__BEL:",
+                        "                value = self.__buffer[self.__startOfValue:self.__pos - 1].decode(self.__cs)",
+                        "                self.__options.append(value)",
+                        "                self.__processOperatingSystemCommand()",
+                        "            elif data == self.__FIRST_ESC_CHAR:",
+                        "                self.__state = self.__LOOKING_FOR_ST",
+                        "            else:",
+                        "                # just keep looking while adding text",
+                        "                pass",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_ST:",
+                        "            self.__buffer[self.__pos] = data",
+                        "            self.__pos += 1",
+                        "            if data == self.__SECOND_ST_CHAR:",
+                        "                value = self.__buffer[self.__startOfValue:self.__pos - 2].decode(self.__cs)",
+                        "                self.__options.append(value)",
+                        "                self.__processOperatingSystemCommand()",
+                        "            else:",
+                        "                self.__state = self.__LOOKING_FOR_OSC_PARAM",
+                        "",
+                        "        elif self.__state == self.__LOOKING_FOR_CHARSET:",
+                        "            self.__options.append(chr(data))",
+                        "            self.__processCharsetSelect()",
+                        "",
+                        "        # Is it just too long?",
+                        "        if self.__pos >= len(self.__buffer):",
+                        "            self.__reset(False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\norg.fusesource.jansi.io.AnsiOutputStreamTest.canHandleSgrsWithMultipleOptions_test1_decomposed: java.lang.ClassCastException\norg.fusesource.jansi.io.AnsiOutputStreamTest.canHandleSgrsWithMultipleOptions_test2_decomposed: java.lang.ClassCastException\n"
+                    },
+                    "test_execution": {
+                        "jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py::AnsiOutputStreamTest::testcanHandleSgrsWithMultipleOptions_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py\", line 59, in testcanHandleSgrsWithMultipleOptions_test1_decomposed\n    ansiOutput.write(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/main/org/fusesource/jansi/io/AnsiOutputStream.py\", line 227, in write\n    if self.__pos >= len(self.__buffer):\nAttributeError: 'AnsiOutputStream' object has no attribute '_AnsiOutputStream__buffer'. Did you mean: '_AnsiOutputStream__BEL'?",
+                            "covered_methods": [
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "157-293:write"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "138-143:setMode"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "99-120:AnsiOutputStream"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                                    "class": "AnsiProcessor",
+                                    "method": "37-39:AnsiProcessor"
+                                },
+                                {
+                                    "file": "jansi.src.test.org.fusesource.jansi.io.AnsiOutputStreamTest",
+                                    "class": "AnsiOutputStreamTest",
+                                    "method": "48-63:canHandleSgrsWithMultipleOptions_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 221.66073846817017,
+                    "generation_timestamp": "2024-08-28T23:24:59.845371",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "343-352:uninstall": {
+                    "start": 343,
+                    "end": 352,
+                    "body": [
+                        "    public void uninstall() throws IOException {\n",
+                        "        if (resetAtUninstall && type != AnsiType.Redirected && type != AnsiType.Unsupported) {\n",
+                        "            setMode(AnsiMode.Default);\n",
+                        "            write(RESET_CODE);\n",
+                        "            flush();\n",
+                        "        }\n",
+                        "        if (uninstaller != null) {\n",
+                        "            uninstaller.run();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uninstall()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "138-143:setMode"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "IoRunnable",
+                            "47-47:run"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uninstall(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uninstall(self) -> None:",
+                        "         if self.__resetAtUninstall and self.__type != AnsiType.Redirected and self.__type != AnsiType.Unsupported:",
+                        "             self.setMode(AnsiMode.Default)",
+                        "             self.write(self.RESET_CODE)",
+                        "             self.flush()",
+                        "         if self.__uninstaller is not None:",
+                        "             self.__uninstaller.run()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 54.14444828033447,
+                    "generation_timestamp": "2024-08-28T23:44:11.635931",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "337-341:install": {
+                    "start": 337,
+                    "end": 341,
+                    "body": [
+                        "    public void install() throws IOException {\n",
+                        "        if (installer != null) {\n",
+                        "            installer.run();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "install()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "IoRunnable",
+                            "47-47:run"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def install(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def install(self) -> None:",
+                        "         if self.__installer is not None:",
+                        "             self.__installer.run()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 32.21913933753967,
+                    "generation_timestamp": "2024-08-28T23:26:53.084093",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "149-151:setResetAtUninstall": {
+                    "start": 149,
+                    "end": 151,
+                    "body": [
+                        "    public void setResetAtUninstall(boolean resetAtUninstall) {\n",
+                        "        this.resetAtUninstall = resetAtUninstall;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setResetAtUninstall(boolean)",
+                    "parameters": [
+                        "resetAtUninstall"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setResetAtUninstall(self, resetAtUninstall: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setResetAtUninstall(self, resetAtUninstall: bool) -> None:",
+                        "         self.__resetAtUninstall = resetAtUninstall"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 39.85743498802185,
+                    "generation_timestamp": "2024-08-28T23:14:30.379484",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "145-147:isResetAtUninstall": {
+                    "start": 145,
+                    "end": 147,
+                    "body": [
+                        "    public boolean isResetAtUninstall() {\n",
+                        "        return resetAtUninstall;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isResetAtUninstall()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isResetAtUninstall(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isResetAtUninstall(self) -> bool:",
+                        "         return self.__resetAtUninstall"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 33.877567768096924,
+                    "generation_timestamp": "2024-08-28T23:15:04.290562",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-143:setMode": {
+                    "start": 138,
+                    "end": 143,
+                    "body": [
+                        "    public void setMode(AnsiMode mode) {\n",
+                        "        ap = mode == AnsiMode.Strip\n",
+                        "                ? new AnsiProcessor(out)\n",
+                        "                : mode == AnsiMode.Force || processor == null ? new ColorsAnsiProcessor(out, colors) : processor;\n",
+                        "        this.mode = mode;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setMode(AnsiMode)",
+                    "parameters": [
+                        "mode"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "37-39:AnsiProcessor"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.ColorsAnsiProcessor",
+                            "ColorsAnsiProcessor",
+                            "32-35:ColorsAnsiProcessor"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setMode(self, mode: AnsiMode) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setMode(self, mode: AnsiMode) -> None:",
+                        "         if mode == AnsiMode.Strip:",
+                        "             self.__ap = AnsiProcessor(self.__os)",
+                        "         elif mode == AnsiMode.Force or self.__processor is None:",
+                        "             self.__ap = ColorsAnsiProcessor(self.__os, self.__colors)",
+                        "         else:",
+                        "             self.__ap = self.__processor",
+                        "         self.__mode = mode"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\norg.fusesource.jansi.io.AnsiOutputStreamTest.canHandleSgrsWithMultipleOptions_test0_decomposed: org.graalvm.polyglot.PolyglotException\norg.fusesource.jansi.io.AnsiOutputStreamTest.canHandleSgrsWithMultipleOptions_test1_decomposed: org.graalvm.polyglot.PolyglotException\norg.fusesource.jansi.io.AnsiOutputStreamTest.canHandleSgrsWithMultipleOptions_test2_decomposed: org.graalvm.polyglot.PolyglotException\n"
+                    },
+                    "test_execution": {
+                        "jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py::AnsiOutputStreamTest::testcanHandleSgrsWithMultipleOptions_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "138-143:setMode"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "99-120:AnsiOutputStream"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                                    "class": "AnsiProcessor",
+                                    "method": "37-39:AnsiProcessor"
+                                },
+                                {
+                                    "file": "jansi.src.test.org.fusesource.jansi.io.AnsiOutputStreamTest",
+                                    "class": "AnsiOutputStreamTest",
+                                    "method": "32-45:canHandleSgrsWithMultipleOptions_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py::AnsiOutputStreamTest::testcanHandleSgrsWithMultipleOptions_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py\", line 59, in testcanHandleSgrsWithMultipleOptions_test1_decomposed\n    ansiOutput.write(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/main/org/fusesource/jansi/io/AnsiOutputStream.py\", line 227, in write\n    if self.__pos >= len(self.__buffer):\nAttributeError: 'AnsiOutputStream' object has no attribute '_AnsiOutputStream__buffer'. Did you mean: '_AnsiOutputStream__BEL'?",
+                            "covered_methods": [
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "157-293:write"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "138-143:setMode"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "99-120:AnsiOutputStream"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                                    "class": "AnsiProcessor",
+                                    "method": "37-39:AnsiProcessor"
+                                },
+                                {
+                                    "file": "jansi.src.test.org.fusesource.jansi.io.AnsiOutputStreamTest",
+                                    "class": "AnsiOutputStreamTest",
+                                    "method": "48-63:canHandleSgrsWithMultipleOptions_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 83.40244197845459,
+                    "generation_timestamp": "2024-08-28T23:40:31.330636",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 0,
+                        "test_execution": 0
+                    }
+                },
+                "134-136:getMode": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "    public AnsiMode getMode() {\n",
+                        "        return mode;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "AnsiMode",
+                            "AnsiMode"
+                        ]
+                    ],
+                    "signature": "getMode()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getMode(self) -> AnsiMode:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getMode(self) -> AnsiMode:",
+                        "         return self.__mode"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 44.07074785232544,
+                    "generation_timestamp": "2024-08-28T23:15:48.407414",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "130-132:getColors": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "    public AnsiColors getColors() {\n",
+                        "        return colors;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "AnsiColors",
+                            "AnsiColors"
+                        ]
+                    ],
+                    "signature": "getColors()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getColors(self) -> AnsiColors:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getColors(self) -> AnsiColors:",
+                        "         return self.__colors"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 31.619632720947266,
+                    "generation_timestamp": "2024-08-28T23:16:20.134454",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "126-128:getType": {
+                    "start": 126,
+                    "end": 128,
+                    "body": [
+                        "    public AnsiType getType() {\n",
+                        "        return type;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "AnsiType",
+                            "AnsiType"
+                        ]
+                    ],
+                    "signature": "getType()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getType(self) -> AnsiType:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getType(self) -> AnsiType:",
+                        "         return self.__type"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 45.12614607810974,
+                    "generation_timestamp": "2024-08-28T23:17:05.294433",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "122-124:getTerminalWidth": {
+                    "start": 122,
+                    "end": 124,
+                    "body": [
+                        "    public int getTerminalWidth() {\n",
+                        "        return width.getTerminalWidth();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getTerminalWidth()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "WidthSupplier",
+                            "52-52:getTerminalWidth"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getTerminalWidth(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getTerminalWidth(self) -> int:",
+                        "        ",
+                        "        # Get the terminal size",
+                        "        terminal_size = os.get_terminal_size()",
+                        "",
+                        "        # Return the width",
+                        "        return terminal_size.columns"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 39.20783710479736,
+                    "generation_timestamp": "2024-08-28T23:28:15.949489",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "99-120:AnsiOutputStream": {
+                    "start": 99,
+                    "end": 120,
+                    "body": [
+                        "    public AnsiOutputStream(\n",
+                        "            OutputStream os,\n",
+                        "            WidthSupplier width,\n",
+                        "            AnsiMode mode,\n",
+                        "            AnsiProcessor processor,\n",
+                        "            AnsiType type,\n",
+                        "            AnsiColors colors,\n",
+                        "            Charset cs,\n",
+                        "            IoRunnable installer,\n",
+                        "            IoRunnable uninstaller,\n",
+                        "            boolean resetAtUninstall) {\n",
+                        "        super(os);\n",
+                        "        this.width = width;\n",
+                        "        this.processor = processor;\n",
+                        "        this.type = type;\n",
+                        "        this.colors = colors;\n",
+                        "        this.installer = installer;\n",
+                        "        this.uninstaller = uninstaller;\n",
+                        "        this.resetAtUninstall = resetAtUninstall;\n",
+                        "        this.cs = cs;\n",
+                        "        setMode(mode);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AnsiOutputStream(OutputStream, WidthSupplier, AnsiMode, AnsiProcessor, AnsiType, AnsiColors, Charset, IoRunnable, IoRunnable, boolean)",
+                    "parameters": [
+                        "os",
+                        "width",
+                        "mode",
+                        "processor",
+                        "type",
+                        "colors",
+                        "cs",
+                        "installer",
+                        "uninstaller",
+                        "resetAtUninstall"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "138-143:setMode"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter], width: AnsiOutputStream.WidthSupplier, mode: AnsiMode, processor: AnsiProcessor, type_: AnsiType, colors: AnsiColors, cs: str, installer: AnsiOutputStream.IoRunnable, uninstaller: AnsiOutputStream.IoRunnable, resetAtUninstall: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter], width: AnsiOutputStream.WidthSupplier, mode: AnsiMode, processor: AnsiProcessor, type_: AnsiType, colors: AnsiColors, cs: str, installer: AnsiOutputStream.IoRunnable, uninstaller: AnsiOutputStream.IoRunnable, resetAtUninstall: bool) -> None:",
+                        "        ",
+                        "        self.__os = os",
+                        "        self.__width = width",
+                        "        self.__processor = processor",
+                        "        self.__type = type_",
+                        "        self.__colors = colors",
+                        "        self.__installer = installer",
+                        "        self.__uninstaller = uninstaller",
+                        "        self.__resetAtUninstall = resetAtUninstall",
+                        "        self.__cs = cs",
+                        "        self.setMode(mode)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py::AnsiOutputStreamTest::testcanHandleSgrsWithMultipleOptions_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "138-143:setMode"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "99-120:AnsiOutputStream"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                                    "class": "AnsiProcessor",
+                                    "method": "37-39:AnsiProcessor"
+                                },
+                                {
+                                    "file": "jansi.src.test.org.fusesource.jansi.io.AnsiOutputStreamTest",
+                                    "class": "AnsiOutputStreamTest",
+                                    "method": "32-45:canHandleSgrsWithMultipleOptions_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py::AnsiOutputStreamTest::testcanHandleSgrsWithMultipleOptions_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/test/org/fusesource/jansi/io/AnsiOutputStreamTest.py\", line 59, in testcanHandleSgrsWithMultipleOptions_test1_decomposed\n    ansiOutput.write(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/jansi/src/main/org/fusesource/jansi/io/AnsiOutputStream.py\", line 227, in write\n    if self.__pos >= len(self.__buffer):\nAttributeError: 'AnsiOutputStream' object has no attribute '_AnsiOutputStream__buffer'. Did you mean: '_AnsiOutputStream__BEL'?",
+                            "covered_methods": [
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "157-293:write"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "138-143:setMode"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                                    "class": "AnsiOutputStream",
+                                    "method": "99-120:AnsiOutputStream"
+                                },
+                                {
+                                    "file": "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                                    "class": "AnsiProcessor",
+                                    "method": "37-39:AnsiProcessor"
+                                },
+                                {
+                                    "file": "jansi.src.test.org.fusesource.jansi.io.AnsiOutputStreamTest",
+                                    "class": "AnsiOutputStreamTest",
+                                    "method": "48-63:canHandleSgrsWithMultipleOptions_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 54.44681000709534,
+                    "generation_timestamp": "2024-08-28T23:41:25.799889",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -1,
+                        "test_execution": 0
+                    }
+                },
+                "327-335:reset": {
+                    "start": 327,
+                    "end": 335,
+                    "body": [
+                        "    private void reset(boolean skipBuffer) throws IOException {\n",
+                        "        if (!skipBuffer) {\n",
+                        "            out.write(buffer, 0, pos);\n",
+                        "        }\n",
+                        "        pos = 0;\n",
+                        "        startOfValue = 0;\n",
+                        "        options.clear();\n",
+                        "        state = LOOKING_FOR_FIRST_ESC_CHAR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "reset(boolean)",
+                    "parameters": [
+                        "skipBuffer"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __reset(self, skipBuffer: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __reset(self, skipBuffer: bool) -> None:",
+                        "        ",
+                        "        if not skipBuffer:",
+                        "            self._os.write(self.__buffer[0:self.__pos])",
+                        "        ",
+                        "        self.__pos = 0",
+                        "        self.__startOfValue = 0",
+                        "        self.__options.clear()",
+                        "        self.__state = self.__LOOKING_FOR_FIRST_ESC_CHAR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 80.61570835113525,
+                    "generation_timestamp": "2024-08-28T23:18:25.989109",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "313-320:processEscapeCommand": {
+                    "start": 313,
+                    "end": 320,
+                    "body": [
+                        "    private void processEscapeCommand(int data) throws IOException {\n",
+                        "        try {\n",
+                        "            reset(ap != null && ap.processEscapeCommand(options, data));\n",
+                        "        } catch (RuntimeException e) {\n",
+                        "            reset(true);\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processEscapeCommand(int)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "327-335:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "57-197:processEscapeCommand"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __processEscapeCommand(self, data: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __processEscapeCommand(self, data: int) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__reset(self.__ap is not None and self.__ap._processEscapeCommand(self.__options, data))",
+                        "        except RuntimeError as e:",
+                        "            self.__reset(True)",
+                        "            raise e"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 77.85654330253601,
+                    "generation_timestamp": "2024-08-28T23:19:43.910333",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "304-311:processOperatingSystemCommand": {
+                    "start": 304,
+                    "end": 311,
+                    "body": [
+                        "    private void processOperatingSystemCommand() throws IOException {\n",
+                        "        try {\n",
+                        "            reset(ap != null && ap.processOperatingSystemCommand(options));\n",
+                        "        } catch (RuntimeException e) {\n",
+                        "            reset(true);\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processOperatingSystemCommand()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "327-335:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "202-227:processOperatingSystemCommand"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __processOperatingSystemCommand(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __processOperatingSystemCommand(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__reset(self.__ap is not None and self.__ap._processOperatingSystemCommand(self.__options))",
+                        "        except RuntimeError as e:",
+                        "            self.__reset(True)",
+                        "            raise e"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 54.487809896469116,
+                    "generation_timestamp": "2024-08-28T23:20:38.441870",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "295-302:processCharsetSelect": {
+                    "start": 295,
+                    "end": 302,
+                    "body": [
+                        "    private void processCharsetSelect() throws IOException {\n",
+                        "        try {\n",
+                        "            reset(ap != null && ap.processCharsetSelect0(options));\n",
+                        "        } catch (RuntimeException e) {\n",
+                        "            reset(true);\n",
+                        "            throw e;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processCharsetSelect()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiOutputStream",
+                            "AnsiOutputStream",
+                            "327-335:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "234-239:processCharsetSelect0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __processCharsetSelect(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __processCharsetSelect(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            self.__reset(self.__ap is not None and self.__ap._processCharsetSelect0(self.__options))",
+                        "        except RuntimeError as e:",
+                        "            self.__reset(True)",
+                        "            raise e"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 39.66559052467346,
+                    "generation_timestamp": "2024-08-28T23:21:18.144090",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "43-43:RESET_CODE": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    public static final byte[] RESET_CODE = \"\\033[0m\".getBytes(US_ASCII);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    RESET_CODE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    RESET_CODE: typing.List[int] = [0x1b, 0x5b, 0x30, 0x6d]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.020484447479248,
+                    "generation_timestamp": "2024-08-28T22:01:53.255640",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "97-97:resetAtUninstall": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    private boolean resetAtUninstall;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __resetAtUninstall: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __resetAtUninstall: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.276795",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "96-96:mode": {
+                    "start": 96,
+                    "end": 96,
+                    "body": [
+                        "    private AnsiMode mode;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiMode",
+                            "AnsiMode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __mode: AnsiMode = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __mode: AnsiMode = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.293916",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "95-95:uninstaller": {
+                    "start": 95,
+                    "end": 95,
+                    "body": [
+                        "    private final IoRunnable uninstaller;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "IoRunnable",
+                            "IoRunnable"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __uninstaller: AnsiOutputStream.IoRunnable = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __uninstaller: AnsiOutputStream.IoRunnable = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.309798",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "94-94:installer": {
+                    "start": 94,
+                    "end": 94,
+                    "body": [
+                        "    private final IoRunnable installer;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "IoRunnable",
+                            "IoRunnable"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __installer: AnsiOutputStream.IoRunnable = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __installer: AnsiOutputStream.IoRunnable = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.323342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "93-93:colors": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    private final AnsiColors colors;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiColors",
+                            "AnsiColors"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __colors: AnsiColors = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __colors: AnsiColors = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.336870",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "92-92:type": {
+                    "start": 92,
+                    "end": 92,
+                    "body": [
+                        "    private final AnsiType type;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiType",
+                            "AnsiType"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __type: AnsiType = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __type: AnsiType = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.354576",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "91-91:processor": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    private final AnsiProcessor processor;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiProcessor",
+                            "AnsiProcessor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __processor: AnsiProcessor = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __processor: AnsiProcessor = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.374552",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "90-90:width": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    private final WidthSupplier width;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "WidthSupplier",
+                            "WidthSupplier"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __width: AnsiOutputStream.WidthSupplier = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __width: AnsiOutputStream.WidthSupplier = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.395538",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "88-88:cs": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    private final Charset cs;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Charset",
+                            "java.nio.charset.Charset"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __cs: str = ''",
+                        ""
+                    ],
+                    "translation": [
+                        "    __cs: str = ''",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:01:53.414298",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "87-87:state": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private int state = LOOKING_FOR_FIRST_ESC_CHAR;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __state: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __state: int = LOOKING_FOR_FIRST_ESC_CHAR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.235876083374023,
+                    "generation_timestamp": "2024-08-28T22:02:15.665780",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "86-86:options": {
+                    "start": 86,
+                    "end": 86,
+                    "body": [
+                        "    private final ArrayList<Object> options = new ArrayList<>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ArrayList<Object>",
+                            "java.util.ArrayList<Object>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __options: typing.List[typing.Any] = []",
+                        ""
+                    ],
+                    "translation": [
+                        "    __options: typing.List[typing.Any] = []",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:02:15.682515",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "85-85:startOfValue": {
+                    "start": 85,
+                    "end": 85,
+                    "body": [
+                        "    private int startOfValue;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __startOfValue: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __startOfValue: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:02:15.698421",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "84-84:pos": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    private int pos = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pos: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pos: int = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.079169750213623,
+                    "generation_timestamp": "2024-08-28T22:02:21.789875",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "83-83:buffer": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    private final byte[] buffer = new byte[MAX_ESCAPE_SEQUENCE_LENGTH];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __buffer: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_ESCAPE_SEQUENCE_LENGTH: int = 100",
+                        "__buffer: bytearray = bytearray(__MAX_ESCAPE_SEQUENCE_LENGTH)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.228567361831665,
+                    "generation_timestamp": "2024-08-28T22:02:39.040918",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "82-82:MAX_ESCAPE_SEQUENCE_LENGTH": {
+                    "start": 82,
+                    "end": 82,
+                    "body": [
+                        "    private static final int MAX_ESCAPE_SEQUENCE_LENGTH = 100;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX_ESCAPE_SEQUENCE_LENGTH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_ESCAPE_SEQUENCE_LENGTH: int = 100"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.049370527267456,
+                    "generation_timestamp": "2024-08-28T22:02:47.105979",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-81:ap": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    private AnsiProcessor ap;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiProcessor",
+                            "AnsiProcessor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ap: AnsiProcessor = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ap: AnsiProcessor = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:02:47.133881",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "79-79:SECOND_CHARSET1_CHAR": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    private static final int SECOND_CHARSET1_CHAR = ')';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SECOND_CHARSET1_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SECOND_CHARSET1_CHAR: int = ord(')')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.98914361000061,
+                    "generation_timestamp": "2024-08-28T22:02:57.139136",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-78:SECOND_CHARSET0_CHAR": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    private static final int SECOND_CHARSET0_CHAR = '(';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SECOND_CHARSET0_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SECOND_CHARSET0_CHAR: int = ord('(')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.868532657623291,
+                    "generation_timestamp": "2024-08-28T22:03:05.029904",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-77:SECOND_ST_CHAR": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private static final int SECOND_ST_CHAR = '\\\\';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SECOND_ST_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SECOND_ST_CHAR: int = ord('\\\\')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.33801817893982,
+                    "generation_timestamp": "2024-08-28T22:03:13.389182",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "76-76:BEL": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private static final int BEL = 7;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BEL: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BEL: int = 7"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.600029945373535,
+                    "generation_timestamp": "2024-08-28T22:03:20.012311",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-75:SECOND_OSC_CHAR": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final int SECOND_OSC_CHAR = ']';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SECOND_OSC_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SECOND_OSC_CHAR: int = ord(']')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.936928033828735,
+                    "generation_timestamp": "2024-08-28T22:03:28.969246",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "74-74:SECOND_ESC_CHAR": {
+                    "start": 74,
+                    "end": 74,
+                    "body": [
+                        "    private static final int SECOND_ESC_CHAR = '[';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SECOND_ESC_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SECOND_ESC_CHAR: int = ord('[')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.413742780685425,
+                    "generation_timestamp": "2024-08-28T22:03:39.406942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-73:FIRST_ESC_CHAR": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final int FIRST_ESC_CHAR = 27;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __FIRST_ESC_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __FIRST_ESC_CHAR: int = 27"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.731219053268433,
+                    "generation_timestamp": "2024-08-28T22:03:46.159524",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "71-71:LOOKING_FOR_CHARSET": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final int LOOKING_FOR_CHARSET = 9;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_CHARSET: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_CHARSET: int = 9"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.745586156845093,
+                    "generation_timestamp": "2024-08-28T22:03:52.928284",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "70-70:LOOKING_FOR_ST": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "    private static final int LOOKING_FOR_ST = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_ST: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_ST: int = 8"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.336549520492554,
+                    "generation_timestamp": "2024-08-28T22:03:59.278635",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "69-69:LOOKING_FOR_OSC_PARAM": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "    private static final int LOOKING_FOR_OSC_PARAM = 7;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_OSC_PARAM: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_OSC_PARAM: int = 7"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.043009042739868,
+                    "generation_timestamp": "2024-08-28T22:04:06.343644",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "68-68:LOOKING_FOR_OSC_COMMAND_END": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private static final int LOOKING_FOR_OSC_COMMAND_END = 6;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_OSC_COMMAND_END: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_OSC_COMMAND_END: int = 6"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.34037184715271,
+                    "generation_timestamp": "2024-08-28T22:04:13.697771",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "67-67:LOOKING_FOR_OSC_COMMAND": {
+                    "start": 67,
+                    "end": 67,
+                    "body": [
+                        "    private static final int LOOKING_FOR_OSC_COMMAND = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_OSC_COMMAND: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_OSC_COMMAND: int = 5"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.312374830245972,
+                    "generation_timestamp": "2024-08-28T22:04:23.026315",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "66-66:LOOKING_FOR_INT_ARG_END": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private static final int LOOKING_FOR_INT_ARG_END = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_INT_ARG_END: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_INT_ARG_END: int = 4"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 8.25481128692627,
+                    "generation_timestamp": "2024-08-28T22:04:31.312436",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "65-65:LOOKING_FOR_STR_ARG_END": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private static final int LOOKING_FOR_STR_ARG_END = 3;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_STR_ARG_END: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_STR_ARG_END: int = 3"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.280072212219238,
+                    "generation_timestamp": "2024-08-28T22:04:37.606649",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "64-64:LOOKING_FOR_NEXT_ARG": {
+                    "start": 64,
+                    "end": 64,
+                    "body": [
+                        "    private static final int LOOKING_FOR_NEXT_ARG = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_NEXT_ARG: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_NEXT_ARG: int = 2"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.408260107040405,
+                    "generation_timestamp": "2024-08-28T22:04:45.038717",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "63-63:LOOKING_FOR_SECOND_ESC_CHAR": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    private static final int LOOKING_FOR_SECOND_ESC_CHAR = 1;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_SECOND_ESC_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_SECOND_ESC_CHAR: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.082239627838135,
+                    "generation_timestamp": "2024-08-28T22:04:52.145719",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "62-62:LOOKING_FOR_FIRST_ESC_CHAR": {
+                    "start": 62,
+                    "end": 62,
+                    "body": [
+                        "    private static final int LOOKING_FOR_FIRST_ESC_CHAR = 0;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOOKING_FOR_FIRST_ESC_CHAR: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __LOOKING_FOR_FIRST_ESC_CHAR: int = 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.4893479347229,
+                    "generation_timestamp": "2024-08-28T22:04:59.659753",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class AnsiOutputStream():\n\n"
+        },
+        "ZeroWidthSupplier": {
+            "start": 55,
+            "end": 55,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "AnsiOutputStream",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "57-59:getTerminalWidth": {
+                    "start": 57,
+                    "end": 59,
+                    "body": [
+                        "        public int getTerminalWidth() {\n",
+                        "            return 0;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getTerminalWidth()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getTerminalWidth(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getTerminalWidth(self) -> int:",
+                        "         return 0"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 43.1618332862854,
+                    "generation_timestamp": "2024-08-28T23:25:43.055885",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class ZeroWidthSupplier():\n\n"
+        },
+        "IoRunnable": {
+            "start": 46,
+            "end": 46,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": "AnsiOutputStream",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "47-47:run": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "        void run() throws IOException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def run(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "         raise NotImplementedError(\"Subclass must implement abstract method\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 37.6576623916626,
+                    "generation_timestamp": "2024-08-28T23:26:20.761385",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class IoRunnable(ABC):\n\n"
+        },
+        "WidthSupplier": {
+            "start": 51,
+            "end": 51,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": "AnsiOutputStream",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "52-52:getTerminalWidth": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "        int getTerminalWidth();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getTerminalWidth()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getTerminalWidth(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def getTerminalWidth(self) -> int:",
+                        "        ",
+                        "        # Get the terminal size",
+                        "        terminal_size = os.get_terminal_size()",
+                        "",
+                        "        # Return the width",
+                        "        return terminal_size.columns"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 43.57700753211975,
+                    "generation_timestamp": "2024-08-28T23:27:36.701175",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class WidthSupplier(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.fusesource.jansi.AnsiColors import *",
+        "from src.main.org.fusesource.jansi.AnsiMode import *",
+        "from src.main.org.fusesource.jansi.AnsiType import *",
+        "from src.main.org.fusesource.jansi.io.AnsiProcessor import *",
+        "from src.main.org.fusesource.jansi.io.ColorsAnsiProcessor import *"
+    ]
+}
