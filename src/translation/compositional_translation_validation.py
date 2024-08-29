@@ -87,22 +87,31 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
         "fragment_name": fragment_,
         "class_name": class_,
     }
-    status, feedback = graal_validation(generation.split('\n'), fragment_obj, args)
+    status, feedback, message = graal_validation(generation.split('\n'), fragment_obj, args)
     functionally_validated_members = syntactically_validated_members if status == 'success' else None
     
     if status == 'success':
         print("\033[92mPASSED!\033[0m")
     else:
         print("\033[93m" + status.upper() + "\033[0m")
+        print(message)
         if not RECORD_ALL:
             if input("Do you want to interrupt? (no=Enter)"):
                 quit()
                 
-    # record
+    # record into a JSONL
     if RECORD_ALL:
-        with open(f'{project_name}_stats.csv', 'a') as f:
-            f.write(f"{schema}, {class_}, {fragment_}, {status}, {loc}\n")
-        
+        with open(f'{project_name}_results.jsonl', 'a') as f:
+            json.dump({
+                "schema": schema,
+                "class": class_,
+                "fragment": fragment_,
+                "status": status,
+                "loc": loc,
+                "message": message
+            }, f)
+            f.write("\n")
+
     if not status:
         # TODO: handle feedback
         # print(feedback, flush=True)
@@ -232,7 +241,7 @@ if __name__ == '__main__':
     
     # reset the stats file
     if RECORD_ALL:
-        with open(f'{args.project_name}_stats.csv', 'w') as f:
+        with open(f'{args.project_name}_results.jsonl', 'w') as f:
             f.write("")
     
     main(args)
