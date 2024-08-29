@@ -440,7 +440,7 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
                 graal_status = 'error'
 
             elif status == 'failure':
-                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation='failed', test_execution='pending', elapsed_time=time.time() - start_time)
+                update_labels(args=args, fragment=fragment, translation=generation, translation_status='attempted', syntactic_validation='parseable', field_exercise='pending', graal_validation={'graal_outcome': 'failed', 'feedback': feedback}, test_execution='pending', elapsed_time=time.time() - start_time)
                 update_budget(fragment, args, budget, type_='final')
                 graal_status = 'failed'
                 
