@@ -46,12 +46,18 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
 
     project.recompose_python_project(injected_translations)
 
-    test = project.derive_compositional_tests(components, debug=True)
-    if test is None:
-        return ERROR, dict()
+    try:
+        test = project.derive_compositional_tests(components, debug=True)
+        output = test.run()
+    except NotImplementedError as e:
+        output = {
+            "status": ERROR,
+            "feedback": dict(),
+            "message": str(e)
+        }
 
-    output = test.run()
     status = output['status']
     feedback = output['feedback']
+    message = output['message']
 
-    return status, feedback
+    return status, feedback, message
