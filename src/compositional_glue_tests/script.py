@@ -362,11 +362,7 @@ class Project:
             }
         }
         """
-        try:
-            return CompositionalTest(self, components, debug)
-        except NotImplementedError as e:
-            print(e)
-            return None
+        return CompositionalTest(self, components, debug)
 
         
 class CompositionalTest:
@@ -745,10 +741,10 @@ class CompositionalTest:
             if not tests_to_run and not self.test_items:
                 # was: run all tests
                 # was: test_selection_specification = "*"
-                print("Not Exercised: No tests to run.")
                 return {
                     "status": NOT_EXERCISED,
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "No tests to run."
                 }
             else:
                 if not tests_to_run:
@@ -785,10 +781,10 @@ class CompositionalTest:
                     timeout=60*10 # 10 minutes
                 )
             except subprocess.TimeoutExpired:
-                print("Error: Timeout in running the tests.")
                 return {
                     "status": ERROR, # timeout
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "Timeout in running the tests."
                 }
 
             failure_flag = (output.returncode != 0) # check if the failure is due to the tests or something else
@@ -804,10 +800,10 @@ class CompositionalTest:
             feedback = self.__get_feedback_from_surefire()
             
             if failure_flag and not feedback:
-                print("Error: Error in running the tests.")
                 return {
                     "status": ERROR, # error in running the tests
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "Error during test execution."
                 }
                 
             # check if any unsupported operation was encountered
@@ -818,15 +814,18 @@ class CompositionalTest:
                 "[ExceptionHandler] Unhandled exception type"
             ]
             if feedback and any(x in stdout for x in unsupported_operation_keywords):
-                print("Error: Unsupported operation encountered.")
+                # collect all lines with unsupported operation keywords
+                unsupported_lines = [x for x in stdout.split('\n') if any(y in x for y in unsupported_operation_keywords)]                
                 return {
                     "status": ERROR, # unsupported operation encountered
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "Unsupported operation encountered: " + "\n".join(unsupported_lines)
                 }
             
             return {
                 "status": SUCCESS if not feedback else FAILURE,
-                "feedback": feedback
+                "feedback": feedback,
+                "message": "\n".join([f"{test}: {feedback[test]}" for test in feedback])
             }
         finally:
             # revert the writes before returning
@@ -836,7 +835,7 @@ class CompositionalTest:
         """
         Get the failed tests from the surefire reports.
         """
-        feedback = dict() # { test_class.method: [error_message] }
+        feedback = dict() # { test_class.method: error_message }
 
         surefire_dir = f"{self.project.glue_dir}/target/surefire-reports"
         if not os.path.exists(surefire_dir):
@@ -866,7 +865,7 @@ class CompositionalTest:
         
         # no support for non-static nested classes
         if 'static' not in class_declaration and class_data['nested_inside']:
-            raise NotImplementedError("Static nested classes are not supported.")
+            raise NotImplementedError("Non-static nested classes are not supported.")
 
     @staticmethod
     def __check_if_supported_method(method_data: dict):
