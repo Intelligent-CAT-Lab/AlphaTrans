@@ -54,7 +54,7 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
         output = {
             "status": ERROR,
             "feedback": dict(),
-            "message": str(e)
+            "message": "Unsupported fragment: " + str(e)
         }
 
     status = output['status']
