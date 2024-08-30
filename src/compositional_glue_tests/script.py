@@ -1284,7 +1284,11 @@ class Schema:
             return
         
         # comment out the original method contents
-        final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+        if not is_constructor:
+            final_method_content = "".join([f"// {line.strip()}\n" for line in method_content.split('\n')])
+        else:
+            # for constructors, we keep the super() call (if any)
+            final_method_content = method_content_super + "".join([f"// {line.strip()}\n" for line in method_content_without_super.split('\n')])
             
         # construct call to Python
         if "static" in method_schema_data['modifiers']:
