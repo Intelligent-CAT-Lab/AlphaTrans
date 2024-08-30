@@ -7,8 +7,9 @@ from src.compositional_glue_tests.utils import topological_sort
 from syntactic_validation import l0_validation
 from src.translation.graal_validation import graal_validation
 
-# subprocess.run(['git', 'checkout', 'data/schemas/'])
 i = 0
+
+SCHEMA_PATH = "data/results"
 
 def translate(model, tokenizer, device, members_to_translate: list[list], dump_syntactically_validated_fragments, is_test):
     """
@@ -38,7 +39,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             print('=======================GENERATING=======================', flush=True)
             
             # open the schema file
-            with open(f'data/results/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
+            with open(f'{SCHEMA_PATH}/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
                 data = json.load(f)
                 
             # get the precomputed translation
@@ -143,7 +144,7 @@ def main(args):
     device = 'cpu' # 'cuda' if torch.cuda.is_available() and args.use_cuda else 'cpu''
     tokenizer, model = None, None
 
-    schemas = os.listdir(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}')
+    schemas = os.listdir(f'{SCHEMA_PATH}/{args.model_name}/{args.prompt_type}/{args.project_name}')
 
     traversal = {}
     with open(f'data/dependencies/{args.project_name}/traversal.json', 'r') as f:
@@ -158,7 +159,7 @@ def main(args):
             continue
         SCHEMA_BREAK_PASSED = True
 
-        path_ = f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}'
+        path_ = f'{SCHEMA_PATH}/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}'
         with open(path_, 'r') as f:
             data = json.load(f)
       
