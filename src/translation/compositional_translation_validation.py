@@ -38,7 +38,7 @@ def translate(model, tokenizer, device, members_to_translate: list[list], dump_s
             print('=======================GENERATING=======================', flush=True)
             
             # open the schema file
-            with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
+            with open(f'data/results/{args.model_name}/{args.prompt_type}/{args.project_name}/{schema}', 'r') as f:
                 data = json.load(f)
                 
             # get the precomputed translation
