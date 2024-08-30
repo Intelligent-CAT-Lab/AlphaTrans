@@ -766,7 +766,7 @@ class CompositionalTest:
             test_command = [
                 'mvn', 'clean', 'test', 
                 '-Drat.skip', '-Dcheckstyle.skip', '-Djacoco.skip',
-                '-DfailIfNoTests=false',
+                '-DfailIfNoTests=true',
                 '-Dtest=' + test_selection_specification
             ]
             
@@ -803,8 +803,15 @@ class CompositionalTest:
             feedback = self.__get_feedback_from_surefire()
             
             if failure_flag and not feedback:
+                if "No tests were executed!" in stdout:
+                    return {
+                        "status": NOT_EXERCISED, # no tests were actually executed!
+                        "feedback": dict(),
+                        "message": "No tests were executed."
+                    }
+
                 return {
-                    "status": ERROR, # error in running the tests
+                    "status": ERROR, # some other error in running the tests
                     "feedback": dict(),
                     "message": "Error during test execution."
                 }
