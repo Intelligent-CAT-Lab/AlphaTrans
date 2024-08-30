@@ -1,0 +1,294 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/InterruptibleReentrantLock.java",
+    "imports": {
+        "19-19:import Condition": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.util.concurrent.locks.Condition;\n"
+            ]
+        },
+        "20-20:import ReentrantLock": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.concurrent.locks.ReentrantLock;\n"
+            ]
+        }
+    },
+    "classes": {
+        "InterruptibleReentrantLock": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Consumer<Thread>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "49-51:interruptWaiters": {
+                    "start": 49,
+                    "end": 51,
+                    "body": [
+                        "    public void interruptWaiters(final Condition condition) {\n",
+                        "        getWaitingThreads(condition).forEach(Thread::interrupt);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "interruptWaiters(Condition)",
+                    "parameters": [
+                        "condition"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def interruptWaiters(self, condition: threading.Condition) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def interruptWaiters(self, condition: threading.Condition) -> None:",
+                        "        ",
+                        "        # Get all waiting threads",
+                        "        waiting_threads = self.getWaitingThreads(condition)",
+                        "",
+                        "        # Interrupt each waiting thread",
+                        "        for thread in waiting_threads:",
+                        "            thread.interrupt()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 68.46186900138855,
+                    "generation_timestamp": "2024-08-29T05:17:07.715751",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "40-42:InterruptibleReentrantLock": {
+                    "start": 40,
+                    "end": 42,
+                    "body": [
+                        "    public InterruptibleReentrantLock(final boolean fairness) {\n",
+                        "        super(fairness);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "InterruptibleReentrantLock(boolean)",
+                    "parameters": [
+                        "fairness"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, fairness: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, fairness: bool) -> None:",
+                        "         super().__init__(threading.RLock(), fairness)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "commons-pool/src/test/org/apache/commons/pool2/impl/TestLinkedBlockingDeque.py::TestLinkedBlockingDeque::testPossibleBug_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/test/org/apache/commons/pool2/impl/TestLinkedBlockingDeque.py\", line 208, in testPossibleBug_test0_decomposed\n    self.deque = LinkedBlockingDeque.LinkedBlockingDeque0()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/main/org/apache/commons/pool2/impl/LinkedBlockingDeque.py\", line 491, in LinkedBlockingDeque0\n    0, 2147483647, False, InterruptibleReentrantLock(False)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/main/org/apache/commons/pool2/impl/InterruptibleReentrantLock.py\", line 21, in __init__\n    super().__init__(threading.RLock(), fairness)\nTypeError: object.__init__() takes exactly one argument (the instance to initialize)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.InterruptibleReentrantLock",
+                                    "class": "InterruptibleReentrantLock",
+                                    "method": "40-42:InterruptibleReentrantLock"
+                                },
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                                    "class": "LinkedBlockingDeque",
+                                    "method": "283-285:LinkedBlockingDeque0"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestLinkedBlockingDeque",
+                                    "class": "TestLinkedBlockingDeque",
+                                    "method": "840-842:testPossibleBug_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestLinkedBlockingDeque",
+                                    "class": "TestLinkedBlockingDeque",
+                                    "method": "48-50:setUp"
+                                }
+                            ]
+                        },
+                        "commons-pool/src/test/org/apache/commons/pool2/impl/TestLinkedBlockingDeque.py::TestLinkedBlockingDeque::testConstructors_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/test/org/apache/commons/pool2/impl/TestLinkedBlockingDeque.py\", line 564, in testConstructors_test0_decomposed\n    self.deque = LinkedBlockingDeque.LinkedBlockingDeque0()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/main/org/apache/commons/pool2/impl/LinkedBlockingDeque.py\", line 491, in LinkedBlockingDeque0\n    0, 2147483647, False, InterruptibleReentrantLock(False)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-pool/src/main/org/apache/commons/pool2/impl/InterruptibleReentrantLock.py\", line 21, in __init__\n    super().__init__(threading.RLock(), fairness)\nTypeError: object.__init__() takes exactly one argument (the instance to initialize)",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.InterruptibleReentrantLock",
+                                    "class": "InterruptibleReentrantLock",
+                                    "method": "40-42:InterruptibleReentrantLock"
+                                },
+                                {
+                                    "file": "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                                    "class": "LinkedBlockingDeque",
+                                    "method": "283-285:LinkedBlockingDeque0"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestLinkedBlockingDeque",
+                                    "class": "TestLinkedBlockingDeque",
+                                    "method": "211-213:testConstructors_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-pool.src.test.org.apache.commons.pool2.impl.TestLinkedBlockingDeque",
+                                    "class": "TestLinkedBlockingDeque",
+                                    "method": "48-50:setUp"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 78.67966032028198,
+                    "generation_timestamp": "2024-08-29T09:38:23.594951",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": 1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "fields": {
+                "32-32:serialVersionUID": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.08357834815979,
+                    "generation_timestamp": "2024-08-28T22:40:14.215959",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class InterruptibleReentrantLock():\n\n"
+        },
+        "new Consumer<Thread>(...) { ... }": {
+            "start": 50,
+            "end": 50,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "InterruptibleReentrantLock",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "50-50:accept": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "        getWaitingThreads(condition).forEach(Thread::interrupt);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "accept(Thread)",
+                    "parameters": [
+                        "p0"
+                    ],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import threading"
+    ]
+}
