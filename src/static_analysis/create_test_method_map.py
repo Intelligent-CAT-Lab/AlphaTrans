@@ -5,7 +5,7 @@ import argparse
 
 def main(args):
 
-    schema_dir = f'data/schemas'
+    schema_dir = f'data/schemas{args.suffix}'
     for project_name in os.listdir(schema_dir):
 
         if project_name == 'translations':
@@ -48,5 +48,6 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create call graph for test methods')
     parser.add_argument('--evosuite', action='store_true', help='Use evosuite schemas')
+    parser.add_argument('--suffix', type=str, default='', help='Suffix for schema directory')
     args = parser.parse_args()
     main(args)

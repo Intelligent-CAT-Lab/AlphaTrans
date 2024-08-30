@@ -1,8 +1,12 @@
 import re
 import ast
+import json
 
 
 def syntactic_validation(generation, fragment, args):
+    exception_map = json.load(open('data/type_resolution/exception_map.json'))
+    constant_map = json.load(open('data/type_resolution/constant_map.json'))
+
     generation = generation.replace('```python', '```')
     pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
     match = re.search(pattern, generation, re.DOTALL)
@@ -30,6 +34,14 @@ def syntactic_validation(generation, fragment, args):
 
             if args.debug:
                 print(f'=======================PARSED=======================\n{output}\n' + '---' * 50, flush=True)
+
+            for key in exception_map:
+                if key in output:
+                    output = output.replace(key, exception_map[key])
+            
+            for key in constant_map:
+                if key in output:
+                    output = output.replace(key, constant_map[key])
 
             return True, output.split('\n'), None
 

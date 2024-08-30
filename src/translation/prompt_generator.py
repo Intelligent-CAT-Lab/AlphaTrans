@@ -10,6 +10,7 @@ class PromptGenerator:
         self.prompt = ''
         self.feedback = feedback
         self.prompt_status = 'success'
+
         self.meta_data = {
                             'persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
                             'icl': {
@@ -19,8 +20,11 @@ class PromptGenerator:
                                 'feedback': "Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```" + "\n\nIncorrect Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        return a + c\n```\n\nExecution feedback:\n```\n  File \"script.py\", line 5, in add\n    return a + c\nNameError: name 'c' is not defined\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```",
                             }
                         }
+
+        self.assert_map = json.load(open('data/type_resolution/assert_map.json', 'r'))
         
         self.load_fragment(fragment_details)
+        self.construct_adaptive_icl()
         self.build_base_prompt()
     
     def build_base_prompt(self):
@@ -31,10 +35,7 @@ class PromptGenerator:
         self.double_line_break()
 
         # add in-context learning example
-        if self.is_feedback:
-            self.prompt += self.meta_data['icl']['feedback']
-        else:
-            self.prompt += self.meta_data['icl'][self.fragment_type]
+        self.prompt += self.adaptive_icl
 
         self.double_line_break()
 
@@ -62,15 +63,49 @@ class PromptGenerator:
         # add target translation
         self.add_target_translation()
 
+    def construct_adaptive_icl(self):
+        used_assertions = []
+        for source_assert in self.assert_map:
+            if source_assert in self.source_fragment_body:
+                used_assertions.append(source_assert)
+
+        source_statements = ''
+        target_statements = ''
+        for source_assert in self.assert_map:
+            if source_assert not in used_assertions:
+                continue
+            for i in range(2):
+                source_statements += self.assert_map[source_assert][i]['java'] + ';\n        '
+                target_statements += 'self.' + self.assert_map[source_assert][i]['python'] + '\n        '
+
+        if self.is_feedback:
+            test_icl = "Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        List<String> inputList = Arrays.asList(\"apple\", \"banana\", \"cherry\");\n        assertEquals(\"inputList size does not match expected size = 3\", 3, inputList.size());\n    " + "}\n}\n```\n\nIncorrect Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        inputList = [\"apple\", \"banana\", \"cherry\"]\n        self.assertEqual(\"inputList size does not match expected size = 3\", 3, len(inputList))\n```\n\nExecution feedback:\n```\n  File \"TestClass.py\", line 4, in testMethod\n    self.assertEqual(\"inputList size does not match expected size = 3\", 3, len(inputList))\nAssertionError: 'inputList size does not match expected size = 3' != 3 : 2\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        inputList = [\"apple\", \"banana\", \"cherry\"]\n        self.assertEqual(3, len(inputList), \"inputList size does not match expected size = 3\")\n```"
+            test_icl = test_icl.replace('self.pytest.', 'pytest.')
+        else:
+            test_icl = 'Java code:\n```\npublic class TestClass {\n    @Test\n    public void testMethod(self) {\n        ' + source_statements.rstrip() + '\n    ' + '}\n}\n```\n\nPartial Python translation:\n```\nclass TestClass(unittest.TestCase):\n    def testMethod(self) -> None:\n        pass\n```\n\nPython method translation:\n```\n    def testMethod(self) -> None:\n        ' + target_statements.rstrip() + '\n```\n'
+            test_icl = test_icl.replace('self.pytest.', 'pytest.')
+
+        if self.is_feedback:
+            if used_assertions:
+                self.adaptive_icl = test_icl
+            else:
+                self.adaptive_icl = self.meta_data['icl']['feedback']
+        else:
+            if used_assertions:
+                self.adaptive_icl = test_icl
+            else:
+                self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
+
     def load_fragment(self, fragment_details):
         self.schema_name = fragment_details['schema_name']
         self.class_name = fragment_details['class_name']
         self.fragment_name = fragment_details['fragment_name']
         self.fragment_actual_name = self.fragment_name.split(':')[1]
         self.fragment_type = fragment_details['fragment_type']
+        self.is_test_method = fragment_details['is_test_method']
 
         self.schema_data = {}
-        with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{self.schema_name}_python_partial.json', 'r') as f:
+        with open(f'{self.args.translation_dir}/{self.schema_name}_python_partial.json', 'r') as f:
             self.schema_data = json.load(f)
         
         self.fragment_dict = self.schema_data['classes'][self.class_name][f'{self.fragment_type}s'][self.fragment_name]
@@ -163,7 +198,7 @@ class PromptGenerator:
             imported_class_path = self.get_dependency_path(dependent_class_path, self.args.project_name)
             
             imported_class_data = {}
-            with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{self.args.project_name}.{imported_class_path}_python_partial.json', 'r') as f:
+            with open(f'{self.args.translation_dir}/{self.args.project_name}.{imported_class_path}_python_partial.json', 'r') as f:
                 imported_class_data = json.load(f)
 
             imported_classes = [f'{imported_class_data["classes"][dependenct_class_name]["python_class_declaration"]}']
@@ -182,7 +217,7 @@ class PromptGenerator:
         # include fields of superclass
         for super_class in self.schema_data['classes'][self.class_name]['extends']:            
             super_class_schema = ''
-            for schema_file in os.listdir(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}'):
+            for schema_file in os.listdir(self.args.translation_dir):
                 if f'.{super_class}_python_partial.json' in schema_file:
                     super_class_schema = schema_file
                     break
@@ -191,7 +226,7 @@ class PromptGenerator:
                 continue
 
             super_class_data = {}
-            with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{super_class_schema}', 'r') as f:
+            with open(f'{self.args.translation_dir}/{super_class_schema}', 'r') as f:
                 super_class_data = json.load(f)
 
             if f'class {super_class}:' in self.partial_translation or f'class {super_class}(' in self.partial_translation:
@@ -211,11 +246,11 @@ class PromptGenerator:
         main_class_partial_translation = self.schema_data['classes'][self.class_name]['python_class_declaration']
 
         if '<placeholder>' not in ''.join(self.fragment_dict['partial_translation']):
-            self.prompt_status = 'error'
+            self.prompt_status = 'translated'
         
         # add related fields of the main class 
         for field in self.schema_data['classes'][self.class_name]['fields']:
-            if field.split(':')[1] == self.fragment_actual_name:
+            if field.split(':')[1] == self.fragment_actual_name and self.fragment_type == 'field':
                 continue
             if field.split(':')[1] in ''.join(''.join(self.schema_data['classes'][self.class_name][f'{self.fragment_type}s'][self.fragment_name]['body'])):
                 field_translation = self.schema_data['classes'][self.class_name]['fields'][field]['translation']
@@ -232,7 +267,7 @@ class PromptGenerator:
                 for callee_schema, callee_class, callee_method in self.schema_data['classes'][self.class_name]['methods'][self.fragment_name]['calls']:
 
                     callee_schema_data = {}
-                    with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{callee_schema}_python_partial.json', 'r') as f:
+                    with open(f'{self.args.translation_dir}/{callee_schema}_python_partial.json', 'r') as f:
                         callee_schema_data = json.load(f)
                     
                     if ':' not in callee_method:
@@ -266,7 +301,7 @@ class PromptGenerator:
                         for callee_class, callee_method in ordered_out_of_file_dependencies[callee_schema]:
 
                             callee_schema_data = {}
-                            with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{callee_schema}_python_partial.json', 'r') as f:
+                            with open(f'{self.args.translation_dir}/{callee_schema}_python_partial.json', 'r') as f:
                                 callee_schema_data = json.load(f)
                             
                             if callee_schema_data['classes'][callee_class]['python_class_declaration'] not in self.partial_translation:
@@ -295,7 +330,7 @@ class PromptGenerator:
                     for callee_schema in ordered_out_of_file_dependencies:
                         for callee_class, callee_method in ordered_out_of_file_dependencies[callee_schema]:
                             callee_schema_data = {}
-                            with open(f'data/schemas/translations/{self.args.model_name}/{self.args.prompt_type}/{self.args.project_name}/{callee_schema}_python_partial.json', 'r') as f:
+                            with open(f'{self.args.translation_dir}/{callee_schema}_python_partial.json', 'r') as f:
                                 callee_schema_data = json.load(f)
                             
                             self.partial_translation += f"{callee_schema_data['classes'][callee_class]['python_class_declaration']}"
@@ -354,9 +389,9 @@ class PromptGenerator:
         self.prompt += '\n\n'
 
     def get_dependency_path(self, dependent_class, project_name):
-        if os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
+        if os.path.exists(f'java_projects/cleaned_final_projects{self.args.suffix}/{project_name}/src/main/java/' + dependent_class.replace('.', '/') + '.java'):
             return f'src.main.{dependent_class}'
-        elif os.path.exists(f'java_projects/cleaned_final_projects/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
+        elif os.path.exists(f'java_projects/cleaned_final_projects{self.args.suffix}/{project_name}/src/test/java/' + dependent_class.replace('.', '/') + '.java'):
             return f'src.test.{dependent_class}'
         else:
             return f'src.main.{dependent_class}'

@@ -17,6 +17,7 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -28,25 +29,136 @@ class PrimTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testVerifyWikipediaMinimumSpanningTree(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test11_decomposed(self) -> None:
         pass
 
-    def testVerifyMinimumSpanningTree2(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test10_decomposed(self) -> None:
         pass
 
-    def testNullVertex(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test9_decomposed(self) -> None:
         pass
 
-    def testNullMonoid(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test8_decomposed(self) -> None:
         pass
 
-    def testNullGraph(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test7_decomposed(self) -> None:
         pass
 
-    def testNotExistVertex(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test6_decomposed(self) -> None:
         pass
 
-    def testEmptyGraph(self) -> None:
+    def testVerifyWikipediaMinimumSpanningTree_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyWikipediaMinimumSpanningTree_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyWikipediaMinimumSpanningTree_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyWikipediaMinimumSpanningTree_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyWikipediaMinimumSpanningTree_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyWikipediaMinimumSpanningTree_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test11_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test10_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test9_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test8_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test7_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyMinimumSpanningTree2_test0_decomposed(self) -> None:
+        pass
+
+    def testNullVertex_test3_decomposed(self) -> None:
+        pass
+
+    def testNullVertex_test2_decomposed(self) -> None:
+        pass
+
+    def testNullVertex_test1_decomposed(self) -> None:
+        pass
+
+    def testNullVertex_test0_decomposed(self) -> None:
+        pass
+
+    def testNullMonoid_test4_decomposed(self) -> None:
+        pass
+
+    def testNullMonoid_test3_decomposed(self) -> None:
+        pass
+
+    def testNullMonoid_test2_decomposed(self) -> None:
+        pass
+
+    def testNullMonoid_test1_decomposed(self) -> None:
+        pass
+
+    def testNullMonoid_test0_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testNullGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testNotExistVertex_test2_decomposed(self) -> None:
+        pass
+
+    def testNotExistVertex_test1_decomposed(self) -> None:
+        pass
+
+    def testNotExistVertex_test0_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testEmptyGraph_test0_decomposed(self) -> None:
         pass
 
     @staticmethod

@@ -15,21 +15,6 @@ from abc import ABC
 # Imports End
 
 
-class NotSimpleFactory(FactoryF):
-
-    # Class Fields Begin
-    # Class Fields End
-
-    # Class Methods Begin
-    def wrap(self, obj: int) -> PooledObject[int]:
-        pass
-
-    def create(self) -> int:
-        pass
-
-    # Class Methods End
-
-
 class SimpleFactory(BasePooledObjectFactory):
 
     # Class Fields Begin
@@ -98,6 +83,21 @@ class FactoryF(FactoryDE, ABC):
     # Class Methods End
 
     pass
+
+
+class NotSimpleFactory(FactoryF):
+
+    # Class Fields Begin
+    # Class Fields End
+
+    # Class Methods Begin
+    def wrap(self, obj: int) -> PooledObject[int]:
+        pass
+
+    def create(self) -> int:
+        pass
+
+    # Class Methods End
 
 
 class TestPoolImplUtils(unittest.TestCase):

@@ -1,22 +1,38 @@
 import os
-import json
 import subprocess
-from subprocess import Popen
 import xml.etree.ElementTree as ET
 from calculate_coverage import calculate_method_coverage
 
 
-def test_validation(args, eligible_tests, fragment_test_stats):
+def test_validation(args, eligible_tests):
 
-    os.system(f'python3 src/postprocessing/recompose.py --project_name={args.project_name} --model_name={args.model_name} --output_dir=data/recomposed_projects --type={args.prompt_type}')
+    os.system(f'python3 src/postprocessing/recompose.py --project_name={args.project_name} \
+                                                        --model_name={args.model_name} \
+                                                        --output_dir=data/recomposed_projects \
+                                                        --type={args.prompt_type} \
+                                                        --suffix={args.suffix}')
 
-    green_tests = True
-    feedback = 'the test did not execute successfully'
+    test_execution_results = {}
+    failed_tests = []
     for test in eligible_tests:
+
         test_path = test['schema_name'].replace('.', '/') + '.java'
         test_path = test_path[test_path.index(args.project_name):].replace('test/java/org', 'test/org').replace('.java', '.py')
         test_class = test['class_name']
         test_method = test['fragment_name'].split(':')[1]
+
+        if not test_method.startswith('test'):
+            test_method = 'test' + test_method
+
+        if '_decomposed' in test_method:
+            actual_test_name = test_method[:test_method.index('_decomposed')].split('_')[0]
+        else:
+            actual_test_name = test_method
+
+        if actual_test_name in failed_tests:
+            continue
+
+        test_execution_results.setdefault(f'{test_path}::{test_class}::{test_method}', {'test_outcome': 'exercised-success', 'feedback': '', 'covered_methods': []})
 
         if os.path.exists(f'{args.project_name}-{args.model_name}-pytest-report.xml'):
             os.remove(f'{args.project_name}-{args.model_name}-pytest-report.xml')
@@ -43,13 +59,15 @@ def test_validation(args, eligible_tests, fragment_test_stats):
                 env=env
             )
         except subprocess.CalledProcessError as e:
-            green_tests = False
-        
+            test_execution_results[f'{test_path}::{test_class}::{test_method}']['test_outcome'] = 'exercised-failed'
+            failed_tests.append(actual_test_name)
+                    
         if not os.path.exists(f'{args.project_name}-{args.model_name}-coverage.xml'):
-            green_tests = False
-            covered_methods = []
+            test_execution_results[f'{test_path}::{test_class}::{test_method}']['test_outcome'] = 'exercised-failed'
+            failed_tests.append(actual_test_name)
         else:
             covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}')
+            test_execution_results[f'{test_path}::{test_class}::{test_method}']['covered_methods'] = covered_methods
 
         assert os.path.exists(f'{args.project_name}-{args.model_name}-pytest-report.xml')
         with open(f'{args.project_name}-{args.model_name}-pytest-report.xml', 'r') as f:
@@ -58,28 +76,12 @@ def test_validation(args, eligible_tests, fragment_test_stats):
             for testcase in root.findall('.//testcase'):
                 if testcase.get('name') == test_method:
                     if testcase.find('failure') is not None:
-                        feedback = testcase.find('failure').text
+                        test_execution_results[f'{test_path}::{test_class}::{test_method}']['feedback'] = testcase.find('failure').text
                     elif testcase.find('error') is not None:
-                        feedback = testcase.find('error').text
+                        test_execution_results[f'{test_path}::{test_class}::{test_method}']['feedback'] = testcase.find('error').text
                     break
+        
+        if test_execution_results[f'{test_path}::{test_class}::{test_method}']['test_outcome'] == 'exercised-failed' and test_execution_results[f'{test_path}::{test_class}::{test_method}']['feedback'] == '':
+            test_execution_results[f'{test_path}::{test_class}::{test_method}']['feedback'] = 'test did not execute properly'
 
-        for covered_method in covered_methods:
-            covered_method_file = covered_method['file'][covered_method['file'].index(args.project_name):].replace('.py', '').replace('/', '.')
-            covered_method_class = covered_method['class']
-            covered_method_name = covered_method['method']
-
-            fragment_test_stats.setdefault(f'{covered_method_file}|{covered_method_class}|{covered_method_name}', {'total': [], 'pass': [], 'fail': []})
-
-            if f'{test_path}|{test_class}|{test_method}' in fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['total']:
-                continue
-
-            fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['total'].append(f'{test_path}|{test_class}|{test_method}')
-            if green_tests:
-                fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['pass'].append(f'{test_path}|{test_class}|{test_method}')
-            else:
-                fragment_test_stats[f'{covered_method_file}|{covered_method_class}|{covered_method_name}']['fail'].append(f'{test_path}|{test_class}|{test_method}')
-
-        if not green_tests:
-            break
-
-    return green_tests, feedback, covered_methods
+    return test_execution_results

@@ -163,7 +163,7 @@ class MockHttpServletRequest:
     def getServletPath(self) -> str:
         pass
 
-    def getRequestURL(self) -> str:
+    def getRequestURL(self) -> io.StringIO:
         pass
 
     def getRequestURI(self) -> str:

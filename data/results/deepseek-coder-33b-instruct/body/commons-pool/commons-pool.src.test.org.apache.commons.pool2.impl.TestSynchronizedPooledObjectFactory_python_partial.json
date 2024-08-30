@@ -1,0 +1,601 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/test/java/org/apache/commons/pool2/impl/TestSynchronizedPooledObjectFactory.java",
+    "imports": {
+        "23-23:import ReentrantReadWriteLock": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.concurrent.locks.ReentrantReadWriteLock;\n"
+            ]
+        },
+        "24-24:import WriteLock": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;\n"
+            ]
+        },
+        "20-20:import PooledObject": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.pool2.PooledObject;\n"
+            ]
+        },
+        "21-21:import PooledObjectFactory": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.pool2.PooledObjectFactory;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestSynchronizedPooledObjectFactory": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "PooledObjectFactory"
+            ],
+            "extends": [],
+            "methods": {
+                "113-120:validateObject": {
+                    "start": 113,
+                    "end": 120,
+                    "body": [
+                        "    public boolean validateObject(final PooledObject<T> p) {\n",
+                        "        writeLock.lock();\n",
+                        "        try {\n",
+                        "            return factory.validateObject(p);\n",
+                        "        } finally {\n",
+                        "            writeLock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "validateObject(PooledObject<T>)",
+                    "parameters": [
+                        "p"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validateObject(self, p: PooledObject[typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validateObject(self, p: PooledObject[typing.Any]) -> bool:",
+                        "        ",
+                        "        self.__writeLock.acquire()",
+                        "        try:",
+                        "            return self.__factory.validateObject(p)",
+                        "        finally:",
+                        "            self.__writeLock.release()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.53618574142456,
+                    "generation_timestamp": "2024-08-29T16:43:02.677348",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "103-109:toString": {
+                    "start": 103,
+                    "end": 109,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder sb = new StringBuilder();\n",
+                        "        sb.append(\"SynchronizedPoolableObjectFactory\");\n",
+                        "        sb.append(\"{factory=\").append(factory);\n",
+                        "        sb.append('}');\n",
+                        "        return sb.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return f\"SynchronizedPoolableObjectFactory{{factory={self.__factory}}}\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 25.617748260498047,
+                    "generation_timestamp": "2024-08-29T16:42:42.112665",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "92-99:passivateObject": {
+                    "start": 92,
+                    "end": 99,
+                    "body": [
+                        "    public void passivateObject(final PooledObject<T> p) throws Exception {\n",
+                        "        writeLock.lock();\n",
+                        "        try {\n",
+                        "            factory.passivateObject(p);\n",
+                        "        } finally {\n",
+                        "            writeLock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "passivateObject(PooledObject<T>)",
+                    "parameters": [
+                        "p"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def passivateObject(self, p: PooledObject[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def passivateObject(self, p: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__writeLock.acquire()",
+                        "        try:",
+                        "            self.__factory.passivateObject(p)",
+                        "        finally:",
+                        "            self.__writeLock.release()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 18.18729305267334,
+                    "generation_timestamp": "2024-08-29T16:42:16.475339",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-88:makeObject": {
+                    "start": 81,
+                    "end": 88,
+                    "body": [
+                        "    public PooledObject<T> makeObject() throws Exception {\n",
+                        "        writeLock.lock();\n",
+                        "        try {\n",
+                        "            return factory.makeObject();\n",
+                        "        } finally {\n",
+                        "            writeLock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "PooledObject<T>",
+                            "PooledObject<T>"
+                        ]
+                    ],
+                    "signature": "makeObject()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def makeObject(self) -> PooledObject[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def makeObject(self) -> PooledObject[typing.Any]:",
+                        "         with self.__writeLock:",
+                        "            return self.__factory.makeObject()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.24123740196228,
+                    "generation_timestamp": "2024-08-29T16:41:58.251091",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "70-77:destroyObject0": {
+                    "start": 70,
+                    "end": 77,
+                    "body": [
+                        "    public void destroyObject0(final PooledObject<T> p) throws Exception {\n",
+                        "        writeLock.lock();\n",
+                        "        try {\n",
+                        "            factory.destroyObject0(p);\n",
+                        "        } finally {\n",
+                        "            writeLock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "destroyObject0(PooledObject<T>)",
+                    "parameters": [
+                        "p"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def destroyObject0(self, p: PooledObject[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def destroyObject0(self, p: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__writeLock.acquire()",
+                        "        try:",
+                        "            self.__factory.destroyObject0(p)",
+                        "        finally:",
+                        "            self.__writeLock.release()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.4918053150177,
+                    "generation_timestamp": "2024-08-29T16:41:37.976467",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "59-66:activateObject": {
+                    "start": 59,
+                    "end": 66,
+                    "body": [
+                        "    public void activateObject(final PooledObject<T> p) throws Exception {\n",
+                        "        writeLock.lock();\n",
+                        "        try {\n",
+                        "            factory.activateObject(p);\n",
+                        "        } finally {\n",
+                        "            writeLock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "activateObject(PooledObject<T>)",
+                    "parameters": [
+                        "p"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def activateObject(self, p: PooledObject[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def activateObject(self, p: PooledObject[typing.Any]) -> None:",
+                        "        ",
+                        "        self.__writeLock.acquire()",
+                        "        try:",
+                        "            self.__factory.activateObject(p)",
+                        "        finally:",
+                        "            self.__writeLock.release()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 20.463866472244263,
+                    "generation_timestamp": "2024-08-29T16:41:17.383658",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "49-55:TestSynchronizedPooledObjectFactory": {
+                    "start": 49,
+                    "end": 55,
+                    "body": [
+                        "    TestSynchronizedPooledObjectFactory(final PooledObjectFactory<T> factory)\n",
+                        "            throws IllegalArgumentException {\n",
+                        "        if (factory == null) {\n",
+                        "            throw new IllegalArgumentException(\"factory must not be null.\");\n",
+                        "        }\n",
+                        "        this.factory = factory;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "TestSynchronizedPooledObjectFactory(PooledObjectFactory<T>)",
+                    "parameters": [
+                        "factory"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, factory: PooledObjectFactory[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, factory: PooledObjectFactory[typing.Any]) -> None:",
+                        "         if factory is None:",
+                        "            raise ValueError(\"factory must not be null.\")",
+                        "         self.__factory = factory"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 17.555779695510864,
+                    "generation_timestamp": "2024-08-29T16:40:56.890070",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "41-41:factory": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final PooledObjectFactory<T> factory;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "PooledObjectFactory<T>",
+                            "PooledObjectFactory<T>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __factory: PooledObjectFactory[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __factory: PooledObjectFactory[typing.Any] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:13:07.169895",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "38-38:writeLock": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final WriteLock writeLock = new ReentrantReadWriteLock().writeLock();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "WriteLock",
+                            "java.util.concurrent.locks.WriteLock"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __writeLock: typing.Union[threading.RLock, threading.Lock] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __writeLock: typing.Union[threading.RLock, threading.Lock] = threading.Lock()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 19.713460206985474,
+                    "generation_timestamp": "2024-08-28T22:13:26.887769",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class TestSynchronizedPooledObjectFactory(PooledObjectFactory):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import threading",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.pool2.PooledObject import *",
+        "from src.main.org.apache.commons.pool2.PooledObjectFactory import *"
+    ]
+}

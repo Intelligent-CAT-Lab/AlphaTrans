@@ -13,7 +13,7 @@ import io
 # Imports End
 
 
-class AnsiPrintStream(typing.IO):
+class AnsiPrintStream:
 
     # Class Fields Begin
     # Class Fields End

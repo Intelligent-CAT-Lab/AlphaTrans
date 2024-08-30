@@ -13,6 +13,7 @@ from src.main.org.apache.commons.graph.builder.GraphConnection import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -24,28 +25,148 @@ class FindConnectedComponetTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def verifyNullGraph(self) -> None:
+    def verifyNullGraph_test2_decomposed(self) -> None:
         pass
 
-    def testVerifyNullVerticesGraph(self) -> None:
+    def verifyNullGraph_test1_decomposed(self) -> None:
         pass
 
-    def testVerifyEmptyGraph(self) -> None:
+    def verifyNullGraph_test0_decomposed(self) -> None:
         pass
 
-    def testVerifyConnectedComponentsIncludingVertices2(self) -> None:
+    def testVerifyNullVerticesGraph_test4_decomposed(self) -> None:
         pass
 
-    def testVerifyConnectedComponentsIncludingVertices(self) -> None:
+    def testVerifyNullVerticesGraph_test3_decomposed(self) -> None:
         pass
 
-    def testVerifyConnectedComponents3(self) -> None:
+    def testVerifyNullVerticesGraph_test2_decomposed(self) -> None:
         pass
 
-    def testVerifyConnectedComponents2(self) -> None:
+    def testVerifyNullVerticesGraph_test1_decomposed(self) -> None:
         pass
 
-    def testVerifyConnectedComponents(self) -> None:
+    def testVerifyNullVerticesGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyEmptyGraph_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyEmptyGraph_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyEmptyGraph_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyEmptyGraph_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test7_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices2_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponentsIncludingVertices_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents3_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents2_test0_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test6_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test5_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test4_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test3_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test2_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test1_decomposed(self) -> None:
+        pass
+
+    def testVerifyConnectedComponents_test0_decomposed(self) -> None:
         pass
 
     # Class Methods End

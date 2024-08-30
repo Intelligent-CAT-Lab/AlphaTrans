@@ -18,6 +18,7 @@ from src.main.org.apache.commons.graph.Mapper import *
 from src.main.org.apache.commons.graph.Graph import *
 from src.main.org.apache.commons.graph.CommonsGraph import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -32,7 +33,25 @@ class ExportTestCase(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testShouldPrintDotFormat(self) -> None:
+    def testShouldPrintDotFormat_test6_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test5_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test4_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test3_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test2_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test1_decomposed(self) -> None:
+        pass
+
+    def testShouldPrintDotFormat_test0_decomposed(self) -> None:
         pass
 
     def tearDown(self) -> None:

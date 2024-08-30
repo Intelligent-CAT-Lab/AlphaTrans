@@ -40,7 +40,7 @@ def calculate_method_coverage(args, project_root):
                 assert class_name is not None
 
                 covered_method_schema_data = {}
-                with open(f'data/schemas/translations/{args.model_name}/{args.prompt_type}/{args.project_name}/{py_file_path[py_file_path.index(args.project_name):].replace(".py", "").replace("/", ".")}_python_partial.json', 'r') as f:
+                with open(f'{args.translation_dir}/{py_file_path[py_file_path.index(args.project_name):].replace(".py", "").replace("/", ".")}_python_partial.json', 'r') as f:
                     covered_method_schema_data = json.load(f)
                 
                 method_name = method.name
@@ -65,6 +65,9 @@ def calculate_method_coverage(args, project_root):
                         if f"__{method_.split(':')[1]}" == method_name:
                             method_name = method_
                             break
+                    elif method_name.startswith('test') and method_name[4:] == method_.split(':')[1]:
+                        method_name = method_
+                        break
                     else:
                         if method_.split(':')[1] == method_name:
                             method_name = method_
@@ -74,7 +77,7 @@ def calculate_method_coverage(args, project_root):
                     print(f'{method_name} not found in schema {py_file_path}::{class_name}')
                     continue
 
-                covered_methods.append({'file': py_file_path, 'class': class_name, 'method': method_name})
+                covered_methods.append({'file': py_file_path[py_file_path.index(args.project_name):].replace('.py', '').replace('/', '.'), 'class': class_name, 'method': method_name})
 
     return covered_methods
 

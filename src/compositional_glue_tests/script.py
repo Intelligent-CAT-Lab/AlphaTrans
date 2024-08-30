@@ -11,6 +11,7 @@ from src.compositional_glue_tests.constants import *
 ERROR = "error"
 SUCCESS = "success"
 FAILURE = "failure"
+NOT_EXERCISED = "not-exercised"
 
 
 class Project:
@@ -167,13 +168,9 @@ class Project:
                             # add StaticFieldRedirector as a metaclass
                             inherited_classes.append("metaclass=StaticFieldRedirector")
 
-                            # filter out the typing module classes
-                            # TODO: this is a temporary fix and should eventually be made at the translation level
-                            filtered_inherited_classes = list(filter(lambda x: not x.startswith("typing."), inherited_classes))
-
                             class_declaration_suffix = "".join([
                                 class_declaration_suffix[:bracket_left+1],
-                                ", ".join(filtered_inherited_classes),
+                                ", ".join(inherited_classes),
                                 class_declaration_suffix[bracket_right:]
                             ])
                             
@@ -216,7 +213,7 @@ class Project:
                             f"            return object.__getattribute__(self, name)",
                             f"        except AttributeError:",
                             f"            pass",
-                            f"        return getattr(self.javaClz, name)" # TODO: type casting?
+                            f"        return JavaHandler.mapping(getattr(self.javaClz, StaticFieldRedirector.unmangle_name(name)))"
                         ]))
                     else:
                         python_file_contents.append("    pass") # in case there is no method to add!
@@ -349,9 +346,12 @@ class Project:
                 self.test_dependencies[test_class_name][test_method_name] = dict()
                 for class_name in coverage[test_class_name][test_method_name]:
                     proper_class_name = class_name.replace('/', '.')
-                    simple_class_name = class_name.split('/')[-1]
+                    simple_class_name = class_name.split('/')[-1].split('$')[-1]
                     self.test_dependencies[test_class_name][test_method_name][proper_class_name] = list()
                     for method_name in coverage[test_class_name][test_method_name][class_name]:
+                        # skip <clinit> methods
+                        if method_name == "<clinit>":
+                            continue
                         proper_method_name = method_name if method_name != "<init>" else simple_class_name
                         self.test_dependencies[test_class_name][test_method_name][proper_class_name].append(proper_method_name)
 
@@ -365,11 +365,7 @@ class Project:
             }
         }
         """
-        try:
-            return CompositionalTest(self, components, debug)
-        except NotImplementedError as e:
-            print(e)
-            return None
+        return CompositionalTest(self, components, debug)
 
         
 class CompositionalTest:
@@ -746,8 +742,13 @@ class CompositionalTest:
                 subprocess.run(['cp', '-r', f"{self.project.glue_dir}/.", f"{self.project.root_dir}/logs/glue/{self.project.name}/"], check=True)
 
             if not tests_to_run and not self.test_items:
-                # run all tests
-                test_selection_specification = "*"
+                # was: run all tests
+                # was: test_selection_specification = "*"
+                return {
+                    "status": NOT_EXERCISED,
+                    "feedback": dict(),
+                    "message": "No tests to run."
+                }
             else:
                 if not tests_to_run:
                     tests_to_run = dict()
@@ -774,12 +775,21 @@ class CompositionalTest:
                 with open(f"{self.project.root_dir}/logs/glue/{self.project.name}/run.sh", "w") as f:
                     f.write(" ".join(test_command))
 
-            output = subprocess.run(
-                test_command,
-                cwd=self.project.glue_dir,
-                capture_output=True,
-                text=True
-            )
+            try:
+                output = subprocess.run(
+                    test_command,
+                    cwd=self.project.glue_dir,
+                    capture_output=True,
+                    text=True,
+                    timeout=60*10 # 10 minutes
+                )
+            except subprocess.TimeoutExpired:
+                return {
+                    "status": ERROR, # timeout
+                    "feedback": dict(),
+                    "message": "Timeout in running the tests."
+                }
+
             failure_flag = (output.returncode != 0) # check if the failure is due to the tests or something else
             stdout, stderr = output.stdout, output.stderr
 
@@ -795,7 +805,8 @@ class CompositionalTest:
             if failure_flag and not feedback:
                 return {
                     "status": ERROR, # error in running the tests
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "Error during test execution."
                 }
                 
             # check if any unsupported operation was encountered
@@ -806,14 +817,18 @@ class CompositionalTest:
                 "[ExceptionHandler] Unhandled exception type"
             ]
             if feedback and any(x in stdout for x in unsupported_operation_keywords):
+                # collect all lines with unsupported operation keywords
+                unsupported_lines = [x for x in stdout.split('\n') if any(y in x for y in unsupported_operation_keywords)]                
                 return {
                     "status": ERROR, # unsupported operation encountered
-                    "feedback": dict()
+                    "feedback": dict(),
+                    "message": "Unsupported operation encountered: " + "\n".join(unsupported_lines)
                 }
             
             return {
                 "status": SUCCESS if not feedback else FAILURE,
-                "feedback": feedback
+                "feedback": feedback,
+                "message": "\n".join([f"{test}: {feedback[test]}" for test in feedback])
             }
         finally:
             # revert the writes before returning
@@ -823,7 +838,7 @@ class CompositionalTest:
         """
         Get the failed tests from the surefire reports.
         """
-        feedback = dict() # { test_class.method: [error_message] }
+        feedback = dict() # { test_class.method: error_message }
 
         surefire_dir = f"{self.project.glue_dir}/target/surefire-reports"
         if not os.path.exists(surefire_dir):
@@ -853,7 +868,7 @@ class CompositionalTest:
         
         # no support for non-static nested classes
         if 'static' not in class_declaration and class_data['nested_inside']:
-            raise NotImplementedError("Static nested classes are not supported.")
+            raise NotImplementedError("Non-static nested classes are not supported.")
 
     @staticmethod
     def __check_if_supported_method(method_data: dict):
@@ -880,7 +895,7 @@ class SyncMethod:
         self.fields.append(self.get_interop_code(field_name, field_schema_data, self.class_name, self.reverse))
 
     @staticmethod
-    def get_interop_code(field_name: str, field_schema_data: dict, class_name: str, reverse=False, idMap_name="idMap"):
+    def get_interop_code(field_name: str, field_schema_data: dict, class_name: str, reverse=False, idMap_name="idMap", skip_target_object=False):
         """
         Get the Java code for getting a field from Python (reverse=False) or setting a field in Python (reverse=True).
         """
@@ -898,7 +913,13 @@ class SyncMethod:
             python_field_name = field_name
         
         if not reverse:
-            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name, idMap_name=idMap_name)
+            field_from_python = type_mapping(
+                f"this.obj.getMember(\"{python_field_name}\")",
+                formatted_field_type,
+                include_idMap=True,
+                target_object=field_name if not skip_target_object else None,
+                idMap_name=idMap_name
+            )
             return f"this.{field_name} = ({formatted_field_type}) {field_from_python};"
         else:
             return f"this.obj.invokeMember(\"__setattr__\", \"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, {idMap_name}, this.obj.getMember(\"{python_field_name}\")));"
@@ -1304,7 +1325,7 @@ class Schema:
             # we must ininitialize all uninitialized final fields in the constructor
             # since these are skipped from pyToJ
             pyToJ1 += "".join(
-                SyncMethod.get_interop_code(field_name, field_schema_data, class_obj['name'], idMap_name="idMapPyToJ") 
+                SyncMethod.get_interop_code(field_name, field_schema_data, class_obj['name'], idMap_name="idMapPyToJ", skip_target_object=True)
                 for field_name, field_schema_data in class_obj["uninitialized_final_fields"]
             )
 
@@ -1442,8 +1463,7 @@ class Schema:
                     fully_qualified_class_name in self.project.test_dependencies[test_class][test_method] and
                     proper_method_name in self.project.test_dependencies[test_class][test_method][fully_qualified_class_name]
                 ):
-                    test_class_name = test_class.split('.')[-1]
-                    relevant_tests.add((test_class_name, test_method))
+                    relevant_tests.add((test_class, test_method))
 
         self.tests_to_execute.update(relevant_tests)
     

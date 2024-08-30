@@ -42,12 +42,16 @@ class JavaHandler:
             return JavaHandler.properties_to_dict(x, id_map, target_object)
 
         # Map
-        if hasattr(x, 'keySet'):
+        if JavaHandler.isJavaMap(x):
             return JavaHandler.map_to_dict(x, id_map, target_object)
 
         # List
-        if hasattr(x, 'toArray'):
+        if JavaHandler.isJavaList(x):
             return JavaHandler.list_to_list(x, id_map, target_object)
+
+        # Set
+        if JavaHandler.isJavaSet(x):
+            return JavaHandler.set_to_set(x, id_map, target_object)
 
         # handle exception objects
         if x.getClass().getName().endswith("Exception"):
@@ -100,6 +104,10 @@ class JavaHandler:
         # Pattern
         if x.getClass().getName() == "java.util.regex.Pattern":
             return JavaHandler.pattern_to_pattern(x, id_map, target_object)
+
+        # Charset
+        if "sun.nio.cs." in x.getClass().getName():
+            return JavaHandler.charset_to_string(x)
         
         print("[JavaHandler.mapping] Unhandled Java object type: " + repr(x))
         return x # return untranslated object
@@ -142,6 +150,19 @@ class JavaHandler:
         
         JavaHandler.putObjectsToMaps(x, L)    
         return L
+
+    def set_to_set(x, id_map, target_object=None):
+        S = set()
+        if target_object:
+            S = target_object
+            S.clear()
+        id = JavaHandler.getJavaId(x)
+        id_map[id] = S
+        for item in x.toArray():
+            S.add(JavaHandler.mapping(item, id_map))
+
+        JavaHandler.putObjectsToMaps(x, S)
+        return S
 
     def array_to_list(x, id_map, target_object=None):
         L = []
@@ -196,6 +217,24 @@ class JavaHandler:
         id_map[id] = P
         return P
 
+    def charset_to_string(x):
+        charsetName = x.getClass().getName().split(".")[-1]
+        if charsetName == "UTF_8":
+            return "UTF-8"
+        if charsetName == "UTF_16":
+            return "UTF-16"
+        if charsetName == "UTF_16BE":
+            return "UTF-16BE"
+        if charsetName == "UTF_16LE":
+            return "UTF-16LE"
+        if charsetName == "US_ASCII":
+            return "US-ASCII"
+        if charsetName == "ISO_8859_1":
+            return "ISO-8859-1"
+
+        # handle other charsets with a generic rule
+        return charsetName.replace("_", "-")
+
     def getPythonId(obj):
         return id(obj)
 
@@ -207,6 +246,15 @@ class JavaHandler:
 
     def isJavaClass(obj):
         return JavaHandler.IntegrationUtils.isJavaClass(obj)
+
+    def isJavaList(obj):
+        return JavaHandler.IntegrationUtils.isJavaList(obj)
+
+    def isJavaSet(obj):
+        return JavaHandler.IntegrationUtils.isJavaSet(obj)
+
+    def isJavaMap(obj):
+        return JavaHandler.IntegrationUtils.isJavaMap(obj)
 
     def getPythonClassFromJavaClass(javaClass):
         return JavaHandler.mapping(JavaHandler.ContextInitializer.getPythonClass(javaClass))
@@ -225,6 +273,9 @@ class JavaHandler:
 
     def createDefaultPythonObject(cls):
         return getattr(cls, '__new__')(cls)
+
+    def pythonSetToPythonList(s):
+        return list(s)
 
 
 class ExceptionHandler:

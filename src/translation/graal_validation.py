@@ -1,11 +1,11 @@
 import json
 import typing
-from src.compositional_glue_tests.script import Project
+from src.compositional_glue_tests.script import Project, ERROR
 
 project = None
 
 
-def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, str], args) -> typing.Tuple[str, typing.Dict[str, str]]:
+def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, str], args) -> typing.Tuple[str, typing.Dict[str, str], str]:
     """
     generation: List of strings. Each string is a line of code of the translation.
     fragment: Dictionary containing information about the fragment. (TODO: add more details)
@@ -13,12 +13,13 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
     returns (status, feedback) where
         status: success, failure, error
         feedback: Dict[str, str]. example: {'test_1': 'failing message', 'test_2': 'failing message', ...}
+        message: str. A message for the user.
     """
     global project
     project_name = args.project_name
 
-    schema_dir = f'data/schemas/translations/{args.model_name}/{args.prompt_type}'
-    
+    schema_dir = '/'.join(args.translation_dir.split('/')[:-1])
+
     if not project:
         project = Project(project_name, schema_dir)
         
@@ -45,12 +46,18 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
 
     project.recompose_python_project(injected_translations)
 
-    test = project.derive_compositional_tests(components, debug=True)
-    if test is None:
-        return "error", dict()
+    try:
+        test = project.derive_compositional_tests(components, debug=True)
+        output = test.run()
+    except NotImplementedError as e:
+        output = {
+            "status": ERROR,
+            "feedback": dict(),
+            "message": "Unsupported fragment: " + str(e)
+        }
 
-    output = test.run()
     status = output['status']
     feedback = output['feedback']
+    message = output['message']
 
-    return status, feedback
+    return status, feedback, message

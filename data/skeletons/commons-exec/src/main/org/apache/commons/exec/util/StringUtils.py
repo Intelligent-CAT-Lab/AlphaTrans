@@ -4,6 +4,7 @@ from __future__ import annotations
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -26,7 +27,7 @@ class StringUtils:
     @staticmethod
     def stringSubstitution(
         argStr: str, vars_: typing.Dict[str, typing.Any], isLenient: bool
-    ) -> str:
+    ) -> io.StringIO:
         pass
 
     @staticmethod
