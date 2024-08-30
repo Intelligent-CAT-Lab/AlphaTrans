@@ -346,9 +346,12 @@ class Project:
                 self.test_dependencies[test_class_name][test_method_name] = dict()
                 for class_name in coverage[test_class_name][test_method_name]:
                     proper_class_name = class_name.replace('/', '.')
-                    simple_class_name = class_name.split('/')[-1]
+                    simple_class_name = class_name.split('/')[-1].split('$')[-1]
                     self.test_dependencies[test_class_name][test_method_name][proper_class_name] = list()
                     for method_name in coverage[test_class_name][test_method_name][class_name]:
+                        # skip <clinit> methods
+                        if method_name == "<clinit>":
+                            continue
                         proper_method_name = method_name if method_name != "<init>" else simple_class_name
                         self.test_dependencies[test_class_name][test_method_name][proper_class_name].append(proper_method_name)
 
@@ -892,7 +895,7 @@ class SyncMethod:
         self.fields.append(self.get_interop_code(field_name, field_schema_data, self.class_name, self.reverse))
 
     @staticmethod
-    def get_interop_code(field_name: str, field_schema_data: dict, class_name: str, reverse=False, idMap_name="idMap"):
+    def get_interop_code(field_name: str, field_schema_data: dict, class_name: str, reverse=False, idMap_name="idMap", skip_target_object=False):
         """
         Get the Java code for getting a field from Python (reverse=False) or setting a field in Python (reverse=True).
         """
@@ -910,7 +913,13 @@ class SyncMethod:
             python_field_name = field_name
         
         if not reverse:
-            field_from_python = type_mapping(f"this.obj.getMember(\"{python_field_name}\")", formatted_field_type, include_idMap=True, target_object=field_name, idMap_name=idMap_name)
+            field_from_python = type_mapping(
+                f"this.obj.getMember(\"{python_field_name}\")",
+                formatted_field_type,
+                include_idMap=True,
+                target_object=field_name if not skip_target_object else None,
+                idMap_name=idMap_name
+            )
             return f"this.{field_name} = ({formatted_field_type}) {field_from_python};"
         else:
             return f"this.obj.invokeMember(\"__setattr__\", \"{python_field_name}\", IntegrationUtils.mapToPython({field_name}, {idMap_name}, this.obj.getMember(\"{python_field_name}\")));"
@@ -1316,7 +1325,7 @@ class Schema:
             # we must ininitialize all uninitialized final fields in the constructor
             # since these are skipped from pyToJ
             pyToJ1 += "".join(
-                SyncMethod.get_interop_code(field_name, field_schema_data, class_obj['name'], idMap_name="idMapPyToJ") 
+                SyncMethod.get_interop_code(field_name, field_schema_data, class_obj['name'], idMap_name="idMapPyToJ", skip_target_object=True)
                 for field_name, field_schema_data in class_obj["uninitialized_final_fields"]
             )
 
