@@ -56,7 +56,10 @@ def main(project: str):
     schema_files = set()
     schema_files.update(os.listdir(f"{ORIGINAL_SCHEMA}/{project}"))
     schema_files.update(os.listdir(f"{NEW_SCHEMA}/{project}"))
-    schema_files = {f for f in schema_files if 'src.main' in f}
+    schema_files = {f for f in schema_files if (
+        'src.main' in f
+        or ('src.test' in f and 'Test' not in f)
+    )}
     
     # loop over the files and compare them
     for schema_file in schema_files:
