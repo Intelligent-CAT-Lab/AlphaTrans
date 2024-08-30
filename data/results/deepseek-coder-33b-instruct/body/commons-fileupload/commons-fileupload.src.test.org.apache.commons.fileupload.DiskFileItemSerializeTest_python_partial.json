@@ -1,5 +1,5 @@
 {
-    "path": "java_projects/cleaned_final_projects/commons-fileupload/src/test/java/org/apache/commons/fileupload/DiskFileItemSerializeTest.java",
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/test/java/org/apache/commons/fileupload/DiskFileItemSerializeTest.java",
     "imports": {
         "22-22:import ByteArrayInputStream": {
             "start": 22,
@@ -99,23 +99,16 @@
                     ],
                     "translation": [
                         "    def __deserialize(self, baos: typing.Union[io.BytesIO, bytearray]) -> typing.Any:",
-                        "         result = None",
-                        "         bais = BytesIO(baos.getvalue() if isinstance(baos, BytesIO) else baos)",
-                        "         import pickle",
-                        "         result = pickle.load(bais)",
-                        "         return result"
+                        "        ",
+                        "        result = None",
+                        "        bais = io.BytesIO(baos)",
+                        "        ois = pickle.load(bais)",
+                        "        result = ois",
+                        "        bais.close()",
+                        "",
+                        "        return result"
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 5.544999837875366,
-                    "generation_timestamp": "2024-07-21T11:57:53.107333",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "pending",
                     "graal_validation": "pending",
@@ -136,7 +129,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 },
                 "89-96:serialize": {
                     "start": 89,
@@ -174,22 +166,15 @@
                     ],
                     "translation": [
                         "    def __serialize(self, target: typing.Any) -> typing.Union[io.BytesIO, bytearray]:",
-                        "         baos = BytesIO()",
-                        "         import pickle",
-                        "         pickle.dump(target, baos)",
-                        "         return baos.getvalue()"
+                        "        ",
+                        "        baos = BytesIO()",
+                        "        oos = BytesIO()",
+                        "        oos.write(target)",
+                        "        oos.flush()",
+                        "        oos.close()",
+                        "        return baos"
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 4.518608331680298,
-                    "generation_timestamp": "2024-07-21T11:57:57.629700",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "pending",
                     "graal_validation": "pending",
@@ -210,7 +195,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 },
                 "71-82:createContentBytes": {
                     "start": 71,
@@ -252,26 +236,11 @@
                     ],
                     "translation": [
                         "    def __createContentBytes(self, size: int) -> typing.List[int]:",
-                        "         buffer = \"\"",
-                        "         count = 0",
-                        "         for i in range(size):",
-                        "             buffer += str(count)",
-                        "             count += 1",
-                        "             if count > 9:",
-                        "                 count = 0",
-                        "         return list(buffer.encode())"
+                        "        ",
+                        "        buffer = [str(i % 10) for i in range(size)]",
+                        "        return [ord(c) for c in ''.join(buffer)]"
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 4.164006471633911,
-                    "generation_timestamp": "2024-07-21T11:58:01.795276",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "pending",
                     "graal_validation": "pending",
@@ -292,7 +261,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 },
                 "61-68:compareBytes": {
                     "start": 61,
@@ -332,23 +300,15 @@
                     ],
                     "translation": [
                         "    def __compareBytes(self, text: str, origBytes: typing.List[int], newBytes: typing.List[int]) -> None:",
-                        "         assert origBytes is not None, \"origBytes must not be null\"",
-                        "         assert newBytes is not None, \"newBytes must not be null\"",
-                        "         assert len(origBytes) == len(newBytes), f\"{text} byte[] length\"",
-                        "         for i in range(len(origBytes)):",
-                        "             assert origBytes[i] == newBytes[i], f\"{text} byte[{i}]\""
+                        "        ",
+                        "        assert origBytes is not None, \"origBytes must not be null\"",
+                        "        assert newBytes is not None, \"newBytes must not be null\"",
+                        "        assert len(origBytes) == len(newBytes), f\"{text} byte[] length\"",
+                        "        ",
+                        "        for i in range(len(origBytes)):",
+                        "            assert origBytes[i] == newBytes[i], f\"{text} byte[{i}]\""
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "pending",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 4.4559853076934814,
-                    "generation_timestamp": "2024-07-21T11:58:06.253868",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "pending",
                     "graal_validation": "pending",
@@ -369,7 +329,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 }
             },
             "fields": {
@@ -380,8 +339,8 @@
                         "    private static final int threshold = 16;\n"
                     ],
                     "modifiers": [
-                        "static",
                         "final",
+                        "static",
                         "private"
                     ],
                     "types": [
@@ -398,16 +357,6 @@
                         "    __threshold: int = 16"
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "success",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 7.993547439575195,
-                    "generation_timestamp": "2024-07-21T11:47:00.841576",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "success",
                     "graal_validation": "pending",
@@ -428,7 +377,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 },
                 "35-35:textContentType": {
                     "start": 35,
@@ -437,8 +385,8 @@
                         "    private static final String textContentType = \"text/plain\";\n"
                     ],
                     "modifiers": [
-                        "static",
                         "final",
+                        "static",
                         "private"
                     ],
                     "types": [
@@ -455,16 +403,6 @@
                         "    __textContentType: str = \"text/plain\""
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "success",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 8.124513387680054,
-                    "generation_timestamp": "2024-07-21T11:47:08.969620",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "success",
                     "graal_validation": "pending",
@@ -485,7 +423,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 },
                 "31-32:REPO": {
                     "start": 31,
@@ -495,8 +432,8 @@
                         "            new File(System.getProperty(\"java.io.tmpdir\"), \"diskfileitemrepo\");\n"
                     ],
                     "modifiers": [
-                        "static",
                         "final",
+                        "static",
                         "private"
                     ],
                     "types": [
@@ -510,19 +447,9 @@
                         ""
                     ],
                     "translation": [
-                        "    __REPO: pathlib.Path = pathlib.Path(os.environ.get('TMPDIR', '/tmp'), 'diskfileitemrepo')"
+                        "    __REPO: pathlib.Path = pathlib.Path(os.getenv('TEMP') or tempfile.gettempdir(), \"diskfileitemrepo\")"
                     ],
                     "translation_status": "attempted",
-<<<<<<<< HEAD:data/schemas/translations/llama-3-70b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
-                    "syntactical_validation_status": "success",
-                    "execution_validation_status": "success",
-                    "test_validation_status": "pending",
-                    "graal_validation_status": "pending",
-                    "elapsed_time": 11.828502655029297,
-                    "generation_timestamp": "2024-07-21T11:47:20.801453",
-                    "model_name": "llama-3-70b-instruct",
-                    "include_implementation": true
-========
                     "syntactic_validation": "parseable",
                     "field_exercise": "success",
                     "graal_validation": "pending",
@@ -543,7 +470,6 @@
                         "graal": 2,
                         "test_execution": 2
                     }
->>>>>>>> 85458ea2e (update results):data/results/deepseek-coder-33b-instruct/body/commons-fileupload/commons-fileupload.src.test.org.apache.commons.fileupload.DiskFileItemSerializeTest_python_partial.json
                 }
             },
             "is_enum": false,
