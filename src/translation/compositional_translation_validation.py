@@ -50,20 +50,29 @@ def get_eligible_tests(fragment, processed_fragments, args):
 
         if all(focal_method in processed_fragments for focal_method in test_focal_method_map[test] if focal_method != f"{fragment['schema_name']}|{fragment['class_name']}|{fragment['fragment_name']}"):
             test_schema = '.'.join(test.split('|')[0].split('/')[2:]).replace('.java', '')
+            test_class = test.split('|')[1]
+            test_method = test.split('|')[2]
+
             test_schema_data = {}
             with open(f'{args.translation_dir}/{test_schema}_python_partial.json', 'r') as f:
                 test_schema_data = json.load(f)
-            
-            if 'Test' not in [x.split('(')[0] for x in test_schema_data['classes'][test.split('|')[1]]['methods'][test.split('|')[2]]['annotations']]:
+
+            if test_class not in test_schema_data['classes']:
                 continue
 
-            if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test.split('|')[1]]['methods'][test.split('|')[2]]['annotations']]:
+            if test_method not in test_schema_data['classes'][test_class]['methods']:
                 continue
 
-            if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test.split('|')[1]]['methods'][test.split('|')[2]]['annotations']]:
+            if 'Test' not in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
                 continue
 
-            executable_tests.append({'schema_name': test_schema, 'class_name': test.split('|')[1], 'fragment_name': test.split('|')[2], 'fragment_type': 'method', 'is_test_method': True})
+            if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+                continue
+
+            if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+                continue
+
+            executable_tests.append({'schema_name': test_schema, 'class_name': test_class, 'fragment_name': test_method, 'fragment_type': 'method', 'is_test_method': True})
     
     non_decomposed_tests = [x for x in executable_tests if '_decomposed' not in x['fragment_name']]
     executable_tests = [x for x in executable_tests if '_decomposed' in x['fragment_name']]
