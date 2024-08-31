@@ -1,0 +1,1961 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/ExecuteWatchdog.java",
+    "imports": {
+        "20-20:import Duration": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "21-21:import Objects": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "24-24:import Supplier": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.function.Supplier;\n"
+            ]
+        },
+        "22-22:import Executors": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.concurrent.Executors;\n"
+            ]
+        },
+        "23-23:import ThreadFactory": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.concurrent.ThreadFactory;\n"
+            ]
+        },
+        "26-26:import DebugUtils": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.util.DebugUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ExecuteWatchdog": {
+            "start": 52,
+            "end": 52,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Builder"
+            ],
+            "implements": [
+                "TimeoutObserver"
+            ],
+            "extends": [],
+            "methods": {
+                "286-308:timeoutOccured": {
+                    "start": 286,
+                    "end": 308,
+                    "body": [
+                        "    public synchronized void timeoutOccured(final Watchdog w) {\n",
+                        "        try {\n",
+                        "            try {\n",
+                        "                // We must check if the process was not stopped\n",
+                        "                // before being here\n",
+                        "                if (process != null) {\n",
+                        "                    process.exitValue();\n",
+                        "                }\n",
+                        "            } catch (final IllegalThreadStateException itse) {\n",
+                        "                // the process is not terminated, if this is really\n",
+                        "                // a timeout and not a manual stop then destroy it.\n",
+                        "                if (watch) {\n",
+                        "                    killedProcess = true;\n",
+                        "                    process.destroy();\n",
+                        "                }\n",
+                        "            }\n",
+                        "        } catch (final Exception e) {\n",
+                        "            caught = e;\n",
+                        "            DebugUtils.handleException(\"Getting the exit value of the process failed\", e);\n",
+                        "        } finally {\n",
+                        "            cleanUp();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "timeoutOccured(Watchdog)",
+                    "parameters": [
+                        "w"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "186-189:cleanUp"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def timeoutOccured(self, w: Watchdog) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def timeoutOccured(self, w: Watchdog) -> None:",
+                        "         try:",
+                        "             try:",
+                        "                 # We must check if the process was not stopped",
+                        "                 # before being here",
+                        "                 if self.__process is not None:",
+                        "                     self.__process.poll()",
+                        "             except subprocess.SubprocessError:",
+                        "                 # the process is not terminated, if this is really",
+                        "                 # a timeout and not a manual stop then destroy it.",
+                        "                 if self.__watch:",
+                        "                     self.__killedProcess = True",
+                        "                     self.__process.terminate()",
+                        "         except Exception as e:",
+                        "             self.__caught = e",
+                        "             DebugUtils.handleException(\"Getting the exit value of the process failed\", e)",
+                        "         finally:",
+                        "             self._cleanUp()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 654.1188912391663,
+                    "generation_timestamp": "2024-08-29T02:49:14.128441",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "147-149:ExecuteWatchdog0": {
+                    "start": 147,
+                    "end": 149,
+                    "body": [
+                        "    public static ExecuteWatchdog ExecuteWatchdog0(final long timeoutMillis) {\n",
+                        "        return new ExecuteWatchdog(Executors.defaultThreadFactory(), Duration.ofMillis(timeoutMillis));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ExecuteWatchdog",
+                            "ExecuteWatchdog"
+                        ]
+                    ],
+                    "signature": "ExecuteWatchdog0(long)",
+                    "parameters": [
+                        "timeoutMillis"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "157-169:ExecuteWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def ExecuteWatchdog0(timeoutMillis: int) -> ExecuteWatchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def ExecuteWatchdog0(timeoutMillis: int) -> ExecuteWatchdog:",
+                        "         return ExecuteWatchdog(threading.Thread(), datetime.timedelta(milliseconds=timeoutMillis))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec34Test.py::Exec34Test::testExec34_2_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                                    "class": "ExecuteWatchdog",
+                                    "method": "147-149:ExecuteWatchdog0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                                    "class": "ExecuteWatchdog",
+                                    "method": "157-169:ExecuteWatchdog"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "48-50:get"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "69-72:setTimeout"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "58-61:setThreadFactory"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "127-129:addTimeoutObserver"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "82-84:builder"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "114-120:Watchdog"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "Argument",
+                                    "method": "43-46:Argument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "239-241:addArgument0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "75-99:quoteArgument"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec34Test",
+                                    "class": "Exec34Test",
+                                    "method": "165-169:testExec34_2_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec34Test.py::Exec34Test::testExec34_1_test2_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec34Test.py\", line 213, in testExec34_1_test2_decomposed\n    watchdog = ExecuteWatchdog.ExecuteWatchdog0(sys.maxsize)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/ExecuteWatchdog.py\", line 74, in ExecuteWatchdog0\n    threading.Thread(), datetime.timedelta(milliseconds=timeoutMillis)\nOverflowError: Python int too large to convert to C int",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                                    "class": "ExecuteWatchdog",
+                                    "method": "147-149:ExecuteWatchdog0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "Argument",
+                                    "method": "43-46:Argument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "239-241:addArgument0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "75-99:quoteArgument"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec34Test",
+                                    "class": "Exec34Test",
+                                    "method": "70-74:testExec34_1_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 95.18425703048706,
+                    "generation_timestamp": "2024-08-28T23:18:35.368671",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "274-280:stop": {
+                    "start": 274,
+                    "end": 280,
+                    "body": [
+                        "    public synchronized void stop() {\n",
+                        "        if (hasWatchdog) {\n",
+                        "            watchdog.stop();\n",
+                        "        }\n",
+                        "        watch = false;\n",
+                        "        process = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "182-185:stop"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def stop(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def stop(self) -> None:",
+                        "         if self.__hasWatchdog:",
+                        "             self.__watchdog.stop()",
+                        "         self.__watch = False",
+                        "         self.__process = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 140.50858354568481,
+                    "generation_timestamp": "2024-08-28T22:46:14.255982",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "255-269:start": {
+                    "start": 255,
+                    "end": 269,
+                    "body": [
+                        "    public synchronized void start(final Process processToMonitor) {\n",
+                        "        Objects.requireNonNull(processToMonitor, \"processToMonitor\");\n",
+                        "        if (process != null) {\n",
+                        "            throw new IllegalStateException(\"Already running.\");\n",
+                        "        }\n",
+                        "        caught = null;\n",
+                        "        killedProcess = false;\n",
+                        "        watch = true;\n",
+                        "        process = processToMonitor;\n",
+                        "        processStarted = true;\n",
+                        "        notifyAll();\n",
+                        "        if (hasWatchdog) {\n",
+                        "            watchdog.start();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start(Process)",
+                    "parameters": [
+                        "processToMonitor"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "174-177:start"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def start(self, processToMonitor: subprocess.Popen) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def start(self, processToMonitor: subprocess.Popen) -> None:",
+                        "        ",
+                        "        if self.__process is not None:",
+                        "            raise RuntimeError(\"Already running.\")",
+                        "        self.__caught = None",
+                        "        self.__killedProcess = False",
+                        "        self.__watch = True",
+                        "        self.__process = processToMonitor",
+                        "        self.__processStarted = True",
+                        "        self.notifyAll()",
+                        "        if self.__hasWatchdog:",
+                        "            self.__watchdog.start()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 656.090696811676,
+                    "generation_timestamp": "2024-08-29T03:31:53.148445",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "241-243:killedProcess": {
+                    "start": 241,
+                    "end": 243,
+                    "body": [
+                        "    public synchronized boolean killedProcess() {\n",
+                        "        return killedProcess;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "killedProcess()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def killedProcess(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def killedProcess(self) -> bool:",
+                        "         return self.__killedProcess"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 112.28479862213135,
+                    "generation_timestamp": "2024-08-28T22:25:50.437334",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "231-234:isWatching": {
+                    "start": 231,
+                    "end": 234,
+                    "body": [
+                        "    public synchronized boolean isWatching() {\n",
+                        "        ensureStarted();\n",
+                        "        return watch;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isWatching()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "204-212:ensureStarted"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isWatching(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isWatching(self) -> bool:",
+                        "         self.__ensureStarted()",
+                        "         return self.__watch"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 103.85940527915955,
+                    "generation_timestamp": "2024-08-28T22:37:09.985100",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "220-224:failedToStart": {
+                    "start": 220,
+                    "end": 224,
+                    "body": [
+                        "    public synchronized void failedToStart(final Exception e) {\n",
+                        "        processStarted = true;\n",
+                        "        caught = e;\n",
+                        "        notifyAll();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "failedToStart(Exception)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def failedToStart(self, e: Exception) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def failedToStart(self, e: Exception) -> None:",
+                        "        ",
+                        "        self.__processStarted = True",
+                        "        self.__caught = e",
+                        "        self.notifyAll()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 59.51191282272339,
+                    "generation_timestamp": "2024-08-28T22:26:50.001886",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "194-198:destroyProcess": {
+                    "start": 194,
+                    "end": 198,
+                    "body": [
+                        "    public synchronized void destroyProcess() {\n",
+                        "        ensureStarted();\n",
+                        "        timeoutOccured(null);\n",
+                        "        stop();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "destroyProcess()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "204-212:ensureStarted"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "286-308:timeoutOccured"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "274-280:stop"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def destroyProcess(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def destroyProcess(self) -> None:",
+                        "         self.__ensureStarted()",
+                        "         self.timeoutOccured(None)",
+                        "         self.stop()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 92.97898268699646,
+                    "generation_timestamp": "2024-08-29T02:50:47.144558",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "186-189:cleanUp": {
+                    "start": 186,
+                    "end": 189,
+                    "body": [
+                        "    protected synchronized void cleanUp() {\n",
+                        "        watch = false;\n",
+                        "        process = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "synchronized",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cleanUp()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _cleanUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _cleanUp(self) -> None:",
+                        "         self.__watch = False",
+                        "         self.__process = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 149.06593203544617,
+                    "generation_timestamp": "2024-08-28T22:29:19.119475",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "177-181:checkException": {
+                    "start": 177,
+                    "end": 181,
+                    "body": [
+                        "    public synchronized void checkException() throws Exception {\n",
+                        "        if (caught != null) {\n",
+                        "            throw caught;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkException()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def checkException(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def checkException(self) -> None:",
+                        "         if self.__caught is not None:",
+                        "            raise self.__caught"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 161.49151468276978,
+                    "generation_timestamp": "2024-08-28T22:32:00.719727",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "110-112:builder": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    public static Builder builder() {\n",
+                        "        return new Builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "builder()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def builder() -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def builder() -> Builder:",
+                        "         return Builder()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 79.23564743995667,
+                    "generation_timestamp": "2024-08-28T22:33:19.992992",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "204-212:ensureStarted": {
+                    "start": 204,
+                    "end": 212,
+                    "body": [
+                        "    private void ensureStarted() {\n",
+                        "        while (!processStarted && caught == null) {\n",
+                        "            try {\n",
+                        "                wait();\n",
+                        "            } catch (final InterruptedException e) {\n",
+                        "                throw new IllegalStateException(e.getMessage(), e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ensureStarted()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __ensureStarted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __ensureStarted(self) -> None:",
+                        "        ",
+                        "        while not self.__processStarted and self.__caught is None:",
+                        "            try:",
+                        "                self.wait()",
+                        "            except InterruptedError as e:",
+                        "                raise RuntimeError(e.getMessage(), e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 125.99243426322937,
+                    "generation_timestamp": "2024-08-28T22:35:26.060883",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "157-169:ExecuteWatchdog": {
+                    "start": 157,
+                    "end": 169,
+                    "body": [
+                        "    private ExecuteWatchdog(final ThreadFactory threadFactory, final Duration timeout) {\n",
+                        "        this.killedProcess = false;\n",
+                        "        this.watch = false;\n",
+                        "        this.hasWatchdog = !INFINITE_TIMEOUT_DURATION.equals(timeout);\n",
+                        "        this.processStarted = false;\n",
+                        "        this.threadFactory = threadFactory != null ? threadFactory : Executors.defaultThreadFactory();\n",
+                        "        if (this.hasWatchdog) {\n",
+                        "            this.watchdog = Watchdog.builder().setThreadFactory(this.threadFactory).setTimeout(timeout).get();\n",
+                        "            this.watchdog.addTimeoutObserver(this);\n",
+                        "        } else {\n",
+                        "            this.watchdog = null;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ExecuteWatchdog(ThreadFactory, Duration)",
+                    "parameters": [
+                        "threadFactory",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "48-50:get"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "69-72:setTimeout"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "58-61:setThreadFactory"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "82-84:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "127-129:addTimeoutObserver"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, threadFactory: threading.Thread, timeout: datetime.timedelta) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, threadFactory: threading.Thread, timeout: datetime.timedelta) -> None:",
+                        "         self.killedProcess = False",
+                        "         self.watch = False",
+                        "         self.hasWatchdog = not self.INFINITE_TIMEOUT_DURATION == timeout",
+                        "         self.processStarted = False",
+                        "         self.threadFactory = threadFactory if threadFactory is not None else threading.Thread()",
+                        "         if self.hasWatchdog:",
+                        "             self.watchdog = Watchdog.builder().setThreadFactory(self.threadFactory).setTimeout(timeout).get()",
+                        "             self.watchdog.addTimeoutObserver(self)",
+                        "         else:",
+                        "             self.watchdog = None"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec34Test.py::Exec34Test::testExec34_2_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                                    "class": "ExecuteWatchdog",
+                                    "method": "147-149:ExecuteWatchdog0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                                    "class": "ExecuteWatchdog",
+                                    "method": "157-169:ExecuteWatchdog"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "48-50:get"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "69-72:setTimeout"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Builder",
+                                    "method": "58-61:setThreadFactory"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "127-129:addTimeoutObserver"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "82-84:builder"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                                    "class": "Watchdog",
+                                    "method": "114-120:Watchdog"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "Argument",
+                                    "method": "43-46:Argument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "239-241:addArgument0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "75-99:quoteArgument"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec34Test",
+                                    "class": "Exec34Test",
+                                    "method": "165-169:testExec34_2_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 76.60005402565002,
+                    "generation_timestamp": "2024-08-28T23:14:21.681070",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "245-247:setProcessNotStarted": {
+                    "start": 245,
+                    "end": 247,
+                    "body": [
+                        "    void setProcessNotStarted() {\n",
+                        "        processStarted = false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setProcessNotStarted()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setProcessNotStarted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setProcessNotStarted(self) -> None:",
+                        "         self.__processStarted = False"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 130.14456796646118,
+                    "generation_timestamp": "2024-08-28T22:39:20.190808",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "102-102:INFINITE_TIMEOUT_DURATION": {
+                    "start": 102,
+                    "end": 102,
+                    "body": [
+                        "    public static final Duration INFINITE_TIMEOUT_DURATION = Duration.ofMillis(INFINITE_TIMEOUT);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    INFINITE_TIMEOUT_DURATION: datetime.timedelta = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    INFINITE_TIMEOUT_DURATION: datetime.timedelta = datetime.timedelta(milliseconds=-1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.635322570800781,
+                    "generation_timestamp": "2024-08-28T21:58:48.678953",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "99-99:INFINITE_TIMEOUT": {
+                    "start": 99,
+                    "end": 99,
+                    "body": [
+                        "    public static final long INFINITE_TIMEOUT = -1;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    INFINITE_TIMEOUT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    INFINITE_TIMEOUT: int = -1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.210707426071167,
+                    "generation_timestamp": "2024-08-28T21:58:57.903514",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-138:threadFactory": {
+                    "start": 138,
+                    "end": 138,
+                    "body": [
+                        "    private final ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.918169",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "133-133:processStarted": {
+                    "start": 133,
+                    "end": 133,
+                    "body": [
+                        "    private volatile boolean processStarted;\n"
+                    ],
+                    "modifiers": [
+                        "private",
+                        "volatile"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __processStarted: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __processStarted: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.927968",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "130-130:watchdog": {
+                    "start": 130,
+                    "end": 130,
+                    "body": [
+                        "    private final Watchdog watchdog;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Watchdog",
+                            "Watchdog"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __watchdog: Watchdog = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __watchdog: Watchdog = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.938711",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "127-127:killedProcess": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private boolean killedProcess;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __killedProcess: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __killedProcess: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.946532",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "124-124:caught": {
+                    "start": 124,
+                    "end": 124,
+                    "body": [
+                        "    private Exception caught;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Exception",
+                            "java.lang.Exception"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __caught: Exception = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __caught: Exception = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.953177",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "121-121:watch": {
+                    "start": 121,
+                    "end": 121,
+                    "body": [
+                        "    private boolean watch;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __watch: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __watch: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.963497",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "118-118:hasWatchdog": {
+                    "start": 118,
+                    "end": 118,
+                    "body": [
+                        "    private final boolean hasWatchdog;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __hasWatchdog: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __hasWatchdog: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.973873",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "115-115:process": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private Process process;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Process",
+                            "java.lang.Process"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __process: subprocess.Popen = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __process: subprocess.Popen = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.985586",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ExecuteWatchdog(TimeoutObserver):\n\n"
+        },
+        "Builder": {
+            "start": 59,
+            "end": 59,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "ExecuteWatchdog",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "70-72:get": {
+                    "start": 70,
+                    "end": 72,
+                    "body": [
+                        "        public ExecuteWatchdog get() {\n",
+                        "            return new ExecuteWatchdog(threadFactory, timeout);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ExecuteWatchdog",
+                            "ExecuteWatchdog"
+                        ]
+                    ],
+                    "signature": "get()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "157-169:ExecuteWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def get(self) -> ExecuteWatchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def get(self) -> ExecuteWatchdog:",
+                        "         return ExecuteWatchdog(self.threadFactory, self.timeout)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 81.63371586799622,
+                    "generation_timestamp": "2024-08-28T23:15:43.359269",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "91-94:setTimeout": {
+                    "start": 91,
+                    "end": 94,
+                    "body": [
+                        "        public Builder setTimeout(final Duration timeout) {\n",
+                        "            this.timeout = timeout;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setTimeout(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setTimeout(self, timeout: datetime.timedelta) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setTimeout(self, timeout: datetime.timedelta) -> Builder:",
+                        "         self.__timeout = timeout",
+                        "         return self"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 87.50765085220337,
+                    "generation_timestamp": "2024-08-28T22:40:47.733237",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "80-83:setThreadFactory": {
+                    "start": 80,
+                    "end": 83,
+                    "body": [
+                        "        public Builder setThreadFactory(final ThreadFactory threadFactory) {\n",
+                        "            this.threadFactory = threadFactory;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setThreadFactory(ThreadFactory)",
+                    "parameters": [
+                        "threadFactory"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:",
+                        "         self.__threadFactory = threadFactory",
+                        "         return self"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 51.32889676094055,
+                    "generation_timestamp": "2024-08-28T22:41:39.097272",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "62-62:timeout": {
+                    "start": 62,
+                    "end": 62,
+                    "body": [
+                        "        private Duration timeout;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __timeout: datetime.timedelta = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __timeout: datetime.timedelta = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:57.998512",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "61-61:threadFactory": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "        private ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T21:58:58.007790",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Builder():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import threading",
+        "import datetime",
+        "from src.main.org.apache.commons.exec.TimeoutObserver import *",
+        "from src.main.org.apache.commons.exec.Watchdog import *",
+        "from src.main.org.apache.commons.exec.util.DebugUtils import *"
+    ]
+}

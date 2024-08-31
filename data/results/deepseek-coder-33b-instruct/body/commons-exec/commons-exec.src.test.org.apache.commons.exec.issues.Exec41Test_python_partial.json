@@ -1,0 +1,3025 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec41Test.java",
+    "imports": {
+        "22-22:import File": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "24-24:import CommandLine": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "25-25:import DefaultExecutor": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "26-26:import ExecuteException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.ExecuteException;\n"
+            ]
+        },
+        "27-27:import ExecuteWatchdog": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.exec.ExecuteWatchdog;\n"
+            ]
+        },
+        "28-28:import OS": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.OS;\n"
+            ]
+        },
+        "29-29:import PumpStreamHandler": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.PumpStreamHandler;\n"
+            ]
+        },
+        "30-30:import TestUtil": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.TestUtil;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertTrue": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec41Test": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Supplier<String>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "448-480:testExec41WithStreams_test10_decomposed": {
+                    "start": 448,
+                    "end": 480,
+                    "body": [
+                        "    public void testExec41WithStreams_test10_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            // nothing to do\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed by watchdog.\");\n",
+                        "        }\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\");\n",
+                        "        assertTrue(duration < 9000, \"Skipping the Thread.join() did not work\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test10_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test10_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException:",
+                        "            pass",
+                        "        duration = time.time() - startTime",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed by watchdog.\")",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\")",
+                        "        self.assertTrue(duration < 9000, \"Skipping the Thread.join() did not work\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 16.73636221885681,
+                    "generation_timestamp": "2024-08-30T00:36:40.913680",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "414-445:testExec41WithStreams_test9_decomposed": {
+                    "start": 414,
+                    "end": 445,
+                    "body": [
+                        "    public void testExec41WithStreams_test9_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            // nothing to do\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed by watchdog.\");\n",
+                        "        }\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test9_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test9_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException:",
+                        "            pass",
+                        "        duration = time.time() - startTime",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed by watchdog.\")",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.337557792663574,
+                    "generation_timestamp": "2024-08-30T00:36:56.318653",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "381-411:testExec41WithStreams_test8_decomposed": {
+                    "start": 381,
+                    "end": 411,
+                    "body": [
+                        "    public void testExec41WithStreams_test8_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            // nothing to do\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed by watchdog.\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test8_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test8_decomposed(self) -> None:",
+                        "        ",
+                        "        try:",
+                        "            if OS.isFamilyWindows():",
+                        "                cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "            elif \"HP-UX\" == os.getenv('os.name'):",
+                        "                cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "            elif OS.isFamilyUnix():",
+                        "                cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "            else:",
+                        "                print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "                return",
+                        "        except ValueError as e:",
+                        "            print(e)",
+                        "            return",
+                        "",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException:",
+                        "            pass",
+                        "        duration = time.time() - startTime",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed by watchdog.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.448173999786377,
+                    "generation_timestamp": "2024-08-30T00:37:11.845230",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "353-378:testExec41WithStreams_test7_decomposed": {
+                    "start": 353,
+                    "end": 378,
+                    "body": [
+                        "    public void testExec41WithStreams_test7_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            // nothing to do\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test7_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException as e:",
+                        "            pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.65229344367981,
+                    "generation_timestamp": "2024-08-30T00:37:24.638640",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "331-350:testExec41WithStreams_test6_decomposed": {
+                    "start": 331,
+                    "end": 350,
+                    "body": [
+                        "    public void testExec41WithStreams_test6_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test6_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.63376808166504,
+                    "generation_timestamp": "2024-08-30T00:37:42.355936",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "310-328:testExec41WithStreams_test5_decomposed": {
+                    "start": 310,
+                    "end": 328,
+                    "body": [
+                        "    public void testExec41WithStreams_test5_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test5_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)",
+                        "        executor.setWatchdog(watchdog)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.504302740097046,
+                    "generation_timestamp": "2024-08-30T00:37:54.938226",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "290-307:testExec41WithStreams_test4_decomposed": {
+                    "start": 290,
+                    "end": 307,
+                    "body": [
+                        "    public void testExec41WithStreams_test4_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(System.out, System.err);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test4_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler2(sys.stdout, sys.stderr)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.368643045425415,
+                    "generation_timestamp": "2024-08-30T00:38:17.360328",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "271-287:testExec41WithStreams_test3_decomposed": {
+                    "start": 271,
+                    "end": 287,
+                    "body": [
+                        "    public void testExec41WithStreams_test3_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test3_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.191062688827515,
+                    "generation_timestamp": "2024-08-30T00:38:26.612185",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "253-268:testExec41WithStreams_test2_decomposed": {
+                    "start": 253,
+                    "end": 268,
+                    "body": [
+                        "    public void testExec41WithStreams_test2_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test2_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        executor = DefaultExecutor.builder().get()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.982912063598633,
+                    "generation_timestamp": "2024-08-30T00:38:37.667900",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "236-250:testExec41WithStreams_test1_decomposed": {
+                    "start": 236,
+                    "end": 250,
+                    "body": [
+                        "    public void testExec41WithStreams_test1_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        DefaultExecutor.builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test1_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        DefaultExecutor.builder()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py::Exec41Test::testExec41WithStreams_test1_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py\", line 256, in testExec41WithStreams_test1_decomposed\n    if OS.isFamilyWindows():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 131, in isFamilyWindows\n    return OS.__isFamily(OS.FAMILY_WINDOWS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 182, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "191-193:isFamilyWindows"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec41Test",
+                                    "class": "Exec41Test",
+                                    "method": "236-250:testExec41WithStreams_test1_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 8.927278518676758,
+                    "generation_timestamp": "2024-08-30T00:38:46.671080",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "220-233:testExec41WithStreams_test0_decomposed": {
+                    "start": 220,
+                    "end": 233,
+                    "body": [
+                        "    public void testExec41WithStreams_test0_decomposed() throws Exception {\n",
+                        "        CommandLine cmdLine;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\");\n",
+                        "        } else if (\"HP-UX\".equals(System.getProperty(\"os.name\"))) {\n",
+                        "            // see EXEC-52 - option must appear after the hostname!\n",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\");\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\");\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec41WithStreams' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithStreams_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithStreams_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithStreams_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = None",
+                        "        if OS.isFamilyWindows():",
+                        "            cmdLine = CommandLine.parse0(\"ping.exe -n 10 -w 1000 127.0.0.1\")",
+                        "        elif \"HP-UX\" == os.getenv('os.name'):",
+                        "            cmdLine = CommandLine.parse0(\"ping 127.0.0.1 -n 10\")",
+                        "        elif OS.isFamilyUnix():",
+                        "            cmdLine = CommandLine.parse0(\"ping -c 10 127.0.0.1\")",
+                        "        else:",
+                        "            print(\"The test 'testExec41WithStreams' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py::Exec41Test::testExec41WithStreams_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py\", line 273, in testExec41WithStreams_test0_decomposed\n    if OS.isFamilyWindows():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 131, in isFamilyWindows\n    return OS.__isFamily(OS.FAMILY_WINDOWS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 189, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "191-193:isFamilyWindows"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec41Test",
+                                    "class": "Exec41Test",
+                                    "method": "220-233:testExec41WithStreams_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 23.950281620025635,
+                    "generation_timestamp": "2024-08-30T00:39:10.703470",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "195-217:testExec41WithoutStreams_test11_decomposed": {
+                    "start": 195,
+                    "end": 217,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test11_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            System.out.println(e);\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed.\");\n",
+                        "        }\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\");\n",
+                        "        assertTrue(duration < 9000, () -> \"Skipping the Thread.join() did not work, duration=\" + duration);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test11_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test11_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test11_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException as e:",
+                        "            print(e)",
+                        "        duration = time.time() - startTime",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed.\")",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\")",
+                        "        self.assertTrue(duration < 9000, \"Skipping the Thread.join() did not work, duration=\" + str(duration))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.42506718635559,
+                    "generation_timestamp": "2024-08-29T07:19:30.614338",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "171-192:testExec41WithoutStreams_test10_decomposed": {
+                    "start": 171,
+                    "end": 192,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test10_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            System.out.println(e);\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed.\");\n",
+                        "        }\n",
+                        "        assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test10_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test10_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException as e:",
+                        "            print(e)",
+                        "        duration = time.time() - startTime",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed.\")",
+                        "        self.assertTrue(watchdog.killedProcess(), \"The process was killed by the watchdog\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 13.587726831436157,
+                    "generation_timestamp": "2024-08-29T07:19:19.167954",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "148-168:testExec41WithoutStreams_test9_decomposed": {
+                    "start": 148,
+                    "end": 168,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test9_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            System.out.println(e);\n",
+                        "        }\n",
+                        "        final long duration = System.currentTimeMillis() - startTime;\n",
+                        "        System.out.println(\"Process completed in \" + duration + \" millis; below is its output\");\n",
+                        "        if (watchdog.killedProcess()) {\n",
+                        "            System.out.println(\"Process timed out and was killed.\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test9_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test9_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException as e:",
+                        "            print(e)",
+                        "        duration = (time.time() - startTime) * 1000",
+                        "        print(\"Process completed in \" + str(duration) + \" millis; below is its output\")",
+                        "        if watchdog.killedProcess():",
+                        "            print(\"Process timed out and was killed.\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 9.938615322113037,
+                    "generation_timestamp": "2024-08-29T07:18:58.029393",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "130-145:testExec41WithoutStreams_test8_decomposed": {
+                    "start": 130,
+                    "end": 145,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test8_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        try {\n",
+                        "            executor.execute0(cmdLine);\n",
+                        "        } catch (final ExecuteException e) {\n",
+                        "            System.out.println(e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "234-237:execute0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test8_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test8_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)",
+                        "        startTime = time.time()",
+                        "        try:",
+                        "            executor.execute0(cmdLine)",
+                        "        except ExecuteException as e:",
+                        "            print(e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.924191236495972,
+                    "generation_timestamp": "2024-08-29T07:18:34.291363",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "118-127:testExec41WithoutStreams_test7_decomposed": {
+                    "start": 118,
+                    "end": 127,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test7_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "        executor.setStreamHandler(pumpStreamHandler);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "494-496:setStreamHandler"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test7_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)",
+                        "        executor.setStreamHandler(pumpStreamHandler)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.288378715515137,
+                    "generation_timestamp": "2024-08-29T07:18:00.204718",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "107-115:testExec41WithoutStreams_test6_decomposed": {
+                    "start": 107,
+                    "end": 115,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test6_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "        executor.setWatchdog(watchdog);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "509-511:setWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test6_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)",
+                        "        executor.setWatchdog(watchdog)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.173363924026489,
+                    "generation_timestamp": "2024-08-29T07:17:24.850199",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "97-104:testExec41WithoutStreams_test5_decomposed": {
+                    "start": 97,
+                    "end": 104,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test5_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "        final PumpStreamHandler pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(null, null, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test5_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        DefaultExecutor.builder()",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)",
+                        "        pumpStreamHandler = PumpStreamHandler.PumpStreamHandler3(None, None, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.815526247024536,
+                    "generation_timestamp": "2024-08-29T07:16:50.370892",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "88-94:testExec41WithoutStreams_test4_decomposed": {
+                    "start": 88,
+                    "end": 94,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test4_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "        final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test4_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        executor = DefaultExecutor.builder().get()",
+                        "        watchdog = ExecuteWatchdog.ExecuteWatchdog0(2 * 1000)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.986405611038208,
+                    "generation_timestamp": "2024-08-29T07:16:10.976319",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "80-85:testExec41WithoutStreams_test3_decomposed": {
+                    "start": 80,
+                    "end": 85,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test3_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "        final DefaultExecutor executor = DefaultExecutor.builder().get();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test3_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        DefaultExecutor.builder()",
+                        "        executor = DefaultExecutor.builder().get()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py::Exec41Test::testExec41WithoutStreams_test3_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py\", line 408, in testExec41WithoutStreams_test3_decomposed\n    executor = DefaultExecutor.builder().get()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/DefaultExecutor.py\", line 34, in get\n    return DefaultExecutor(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/DefaultExecutor.py\", line 322, in __init__\n    self.__launcher = CommandLauncherFactory.createVMLauncher()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/launcher/CommandLauncherFactory.py\", line 14, in createVMLauncher\n    return VmsCommandLauncher() if OS.isFamilyOpenVms() else Java13CommandLauncher()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 155, in isFamilyOpenVms\n    return OS.__isFamily(OS.FAMILY_VMS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 182, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                                    "class": "Builder",
+                                    "method": "74-76:get"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                                    "class": "DefaultExecutor",
+                                    "method": "131-133:builder"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                                    "class": "DefaultExecutor",
+                                    "method": "177-183:DefaultExecutor"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "137-139:isFamilyOpenVms"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                                    "class": "PumpStreamHandler",
+                                    "method": "97-99:PumpStreamHandler3"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                                    "class": "PumpStreamHandler",
+                                    "method": "86-88:PumpStreamHandler2"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                                    "class": "PumpStreamHandler",
+                                    "method": "67-69:PumpStreamHandler0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                                    "class": "PumpStreamHandler",
+                                    "method": "108-114:PumpStreamHandler"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "Argument",
+                                    "method": "43-46:Argument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "239-241:addArgument0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "398-404:toCleanExecutable"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.launcher.CommandLauncherFactory",
+                                    "class": "CommandLauncherFactory",
+                                    "method": "32-35:createVMLauncher"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "75-99:quoteArgument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "50-52:fixFileSeparatorChar"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec41Test",
+                                    "class": "Exec41Test",
+                                    "method": "80-85:testExec41WithoutStreams_test3_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 3.4609625339508057,
+                    "generation_timestamp": "2024-08-29T07:15:31.315442",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-77:testExec41WithoutStreams_test2_decomposed": {
+                    "start": 73,
+                    "end": 77,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test2_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "        DefaultExecutor.builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                            "DefaultExecutor",
+                            "131-133:builder"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test2_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")",
+                        "        DefaultExecutor.builder()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py::Exec41Test::testExec41WithoutStreams_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.DefaultExecutor",
+                                    "class": "DefaultExecutor",
+                                    "method": "131-133:builder"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "Argument",
+                                    "method": "43-46:Argument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "239-241:addArgument0"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "398-404:toCleanExecutable"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "75-99:quoteArgument"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                                    "class": "StringUtils",
+                                    "method": "50-52:fixFileSeparatorChar"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec41Test",
+                                    "class": "Exec41Test",
+                                    "method": "73-77:testExec41WithoutStreams_test2_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 6.541788578033447,
+                    "generation_timestamp": "2024-08-29T07:14:41.749597",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "67-70:testExec41WithoutStreams_test1_decomposed": {
+                    "start": 67,
+                    "end": 70,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test1_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(\"10\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test1_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript, None)",
+                        "        cmdLine.addArgument0(\"10\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 3.0425262451171875,
+                    "generation_timestamp": "2024-08-29T07:12:52.887526",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "62-64:testExec41WithoutStreams_test0_decomposed": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "    public void testExec41WithoutStreams_test0_decomposed() throws Exception {\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec41WithoutStreams_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec41WithoutStreams_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec41WithoutStreams_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        cmdLine = CommandLine(1, None, self.__pingScript.absolute().as_posix(), None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py::Exec41Test::testExec41WithoutStreams_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec41Test.py\", line 206, in testExec41WithoutStreams_test0_decomposed\n    cmdLine = CommandLine(1, None, self.__pingScript.absolute().as_posix(), None)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/CommandLine.py\", line 145, in __init__\n    self.__executable = self.__toCleanExecutable(executable.as_posix())\nAttributeError: 'str' object has no attribute 'as_posix'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                                    "class": "CommandLine",
+                                    "method": "192-208:CommandLine"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec41Test",
+                                    "class": "Exec41Test",
+                                    "method": "62-64:testExec41WithoutStreams_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 17.04681086540222,
+                    "generation_timestamp": "2024-08-29T07:27:11.329861",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "fields": {
+                "39-39:pingScript": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final File pingScript = TestUtil.resolveScriptForOS(testDir + \"/ping\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pingScript: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __pingScript: pathlib.Path = pathlib.Path(\"src/test/scripts/ping\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.665634632110596,
+                    "generation_timestamp": "2024-08-28T22:02:16.900226",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "38-38:testDir": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final File testDir = new File(\"src/test/scripts\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __testDir: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __testDir: pathlib.Path = pathlib.Path(\"src/test/scripts\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.304527282714844,
+                    "generation_timestamp": "2024-08-28T22:02:28.223031",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec41Test(unittest.TestCase):\n\n"
+        },
+        "new Supplier<String>(...) { ... }": {
+            "start": 216,
+            "end": 216,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Exec41Test",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "216-216:get": {
+                    "start": 216,
+                    "end": 216,
+                    "body": [
+                        "        assertTrue(duration < 9000, () -> \"Skipping the Thread.join() did not work, duration=\" + duration);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "get()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteException import *",
+        "from src.main.org.apache.commons.exec.ExecuteStreamHandler import *",
+        "from src.main.org.apache.commons.exec.ExecuteWatchdog import *",
+        "from src.main.org.apache.commons.exec.OS import *",
+        "from src.main.org.apache.commons.exec.PumpStreamHandler import *",
+        "from src.test.org.apache.commons.exec.TestUtil import *"
+    ]
+}

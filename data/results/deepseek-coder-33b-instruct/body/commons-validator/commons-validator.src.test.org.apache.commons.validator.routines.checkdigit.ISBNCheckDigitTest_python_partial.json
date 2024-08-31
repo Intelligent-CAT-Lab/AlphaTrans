@@ -1,0 +1,297 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/test/java/org/apache/commons/validator/routines/checkdigit/ISBNCheckDigitTest.java",
+    "imports": {},
+    "classes": {
+        "ISBNCheckDigitTest": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractCheckDigitTest"
+            ],
+            "methods": {
+                "38-52:setUp": {
+                    "start": 38,
+                    "end": 52,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "        routine = ISBNCheckDigit.ISBN_CHECK_DIGIT;\n",
+                        "        valid =\n",
+                        "                new String[] {\n",
+                        "                    \"9780072129519\",\n",
+                        "                    \"9780764558313\",\n",
+                        "                    \"1930110995\",\n",
+                        "                    \"020163385X\",\n",
+                        "                    \"1590596277\", // ISBN-10 Ubuntu Book\n",
+                        "                    \"9781590596272\" // ISBN-13 Ubuntu Book\n",
+                        "                };\n",
+                        "        missingMessage = \"ISBN Code is missing\";\n",
+                        "        zeroSum = \"000000000000\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _setUp(self) -> None:",
+                        "        ",
+                        "        self._routine = ISBNCheckDigit.ISBN_CHECK_DIGIT",
+                        "        self._valid = [",
+                        "            \"9780072129519\",",
+                        "            \"9780764558313\",",
+                        "            \"1930110995\",",
+                        "            \"020163385X\",",
+                        "            \"1590596277\", # ISBN-10 Ubuntu Book",
+                        "            \"9781590596272\" # ISBN-13 Ubuntu Book",
+                        "        ]",
+                        "        self._missingMessage = \"ISBN Code is missing\"",
+                        "        self._zeroSum = \"000000000000\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 24.259990453720093,
+                    "generation_timestamp": "2024-08-30T07:38:06.500823",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "55-88:testInvalidLength": {
+                    "start": 55,
+                    "end": 88,
+                    "body": [
+                        "    public void testInvalidLength() {\n",
+                        "        assertFalse(\"isValid() Lth 9 \", routine.isValid(\"123456789\"));\n",
+                        "        assertFalse(\"isValid() Lth 11\", routine.isValid(\"12345678901\"));\n",
+                        "        assertFalse(\"isValid() Lth 12\", routine.isValid(\"123456789012\"));\n",
+                        "        assertFalse(\"isValid() Lth 14\", routine.isValid(\"12345678901234\"));\n",
+                        "\n",
+                        "        try {\n",
+                        "            routine.calculate(\"12345678\");\n",
+                        "            fail(\"calculate() Lth 8 - expected exception\");\n",
+                        "        } catch (Exception e) {\n",
+                        "            assertEquals(\"calculate() Lth 8\", \"Invalid ISBN Length = 8\", e.getMessage());\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            routine.calculate(\"1234567890\");\n",
+                        "            fail(\"calculate() Lth 10 - expected exception\");\n",
+                        "        } catch (Exception e) {\n",
+                        "            assertEquals(\"calculate() Lth 10\", \"Invalid ISBN Length = 10\", e.getMessage());\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            routine.calculate(\"12345678901\");\n",
+                        "            fail(\"calculate() Lth 11 - expected exception\");\n",
+                        "        } catch (Exception e) {\n",
+                        "            assertEquals(\"calculate() Lth 11\", \"Invalid ISBN Length = 11\", e.getMessage());\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            routine.calculate(\"1234567890123\");\n",
+                        "            fail(\"calculate() Lth 13 - expected exception\");\n",
+                        "        } catch (Exception e) {\n",
+                        "            assertEquals(\"calculate() Lth 13\", \"Invalid ISBN Length = 13\", e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidLength()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "63-63:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidLength(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInvalidLength(self) -> None:",
+                        "        ",
+                        "        # Assuming that the routine is an instance of ISBNCheckDigit",
+                        "        routine = ISBNCheckDigit()",
+                        "",
+                        "        self.assertFalse(routine.isValid(\"123456789\"))",
+                        "        self.assertFalse(routine.isValid(\"12345678901\"))",
+                        "        self.assertFalse(routine.isValid(\"123456789012\"))",
+                        "        self.assertFalse(routine.isValid(\"12345678901234\"))",
+                        "",
+                        "        try:",
+                        "            routine.calculate(\"12345678\")",
+                        "            pytest.fail(\"calculate() Lth 8 - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"Invalid ISBN Length = 8\", e.args[0])",
+                        "",
+                        "        try:",
+                        "            routine.calculate(\"1234567890\")",
+                        "            pytest.fail(\"calculate() Lth 10 - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"Invalid ISBN Length = 10\", e.args[0])",
+                        "",
+                        "        try:",
+                        "            routine.calculate(\"12345678901\")",
+                        "            pytest.fail(\"calculate() Lth 11 - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"Invalid ISBN Length = 11\", e.args[0])",
+                        "",
+                        "        try:",
+                        "            routine.calculate(\"1234567890123\")",
+                        "            pytest.fail(\"calculate() Lth 13 - expected exception\")",
+                        "        except Exception as e:",
+                        "            self.assertEqual(\"Invalid ISBN Length = 13\", e.args[0])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 33.0329213142395,
+                    "generation_timestamp": "2024-08-30T07:35:10.557402",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "32-34:ISBNCheckDigitTest": {
+                    "start": 32,
+                    "end": 34,
+                    "body": [
+                        "    public ISBNCheckDigitTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISBNCheckDigitTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest",
+                            "AbstractCheckDigitTest",
+                            "82-84:AbstractCheckDigitTest"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 25.4021954536438,
+                    "generation_timestamp": "2024-08-30T04:46:47.006187",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class ISBNCheckDigitTest(AbstractCheckDigitTest):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ISBNCheckDigit import *"
+    ]
+}
