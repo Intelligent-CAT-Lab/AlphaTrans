@@ -20,7 +20,4 @@ class BaseWeightedEdge:
     def map_(self, edge: BaseLabeledWeightedEdge[typing.Any]) -> typing.Any:
         pass
 
-    def __init__(self) -> None:
-        pass
-
     # Class Methods End
