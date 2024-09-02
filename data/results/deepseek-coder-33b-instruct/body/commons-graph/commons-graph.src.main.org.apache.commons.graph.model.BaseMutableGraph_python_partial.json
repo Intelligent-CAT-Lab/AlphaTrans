@@ -1,0 +1,1068 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/model/BaseMutableGraph.java",
+    "imports": {
+        "25-25:import LinkedHashSet": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "22-22:import MutableGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.MutableGraph;\n"
+            ]
+        },
+        "23-23:import VertexPair": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseMutableGraph": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "MutableGraph",
+                "BaseGraph"
+            ],
+            "methods": {
+                "142-152:removeVertex": {
+                    "start": 142,
+                    "end": 152,
+                    "body": [
+                        "    public final void removeVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to remove a null Vertex from the Graph\");\n",
+                        "        checkGraphCondition(containsVertex(v), \"Vertex '%s' not present in the Graph\", v);\n",
+                        "\n",
+                        "        for (V tail : getAdjacencyList().get(v)) {\n",
+                        "            getIndexedEdges().remove(new VertexPair<V>(v, tail));\n",
+                        "        }\n",
+                        "        getAdjacencyList().remove(v);\n",
+                        "\n",
+                        "        decorateRemoveVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "97-97:decorateRemoveVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def removeVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "        self._checkGraphCondition(v is not None, \"Impossible to remove a null Vertex from the Graph\")",
+                        "        self._checkGraphCondition(self.containsVertex(v), \"Vertex '%s' not present in the Graph\" % v)",
+                        "",
+                        "        for tail in self._getAdjacencyList().get(v):",
+                        "            self._getIndexedEdges().pop(VertexPair(v, tail), None)",
+                        "        self._getAdjacencyList().pop(v, None)",
+                        "",
+                        "        self._decorateRemoveVertex(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 93.36100149154663,
+                    "generation_timestamp": "2024-09-01T02:58:34.275089",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "132-139:removeEdge": {
+                    "start": 132,
+                    "end": 139,
+                    "body": [
+                        "    public final void removeEdge(E e) {\n",
+                        "        checkGraphCondition(e != null, \"Impossible to remove a null Edge from the Graph\");\n",
+                        "        checkGraphCondition(containsEdge(e), \"Edge '%s' not present in the Graph\", e);\n",
+                        "        final VertexPair<V> vertexPair = getVertices1(e);\n",
+                        "        decorateRemoveEdge(e);\n",
+                        "        internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail());\n",
+                        "        getAllEdges().remove(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "90-90:decorateRemoveEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "124-129:internalRemoveEdge"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def removeEdge(self, e: typing.Any) -> None:",
+                        "        ",
+                        "        self._checkGraphCondition(e is not None, \"Impossible to remove a null Edge from the Graph\")",
+                        "        self._checkGraphCondition(self.containsEdge(e), f\"Edge '{e}' not present in the Graph\")",
+                        "        vertexPair = self.getVertices1(e)",
+                        "        self._decorateRemoveEdge(e)",
+                        "        self._internalRemoveEdge(vertexPair.getHead(), e, vertexPair.getTail())",
+                        "        self.getAllEdges().remove(e)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 98.50893235206604,
+                    "generation_timestamp": "2024-09-01T03:00:13.027508",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "124-129:internalRemoveEdge": {
+                    "start": 124,
+                    "end": 129,
+                    "body": [
+                        "    protected void internalRemoveEdge(V head, E e, V tail) {\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedVertices().remove(e);\n",
+                        "        getIndexedEdges().remove(vertexPair);\n",
+                        "        getAdjacencyList().get(vertexPair.getHead()).remove(vertexPair.getTail());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalRemoveEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _internalRemoveEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "        vertexPair = VertexPair(head, tail)",
+                        "        self.getIndexedVertices().remove(e)",
+                        "        self.getIndexedEdges().remove(vertexPair)",
+                        "        self.getAdjacencyList().get(vertexPair.getHead()).remove(vertexPair.getTail())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 91.50884914398193,
+                    "generation_timestamp": "2024-09-01T01:17:00.185482",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "106-115:internalAddEdge": {
+                    "start": 106,
+                    "end": 115,
+                    "body": [
+                        "    protected void internalAddEdge(V head, E e, V tail) {\n",
+                        "        getAdjacencyList().get(head).add(tail);\n",
+                        "\n",
+                        "        final VertexPair<V> vertexPair = new VertexPair<V>(head, tail);\n",
+                        "        getIndexedEdges().put(vertexPair, e);\n",
+                        "\n",
+                        "        if (!getIndexedVertices().containsKey(e)) {\n",
+                        "            getIndexedVertices().put(e, vertexPair);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _internalAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "        self.getAdjacencyList()[head].add(tail)",
+                        "",
+                        "        vertexPair = VertexPair(head, tail)",
+                        "        self.getIndexedEdges()[vertexPair] = e",
+                        "",
+                        "        if e not in self.getIndexedVertices():",
+                        "            self.getIndexedVertices()[e] = vertexPair"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 95.91762709617615,
+                    "generation_timestamp": "2024-09-01T01:18:36.384006",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    }
+                },
+                "60-67:addVertex": {
+                    "start": 60,
+                    "end": 67,
+                    "body": [
+                        "    public final void addVertex(V v) {\n",
+                        "        checkGraphCondition(v != null, \"Impossible to add a null Vertex to the Graph\");\n",
+                        "        checkGraphCondition(!containsVertex(v), \"Vertex '%s' already present in the Graph\", v);\n",
+                        "\n",
+                        "        getAdjacencyList().put(v, new LinkedHashSet<V>());\n",
+                        "\n",
+                        "        decorateAddVertex(v);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "83-83:decorateAddVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def addVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "        self._checkGraphCondition(v is not None, \"Impossible to add a null Vertex to the Graph\")",
+                        "        self._checkGraphCondition(not self.containsVertex(v), f\"Vertex '{v}' already present in the Graph\")",
+                        "",
+                        "        self._adjacencyList[v] = set()",
+                        "",
+                        "        self._decorateAddVertex(v)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/BoruvkaTestCase.py::BoruvkaTestCase::testverifySparseGraphMinimumSpanningTree_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/BoruvkaTestCase.py\", line 149, in testverifySparseGraphMinimumSpanningTree_test0_decomposed\n    input.addVertex(BaseLabeledVertex(\"A\"))\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.BoruvkaTestCase",
+                                    "class": "BoruvkaTestCase",
+                                    "method": "694-698:verifySparseGraphMinimumSpanningTree_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/BoruvkaTestCase.py::BoruvkaTestCase::testNullMonoid_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/BoruvkaTestCase.py\", line 648, in testNullMonoid_test0_decomposed\n    input_graph.addVertex(vertex_a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/BoruvkaTestCase.py\", line 650, in testNullMonoid_test0_decomposed\n    pytest.fail(str(e))\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/site-packages/_pytest/outcomes.py\", line 177, in fail\n    raise Failed(msg=reason, pytrace=pytrace)\nFailed: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.BoruvkaTestCase",
+                                    "class": "BoruvkaTestCase",
+                                    "method": "146-158:testNullMonoid_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py::ReverseDeleteTestCase::testVerifyNotConnectGraph_test3_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py\", line 631, in testVerifyNotConnectGraph_test3_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.ReverseDeleteTestCase",
+                                    "class": "ReverseDeleteTestCase",
+                                    "method": "380-389:testVerifyNotConnectGraph_test3_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py::ReverseDeleteTestCase::testVerifyMinimumSpanningTree_test3_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py\", line 802, in testVerifyMinimumSpanningTree_test3_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.ReverseDeleteTestCase",
+                                    "class": "ReverseDeleteTestCase",
+                                    "method": "177-186:testVerifyMinimumSpanningTree_test3_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py::KruskalTestCase::testVerifyNotConnectedMinimumSpanningTree_test4_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py\", line 604, in testVerifyNotConnectedMinimumSpanningTree_test4_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.KruskalTestCase",
+                                    "class": "KruskalTestCase",
+                                    "method": "880-891:testVerifyNotConnectedMinimumSpanningTree_test4_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py::KruskalTestCase::testP4NonUniformWeightsMinimumSpanningTree_test4_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py\", line 842, in testP4NonUniformWeightsMinimumSpanningTree_test4_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.KruskalTestCase",
+                                    "class": "KruskalTestCase",
+                                    "method": "577-588:testP4NonUniformWeightsMinimumSpanningTree_test4_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py::KruskalTestCase::testDisconnectedMinimumSpanningTree_test4_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/KruskalTestCase.py\", line 1271, in testDisconnectedMinimumSpanningTree_test4_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.KruskalTestCase",
+                                    "class": "KruskalTestCase",
+                                    "method": "107-118:testDisconnectedMinimumSpanningTree_test4_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py::ReverseDeleteTestCase::testVerifyNotConnectGraph2_test5_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py\", line 497, in testVerifyNotConnectGraph2_test5_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.ReverseDeleteTestCase",
+                                    "class": "ReverseDeleteTestCase",
+                                    "method": "543-556:testVerifyNotConnectGraph2_test5_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py::ReverseDeleteTestCase::testVerifyNotConnectGraph3_test6_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/ReverseDeleteTestCase.py\", line 255, in testVerifyNotConnectGraph3_test6_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.ReverseDeleteTestCase",
+                                    "class": "ReverseDeleteTestCase",
+                                    "method": "823-838:testVerifyNotConnectGraph3_test6_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        },
+                        "commons-graph/src/test/org/apache/commons/graph/spanning/PrimTestCase.py::PrimTestCase::testVerifyMinimumSpanningTree2_test7_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/test/org/apache/commons/graph/spanning/PrimTestCase.py\", line 395, in testVerifyMinimumSpanningTree2_test7_decomposed\n    input.addVertex(a)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-graph/src/main/org/apache/commons/graph/model/BaseMutableGraph.py\", line 68, in addVertex\n    self._checkGraphCondition(\nTypeError: BaseGraph._checkGraphCondition() missing 1 required positional argument: 'errorMessageArgs'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                                    "class": "BaseMutableGraph",
+                                    "method": "60-67:addVertex"
+                                },
+                                {
+                                    "file": "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                                    "class": "Assertions",
+                                    "method": "64-70:checkNotNull"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.spanning.PrimTestCase",
+                                    "class": "PrimTestCase",
+                                    "method": "361-378:testVerifyMinimumSpanningTree2_test7_decomposed"
+                                },
+                                {
+                                    "file": "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                                    "class": "BaseLabeledVertex",
+                                    "method": "35-37:BaseLabeledVertex"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 94.54537892341614,
+                    "generation_timestamp": "2024-09-01T03:01:47.844685",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 4,
+                        "field_exercise": 4,
+                        "graal": 4,
+                        "test_execution": 4
+                    },
+                    "final_budget": {
+                        "syntactic": 4,
+                        "field_exercise": 4,
+                        "graal": 4,
+                        "test_execution": 4
+                    }
+                },
+                "41-57:addEdge": {
+                    "start": 41,
+                    "end": 57,
+                    "body": [
+                        "    public void addEdge(V head, E e, V tail) {\n",
+                        "        checkGraphCondition(head != null, \"Null head Vertex not admitted\");\n",
+                        "        checkGraphCondition(e != null, \"Impossible to add a null Edge in the Graph\");\n",
+                        "        checkGraphCondition(tail != null, \"Null tail Vertex not admitted\");\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(head), \"Head Vertex '%s' not present in the Graph\", head);\n",
+                        "        checkGraphCondition(\n",
+                        "                containsVertex(tail), \"Head Vertex '%s' not present in the Graph\", tail);\n",
+                        "        checkGraphCondition(\n",
+                        "                getEdge(head, tail) == null, \"Edge %s is already present in the Graph\", e);\n",
+                        "\n",
+                        "        getAllEdges().add(e);\n",
+                        "\n",
+                        "        internalAddEdge(head, e, tail);\n",
+                        "\n",
+                        "        decorateAddEdge(head, e, tail);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseGraph",
+                            "BaseGraph",
+                            "65-70:checkGraphCondition"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "106-115:internalAddEdge"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.model.BaseMutableGraph",
+                            "BaseMutableGraph",
+                            "76-76:decorateAddEdge"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def addEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "        self._checkGraphCondition(head is not None, \"Null head Vertex not admitted\")",
+                        "        self._checkGraphCondition(e is not None, \"Impossible to add a null Edge in the Graph\")",
+                        "        self._checkGraphCondition(tail is not None, \"Null tail Vertex not admitted\")",
+                        "        self._checkGraphCondition(",
+                        "            self.containsVertex(head), \"Head Vertex '%s' not present in the Graph\" % head)",
+                        "        self._checkGraphCondition(",
+                        "            self.containsVertex(tail), \"Tail Vertex '%s' not present in the Graph\" % tail)",
+                        "        self._checkGraphCondition(",
+                        "            self.getEdge(head, tail) is None, \"Edge %s is already present in the Graph\" % e)",
+                        "",
+                        "        self.getAllEdges().add(e)",
+                        "",
+                        "        self._internalAddEdge(head, e, tail)",
+                        "",
+                        "        self._decorateAddEdge(head, e, tail)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 101.21355676651001,
+                    "generation_timestamp": "2024-09-01T03:03:29.340860",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    }
+                },
+                "97-97:decorateRemoveVertex": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    protected abstract void decorateRemoveVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateRemoveVertex(self, v: typing.Any) -> None:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 88.05171632766724,
+                    "generation_timestamp": "2024-09-01T01:20:04.705656",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "90-90:decorateRemoveEdge": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    protected abstract void decorateRemoveEdge(E e);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateRemoveEdge(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateRemoveEdge(self, e: typing.Any) -> None:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 87.79538011550903,
+                    "generation_timestamp": "2024-09-01T01:21:32.766745",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "83-83:decorateAddVertex": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    protected abstract void decorateAddVertex(V v);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddVertex(V)",
+                    "parameters": [
+                        "v"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateAddVertex(self, v: typing.Any) -> None:",
+                        "         pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 88.58390998840332,
+                    "generation_timestamp": "2024-09-01T01:23:01.580579",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "76-76:decorateAddEdge": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    protected abstract void decorateAddEdge(V head, E e, V tail);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decorateAddEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "e",
+                        "tail"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _decorateAddEdge(self, head: typing.Any, e: typing.Any, tail: typing.Any) -> None:",
+                        "        ",
+                        "        # Your implementation here",
+                        "        pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 89.11784029006958,
+                    "generation_timestamp": "2024-09-01T01:24:30.991707",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "38-38:serialVersionUID": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final long serialVersionUID = 1549113549446254183L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 1549113549446254183"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 25.245004177093506,
+                    "generation_timestamp": "2024-08-31T14:21:29.288866",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BaseMutableGraph(MutableGraph, BaseGraph, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.MutableGraph import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.model.BaseGraph import *"
+    ]
+}
