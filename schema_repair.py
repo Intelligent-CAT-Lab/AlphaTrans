@@ -38,18 +38,8 @@ def diff_and_repair(original, new):
         if set(original) == set(new):
             if all(original.count(x) == new.count(x) for x in set(original)):
                 return
-        for i in range(len(original)):
-            if i >= len(new):
-                new.append(original[i])
-                continue
-            if not isinstance(original[i], dict) and not isinstance(original[i], list):
-                if original[i] != new[i]:
-                    new[i] = original[i]
-                continue
-            diff_and_repair(original[i], new[i])
-            if len(original) < len(new):
-                del new[len(original):]
-
+        new.clear()
+        new.extend(original)
 
 def main(project: str):
     # get the common set of "main" schema files
