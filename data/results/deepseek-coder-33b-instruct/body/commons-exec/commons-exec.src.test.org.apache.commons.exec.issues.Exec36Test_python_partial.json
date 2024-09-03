@@ -1,0 +1,1835 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec36Test.java",
+    "imports": {
+        "23-23:import ByteArrayOutputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "24-24:import File": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "26-26:import Map": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "25-25:import HashMap": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "28-28:import CommandLine": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "37-37:import Test": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "29-29:import DefaultExecutor": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "30-30:import Executor": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "31-31:import OS": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.exec.OS;\n"
+            ]
+        },
+        "32-32:import PumpStreamHandler": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.exec.PumpStreamHandler;\n"
+            ]
+        },
+        "33-33:import TestUtil": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.exec.TestUtil;\n"
+            ]
+        },
+        "34-34:import AfterEach": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.junit.jupiter.api.AfterEach;\n"
+            ]
+        },
+        "35-35:import BeforeEach": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.junit.jupiter.api.BeforeEach;\n"
+            ]
+        },
+        "36-36:import Disabled": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import org.junit.jupiter.api.Disabled;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertFalse": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec36Test": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "313-339:testExec36_2_test7_decomposed": {
+                    "start": 313,
+                    "end": 339,
+                    "body": [
+                        "    public void testExec36_2_test7_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "        assertFalse(exec.isFailure(exitValue));\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            // the parameters fall literally apart under Windows - need to disable the check for Win32\n",
+                        "            assertEquals(expected, result);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test7_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", False)",
+                        "        cmdl.addArgument1(\"/q:a\", False)",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", False)",
+                        "        exitValue = self.__exec.execute0(cmdl)",
+                        "        result = self.__baos.getvalue().decode().strip()",
+                        "        self.assertFalse(self.__exec.isFailure(exitValue))",
+                        "        if OS.isFamilyUnix():",
+                        "            self.assertEqual(expected, result)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 61.24986910820007,
+                    "generation_timestamp": "2024-08-30T00:40:12.033411",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "288-310:testExec36_2_test6_decomposed": {
+                    "start": 288,
+                    "end": 310,
+                    "body": [
+                        "    public void testExec36_2_test6_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "        assertFalse(exec.isFailure(exitValue));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test6_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", False)",
+                        "        cmdl.addArgument1(\"/q:a\", False)",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", False)",
+                        "        exitValue = self.__exec.execute0(cmdl)",
+                        "        result = self.__baos.getvalue().decode().strip()",
+                        "        self.assertFalse(self.__exec.isFailure(exitValue))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 38.388991355895996,
+                    "generation_timestamp": "2024-08-30T00:40:50.498099",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "264-285:testExec36_2_test5_decomposed": {
+                    "start": 264,
+                    "end": 285,
+                    "body": [
+                        "    public void testExec36_2_test5_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test5_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", False)",
+                        "        cmdl.addArgument1(\"/q:a\", False)",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", False)",
+                        "        exitValue = self.__exec.execute0(cmdl)",
+                        "        result = self.__baos.getvalue().decode().strip()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 40.94382190704346,
+                    "generation_timestamp": "2024-08-30T00:41:31.536155",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "241-261:testExec36_2_test4_decomposed": {
+                    "start": 241,
+                    "end": 261,
+                    "body": [
+                        "    public void testExec36_2_test4_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test4_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", False)",
+                        "        cmdl.addArgument1(\"/q:a\", False)",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", False)",
+                        "        exitValue = self.__exec.execute0(cmdl)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 39.991082429885864,
+                    "generation_timestamp": "2024-08-30T00:42:11.592550",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "219-238:testExec36_2_test3_decomposed": {
+                    "start": 219,
+                    "end": 238,
+                    "body": [
+                        "    public void testExec36_2_test3_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test3_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", False)",
+                        "        cmdl.addArgument1(\"/q:a\", False)",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", False)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 33.07947754859924,
+                    "generation_timestamp": "2024-08-30T00:42:44.758465",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "200-216:testExec36_2_test2_decomposed": {
+                    "start": 200,
+                    "end": 216,
+                    "body": [
+                        "    public void testExec36_2_test2_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test2_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {'FILE': file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "        cmdl.setSubstitutionMap(map)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.049152135849,
+                    "generation_timestamp": "2024-08-30T00:43:12.871942",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "182-197:testExec36_2_test1_decomposed": {
+                    "start": 182,
+                    "end": 197,
+                    "body": [
+                        "    public void testExec36_2_test1_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test1_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return",
+                        "        ",
+                        "        file = pathlib.Path(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\")",
+                        "        map = {\"FILE\": file}",
+                        "        cmdl = CommandLine(1, None, self.__printArgsScript, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 23.619516134262085,
+                    "generation_timestamp": "2024-08-30T00:43:36.550002",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "169-179:testExec36_2_test0_decomposed": {
+                    "start": 169,
+                    "end": 179,
+                    "body": [
+                        "    public void testExec36_2_test0_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_2_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        expected = \"\"",
+                        "        if OS.isFamilyWindows():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";",
+                        "        elif OS.isFamilyUnix():",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";",
+                        "        else:",
+                        "            print(\"The test 'testExec36_3' does not support the following OS : \" + os.getenv('os.name'))",
+                        "            return"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py::Exec36Test::testExec36_2_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py\", line 254, in testExec36_2_test0_decomposed\n    if OS.isFamilyWindows():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 131, in isFamilyWindows\n    return OS.__isFamily(OS.FAMILY_WINDOWS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 189, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "191-193:isFamilyWindows"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "169-179:testExec36_2_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "117-119:tearDown"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "110-114:setUp"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 24.769681215286255,
+                    "generation_timestamp": "2024-08-30T00:44:01.363881",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-166:testExec36_1_test0_decomposed": {
+                    "start": 138,
+                    "end": 166,
+                    "body": [
+                        "    public void testExec36_1_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "\n",
+                        "            CommandLine cmdl;\n",
+                        "\n",
+                        "            /**\n",
+                        "             * ./script/jrake cruise:publish_installers INSTALLER_VERSION=unstable_2_1 \\ INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\"\n",
+                        "             * INSTALLER_DOWNLOAD_SERVER='something' WITHOUT_HELP_DOC=true\n",
+                        "             */\n",
+                        "\n",
+                        "            final String expected = \"./script/jrake\\n\" + \"cruise:publish_installers\\n\" + \"INSTALLER_VERSION=unstable_2_1\\n\"\n",
+                        "                    + \"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\\n\" + \"INSTALLER_DOWNLOAD_SERVER='something'\\n\" + \"WITHOUT_HELP_DOC=true\";\n",
+                        "\n",
+                        "            cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "            cmdl.addArgument1(\"./script/jrake\", false);\n",
+                        "            cmdl.addArgument1(\"cruise:publish_installers\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_VERSION=unstable_2_1\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_DOWNLOAD_SERVER='something'\", false);\n",
+                        "            cmdl.addArgument1(\"WITHOUT_HELP_DOC=true\", false);\n",
+                        "\n",
+                        "            final int exitValue = exec.execute0(cmdl);\n",
+                        "            final String result = baos.toString().trim();\n",
+                        "            assertFalse(exec.isFailure(exitValue));\n",
+                        "            assertEquals(expected, result);\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_1' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec36_1_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyUnix():",
+                        "",
+                        "            cmdl = None",
+                        "",
+                        "            expected = \"./script/jrake\\n\" + \"cruise:publish_installers\\n\" + \"INSTALLER_VERSION=unstable_2_1\\n\" + \"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\\n\" + \"INSTALLER_DOWNLOAD_SERVER='something'\\n\" + \"WITHOUT_HELP_DOC=true\"",
+                        "",
+                        "            cmdl = CommandLine(1, None, self.__printArgsScript, None)",
+                        "            cmdl.addArgument1(\"./script/jrake\", False)",
+                        "            cmdl.addArgument1(\"cruise:publish_installers\", False)",
+                        "            cmdl.addArgument1(\"INSTALLER_VERSION=unstable_2_1\", False)",
+                        "            cmdl.addArgument1(\"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\", False)",
+                        "            cmdl.addArgument1(\"INSTALLER_DOWNLOAD_SERVER='something'\", False)",
+                        "            cmdl.addArgument1(\"WITHOUT_HELP_DOC=true\", False)",
+                        "",
+                        "            exitValue = self.__exec.execute0(cmdl)",
+                        "            result = self.__baos.getvalue().decode().strip()",
+                        "            self.assertFalse(self.__exec.isFailure(exitValue))",
+                        "            self.assertEqual(expected, result)",
+                        "        else:",
+                        "            print(\"The test 'testExec36_1' does not support the following OS : \" + os.getenv('os.name'))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 44.12864017486572,
+                    "generation_timestamp": "2024-08-30T00:44:45.558399",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "117-119:tearDown": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public void tearDown() throws Exception {\n",
+                        "        this.baos.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "AfterEach"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "tearDown()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def tearDown(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def tearDown(self) -> None:",
+                        "         self.__baos.close()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py::Exec36Test::testExec36_2_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py\", line 254, in testExec36_2_test0_decomposed\n    if OS.isFamilyWindows():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 131, in isFamilyWindows\n    return OS.__isFamily(OS.FAMILY_WINDOWS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 189, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "191-193:isFamilyWindows"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "169-179:testExec36_2_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "117-119:tearDown"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "110-114:setUp"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 12.513330936431885,
+                    "generation_timestamp": "2024-08-30T00:23:19.484546",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "110-114:setUp": {
+                    "start": 110,
+                    "end": 114,
+                    "body": [
+                        "    public void setUp() throws Exception {\n",
+                        "        // prepare a ready to Executor\n",
+                        "        this.baos = new ByteArrayOutputStream();\n",
+                        "        this.exec.setStreamHandler(PumpStreamHandler.PumpStreamHandler2(baos, baos));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "BeforeEach"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def setUp(self) -> None:",
+                        "        ",
+                        "        # prepare a ready to Executor",
+                        "        self.__baos = BytesIO()",
+                        "        self.__exec.setStreamHandler(PumpStreamHandler.PumpStreamHandler2(self.__baos, self.__baos))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py::Exec36Test::testExec36_2_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec36Test.py\", line 254, in testExec36_2_test0_decomposed\n    if OS.isFamilyWindows():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 131, in isFamilyWindows\n    return OS.__isFamily(OS.FAMILY_WINDOWS)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 189, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "191-193:isFamilyWindows"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "169-179:testExec36_2_test0_decomposed"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "117-119:tearDown"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec36Test",
+                                    "class": "Exec36Test",
+                                    "method": "110-114:setUp"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 15.092907667160034,
+                    "generation_timestamp": "2024-08-30T00:23:06.940733",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "98-107:_testExec36_6": {
+                    "start": 98,
+                    "end": 107,
+                    "body": [
+                        "    public void _testExec36_6() {\n",
+                        "\n",
+                        "        final String commandline = \"C:\\\\CVS_DB\\\\WeightsEngine /f WeightsEngine.mak CFG=\\\"WeightsEngine - Win32Release\\\"\";\n",
+                        "\n",
+                        "        final CommandLine cmdl = CommandLine.parse0(commandline);\n",
+                        "        final String[] args = cmdl.getArguments();\n",
+                        "        assertEquals(\"/f\", args[0]);\n",
+                        "        assertEquals(\"WeightsEngine.mak\", args[1]);\n",
+                        "        assertEquals(\"CFG=\\\"WeightsEngine - Win32Release\\\"\", args[2]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_6()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "336-349:getArguments"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_6(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _testExec36_6(self) -> None:",
+                        "        ",
+                        "        commandline = \"C:\\\\CVS_DB\\\\WeightsEngine /f WeightsEngine.mak CFG=\\\"WeightsEngine - Win32Release\\\"\"",
+                        "",
+                        "        cmdl = CommandLine.parse0(commandline)",
+                        "        args = cmdl.getArguments()",
+                        "        self.assertEqual(\"/f\", args[0])",
+                        "        self.assertEqual(\"WeightsEngine.mak\", args[1])",
+                        "        self.assertEqual(\"CFG=\\\"WeightsEngine - Win32Release\\\"\", args[2])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 7.322817802429199,
+                    "generation_timestamp": "2024-08-30T00:31:41.529580",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-89:_testExec36_5": {
+                    "start": 77,
+                    "end": 89,
+                    "body": [
+                        "    public void _testExec36_5() {\n",
+                        "\n",
+                        "        CommandLine cmdl;\n",
+                        "\n",
+                        "        final String line = \"dotnetfx.exe\" + \" /q:a \"\n",
+                        "                + \"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "\n",
+                        "        cmdl = CommandLine.parse0(line);\n",
+                        "        final String[] args = cmdl.toStrings();\n",
+                        "        assertEquals(\"dotnetfx.exe\", args[0]);\n",
+                        "        assertEquals(\"/q:a\", args[1]);\n",
+                        "        assertEquals(\"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\", args[2]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_5()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "422-427:toStrings"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_5(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _testExec36_5(self) -> None:",
+                        "        ",
+                        "        line = \"dotnetfx.exe\" + \" /q:a \" + \"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\"",
+                        "",
+                        "        cmdl = CommandLine.parse0(line)",
+                        "        args = cmdl.toStrings()",
+                        "        self.assertEqual(\"dotnetfx.exe\", args[0])",
+                        "        self.assertEqual(\"/q:a\", args[1])",
+                        "        self.assertEqual(\"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\", args[2])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.582739353179932,
+                    "generation_timestamp": "2024-08-30T00:32:06.489767",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "55-70:_testExec36_4": {
+                    "start": 55,
+                    "end": 70,
+                    "body": [
+                        "    public void _testExec36_4() throws Exception {\n",
+                        "\n",
+                        "        CommandLine cmdl;\n",
+                        "\n",
+                        "        final String line = \"./script/jrake \" + \"cruise:publish_installers \" + \"INSTALLER_VERSION=unstable_2_1 \"\n",
+                        "                + \"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\" \" + \"INSTALLER_DOWNLOAD_SERVER='something'\" + \"WITHOUT_HELP_DOC=true\";\n",
+                        "\n",
+                        "        cmdl = CommandLine.parse0(line);\n",
+                        "        final String[] args = cmdl.toStrings();\n",
+                        "        assertEquals(\"./script/jrake\", args[0]);\n",
+                        "        assertEquals(\"cruise:publish_installers\", args[1]);\n",
+                        "        assertEquals(\"INSTALLER_VERSION=unstable_2_1\", args[2]);\n",
+                        "        assertEquals(\"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\"\", args[3]);\n",
+                        "        assertEquals(\"INSTALLER_DOWNLOAD_SERVER='something'\", args[4]);\n",
+                        "        assertEquals(\"WITHOUT_HELP_DOC=true\", args[5]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_4()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "422-427:toStrings"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_4(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _testExec36_4(self) -> None:",
+                        "        ",
+                        "        line = \"./script/jrake \" + \"cruise:publish_installers \" + \"INSTALLER_VERSION=unstable_2_1 \" + \"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\" \" + \"INSTALLER_DOWNLOAD_SERVER='something'\" + \"WITHOUT_HELP_DOC=true\"",
+                        "",
+                        "        cmdl = CommandLine.parse0(line)",
+                        "        args = cmdl.toStrings()",
+                        "        self.assertEqual(\"./script/jrake\", args[0])",
+                        "        self.assertEqual(\"cruise:publish_installers\", args[1])",
+                        "        self.assertEqual(\"INSTALLER_VERSION=unstable_2_1\", args[2])",
+                        "        self.assertEqual(\"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\"\", args[3])",
+                        "        self.assertEqual(\"INSTALLER_DOWNLOAD_SERVER='something'\", args[4])",
+                        "        self.assertEqual(\"WITHOUT_HELP_DOC=true\", args[5])"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.602511644363403,
+                    "generation_timestamp": "2024-08-30T00:32:18.178522",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "48-48:baos": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private ByteArrayOutputStream baos;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ByteArrayOutputStream",
+                            "java.io.ByteArrayOutputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __baos: typing.Union[io.BytesIO, bytearray] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __baos: typing.Union[io.BytesIO, bytearray] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:05:23.464141",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "46-46:printArgsScript": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private final File printArgsScript = TestUtil.resolveScriptForOS(testDir + \"/printargs\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __printArgsScript: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __printArgsScript: pathlib.Path = pathlib.Path(\"src/test/scripts/printargs\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 10.053210496902466,
+                    "generation_timestamp": "2024-08-28T22:05:33.526696",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "45-45:testDir": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final File testDir = new File(\"src/test/scripts\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __testDir: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __testDir: pathlib.Path = pathlib.Path(\"src/test/scripts\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 11.421958923339844,
+                    "generation_timestamp": "2024-08-28T22:05:44.964438",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "44-44:exec": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __exec: Executor = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __exec: Executor = DefaultExecutor.builder().get()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.30120539665222,
+                    "generation_timestamp": "2024-08-28T22:06:09.283682",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec36Test(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteStreamHandler import *",
+        "from src.main.org.apache.commons.exec.Executor import *",
+        "from src.main.org.apache.commons.exec.OS import *",
+        "from src.main.org.apache.commons.exec.PumpStreamHandler import *",
+        "from src.test.org.apache.commons.exec.TestUtil import *"
+    ]
+}

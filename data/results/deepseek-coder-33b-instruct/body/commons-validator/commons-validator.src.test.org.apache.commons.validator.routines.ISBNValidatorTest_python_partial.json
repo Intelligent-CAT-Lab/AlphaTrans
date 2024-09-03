@@ -1,0 +1,1532 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/test/java/org/apache/commons/validator/routines/ISBNValidatorTest.java",
+    "imports": {
+        "21-21:import Pattern": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "19-19:import TestCase": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import junit.framework.TestCase;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISBNValidatorTest": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "unittest.TestCase"
+            ],
+            "methods": {
+                "300-327:testConversionErrors": {
+                    "start": 300,
+                    "end": 327,
+                    "body": [
+                        "    public void testConversionErrors() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        String input = null;\n",
+                        "        try {\n",
+                        "            input = \"123456789 \";\n",
+                        "            validator.convertToISBN13(input);\n",
+                        "            fail(\"Expected IllegalArgumentException for '\" + input + \"'\");\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            input = \"12345678901\";\n",
+                        "            validator.convertToISBN13(input);\n",
+                        "            fail(\"Expected IllegalArgumentException for '\" + input + \"'\");\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            input = \"\";\n",
+                        "            validator.convertToISBN13(input);\n",
+                        "            fail(\"Expected IllegalArgumentException for '\" + input + \"'\");\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            input = \"X234567890\";\n",
+                        "            validator.convertToISBN13(input);\n",
+                        "            fail(\"Expected IllegalArgumentException for '\" + input + \"'\");\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testConversionErrors()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "242-263:convertToISBN13"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testConversionErrors(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testConversionErrors(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        input = None",
+                        "        try:",
+                        "            input = \"123456789 \"",
+                        "            validator.convertToISBN13(input)",
+                        "            pytest.fail(\"Expected ValueError for '\" + input + \"'\")",
+                        "        except ValueError:",
+                        "            pass",
+                        "        try:",
+                        "            input = \"12345678901\"",
+                        "            validator.convertToISBN13(input)",
+                        "            pytest.fail(\"Expected ValueError for '\" + input + \"'\")",
+                        "        except ValueError:",
+                        "            pass",
+                        "        try:",
+                        "            input = \"\"",
+                        "            validator.convertToISBN13(input)",
+                        "            pytest.fail(\"Expected ValueError for '\" + input + \"'\")",
+                        "        except ValueError:",
+                        "            pass",
+                        "        try:",
+                        "            input = \"X234567890\"",
+                        "            validator.convertToISBN13(input)",
+                        "            pytest.fail(\"Expected ValueError for '\" + input + \"'\")",
+                        "        except ValueError:",
+                        "            pass"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 33.79089832305908,
+                    "generation_timestamp": "2024-08-30T06:07:13.796960",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "268-294:testInvalid": {
+                    "start": 268,
+                    "end": 294,
+                    "body": [
+                        "    public void testInvalid() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        String baseCode = \"193011099\";\n",
+                        "        assertFalse(\"ISBN10-0\", validator.isValid(baseCode + \"0\"));\n",
+                        "        assertFalse(\"ISBN10-1\", validator.isValid(baseCode + \"1\"));\n",
+                        "        assertFalse(\"ISBN10-2\", validator.isValid(baseCode + \"2\"));\n",
+                        "        assertFalse(\"ISBN10-3\", validator.isValid(baseCode + \"3\"));\n",
+                        "        assertFalse(\"ISBN10-4\", validator.isValid(baseCode + \"4\"));\n",
+                        "        assertTrue(\"ISBN10-5\", validator.isValid(baseCode + \"5\")); // valid check digit\n",
+                        "        assertFalse(\"ISBN10-6\", validator.isValid(baseCode + \"6\"));\n",
+                        "        assertFalse(\"ISBN10-7\", validator.isValid(baseCode + \"7\"));\n",
+                        "        assertFalse(\"ISBN10-8\", validator.isValid(baseCode + \"8\"));\n",
+                        "        assertFalse(\"ISBN10-9\", validator.isValid(baseCode + \"9\"));\n",
+                        "        assertFalse(\"ISBN10-X\", validator.isValid(baseCode + \"X\"));\n",
+                        "\n",
+                        "        baseCode = \"978193011099\";\n",
+                        "        assertFalse(\"ISBN13-0\", validator.isValid(baseCode + \"0\"));\n",
+                        "        assertTrue(\"ISBN13-1\", validator.isValid(baseCode + \"1\")); // valid check digit\n",
+                        "        assertFalse(\"ISBN13-2\", validator.isValid(baseCode + \"2\"));\n",
+                        "        assertFalse(\"ISBN13-3\", validator.isValid(baseCode + \"3\"));\n",
+                        "        assertFalse(\"ISBN13-4\", validator.isValid(baseCode + \"4\"));\n",
+                        "        assertFalse(\"ISBN13-5\", validator.isValid(baseCode + \"5\"));\n",
+                        "        assertFalse(\"ISBN13-6\", validator.isValid(baseCode + \"6\"));\n",
+                        "        assertFalse(\"ISBN13-7\", validator.isValid(baseCode + \"7\"));\n",
+                        "        assertFalse(\"ISBN13-8\", validator.isValid(baseCode + \"8\"));\n",
+                        "        assertFalse(\"ISBN13-9\", validator.isValid(baseCode + \"9\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalid()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "160-162:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalid(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInvalid(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        baseCode = \"193011099\"",
+                        "        self.assertFalse(\"ISBN10-0\", validator.isValid(baseCode + \"0\"))",
+                        "        self.assertFalse(\"ISBN10-1\", validator.isValid(baseCode + \"1\"))",
+                        "        self.assertFalse(\"ISBN10-2\", validator.isValid(baseCode + \"2\"))",
+                        "        self.assertFalse(\"ISBN10-3\", validator.isValid(baseCode + \"3\"))",
+                        "        self.assertFalse(\"ISBN10-4\", validator.isValid(baseCode + \"4\"))",
+                        "        self.assertTrue(\"ISBN10-5\", validator.isValid(baseCode + \"5\")) # valid check digit",
+                        "        self.assertFalse(\"ISBN10-6\", validator.isValid(baseCode + \"6\"))",
+                        "        self.assertFalse(\"ISBN10-7\", validator.isValid(baseCode + \"7\"))",
+                        "        self.assertFalse(\"ISBN10-8\", validator.isValid(baseCode + \"8\"))",
+                        "        self.assertFalse(\"ISBN10-9\", validator.isValid(baseCode + \"9\"))",
+                        "        self.assertFalse(\"ISBN10-X\", validator.isValid(baseCode + \"X\"))",
+                        "",
+                        "        baseCode = \"978193011099\"",
+                        "        self.assertFalse(\"ISBN13-0\", validator.isValid(baseCode + \"0\"))",
+                        "        self.assertTrue(\"ISBN13-1\", validator.isValid(baseCode + \"1\")) # valid check digit",
+                        "        self.assertFalse(\"ISBN13-2\", validator.isValid(baseCode + \"2\"))",
+                        "        self.assertFalse(\"ISBN13-3\", validator.isValid(baseCode + \"3\"))",
+                        "        self.assertFalse(\"ISBN13-4\", validator.isValid(baseCode + \"4\"))",
+                        "        self.assertFalse(\"ISBN13-5\", validator.isValid(baseCode + \"5\"))",
+                        "        self.assertFalse(\"ISBN13-6\", validator.isValid(baseCode + \"6\"))",
+                        "        self.assertFalse(\"ISBN13-7\", validator.isValid(baseCode + \"7\"))",
+                        "        self.assertFalse(\"ISBN13-8\", validator.isValid(baseCode + \"8\"))",
+                        "        self.assertFalse(\"ISBN13-9\", validator.isValid(baseCode + \"9\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 39.514249324798584,
+                    "generation_timestamp": "2024-08-30T06:19:12.947894",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "256-265:testNull": {
+                    "start": 256,
+                    "end": 265,
+                    "body": [
+                        "    public void testNull() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        assertFalse(\"isValid\", validator.isValid(null));\n",
+                        "        assertFalse(\"isValidISBN10\", validator.isValidISBN10(null));\n",
+                        "        assertFalse(\"isValidISBN13\", validator.isValidISBN13(null));\n",
+                        "        assertNull(\"validate\", validator.validate(null));\n",
+                        "        assertNull(\"validateISBN10\", validator.validateISBN10(null));\n",
+                        "        assertNull(\"validateISBN13\", validator.validateISBN13(null));\n",
+                        "        assertNull(\"convertToISBN13\", validator.convertToISBN13(null));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNull()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "160-162:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "170-172:isValidISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "180-182:isValidISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "195-204:validate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "215-218:validateISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "229-232:validateISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "242-263:convertToISBN13"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNull(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testNull(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        self.assertFalse(validator.isValid(None))",
+                        "        self.assertFalse(validator.isValidISBN10(None))",
+                        "        self.assertFalse(validator.isValidISBN13(None))",
+                        "        self.assertIsNone(validator.validate(None))",
+                        "        self.assertIsNone(validator.validateISBN10(None))",
+                        "        self.assertIsNone(validator.validateISBN13(None))",
+                        "        self.assertIsNone(validator.convertToISBN13(None))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 28.021986484527588,
+                    "generation_timestamp": "2024-08-30T06:06:39.878744",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "232-253:testValidateISBN13": {
+                    "start": 232,
+                    "end": 253,
+                    "body": [
+                        "    public void testValidateISBN13() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-1\", \"9781930110991\", validator.validateISBN13(\"9781930110991\"));\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-2\", \"9781930110991\", validator.validateISBN13(\"978-1-930110-99-1\"));\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-3\", \"9781930110991\", validator.validateISBN13(\"978 1 930110 99 1\"));\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-4\", \"9780201633856\", validator.validateISBN13(\"9780201633856\"));\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-5\", \"9780201633856\", validator.validateISBN13(\"978-0-201-63385-6\"));\n",
+                        "        assertEquals(\n",
+                        "                \"validateISBN13-6\", \"9780201633856\", validator.validateISBN13(\"978 0 201 63385 6\"));\n",
+                        "\n",
+                        "        assertEquals(\"validate-1\", \"9781930110991\", validator.validate(\"9781930110991\"));\n",
+                        "        assertEquals(\"validate-2\", \"9781930110991\", validator.validate(\"978-1-930110-99-1\"));\n",
+                        "        assertEquals(\"validate-3\", \"9781930110991\", validator.validate(\"978 1 930110 99 1\"));\n",
+                        "        assertEquals(\"validate-4\", \"9780201633856\", validator.validate(\"9780201633856\"));\n",
+                        "        assertEquals(\"validate-5\", \"9780201633856\", validator.validate(\"978-0-201-63385-6\"));\n",
+                        "        assertEquals(\"validate-6\", \"9780201633856\", validator.validate(\"978 0 201 63385 6\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidateISBN13()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "229-232:validateISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "195-204:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidateISBN13(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testValidateISBN13(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        ",
+                        "        self.assertEqual(\"9781930110991\", validator.validateISBN13(\"9781930110991\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validateISBN13(\"978-1-930110-99-1\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validateISBN13(\"978 1 930110 99 1\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validateISBN13(\"9780201633856\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validateISBN13(\"978-0-201-63385-6\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validateISBN13(\"978 0 201 63385 6\"))",
+                        "",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"9781930110991\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"978-1-930110-99-1\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"978 1 930110 99 1\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"9780201633856\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"978-0-201-63385-6\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"978 0 201 63385 6\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 38.40862226486206,
+                    "generation_timestamp": "2024-08-30T06:06:11.742630",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "221-229:testValidateISBN10Convert": {
+                    "start": 221,
+                    "end": 229,
+                    "body": [
+                        "    public void testValidateISBN10Convert() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        assertEquals(\"validate-1\", \"9781930110991\", validator.validate(\"1930110995\"));\n",
+                        "        assertEquals(\"validate-2\", \"9781930110991\", validator.validate(\"1-930110-99-5\"));\n",
+                        "        assertEquals(\"validate-3\", \"9781930110991\", validator.validate(\"1 930110 99 5\"));\n",
+                        "        assertEquals(\"validate-4\", \"9780201633856\", validator.validate(\"020163385X\"));\n",
+                        "        assertEquals(\"validate-5\", \"9780201633856\", validator.validate(\"0-201-63385-X\"));\n",
+                        "        assertEquals(\"validate-6\", \"9780201633856\", validator.validate(\"0 201 63385 X\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidateISBN10Convert()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "195-204:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidateISBN10Convert(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testValidateISBN10Convert(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        ",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"1930110995\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"1-930110-99-5\"))",
+                        "        self.assertEqual(\"9781930110991\", validator.validate(\"1 930110 99 5\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"020163385X\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"0-201-63385-X\"))",
+                        "        self.assertEqual(\"9780201633856\", validator.validate(\"0 201 63385 X\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 28.703012704849243,
+                    "generation_timestamp": "2024-08-30T06:05:33.221549",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "203-218:testValidateISBN10": {
+                    "start": 203,
+                    "end": 218,
+                    "body": [
+                        "    public void testValidateISBN10() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance1(false);\n",
+                        "        assertEquals(\"validateISBN10-1\", \"1930110995\", validator.validateISBN10(\"1930110995\"));\n",
+                        "        assertEquals(\"validateISBN10-2\", \"1930110995\", validator.validateISBN10(\"1-930110-99-5\"));\n",
+                        "        assertEquals(\"validateISBN10-3\", \"1930110995\", validator.validateISBN10(\"1 930110 99 5\"));\n",
+                        "        assertEquals(\"validateISBN10-4\", \"020163385X\", validator.validateISBN10(\"020163385X\"));\n",
+                        "        assertEquals(\"validateISBN10-5\", \"020163385X\", validator.validateISBN10(\"0-201-63385-X\"));\n",
+                        "        assertEquals(\"validateISBN10-6\", \"020163385X\", validator.validateISBN10(\"0 201 63385 X\"));\n",
+                        "\n",
+                        "        assertEquals(\"validate-1\", \"1930110995\", validator.validate(\"1930110995\"));\n",
+                        "        assertEquals(\"validate-2\", \"1930110995\", validator.validate(\"1-930110-99-5\"));\n",
+                        "        assertEquals(\"validate-3\", \"1930110995\", validator.validate(\"1 930110 99 5\"));\n",
+                        "        assertEquals(\"validate-4\", \"020163385X\", validator.validate(\"020163385X\"));\n",
+                        "        assertEquals(\"validate-5\", \"020163385X\", validator.validate(\"0-201-63385-X\"));\n",
+                        "        assertEquals(\"validate-6\", \"020163385X\", validator.validate(\"0 201 63385 X\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidateISBN10()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "134-136:getInstance1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "215-218:validateISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "195-204:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidateISBN10(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testValidateISBN10(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance1(False)",
+                        "        self.assertEqual(\"1930110995\", validator.validateISBN10(\"1930110995\"))",
+                        "        self.assertEqual(\"1930110995\", validator.validateISBN10(\"1-930110-99-5\"))",
+                        "        self.assertEqual(\"1930110995\", validator.validateISBN10(\"1 930110 99 5\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validateISBN10(\"020163385X\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validateISBN10(\"0-201-63385-X\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validateISBN10(\"0 201 63385 X\"))",
+                        "",
+                        "        self.assertEqual(\"1930110995\", validator.validate(\"1930110995\"))",
+                        "        self.assertEqual(\"1930110995\", validator.validate(\"1-930110-99-5\"))",
+                        "        self.assertEqual(\"1930110995\", validator.validate(\"1 930110 99 5\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validate(\"020163385X\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validate(\"0-201-63385-X\"))",
+                        "        self.assertEqual(\"020163385X\", validator.validate(\"0 201 63385 X\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 33.37686610221863,
+                    "generation_timestamp": "2024-08-30T06:05:04.409222",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "185-200:testIsValidISBN13": {
+                    "start": 185,
+                    "end": 200,
+                    "body": [
+                        "    public void testIsValidISBN13() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        assertTrue(\"isValidISBN13-1\", validator.isValidISBN13(\"9781930110991\"));\n",
+                        "        assertTrue(\"isValidISBN13-2\", validator.isValidISBN13(\"978-1-930110-99-1\"));\n",
+                        "        assertTrue(\"isValidISBN13-3\", validator.isValidISBN13(\"978 1 930110 99 1\"));\n",
+                        "        assertTrue(\"isValidISBN13-4\", validator.isValidISBN13(\"9780201633856\"));\n",
+                        "        assertTrue(\"isValidISBN13-5\", validator.isValidISBN13(\"978-0-201-63385-6\"));\n",
+                        "        assertTrue(\"isValidISBN13-6\", validator.isValidISBN13(\"978 0 201 63385 6\"));\n",
+                        "\n",
+                        "        assertTrue(\"isValid-1\", validator.isValid(\"9781930110991\"));\n",
+                        "        assertTrue(\"isValid-2\", validator.isValid(\"978-1-930110-99-1\"));\n",
+                        "        assertTrue(\"isValid-3\", validator.isValid(\"978 1 930110 99 1\"));\n",
+                        "        assertTrue(\"isValid-4\", validator.isValid(\"9780201633856\"));\n",
+                        "        assertTrue(\"isValid-5\", validator.isValid(\"978-0-201-63385-6\"));\n",
+                        "        assertTrue(\"isValid-6\", validator.isValid(\"978 0 201 63385 6\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIsValidISBN13()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "180-182:isValidISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "160-162:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testIsValidISBN13(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testIsValidISBN13(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        ",
+                        "        self.assertTrue(validator.isValidISBN13(\"9781930110991\"))",
+                        "        self.assertTrue(validator.isValidISBN13(\"978-1-930110-99-1\"))",
+                        "        self.assertTrue(validator.isValidISBN13(\"978 1 930110 99 1\"))",
+                        "        self.assertTrue(validator.isValidISBN13(\"9780201633856\"))",
+                        "        self.assertTrue(validator.isValidISBN13(\"978-0-201-63385-6\"))",
+                        "        self.assertTrue(validator.isValidISBN13(\"978 0 201 63385 6\"))",
+                        "",
+                        "        self.assertTrue(validator.isValid(\"9781930110991\"))",
+                        "        self.assertTrue(validator.isValid(\"978-1-930110-99-1\"))",
+                        "        self.assertTrue(validator.isValid(\"978 1 930110 99 1\"))",
+                        "        self.assertTrue(validator.isValid(\"9780201633856\"))",
+                        "        self.assertTrue(validator.isValid(\"978-0-201-63385-6\"))",
+                        "        self.assertTrue(validator.isValid(\"978 0 201 63385 6\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 35.69658160209656,
+                    "generation_timestamp": "2024-08-30T06:18:33.328969",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "167-182:testIsValidISBN10": {
+                    "start": 167,
+                    "end": 182,
+                    "body": [
+                        "    public void testIsValidISBN10() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        assertTrue(\"isValidISBN10-1\", validator.isValidISBN10(\"1930110995\"));\n",
+                        "        assertTrue(\"isValidISBN10-2\", validator.isValidISBN10(\"1-930110-99-5\"));\n",
+                        "        assertTrue(\"isValidISBN10-3\", validator.isValidISBN10(\"1 930110 99 5\"));\n",
+                        "        assertTrue(\"isValidISBN10-4\", validator.isValidISBN10(\"020163385X\"));\n",
+                        "        assertTrue(\"isValidISBN10-5\", validator.isValidISBN10(\"0-201-63385-X\"));\n",
+                        "        assertTrue(\"isValidISBN10-6\", validator.isValidISBN10(\"0 201 63385 X\"));\n",
+                        "\n",
+                        "        assertTrue(\"isValid-1\", validator.isValid(\"1930110995\"));\n",
+                        "        assertTrue(\"isValid-2\", validator.isValid(\"1-930110-99-5\"));\n",
+                        "        assertTrue(\"isValid-3\", validator.isValid(\"1 930110 99 5\"));\n",
+                        "        assertTrue(\"isValid-4\", validator.isValid(\"020163385X\"));\n",
+                        "        assertTrue(\"isValid-5\", validator.isValid(\"0-201-63385-X\"));\n",
+                        "        assertTrue(\"isValid-6\", validator.isValid(\"0 201 63385 X\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testIsValidISBN10()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "170-172:isValidISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "160-162:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testIsValidISBN10(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testIsValidISBN10(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        ",
+                        "        self.assertTrue(validator.isValidISBN10(\"1930110995\"))",
+                        "        self.assertTrue(validator.isValidISBN10(\"1-930110-99-5\"))",
+                        "        self.assertTrue(validator.isValidISBN10(\"1 930110 99 5\"))",
+                        "        self.assertTrue(validator.isValidISBN10(\"020163385X\"))",
+                        "        self.assertTrue(validator.isValidISBN10(\"0-201-63385-X\"))",
+                        "        self.assertTrue(validator.isValidISBN10(\"0 201 63385 X\"))",
+                        "",
+                        "        self.assertTrue(validator.isValid(\"1930110995\"))",
+                        "        self.assertTrue(validator.isValid(\"1-930110-99-5\"))",
+                        "        self.assertTrue(validator.isValid(\"1 930110 99 5\"))",
+                        "        self.assertTrue(validator.isValid(\"020163385X\"))",
+                        "        self.assertTrue(validator.isValid(\"0-201-63385-X\"))",
+                        "        self.assertTrue(validator.isValid(\"0 201 63385 X\"))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 30.43768882751465,
+                    "generation_timestamp": "2024-08-30T06:17:57.469455",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "150-164:testInvalidISBN13Format": {
+                    "start": 150,
+                    "end": 164,
+                    "body": [
+                        "    public void testInvalidISBN13Format() {\n",
+                        "        Pattern pattern = Pattern.compile(ISBNValidator.ISBN13_REGEX);\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        for (int i = 0; i < invalidISBN13Format.length; i++) {\n",
+                        "            assertFalse(\n",
+                        "                    \"Pattern[\" + i + \"]=\" + invalidISBN13Format[i],\n",
+                        "                    pattern.matcher(invalidISBN13Format[i]).matches());\n",
+                        "            assertFalse(\n",
+                        "                    \"isValidISBN13[\" + i + \"]=\" + invalidISBN13Format[i],\n",
+                        "                    validator.isValidISBN13(invalidISBN13Format[i]));\n",
+                        "            assertNull(\n",
+                        "                    \"validateISBN13[\" + i + \"]=\" + invalidISBN13Format[i],\n",
+                        "                    validator.validateISBN13(invalidISBN13Format[i]));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidISBN13Format()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "180-182:isValidISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "229-232:validateISBN13"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidISBN13Format(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInvalidISBN13Format(self) -> None:",
+                        "        ",
+                        "        pattern = re.compile(ISBNValidator.ISBN13_REGEX)",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        ",
+                        "        for i, code in enumerate(self.__invalidISBN13Format):",
+                        "            self.assertFalse(",
+                        "                f\"Pattern[{i}]={code}\",",
+                        "                pattern.match(code) is not None)",
+                        "            self.assertFalse(",
+                        "                f\"isValidISBN13[{i}]={code}\",",
+                        "                validator.isValidISBN13(code))",
+                        "            self.assertIsNone(",
+                        "                f\"validateISBN13[{i}]={code}\",",
+                        "                validator.validateISBN13(code))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 28.619311571121216,
+                    "generation_timestamp": "2024-08-30T06:17:26.925716",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "140-147:testValidISBN13Format": {
+                    "start": 140,
+                    "end": 147,
+                    "body": [
+                        "    public void testValidISBN13Format() {\n",
+                        "        Pattern pattern = Pattern.compile(ISBNValidator.ISBN13_REGEX);\n",
+                        "        for (int i = 0; i < validISBN13Format.length; i++) {\n",
+                        "            assertTrue(\n",
+                        "                    \"Pattern[\" + i + \"]=\" + validISBN13Format[i],\n",
+                        "                    pattern.matcher(validISBN13Format[i]).matches());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidISBN13Format()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidISBN13Format(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testValidISBN13Format(self) -> None:",
+                        "        ",
+                        "        pattern = re.compile(ISBNValidator.ISBN13_REGEX)",
+                        "        for i in range(len(self.__validISBN13Format)):",
+                        "            self.assertTrue(",
+                        "                \"Pattern[\" + str(i) + \"]=\" + self.__validISBN13Format[i],",
+                        "                pattern.match(self.__validISBN13Format[i]) is not None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 27.426557540893555,
+                    "generation_timestamp": "2024-08-30T06:20:51.389261",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "123-137:testInvalidISBN10Format": {
+                    "start": 123,
+                    "end": 137,
+                    "body": [
+                        "    public void testInvalidISBN10Format() {\n",
+                        "        ISBNValidator validator = ISBNValidator.getInstance0();\n",
+                        "        Pattern pattern = Pattern.compile(ISBNValidator.ISBN10_REGEX);\n",
+                        "        for (int i = 0; i < invalidISBN10Format.length; i++) {\n",
+                        "            assertFalse(\n",
+                        "                    \"Pattern[\" + i + \"]=\" + invalidISBN10Format[i],\n",
+                        "                    pattern.matcher(invalidISBN10Format[i]).matches());\n",
+                        "            assertFalse(\n",
+                        "                    \"isValidISBN10[\" + i + \"]=\" + invalidISBN10Format[i],\n",
+                        "                    validator.isValidISBN10(invalidISBN10Format[i]));\n",
+                        "            assertNull(\n",
+                        "                    \"validateISBN10[\" + i + \"]=\" + invalidISBN10Format[i],\n",
+                        "                    validator.validateISBN10(invalidISBN10Format[i]));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidISBN10Format()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "122-124:getInstance0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "170-172:isValidISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "215-218:validateISBN10"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidISBN10Format(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testInvalidISBN10Format(self) -> None:",
+                        "        ",
+                        "        validator = ISBNValidator.getInstance0()",
+                        "        pattern = re.compile(ISBNValidator.ISBN10_REGEX)",
+                        "        ",
+                        "        for i, code in enumerate(self.__invalidISBN10Format):",
+                        "            self.assertFalse(",
+                        "                f\"Pattern[{i}]={code}\",",
+                        "                pattern.match(code) is not None)",
+                        "            self.assertFalse(",
+                        "                f\"isValidISBN10[{i}]={code}\",",
+                        "                validator.isValidISBN10(code))",
+                        "            self.assertIsNone(",
+                        "                f\"validateISBN10[{i}]={code}\",",
+                        "                validator.validateISBN10(code))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 31.037443161010742,
+                    "generation_timestamp": "2024-08-30T06:16:58.167780",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "113-120:testValidISBN10Format": {
+                    "start": 113,
+                    "end": 120,
+                    "body": [
+                        "    public void testValidISBN10Format() {\n",
+                        "        Pattern pattern = Pattern.compile(ISBNValidator.ISBN10_REGEX);\n",
+                        "        for (int i = 0; i < validISBN10Format.length; i++) {\n",
+                        "            assertTrue(\n",
+                        "                    \"Pattern[\" + i + \"]=\" + validISBN10Format[i],\n",
+                        "                    pattern.matcher(validISBN10Format[i]).matches());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidISBN10Format()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidISBN10Format(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testValidISBN10Format(self) -> None:",
+                        "        ",
+                        "        pattern = re.compile(ISBNValidator.ISBN10_REGEX)",
+                        "        for i in range(len(self.__validISBN10Format)):",
+                        "            self.assertTrue(",
+                        "                \"Pattern[\" + str(i) + \"]=\" + self.__validISBN10Format[i],",
+                        "                pattern.match(self.__validISBN10Format[i]) is not None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 25.936631679534912,
+                    "generation_timestamp": "2024-08-30T06:20:23.843931",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "108-110:ISBNValidatorTest": {
+                    "start": 108,
+                    "end": 110,
+                    "body": [
+                        "    public ISBNValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISBNValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, name: str) -> None:",
+                        "         super().__init__(name)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 19.995344638824463,
+                    "generation_timestamp": "2024-08-30T06:19:57.802114",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "78-101:invalidISBN13Format": {
+                    "start": 78,
+                    "end": 101,
+                    "body": [
+                        "    private final String[] invalidISBN13Format =\n",
+                        "            new String[] {\n",
+                        "                \"\", // empty\n",
+                        "                \"   \", // empty\n",
+                        "                \"1\", // too short\n",
+                        "                \"978123456789\", // too short\n",
+                        "                \"97812345678901\", // too long\n",
+                        "                \"978-123456-1234567-123456-1\", // Group too long\n",
+                        "                \"978-12345-12345678-123456-1\", // Publisher too long\n",
+                        "                \"978-12345-1234567-1234567-1\", // Title too long\n",
+                        "                \"978-12345-1234567-123456-12\", // Check Digit too long\n",
+                        "                \"--978 1 930110 99 1\", // format\n",
+                        "                \"978 1 930110 99 1--\", // format\n",
+                        "                \"978 1 930110-99 1-\", // format\n",
+                        "                \"123-4-567890-12-8\", // format\n",
+                        "                \"978.1.2.3.4\", // Invalid Separator\n",
+                        "                \"978=1=2=3=4\", // Invalid Separator\n",
+                        "                \"978_1_2_3_4\", // Invalid Separator\n",
+                        "                \"978123456789X\", // invalid character\n",
+                        "                \"978-0-201-63385-X\", // invalid character\n",
+                        "                \"dsasdsadsadsa\", // invalid characters\n",
+                        "                \"I love sparrows!\", // invalid characters\n",
+                        "                \"979-1-234-567-89-6\" // format\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __invalidISBN13Format: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __invalidISBN13Format: typing.List[str] = [",
+                        "        \"\",  # empty",
+                        "        \"   \",  # empty",
+                        "        \"1\",  # too short",
+                        "        \"978123456789\",  # too short",
+                        "        \"97812345678901\",  # too long",
+                        "        \"978-123456-1234567-123456-1\",  # Group too long",
+                        "        \"978-12345-12345678-123456-1\",  # Publisher too long",
+                        "        \"978-12345-1234567-1234567-1\",  # Title too long",
+                        "        \"978-12345-1234567-123456-12\",  # Check Digit too long",
+                        "        \"--978 1 930110 99 1\",  # format",
+                        "        \"978 1 930110 99 1--\",  # format",
+                        "        \"978 1 930110-99 1-\",  # format",
+                        "        \"123-4-567890-12-8\",  # format",
+                        "        \"978.1.2.3.4\",  # Invalid Separator",
+                        "        \"978=1=2=3=4\",  # Invalid Separator",
+                        "        \"978_1_2_3_4\",  # Invalid Separator",
+                        "        \"978123456789X\",  # invalid character",
+                        "        \"978-0-201-63385-X\",  # invalid character",
+                        "        \"dsasdsadsadsa\",  # invalid characters",
+                        "        \"I love sparrows\",  # invalid characters",
+                        "        \"979-1-234-567-89-6\"  # format",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 48.00601887702942,
+                    "generation_timestamp": "2024-08-29T02:40:38.040959",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "64-76:validISBN13Format": {
+                    "start": 64,
+                    "end": 76,
+                    "body": [
+                        "    private final String[] validISBN13Format =\n",
+                        "            new String[] {\n",
+                        "                \"9781234567890\",\n",
+                        "                \"9791234567890\",\n",
+                        "                \"978-12345-1234567-123456-1\",\n",
+                        "                \"979-12345-1234567-123456-1\",\n",
+                        "                \"978 12345 1234567 123456 1\",\n",
+                        "                \"979 12345 1234567 123456 1\",\n",
+                        "                \"978-1-2-3-4\",\n",
+                        "                \"979-1-2-3-4\",\n",
+                        "                \"978 1 2 3 4\",\n",
+                        "                \"979 1 2 3 4\",\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __validISBN13Format: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __validISBN13Format: typing.List[str] = [",
+                        "        \"9781234567890\",",
+                        "        \"9791234567890\",",
+                        "        \"978-12345-1234567-123456-1\",",
+                        "        \"979-12345-1234567-123456-1\",",
+                        "        \"978 12345 1234567 123456 1\",",
+                        "        \"979 12345 1234567 123456 1\",",
+                        "        \"978-1-2-3-4\",",
+                        "        \"979-1-2-3-4\",",
+                        "        \"978 1 2 3 4\",",
+                        "        \"979 1 2 3 4\",",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 37.606242179870605,
+                    "generation_timestamp": "2024-08-29T02:41:15.661954",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "40-62:invalidISBN10Format": {
+                    "start": 40,
+                    "end": 62,
+                    "body": [
+                        "    private final String[] invalidISBN10Format =\n",
+                        "            new String[] {\n",
+                        "                \"\", // empty\n",
+                        "                \"   \", // empty\n",
+                        "                \"1\", // too short\n",
+                        "                \"123456789\", // too short\n",
+                        "                \"12345678901\", // too long\n",
+                        "                \"12345678X0\", // X not at end\n",
+                        "                \"123456-1234567-123456-X\", // Group too long\n",
+                        "                \"12345-12345678-123456-X\", // Publisher too long\n",
+                        "                \"12345-1234567-1234567-X\", // Title too long\n",
+                        "                \"12345-1234567-123456-X2\", // Check Digit too long\n",
+                        "                \"--1 930110 99 5\", // format\n",
+                        "                \"1 930110 99 5--\", // format\n",
+                        "                \"1 930110-99 5-\", // format\n",
+                        "                \"1.2.3.4\", // Invalid Separator\n",
+                        "                \"1=2=3=4\", // Invalid Separator\n",
+                        "                \"1_2_3_4\", // Invalid Separator\n",
+                        "                \"123456789Y\", // Other character at the end\n",
+                        "                \"dsasdsadsa\", // invalid characters\n",
+                        "                \"I love sparrows!\", // invalid characters\n",
+                        "                \"068-556-98-45\" // format\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __invalidISBN10Format: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __invalidISBN10Format: typing.List[typing.List[str]] = [",
+                        "        [\"\"], # empty",
+                        "        [\"   \"], # empty",
+                        "        [\"1\"], # too short",
+                        "        [\"123456789\"], # too short",
+                        "        [\"12345678901\"], # too long",
+                        "        [\"12345678X0\"], # X not at end",
+                        "        [\"123456-1234567-123456-X\"], # Group too long",
+                        "        [\"12345-12345678-123456-X\"], # Publisher too long",
+                        "        [\"12345-1234567-1234567-X\"], # Title too long",
+                        "        [\"12345-1234567-123456-X2\"], # Check Digit too long",
+                        "        [\"--1 930110 99 5\"], # format",
+                        "        [\"1 930110 99 5--\"], # format",
+                        "        [\"1 930110-99 5-\"], # format",
+                        "        [\"1.2.3.4\"], # Invalid Separator",
+                        "        [\"1=2=3=4\"], # Invalid Separator",
+                        "        [\"1_2_3_4\"], # Invalid Separator",
+                        "        [\"123456789Y\"], # Other character at the end",
+                        "        [\"dsasdsadsa\"], # invalid characters",
+                        "        [\"I love sparrows!\"], # invalid characters",
+                        "        [\"068-556-98-45\"] # format",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 41.65828204154968,
+                    "generation_timestamp": "2024-08-29T02:41:57.336003",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "30-38:validISBN10Format": {
+                    "start": 30,
+                    "end": 38,
+                    "body": [
+                        "    private final String[] validISBN10Format =\n",
+                        "            new String[] {\n",
+                        "                \"1234567890\",\n",
+                        "                \"123456789X\",\n",
+                        "                \"12345-1234567-123456-X\",\n",
+                        "                \"12345 1234567 123456 X\",\n",
+                        "                \"1-2-3-4\",\n",
+                        "                \"1 2 3 4\",\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __validISBN10Format: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __validISBN10Format: List[str] = [",
+                        "        \"1234567890\",",
+                        "        \"123456789X\",",
+                        "        \"12345-1234567-123456-X\",",
+                        "        \"12345 1234567 123456 X\",",
+                        "        \"1-2-3-4\",",
+                        "        \"1 2 3 4\",",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 38.50578570365906,
+                    "generation_timestamp": "2024-08-29T02:42:35.872294",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISBNValidatorTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.apache.commons.validator.ISBNValidator import *",
+        "from src.main.org.apache.commons.validator.routines.ISBNValidator import *"
+    ]
+}

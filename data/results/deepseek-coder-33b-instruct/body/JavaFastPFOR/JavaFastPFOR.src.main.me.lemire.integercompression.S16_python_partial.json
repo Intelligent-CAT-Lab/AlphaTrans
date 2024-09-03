@@ -1,0 +1,883 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/S16.java",
+    "imports": {},
+    "classes": {
+        "S16": {
+            "start": 16,
+            "end": 16,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "167-177:uncompress": {
+                    "start": 167,
+                    "end": 177,
+                    "body": [
+                        "\tpublic static void uncompress(final int[] in, int tmpinpos, final int inlength, final int[] out, int currentPos,\n",
+                        "\t\t\tint outlength) {\n",
+                        "\t\tfinal int finalpos = tmpinpos + inlength;\n",
+                        "\t\twhile (tmpinpos < finalpos) {\n",
+                        "\t\t\tfinal int howmany = decompressblock(out, currentPos, in, tmpinpos, outlength);\n",
+                        "\t\t\toutlength -= howmany;\n",
+                        "\t\t\tcurrentPos += howmany;\n",
+                        "\t\t\ttmpinpos += 1;\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress(int[], int, int, int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "tmpinpos",
+                        "inlength",
+                        "out",
+                        "currentPos",
+                        "outlength"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "140-149:decompressblock"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def uncompress(in_: typing.List[int], tmpinpos: int, inlength: int, out: typing.List[int], currentPos: int, outlength: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def uncompress(in_: typing.List[int], tmpinpos: int, inlength: int, out: typing.List[int], currentPos: int, outlength: int) -> None:",
+                        "        ",
+                        "        finalpos = tmpinpos + inlength",
+                        "        while tmpinpos < finalpos:",
+                        "            howmany = S16.decompressblock(out, currentPos, in_, tmpinpos, outlength)",
+                        "            outlength -= howmany",
+                        "            currentPos += howmany",
+                        "            tmpinpos += 1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 719.0326614379883,
+                    "generation_timestamp": "2024-08-29T00:19:31.456654",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "140-149:decompressblock": {
+                    "start": 140,
+                    "end": 149,
+                    "body": [
+                        "\tpublic static final int decompressblock(int[] out, int outOffset, int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j = 0, bits = 0;\n",
+                        "\t\tnumIdx = in[inOffset] >>> S16_BITSSIZE;\n",
+                        "\t\tint num = S16_NUM[numIdx] < n ? S16_NUM[numIdx] : n;\n",
+                        "\t\tfor (j = 0, bits = 0; j < num; j++) {\n",
+                        "\t\t\tout[outOffset + j] = (in[inOffset] >>> bits) & (0xffffffff >>> (32 - S16_BITS[numIdx][j]));\n",
+                        "\t\t\tbits += S16_BITS[numIdx][j];\n",
+                        "\t\t}\n",
+                        "\t\treturn num;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decompressblock(int[], int, int[], int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decompressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def decompressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:",
+                        "        ",
+                        "        numIdx, j, bits = 0, 0, 0",
+                        "        numIdx = in_[inOffset] >> S16.__S16_BITSSIZE",
+                        "        num = S16.__S16_NUM[numIdx] if S16.__S16_NUM[numIdx] < n else n",
+                        "        ",
+                        "        for j in range(num):",
+                        "            out[outOffset + j] = (in_[inOffset] >> bits) & (0xffffffff >> (32 - S16.__S16_BITS[numIdx][j]))",
+                        "            bits += S16.__S16_BITS[numIdx][j]",
+                        "        ",
+                        "        return num"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 720.6191203594208,
+                    "generation_timestamp": "2024-08-29T00:07:32.173030",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "88-106:compressblock": {
+                    "start": 88,
+                    "end": 106,
+                    "body": [
+                        "\tpublic static final int compressblock(int[] out, int outOffset, int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j, num, bits;\n",
+                        "\t\tfor (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {\n",
+                        "\t\t\tout[outOffset] = numIdx << S16_BITSSIZE;\n",
+                        "\t\t\tnum = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;\n",
+                        "\n",
+                        "\t\t\tfor (j = 0, bits = 0; (j < num) && (in[inOffset + j] < SHIFTED_S16_BITS[numIdx][j]);) {\n",
+                        "\t\t\t\tout[outOffset] |= (in[inOffset + j] << bits);\n",
+                        "\t\t\t\tbits += S16_BITS[numIdx][j];\n",
+                        "\t\t\t\tj++;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (j == num) {\n",
+                        "\t\t\t\treturn num;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\treturn -1;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compressblock(int[], int, int[], int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def compressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def compressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:",
+                        "        ",
+                        "        numIdx, j, num, bits = 0, 0, 0, 0",
+                        "        ",
+                        "        for numIdx in range(S16.__S16_NUMSIZE):",
+                        "            out[outOffset] = numIdx << S16.__S16_BITSSIZE",
+                        "            num = S16.__S16_NUM[numIdx] if S16.__S16_NUM[numIdx] < n else n",
+                        "",
+                        "            for j in range(num):",
+                        "                if in_[inOffset + j] < S16.__SHIFTED_S16_BITS[numIdx][j]:",
+                        "                    out[outOffset] |= (in_[inOffset + j] << bits)",
+                        "                    bits += S16.__S16_BITS[numIdx][j]",
+                        "                else:",
+                        "                    break",
+                        "",
+                        "            if j == num:",
+                        "                return num",
+                        "",
+                        "        return -1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: java.lang.ClassCastException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: java.lang.ClassCastException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: java.lang.ClassCastException\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 317.07485270500183,
+                    "generation_timestamp": "2024-08-29T00:24:48.625212",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "58-70:estimatecompress": {
+                    "start": 58,
+                    "end": 70,
+                    "body": [
+                        "\tpublic static int estimatecompress(final int[] in, int currentPos, int inlength) {\n",
+                        "\t\tfinal int finalin = currentPos + inlength;\n",
+                        "\t\tint counter = 0;\n",
+                        "\t\twhile (currentPos < finalin) {\n",
+                        "\t\t\tint inoffset = fakecompressblock(in, currentPos, inlength);\n",
+                        "\t\t\tif (inoffset == -1)\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\tcurrentPos += inoffset;\n",
+                        "\t\t\tinlength -= inoffset;\n",
+                        "\t\t\t++counter;\n",
+                        "\t\t}\n",
+                        "\t\treturn counter;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "estimatecompress(int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "108-123:fakecompressblock"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def estimatecompress(in_: typing.List[int], currentPos: int, inlength: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def estimatecompress(in_: typing.List[int], currentPos: int, inlength: int) -> int:",
+                        "        ",
+                        "        finalin = currentPos + inlength",
+                        "        counter = 0",
+                        "        while currentPos < finalin:",
+                        "            inoffset = S16.__fakecompressblock(in_, currentPos, inlength)",
+                        "            if inoffset == -1:",
+                        "                raise RuntimeError(\"Too big a number\")",
+                        "            currentPos += inoffset",
+                        "            inlength -= inoffset",
+                        "            counter += 1",
+                        "        return counter"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 699.0119519233704,
+                    "generation_timestamp": "2024-08-29T00:54:02.740534",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "34-45:compress": {
+                    "start": 34,
+                    "end": 45,
+                    "body": [
+                        "\tpublic static int compress(final int[] in, int currentPos, int inlength, final int out[], final int tmpoutpos) {\n",
+                        "\t\tint outpos = tmpoutpos;\n",
+                        "\t\tfinal int finalin = currentPos + inlength;\n",
+                        "\t\twhile (currentPos < finalin) {\n",
+                        "\t\t\tint inoffset = compressblock(out, outpos++, in, currentPos, inlength);\n",
+                        "\t\t\tif (inoffset == -1)\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\tcurrentPos += inoffset;\n",
+                        "\t\t\tinlength -= inoffset;\n",
+                        "\t\t}\n",
+                        "\t\treturn outpos - tmpoutpos;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compress(int[], int, int, int[], int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength",
+                        "out",
+                        "tmpoutpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "88-106:compressblock"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def compress(in_: typing.List[int], currentPos: int, inlength: int, out: typing.List[int], tmpoutpos: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def compress(in_: typing.List[int], currentPos: int, inlength: int, out: typing.List[int], tmpoutpos: int) -> int:",
+                        "        ",
+                        "        outpos = tmpoutpos",
+                        "        finalin = currentPos + inlength",
+                        "        ",
+                        "        while currentPos < finalin:",
+                        "            inoffset = S16.compressblock(out, outpos, in_, currentPos, inlength)",
+                        "            if inoffset == -1:",
+                        "                raise RuntimeError(\"Too big a number\")",
+                        "            currentPos += inoffset",
+                        "            inlength -= inoffset",
+                        "            outpos += 1",
+                        "            ",
+                        "        return outpos - tmpoutpos"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: failed to reconstruct original data\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: arrays first differed at element [15088]; expected\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: arrays first differed at element [15088]; expected\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 281.24951553344727,
+                    "generation_timestamp": "2024-08-29T00:29:29.915890",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "179-187:shiftme": {
+                    "start": 179,
+                    "end": 187,
+                    "body": [
+                        "\tprivate static int[][] shiftme(int[][] x) {\n",
+                        "\t\tint[][] answer = new int[x.length][];\n",
+                        "\t\tfor (int k = 0; k < x.length; ++k) {\n",
+                        "\t\t\tanswer[k] = new int[x[k].length];\n",
+                        "\t\t\tfor (int z = 0; z < answer[k].length; ++z)\n",
+                        "\t\t\t\tanswer[k][z] = 1 << x[k][z];\n",
+                        "\t\t}\n",
+                        "\t\treturn answer;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "signature": "shiftme(int[][])",
+                    "parameters": [
+                        "x"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __shiftme(x: typing.List[typing.List[int]]) -> typing.List[typing.List[int]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __shiftme(x: typing.List[typing.List[int]]) -> typing.List[typing.List[int]]:",
+                        "        ",
+                        "        answer = [ [0]*len(x[i]) for i in range(len(x)) ]",
+                        "        ",
+                        "        for k in range(len(x)):",
+                        "            for z in range(len(x[k])):",
+                        "                answer[k][z] = 1 << x[k][z]",
+                        "        ",
+                        "        return answer"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest_test0_decomposed: java.lang.ExceptionInInitializerError\nme.lemire.integercompression.SkippableBasicTest.varyingLengthTest2_test0_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.SkippableBasicTest.consistentTest_test0_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: java.lang.NoClassDefFoundError\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: java.lang.NoClassDefFoundError\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 271.94974970817566,
+                    "generation_timestamp": "2024-08-29T00:34:02.038740",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "108-123:fakecompressblock": {
+                    "start": 108,
+                    "end": 123,
+                    "body": [
+                        "\tprivate static final int fakecompressblock(int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j, num;\n",
+                        "\t\tfor (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {\n",
+                        "\t\t\tnum = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;\n",
+                        "\n",
+                        "\t\t\tfor (j = 0; (j < num) && (in[inOffset + j] < SHIFTED_S16_BITS[numIdx][j]);) {\n",
+                        "\t\t\t\tj++;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (j == num) {\n",
+                        "\t\t\t\treturn num;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\treturn -1;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "fakecompressblock(int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __fakecompressblock(in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __fakecompressblock(in_: typing.List[int], inOffset: int, n: int) -> int:",
+                        "        ",
+                        "        for numIdx in range(S16.__S16_NUMSIZE):",
+                        "            num = S16.__S16_NUM[numIdx] if S16.__S16_NUM[numIdx] < n else n",
+                        "",
+                        "            j = 0",
+                        "            while j < num and in_[inOffset + j] < S16.__SHIFTED_S16_BITS[numIdx][j]:",
+                        "                j += 1",
+                        "",
+                        "            if j == num:",
+                        "                return num",
+                        "",
+                        "        return -1"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: AttributeError\nme.lemire.integercompression.SkippableBasicTest.consistentTest_test0_decomposed: AttributeError\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: AttributeError\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: AttributeError\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 501.58850836753845,
+                    "generation_timestamp": "2024-08-29T00:42:23.684663",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "203-203:SHIFTED_S16_BITS": {
+                    "start": 203,
+                    "end": 203,
+                    "body": [
+                        "\tprivate static final int[][] SHIFTED_S16_BITS = shiftme(S16_BITS);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SHIFTED_S16_BITS: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __SHIFTED_S16_BITS: typing.List[typing.List[int]] = __shiftme(__S16_BITS)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 62.246482610702515,
+                    "generation_timestamp": "2024-08-28T22:06:35.762593",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "195-202:S16_BITS": {
+                    "start": 195,
+                    "end": 202,
+                    "body": [
+                        "\tprivate static final int[][] S16_BITS = {\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2 },\n",
+                        "\t\t\t{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, { 4, 3, 3, 3, 3, 3, 3, 3, 3 }, { 3, 4, 4, 4, 4, 3, 3, 3 },\n",
+                        "\t\t\t{ 4, 4, 4, 4, 4, 4, 4 }, { 5, 5, 5, 5, 4, 4 }, { 4, 4, 5, 5, 5, 5 }, { 6, 6, 6, 5, 5 }, { 5, 5, 6, 6, 6 },\n",
+                        "\t\t\t{ 7, 7, 7, 7 }, { 10, 9, 9, }, { 14, 14 }, { 28 } };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITS: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __S16_BITS: typing.List[typing.List[int]] = [",
+                        "        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],",
+                        "        [2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],",
+                        "        [1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1],",
+                        "        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2],",
+                        "        [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],",
+                        "        [4, 3, 3, 3, 3, 3, 3, 3, 3],",
+                        "        [3, 4, 4, 4, 4, 3, 3, 3],",
+                        "        [4, 4, 4, 4, 4, 4, 4],",
+                        "        [5, 5, 5, 5, 4, 4],",
+                        "        [4, 4, 5, 5, 5, 5],",
+                        "        [6, 6, 6, 5, 5],",
+                        "        [5, 5, 6, 6, 6],",
+                        "        [7, 7, 7, 7],",
+                        "        [10, 9, 9],",
+                        "        [14, 14],",
+                        "        [28]",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 32.599029779434204,
+                    "generation_timestamp": "2024-08-28T22:07:08.371693",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "192-192:S16_NUM": {
+                    "start": 192,
+                    "end": 192,
+                    "body": [
+                        "\tprivate static final int[] S16_NUM = { 28, 21, 21, 21, 14, 9, 8, 7, 6, 6, 5, 5, 4, 3, 2, 1 };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUM: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __S16_NUM: typing.List[int] = [28, 21, 21, 21, 14, 9, 8, 7, 6, 6, 5, 5, 4, 3, 2, 1]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 17.05983543395996,
+                    "generation_timestamp": "2024-08-28T22:07:25.438429",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "190-190:S16_BITSSIZE": {
+                    "start": 190,
+                    "end": 190,
+                    "body": [
+                        "\tprivate static final int S16_BITSSIZE = 28;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITSSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __S16_BITSSIZE: int = 28"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.915057182312012,
+                    "generation_timestamp": "2024-08-28T22:07:41.361298",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "189-189:S16_NUMSIZE": {
+                    "start": 189,
+                    "end": 189,
+                    "body": [
+                        "\tprivate static final int S16_NUMSIZE = 16;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUMSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __S16_NUMSIZE: int = 16"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 15.562899351119995,
+                    "generation_timestamp": "2024-08-28T22:07:56.932806",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class S16:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os"
+    ]
+}

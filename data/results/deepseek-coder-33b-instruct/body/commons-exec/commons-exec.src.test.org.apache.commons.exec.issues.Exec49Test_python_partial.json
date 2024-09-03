@@ -1,0 +1,528 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec49Test.java",
+    "imports": {
+        "20-20:import ByteArrayOutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "21-21:import PipedInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.PipedInputStream;\n"
+            ]
+        },
+        "22-22:import PipedOutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.PipedOutputStream;\n"
+            ]
+        },
+        "23-23:import Duration": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "25-25:import CommandLine": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "27-27:import DefaultExecutor": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "26-26:import DefaultExecuteResultHandler": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecuteResultHandler;\n"
+            ]
+        },
+        "28-28:import Executor": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "29-29:import OS": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.OS;\n"
+            ]
+        },
+        "30-30:import PumpStreamHandler": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.PumpStreamHandler;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec49Test": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "83-106:testExec49_2_test0_decomposed": {
+                    "start": 83,
+                    "end": 106,
+                    "body": [
+                        "    public void testExec49_2_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            final CommandLine cl = CommandLine.parse0(\"/bin/ls\");\n",
+                        "            cl.addArgument0(\"/opt\");\n",
+                        "            // redirect only stdout to pipedOutputStream\n",
+                        "            try (PipedOutputStream pipedOutputStream = new PipedOutputStream()) {\n",
+                        "                final PumpStreamHandler psh = PumpStreamHandler.PumpStreamHandler2(pipedOutputStream, new ByteArrayOutputStream());\n",
+                        "                exec.setStreamHandler(psh);\n",
+                        "                // start an asynchronous process to enable the main thread\n",
+                        "                System.out.println(\"Preparing to execute process - commandLine=\" + cl.toString());\n",
+                        "                final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();\n",
+                        "                exec.execute1(cl, handler);\n",
+                        "                System.out.println(\"Process spun off successfully - process=\" + cl.getExecutable());\n",
+                        "                try (PipedInputStream pis = new PipedInputStream(pipedOutputStream)) {\n",
+                        "                    while (pis.read() >= 0) {\n",
+                        "//                 System.out.println(\"pis.available() \" + pis.available());\n",
+                        "//                 System.out.println(\"x \" + x);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                handler.waitFor1(WAIT);\n",
+                        "                handler.getExitValue(); // will fail if process has not finished\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec49_2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "413-415:toString"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "356-361:getExecutable"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "125-130:waitFor1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "67-72:getExitValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec49_2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec49_2_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyUnix():",
+                        "            cl = CommandLine.parse0(\"/bin/ls\")",
+                        "            cl.addArgument0(\"/opt\")",
+                        "            # redirect only stdout to pipedOutputStream",
+                        "            with io.BytesIO() as pipedOutputStream:",
+                        "                psh = PumpStreamHandler.PumpStreamHandler2(pipedOutputStream, io.BytesIO())",
+                        "                self.__exec.setStreamHandler(psh)",
+                        "                # start an asynchronous process to enable the main thread",
+                        "                print(\"Preparing to execute process - commandLine=\" + cl.toString())",
+                        "                handler = DefaultExecuteResultHandler()",
+                        "                self.__exec.execute1(cl, handler)",
+                        "                print(\"Process spun off successfully - process=\" + cl.getExecutable())",
+                        "                with io.BytesIO(pipedOutputStream.getvalue()) as pis:",
+                        "                    while pis.read() >= 0:",
+                        "                        pass",
+                        "                handler.waitFor1(self.__WAIT)",
+                        "                handler.getExitValue() # will fail if process has not finished"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "commons-exec/src/test/org/apache/commons/exec/issues/Exec49Test.py::Exec49Test::testExec49_2_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/test/org/apache/commons/exec/issues/Exec49Test.py\", line 29, in testExec49_2_test0_decomposed\n    if OS.isFamilyUnix():\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 139, in isFamilyUnix\n    return OS.__isFamily(OS.FAMILY_UNIX)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/commons-exec/src/main/org/apache/commons/exec/OS.py\", line 189, in __isFamily\n    isWindows = OS.__OS_NAME.find(OS.FAMILY_WINDOWS) != -1\nAttributeError: 'NoneType' object has no attribute 'find'",
+                            "covered_methods": [
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "173-175:isFamilyUnix"
+                                },
+                                {
+                                    "file": "commons-exec.src.main.org.apache.commons.exec.OS",
+                                    "class": "OS",
+                                    "method": "101-103:isFamily"
+                                },
+                                {
+                                    "file": "commons-exec.src.test.org.apache.commons.exec.issues.Exec49Test",
+                                    "class": "Exec49Test",
+                                    "method": "83-106:testExec49_2_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 13.29382061958313,
+                    "generation_timestamp": "2024-08-30T00:36:10.592986",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "57-80:testExec49_1_test0_decomposed": {
+                    "start": 57,
+                    "end": 80,
+                    "body": [
+                        "    public void testExec49_1_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            final CommandLine cl = CommandLine.parse0(\"/bin/ls\");\n",
+                        "            cl.addArgument0(\"/opt\");\n",
+                        "            // redirect stdout/stderr to pipedOutputStream\n",
+                        "            try (PipedOutputStream pipedOutputStream = new PipedOutputStream()) {\n",
+                        "                final PumpStreamHandler psh = PumpStreamHandler.PumpStreamHandler1(pipedOutputStream);\n",
+                        "                exec.setStreamHandler(psh);\n",
+                        "                // start an asynchronous process to enable the main thread\n",
+                        "                System.out.println(\"Preparing to execute process - commandLine=\" + cl.toString());\n",
+                        "                final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();\n",
+                        "                exec.execute1(cl, handler);\n",
+                        "                System.out.println(\"Process spun off successfully - process=\" + cl.getExecutable());\n",
+                        "                try (PipedInputStream pis = new PipedInputStream(pipedOutputStream)) {\n",
+                        "                    while (pis.read() >= 0) {\n",
+                        "//                 System.out.println(\"pis.available() \" + pis.available());\n",
+                        "//                 System.out.println(\"x \" + x);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                handler.waitFor1(WAIT);\n",
+                        "                handler.getExitValue(); // will fail if process has not finished\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec49_1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "76-78:PumpStreamHandler1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "413-415:toString"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "356-361:getExecutable"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "125-130:waitFor1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "67-72:getExitValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec49_1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def testExec49_1_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        if OS.isFamilyUnix():",
+                        "            cl = CommandLine.parse0(\"/bin/ls\")",
+                        "            cl.addArgument0(\"/opt\")",
+                        "            # redirect stdout/stderr to pipedOutputStream",
+                        "            with io.BytesIO() as pipedOutputStream:",
+                        "                psh = PumpStreamHandler.PumpStreamHandler1(pipedOutputStream)",
+                        "                self.__exec.setStreamHandler(psh)",
+                        "                # start an asynchronous process to enable the main thread",
+                        "                print(\"Preparing to execute process - commandLine=\" + cl.toString())",
+                        "                handler = DefaultExecuteResultHandler()",
+                        "                self.__exec.execute1(cl, handler)",
+                        "                print(\"Process spun off successfully - process=\" + cl.getExecutable())",
+                        "                with io.BytesIO(pipedOutputStream.getvalue()) as pis:",
+                        "                    while pis.read() >= 0:",
+                        "                        pass",
+                        "                handler.waitFor1(self.__WAIT)",
+                        "                handler.getExitValue() # will fail if process has not finished"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 13.40034294128418,
+                    "generation_timestamp": "2024-08-30T00:36:24.105419",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "39-39:exec": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __exec: Executor = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __exec: Executor = DefaultExecutor.builder().get()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "failed",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.716190338134766,
+                    "generation_timestamp": "2024-08-28T22:01:51.346707",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 1,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "38-38:WAIT": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final Duration WAIT = Duration.ofSeconds(10);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __WAIT: datetime.timedelta = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __WAIT: datetime.timedelta = datetime.timedelta(seconds=10)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 13.858164072036743,
+                    "generation_timestamp": "2024-08-28T22:02:05.217329",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec49Test(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import datetime",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteResultHandler import *",
+        "from src.main.org.apache.commons.exec.ExecuteStreamHandler import *",
+        "from src.main.org.apache.commons.exec.Executor import *",
+        "from src.main.org.apache.commons.exec.OS import *",
+        "from src.main.org.apache.commons.exec.PumpStreamHandler import *"
+    ]
+}

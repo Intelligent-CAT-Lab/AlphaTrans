@@ -1,0 +1,952 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/ISSNValidator.java",
+    "imports": {
+        "23-23:import Serializable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "19-19:import CheckDigitException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigitException;\n"
+            ]
+        },
+        "20-20:import EAN13CheckDigit": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit;\n"
+            ]
+        },
+        "21-21:import ISSNCheckDigit": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISSNValidator": {
+            "start": 64,
+            "end": 64,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "177-201:extractFromEAN13": {
+                    "start": 177,
+                    "end": 201,
+                    "body": [
+                        "    public String extractFromEAN13(String ean13) {\n",
+                        "        String input = ean13.trim();\n",
+                        "        if (input.length() != EAN_ISSN_LEN) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Invalid length \" + input.length() + \" for '\" + input + \"'\");\n",
+                        "        }\n",
+                        "        if (!input.startsWith(ISSN_PREFIX)) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Prefix must be \" + ISSN_PREFIX + \" to contain an ISSN: '\" + ean13 + \"'\");\n",
+                        "        }\n",
+                        "        Object result = validateEan(input);\n",
+                        "        if (result == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        input = result.toString();\n",
+                        "        try {\n",
+                        "            String issnBase = input.substring(3, 10); // TODO: how to derive these\n",
+                        "            String checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase);\n",
+                        "            String issn = issnBase + checkDigit;\n",
+                        "            return issn;\n",
+                        "        } catch (CheckDigitException e) { // Should not happen\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "extractFromEAN13(String)",
+                    "parameters": [
+                        "ean13"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISSNValidator",
+                            "ISSNValidator",
+                            "107-109:validateEan"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def extractFromEAN13(self, ean13: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def extractFromEAN13(self, ean13: str) -> str:",
+                        "        ",
+                        "        input = ean13.strip()",
+                        "        if len(input) != self.__EAN_ISSN_LEN:",
+                        "            raise ValueError(",
+                        "                f\"Invalid length {len(input)} for '{input}'\")",
+                        "        if not input.startswith(self.__ISSN_PREFIX):",
+                        "            raise ValueError(",
+                        "                f\"Prefix must be {self.__ISSN_PREFIX} to contain an ISSN: '{ean13}'\")",
+                        "        result = self.validateEan(input)",
+                        "        if result is None:",
+                        "            return None",
+                        "        input = str(result)",
+                        "        try:",
+                        "            issnBase = input[3:10] ",
+                        "            checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase)",
+                        "            issn = issnBase + checkDigit",
+                        "            return issn",
+                        "        except CheckDigitException as e: ",
+                        "            raise ValueError(",
+                        "                f\"Check digit error for '{ean13}' - {str(e)}\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 80.2796802520752,
+                    "generation_timestamp": "2024-08-30T02:57:05.778983",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "144-165:convertToEAN13": {
+                    "start": 144,
+                    "end": 165,
+                    "body": [
+                        "    public String convertToEAN13(String issn, String suffix) {\n",
+                        "\n",
+                        "        if (suffix == null || !suffix.matches(\"\\\\d\\\\d\")) {\n",
+                        "            throw new IllegalArgumentException(\"Suffix must be two digits: '\" + suffix + \"'\");\n",
+                        "        }\n",
+                        "\n",
+                        "        Object result = validate(issn);\n",
+                        "        if (result == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        final String input = result.toString();\n",
+                        "        String ean13 = ISSN_PREFIX + input.substring(0, input.length() - 1) + suffix;\n",
+                        "        try {\n",
+                        "            String checkDigit = EAN13CheckDigit.EAN13_CHECK_DIGIT.calculate(ean13);\n",
+                        "            ean13 += checkDigit;\n",
+                        "            return ean13;\n",
+                        "        } catch (CheckDigitException e) { // Should not happen\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToEAN13(String, String)",
+                    "parameters": [
+                        "issn",
+                        "suffix"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISSNValidator",
+                            "ISSNValidator",
+                            "130-132:validate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def convertToEAN13(self, issn: str, suffix: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def convertToEAN13(self, issn: str, suffix: str) -> str:",
+                        "        ",
+                        "        if suffix is None or not suffix.isdigit() or len(suffix) != 2:",
+                        "            raise ValueError(\"Suffix must be two digits: '\" + suffix + \"'\")",
+                        "",
+                        "        result = self.validate(issn)",
+                        "        if result is None:",
+                        "            return None",
+                        "",
+                        "        input = result",
+                        "        ean13 = self.__ISSN_PREFIX + input[:-1] + suffix",
+                        "        try:",
+                        "            checkDigit = EAN13CheckDigit.EAN13_CHECK_DIGIT.calculate(ean13)",
+                        "            ean13 += checkDigit",
+                        "            return ean13",
+                        "        except CheckDigitException as e:  # Should not happen",
+                        "            raise ValueError(",
+                        "                \"Check digit error for '\" + ean13 + \"' - \" + str(e))"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 79.46396994590759,
+                    "generation_timestamp": "2024-08-30T02:51:49.633595",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "130-132:validate": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "    public Object validate(String code) {\n",
+                        "        return VALIDATOR.validate(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate(self, code: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validate(self, code: str) -> typing.Any:",
+                        "        ",
+                        "        return self.__VALIDATOR.validate(code)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 77.346675157547,
+                    "generation_timestamp": "2024-08-30T02:50:30.053577",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "117-119:isValid": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        return VALIDATOR.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isValid(self, code: str) -> bool:",
+                        "        ",
+                        "        return self.__VALIDATOR.isValid(code)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 79.27671194076538,
+                    "generation_timestamp": "2024-08-30T02:53:08.980550",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "107-109:validateEan": {
+                    "start": 107,
+                    "end": 109,
+                    "body": [
+                        "    public Object validateEan(String code) {\n",
+                        "        return EAN_VALIDATOR.validate(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validateEan(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validateEan(self, code: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def validateEan(self, code: str) -> typing.Any:",
+                        "        ",
+                        "        if code is None:",
+                        "            return None",
+                        "",
+                        "        code = code.strip()",
+                        "        if len(code) == 0:",
+                        "            return None",
+                        "",
+                        "        if self.__EAN_VALIDATOR.__regexValidator is not None:",
+                        "            code = self.__EAN_VALIDATOR.__regexValidator.validate(code)",
+                        "            if code is None:",
+                        "                return None",
+                        "",
+                        "        if ((self.__EAN_VALIDATOR.__minLength >= 0 and len(code) < self.__EAN_VALIDATOR.__minLength)",
+                        "                or (self.__EAN_VALIDATOR.__maxLength >= 0 and len(code) > self.__EAN_VALIDATOR.__maxLength)):",
+                        "            return None",
+                        "",
+                        "        if self.__EAN_VALIDATOR.__checkdigit is not None and not self.__EAN_VALIDATOR.__checkdigit.isValid(code):",
+                        "            return None",
+                        "",
+                        "        return code"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\norg.apache.commons.validator.routines.ISSNValidatorTest.testIsValidExtract: AttributeError\norg.apache.commons.validator.routines.ISSNValidatorTest.testValidCheckDigitEan13: AttributeError\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 156.21432518959045,
+                    "generation_timestamp": "2024-08-30T02:55:45.351592",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "94-96:getInstance": {
+                    "start": 94,
+                    "end": 96,
+                    "body": [
+                        "    public static ISSNValidator getInstance() {\n",
+                        "        return ISSN_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISSNValidator",
+                            "ISSNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> ISSNValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def getInstance() -> ISSNValidator:",
+                        "         return ISSNValidator.__ISSN_VALIDATOR"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 74.22583436965942,
+                    "generation_timestamp": "2024-08-30T02:58:20.118791",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "87-87:ISSN_VALIDATOR": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private static final ISSNValidator ISSN_VALIDATOR = new ISSNValidator();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISSNValidator",
+                            "ISSNValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_VALIDATOR: ISSNValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_VALIDATOR: ISSNValidator = ISSNValidator()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 32.32211112976074,
+                    "generation_timestamp": "2024-08-29T03:13:28.375540",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "82-84:EAN_VALIDATOR": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "    private static final CodeValidator EAN_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator4(\n",
+                        "                    EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(__EAN_ISSN_REGEX, __EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 35.112080812454224,
+                    "generation_timestamp": "2024-08-29T03:14:03.501826",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "79-80:VALIDATOR": {
+                    "start": 79,
+                    "end": 80,
+                    "body": [
+                        "    private static final CodeValidator VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator4(ISSN_REGEX, ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __VALIDATOR: CodeValidator = CodeValidator.CodeValidator4(\"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\", 8, ISSNCheckDigit.ISSN_CHECK_DIGIT)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 39.223233222961426,
+                    "generation_timestamp": "2024-08-29T03:14:42.738270",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "77-77:EAN_ISSN_LEN": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private static final int EAN_ISSN_LEN = 13;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_ISSN_LEN: int = 13"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 33.91649556159973,
+                    "generation_timestamp": "2024-08-29T03:15:16.667877",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "75-75:EAN_ISSN_REGEX": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final String EAN_ISSN_REGEX = \"^(977)(?:(\\\\d{10}))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __EAN_ISSN_REGEX: str = \"^(977)(?:(\\\\d{10}))$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 34.8144645690918,
+                    "generation_timestamp": "2024-08-29T03:15:51.496560",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "73-73:ISSN_PREFIX": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final String ISSN_PREFIX = \"977\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_PREFIX: str = \"977\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 35.3778076171875,
+                    "generation_timestamp": "2024-08-29T03:16:26.888344",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "71-71:ISSN_LEN": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final int ISSN_LEN = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_LEN: int = 8"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 35.92042422294617,
+                    "generation_timestamp": "2024-08-29T03:17:02.822232",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "68-69:ISSN_REGEX": {
+                    "start": 68,
+                    "end": 69,
+                    "body": [
+                        "    private static final String ISSN_REGEX =\n",
+                        "            \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\"; // We don't include the '-' in the code, so it is\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __ISSN_REGEX: str = \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 28.133450984954834,
+                    "generation_timestamp": "2024-08-29T03:17:30.968864",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "66-66:serialVersionUID": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private static final long serialVersionUID = 4319515687976420405L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = 4319515687976420405"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 33.20258712768555,
+                    "generation_timestamp": "2024-08-29T03:18:04.186147",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISSNValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.CodeValidator import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit import *"
+    ]
+}

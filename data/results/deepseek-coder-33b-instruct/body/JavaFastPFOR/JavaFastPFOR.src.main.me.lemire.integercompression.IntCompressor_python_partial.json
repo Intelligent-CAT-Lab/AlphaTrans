@@ -1,0 +1,386 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/IntCompressor.java",
+    "imports": {
+        "3-3:import Arrays": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IntCompressor": {
+            "start": 10,
+            "end": 10,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "71-79:uncompress": {
+                    "start": 71,
+                    "end": 79,
+                    "body": [
+                        "    public int[] uncompress(int[] compressed) {\n",
+                        "        int[] decompressed = new int[compressed[0]];\n",
+                        "        IntWrapper inpos = new IntWrapper(1);\n",
+                        "        codec.headlessUncompress(compressed, inpos, \n",
+                        "                compressed.length - inpos.intValue(), \n",
+                        "                decompressed, new IntWrapper(0), \n",
+                        "                decompressed.length);\n",
+                        "        return decompressed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "uncompress(int[])",
+                    "parameters": [
+                        "compressed"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "66-68:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "        decompressed = [0] * compressed[0]",
+                        "        inpos = IntWrapper(1)",
+                        "        self.codec.headlessUncompress(compressed, inpos, len(compressed) - inpos.intValue(), decompressed, IntWrapper(0), len(decompressed))",
+                        "        return decompressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.integercompression.IntCompressorTest.basicTest_test0_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: arrays first differed at element [0]; expected"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 77.89990282058716,
+                    "generation_timestamp": "2024-08-30T18:51:35.269211",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "49-63:compress": {
+                    "start": 49,
+                    "end": 63,
+                    "body": [
+                        "    public  int[] compress(int[] input) {\n",
+                        "        int [] compressed = new int[input.length + input.length / 100 + 1024];\n",
+                        "        compressed[0] = input.length;\n",
+                        "        IntWrapper outpos = new IntWrapper(1);\n",
+                        "        try {\n",
+                        "            codec.headlessCompress(input, new IntWrapper(0),\n",
+                        "                    input.length, compressed, outpos);\n",
+                        "        } catch (IndexOutOfBoundsException ioebe) {\n",
+                        "            throw new\n",
+                        "            UncompressibleInputException(\"Your input is too poorly compressible \"\n",
+                        "                    + \"with the current codec : \"+codec);\n",
+                        "        }\n",
+                        "        compressed = Arrays.copyOf(compressed,outpos.intValue());\n",
+                        "        return compressed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "compress(int[])",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "44-46:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.UncompressibleInputException",
+                            "UncompressibleInputException",
+                            "13-15:UncompressibleInputException"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress(self, input_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress(self, input_: typing.List[int]) -> typing.List[int]:",
+                        "        ",
+                        "        compressed = [0] * (len(input_) + len(input_) // 100 + 1024)",
+                        "        compressed[0] = len(input_)",
+                        "        outpos = IntWrapper(1)",
+                        "        try:",
+                        "            self.codec.headlessCompress(input_, IntWrapper(0), len(input_), compressed, outpos)",
+                        "        except IndexOutOfBoundsException:",
+                        "            raise UncompressibleInputException(\"Your input is too poorly compressible with the current codec : \"+str(self.codec))",
+                        "        compressed = compressed[:outpos.intValue()]",
+                        "        return compressed"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.integercompression.IntCompressorTest.basicTest_test0_decomposed: java.lang.ArrayIndexOutOfBoundsException\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test3_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.ResourcedTest.IntCompressorTest_test2_decomposed: arrays first differed at element [0]; expected"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 80.26881456375122,
+                    "generation_timestamp": "2024-08-30T18:52:59.615482",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "26-36:IntCompressor": {
+                    "start": 26,
+                    "end": 36,
+                    "body": [
+                        "public IntCompressor(int constructorId, SkippableIntegerCODEC c) {\n",
+                        "    if (constructorId == 0) {\n",
+                        "\n",
+                        "      codec = c;\n",
+                        "        }\n",
+                        "    else {\n",
+                        "\n",
+                        "        codec = new SkippableComposition(new BinaryPacking(),\n",
+                        "                new VariableByte());\n",
+                        "        }\n",
+                        "}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressor(int, SkippableIntegerCODEC)",
+                    "parameters": [
+                        "constructorId",
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                            "SkippableComposition",
+                            "31-35:SkippableComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, c: SkippableIntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, constructorId: int, c: SkippableIntegerCODEC) -> None:",
+                        "         if constructorId == 0:",
+                        "             self.codec = c",
+                        "         else:",
+                        "             self.codec = SkippableComposition(BinaryPacking(), VariableByte())"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "error",
+                        "message": "Unsupported operation encountered: [JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x88edd90>\n[JavaHandler.mapping] Unhandled Java object type: <JavaObject[java.nio.DirectByteBuffer] at 0x5a414ed4>"
+                    },
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/IntCompressorTest.py::IntCompressorTest::testsuperSimpleExample_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                                    "class": "IntCompressor",
+                                    "method": "26-36:IntCompressor"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                                    "class": "IntegratedIntCompressor",
+                                    "method": "29-39:IntegratedIntCompressor"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.SkippableIntegratedComposition",
+                                    "class": "SkippableIntegratedComposition",
+                                    "method": "33-37:SkippableIntegratedComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.IntCompressorTest",
+                                    "class": "IntCompressorTest",
+                                    "method": "63-65:superSimpleExample_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 430.9893081188202,
+                    "generation_timestamp": "2024-08-30T19:00:14.685904",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "13-13:codec": {
+                    "start": 13,
+                    "end": 13,
+                    "body": [
+                        "    SkippableIntegerCODEC codec;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codec: SkippableIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    codec: SkippableIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:51:21.295283",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IntCompressor:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.SkippableComposition import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.UncompressibleInputException import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *"
+    ]
+}

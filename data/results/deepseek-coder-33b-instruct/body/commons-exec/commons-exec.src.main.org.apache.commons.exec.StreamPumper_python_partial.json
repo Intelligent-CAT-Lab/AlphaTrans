@@ -1,0 +1,695 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/StreamPumper.java",
+    "imports": {
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "22-22:import OutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "21-21:import InputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "24-24:import DebugUtils": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.exec.util.DebugUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "StreamPumper": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "101-130:run": {
+                    "start": 101,
+                    "end": 130,
+                    "body": [
+                        "    public void run() {\n",
+                        "        synchronized (this) {\n",
+                        "            // Just in case this object is reused in the future\n",
+                        "            finished = false;\n",
+                        "        }\n",
+                        "\n",
+                        "        final byte[] buf = new byte[this.size];\n",
+                        "\n",
+                        "        int length;\n",
+                        "        try {\n",
+                        "            while ((length = is.read(buf)) > 0) {\n",
+                        "                os.write(buf, 0, length);\n",
+                        "            }\n",
+                        "        } catch (final Exception ignored) {\n",
+                        "            // nothing to do - happens quite often with watchdog\n",
+                        "        } finally {\n",
+                        "            if (closeWhenExhausted) {\n",
+                        "                try {\n",
+                        "                    os.close();\n",
+                        "                } catch (final IOException e) {\n",
+                        "                    final String msg = \"Got exception while closing exhausted output stream\";\n",
+                        "                    DebugUtils.handleException(msg, e);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            synchronized (this) {\n",
+                        "                finished = true;\n",
+                        "                notifyAll();\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def run(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def run(self) -> None:",
+                        "        ",
+                        "        with self:",
+                        "            # Just in case this object is reused in the future",
+                        "            self.__finished = False",
+                        "",
+                        "        buf = bytearray(self.__size)",
+                        "",
+                        "        try:",
+                        "            length = self.__is.readinto(buf)",
+                        "            while length > 0:",
+                        "                self.__os.write(buf[:length])",
+                        "                length = self.__is.readinto(buf)",
+                        "        except Exception:",
+                        "            # nothing to do - happens quite often with watchdog",
+                        "            pass",
+                        "        finally:",
+                        "            if self.__closeWhenExhausted:",
+                        "                try:",
+                        "                    self.__os.close()",
+                        "                except IOError as e:",
+                        "                    msg = \"Got exception while closing exhausted output stream\"",
+                        "                    DebugUtils.handleException(msg, e)",
+                        "            with self:",
+                        "                self.__finished = True",
+                        "                self.notify_all()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 646.2990431785583,
+                    "generation_timestamp": "2024-08-29T22:41:01.397767",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "138-142:waitFor": {
+                    "start": 138,
+                    "end": 142,
+                    "body": [
+                        "    public synchronized void waitFor() throws InterruptedException {\n",
+                        "        while (!isFinished()) {\n",
+                        "            wait();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "waitFor()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.StreamPumper",
+                            "StreamPumper",
+                            "93-95:isFinished"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def waitFor(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def waitFor(self) -> None:",
+                        "         while not self.isFinished():",
+                        "             self.wait()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 35.448283672332764,
+                    "generation_timestamp": "2024-08-29T22:42:16.023190",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "93-95:isFinished": {
+                    "start": 93,
+                    "end": 95,
+                    "body": [
+                        "    public synchronized boolean isFinished() {\n",
+                        "        return finished;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFinished()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isFinished(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def isFinished(self) -> bool:",
+                        "         return self.__finished"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 39.13244342803955,
+                    "generation_timestamp": "2024-08-29T22:41:40.557224",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "81-86:StreamPumper": {
+                    "start": 81,
+                    "end": 86,
+                    "body": [
+                        "    public StreamPumper(final InputStream is, final OutputStream os, final boolean closeWhenExhausted, final int size) {\n",
+                        "        this.is = is;\n",
+                        "        this.os = os;\n",
+                        "        this.size = size > 0 ? size : DEFAULT_SIZE;\n",
+                        "        this.closeWhenExhausted = closeWhenExhausted;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "StreamPumper(InputStream, OutputStream, boolean, int)",
+                    "parameters": [
+                        "is",
+                        "os",
+                        "closeWhenExhausted",
+                        "size"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter], closeWhenExhausted: bool, size: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self, is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter], closeWhenExhausted: bool, size: int) -> None:",
+                        "        ",
+                        "        self.__is = is_",
+                        "        self.__os = os",
+                        "        self.__closeWhenExhausted = closeExhausted",
+                        "        self.__size = size if size > 0 else self.__DEFAULT_SIZE"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 636.9203588962555,
+                    "generation_timestamp": "2024-08-29T22:52:53.021542",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "55-57:StreamPumper0": {
+                    "start": 55,
+                    "end": 57,
+                    "body": [
+                        "    public static StreamPumper StreamPumper0(final InputStream is, final OutputStream os) {\n",
+                        "        return new StreamPumper(is, os, false, -1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "StreamPumper",
+                            "StreamPumper"
+                        ]
+                    ],
+                    "signature": "StreamPumper0(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.StreamPumper",
+                            "StreamPumper",
+                            "81-86:StreamPumper"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def StreamPumper0(is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> StreamPumper:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def StreamPumper0(is_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> StreamPumper:",
+                        "        ",
+                        "        return StreamPumper(is_, os, False, -1)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "not-exercised",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 37.79418873786926,
+                    "generation_timestamp": "2024-08-29T23:02:32.426161",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "47-47:closeWhenExhausted": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final boolean closeWhenExhausted;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __closeWhenExhausted: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __closeWhenExhausted: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:11:18.543266",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "44-44:finished": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private boolean finished;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __finished: bool = False",
+                        ""
+                    ],
+                    "translation": [
+                        "    __finished: bool = False",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:11:18.548342",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "41-41:size": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final int size;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __size: int = 0",
+                        ""
+                    ],
+                    "translation": [
+                        "    __size: int = 0",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:11:18.555360",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "38-38:os": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final OutputStream os;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __os: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:11:18.559956",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "35-35:is": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final InputStream is;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InputStream",
+                            "java.io.InputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __is: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None",
+                        ""
+                    ],
+                    "translation": [
+                        "    __is: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader] = None",
+                        ""
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": "2024-08-28T22:11:18.564854",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    },
+                    "final_budget": {
+                        "syntactic": -1,
+                        "field_exercise": -1,
+                        "graal": -1,
+                        "test_execution": -1
+                    }
+                },
+                "32-32:DEFAULT_SIZE": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final int DEFAULT_SIZE = 1024;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DEFAULT_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __DEFAULT_SIZE: int = 1024"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 12.818450927734375,
+                    "generation_timestamp": "2024-08-28T22:11:31.386884",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class StreamPumper():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.apache.commons.exec.util.DebugUtils import *"
+    ]
+}

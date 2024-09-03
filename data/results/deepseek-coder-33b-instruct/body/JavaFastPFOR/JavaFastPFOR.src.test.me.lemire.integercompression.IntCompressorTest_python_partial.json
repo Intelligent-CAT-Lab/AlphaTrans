@@ -1,0 +1,698 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/integercompression/IntCompressorTest.java",
+    "imports": {
+        "10-10:import Arrays": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "13-13:import Test": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "16-16:import IntegratedIntCompressor": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedIntCompressor;\n"
+            ]
+        },
+        "15-15:import IntegratedBinaryPacking": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedBinaryPacking;\n"
+            ]
+        },
+        "17-17:import IntegratedVariableByte": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedVariableByte;\n"
+            ]
+        },
+        "18-18:import SkippableIntegratedComposition": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import me.lemire.integercompression.differential.SkippableIntegratedComposition;\n"
+            ]
+        },
+        "12-12:import Assert": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.junit.Assert;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IntCompressorTest": {
+            "start": 23,
+            "end": 23,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "102-113:basicIntegratedTest_test0_decomposed": {
+                    "start": 102,
+                    "end": 113,
+                    "body": [
+                        "    public void basicIntegratedTest_test0_decomposed()  {\n",
+                        "        for (int N = 1; N <= 10000; N *= 10) {\n",
+                        "            int[] orig = new int[N];\n",
+                        "            for (int k = 0; k < N; k++)\n",
+                        "                orig[k] = 3 * k + 5;\n",
+                        "            for (IntegratedIntCompressor i : iic) {\n",
+                        "                int[] comp = i.compress(orig);\n",
+                        "                int[] back = i.uncompress(comp);\n",
+                        "                Assert.assertArrayEquals(back, orig);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "basicIntegratedTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "52-65:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "73-81:uncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def basicIntegratedTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def basicIntegratedTest_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        for N in [1, 10, 100, 1000, 10000]:",
+                        "            orig = [3 * k + 5 for k in range(N)]",
+                        "            for i in self.iic:",
+                        "                comp = i.compress(orig)",
+                        "                back = i.uncompress(comp)",
+                        "                self.assertEqual(back, orig)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.4248199462890625,
+                    "generation_timestamp": "2024-08-31T00:34:25.942063",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "89-99:superSimpleExample_test3_decomposed": {
+                    "start": 89,
+                    "end": 99,
+                    "body": [
+                        "    public void superSimpleExample_test3_decomposed()  {\n",
+                        "        IntegratedIntCompressor iic = new IntegratedIntCompressor(1, null);\n",
+                        "        int[] data = new int[2342351];\n",
+                        "        for(int k = 0; k < data.length; ++k)\n",
+                        "          data[k] = k;\n",
+                        "        System.out.println(\"Compressing \"+data.length+\" integers using friendly interface\");\n",
+                        "        int[] compressed = iic.compress(data);\n",
+                        "        int[] recov = iic.uncompress(compressed);\n",
+                        "        System.out.println(\"compressed from \"+data.length*4/1024+\"KB to \"+compressed.length*4/1024+\"KB\");\n",
+                        "        if(!Arrays.equals(recov,data)) throw new RuntimeException(\"bug\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "superSimpleExample_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "29-39:IntegratedIntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "52-65:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "73-81:uncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def superSimpleExample_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def superSimpleExample_test3_decomposed(self) -> None:",
+                        "        ",
+                        "        iic = IntegratedIntCompressor(1, None)",
+                        "        data = [0] * 2342351",
+                        "        for k in range(len(data)):",
+                        "            data[k] = k",
+                        "        print(\"Compressing \"+str(len(data))+\" integers using friendly interface\")",
+                        "        compressed = iic.compress(data)",
+                        "        recov = iic.uncompress(compressed)",
+                        "        print(\"compressed from \"+str(len(data)*4/1024)+\"KB to \"+str(len(compressed)*4/1024)+\"KB\")",
+                        "        if recov != data:",
+                        "            raise RuntimeError(\"bug\")"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.593842267990112,
+                    "generation_timestamp": "2024-08-31T00:34:32.559643",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "78-86:superSimpleExample_test2_decomposed": {
+                    "start": 78,
+                    "end": 86,
+                    "body": [
+                        "    public void superSimpleExample_test2_decomposed()  {\n",
+                        "        IntegratedIntCompressor iic = new IntegratedIntCompressor(1, null);\n",
+                        "        int[] data = new int[2342351];\n",
+                        "        for(int k = 0; k < data.length; ++k)\n",
+                        "          data[k] = k;\n",
+                        "        System.out.println(\"Compressing \"+data.length+\" integers using friendly interface\");\n",
+                        "        int[] compressed = iic.compress(data);\n",
+                        "        int[] recov = iic.uncompress(compressed);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "superSimpleExample_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "29-39:IntegratedIntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "52-65:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "73-81:uncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def superSimpleExample_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def superSimpleExample_test2_decomposed(self) -> None:",
+                        "        ",
+                        "        iic = IntegratedIntCompressor(1, None)",
+                        "        data = [0] * 2342351",
+                        "        for k in range(len(data)):",
+                        "            data[k] = k",
+                        "        print(\"Compressing \"+str(len(data))+\" integers using friendly interface\")",
+                        "        compressed = iic.compress(data)",
+                        "        recov = iic.uncompress(compressed)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 4.677708387374878,
+                    "generation_timestamp": "2024-08-31T00:34:37.263453",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "68-75:superSimpleExample_test1_decomposed": {
+                    "start": 68,
+                    "end": 75,
+                    "body": [
+                        "    public void superSimpleExample_test1_decomposed()  {\n",
+                        "        IntegratedIntCompressor iic = new IntegratedIntCompressor(1, null);\n",
+                        "        int[] data = new int[2342351];\n",
+                        "        for(int k = 0; k < data.length; ++k)\n",
+                        "          data[k] = k;\n",
+                        "        System.out.println(\"Compressing \"+data.length+\" integers using friendly interface\");\n",
+                        "        int[] compressed = iic.compress(data);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "superSimpleExample_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "29-39:IntegratedIntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "52-65:compress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def superSimpleExample_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def superSimpleExample_test1_decomposed(self) -> None:",
+                        "        ",
+                        "        iic = IntegratedIntCompressor(1, None)",
+                        "        data = [0] * 2342351",
+                        "        for k in range(len(data)):",
+                        "            data[k] = k",
+                        "        print(\"Compressing \"+str(len(data))+\" integers using friendly interface\")",
+                        "        compressed = iic.compress(data)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 6.456055164337158,
+                    "generation_timestamp": "2024-08-31T00:34:43.744446",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "63-65:superSimpleExample_test0_decomposed": {
+                    "start": 63,
+                    "end": 65,
+                    "body": [
+                        "    public void superSimpleExample_test0_decomposed()  {\n",
+                        "        IntegratedIntCompressor iic = new IntegratedIntCompressor(1, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "superSimpleExample_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "29-39:IntegratedIntCompressor"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def superSimpleExample_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def superSimpleExample_test0_decomposed(self) -> None:",
+                        "         iic = IntegratedIntCompressor(1, None)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/IntCompressorTest.py::IntCompressorTest::testsuperSimpleExample_test0_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                                    "class": "IntCompressor",
+                                    "method": "26-36:IntCompressor"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                                    "class": "IntegratedIntCompressor",
+                                    "method": "29-39:IntegratedIntCompressor"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.SkippableIntegratedComposition",
+                                    "class": "SkippableIntegratedComposition",
+                                    "method": "33-37:SkippableIntegratedComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.IntCompressorTest",
+                                    "class": "IntCompressorTest",
+                                    "method": "63-65:superSimpleExample_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 1.0370676517486572,
+                    "generation_timestamp": "2024-08-29T12:02:27.901623",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "49-60:basicTest_test0_decomposed": {
+                    "start": 49,
+                    "end": 60,
+                    "body": [
+                        "    public void basicTest_test0_decomposed()  {\n",
+                        "        for (int N = 1; N <= 10000; N *= 10) {\n",
+                        "            int[] orig = new int[N];\n",
+                        "            for (int k = 0; k < N; k++)\n",
+                        "                orig[k] = 3 * k + 5;\n",
+                        "            for (IntCompressor i : ic) {\n",
+                        "                int[] comp = i.compress(orig);\n",
+                        "                int[] back = i.uncompress(comp);\n",
+                        "                Assert.assertArrayEquals(back, orig);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "basicTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "49-63:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "71-79:uncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def basicTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def basicTest_test0_decomposed(self) -> None:",
+                        "        ",
+                        "        for N in range(1, 10001, 10):",
+                        "            orig = [0] * N",
+                        "            for k in range(N):",
+                        "                orig[k] = 3 * k + 5",
+                        "            for i in self.ic:",
+                        "                comp = i.compress(orig)",
+                        "                back = i.uncompress(comp)",
+                        "                self.assertEqual(back, orig)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 5.066471338272095,
+                    "generation_timestamp": "2024-08-31T00:34:48.835626",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "30-33:ic": {
+                    "start": 30,
+                    "end": 33,
+                    "body": [
+                        "    IntCompressor[] ic = {\n",
+                        "            new IntCompressor(0, new VariableByte()),\n",
+                        "            new IntCompressor(0, new SkippableComposition(new BinaryPacking(),\n",
+                        "                    new VariableByte())) };\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "IntCompressor[]",
+                            "IntCompressor[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ic: typing.List[IntCompressor] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ic: List[IntCompressor] = [",
+                        "        IntCompressor(0, VariableByte()),",
+                        "        IntCompressor(0, SkippableComposition(BinaryPacking(), VariableByte()))",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 24.875812768936157,
+                    "generation_timestamp": "2024-08-28T22:14:53.297118",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "24-29:iic": {
+                    "start": 24,
+                    "end": 29,
+                    "body": [
+                        "    IntegratedIntCompressor[] iic = {\n",
+                        "            new IntegratedIntCompressor(0, new IntegratedVariableByte()),\n",
+                        "            new IntegratedIntCompressor(0, new SkippableIntegratedComposition(\n",
+                        "                            new IntegratedBinaryPacking(),\n",
+                        "                            new IntegratedVariableByte()))\n",
+                        " };\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "IntegratedIntCompressor[]",
+                            "IntegratedIntCompressor[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    iic: typing.List[IntegratedIntCompressor] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    iic: List[IntegratedIntCompressor] = [",
+                        "        IntegratedIntCompressor(0, IntegratedVariableByte()),",
+                        "        IntegratedIntCompressor(0, SkippableIntegratedComposition(",
+                        "            IntegratedBinaryPacking(),",
+                        "            IntegratedVariableByte()))",
+                        "    ]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.629759311676025,
+                    "generation_timestamp": "2024-08-28T22:15:15.940132",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IntCompressorTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.IntCompressor import *",
+        "from src.main.me.lemire.integercompression.SkippableComposition import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntCompressor import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedVariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.SkippableIntegratedComposition import *",
+        "from src.main.me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC import *"
+    ]
+}

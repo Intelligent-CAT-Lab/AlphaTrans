@@ -1,0 +1,810 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/DeltaZigzagBinaryPacking.java",
+    "imports": {},
+    "classes": {
+        "DeltaZigzagBinaryPacking": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "102-104:toString": {
+                    "start": 102,
+                    "end": 104,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__class__.__name__"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 115.91924405097961,
+                    "generation_timestamp": "2024-08-29T11:02:51.934050",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "60-86:uncompress0": {
+                    "start": 60,
+                    "end": 86,
+                    "body": [
+                        "        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                                int[] outBuf, IntWrapper outPos) {\n",
+                        "                if (inLen == 0) {\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "\n",
+                        "                final int outLen = inBuf[inPos.get()];\n",
+                        "                inPos.increment();\n",
+                        "\n",
+                        "                DeltaZigzagEncoding.Decoder ctx = new DeltaZigzagEncoding.Decoder(0);\n",
+                        "                int[] work = new int[BLOCK_LENGTH];\n",
+                        "\n",
+                        "                int ip = inPos.get();\n",
+                        "                int op = outPos.get();\n",
+                        "                final int outPosLast = op + outLen;\n",
+                        "                for (; op < outPosLast; op += BLOCK_LENGTH) {\n",
+                        "                        int n = inBuf[ip++];\n",
+                        "                        ip += unpack(inBuf, ip, work, 0, (n >> 24) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 64, (n >> 8) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 96, (n >> 0) & 0x3F);\n",
+                        "                        ctx.decodeArray0(work, 0, BLOCK_LENGTH, outBuf, op);\n",
+                        "                }\n",
+                        "\n",
+                        "                outPos.add(outLen);\n",
+                        "                inPos.set(ip);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "66-68:Decoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking",
+                            "95-99:unpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "77-83:decodeArray0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:",
+                        "        ",
+                        "        if inLen == 0:",
+                        "            return",
+                        "",
+                        "        outLen = inBuf[inPos.get()]",
+                        "        inPos.increment()",
+                        "",
+                        "        ctx = Decoder(0)",
+                        "        work = [0] * self.__BLOCK_LENGTH",
+                        "",
+                        "        ip = inPos.get()",
+                        "        op = outPos.get()",
+                        "        outPosLast = op + outLen",
+                        "",
+                        "        for op in range(op, outPosLast, self.__BLOCK_LENGTH):",
+                        "            n = inBuf[ip]",
+                        "            ip += 1",
+                        "            ip += self.__unpack(inBuf, ip, work, 0, (n >> 24) & 0x3F)",
+                        "            ip += self.__unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F)",
+                        "            ip += self.__unpack(inBuf, ip, work, 64, (n >> 8) & 0x3F)",
+                        "            ip += self.__unpack(inBuf, ip, work, 96, (n >> 0) & 0x3F)",
+                        "            ctx.decodeArray0(work, 0, self.__BLOCK_LENGTH, outBuf, op)",
+                        "",
+                        "        outPos.add(outLen)",
+                        "        inPos.set(ip)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test6_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test7_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.saulTest_test0_decomposed: AttributeError\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: AttributeError"
+                    },
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py::BasicTest::testcheckDeltaZigzagPacking_test6_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py\", line 1636, in testcheckDeltaZigzagPacking_test6_decomposed\n    self.__testSpurious(codec)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py\", line 1973, in __testSpurious\n    self.assertEqual(0, i1.intValue())\nNameError: name 'self' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "352-354:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "90-92:FastPFOR1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "81-89:FastPFOR"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                                    "class": "NewPFD",
+                                    "method": "45-46:NewPFD"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                                    "class": "NewPFDS16",
+                                    "method": "44-45:NewPFDS16"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                                    "class": "NewPFDS9",
+                                    "method": "43-44:NewPFDS9"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "74-76:intValue"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "333-335:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "71-73:FastPFOR1281"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "62-70:FastPFOR128"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                                    "class": "DeltaZigzagBinaryPacking",
+                                    "method": "60-86:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                                    "class": "DeltaZigzagBinaryPacking",
+                                    "method": "25-57:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                                    "class": "OptPFDS16",
+                                    "method": "42-43:OptPFDS16"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                                    "class": "UniformDataGenerator",
+                                    "method": "24-33:UniformDataGenerator"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                                    "class": "IntegratedComposition",
+                                    "method": "33-37:IntegratedComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "532-542:checkDeltaZigzagPacking_test6_decomposed"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "150-162:testZeroInZeroOut"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "139-148:testSpurious"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 87.73936080932617,
+                    "generation_timestamp": "2024-08-30T23:08:17.364962",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -4,
+                        "test_execution": 1
+                    }
+                },
+                "25-57:compress0": {
+                    "start": 25,
+                    "end": 57,
+                    "body": [
+                        "        public void compress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                              int[] outBuf, IntWrapper outPos) {\n",
+                        "                inLen = inLen - inLen % BLOCK_LENGTH;\n",
+                        "                if (inLen == 0) {\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "\n",
+                        "                outBuf[outPos.get()] = inLen;\n",
+                        "                outPos.increment();\n",
+                        "\n",
+                        "                DeltaZigzagEncoding.Encoder ctx = new DeltaZigzagEncoding.Encoder(0);\n",
+                        "                int[] work = new int[BLOCK_LENGTH];\n",
+                        "\n",
+                        "                int op = outPos.get();\n",
+                        "                int ip = inPos.get();\n",
+                        "                final int inPosLast = ip + inLen;\n",
+                        "                for (; ip < inPosLast; ip += BLOCK_LENGTH) {\n",
+                        "                        ctx.encodeArray1(inBuf, ip, BLOCK_LENGTH, work);\n",
+                        "                        final int bits1 = Util.maxbits32(work, 0);\n",
+                        "                        final int bits2 = Util.maxbits32(work, 32);\n",
+                        "                        final int bits3 = Util.maxbits32(work, 64);\n",
+                        "                        final int bits4 = Util.maxbits32(work, 96);\n",
+                        "                        outBuf[op++] = (bits1 << 24) | (bits2 << 16)\n",
+                        "                                | (bits3 << 8) | (bits4 << 0);\n",
+                        "                        op += pack(work, 0, outBuf, op, bits1);\n",
+                        "                        op += pack(work, 32, outBuf, op, bits2);\n",
+                        "                        op += pack(work, 64, outBuf, op, bits3);\n",
+                        "                        op += pack(work, 96, outBuf, op, bits4);\n",
+                        "                }\n",
+                        "\n",
+                        "                inPos.add(inLen);\n",
+                        "                outPos.set(op);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "31-33:Encoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "43-77:maxbits32"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "49-52:encodeArray1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking",
+                            "88-93:pack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:",
+                        "        ",
+                        "        inLen = inLen - inLen % self.__BLOCK_LENGTH",
+                        "        if inLen == 0:",
+                        "            return",
+                        "",
+                        "        outBuf[outPos.get()] = inLen",
+                        "        outPos.increment()",
+                        "",
+                        "        ctx = Encoder(0)",
+                        "        work = [0] * self.__BLOCK_LENGTH",
+                        "",
+                        "        op = outPos.get()",
+                        "        ip = inPos.get()",
+                        "        inPosLast = ip + inLen",
+                        "        for ip in range(ip, inPosLast, self.__BLOCK_LENGTH):",
+                        "            ctx.encodeArray1(inBuf, ip, self.__BLOCK_LENGTH, work)",
+                        "            bits1 = Util._maxbits32(work, 0)",
+                        "            bits2 = Util._maxbits32(work, 32)",
+                        "            bits3 = Util._maxbits32(work, 64)",
+                        "            bits4 = Util._maxbits32(work, 96)",
+                        "            outBuf[op] = (bits1 << 24) | (bits2 << 16) | (bits3 << 8) | (bits4 << 0)",
+                        "            op += 1",
+                        "            op += self.__pack(work, 0, outBuf, op, bits1)",
+                        "            op += self.__pack(work, 32, outBuf, op, bits2)",
+                        "            op += self.__pack(work, 64, outBuf, op, bits3)",
+                        "            op += self.__pack(work, 96, outBuf, op, bits4)",
+                        "",
+                        "        inPos.add(inLen)",
+                        "        outPos.set_(op)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException"
+                    },
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py::BasicTest::testcheckDeltaZigzagPacking_test6_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py\", line 1636, in testcheckDeltaZigzagPacking_test6_decomposed\n    self.__testSpurious(codec)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/BasicTest.py\", line 1973, in __testSpurious\n    self.assertEqual(0, i1.intValue())\nNameError: name 'self' is not defined",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "352-354:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "90-92:FastPFOR1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                                    "class": "FastPFOR",
+                                    "method": "81-89:FastPFOR"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFD",
+                                    "class": "NewPFD",
+                                    "method": "45-46:NewPFD"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS16",
+                                    "class": "NewPFDS16",
+                                    "method": "44-45:NewPFDS16"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.NewPFDS9",
+                                    "class": "NewPFDS9",
+                                    "method": "43-44:NewPFDS9"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "74-76:intValue"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "333-335:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "71-73:FastPFOR1281"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR128",
+                                    "class": "FastPFOR128",
+                                    "method": "62-70:FastPFOR128"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                                    "class": "DeltaZigzagBinaryPacking",
+                                    "method": "60-86:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                                    "class": "DeltaZigzagBinaryPacking",
+                                    "method": "25-57:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.OptPFDS16",
+                                    "class": "OptPFDS16",
+                                    "method": "42-43:OptPFDS16"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                                    "class": "UniformDataGenerator",
+                                    "method": "24-33:UniformDataGenerator"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedComposition",
+                                    "class": "IntegratedComposition",
+                                    "method": "33-37:IntegratedComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "532-542:checkDeltaZigzagPacking_test6_decomposed"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "150-162:testZeroInZeroOut"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.BasicTest",
+                                    "class": "BasicTest",
+                                    "method": "139-148:testSpurious"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 81.00458025932312,
+                    "generation_timestamp": "2024-08-30T23:09:38.377332",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -5,
+                        "test_execution": 1
+                    }
+                },
+                "95-99:unpack": {
+                    "start": 95,
+                    "end": 99,
+                    "body": [
+                        "        private static int unpack(int[] inBuf, int inOff, int[] outBuf,\n",
+                        "                int outOff, int validBits) {\n",
+                        "                BitPacking.fastunpack(inBuf, inOff, outBuf, outOff, validBits);\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "unpack(int[], int, int[], int, int)",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __unpack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __unpack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:",
+                        "         BitPacking.fastunpack(inBuf, inOff, outBuf, outOff, validBits)",
+                        "         return validBits"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 207.62422513961792,
+                    "generation_timestamp": "2024-08-29T23:46:03.132761",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "88-93:pack": {
+                    "start": 88,
+                    "end": 93,
+                    "body": [
+                        "        private static int pack(int[] inBuf, int inOff, int[] outBuf,\n",
+                        "                int outOff, int validBits) {\n",
+                        "                BitPacking.fastpackwithoutmask(inBuf, inOff, outBuf, outOff,\n",
+                        "                        validBits);\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "pack(int[], int, int[], int, int)",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __pack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    @staticmethod",
+                        "    def __pack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:",
+                        "         BitPacking.fastpackwithoutmask(inBuf, inOff, outBuf, outOff, validBits)",
+                        "         return validBits"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.checkDeltaZigzagPacking_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 181.05867099761963,
+                    "generation_timestamp": "2024-08-30T03:27:29.199837",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "22-22:BLOCK_LENGTH": {
+                    "start": 22,
+                    "end": 22,
+                    "body": [
+                        "        private static final int BLOCK_LENGTH = 128;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BLOCK_LENGTH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __BLOCK_LENGTH: int = 128"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 26.08234477043152,
+                    "generation_timestamp": "2024-08-28T22:21:47.613280",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DeltaZigzagBinaryPacking(IntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.DeltaZigzagEncoding import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

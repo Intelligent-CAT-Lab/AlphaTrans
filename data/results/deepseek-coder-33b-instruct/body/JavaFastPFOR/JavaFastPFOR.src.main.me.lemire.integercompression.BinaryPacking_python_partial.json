@@ -1,0 +1,1871 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/BinaryPacking.java",
+    "imports": {},
+    "classes": {
+        "BinaryPacking": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC",
+                "SkippableIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "136-138:toString": {
+                    "start": 136,
+                    "end": 138,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def toString(self) -> str:",
+                        "         return self.__class__.__name__"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 105.5947093963623,
+                    "generation_timestamp": "2024-08-29T09:29:59.208161",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "102-133:headlessUncompress": {
+                    "start": 102,
+                    "end": 133,
+                    "body": [
+                        "        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos, int num) {\n",
+                        "            final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);\n",
+                        "            int tmpinpos = inpos.get();\n",
+                        "            int s = outpos.get();\n",
+                        "            for (; s + BLOCK_SIZE * 4 - 1 < outpos.get() + outlength; s += BLOCK_SIZE * 4) {\n",
+                        "                final int mbits1 = (in[tmpinpos] >>> 24);\n",
+                        "                final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;\n",
+                        "                final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;\n",
+                        "                final int mbits4 = (in[tmpinpos]) & 0xFF;\n",
+                        "                ++tmpinpos;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s, mbits1);\n",
+                        "                tmpinpos += mbits1;\n",
+                        "                BitPacking\n",
+                        "                .fastunpack(in, tmpinpos, out, s + BLOCK_SIZE, mbits2);\n",
+                        "                tmpinpos += mbits2;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s + 2 * BLOCK_SIZE,\n",
+                        "                        mbits3);\n",
+                        "                tmpinpos += mbits3;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s + 3 * BLOCK_SIZE,\n",
+                        "                        mbits4);\n",
+                        "                tmpinpos += mbits4;\n",
+                        "            }\n",
+                        "            for (; s < outpos.get() + outlength; s += BLOCK_SIZE ) {\n",
+                        "                final int mbits = in[tmpinpos];\n",
+                        "                ++tmpinpos;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s, mbits);\n",
+                        "                tmpinpos += mbits;\n",
+                        "            }\n",
+                        "            outpos.add(outlength);\n",
+                        "            inpos.set(tmpinpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:",
+                        "        ",
+                        "        outlength = Util.greatestMultiple(num, self.BLOCK_SIZE)",
+                        "        tmpinpos = inpos.get()",
+                        "        s = outpos.get()",
+                        "        ",
+                        "        for _ in range(s + self.BLOCK_SIZE * 4 - 1, outpos.get() + outlength, self.BLOCK_SIZE * 4):",
+                        "            mbits1 = (in_[tmpinpos] >> 24)",
+                        "            mbits2 = (in_[tmpinpos] >> 16) & 0xFF",
+                        "            mbits3 = (in_[tmpinpos] >> 8) & 0xFF",
+                        "            mbits4 = (in_[tmpinpos]) & 0xFF",
+                        "            tmpinpos += 1",
+                        "            BitPacking.fastunpack(in_, tmpinpos, out, s, mbits1)",
+                        "            tmpinpos += mbits1",
+                        "            BitPacking.fastunpack(in_, tmpinpos, out, s + self.BLOCK_SIZE, mbits2)",
+                        "            tmpinpos += mbits2",
+                        "            BitPacking.fastunpack(in_, tmpinpos, out, s + 2 * self.BLOCK_SIZE, mbits3)",
+                        "            tmpinpos += mbits3",
+                        "            BitPacking.fastunpack(in_, tmpinpos, out, s + 3 * self.BLOCK_SIZE, mbits4)",
+                        "            tmpinpos += mbits4",
+                        "        ",
+                        "        for _ in range(s, outpos.get() + outlength, self.BLOCK_SIZE):",
+                        "            mbits = in_[tmpinpos]",
+                        "            tmpinpos += 1",
+                        "            BitPacking.fastunpack(in_, tmpinpos, out, s, mbits)",
+                        "            tmpinpos += mbits",
+                        "        ",
+                        "        outpos.add(outlength)",
+                        "        inpos.set_(tmpinpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py::AdhocTest::testIssue29b_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py\", line 98, in testIssue29b_test0_decomposed\n    codec.headlessUncompress(b, bOffset, len_, c, cOffset, len(a))\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/SkippableComposition.py\", line 37, in headlessUncompress\n    self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/VariableByte.py\", line 34, in headlessUncompress\n    val = in_[p]\nIndexError: list index out of range",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "52-62:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "183-209:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.AdhocTest",
+                                    "class": "AdhocTest",
+                                    "method": "76-91:testIssue29b_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py::AdhocTest::testIssue29_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py\", line 115, in testIssue29_test0_decomposed\n    codec.uncompress0(b, bOffset, len_, c, cOffset)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/Composition.py\", line 34, in uncompress0\n    inpos.set(init + inlength)\nAttributeError: 'IntWrapper' object has no attribute 'set'. Did you mean: 'get'?",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "32-35:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "92-99:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "43-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "54-62:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "37-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.AdhocTest",
+                                    "class": "AdhocTest",
+                                    "method": "57-73:testIssue29_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test8_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py\", line 207, in testheadlessDemo_test8_decomposed\n    codec.headlessUncompress(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/SkippableComposition.py\", line 37, in headlessUncompress\n    self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/VariableByte.py\", line 34, in headlessUncompress\n    val = in_[p]\nIndexError: list index out of range",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "52-62:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "183-209:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "877-904:headlessDemo_test8_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 671.0869574546814,
+                    "generation_timestamp": "2024-08-30T17:43:36.570434",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -7,
+                        "test_execution": 0
+                    }
+                },
+                "92-99:uncompress0": {
+                    "start": 92,
+                    "end": 99,
+                    "body": [
+                        "        public void uncompress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                                int[] out, IntWrapper outpos) {\n",
+                        "                if (inlength == 0)\n",
+                        "                        return;\n",
+                        "                final int outlength = in[inpos.get()];\n",
+                        "                inpos.increment();\n",
+                        "                headlessUncompress(in,inpos, inlength,out,outpos,outlength);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "102-133:headlessUncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        ",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        ",
+                        "        outlength = in_[inpos.get()]",
+                        "        inpos.increment()",
+                        "        self.headlessUncompress(in_, inpos, inlength, out, outpos, outlength)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\nme.lemire.longcompression.LongBasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: failed to reconstruct original data\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test2_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BoundaryTest.testComposition_test1_decomposed: arrays first differed at element [1]; expected\n"
+                    },
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py::AdhocTest::testIssue29_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py\", line 115, in testIssue29_test0_decomposed\n    codec.uncompress0(b, bOffset, len_, c, cOffset)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/Composition.py\", line 34, in uncompress0\n    inpos.set(init + inlength)\nAttributeError: 'IntWrapper' object has no attribute 'set'. Did you mean: 'get'?",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "32-35:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "92-99:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "43-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "54-62:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "37-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.AdhocTest",
+                                    "class": "AdhocTest",
+                                    "method": "57-73:testIssue29_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 95.46640706062317,
+                    "generation_timestamp": "2024-08-30T15:16:35.602037",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -16,
+                        "test_execution": 1
+                    }
+                },
+                "54-89:headlessCompress": {
+                    "start": 54,
+                    "end": 89,
+                    "body": [
+                        "        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "            int tmpoutpos = outpos.get();\n",
+                        "            int s = inpos.get();\n",
+                        "            for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {\n",
+                        "                final int mbits1 = Util.maxbits(in, s, BLOCK_SIZE);\n",
+                        "                final int mbits2 = Util.maxbits(in, s + BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                final int mbits3 = Util.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                final int mbits4 = Util.maxbits(in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16)\n",
+                        "                        | (mbits3 << 8) | (mbits4);\n",
+                        "                BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,\n",
+                        "                        mbits1);\n",
+                        "                tmpoutpos += mbits1;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits2);\n",
+                        "                tmpoutpos += mbits2;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + 2 * BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits3);\n",
+                        "                tmpoutpos += mbits3;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + 3 * BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits4);\n",
+                        "                tmpoutpos += mbits4;\n",
+                        "            }\n",
+                        "            for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {\n",
+                        "                final int mbits = Util.maxbits(in, s, BLOCK_SIZE);\n",
+                        "                out[tmpoutpos++] = mbits;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,\n",
+                        "                        mbits);\n",
+                        "                tmpoutpos += mbits;\n",
+                        "\n",
+                        "            }\n",
+                        "            inpos.add(inlength);\n",
+                        "            outpos.set(tmpoutpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "36-41:maxbits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        ",
+                        "        inlength = Util.greatestMultiple(inlength, self.BLOCK_SIZE)",
+                        "        tmpoutpos = outpos.get()",
+                        "        s = inpos.get()",
+                        "        ",
+                        "        for _ in range(s, inpos.get() + inlength, self.BLOCK_SIZE * 4):",
+                        "            mbits1 = Util.maxbits(in_, s, self.BLOCK_SIZE)",
+                        "            mbits2 = Util.maxbits(in_, s + self.BLOCK_SIZE, self.BLOCK_SIZE)",
+                        "            mbits3 = Util.maxbits(in_, s + 2 * self.BLOCK_SIZE, self.BLOCK_SIZE)",
+                        "            mbits4 = Util.maxbits(in_, s + 3 * self.BLOCK_SIZE, self.BLOCK_SIZE)",
+                        "            out[tmpoutpos] = (mbits1 << 24) | (mbits2 << 16) | (mbits3 << 8) | mbits4",
+                        "            BitPacking.fastpackwithoutmask(in_, s, out, tmpoutpos + 1, mbits1)",
+                        "            tmpoutpos += mbits1 + 1",
+                        "            BitPacking.fastpackwithoutmask(in_, s + self.BLOCK_SIZE, out, tmpoutpos, mbits2)",
+                        "            tmpoutpos += mbits2",
+                        "            BitPacking.fastpackwithoutmask(in_, s + 2 * self.BLOCK_SIZE, out, tmpoutpos, mbits3)",
+                        "            tmpoutpos += mbits3",
+                        "            BitPacking.fastpackwithoutmask(in_, s + 3 * self.BLOCK_SIZE, out, tmpoutpos, mbits4)",
+                        "            tmpoutpos += mbits4",
+                        "            s += self.BLOCK_SIZE * 4",
+                        "        ",
+                        "        for _ in range(s, inpos.get() + inlength, self.BLOCK_SIZE):",
+                        "            mbits = Util.maxbits(in_, s, self.BLOCK_SIZE)",
+                        "            out[tmpoutpos] = mbits",
+                        "            BitPacking.fastpackwithoutmask(in_, s, out, tmpoutpos + 1, mbits)",
+                        "            tmpoutpos += mbits + 1",
+                        "            s += self.BLOCK_SIZE",
+                        "        ",
+                        "        inpos.add(inlength)",
+                        "        outpos.set_(tmpoutpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py::AdhocTest::testIssue29b_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py\", line 98, in testIssue29b_test0_decomposed\n    codec.headlessUncompress(b, bOffset, len_, c, cOffset, len(a))\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/SkippableComposition.py\", line 37, in headlessUncompress\n    self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/VariableByte.py\", line 34, in headlessUncompress\n    val = in_[p]\nIndexError: list index out of range",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "52-62:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "183-209:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.AdhocTest",
+                                    "class": "AdhocTest",
+                                    "method": "76-91:testIssue29b_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test2_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "771-781:headlessDemo_test2_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test3_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "784-796:headlessDemo_test3_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test4_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "799-812:headlessDemo_test4_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test5_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "815-829:headlessDemo_test5_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test6_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "832-847:headlessDemo_test6_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test7_decomposed": {
+                            "test_outcome": "exercised-success",
+                            "feedback": "",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "850-874:headlessDemo_test7_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py::ExampleTest::testheadlessDemo_test8_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/ExampleTest.py\", line 207, in testheadlessDemo_test8_decomposed\n    codec.headlessUncompress(\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/SkippableComposition.py\", line 37, in headlessUncompress\n    self.F2.headlessUncompress(in_, inpos, inlength, out, outpos, num)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/VariableByte.py\", line 34, in headlessUncompress\n    val = in_[p]\nIndexError: list index out of range",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "52-62:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "38-49:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                                    "class": "SkippableComposition",
+                                    "method": "31-35:SkippableComposition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "183-209:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "54-89:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.ExampleTest",
+                                    "class": "ExampleTest",
+                                    "method": "877-904:headlessDemo_test8_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 668.637806892395,
+                    "generation_timestamp": "2024-08-30T12:15:13.904821",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "43-51:compress0": {
+                    "start": 43,
+                    "end": 51,
+                    "body": [
+                        "        public void compress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                              int[] out, IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "            if (inlength == 0)\n",
+                        "                    return;\n",
+                        "            out[outpos.get()] = inlength;\n",
+                        "            outpos.increment();\n",
+                        "            headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "54-89:headlessCompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:",
+                        "        ",
+                        "        inlength = Util.greatestMultiple(inlength, self.BLOCK_SIZE)",
+                        "        if inlength == 0:",
+                        "            return",
+                        "        out[outpos.get()] = inlength",
+                        "        outpos.increment()",
+                        "        self.headlessCompress(in_, inpos, inlength, out, outpos)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "outcome": "failure",
+                        "message": "me.lemire.longcompression.LongBasicTest.fastPforTest_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.longcompression.LongBasicTest.fastPfor128Test_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.longcompression.LongBasicTest.varyingLengthTest_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.longcompression.LongBasicTest.varyingLengthTest2_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test15_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test28_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test16_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test29_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test17_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test18_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.basictest_test0_decomposed: failed to reconstruct original data\nme.lemire.integercompression.BasicTest.testUnsortedExample_test19_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test2_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test3_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test40_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test4_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test41_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test5_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test42_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test6_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test30_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.varyingLengthTest2_test0_decomposed: java.lang.RuntimeException\nme.lemire.integercompression.BasicTest.testUnsortedExample_test43_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test7_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test31_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test44_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test8_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test32_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test20_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test9_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test33_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test21_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test34_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test22_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test10_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test35_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test23_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test11_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test36_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test24_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test12_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test37_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test25_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test13_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test38_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test26_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test14_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test39_decomposed: arrays first differed at element [0]; expected\nme.lemire.integercompression.BasicTest.testUnsortedExample_test27_decomposed: arrays first differed at element [0]; expected\nme.lemire.longcompression.TestLongAs2IntsCodec.testCodec_ZeroTimes128Minus1_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.longcompression.TestLongAs2IntsCodec.testCodec_ZeroTimes127Minus1_test0_decomposed: java.lang.IllegalArgumentException\nme.lemire.integercompression.BoundaryTest.testComposition_test1_decomposed: arrays first differed at element [1]; expected"
+                    },
+                    "test_execution": {
+                        "JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py::AdhocTest::testIssue29_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/integercompression/AdhocTest.py\", line 115, in testIssue29_test0_decomposed\n    codec.uncompress0(b, bOffset, len_, c, cOffset)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/integercompression/Composition.py\", line 34, in uncompress0\n    inpos.set(init + inlength)\nAttributeError: 'IntWrapper' object has no attribute 'set'. Did you mean: 'get'?",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "32-35:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "102-133:headlessUncompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "92-99:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "43-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "89-91:set"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "54-62:uncompress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "37-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.integercompression.AdhocTest",
+                                    "class": "AdhocTest",
+                                    "method": "57-73:testIssue29_test0_decomposed"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/longcompression/TestLongAs2IntsCodec.py::TestLongAs2IntsCodec::testCodec_ZeroThenAllPowerOfTwo_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/longcompression/TestLongAs2IntsCodec.py\", line 28, in testCodec_ZeroThenAllPowerOfTwo_test0_decomposed\n    self.__checkConsistency(self.codec, [0, 1 << i])\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/longcompression/TestLongAs2IntsCodec.py\", line 70, in __checkConsistency\n    compressed = LongTestUtils._compress1(codec, array)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/longcompression/LongTestUtils.py\", line 65, in _compress1\n    codec.compress0(data, inPos, len(data), outBuf, outPos)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/longcompression/LongAs2IntsCodec.py\", line 172, in compress0\n    outpos.set(outPosition)\nAttributeError: 'IntWrapper' object has no attribute 'set'. Did you mean: 'get'?",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "32-35:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "43-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "37-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "45-48:pack"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "34-36:low"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "25-27:high"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "43-114:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "35-37:LongAs2IntsCodec1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "31-34:LongAs2IntsCodec"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                                    "class": "LongTestUtils",
+                                    "method": "79-85:compress1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                                    "class": "TestLongAs2IntsCodec",
+                                    "method": "93-97:testCodec_ZeroThenAllPowerOfTwo_test0_decomposed"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                                    "class": "TestLongAs2IntsCodec",
+                                    "method": "23-45:checkConsistency"
+                                }
+                            ]
+                        },
+                        "JavaFastPFOR/src/test/me/lemire/longcompression/TestLongAs2IntsCodec.py::TestLongAs2IntsCodec::testCodec_intermediateHighPowerOfTwo_test0_decomposed": {
+                            "test_outcome": "exercised-failed",
+                            "feedback": "Traceback (most recent call last):\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 59, in testPartExecutor\n    yield\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 591, in run\n    self._callTestMethod(testMethod)\n  File \"/home/ali/miniconda3/envs/alphatrans/lib/python3.10/unittest/case.py\", line 549, in _callTestMethod\n    method()\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/longcompression/TestLongAs2IntsCodec.py\", line 23, in testCodec_intermediateHighPowerOfTwo_test0_decomposed\n    self.assertEqual(3, len(LongTestUtils._compress1(self.codec, [1 << 42])))\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/test/me/lemire/longcompression/LongTestUtils.py\", line 65, in _compress1\n    codec.compress0(data, inPos, len(data), outBuf, outPos)\n  File \"/home/ali/Documents/AlphaTrans/data/recomposed_projects/deepseek-coder-33b-instruct/body/JavaFastPFOR/src/main/me/lemire/longcompression/LongAs2IntsCodec.py\", line 172, in compress0\n    outpos.set(outPosition)\nAttributeError: 'IntWrapper' object has no attribute 'set'. Did you mean: 'get'?",
+                            "covered_methods": [
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "38-77:headlessCompress"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "32-35:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "218-220:makeBuffer"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "28-30:extract7bitsmaskless"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                                    "class": "VariableByte",
+                                    "method": "24-26:extract7bits"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                                    "class": "BinaryPacking",
+                                    "method": "43-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                                    "class": "Util",
+                                    "method": "207-209:greatestMultiple"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "69-71:increment"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "62-64:get"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "45-47:add"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "24-26:IntWrapper1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                                    "class": "IntWrapper",
+                                    "method": "21-23:IntWrapper"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "37-51:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                                    "class": "Composition",
+                                    "method": "31-34:Composition"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "45-48:pack"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "34-36:low"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                                    "class": "RoaringIntPacking",
+                                    "method": "25-27:high"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "43-114:compress0"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "35-37:LongAs2IntsCodec1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                                    "class": "LongAs2IntsCodec",
+                                    "method": "31-34:LongAs2IntsCodec"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                                    "class": "LongTestUtils",
+                                    "method": "79-85:compress1"
+                                },
+                                {
+                                    "file": "JavaFastPFOR.src.test.me.lemire.longcompression.TestLongAs2IntsCodec",
+                                    "class": "TestLongAs2IntsCodec",
+                                    "method": "100-102:testCodec_intermediateHighPowerOfTwo_test0_decomposed"
+                                }
+                            ]
+                        }
+                    },
+                    "elapsed_time": 83.42988324165344,
+                    "generation_timestamp": "2024-08-30T19:32:16.085427",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 3,
+                        "field_exercise": 3,
+                        "graal": 3,
+                        "test_execution": 3
+                    },
+                    "final_budget": {
+                        "syntactic": 1,
+                        "field_exercise": 1,
+                        "graal": -2,
+                        "test_execution": 1
+                    }
+                }
+            },
+            "fields": {
+                "40-40:BLOCK_SIZE": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "        final static int BLOCK_SIZE = 32;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    BLOCK_SIZE: int = 32"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 22.37432074546814,
+                    "generation_timestamp": "2024-08-28T22:17:11.712781",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BinaryPacking(IntegerCODEC, SkippableIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

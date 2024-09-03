@@ -1,0 +1,450 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/checkdigit/ISINCheckDigit.java",
+    "imports": {},
+    "classes": {
+        "ISINCheckDigit": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "ModulusCheckDigit"
+            ],
+            "methods": {
+                "96-100:weightedValue": {
+                    "start": 96,
+                    "end": 100,
+                    "body": [
+                        "    protected int weightedValue(int charValue, int leftPos, int rightPos) {\n",
+                        "        int weight = POSITION_WEIGHT[rightPos % 2]; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        int weightedValue = charValue * weight;\n",
+                        "        return ModulusCheckDigit.sumDigits(weightedValue);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "weightedValue(int, int, int)",
+                    "parameters": [
+                        "charValue",
+                        "leftPos",
+                        "rightPos"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "181-189:sumDigits"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _weightedValue(self, charValue: int, leftPos: int, rightPos: int) -> int:",
+                        "        ",
+                        "        weight = self.__POSITION_WEIGHT[rightPos % 2]",
+                        "        weightedValue = charValue * weight",
+                        "        ",
+                        "        return self.sumDigits(weightedValue)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "success",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 111.16275811195374,
+                    "generation_timestamp": "2024-08-29T08:04:35.957231",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "61-81:calculateModulus": {
+                    "start": 61,
+                    "end": 81,
+                    "body": [
+                        "    protected int calculateModulus(String code, boolean includesCheckDigit)\n",
+                        "            throws CheckDigitException {\n",
+                        "        StringBuilder transformed =\n",
+                        "                new StringBuilder(code.length() * 2); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        if (includesCheckDigit) {\n",
+                        "            char checkDigit = code.charAt(code.length() - 1); // fetch the last character\n",
+                        "            if (!Character.isDigit(checkDigit)) {\n",
+                        "                throw CheckDigitException.CheckDigitException1(\n",
+                        "                        \"Invalid checkdigit[\" + checkDigit + \"] in \" + code);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        for (int i = 0; i < code.length(); i++) {\n",
+                        "            int charValue = Character.getNumericValue(code.charAt(i));\n",
+                        "            if (charValue < 0 || charValue > MAX_ALPHANUMERIC_VALUE) {\n",
+                        "                throw CheckDigitException.CheckDigitException1(\n",
+                        "                        \"Invalid Character[\" + (i + 1) + \"] = '\" + charValue + \"'\");\n",
+                        "            }\n",
+                        "            transformed.append(charValue);\n",
+                        "        }\n",
+                        "        return super.calculateModulus(transformed.toString(), includesCheckDigit);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateModulus(String, boolean)",
+                    "parameters": [
+                        "code",
+                        "includesCheckDigit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "104-118:calculateModulus"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def _calculateModulus(self, code: str, includesCheckDigit: bool) -> int:",
+                        "         total = 0",
+                        "         transformed = \"\"",
+                        "         if includesCheckDigit:",
+                        "             checkDigit = code[-1]",
+                        "             if not checkDigit.isdigit():",
+                        "                 raise CheckDigitException.CheckDigitException1(",
+                        "                     \"Invalid checkdigit[\" + checkDigit + \"] in \" + code)",
+                        "         for i in range(len(code)):",
+                        "             charValue = ord(code[i])",
+                        "             if charValue < 0 or charValue > self.__MAX_ALPHANUMERIC_VALUE:",
+                        "                 raise CheckDigitException.CheckDigitException1(",
+                        "                     \"Invalid Character[\" + str(i + 1) + \"] = '\" + str(charValue) + \"'\")",
+                        "             transformed += str(charValue)",
+                        "         return super()._calculateModulus(transformed, includesCheckDigit)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": {
+                        "graal_outcome": "failed",
+                        "feedback": "Executing the tests failed with the following reasons:\norg.apache.commons.validator.routines.checkdigit.ISINCheckDigitTest.testZeroSum: junit.framework.ComparisonFailure\norg.apache.commons.validator.routines.checkdigit.ISINCheckDigitTest.testIsValidTrue: junit.framework.AssertionFailedError\norg.apache.commons.validator.routines.checkdigit.ISINCheckDigitTest.testCalculateValid: junit.framework.AssertionFailedError\norg.apache.commons.validator.routines.ISINValidatorTest.testIsValidFalse: junit.framework.AssertionFailedError\norg.apache.commons.validator.routines.ISINValidatorTest.testIsValidTrue: junit.framework.AssertionFailedError\n"
+                    },
+                    "test_execution": "pending",
+                    "elapsed_time": 216.76959443092346,
+                    "generation_timestamp": "2024-08-29T08:53:11.715854",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 1,
+                        "test_execution": 2
+                    }
+                },
+                "48-50:ISINCheckDigit": {
+                    "start": 48,
+                    "end": 50,
+                    "body": [
+                        "    public ISINCheckDigit() {\n",
+                        "        super(10); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISINCheckDigit()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "46-48:ModulusCheckDigit"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [
+                        "    def __init__(self) -> None:",
+                        "         super().__init__(10)"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "pending",
+                    "graal_validation": "error",
+                    "test_execution": "not-exercised",
+                    "elapsed_time": 89.24936008453369,
+                    "generation_timestamp": "2024-08-29T08:06:05.317302",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "fields": {
+                "42-42:ISIN_CHECK_DIGIT": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    public static final CheckDigit ISIN_CHECK_DIGIT = new ISINCheckDigit();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ISIN_CHECK_DIGIT: CheckDigit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    ISIN_CHECK_DIGIT: CheckDigit = ISINCheckDigit()"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 35.66470718383789,
+                    "generation_timestamp": "2024-08-28T23:49:43.077927",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "45-45:POSITION_WEIGHT": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final int[] POSITION_WEIGHT = new int[] {2, 1};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __POSITION_WEIGHT: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __POSITION_WEIGHT: typing.List[int] = [2, 1]"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 38.08073163032532,
+                    "generation_timestamp": "2024-08-28T23:50:21.169272",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "39-39:MAX_ALPHANUMERIC_VALUE": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final int MAX_ALPHANUMERIC_VALUE = 35; // Character.getNumericValue('Z')\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = ord('Z')"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 34.35802388191223,
+                    "generation_timestamp": "2024-08-28T23:50:55.540540",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                },
+                "37-37:serialVersionUID": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final long serialVersionUID = -1239211208101323599L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [
+                        "    __serialVersionUID: int = -1239211208101323599"
+                    ],
+                    "translation_status": "attempted",
+                    "syntactic_validation": "parseable",
+                    "field_exercise": "success",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 35.62075614929199,
+                    "generation_timestamp": "2024-08-28T23:51:31.169567",
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true,
+                    "original_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    },
+                    "final_budget": {
+                        "syntactic": 2,
+                        "field_exercise": 2,
+                        "graal": 2,
+                        "test_execution": 2
+                    }
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISINCheckDigit(ModulusCheckDigit):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit import *"
+    ]
+}
