@@ -34,19 +34,19 @@ class JiraCsv253Test(unittest.TestCase):
             csvRecords = parser.iterator()
             self.__assertArrayEqual(
                 ["John", None, "Doe"],
-                csvRecords.next()
+                next(csvRecords)
             )
             self.__assertArrayEqual(
                 [None, "AA", "123"],
-                csvRecords.next()
+                next(csvRecords)
             )
             self.__assertArrayEqual(
                 ["John", "90", None],
-                csvRecords.next()
+                next(csvRecords)
             )
             self.__assertArrayEqual(
                 ["", None, "90"],
-                csvRecords.next()
+                next(csvRecords)
             )
         finally:
             parser.close()

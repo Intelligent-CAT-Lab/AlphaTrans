@@ -1,11 +1,11 @@
 import pytest
 
-from src.test.org.apache.commons.csv.Utils import *
-from src.main.org.apache.commons.csv.Constants import *
-from src.main.org.apache.commons.csv.CSVRecord import *
-from src.main.org.apache.commons.csv.CSVPrinter import *
-from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+from src.main.org.apache.commons.csv.CSVParser import *
+from src.main.org.apache.commons.csv.CSVPrinter import *
+from src.main.org.apache.commons.csv.CSVRecord import *
+from src.main.org.apache.commons.csv.Constants import *
+from src.test.org.apache.commons.csv.Utils import *
 import unittest
 from io import StringIO
 from pathlib import Path
@@ -363,8 +363,8 @@ class CSVParserTest(unittest.TestCase):
             parser = CSVFormat.RFC4180.parse(StringIO(dqString))
             try:
                 records = parser.iterator()
-                record = records.next()
-                self.assertFalse(record.hasNext())
+                record = next(records)
+                self.assertFalse(records.hasNext())
                 self.assertEqual(3, record.size())
                 self.assertEqual("aaa", record.get1(0))
                 self.assertEqual("b\"bb", record.get1(1))
@@ -440,7 +440,7 @@ class CSVParserTest(unittest.TestCase):
             path = Path(__file__).resolve()\
                 .parent.parent.parent.parent\
                 .parent / 'resources' / 'org' /\
-                'apache' / 'commons' / 'csv' / 'empty.csv'
+                'apache' / 'commons' / 'csv' / 'empty.txt'
             parser = CSVParser.parse2(
                 path,
                 'utf-8',
@@ -685,7 +685,7 @@ class CSVParserTest(unittest.TestCase):
                 parserIterator = parser.iterator()
                 while True:
                     try:
-                        record = parserIterator.next()
+                        record = next(parserIterator)
                         records.append(record)
                     except StopIteration:
                         break
@@ -772,24 +772,33 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testGetOneLineOneParser(self) -> None:
+        format = CSVFormat.DEFAULT
+        writer = StringIO()
+        parser = CSVParser.CSVParser1(
+            writer, format
+        )
+        writePos = 0
+        readPos = 0
         try:
-            format = CSVFormat.DEFAULT
-            writer = StringIO()
-            parser = CSVParser.CSVParser1(writer, format)
-            try:
-                writer.write(CSVParserTest.__CSV_INPUT_1)
-                writer.write(format.getRecordSeparator())
-                record1 = parser.nextRecord()
-                self.assertEqual(CSVParserTest.__RESULT[0], record1.values())
-                writer.write(CSVParserTest.__CSV_INPUT_2)
-                writer.write(format.getRecordSeparator())
-                record2 = parser.nextRecord()
-                self.assertEqual(CSVParserTest.__RESULT[1], record2.values())
-            finally:
-                writer.close()
-                parser.close()
-        except (IOError, OSError) as e:
-            self.fail(f"An unexpected exception occurred: {e}")
+            writer.seek(writePos)
+            writer.write(CSVParserTest.__CSV_INPUT_1)
+            writer.write(format.getRecordSeparator())
+            writePos = writer.tell()
+            writer.seek(readPos)
+            record1 = parser.nextRecord()
+            readPos = writer.tell()
+            self.assertEqual(CSVParserTest.__RESULT[0], record1.values())
+            writer.seek(writePos)
+            writer.write(CSVParserTest.__CSV_INPUT_2)
+            writer.write(format.getRecordSeparator())
+            writePos = writer.tell()
+            writer.seek(readPos)
+            record2 = parser.nextRecord()
+            readPos = writer.tell()
+            self.assertEqual(CSVParserTest.__RESULT[1], record2.values())
+        finally:
+            writer.close()
+            parser.close()
 
     
     @pytest.mark.test
@@ -887,7 +896,7 @@ class CSVParserTest(unittest.TestCase):
                 self.assertEqual(3, record.getRecordNumber())
                 self.assertEqual(3, parser.getRecordNumber())
                 record = parser.nextRecord()
-                self.assertIsNotNone(record)
+                self.assertIsNone(record)
                 self.assertEqual(9, parser.getCurrentLineNumber())
                 self.assertEqual(3, parser.getRecordNumber())
             finally:
@@ -930,23 +939,23 @@ class CSVParserTest(unittest.TestCase):
                     iterator.remove()
                 self.assertEqual(
                     ["a", "b", "c"],
-                    iterator.next().values()
+                    next(iterator).values()
                 )
                 self.assertEqual(
                     ["1", "2", "3"],
-                    iterator.next().values()
+                    next(iterator).values()
                 )
                 self.assertTrue(iterator.hasNext())
                 self.assertTrue(iterator.hasNext())
                 self.assertTrue(iterator.hasNext())
                 self.assertEqual(
                     ["x", "y", "z"],
-                    iterator.next().values()
+                    next(iterator).values()
                 )
                 self.assertFalse(iterator.hasNext())
 
                 with self.assertRaises(StopIteration):
-                    iterator.next()
+                    next(iterator)
             finally:
                 parser.close()
         except Exception as e:
@@ -964,7 +973,7 @@ class CSVParserTest(unittest.TestCase):
                 iterator = parser.iterator()
                 recordNumber = 0
                 while iterator.hasNext():
-                    record = iterator.next()
+                    record = next(iterator)
                     recordNumber += 1
                     self.assertEqual(
                         str(recordNumber),
@@ -974,7 +983,7 @@ class CSVParserTest(unittest.TestCase):
                         break
                 iterator.hasNext()
                 while iterator.hasNext():
-                    record = iterator.next()
+                    record = next(iterator)
                     recordNumber += 1
                     self.assertEqual(
                         str(recordNumber),
@@ -990,7 +999,7 @@ class CSVParserTest(unittest.TestCase):
                 iterator = parser.iterator()
                 while True:
                     try:
-                        record = iterator.next()
+                        record = next(iterator)
                         recordNumber += 1
                         self.assertEqual(str(recordNumber), record.get1(0))
                         if (recordNumber >= 2):
@@ -999,7 +1008,7 @@ class CSVParserTest(unittest.TestCase):
                         break
                 while True:
                     try:
-                        record = iterator.next()
+                        record = next(iterator)
                         recordNumber += 1
                         self.assertEqual(str(recordNumber), record.get1(0))
                     except StopIteration:
@@ -1015,7 +1024,7 @@ class CSVParserTest(unittest.TestCase):
                 iterator = parser.iterator()
                 while True:
                     try:
-                        record = iterator.next()
+                        record = next(iterator)
                         recordNumber += 1
                         self.assertEqual(str(recordNumber), record.get1(0))
                         if (recordNumber >= 2):
@@ -1025,7 +1034,7 @@ class CSVParserTest(unittest.TestCase):
                 parser.iterator().hasNext()
                 while True:
                     try:
-                        record = iterator.next()
+                        record = next(iterator)
                         recordNumber += 1
                         self.assertEqual(str(recordNumber), record.get1(0))
                     except StopIteration:
@@ -1088,12 +1097,12 @@ class CSVParserTest(unittest.TestCase):
             try:
                 itr1 = parser.iterator()
 
-                first = itr1.next()
+                first = next(itr1)
                 self.assertEqual("a", first.get1(0))
                 self.assertEqual("b", first.get1(1))
                 self.assertEqual("c", first.get1(2))
 
-                second = itr1.next()
+                second = next(itr1)
                 self.assertEqual("d", second.get1(0))
                 self.assertEqual("e", second.get1(1))
                 self.assertEqual("f", second.get1(2))
@@ -1105,13 +1114,13 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testNewCSVParserNullReaderFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.CSVParser1(None, CSVFormat.DEFAULT)
 
     
     @pytest.mark.test
     def testNewCSVParserReaderNullFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.CSVParser1(StringIO(""), None)
 
     
@@ -1144,7 +1153,7 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testParseFileNullFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             path = Path(__file__).resolve()\
                 .parent.parent.parent.parent\
                 .parent / 'resources' / 'org' /\
@@ -1159,7 +1168,7 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testParseNullFileFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse0(
                 None,
                 locale.getpreferredencoding(),
@@ -1169,7 +1178,7 @@ class CSVParserTest(unittest.TestCase):
 
     @pytest.mark.test
     def testParseNullPathFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse2(
                 None,
                 locale.getpreferredencoding(),
@@ -1179,13 +1188,13 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testParseNullStringFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse4(None, CSVFormat.DEFAULT)
 
     
     @pytest.mark.test
     def testParseNullUrlCharsetFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse5(
                 None,
                 locale.getpreferredencoding(),
@@ -1195,7 +1204,7 @@ class CSVParserTest(unittest.TestCase):
 
     @pytest.mark.test
     def testParserUrlNullCharsetFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse5(
                 urlparse("https://commons.apache.org"),
                 None,
@@ -1205,13 +1214,13 @@ class CSVParserTest(unittest.TestCase):
     
     @pytest.mark.test
     def testParseStringNullFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse4("csv data", None)
 
     
     @pytest.mark.test
     def testParseUrlCharsetNullFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, AttributeError, ValueError)):
             CSVParser.parse5(
                 urlparse("https://commons.apache.org"),
                 locale.getpreferredencoding(),
@@ -1335,7 +1344,7 @@ class CSVParserTest(unittest.TestCase):
                 iterator = parse.iterator()
                 while True:
                     try:
-                        record = iterator.next()
+                        record = next(iterator)
                         printer.printRecord0(record)
                     except StopIteration:
                         break

@@ -6,10 +6,16 @@ import unittest
 class CSVFormatPredefinedTest(unittest.TestCase):
 
     def __test(self, format, enumName) -> None:
-        self.assertEqual(
-            format,
-            getattr(CSVFormat.Predefined, enumName).getFormat()
-        )
+        try:
+            self.assertEqual(
+                format,
+                getattr(CSVFormat.Predefined, enumName).getFormat()
+            )
+        except AttributeError:
+            self.assertEqual(
+                format,
+                getattr(Predefined, enumName).getFormat()
+            )
         self.assertEqual(
             format,
             CSVFormat.valueOf(enumName)

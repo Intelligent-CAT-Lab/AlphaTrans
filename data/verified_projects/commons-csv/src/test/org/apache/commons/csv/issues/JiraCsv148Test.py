@@ -14,20 +14,61 @@ class JiraCsv148Test(unittest.TestCase):
             .setQuoteMode(QuoteMode.ALL)\
             .setIgnoreSurroundingSpaces(True)\
             .build()
+        try:
+            try:
+                output = format.format(
+                    "",
+                    " ",
+                    " Single space on the left",
+                    "Single space on the right ",
+                    " Single spaces on both sides ",
+                    "   Multiple spaces on the left",
+                    "Multiple spaces on the right   ",
+                    "  Multiple spaces on both sides     "
+                )
+            except TypeError:
+                output = format.format(
+                    [
+                        "",
+                        " ",
+                        " Single space on the left",
+                        "Single space on the right ",
+                        " Single spaces on both sides ",
+                        "   Multiple spaces on the left",
+                        "Multiple spaces on the right   ",
+                        "  Multiple spaces on both sides     "
+                    ]
+                )
+        except AttributeError:
+            try:
+                output = format.format_(
+                    "",
+                    " ",
+                    " Single space on the left",
+                    "Single space on the right ",
+                    " Single spaces on both sides ",
+                    "   Multiple spaces on the left",
+                    "Multiple spaces on the right   ",
+                    "  Multiple spaces on both sides     "
+                )
+            except TypeError:
+                output = format.format_(
+                    [
+                        "",
+                        " ",
+                        " Single space on the left",
+                        "Single space on the right ",
+                        " Single spaces on both sides ",
+                        "   Multiple spaces on the left",
+                        "Multiple spaces on the right   ",
+                        "  Multiple spaces on both sides     "
+                    ]
+                )
         self.assertEqual(
             "\"\",\" \",\" Single space on the left\",\"Single space on the right \",\" Single" +\
                 " spaces on both sides \",\"   Multiple spaces on the left\",\"Multiple" + \
                 " spaces on the right   \",\"  Multiple spaces on both sides     \"",
-            format.format(
-                "",
-                " ",
-                " Single space on the left",
-                "Single space on the right ",
-                " Single spaces on both sides ",
-                "   Multiple spaces on the left",
-                "Multiple spaces on the right   ",
-                "  Multiple spaces on both sides     "
-            )
+            output
         )
     
     
@@ -37,18 +78,59 @@ class JiraCsv148Test(unittest.TestCase):
             .setQuoteMode(QuoteMode.ALL)\
             .setTrim(True)\
             .build()
+        try:
+            try:
+                output = format.format(
+                    "",
+                    " ",
+                    " Single space on the left",
+                    "Single space on the right ",
+                    " Single spaces on both sides ",
+                    "   Multiple spaces on the left",
+                    "Multiple spaces on the right   ",
+                    "  Multiple spaces on both sides     ",
+                )
+            except TypeError:
+                output = format.format(
+                    [
+                        "",
+                        " ",
+                        " Single space on the left",
+                        "Single space on the right ",
+                        " Single spaces on both sides ",
+                        "   Multiple spaces on the left",
+                        "Multiple spaces on the right   ",
+                        "  Multiple spaces on both sides     "
+                    ]
+                )
+        except AttributeError:
+            try:
+                output = format.format_(
+                    "",
+                    " ",
+                    " Single space on the left",
+                    "Single space on the right ",
+                    " Single spaces on both sides ",
+                    "   Multiple spaces on the left",
+                    "Multiple spaces on the right   ",
+                    "  Multiple spaces on both sides     ",
+                )
+            except TypeError:
+                output = format.format_(
+                    [
+                        "",
+                        " ",
+                        " Single space on the left",
+                        "Single space on the right ",
+                        " Single spaces on both sides ",
+                        "   Multiple spaces on the left",
+                        "Multiple spaces on the right   ",
+                        "  Multiple spaces on both sides     "
+                    ]
+                )
         self.assertEqual(
             "\"\",\"\",\"Single space on the left\",\"Single space on the right\"," +\
                 "\"Single spaces on both sides\",\"Multiple spaces on the left\"," +\
                 "\"Multiple spaces on the right\",\"Multiple spaces on both sides\"",
-            format.format(
-                "",
-                " ",
-                " Single space on the left",
-                "Single space on the right ",
-                " Single spaces on both sides ",
-                "   Multiple spaces on the left",
-                "Multiple spaces on the right   ",
-                "  Multiple spaces on both sides     ",
-            )
+            output
         )

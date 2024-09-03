@@ -39,10 +39,10 @@ class JiraCsv248Test(unittest.TestCase):
             self.assertIsNone(rec.getParser())
             self.assertTrue(rec.isConsistent())
             self.assertFalse(rec.isMapped("A"))
-            self.assertFalse(rec.isSet("A"))
+            self.assertFalse(rec.isSet1("A"))
             self.assertEqual(0, len(rec.toMap()))
             try:
-                rec.get("A")
+                rec.get2("A")
                 self.fail("Access by name is not expected after deserialisation")
             except RuntimeError as expected:
                 pass

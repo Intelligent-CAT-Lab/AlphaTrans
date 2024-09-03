@@ -6,9 +6,9 @@ from pathlib import Path
 import locale
 from urllib.parse import urlparse
 from typing import Generator
-from src.main.org.apache.commons.csv.CSVRecord import *
-from src.main.org.apache.commons.csv.CSVParser import *
 from src.main.org.apache.commons.csv.CSVFormat import *
+from src.main.org.apache.commons.csv.CSVParser import *
+from src.main.org.apache.commons.csv.CSVRecord import *
 
 
 BASE_DIR = Path(__file__).resolve()\
@@ -72,7 +72,7 @@ class CSVFileParserTest(unittest.TestCase):
                     format
                 )
                 for record in parser:
-                    parsed = str(record.values())
+                    parsed = "[" + ", ".join(str(e) for e in record.values()) + "]"
                     comment = record.getComment()
                     if (checkComments and comment != None):
                         parsed += ("#" + comment.replace("\n", "\\n"))
@@ -119,7 +119,7 @@ class CSVFileParserTest(unittest.TestCase):
             try:
                 parser = CSVParser.parse5(resource, 'utf-8', format)
                 for record in parser:
-                    parsed = str(record.values())
+                    parsed = "[" + ", ".join(str(e) for e in record.values()) + "]"
                     comment = record.getComment()
                     if (checkComments and comment != None):
                         parsed += ("#" + comment.replace("\n", "\\n"))

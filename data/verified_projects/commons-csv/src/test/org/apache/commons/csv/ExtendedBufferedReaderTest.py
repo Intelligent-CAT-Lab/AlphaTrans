@@ -124,14 +124,14 @@ class ExtendedBufferedReaderTest(unittest.TestCase):
                 br.close()
             br = self.__createBufferedReader("foo\n\nhello")
             try:
-                self.assertEqual("f", br.read0())
-                self.assertEqual("o", br.lookAhead0())
+                self.assertEqual("f", chr(br.read0()))
+                self.assertEqual("o",  chr(br.lookAhead0()))
                 self.assertEqual("oo", br.readLine())
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('\n', br.lookAhead0())
+                self.assertEqual('\n', chr(br.lookAhead0()))
                 self.assertEqual("", br.readLine())
                 self.assertEqual(2, br.getCurrentLineNumber())
-                self.assertEqual("h", br.lookAhead0())
+                self.assertEqual("h", chr(br.lookAhead0()))
                 self.assertEqual("hello", br.readLine())
                 self.assertIsNone(br.readLine())
                 self.assertEqual(3, br.getCurrentLineNumber())
@@ -140,9 +140,9 @@ class ExtendedBufferedReaderTest(unittest.TestCase):
             br = self.__createBufferedReader("foo\rbaar\r\nfoo")
             try:
                 self.assertEqual("foo", br.readLine())
-                self.assertEqual("b", br.lookAhead0())
+                self.assertEqual("b", chr(br.lookAhead0()))
                 self.assertEqual("baar", br.readLine())
-                self.assertEqual("f", br.lookAhead0())
+                self.assertEqual("f", chr(br.lookAhead0()))
                 self.assertEqual("foo", br.readLine())
                 self.assertIsNone(br.readLine())
             finally:
@@ -157,52 +157,52 @@ class ExtendedBufferedReaderTest(unittest.TestCase):
             br = self.__createBufferedReader("1\n2\r3\n")
             try:
                 self.assertEqual(0, br.getCurrentLineNumber())
-                self.assertEqual('1', br.lookAhead0())
+                self.assertEqual('1', chr(br.lookAhead0()))
                 self.assertEqual(Constants.UNDEFINED, br.getLastChar())
                 self.assertEqual(0, br.getCurrentLineNumber())
-                self.assertEqual('1', br.read0())  # Start line 1
-                self.assertEqual('1', br.getLastChar())
+                self.assertEqual('1', chr(br.read0()))  # Start line 1
+                self.assertEqual('1', chr(br.getLastChar()))
 
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('\n', br.lookAhead0())
+                self.assertEqual('\n', chr(br.lookAhead0()))
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('1', br.getLastChar())
-                self.assertEqual('\n', br.read0())
+                self.assertEqual('1', chr(br.getLastChar()))
+                self.assertEqual('\n', chr(br.read0()))
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('\n', br.getLastChar())
+                self.assertEqual('\n', chr(br.getLastChar()))
                 self.assertEqual(1, br.getCurrentLineNumber())
 
-                self.assertEqual('2', br.lookAhead0())
+                self.assertEqual('2', chr(br.lookAhead0()))
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('\n', br.getLastChar())
+                self.assertEqual('\n', chr(br.getLastChar()))
                 self.assertEqual(1, br.getCurrentLineNumber())
-                self.assertEqual('2', br.read0())  # Start line 2
+                self.assertEqual('2', chr(br.read0()))  # Start line 2
                 self.assertEqual(2, br.getCurrentLineNumber())
-                self.assertEqual('2', br.getLastChar())
+                self.assertEqual('2', chr(br.getLastChar()))
 
-                self.assertEqual('\r', br.lookAhead0())
+                self.assertEqual('\r', chr(br.lookAhead0()))
                 self.assertEqual(2, br.getCurrentLineNumber())
-                self.assertEqual('2', br.getLastChar())
-                self.assertEqual('\r', br.read0())
-                self.assertEqual('\r', br.getLastChar())
+                self.assertEqual('2', chr(br.getLastChar()))
+                self.assertEqual('\r', chr(br.read0()))
+                self.assertEqual('\r', chr(br.getLastChar()))
                 self.assertEqual(2, br.getCurrentLineNumber())
 
-                self.assertEqual('3', br.lookAhead0())
-                self.assertEqual('\r', br.getLastChar())
-                self.assertEqual('3', br.read0())  # Start line 3
-                self.assertEqual('3', br.getLastChar())
+                self.assertEqual('3', chr(br.lookAhead0()))
+                self.assertEqual('\r', chr(br.getLastChar()))
+                self.assertEqual('3', chr(br.read0()))  # Start line 3
+                self.assertEqual('3', chr(br.getLastChar()))
                 self.assertEqual(3, br.getCurrentLineNumber())
 
-                self.assertEqual('\n', br.lookAhead0())
+                self.assertEqual('\n', chr(br.lookAhead0()))
                 self.assertEqual(3, br.getCurrentLineNumber())
-                self.assertEqual('3', br.getLastChar())
-                self.assertEqual('\n', br.read0())
+                self.assertEqual('3', chr(br.getLastChar()))
+                self.assertEqual('\n', chr(br.read0()))
                 self.assertEqual(3, br.getCurrentLineNumber())
-                self.assertEqual('\n', br.getLastChar())
+                self.assertEqual('\n', chr(br.getLastChar()))
                 self.assertEqual(3, br.getCurrentLineNumber())
 
                 self.assertEqual(Constants.END_OF_STREAM, br.lookAhead0())
-                self.assertEqual('\n', br.getLastChar())
+                self.assertEqual('\n', chr(br.getLastChar()))
                 self.assertEqual(Constants.END_OF_STREAM, br.read0())
                 self.assertEqual(Constants.END_OF_STREAM, br.getLastChar())
                 self.assertEqual(Constants.END_OF_STREAM, br.read0())
@@ -226,13 +226,13 @@ class ExtendedBufferedReaderTest(unittest.TestCase):
                 ref[2] = 'c'
                 self.assertEqual(3, br.read1(res, 0, 3))
                 self.assertEqual(ref, res)
-                self.assertEqual("c", br.getLastChar())
+                self.assertEqual("c", chr(br.getLastChar()))
 
-                self.assertEqual("d", br.lookAhead0())
+                self.assertEqual("d", chr(br.lookAhead0()))
                 ref[4] = 'd'
                 self.assertEqual(1, br.read1(res, 4, 1))
                 self.assertEqual(ref, res)
-                self.assertEqual("d", br.getLastChar())
+                self.assertEqual("d", chr(br.getLastChar()))
             finally:
                 br.close()
         except Exception as e:

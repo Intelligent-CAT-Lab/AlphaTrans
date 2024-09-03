@@ -14,11 +14,17 @@ class JiraCsv271Test(unittest.TestCase):
         stringWriter = io.StringIO()
         printer = CSVPrinter(stringWriter, csvFormat)
         try:
-            printer.print("a")
-            printer.printRecord1("b", "c")
+            try:
+                printer.print("a")
+            except AttributeError:
+                printer.print_("a")
+            try:
+                printer.printRecord1("b", "c")
+            except TypeError:
+                printer.printRecord1(["b", "c"])
+            self.assertEqual("a,b,c\r\n", stringWriter.getvalue())
         finally:
             printer.close()
-        self.assertEqual("a,b,c\r\n", stringWriter.getvalue())
 
     
     @pytest.mark.test
@@ -27,8 +33,11 @@ class JiraCsv271Test(unittest.TestCase):
         stringWriter = io.StringIO()
         printer = CSVPrinter(stringWriter, csvFormat)
         try:
-            printer.print("a")
+            try:
+                printer.print("a")
+            except AttributeError:
+                printer.print_("a")
             printer.printRecord0(["b", "c"])
+            self.assertEqual("a,b,c\r\n", stringWriter.getvalue())
         finally:
             printer.close()
-        self.assertEqual("a,b,c\r\n", stringWriter.getvalue())

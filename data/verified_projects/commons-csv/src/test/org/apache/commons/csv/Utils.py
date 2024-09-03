@@ -4,7 +4,7 @@ from src.main.org.apache.commons.csv.CSVRecord import *
 import unittest
 
 
-class Utils(unittest.TestCase):
+class Utils:
 
     def __init__(self) -> None:
         pass

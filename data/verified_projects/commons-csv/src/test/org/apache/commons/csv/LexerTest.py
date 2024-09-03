@@ -42,7 +42,7 @@ class LexerTest(unittest.TestCase):
             lexer = self.__createLexer("#", CSVFormat.DEFAULT.withCommentMarker0('#'))
             try:
                 ch = lexer.readEscape()
-                self.assertEqual('#', ch)
+                self.assertEqual('#', chr(ch))
             finally:
                 lexer.close()
         except (IOError, OSError) as e:
@@ -55,7 +55,7 @@ class LexerTest(unittest.TestCase):
             lexer = self.__createLexer("b", CSVFormat.DEFAULT.withEscape0('\b'))
             try:
                 ch = lexer.readEscape()
-                self.assertEqual(Constants.BACKSPACE, ch)
+                self.assertEqual(Constants.BACKSPACE, chr(ch))
             finally:
                 lexer.close()
         except (IOError, OSError) as e:
@@ -68,7 +68,7 @@ class LexerTest(unittest.TestCase):
             lexer = self.__createLexer("f", CSVFormat.DEFAULT.withEscape0('\f'))
             try:
                 ch = lexer.readEscape()
-                self.assertEqual(Constants.FF, ch)
+                self.assertEqual(Constants.FF, chr(ch))
             finally:
                 lexer.close()
         except (IOError, OSError) as e:

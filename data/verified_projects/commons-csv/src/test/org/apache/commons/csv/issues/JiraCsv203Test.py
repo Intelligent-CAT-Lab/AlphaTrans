@@ -18,7 +18,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -38,7 +41,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -58,7 +64,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -78,7 +87,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -98,7 +110,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1("", "Hello", "", "World")
+            try:
+                printer.printRecord1("", "Hello", "", "World")
+            except TypeError:
+                printer.printRecord1(["", "Hello", "", "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -117,7 +132,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(
@@ -136,7 +154,10 @@ class JiraCsv203Test(unittest.TestCase):
         buffer = []
         printer = CSVPrinter(buffer, format)
         try:
-            printer.printRecord1(None, "Hello", None, "World")
+            try:
+                printer.printRecord1(None, "Hello", None, "World")
+            except TypeError:
+                printer.printRecord1([None, "Hello", None, "World"])
         finally:
             printer.close()
         self.assertEqual(

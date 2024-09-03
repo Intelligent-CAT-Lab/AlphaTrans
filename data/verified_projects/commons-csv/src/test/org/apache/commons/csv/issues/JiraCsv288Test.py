@@ -15,7 +15,10 @@ class JiraCsv288Test(unittest.TestCase):
         while True:
             try:
                 value = next(csvRecordIterator)
-                csvPrinter.print(value)
+                try:
+                    csvPrinter.print(value)
+                except AttributeError:
+                    csvPrinter.print_(value)
             except StopIteration:
                 break
     
@@ -25,15 +28,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a|~|b|~|c|~|d|~||~|f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("|~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("|~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("|~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -48,15 +57,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a||b||c||d||||f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("||").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("||").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("||").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -71,15 +86,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a||bb||cc||dd||f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("||").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("||").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("||").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,bb,cc,dd,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -94,15 +115,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a||b||c||d||||f||")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("||").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("||").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("||").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f,", ''.join(stringBuilder))
                 except StopIteration:
@@ -117,15 +144,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a||\"b||c\"||d||||f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("||").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("||").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("||").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b||c,d,,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -140,15 +173,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a|b|c|d||f|")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f,", ''.join(stringBuilder))
                 except StopIteration:
@@ -163,15 +202,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a|||b|||c|||d||||||f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("|||").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("|||").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("|||").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -186,15 +231,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a~|b~|c~|d~|~|f")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f", ''.join(stringBuilder))
                 except StopIteration:
@@ -209,15 +260,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a~|b~|c~|d~|~|f~")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f~", ''.join(stringBuilder))
                 except StopIteration:
@@ -232,15 +289,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a~|b~|c~|d~|~|f|")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f|", ''.join(stringBuilder))
                 except StopIteration:
@@ -255,15 +318,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a~|b~|c~|d~|~|f~~||g")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f~,|g", ''.join(stringBuilder))
                 except StopIteration:
@@ -278,15 +347,21 @@ class JiraCsv288Test(unittest.TestCase):
         in_ = io.StringIO("a~|b~|c~|d~|~|f~|")
         stringBuilder = []
         csvPrinter = CSVPrinter(stringBuilder, CSVFormat.EXCEL)
-        parser = CSVParser.parse3(
-            in_,
-            CSVFormat.Builder.create0().setDelimiter1("~|").build()
-        )
+        try:
+            parser = CSVParser.parse3(
+                in_,
+                CSVFormat.Builder.create0().setDelimiter1("~|").build()
+            )
+        except AttributeError:
+            parser = CSVParser.parse3(
+                in_,
+                Builder.create0().setDelimiter1("~|").build()
+            )
         try:
             parserIterator = parser.iterator()
             while True:
                 try:
-                    csvRecord = parserIterator.next()
+                    csvRecord = next(parserIterator)
                     self.__print(csvRecord, csvPrinter)
                     self.assertEqual("a,b,c,d,,f,", ''.join(stringBuilder))
                 except StopIteration:

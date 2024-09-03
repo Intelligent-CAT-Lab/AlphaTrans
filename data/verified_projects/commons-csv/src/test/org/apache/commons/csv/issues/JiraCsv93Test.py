@@ -16,11 +16,14 @@ class JiraCsv93Test(unittest.TestCase):
 
     
     def __every(self, csvFormat, objects, format, data) -> None:
-        source = csvFormat.format(objects)
+        try:
+            source = csvFormat.format(objects)
+        except AttributeError:
+            source = csvFormat.format_(objects)
         self.assertEqual(source, format)
         csvParser = csvFormat.parse(io.StringIO(source))
         try:
-            csvRecord = csvParser.iterator().next()
+            csvRecord = next(csvParser.iterator())
             for i in range(len(data)):
                 self.assertEqual(csvRecord.get1(i), data[i])
         finally:

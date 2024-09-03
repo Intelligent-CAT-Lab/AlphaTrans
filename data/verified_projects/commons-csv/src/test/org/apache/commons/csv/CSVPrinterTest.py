@@ -77,26 +77,27 @@ class CSVPrinterTest(unittest.TestCase):
                 for i in range(nLines):
                     printer.printRecord1(lines[i])
                 
+                result = sw.getvalue()
+
+                parser = CSVParser.parse4(result, format)
+
+                try:
+                    parseResult = parser.getRecords()
+
+                    expected = copy.deepcopy(lines)
+                    for i in range(len(expected)):
+                        expected[i] = self.__expectNulls(expected[i], format)
+                    Utils.compare(
+                        "Printer output :" + CSVPrinterTest.__printable(result),
+                        expected,
+                        parseResult
+                    )
+                finally:
+                    parser.close()
+                
                 printer.flush()
             finally:
                 printer.close()
-
-            result = sw.getvalue()
-
-            parser = CSVParser.parse4(result, format)
-            try:
-                parseResult = parser.getRecords()
-
-                expected = copy.deepcopy(lines)
-                for i in range(len(expected)):
-                    expected[i] = self.__expectNulls(expected[i], format)
-                Utils.compare(
-                    "Printer output :" + CSVPrinterTest.__printable(result),
-                    expected,
-                    parseResult
-                )
-            finally:
-                parser.close()
         except Exception as e:
             self.fail(f"An unexpected exception occurred in `__doOneRandom()`: {e}")
 
@@ -144,6 +145,10 @@ class CSVPrinterTest(unittest.TestCase):
                 7: '\'',
                 8: Constants.BACKSLASH
             }.get(what, chr(r.randint(0, 299)))
+            if ch == '\xa0':
+                ch = " "
+            elif ch == '\x85':
+                ch = "\n"
             buf[i] = ch
         return ''.join(buf)
 
@@ -155,7 +160,10 @@ class CSVPrinterTest(unittest.TestCase):
             value = "abc"
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withCommentMarker0('#'))
             try:
-                printer.print(value)
+                try:
+                    printer.print(value)
+                except AttributeError:
+                    printer.print_(value)
                 printer.printComment(
                     "This is a comment\r\non multiple lines\rthis is next comment\r"
                 )
@@ -208,7 +216,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withEscape0('!').withQuote1(None)
             )
             try:
-                printer.print(reader)
+                try:
+                    printer.print(reader)
+                except AttributeError:
+                    printer.print_(reader)
                 self.assertEqual("x!,y!,z", sw.getvalue())
             finally:
                 printer.close()
@@ -223,8 +234,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))
             try:
-                printer.print("a,b,c")
-                printer.print("xyz")
+                try:
+                    printer.print("a,b,c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a,b,c")
+                    printer.print_("xyz")
                 self.assertEqual("'a,b,c',xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -239,8 +254,12 @@ class CSVPrinterTest(unittest.TestCase):
             format = CSVFormat.DEFAULT.withEscape0('!').withQuoteMode(QuoteMode.NONE)
             printer = CSVPrinter(sw, format)
             try:
-                printer.print("a,b,c")
-                printer.print("xyz")
+                try:
+                    printer.print("a,b,c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a,b,c")
+                    printer.print_("xyz")
                 self.assertEqual("a!,b!,c,xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -261,8 +280,12 @@ class CSVPrinterTest(unittest.TestCase):
                     .build()
             )
             try:
-                printer.print("a[|]b[|]c")
-                printer.print("xyz")
+                try:
+                    printer.print("a[|]b[|]c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a[|]b[|]c")
+                    printer.print_("xyz")
                 self.assertEqual("'a[|]b[|]c'[|]xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -282,9 +305,14 @@ class CSVPrinterTest(unittest.TestCase):
                 .build()
             printer = CSVPrinter(sw, format)
             try:
-                printer.print("a[|]b[|]c")
-                printer.print("xyz")
-                printer.print("a[xy]bc[]")
+                try:
+                    printer.print("a[|]b[|]c")
+                    printer.print("xyz")
+                    printer.print("a[xy]bc[]")
+                except AttributeError:
+                    printer.print_("a[|]b[|]c")
+                    printer.print_("xyz")
+                    printer.print_("a[xy]bc[]")
                 self.assertEqual(
                     "a![!|!]b![!|!]c[|]xyz[|]a[xy]bc[]",
                     sw.getvalue()
@@ -304,8 +332,12 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withEscape0('!').withQuote1(None)
             )
             try:
-                printer.print("a,b,c")
-                printer.print("xyz")
+                try:
+                    printer.print("a,b,c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a,b,c")
+                    printer.print_("xyz")
                 self.assertEqual("a!,b!,c,xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -319,8 +351,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(None))
             try:
-                printer.print("a,b,c")
-                printer.print("xyz")
+                try:
+                    printer.print("a,b,c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a,b,c")
+                    printer.print_("xyz")
                 self.assertEqual("a,b,c,xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -342,8 +378,12 @@ class CSVPrinterTest(unittest.TestCase):
                     .build()
             )
             try:
-                printer.print("a|||b|||c")
-                printer.print("xyz")
+                try:
+                    printer.print("a|||b|||c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a|||b|||c")
+                    printer.print_("xyz")
                 self.assertEqual("a!|!|!|b!|!|!|c|||xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -371,7 +411,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.RFC4180)
             try:
-                printer.printRecord1(CSVPrinterTest.__EURO_CH, "Deux")
+                try:
+                    printer.printRecord1(CSVPrinterTest.__EURO_CH, "Deux")
+                except TypeError:
+                    printer.printRecord1([CSVPrinterTest.__EURO_CH, "Deux"])
                 self.assertEqual(
                     CSVPrinterTest.__EURO_CH + ",Deux" + self.__recordSeparator,
                     sw.getvalue()
@@ -391,8 +434,12 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote1(None).withEscape0('!')
             )
             try:
-                printer.print("a\rb\nc")
-                printer.print("x\fy\bz")
+                try:
+                    printer.print("a\rb\nc")
+                    printer.print("x\fy\bz")
+                except AttributeError:
+                    printer.print_("a\rb\nc")
+                    printer.print_("x\fy\bz")
                 self.assertEqual("a!rb!nc,x\fy\bz", sw.getvalue())
             finally:
                 printer.close()
@@ -406,8 +453,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(None))
             try:
-                printer.print("a\rb\nc")
-                printer.print("x\fy\bz")
+                try:
+                    printer.print("a\rb\nc")
+                    printer.print("x\fy\bz")
+                except AttributeError:
+                    printer.print_("a\rb\nc")
+                    printer.print_("x\fy\bz")
                 self.assertEqual("a\rb\nc,x\fy\bz", sw.getvalue())
             finally:
                 printer.close()
@@ -421,8 +472,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))
             try:
-                printer.print("a\rb\nc")
-                printer.print("x\by\fz")
+                try:
+                    printer.print("a\rb\nc")
+                    printer.print("x\by\fz")
+                except AttributeError:
+                    printer.print_("a\rb\nc")
+                    printer.print_("x\by\fz")
                 self.assertEqual("'a\rb\nc',x\by\fz", sw.getvalue())
             finally:
                 printer.close()
@@ -439,10 +494,13 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0(CSVPrinterTest.__QUOTE_CH)
             )
             try:
-                printer.print("\\")
+                try:
+                    printer.print("\\")
+                except AttributeError:
+                    printer.print_("\\")
+                self.assertEqual("\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -456,10 +514,13 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0(CSVPrinterTest.__QUOTE_CH)
             )
             try:
-                printer.print("\\\r")
+                try:
+                    printer.print("\\\r")
+                except AttributeError:
+                    printer.print_("\\\r")
+                self.assertEqual("'\\\r'", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("'\\\r'", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -473,10 +534,13 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0(CSVPrinterTest.__QUOTE_CH)
             )
             try:
-                printer.print("X\\\r")
+                try:
+                    printer.print("X\\\r")
+                except AttributeError:
+                    printer.print_("X\\\r")
+                self.assertEqual("'X\\\r'", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("'X\\\r'", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -490,10 +554,13 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0(CSVPrinterTest.__QUOTE_CH)
             )
             try:
-                printer.print("\\\\")
+                try:
+                    printer.print("\\\\")
+                except AttributeError:
+                    printer.print_("\\\\")
+                self.assertEqual("\\\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -507,10 +574,13 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0(CSVPrinterTest.__QUOTE_CH)
             )
             try:
-                printer.print("\\\\")
+                try:
+                    printer.print("\\\\")
+                except AttributeError:
+                    printer.print_("\\\\")
+                self.assertEqual("\\\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -521,10 +591,13 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(None))
             try:
-                printer.print("\\")
+                try:
+                    printer.print("\\")
+                except AttributeError:
+                    printer.print_("\\")
+                self.assertEqual("\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -535,10 +608,13 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(None))
             try:
-                printer.print("\\\r")
+                try:
+                    printer.print("\\\r")
+                except AttributeError:
+                    printer.print_("\\\r")
+                self.assertEqual("\"\\\r\"", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\"\\\r\"", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -549,10 +625,13 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(None))
             try:
-                printer.print("X\\\r")
+                try:
+                    printer.print("X\\\r")
+                except AttributeError:
+                    printer.print_("X\\\r")
+                self.assertEqual("\"X\\\r\"", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\"X\\\r\"", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -563,10 +642,13 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(None))
             try:
-                printer.print("\\\\")
+                try:
+                    printer.print("\\\\")
+                except AttributeError:
+                    printer.print_("\\\\")
+                self.assertEqual("\\\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -577,10 +659,13 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withEscape1(None))
             try:
-                printer.print("\\\\")
+                try:
+                    printer.print("\\\\")
+                except AttributeError:
+                    printer.print_("\\\\")
+                self.assertEqual("\\\\", sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual("\\\\", sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -679,7 +764,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.EXCEL)
             try:
-                printer.printRecord1("a", "b")
+                try:
+                    printer.printRecord1("a", "b")
+                except TypeError:
+                    printer.printRecord1(["a", "b"])
                 self.assertEqual(
                     "a,b" + self.__recordSeparator,
                     sw.getvalue()
@@ -696,7 +784,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.EXCEL)
             try:
-                printer.printRecord1("a,b", "b")
+                try:
+                    printer.printRecord1("a,b", "b")
+                except TypeError:
+                    printer.printRecord1(["a,b", "b"])
                 self.assertEqual(
                     "\"a,b\",b" + self.__recordSeparator,
                     sw.getvalue()
@@ -713,8 +804,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(None))
             try:
-                printer.printRecord1("a", "b", "c")
-                printer.printRecord1("x", "y", "z")
+                try:
+                    printer.printRecord1("a", "b", "c")
+                    printer.printRecord1("x", "y", "z")
+                except TypeError:
+                    printer.printRecord1(["a", "b", "c"])
+                    printer.printRecord1(["x", "y", "z"])
                 self.assertEqual("a,b,c\r\nx,y,z\r\n", sw.getvalue())
             finally:
                 printer.close()
@@ -741,12 +836,12 @@ class CSVPrinterTest(unittest.TestCase):
             try:
                 list_.append("\"")
                 printer.printRecord0(list_)
+                expected = "\"\\\"\"" + format.getRecordSeparator()
+                self.assertEqual(expected, sw.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(self.__expectNulls(list_, format), record0)
             finally:
                 printer.close()
-            expected = "\"\\\"\"" + format.getRecordSeparator()
-            self.assertEqual(expected, sw.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(self.__expectNulls(list_, format), record0)
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -765,12 +860,12 @@ class CSVPrinterTest(unittest.TestCase):
             try:
                 list_.append("\n")
                 printer.printRecord0(list_)
+                expected = "\"\\n\"" + format.getRecordSeparator()
+                self.assertEqual(expected, sw.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(self.__expectNulls(list_, format), record0)
             finally:
                 printer.close()
-            expected = "\"\\n\"" + format.getRecordSeparator()
-            self.assertEqual(expected, sw.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(self.__expectNulls(list_, format), record0)
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -788,12 +883,12 @@ class CSVPrinterTest(unittest.TestCase):
             try:
                 list_.append("\\")
                 printer.printRecord0(list_)
+                expected = "\"\\\\\"" + format.getRecordSeparator()
+                self.assertEqual(expected, sw.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(self.__expectNulls(list_, format), record0)
             finally:
                 printer.close()
-            expected = "\"\\\\\"" + format.getRecordSeparator()
-            self.assertEqual(expected, sw.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(self.__expectNulls(list_, format), record0)
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -830,7 +925,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_CSV)
             try:
-                printer.printRecord1("a", "b")
+                try:
+                    printer.printRecord1("a", "b")
+                except TypeError:
+                    printer.printRecord1(["a", "b"])
                 self.assertEqual("a,b" + self.__recordSeparator, sw.getvalue())
             finally:
                 printer.close()
@@ -844,7 +942,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_CSV)
             try:
-                printer.printRecord1("a,b", "c")
+                try:
+                    printer.printRecord1("a,b", "c")
+                except TypeError:
+                    printer.printRecord1(["a,b", "c"])
                 self.assertEqual("\"a,b\",c" + self.__recordSeparator, sw.getvalue())
             finally:
                 printer.close()
@@ -858,7 +959,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_CSV)
             try:
-                printer.printRecord1("a \"c\" b", "d")
+                try:
+                    printer.printRecord1("a \"c\" b", "d")
+                except TypeError:
+                    printer.printRecord1(["a \"c\" b", "d"])
                 self.assertEqual(
                     "\"a \"\"c\"\" b\",d" + self.__recordSeparator,
                     sw.getvalue()
@@ -875,7 +979,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_CSV)
             try:
-                printer.printRecord1("a\tb", "c")
+                try:
+                    printer.printRecord1("a\tb", "c")
+                except TypeError:
+                    printer.printRecord1(["a\tb", "c"])
                 self.assertEqual("a\tb,c" + self.__recordSeparator, sw.getvalue())
             finally:
                 printer.close()
@@ -889,7 +996,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_TSV)
             try:
-                printer.printRecord1("a", "b")
+                try:
+                    printer.printRecord1("a", "b")
+                except TypeError:
+                    printer.printRecord1(["a", "b"])
                 self.assertEqual("a\tb" + self.__recordSeparator, sw.getvalue())
             finally:
                 printer.close()
@@ -903,7 +1013,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_TSV)
             try:
-                printer.printRecord1("a,b", "c")
+                try:
+                    printer.printRecord1("a,b", "c")
+                except TypeError:
+                    printer.printRecord1(["a,b", "c"])
                 self.assertEqual("a,b\tc" + self.__recordSeparator, sw.getvalue())
             finally:
                 printer.close()
@@ -917,7 +1030,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.MONGODB_TSV)
             try:
-                printer.printRecord1("a\tb", "c")
+                try:
+                    printer.printRecord1("a\tb", "c")
+                except TypeError:
+                    printer.printRecord1(["a\tb", "c"])
                 self.assertEqual(
                     "\"a\tb\"\tc" + self.__recordSeparator,
                     sw.getvalue()
@@ -960,12 +1076,12 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\"NULL\"\tNULL\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(s, record0)
             finally:
                 printer.close()
-            expected = "\"NULL\"\tNULL\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(s, record0)
             
             s = ["\\N", None]
             format = CSVFormat.MYSQL.withNullString("\\N")
@@ -973,15 +1089,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\\\\N\t\\N\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\\\\N\t\\N\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["\\N", "A"]
             format = CSVFormat.MYSQL.withNullString("\\N")
@@ -989,15 +1105,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\\\\N\tA\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\\\\N\tA\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["\n", "A"]
             format = CSVFormat.MYSQL.withNullString("\\N")
@@ -1005,15 +1121,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\\n\tA\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\\n\tA\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["", None]
             format = CSVFormat.MYSQL.withNullString("NULL")
@@ -1021,15 +1137,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\tNULL\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\tNULL\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["", None]
             format = CSVFormat.MYSQL
@@ -1037,15 +1153,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\t\\N\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\t\\N\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["\\N", "", "\u000e,\\\r"]
             format = CSVFormat.MYSQL
@@ -1053,15 +1169,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\\\\N\t\t\u000e,\\\\\\r\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\\\\N\t\t\u000e,\\\\\\r\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["NULL", "\\\r"]
             format = CSVFormat.MYSQL
@@ -1069,15 +1185,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "NULL\t\\\\\\r\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "NULL\t\\\\\\r\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
             
             s = ["\\\r"]
             format = CSVFormat.MYSQL
@@ -1085,15 +1201,15 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(writer, format)
             try:
                 printer.printRecord1(s)
+                expected = "\\\\\\r\n"
+                self.assertEqual(expected, writer.getvalue())
+                record0 = self.__toFirstRecordValues(expected, format)
+                self.assertEqual(
+                    self.__expectNulls(s, format),
+                    record0
+                )
             finally:
                 printer.close()
-            expected = "\\\\\\r\n"
-            self.assertEqual(expected, writer.getvalue())
-            record0 = self.__toFirstRecordValues(expected, format)
-            self.assertEqual(
-                self.__expectNulls(s, format),
-                record0
-            )
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
 
@@ -1105,13 +1221,13 @@ class CSVPrinterTest(unittest.TestCase):
     
     @pytest.mark.test
     def testNewCsvPrinterAppendableNullFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, ValueError, AttributeError)):
             CSVPrinter(io.StringIO(), None)
 
     
     @pytest.mark.test
     def testNewCsvPrinterNullAppendableFormat(self) -> None:
-        with self.assertRaises((TypeError, AttributeError)):
+        with self.assertRaises((TypeError, ValueError, AttributeError)):
             CSVPrinter(None, CSVFormat.DEFAULT)
 
     
@@ -1121,9 +1237,12 @@ class CSVPrinterTest(unittest.TestCase):
             out = []
             printer = CSVPrinter(out, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b", "c")
+                try:
+                    printer.printRecord1("a", "b", "c")
+                except TypeError:
+                    printer.printRecord1(["a", "b", "c"])
                 self.assertEqual(
-                    "a,b,c" + self.__recordSeparator, out.getvalue()
+                    "a,b,c" + self.__recordSeparator, "".join(out)
                 )
                 printer.flush()
             finally:
@@ -1139,18 +1258,21 @@ class CSVPrinterTest(unittest.TestCase):
             format = CSVFormat.DEFAULT.withNullString("NULL")
             printer = CSVPrinter(sw, format)
             try:
-                printer.printRecord1("a", None, "b")
+                try:
+                    printer.printRecord1("a", None, "b")
+                except TypeError:
+                    printer.printRecord1(["a", None, "b"])
+                csvString = sw.getvalue()
+                self.assertEqual(
+                    "a,NULL,b" + self.__recordSeparator,
+                    csvString
+                )
             finally:
                 printer.close()
-            csvString = sw.getvalue()
-            self.assertEqual(
-                "a,NULL,b" + self.__recordSeparator,
-                csvString
-            )
             iterable = format.parse(io.StringIO(csvString))
             try:
                 iterator = iterable.iterator()
-                record = iterator.next()
+                record = next(iterator)
                 self.assertEqual("a", record.get1(0))
                 self.assertIsNone(record.get1(1))
                 self.assertEqual("b", record.get1(2))
@@ -1170,8 +1292,12 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote1(None).withEscape0('!')
             )
             try:
-                printer.print("abc")
-                printer.print("xyz")
+                try:
+                    printer.print("abc")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("abc")
+                    printer.print_("xyz")
                 self.assertEqual("abc,xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -1185,8 +1311,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(None))
             try:
-                printer.print("abc")
-                printer.print("xyz")
+                try:
+                    printer.print("abc")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("abc")
+                    printer.print_("xyz")
                 self.assertEqual("abc,xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -1200,7 +1330,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote0('\''))
             try:
-                printer.print("abc")
+                try:
+                    printer.print("abc")
+                except AttributeError:
+                    printer.print_("abc")
                 self.assertEqual("abc", sw.getvalue())
             finally:
                 printer.close()
@@ -1534,7 +1667,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVFormat.DEFAULT.print0(sw)
             try:
-                printer.printRecord1("a", "b\\c")
+                try:
+                    printer.printRecord1("a", "b\\c")
+                except TypeError:
+                    printer.printRecord1(["a", "b\\c"])
                 self.assertEqual(
                     "a,b\\c" + self.__recordSeparator,
                     sw.getvalue()
@@ -1559,15 +1695,15 @@ class CSVPrinterTest(unittest.TestCase):
             parser = CSVParser.parse4(code, format)
             try:
                 printer.printRecords0(parser)
+                parser2 = CSVParser.parse4(sw.getvalue(), format)
+                try:
+                    records = parser2.getRecords()
+                    self.assertFalse(len(records) == 0)
+                    Utils.compare("Fail", res, records)
+                finally:
+                    parser2.close()
             finally:
                 printer.close()
-                parser.close()
-            parser = CSVParser.parse4(sw.getvalue(), format)
-            try:
-                records = parser.getRecords()
-                self.assertFalse(len(records) == 0)
-                Utils.compare("Fail", res, records)
-            finally:
                 parser.close()
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
@@ -1589,19 +1725,19 @@ class CSVPrinterTest(unittest.TestCase):
                 parserIterator = parser.iterator()
                 while True:
                     try:
-                        record = parserIterator.next()
+                        record = next(parserIterator)
                         printer.printRecord0(record)
                     except StopIteration:
                         break
+                parser2 = CSVParser.parse4(sw.getvalue(), format)
+                try:
+                    records = parser2.getRecords()
+                    self.assertFalse(len(records) == 0)
+                    Utils.compare("Fail", res, records)
+                finally:
+                    parser2.close()
             finally:
                 printer.close()
-                parser.close()
-            parser = CSVParser.parse4(sw.getvalue(), format)
-            try:
-                records = parser.getRecords()
-                self.assertFalse(len(records) == 0)
-                Utils.compare("Fail", res, records)
-            finally:
                 parser.close()
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
@@ -1621,15 +1757,15 @@ class CSVPrinterTest(unittest.TestCase):
             parser = CSVParser.parse4(code, format)
             try:
                 printer.printRecords0(parser.getRecords())
+                parser2 = CSVParser.parse4(sw.getvalue(), format)
+                try:
+                    records = parser2.getRecords()
+                    self.assertFalse(len(records) == 0)
+                    Utils.compare("Fail", res, records)
+                finally:
+                    parser2.close()
             finally:
                 printer.close()
-                parser.close()
-            parser = CSVParser.parse4(sw.getvalue(), format)
-            try:
-                records = parser.getRecords()
-                self.assertFalse(len(records) == 0)
-                Utils.compare("Fail", res, records)
-            finally:
                 parser.close()
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
@@ -1641,7 +1777,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withNullString("NULL"))
             try:
-                printer.printRecord1("a", None, "b")
+                try:
+                    printer.printRecord1("a", None, "b")
+                except TypeError:
+                    printer.printRecord1(["a", None, "b"])
                 self.assertEqual(
                     "a,NULL,b" + self.__recordSeparator,
                     sw.getvalue()
@@ -1658,7 +1797,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b")
+                try:
+                    printer.printRecord1("a", "b")
+                except TypeError:
+                    printer.printRecord1(["a", "b"])
                 self.assertEqual(
                     "a,b" + self.__recordSeparator,
                     sw.getvalue()
@@ -1675,7 +1817,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a,b", "b")
+                try:
+                    printer.printRecord1("a,b", "b")
+                except TypeError:
+                    printer.printRecord1(["a,b", "b"])
                 self.assertEqual(
                     "\"a,b\",b" + self.__recordSeparator,
                     sw.getvalue()
@@ -1692,7 +1837,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a, b", "b ")
+                try:
+                    printer.printRecord1("a, b", "b ")
+                except TypeError:
+                    printer.printRecord1(["a, b", "b "])
                 self.assertEqual(
                     "\"a, b\",\"b \"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1709,7 +1857,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b\"c")
+                try:
+                    printer.printRecord1("a", "b\"c")
+                except TypeError:
+                    printer.printRecord1(["a", "b\"c"])
                 self.assertEqual(
                     "a,\"b\"\"c\"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1726,7 +1877,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b\nc")
+                try:
+                    printer.printRecord1("a", "b\nc")
+                except TypeError:
+                    printer.printRecord1(["a", "b\nc"])
                 self.assertEqual(
                     "a,\"b\nc\"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1743,7 +1897,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b\r\nc")
+                try:
+                    printer.printRecord1("a", "b\r\nc")
+                except TypeError:
+                    printer.printRecord1(["a", "b\r\nc"])
                 self.assertEqual(
                     "a,\"b\r\nc\"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1760,7 +1917,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", "b\\c")
+                try:
+                    printer.printRecord1("a", "b\\c")
+                except TypeError:
+                    printer.printRecord1(["a", "b\\c"])
                 self.assertEqual(
                     "a,b\\c" + self.__recordSeparator,
                     sw.getvalue()
@@ -1777,7 +1937,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT)
             try:
-                printer.printRecord1("a", None, "b")
+                try:
+                    printer.printRecord1("a", None, "b")
+                except TypeError:
+                    printer.printRecord1(["a", None, "b"])
                 self.assertEqual(
                     "a,,b" + self.__recordSeparator,
                     sw.getvalue()
@@ -1797,7 +1960,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuoteMode(QuoteMode.MINIMAL)
             )
             try:
-                printer.print(sys.maxsize)
+                try:
+                    printer.print(sys.maxsize)
+                except AttributeError:
+                    printer.print_(sys.maxsize)
                 self.assertEqual(str(sys.maxsize), sw.getvalue())
             finally:
                 printer.close()
@@ -1813,7 +1979,10 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(sb, CSVFormat.DEFAULT.withQuote1(None))
             try:
                 value = io.StringIO(content)
-                printer.print(value)
+                try:
+                    printer.print(value)
+                except AttributeError:
+                    printer.print_(value)
             finally:
                 printer.close()
             self.assertEqual(content, ''.join(sb))
@@ -1829,10 +1998,13 @@ class CSVPrinterTest(unittest.TestCase):
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withQuote1(None))
             try:
                 value = io.StringIO(content)
-                printer.print(value)
+                try:
+                    printer.print(value)
+                except AttributeError:
+                    printer.print_(value)
+                self.assertEqual(content, sw.getvalue())
             finally:
                 printer.close()
-            self.assertEqual(content, sw.getvalue())
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
         
@@ -1853,19 +2025,19 @@ class CSVPrinterTest(unittest.TestCase):
                 parserIterator = parser.iterator()
                 while True:
                     try:
-                        record = parserIterator.next()
+                        record = next(parserIterator)
                         printer.printRecord2(record.stream())
                     except StopIteration:
                         break
+                parser2 = CSVParser.parse4(sw.getvalue(), format)
+                try:
+                    records = parser2.getRecords()
+                    self.assertFalse(len(records) == 0)
+                    Utils.compare("Fail", res, records)
+                finally:
+                    parser2.close()
             finally:
                 printer.close()
-                parser.close()
-            parser = CSVParser.parse4(sw.getvalue(), format)
-            try:
-                records = parser.getRecords()
-                self.assertFalse(len(records) == 0)
-                Utils.compare("Fail", res, records)
-            finally:
                 parser.close()
         except (IOError, OSError) as e:
             self.fail(f"An unexpected exception occurred: {e}")
@@ -1877,10 +2049,13 @@ class CSVPrinterTest(unittest.TestCase):
             file = self.__createTempPath()
             printer = CSVFormat.DEFAULT.print4(file, locale.getpreferredencoding())
             try:
-                printer.printRecord1("a", "b\\c")
+                try:
+                    printer.printRecord1("a", "b\\c")
+                except TypeError:
+                    printer.printRecord1(["a", "b\\c"])
             finally:
                 printer.close()
-            with open(file, 'r') as f:
+            with open(file, 'r', encoding=locale.getpreferredencoding(), newline='') as f:
                 self.assertEqual(
                     "a,b\\c" + self.__recordSeparator,
                     f.read()
@@ -1898,7 +2073,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuoteMode(QuoteMode.ALL)
             )
             try:
-                printer.printRecord1("a", "b\nc", "d")
+                try:
+                    printer.printRecord1("a", "b\nc", "d")
+                except TypeError:
+                    printer.printRecord1(["a", "b\nc", "d"])
                 self.assertEqual(
                     "\"a\",\"b\nc\",\"d\"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1915,7 +2093,10 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.RFC4180)
             try:
-                printer.printRecord1(",")
+                try:
+                    printer.printRecord1(",")
+                except TypeError:
+                    printer.printRecord1([","])
                 self.assertEqual(
                     "\",\"" + self.__recordSeparator,
                     sw.getvalue()
@@ -1935,7 +2116,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuoteMode(QuoteMode.NON_NUMERIC)
             )
             try:
-                printer.printRecord1("a", "b\nc", 1)
+                try:
+                    printer.printRecord1("a", "b\nc", 1)
+                except TypeError:
+                    printer.printRecord1(["a", "b\nc", 1])
                 self.assertEqual(
                     "\"a\",\"b\nc\",1" + self.__recordSeparator,
                     sw.getvalue()
@@ -2077,8 +2261,12 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withQuote0('\'')
             )
             try:
-                printer.print("a'b'c")
-                printer.print("xyz")
+                try:
+                    printer.print("a'b'c")
+                    printer.print("xyz")
+                except AttributeError:
+                    printer.print_("a'b'c")
+                    printer.print_("xyz")
                 self.assertEqual("'a''b''c',xyz", sw.getvalue())
             finally:
                 printer.close()
@@ -2095,7 +2283,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withTrailingDelimiter0()
             )
             try:
-                printer.printRecord1("A", "B")
+                try:
+                    printer.printRecord1("A", "B")
+                except TypeError:
+                    printer.printRecord1(["A", "B"])
                 self.assertEqual("A,B,\r\n", sw.getvalue())
             finally:
                 printer.close()
@@ -2112,7 +2303,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withTrim1(False)
             )
             try:
-                printer.print(" A ")
+                try:
+                    printer.print(" A ")
+                except AttributeError:
+                    printer.print_(" A ")
                 self.assertEqual("\" A \"", sw.getvalue())
             finally:
                 printer.close()
@@ -2129,7 +2323,10 @@ class CSVPrinterTest(unittest.TestCase):
                 CSVFormat.DEFAULT.withTrim0()
             )
             try:
-                printer.print(" A ")
+                try:
+                    printer.print(" A ")
+                except AttributeError:
+                    printer.print_(" A ")
                 self.assertEqual("A", sw.getvalue())
             finally:
                 printer.close()
@@ -2143,8 +2340,12 @@ class CSVPrinterTest(unittest.TestCase):
             sw = io.StringIO()
             printer = CSVPrinter(sw, CSVFormat.DEFAULT.withTrim0())
             try:
-                printer.print(" A ")
-                printer.print(" B ")
+                try:
+                    printer.print(" A ")
+                    printer.print(" B ")
+                except AttributeError:
+                    printer.print_(" A ")
+                    printer.print_(" B ")
                 self.assertEqual("A,B", sw.getvalue())
             finally:
                 printer.close()

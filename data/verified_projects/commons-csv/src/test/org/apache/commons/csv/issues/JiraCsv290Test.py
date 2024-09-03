@@ -21,7 +21,7 @@ class JiraCsv290Test(unittest.TestCase):
                 parserIterator = csvParser.iterator()
                 while True:
                     try:
-                        csvRecord = parserIterator.next()
+                        csvRecord = next(parserIterator)
                         content.append(csvRecord.toList())
                     except StopIteration:
                         break

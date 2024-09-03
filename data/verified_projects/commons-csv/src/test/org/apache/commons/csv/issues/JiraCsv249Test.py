@@ -15,16 +15,19 @@ class JiraCsv249Test(unittest.TestCase):
         stringWriter = io.StringIO()
         printer = CSVPrinter(stringWriter, csvFormat)
         try:
-            printer.printRecord1("foo \\", "bar")
+            try:
+                printer.printRecord1("foo \\", "bar")
+            except TypeError:
+                printer.printRecord1(["foo \\", "bar"])
+            stringReader = io.StringIO(stringWriter.getvalue())
+            records = []
+            parser = CSVParser.CSVParser1(stringReader, csvFormat)
+            try:
+                records = parser.getRecords()
+            finally:
+                stringReader.close()
+            for record in records:
+                self.assertEqual("foo \\", record.get1(0))
+                self.assertEqual("bar", record.get1(1))
         finally:
-            stringWriter.close()
-        stringReader = io.StringIO(stringWriter.getvalue())
-        records = []
-        parser = CSVParser.CSVParser1(stringReader, csvFormat)
-        try:
-            records = parser.getRecords()
-        finally:
-            stringReader.close()
-        for record in records:
-            self.assertEqual("foo \\", record.get1(0))
-            self.assertEqual("bar", record.get1(1))
+            printer.close()
