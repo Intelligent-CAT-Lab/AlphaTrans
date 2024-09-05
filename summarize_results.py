@@ -24,10 +24,17 @@ def emit_summary(project: str, dir: str):
                         if "test_execution" in data["classes"][class_name]["methods"][method]:
                             status = data["classes"][class_name]["methods"][method]["test_execution"]
                             if not isinstance(status, str):
-                                if data["classes"][class_name]["methods"][method]["graal_validation"] == "not-exercised":
-                                    print(f"\n{filename}::{class_name}::{method}\nAssociated Tests:")
-                                    for test in status:
-                                        print(f"{test} \t\t{status[test]['test_outcome']}")
+                                if all(status[t]["test_outcome"] == "exercised-success" for t in status):
+                                    print(f"{class_name}->{method}")
+                                    print(f"in file: {filename}")
+                                    
+                                    # print body in green
+                                    body = "".join(data['classes'][class_name]['methods'][method]['body'])
+                                    print(f"\033[92m{body}\033[0m")
+
+                                    # print translation in red
+                                    translation = "\n".join(data['classes'][class_name]['methods'][method]['translation'])
+                                    print(f"\033[91m{translation}\033[0m")
 
     return summary
 
@@ -37,4 +44,5 @@ if __name__ == "__main__":
     parser.add_argument("--dir", type=str, default="data/results/deepseek-coder-33b-instruct/body/", help="Directory containing results")
     args = parser.parse_args()
 
-    print(json.dumps(emit_summary(args.project, args.dir), indent=4))
+    # print(json.dumps(emit_summary(args.project, args.dir), indent=4))
+    emit_summary(args.project, args.dir)
