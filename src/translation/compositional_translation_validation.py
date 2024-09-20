@@ -571,7 +571,7 @@ def main(args):
 
     # constant variables
     args.prompt_type = 'body' if args.include_implementation else 'signature'
-    args.translation_dir = f'data/schemas{args.suffix}/translations/{args.model_name}/{args.prompt_type}/{args.project_name}'
+    args.translation_dir = f'data/schemas_decomposed_tests/translations/{args.model_name}/{args.prompt_type}/{args.project_name}'
 
     # extract the reverse-topological order of fragments based on call graph
     fragment_traversal = get_reverse_traversal(args)
