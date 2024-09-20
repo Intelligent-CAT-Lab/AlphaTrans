@@ -171,7 +171,7 @@ class PromptGenerator:
         dependencies = {}
         dependencies_path = f'data/dependencies/{self.args.project_name}/dependencies.json'
         if self.args.translate_evosuite:
-            dependencies_path = f'data/dependencies-evosuite/{self.args.project_name}/dependencies.json'
+            dependencies_path = f'data/dependencies_evosuite/{self.args.project_name}/dependencies.json'
 
         with open(dependencies_path, 'r') as f:
             dependencies = json.load(f)
