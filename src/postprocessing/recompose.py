@@ -262,7 +262,10 @@ def main(args):
                     continue
 
                 if data['classes'][class_]['methods'][method]['translation'] == []:
-                    recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pass # LLM could not translate this method')
+                    if 'Test' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
+                        recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pytest.fail("LLM could not translate this method")')
+                    else:
+                        recomposed_file += '\n'.join([''] + data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pass # LLM could not translate this method')
                     recomposed_file += '\n'
                     total_unsuccessful += 1
                     continue
