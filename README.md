@@ -1,25 +1,24 @@
 # AlphaTrans
-This repository contains artifacts of the project
+This repository contains artifacts of the paper "AlphaTrans: A Neuro-Symbolic Compositional Approach for Repository-Level Code Translation and Validation".
 
 ## Pre-requisites
-<!-- Python Pre-requisites TBA (if any) -->
-The `setup.sh` files contains multiple scripts to setup the proper conda environment and install all dependencies. Please execute the following in order to successfully install all pre-requisites:
+The `setup.sh` files contains multiple scripts to setup the proper conda environment, install all dependencies, download, build, and create project databases for CodeQL, and install GraalVM. Please execute the following in order to successfully setup AlphaTrans requirements.
 
-### Setting up conda environment:
+### 1. Setting up conda environment:
 ```
 bash setup.sh setup_env
 ```
 
-You may need to execute `conda deactivate` and `conda activate alphatrans` to properly activate the installed conda environment.
+You may need to execute `conda deactivate` and `conda activate alphatrans` to properly activate the installed conda environment in your current bash terminal.
 
-### Installing python dependencies:
+### 2. Installing Python dependencies:
 ```
 bash setup.sh install_requirements
 ```
 
 This command will install the proper versions of all python dependencies using python-pip.
 
-### Downloading java subjects:
+### 3. Downloading Java subjects:
 ```
 bash setup.sh download_java_projects
 bash setup.sh build_java_projects
@@ -28,13 +27,13 @@ bash setup.sh create_database_java
 
 This command will download the original snapshots of all java subjects we used in this work from GitHub. It then builds these projects to make sure we can successfully build these projects and finally create their CodeQL databases. Please make sure [CodeQL](https://codeql.github.com/) is installed on your machine.
 
-### Installing Graal
-For running graal-based scripts, both GraalVM and its python component must be installed on the system. The recommended version of the GraalVM JDK is 17.0.8. Please run the following command to install graal.
+### 4. Installing GraalVM
+For running graal-based scripts, both GraalVM and its python component must be installed on the system. The recommended version of the GraalVM JDK is 21.0.3. Please run the following command to install graal.
 ```
 bash setup.sh install_graal
 ```
 > [!NOTE]
-> The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable automatically. If $JAVA_HOME is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 17.0.8-graal` after installation.
+> The script uses SDKMAN! to install GraalVM and set the $JAVA_HOME variable automatically. If $JAVA_HOME is still not set, restart the terminal or switch to the GraalVM JDK by running `sdk use java 21.0.3-graal` after installation.
 
 To verify that GraalVM is installed correctly, run:
 ```bash
@@ -42,9 +41,9 @@ java --version
 ```
 The output should be similar to:
 ```bash
-java 17.0.8 2023-07-18 LTS
-Java(TM) SE Runtime Environment Oracle GraalVM 17.0.8+9.1 (build 17.0.8+9-LTS-jvmci-23.0-b14)
-Java HotSpot(TM) 64-Bit Server VM Oracle GraalVM 17.0.8+9.1 (build 17.0.8+9-LTS-jvmci-23.0-b14, mixed mode, sharing)
+java 21.0.3 2024-04-16 LTS
+Java(TM) SE Runtime Environment Oracle GraalVM 21.0.3+7.1 (build 21.0.3+7-LTS-jvmci-23.1-b37)
+Java HotSpot(TM) 64-Bit Server VM Oracle GraalVM 21.0.3+7.1 (build 21.0.3+7-LTS-jvmci-23.1-b37, mixed mode, sharing)
 ```
 
 ## Skeleton Generation
