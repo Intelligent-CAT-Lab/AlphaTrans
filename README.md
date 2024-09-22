@@ -116,5 +116,6 @@ If a `pom.xml` does not already exist for the project, the script will copy the 
 Execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
 
 ```bash
+bash scripts/extract_coverage.sh <project_name>
 bash scripts/translate_fragment.sh <project_name>
 ```
