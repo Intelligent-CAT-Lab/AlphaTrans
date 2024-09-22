@@ -52,7 +52,7 @@ AlphaTrans requires CodeQL for database creation and static analysis. We did dat
 
 1. Install the [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli).
 2. Clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository into the root directory of this repository. Pull the `ql` submodule of this repository as directed in the README of the repository.
-3. Place the project in `<project_directory>`.
+3. Place the project in `<project_directory>`. The `<project_directory>` can be `java_projects/original_projects`.
 4. Copy all the contents of the `queries` directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `run.sh`.
 5. Once all queries are executed, query outputs will be stored under `data/query_outputs`.
 
@@ -80,29 +80,26 @@ Execute the following for test decomposition from the root directory of the repo
 bash scripts/decompose_test.sh
 ```
 
-## Skeleton Generation
+## Type Translation
+Execute the following from the root directory of the repository to perform type translation on the projects.
+
+```bash
+bash scripts/translate_types.sh <type>
+```
+
+The `<type>` can be either `simple` or `source_description`. The former prompts the model with vanilla prompt, while the latter prompts the model with source PL type description.
+
+## Skeleton Construction
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
 
 ```bash
+bash scripts/get_dependencies.sh
 bash scripts/create_skeleton.sh
 ```
 
 This command should create proper skeletons in target language under `data/skeletons/<project_name>`.
 
----
-
-6. From the root directory, now execute the following.
-```bash
-python src/static_analysis/extract_call_graph.py --project_name <NameOfProject>
-python src/static_analysis/create_schema.py --project_name <NameOfProject>
-python utils.py --project_name <NameOfProject> --function parse_dependencies
-
-# the following command may fail due to unknown types in the new project
-python src/static_analysis/create_skeleton.py --project_name <NameOfProject>
-```
-
-## Graal-based Semantic Check
-Execute the following from the root directory of the project to run the Graal-based semantic check.
+Execute the following from the root directory of the project to run the Graal-based semantic check of generated skeletons.
 ```bash
 python src/compositional_glue_tests/semantic_check.py --project <project_name> [--class=<class_name>] [--method=<method_name>]
 ```
