@@ -84,6 +84,8 @@ bash scripts/decompose_test.sh
 Execute the following from the root directory of the repository to perform type translation on the projects.
 
 ```bash
+bash scripts/extract_types.sh
+bash scripts/crawl_type_desc.sh
 bash scripts/translate_types.sh <type>
 ```
 
@@ -108,3 +110,11 @@ python src/compositional_glue_tests/semantic_check.py --project <project_name> [
 > GraalVM must be installed on the system and the default Java path must be set to GraalVM's installation directory.
 
 If a `pom.xml` does not already exist for the project, the script will copy the original `pom.xml` to the project directory and throw an exception. You are required to manually check that the Java version in the `pom.xml` is set to at least 8 and that GraalVM is included in the dependencies. Once this is done, you can run the script again.
+
+## Compositional Translation and Validation
+
+Execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
+
+```bash
+bash scripts/translate_fragment.sh <project_name>
+```
