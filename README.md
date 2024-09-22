@@ -46,6 +46,40 @@ Java(TM) SE Runtime Environment Oracle GraalVM 21.0.3+7.1 (build 21.0.3+7-LTS-jv
 Java HotSpot(TM) 64-Bit Server VM Oracle GraalVM 21.0.3+7.1 (build 21.0.3+7-LTS-jvmci-23.1-b37, mixed mode, sharing)
 ```
 
+## CodeQL-based Static Analysis
+
+AlphaTrans requires CodeQL for database creation and static analysis. We did database creation previously, and now the following steps describes how to use CodeQL to query and extract its generated outputs for all subject projects.
+
+1. Install the [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli).
+2. Clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository into the root directory of this repository. Pull the `ql` submodule of this repository as directed in the README of the repository.
+3. Place the project in `<project_directory>`.
+4. Copy all the contents of the `queries` directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `run.sh`.
+5. Once all queries are executed, query outputs will be stored under `data/query_outputs`.
+
+## Program Transformation
+Execute the following from the root directory of the repository to perform program transformation on the projects.
+
+```bash
+bash scripts/program_transformation.sh <project_dir> <project_name>
+```
+
+## Program Decomposition
+
+### Source Decomposition
+Execute the following for source decomposition from the root directory of the repository.
+
+```bash
+bash scripts/create_schema.sh
+bash scripts/extract_call_graph.sh
+```
+
+### Test Decomposition
+Execute the following for test decomposition from the root directory of the repository.
+
+```bash
+bash scripts/decompose_test.sh
+```
+
 ## Skeleton Generation
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
 
@@ -57,13 +91,6 @@ This command should create proper skeletons in target language under `data/skele
 
 ---
 
-### Generate Skeleton for a New Project
-
-1. Install the [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli).
-2. Clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository into the root directory of this repository. Pull the `ql` submodule of this repository as directed in the README of the repository.
-3. Place the project in `java_projects/cleaned_final_projects`.
-4. Execute `codeql database create ../../../databases/<NameOfProject> --language=java --overwrite` from the project directory. This will create the database for the project.
-5. Copy all the contents of the `queries` directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `run.sh`.
 6. From the root directory, now execute the following.
 ```bash
 python src/static_analysis/extract_call_graph.py --project_name <NameOfProject>
