@@ -23,7 +23,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
 
         self._testPattern = "#,###.#"
 
-        max_ = float(float("inf"))
+        self._max = float(sys.float_info.max)
         self._maxPlusOne = max_ * 10
         self._min = max_ * -1
         self._minMinusOne = self._min * 10
