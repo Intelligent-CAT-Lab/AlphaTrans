@@ -18,21 +18,13 @@ class FloatValidator(AbstractNumberValidator):
     def initialize_fields() -> None:
         FloatValidator.__VALIDATOR: FloatValidator = FloatValidator.FloatValidator1()
 
-    def _processParsedValue(self, value: typing.Any, formatter: Format) -> typing.Any:
+    def _processParsedValue(self, value: typing.Any, formatter: typing.Any) -> typing.Any:
 
         doubleValue = float(value)
 
-        if doubleValue > 0:
-            if doubleValue < float("-inf"):
-                return None
-            if doubleValue > float("inf"):
-                return None
-        elif doubleValue < 0:
-            posDouble = doubleValue * -1
-            if posDouble < float("-inf"):
-                return None
-            if posDouble > float("inf"):
-                return None
+        if abs(doubleValue) == float("inf"):
+            return None
+        
         if doubleValue != 0 and abs(doubleValue) < sys.float_info.min:
             return None
 
