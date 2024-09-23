@@ -114,7 +114,7 @@ class IntegerValidatorTest(AbstractNumberValidatorTest):
 
     def testIntegerRangeMinMax(self) -> None:
 
-        validator = self._validator
+        validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")
         number11 = validator.validate1("11", "#")
