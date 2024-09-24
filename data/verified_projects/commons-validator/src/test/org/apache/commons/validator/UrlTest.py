@@ -133,7 +133,10 @@ class UrlTest(unittest.TestCase):
         urlVal = UrlValidator(schemes, 0)
         for sIndex in range(len(self.testScheme)):
             testPair = self.testScheme[sIndex]
-            result = urlVal.isValidScheme(testPair.item)
+            try:
+                result = urlVal.isValidScheme(testPair.item)
+            except AttributeError:
+                result = urlVal._isValidScheme(testPair.item)
             self.assertEqual(
                 testPair.valid,
                 result,
@@ -189,7 +192,7 @@ class UrlTest(unittest.TestCase):
 
 
     def checkTestIsValid1(self, testObjects, options) -> None:
-        urlVal = UrlValidator.UrlValidator1(None, None, options)
+        urlVal = UrlValidator.UrlValidator1(options)
         self.assertTrue(urlVal.isValid("http://www.google.com"))
         self.assertTrue(urlVal.isValid("http://www.google.com/"))
         statusPerLine = 60

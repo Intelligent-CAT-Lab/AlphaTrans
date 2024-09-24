@@ -16,7 +16,7 @@ def createTime(zone, time, millisecond):
     min = (time // 100) * 100 - hour
     sec = time - (hour + min)
     calendar = calendar.replace(
-        year=1970, month=1, day=1,
+        year=1900, month=1, day=1,
         hour=hour // 10000,
         minute=min // 100,
         second=sec,
@@ -32,7 +32,7 @@ def createDate(zone, time, millisecond):
 
 class TimeValidatorTest(unittest.TestCase):
 
-    _GMT = ZoneInfo('Etc/GMT')  # 0 offset
+    _GMT = ZoneInfo('GMT')  # 0 offset
     _EST = ZoneInfo('US/Eastern')  # - 5 hours
 
     _validator = None
@@ -277,7 +277,7 @@ class TimeValidatorTest(unittest.TestCase):
             "pattern day"
         )
         self.assertEqual(
-            result.month,
+            result.month - 1,
             11,
             "pattern day"
         )
@@ -316,7 +316,7 @@ class TimeValidatorTest(unittest.TestCase):
             "pattern day"
         )
         self.assertEqual(
-            result.month,
+            result.month - 1,
             11,
             "pattern day"
         )
@@ -339,28 +339,49 @@ class TimeValidatorTest(unittest.TestCase):
 
     @pytest.mark.test
     def testFormat(self) -> None:
-        self.__origDefault = 'en_GB.UTF-8'
+        locale.setlocale(locale.LC_ALL, "en_GB.UTF-8")
 
         test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss")
         self.assertIsNotNone(
             test,
             "Test Date "
         )
-        self.assertEqual(
-            self._validator.format1(test, "HH-mm-ss"),
-            "16-49-23",
-            "Format pattern"
-        )
-        self.assertEqual(
-            self._validator.format2(test, 'en_US.UTF-8'),
-            "4:49 PM",
-            "Format locale"
-        )
-        self.assertEqual(
-            self._validator.format0(test),
-            "16:49",
-            "Format default"
-        )
+        try:
+            self.assertEqual(
+                self._validator.format1(test, "HH-mm-ss"),
+                "16-49-23",
+                "Format pattern"
+            )
+        except (AttributeError, TypeError):
+            self.assertEqual(
+                self._validator._format1(test, "HH-mm-ss"),
+                "16-49-23",
+                "Format pattern"
+            )
+        try:
+            self.assertEqual(
+                self._validator.format2(test, 'en_US.UTF-8'),
+                "4:49 PM",
+                "Format locale"
+            )
+        except (AttributeError, TypeError):
+            self.assertEqual(
+                self._validator._format2(test, 'en_US.UTF-8'),
+                "4:49 PM",
+                "Format locale"
+            )
+        try:
+            self.assertEqual(
+                self._validator.format0(test),
+                "16:49",
+                "Format default"
+            )
+        except(AttributeError, TypeError):
+            self.assertEqual(
+                self._validator._format0(test),
+                "16:49",
+                "Format default"
+            )
 
     @pytest.mark.test
     def testCompare(self) -> None:

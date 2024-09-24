@@ -187,7 +187,7 @@ class ByteValidatorTest(AbstractNumberValidatorTest):
 
     @pytest.mark.test
     def testByteRangeMinMax(self) -> None:
-        validator = self.strictValidator
+        validator = self._strictValidator
         number9 = validator.validate1("9", "#")
         number10 = validator.validate1("10", "#")
         number11 = validator.validate1("11", "#")

@@ -45,7 +45,13 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertTrue(ccv.isValid(CreditCardValidatorTest.__VALID_DINERS))
 
 
-class DinersClub(CreditCardValidator.CreditCardType):
+try:
+    BaseClass = CreditCardValidator.CreditCardType
+except AttributeError:
+    BaseClass = globals().get('CreditCardType')
+
+
+class DinersClub(BaseClass):
 
     __PREFIX = "300,301,302,303,304,305,"
 

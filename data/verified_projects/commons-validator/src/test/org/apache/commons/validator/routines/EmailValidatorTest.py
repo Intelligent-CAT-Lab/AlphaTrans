@@ -97,6 +97,10 @@ class EmailValidatorTest(unittest.TestCase):
     
     def setUp(self) -> None:
         self.__validator = EmailValidator.getInstance0()
+        self.__validator._EmailValidator__domainValidator.mygenericTLDsPlus = []
+        self.__validator._EmailValidator__domainValidator.mylocalLDsPlus = []
+        DomainValidator._DomainValidator__genericTLDsPlus = []
+        DomainValidator._DomainValidator__localTLDsPlus = []
 
     
     @pytest.mark.test
@@ -240,11 +244,11 @@ class EmailValidatorTest(unittest.TestCase):
     def testEmailWithControlChars(self) -> None:
         for c in range(32):
             self.assertFalse(
-                self.__validator.isValid(f"foo{c}bar@domain.com"),
+                self.__validator.isValid(f"foo{chr(c)}bar@domain.com"),
                 f"Test control char {c}"
             )
         self.assertFalse(
-            self.__validator.isValid(f"foo{127}bar@domain.com"),
+            self.__validator.isValid(f"foo{chr(127)}bar@domain.com"),
             "Test control char 127"
         )
 
@@ -546,12 +550,25 @@ class EmailValidatorTest(unittest.TestCase):
     
     @pytest.mark.test
     def testValidator473_4(self) -> None:
-        self.assertFalse(self.__validator.isValidDomain("test.local"))
+        try:    
+            self.assertFalse(self.__validator.isValidDomain("test.local"))
+        except AttributeError:
+            self.assertFalse(self.__validator._isValidDomain("test.local"))
 
-        items = [DomainValidator.Item(DomainValidator.ArrayType.GENERIC_PLUS, ["local"])]
+        try:
+            gp = DomainValidator.ArrayType.GENERIC_PLUS
+        except AttributeError:
+            gp = ArrayType.GENERIC_PLUS
+        try:
+            items = [DomainValidator.Item(gp, ["local"])]
+        except AttributeError:
+            items = [Item(gp, ["local"])]
         val = EmailValidator(0, True, False, DomainValidator.getInstance2(True, items))
         
-        self.assertTrue(val.isValidDomain("test.local"))
+        try:
+            self.assertTrue(val.isValidDomain("test.local"))
+        except AttributeError:
+            self.assertTrue(val._isValidDomain("test.local"))
 
     
     @staticmethod

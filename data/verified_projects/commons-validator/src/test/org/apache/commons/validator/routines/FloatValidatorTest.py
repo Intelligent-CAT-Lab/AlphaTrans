@@ -16,10 +16,10 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             self._validator = FloatValidator(False, 0)
             self._strictValidator = FloatValidator.FloatValidator1()
             self._testPattern = "#,###.#"
-            self._max = float(FloatValidator.MAX_VALUE)
-            self._maxPlusOne = float(float(FloatValidator.MAX_VALUE) * 10)
-            self._min = float(FloatValidator.MAX_VALUE * -1)
-            self._minMinusOne = float(float(FloatValidator.MAX_VALUE * -1) * 10)
+            self._max = float(sys.float_info.max)
+            self._maxPlusOne = float(float(sys.float_info.max) * 10)
+            self._min = float(sys.float_info.max * -1)
+            self._minMinusOne = float(float(sys.float_info.max * -1) * 10)
             self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
             self._invalid = [None, "", "X", "X12"]
             self._testNumber = float(1234.5)
@@ -51,7 +51,7 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
             self._testLocale = 'de_DE.UTF-8'
             self._localeExpected = float(1234.5)
         except Exception as e:
-            self._fail(f"An exception occurred when setting up the test: {e}")
+            self.fail(f"An exception occurred when setting up the test: {e}")
     
 
     @pytest.mark.test

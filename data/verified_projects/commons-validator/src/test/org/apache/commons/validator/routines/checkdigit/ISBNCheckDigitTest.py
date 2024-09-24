@@ -36,22 +36,22 @@ class ISBNCheckDigitTest(AbstractCheckDigitTest):
             self._routine.calculate("12345678")
             self.fail("calculate() Lth 8 - expected exception")
         except Exception as e:
-            self.assertEqual("Invalid ISBN Length = 8", str(e), "calculate() Lth 8")
+            self.assertEqual("Invalid ISBN Length = 8", e.args[0], "calculate() Lth 8")
 
         try:
             self._routine.calculate("1234567890")
             self.fail("calculate() Lth 10 - expected exception")
         except Exception as e:
-            self.assertEqual("Invalid ISBN Length = 10", str(e), "calculate() Lth 10")
+            self.assertEqual("Invalid ISBN Length = 10", e.args[0], "calculate() Lth 10")
 
         try:
             self._routine.calculate("12345678901")
             self.fail("calculate() Lth 11 - expected exception")
         except Exception as e:
-            self.assertEqual("Invalid ISBN Length = 11", str(e), "calculate() Lth 11")
+            self.assertEqual("Invalid ISBN Length = 11", e.args[0], "calculate() Lth 11")
 
         try:
             self._routine.calculate("1234567890123")
             self.fail("calculate() Lth 13 - expected exception")
         except Exception as e:
-            self.assertEqual("Invalid ISBN Length = 13", str(e), "calculate() Lth 13")
+            self.assertEqual("Invalid ISBN Length = 13", e.args[0], "calculate() Lth 13")

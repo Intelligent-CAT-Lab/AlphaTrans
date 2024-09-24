@@ -139,7 +139,7 @@ class CodeValidatorTest(unittest.TestCase):
         validator = CodeValidator.CodeValidator1(RegexValidator.RegexValidator3(regex), 6, None)
         self.assertEqual(
             "RegexValidator{" + regex + "}",
-            str(validator.getRegexValidator()),
+            validator.getRegexValidator().toString(),
             "Reformat 2 Regex"
         )
         self.assertEqual("123456", validator.validate("123-456"), "Reformat 2 123-456")

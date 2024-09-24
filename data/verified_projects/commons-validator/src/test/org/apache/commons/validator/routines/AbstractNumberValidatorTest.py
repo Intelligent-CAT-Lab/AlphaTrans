@@ -72,168 +72,319 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
     
     @pytest.mark.test
     def testValidateMinMax(self) -> None:
-        if self._max is not None:
-            self.assertEqual(
-                self._max,
-                self._validator.parse(str(self._max), '#', None),
-                "Test Max"
-            )
-            self.assertIsNone(
-                self._validator.parse(str(self._maxPlusOne), '#', None),
-                "Test Max + 1"
-            )
-            self.assertEqual(
-                self._min,
-                self._validator.parse(str(self._min), '#', None),
-                "Test Min"
-            )
-            self.assertIsNone(
-                self._validator.parse(str(self._minMinusOne), '#', None),
-                "Test min - 1"
-            )
+        try:
+            if self._max is not None:
+                self.assertEqual(
+                    self._max,
+                    self._validator.parse(str(self._max), '#', None),
+                    "Test Max"
+                )
+                self.assertIsNone(
+                    self._validator.parse(str(self._maxPlusOne), '#', None),
+                    "Test Max + 1"
+                )
+                self.assertEqual(
+                    self._min,
+                    self._validator.parse(str(self._min), '#', None),
+                    "Test Min"
+                )
+                self.assertIsNone(
+                    self._validator.parse(str(self._minMinusOne), '#', None),
+                    "Test min - 1"
+                )
+        except AttributeError:
+            if self._max is not None:
+                self.assertEqual(
+                    self._max,
+                    self._validator._parse(str(self._max), '#', None),
+                    "Test Max"
+                )
+                self.assertIsNone(
+                    self._validator._parse(str(self._maxPlusOne), '#', None),
+                    "Test Max + 1"
+                )
+                self.assertEqual(
+                    self._min,
+                    self._validator._parse(str(self._min), '#', None),
+                    "Test Min"
+                )
+                self.assertIsNone(
+                    self._validator._parse(str(self._minMinusOne), '#', None),
+                    "Test min - 1"
+                )
 
     
     @pytest.mark.test
     def testInvalidStrict(self) -> None:
-        for i, val in enumerate(self._invalidStrict):
-            text = f"idx=[{i}] value=[{val}]"
-            self.assertIsNone(
-                self._strictValidator.parse(val, None, 'en_US.UTF-8'),
-                f"(A) {text}"
-            )
-            self.assertFalse(
-                self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
-                f"(B) {text}"
-            )
-            self.assertIsNone(
-                self._strictValidator.parse(val, self._testPattern, None),
-                f"(C) {text}"
-            )
-            self.assertFalse(
-                self._strictValidator.isValid3(val, self._testPattern, None),
-                f"(D) {text}"
-            )
+        try:
+            for i, val in enumerate(self._invalidStrict):
+                text = f"idx=[{i}] value=[{val}]"
+                self.assertIsNone(
+                    self._strictValidator.parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertFalse(
+                    self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertIsNone(
+                    self._strictValidator.parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertFalse(
+                    self._strictValidator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
+        except AttributeError:
+            for i, val in enumerate(self._invalidStrict):
+                text = f"idx=[{i}] value=[{val}]"
+                self.assertIsNone(
+                    self._strictValidator._parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertFalse(
+                    self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertIsNone(
+                    self._strictValidator._parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertFalse(
+                    self._strictValidator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
 
     
     @pytest.mark.test
     def testInvalidNotStrict(self) -> None:
-        for i, val in enumerate(self._invalid):
-            text = f"idx=[{i}] value=[{val}]"
-            self.assertIsNone(
-                self._validator.parse(val, None, 'en_US.UTF-8'),
-                f"(A) {text}"
-            )
-            self.assertFalse(
-                self._validator.isValid3(val, None, 'en_US.UTF-8'),
-                f"(B) {text}"
-            )
-            self.assertIsNone(
-                self._validator.parse(val, self._testPattern, None),
-                f"(C) {text}"
-            )
-            self.assertFalse(
-                self._validator.isValid3(val, self._testPattern, None),
-                f"(D) {text}"
-            )
+        try:
+            for i, val in enumerate(self._invalid):
+                text = f"idx=[{i}] value=[{val}]"
+                self.assertIsNone(
+                    self._validator.parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertFalse(
+                    self._validator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertIsNone(
+                    self._validator.parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertFalse(
+                    self._validator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
+        except AttributeError:
+            for i, val in enumerate(self._invalid):
+                text = f"idx=[{i}] value=[{val}]"
+                self.assertIsNone(
+                    self._validator._parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertFalse(
+                    self._validator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertIsNone(
+                    self._validator._parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertFalse(
+                    self._validator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
 
     
     @pytest.mark.test
     def testValidStrict(self) -> None:
-        for i, val in enumerate(self._validStrict):
-            text = f"idx=[{i}] value=[{self._validStrictCompare[i]}]"
-            self.assertEqual(
-                self._validStrictCompare[i],
-                self._strictValidator.parse(val, None, 'en_US.UTF-8'),
-                f"(A) {text}"
-            )
-            self.assertTrue(
-                self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
-                f"(B) {text}"
-            )
-            self.assertEqual(
-                self._validStrictCompare[i],
-                self._strictValidator.parse(val, self._testPattern, None),
-                f"(C) {text}"
-            )
-            self.assertTrue(
-                self._strictValidator.isValid3(val, self._testPattern, None),
-                f"(D) {text}"
-            )
+        try:
+            for i, val in enumerate(self._validStrict):
+                text = f"idx=[{i}] value=[{self._validStrictCompare[i]}]"
+                self.assertEqual(
+                    self._validStrictCompare[i],
+                    self._strictValidator.parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertTrue(
+                    self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertEqual(
+                    self._validStrictCompare[i],
+                    self._strictValidator.parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertTrue(
+                    self._strictValidator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
+        except AttributeError:
+            for i, val in enumerate(self._validStrict):
+                text = f"idx=[{i}] value=[{self._validStrictCompare[i]}]"
+                self.assertEqual(
+                    self._validStrictCompare[i],
+                    self._strictValidator._parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertTrue(
+                    self._strictValidator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertEqual(
+                    self._validStrictCompare[i],
+                    self._strictValidator._parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertTrue(
+                    self._strictValidator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
 
     
     @pytest.mark.test
     def testValidNotStrict(self) -> None:
-        for i, val in enumerate(self._valid):
-            text = f"idx=[{i}] value=[{self._validCompare[i]}]"
-            self.assertEqual(
-                self._validCompare[i], self._validator.parse(val, None, 'en_US.UTF-8'),
-                f"(A) {text}"
-            )
-            self.assertTrue(
-                self._validator.isValid3(val, None, 'en_US.UTF-8'),
-                f"(B) {text}"
-            )
-            self.assertEqual(
-                self._validCompare[i], self._validator.parse(val, self._testPattern, None),
-                f"(C) {text}"
-            )
-            self.assertTrue(
-                self._validator.isValid3(val, self._testPattern, None),
-                f"(D) {text}"
-            )
+        try:
+            for i, val in enumerate(self._valid):
+                text = f"idx=[{i}] value=[{self._validCompare[i]}]"
+                self.assertEqual(
+                    self._validCompare[i], self._validator.parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertTrue(
+                    self._validator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertEqual(
+                    self._validCompare[i], self._validator.parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertTrue(
+                    self._validator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
+        except AttributeError:
+            for i, val in enumerate(self._valid):
+                text = f"idx=[{i}] value=[{self._validCompare[i]}]"
+                self.assertEqual(
+                    self._validCompare[i], self._validator._parse(val, None, 'en_US.UTF-8'),
+                    f"(A) {text}"
+                )
+                self.assertTrue(
+                    self._validator.isValid3(val, None, 'en_US.UTF-8'),
+                    f"(B) {text}"
+                )
+                self.assertEqual(
+                    self._validCompare[i], self._validator._parse(val, self._testPattern, None),
+                    f"(C) {text}"
+                )
+                self.assertTrue(
+                    self._validator.isValid3(val, self._testPattern, None),
+                    f"(D) {text}"
+                )
 
     
     @pytest.mark.test
     def testValidateLocale(self) -> None:
-        self.assertEqual(
-            self._testNumber,
-            self._strictValidator.parse(self._testStringUS, None, 'en_US.UTF-8'),
-            "US Locale, US Format"
-        )
-        self.assertIsNone(
-            self._strictValidator.parse(self._testStringDE, None, 'en_US.UTF-8'),
-            "US Locale, DE Format"
-        )
+        try:
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator.parse(self._testStringUS, None, 'en_US.UTF-8'),
+                "US Locale, US Format"
+            )
+            self.assertIsNone(
+                self._strictValidator.parse(self._testStringDE, None, 'en_US.UTF-8'),
+                "US Locale, DE Format"
+            )
 
-        self.assertEqual(
-            self._testNumber,
-            self._strictValidator.parse(self._testStringDE, None, 'de_DE.UTF-8'),
-            "DE Locale, DE Format"
-        )
-        self.assertIsNone(
-            self._strictValidator.parse(self._testStringUS, None, 'de_DE.UTF-8'),
-            "DE Locale, US Format"
-        )
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator.parse(self._testStringDE, None, 'de_DE.UTF-8'),
+                "DE Locale, DE Format"
+            )
+            self.assertIsNone(
+                self._strictValidator.parse(self._testStringUS, None, 'de_DE.UTF-8'),
+                "DE Locale, US Format"
+            )
 
-        self.assertEqual(
-            self._testNumber,
-            self._strictValidator.parse(self._testStringUS, None, None),
-            "Default Locale, US Format"
-        )
-        self.assertIsNone(
-            self._strictValidator.parse(self._testStringDE, None, None),
-            "Default Locale, DE Format"
-        )
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator.parse(self._testStringUS, None, None),
+                "Default Locale, US Format"
+            )
+            self.assertIsNone(
+                self._strictValidator.parse(self._testStringDE, None, None),
+                "Default Locale, DE Format"
+            )
+        except AttributeError:
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator._parse(self._testStringUS, None, 'en_US.UTF-8'),
+                "US Locale, US Format"
+            )
+            self.assertIsNone(
+                self._strictValidator._parse(self._testStringDE, None, 'en_US.UTF-8'),
+                "US Locale, DE Format"
+            )
+
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator._parse(self._testStringDE, None, 'de_DE.UTF-8'),
+                "DE Locale, DE Format"
+            )
+            self.assertIsNone(
+                self._strictValidator._parse(self._testStringUS, None, 'de_DE.UTF-8'),
+                "DE Locale, US Format"
+            )
+
+            self.assertEqual(
+                self._testNumber,
+                self._strictValidator._parse(self._testStringUS, None, None),
+                "Default Locale, US Format"
+            )
+            self.assertIsNone(
+                self._strictValidator._parse(self._testStringDE, None, None),
+                "Default Locale, DE Format"
+            )
 
     
     @pytest.mark.test
     def testFormat(self) -> None:
         number = Decimal("1234.5")
-        self.assertEqual(
-            "1,234.5",
-            self._strictValidator.format2(number, 'en_US.UTF-8'),
-            "US Locale, US Format"
-        )
-        self.assertEqual(
-            "1.234,5",
-            self._strictValidator.format2(number, 'de_DE.UTF-8'),
-            "DE Locale, DE Format"
-        )
-        self.assertEqual(
-            "12,34.50",
-            self._strictValidator.format1(number, "#,#0.00"),
-            "Pattern #,#0.00"
-        )
+        try:
+            self.assertEqual(
+                "1,234.5",
+                self._strictValidator.format2(number, 'en_US.UTF-8'),
+                "US Locale, US Format"
+            )
+            self.assertEqual(
+                "1.234,5",
+                self._strictValidator.format2(number, 'de_DE.UTF-8'),
+                "DE Locale, DE Format"
+            )
+            self.assertEqual(
+                "12,34.50",
+                self._strictValidator.format1(number, "#,#0.00"),
+                "Pattern #,#0.00"
+            )
+        except AttributeError:
+            self.assertEqual(
+                "1,234.5",
+                self._strictValidator._format2(number, 'en_US.UTF-8'),
+                "US Locale, US Format"
+            )
+            self.assertEqual(
+                "1.234,5",
+                self._strictValidator._format2(number, 'de_DE.UTF-8'),
+                "DE Locale, DE Format"
+            )
+            self.assertEqual(
+                "12,34.50",
+                self._strictValidator._format1(number, "#,#0.00"),
+                "Pattern #,#0.00"
+            )
 
     
     @pytest.mark.test

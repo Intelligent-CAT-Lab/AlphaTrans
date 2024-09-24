@@ -24,7 +24,7 @@ class DoubleValidatorTest(AbstractNumberValidatorTest):
             self._testNumber = 1234.5
             self._testZero = 0
             self._validStrict = ["0", "1234.5", "1,234.5"]
-            self._validStrictCompare = [0, 1234.5, 1,234.5]
+            self._validStrictCompare = [0, 1234.5, 1234.5]
             self._valid = [
                 "0",
                 "1234.5",

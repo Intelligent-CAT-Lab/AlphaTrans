@@ -714,13 +714,22 @@ class CreditCardValidatorTest(unittest.TestCase):
 
     @pytest.mark.test
     def testRangeGeneratorNoLuhn(self) -> None:
-        cv = CreditCardValidator.createRangeValidator(
-            [
-                CreditCardValidator.CreditCardRange(0, "1", None, 6, 7, None),
-                CreditCardValidator.CreditCardRange(0, "644", "65", 8, 8, None)
-            ],
-            None
-        )
+        try:
+            cv = CreditCardValidator.createRangeValidator(
+                [
+                    CreditCardValidator.CreditCardRange(0, "1", None, 6, 7, None),
+                    CreditCardValidator.CreditCardRange(0, "644", "65", 8, 8, None)
+                ],
+                None
+            )
+        except AttributeError:
+            cv = CreditCardValidator.createRangeValidator(
+                [
+                    CreditCardRange(0, "1", None, 6, 7, None),
+                    CreditCardRange(0, "644", "65", 8, 8, None)
+                ],
+                None
+            )
         self.assertTrue(cv.isValid("1990000"))
         self.assertTrue(cv.isValid("199000"))
         self.assertFalse(cv.isValid("000000"))
@@ -737,22 +746,40 @@ class CreditCardValidatorTest(unittest.TestCase):
     
     @pytest.mark.test
     def testRangeGenerator(self) -> None:
-        ccv = CreditCardValidator(
-            3,
-            0,
-            [
-                CreditCardValidator.CreditCardRange(0, "300", "305", 14, 14, None), # Diners
-                CreditCardValidator.CreditCardRange(0, "3095", None, 14, 14, None), # Diners
-                CreditCardValidator.CreditCardRange(0, "36", None, 14, 14, None), # Diners
-                CreditCardValidator.CreditCardRange(0, "38", "39", 14, 14, None) # Diners
-            ],
-            [
-                CreditCardValidator.AMEX_VALIDATOR,
-                CreditCardValidator.VISA_VALIDATOR,
-                CreditCardValidator.MASTERCARD_VALIDATOR,
-                CreditCardValidator.DISCOVER_VALIDATOR
-            ]
-        )
+        try:
+            ccv = CreditCardValidator(
+                3,
+                0,
+                [
+                    CreditCardValidator.CreditCardRange(0, "300", "305", 14, 14, None), # Diners
+                    CreditCardValidator.CreditCardRange(0, "3095", None, 14, 14, None), # Diners
+                    CreditCardValidator.CreditCardRange(0, "36", None, 14, 14, None), # Diners
+                    CreditCardValidator.CreditCardRange(0, "38", "39", 14, 14, None) # Diners
+                ],
+                [
+                    CreditCardValidator.AMEX_VALIDATOR,
+                    CreditCardValidator.VISA_VALIDATOR,
+                    CreditCardValidator.MASTERCARD_VALIDATOR,
+                    CreditCardValidator.DISCOVER_VALIDATOR
+                ]
+            )
+        except AttributeError:
+            ccv = CreditCardValidator(
+                3,
+                0,
+                [
+                    CreditCardRange(0, "300", "305", 14, 14, None), # Diners
+                    CreditCardRange(0, "3095", None, 14, 14, None), # Diners
+                    CreditCardRange(0, "36", None, 14, 14, None), # Diners
+                    CreditCardRange(0, "38", "39", 14, 14, None) # Diners
+                ],
+                [
+                    CreditCardValidator.AMEX_VALIDATOR,
+                    CreditCardValidator.VISA_VALIDATOR,
+                    CreditCardValidator.MASTERCARD_VALIDATOR,
+                    CreditCardValidator.DISCOVER_VALIDATOR
+                ]
+            )
         for s in CreditCardValidatorTest.__VALID_CARDS:
             self.assertTrue(ccv.isValid(s), s)
         for s in CreditCardValidatorTest.__ERROR_CARDS:
@@ -761,72 +788,138 @@ class CreditCardValidatorTest(unittest.TestCase):
     
     @pytest.mark.test
     def testValidLength(self) -> None:
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(14, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
-        )
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(15, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
-        )
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(13, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
-        )
+        try:
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(14, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(15, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(13, CreditCardValidator.CreditCardRange(0, "", "", 14, 14, None))
+            )
 
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(14, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
-        )
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(15, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
-        )
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(16, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
-        )
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(17, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
-        )
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(18, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
-        )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(14, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(15, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(16, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(17, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(18, CreditCardValidator.CreditCardRange(0, "", "", 15, 17, None))
+            )
 
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(14, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
-        )
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(15, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
-        )
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(16, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
-        )
-        self.assertTrue(
-            CreditCardValidator\
-                .validLength(17, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
-        )
-        self.assertFalse(
-            CreditCardValidator\
-                .validLength(18, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
-        )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(14, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(15, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(16, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(17, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(18, CreditCardValidator.CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+        except AttributeError:
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(14, CreditCardRange(0, "", "", 14, 14, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(15, CreditCardRange(0, "", "", 14, 14, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(13, CreditCardRange(0, "", "", 14, 14, None))
+            )
+
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(14, CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(15, CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(16, CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(17, CreditCardRange(0, "", "", 15, 17, None))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(18, CreditCardRange(0, "", "", 15, 17, None))
+            )
+
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(14, CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(15, CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(16, CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertTrue(
+                CreditCardValidator\
+                    .validLength(17, CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
+            self.assertFalse(
+                CreditCardValidator\
+                    .validLength(18, CreditCardRange(1, "", "", 0, 0, [15, 17]))
+            )
     
 
     @pytest.mark.test
     def testDisjointRange(self) -> None:
-        ccv = CreditCardValidator(
-            2,
-            0,
-            [
-                CreditCardValidator.CreditCardRange(1, "305", "4", 0, 0, [13, 16]),
-            ],
-            None
-        )
+        try:
+            ccv = CreditCardValidator(
+                2,
+                0,
+                [
+                    CreditCardValidator.CreditCardRange(1, "305", "4", 0, 0, [13, 16]),
+                ],
+                None
+            )
+        except AttributeError:
+            ccv = CreditCardValidator(
+                2,
+                0,
+                [
+                    CreditCardRange(1, "305", "4", 0, 0, [13, 16]),
+                ],
+                None
+            )
         self.assertEqual(13, len(CreditCardValidatorTest.__VALID_SHORT_VISA))
         self.assertEqual(16, len(CreditCardValidatorTest.__VALID_VISA))
         self.assertEqual(14, len(CreditCardValidatorTest.__VALID_DINERS))
@@ -835,12 +928,22 @@ class CreditCardValidatorTest(unittest.TestCase):
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__ERROR_SHORT_VISA))
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__ERROR_VISA))
         self.assertFalse(ccv.isValid(CreditCardValidatorTest.__VALID_DINERS))
-        ccv = CreditCardValidator(
-            2,
-            0,
-            [
-                CreditCardValidator.CreditCardRange(1, "305", "4", 0, 0, [13, 14, 16]),
-            ],
-            None
-        )
+        try:
+            ccv = CreditCardValidator(
+                2,
+                0,
+                [
+                    CreditCardValidator.CreditCardRange(1, "305", "4", 0, 0, [13, 14, 16]),
+                ],
+                None
+            )
+        except AttributeError:
+            ccv = CreditCardValidator(
+                2,
+                0,
+                [
+                    CreditCardRange(1, "305", "4", 0, 0, [13, 14, 16]),
+                ],
+                None
+            )
         self.assertTrue(ccv.isValid(CreditCardValidatorTest.__VALID_DINERS))

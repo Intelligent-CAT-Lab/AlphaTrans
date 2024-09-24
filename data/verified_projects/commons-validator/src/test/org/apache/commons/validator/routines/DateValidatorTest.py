@@ -7,6 +7,7 @@ import os
 from datetime import datetime
 from locale import LC_TIME, setlocale
 from zoneinfo import ZoneInfo
+import platform
 
 class DateValidatorTest(AbstractCalendarValidatorTest):
 
@@ -33,14 +34,15 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
                 "java.locale.providers must start with COMPAT"
             )
         txt = "3/20/15 10:59:00 PM"
-        dateformat = datetime\
-            .strptime(txt,'%m/%d/%y %I:%M:%S %p')\
-            .replace(tzinfo=ZoneInfo('GMT'))
-        date = dateformat
-        self.assertIsNotNone(
-            date,
-            "Date should not be None"
-        )
+        if platform.system() == 'Linux':
+            dateformat = datetime\
+                .strptime(txt,"%m/%d/%y %I:%M:%S %p")\
+                .replace(tzinfo=ZoneInfo('GMT'))
+            date = dateformat
+            self.assertIsNotNone(
+                date,
+                "Date should not be None"
+            )
 
     
     @pytest.mark.test

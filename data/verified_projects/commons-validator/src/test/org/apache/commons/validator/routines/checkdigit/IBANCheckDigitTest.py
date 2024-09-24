@@ -3,6 +3,7 @@ import pytest
 from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import AbstractCheckDigitTest
 from typing import List
+from pathlib import Path
 
 class IBANCheckDigitTest(AbstractCheckDigitTest):
 
@@ -120,7 +121,7 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
     
     def _createInvalidCodes(self, codes: List[str]) -> List[str]:
         invalideCodes = []
-        for i in range(codes):
+        for i in range(len(codes)):
             code = self._removeCheckDigit(codes[i])
             check = self._checkDigit(codes[i])
             for j in range(2, 99): 
@@ -143,7 +144,11 @@ class IBANCheckDigitTest(AbstractCheckDigitTest):
     
     @pytest.mark.test
     def testOther(self):
-        with open("IBANtests.txt", "r") as file:
+        resource = Path(__file__).resolve()\
+            .parent.parent.parent.parent.parent.parent.parent \
+            / 'resources' / 'org' / 'apache' / 'commons' / 'validator' / 'routines' / 'checkdigit'\
+            / 'IBANtests.txt'
+        with open(resource, "r") as file:
             for line in file:
                 line = line.strip()
                 if len(line) > 0 and not line.startswith("#"):

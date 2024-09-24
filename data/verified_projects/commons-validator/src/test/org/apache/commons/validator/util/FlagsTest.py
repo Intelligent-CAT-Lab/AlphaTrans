@@ -68,7 +68,7 @@ class FlagsTest(unittest.TestCase):
     def testTurnOnAll(self) -> None:
         f = Flags(0, 0)
         f.turnOnAll()
-        self.assertEqual(~0, f.getFlags())
+        self.assertEqual(0xFFFFFFFFFFFFFFFF, f.getFlags())
     
 
     @pytest.mark.test

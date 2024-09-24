@@ -2,6 +2,7 @@ import pytest
 
 import unittest
 from io import StringIO
+from pathlib import Path
 
 class CustomValidatorResourcesTest(unittest.TestCase):
     
@@ -17,7 +18,10 @@ class CustomValidatorResourcesTest(unittest.TestCase):
     def testCustomResources(self) -> None:
         inStream = None
         try:
-            inStream = StringIO(self.__getResourceContent("TestNumber-config.xml"))
+            path = Path(__file__).resolve()\
+                .parent.parent.parent.parent.parent / 'resources' \
+                / 'org' / 'apache' / 'commons' / 'validator' / 'TestNumber-config.xml'
+            inStream = StringIO(self.__getResourceContent(path))
         except Exception as e:
             self.fail(f"Error loading resources: {e}")
         finally:

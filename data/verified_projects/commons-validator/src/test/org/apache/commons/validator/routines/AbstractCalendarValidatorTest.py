@@ -97,72 +97,135 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
 
     @pytest.mark.test
     def testPatternValid(self) -> None:
-        for i, pattern in enumerate(self._patternValid):
-            text = f"{i} value=[{pattern}] failed "
-            date = self._validator.parse(pattern, "yy-MM-dd", None, None)
-            self.assertIsNotNone(date, f"validateObj() {text}{date}")
-            self.assertTrue(
-                self._validator.isValid1(pattern, "yy-MM-dd"),
-                f"isValid() {text}"
-            )
-            if isinstance(date, datetime):
-                date = date
-            self.assertEqual(date, self._patternExpect[i], f"compare {text}")
+        try:
+            for i, pattern in enumerate(self._patternValid):
+                text = f"{i} value=[{pattern}] failed "
+                date = self._validator.parse(pattern, "yy-MM-dd", None, None)
+                self.assertIsNotNone(date, f"validateObj() {text}{date}")
+                self.assertTrue(
+                    self._validator.isValid1(pattern, "yy-MM-dd"),
+                    f"isValid() {text}"
+                )
+                if isinstance(date, datetime):
+                    date = date
+                self.assertEqual(date, self._patternExpect[i], f"compare {text}")
+        except AttributeError:
+            for i, pattern in enumerate(self._patternValid):
+                text = f"{i} value=[{pattern}] failed "
+                date = self._validator._parse(pattern, "yy-MM-dd", None, None)
+                self.assertIsNotNone(date, f"validateObj() {text}{date}")
+                self.assertTrue(
+                    self._validator.isValid1(pattern, "yy-MM-dd"),
+                    f"isValid() {text}"
+                )
+                if isinstance(date, datetime):
+                    date = date
+                self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
     @pytest.mark.test
     def testPatternInvalid(self) -> None:
-        for i, pattern in enumerate(self._patternInvalid):
-            text = f"{i} value=[{pattern}] passed "
-            date = self._validator.parse(pattern, "yy-MM-dd", None, None)
-            self.assertIsNone(date, f"validateObj() {text}{date}")
-            self.assertFalse(
-                self._validator.isValid1(pattern, "yy-MM-dd"),
-                f"isValid() {text}"
-            )
+        try:
+            for i, pattern in enumerate(self._patternInvalid):
+                text = f"{i} value=[{pattern}] passed "
+                date = self._validator.parse(pattern, "yy-MM-dd", None, None)
+                self.assertIsNone(date, f"validateObj() {text}{date}")
+                self.assertFalse(
+                    self._validator.isValid1(pattern, "yy-MM-dd"),
+                    f"isValid() {text}"
+                )
+        except AttributeError:
+            for i, pattern in enumerate(self._patternInvalid):
+                text = f"{i} value=[{pattern}] passed "
+                date = self._validator._parse(pattern, "yy-MM-dd", None, None)
+                self.assertIsNone(date, f"validateObj() {text}{date}")
+                self.assertFalse(
+                    self._validator.isValid1(pattern, "yy-MM-dd"),
+                    f"isValid() {text}"
+                )
 
     
     @pytest.mark.test
     def testLocaleValid(self) -> None:
-        for i, pattern in enumerate(self._localeValid):
-            text = f"{i} value=[{pattern}] failed "
-            date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
-            self.assertIsNotNone(date, f"validateObj() {text}{date}")
-            self.assertTrue(
-                self._validator.isValid2(pattern, 'en_US.UTF-8'),
-                f"isValid() {text}"
-            )
-            if isinstance(date, datetime):
-                date = date
-            self.assertEqual(date, self._patternExpect[i], f"compare {text}")
+        try:
+            for i, pattern in enumerate(self._localeValid):
+                text = f"{i} value=[{pattern}] failed "
+                date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
+                self.assertIsNotNone(date, f"validateObj() {text}{date}")
+                self.assertTrue(
+                    self._validator.isValid2(pattern, 'en_US.UTF-8'),
+                    f"isValid() {text}"
+                )
+                if isinstance(date, datetime):
+                    date = date
+                self.assertEqual(date, self._patternExpect[i], f"compare {text}")
+        except AttributeError:
+            for i, pattern in enumerate(self._localeValid):
+                text = f"{i} value=[{pattern}] failed "
+                date = self._validator._parse(pattern, None, 'en_US.UTF-8', None)
+                self.assertIsNotNone(date, f"validateObj() {text}{date}")
+                self.assertTrue(
+                    self._validator.isValid2(pattern, 'en_US.UTF-8'),
+                    f"isValid() {text}"
+                )
+                if isinstance(date, datetime):
+                    date = date
+                self.assertEqual(date, self._patternExpect[i], f"compare {text}")
 
     
     @pytest.mark.test
     def testLocaleInvalid(self) -> None:
-        for i, pattern in enumerate(self._localeInvalid):
-            text = f"{i} value=[{pattern}] passed "
-            date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
-            self.assertIsNone(date, f"validateObj() {text}{date}")
-            self.assertFalse(
-                self._validator.isValid2(pattern, 'en_US.UTF-8'),
-                f"isValid() {text}"
-            )
+        try:
+            for i, pattern in enumerate(self._localeInvalid):
+                text = f"{i} value=[{pattern}] passed "
+                date = self._validator.parse(pattern, None, 'en_US.UTF-8', None)
+                self.assertIsNone(date, f"validateObj() {text}{date}")
+                self.assertFalse(
+                    self._validator.isValid2(pattern, 'en_US.UTF-8'),
+                    f"isValid() {text}"
+                )
+        except AttributeError:
+            for i, pattern in enumerate(self._localeInvalid):
+                text = f"{i} value=[{pattern}] passed "
+                date = self._validator._parse(pattern, None, 'en_US.UTF-8', None)
+                self.assertIsNone(date, f"validateObj() {text}{date}")
+                self.assertFalse(
+                    self._validator.isValid2(pattern, 'en_US.UTF-8'),
+                    f"isValid() {text}"
+                )
 
     
     @pytest.mark.test
     def testFormat(self) -> None:
-        test = self._validator.parse("2005-11-28", "yyyy-MM-dd", None, None)
+        try:
+            test = self._validator.parse("2005-11-28", "yyyy-MM-dd", None, None)
+        except AttributeError:
+            test = self._validator._parse("2005-11-28", "yyyy-MM-dd", None, None)
         self.assertIsNotNone(test, "Test Date")
-        self.assertEqual(
-            self._validator.format1(test, "dd.MM.yy"),
-            "28.11.05",
-            "Format pattern"
-        )
-        self.assertEqual(
-            self._validator.format2(test, 'en_US.UTF-8'),
-            "11/28/05",
-            "Format locale"
-        )
+        try:
+            self.assertEqual(
+                self._validator.format1(test, "dd.MM.yy"),
+                "28.11.05",
+                "Format pattern"
+            )
+        except (TypeError, AttributeError):
+            self.assertEqual(
+                self._validator._format1(test, "dd.MM.yy"),
+                "28.11.05",
+                "Format pattern"
+            )
+        try:
+            self.assertEqual(
+                self._validator.format2(test, 'en_US.UTF-8'),
+                "11/28/05",
+                "Format locale"
+            )
+        except (TypeError, AttributeError):
+            self.assertEqual(
+                self._validator._format2(test, 'en_US.UTF-8'),
+                "11/28/05",
+                "Format locale"
+            )
 
     
     @pytest.mark.test
@@ -188,14 +251,28 @@ class AbstractCalendarValidatorTest(unittest.TestCase, ABC):
     @staticmethod
     def _createCalendar(zone, date, time):
         if zone is None:
-            zone = ZoneInfo('UTC')
-        year = date // 10000
-        mth = (date // 100) % 100
-        day = date % 100
-        hour = time // 10000
-        min = (time // 100) % 100
-        sec = time % 100
-        return datetime(year, mth, day, hour, min, sec, tzinfo=zone)
+            calendar = datetime.now()
+        else:
+            calendar = datetime.now(tz=zone)
+
+        year = (date // 10000) * 10000
+        mth = ((date // 100) * 100) - year
+        day = date - (year + mth)
+        hour = (time // 10000) * 10000
+        min = ((time // 100) * 100) - hour
+        sec = time - (hour + min)
+
+        calendar = calendar.replace(
+            year=(year // 10000),
+            month=(mth // 100),
+            day=day,
+            hour=(hour // 10000),
+            minute=(min // 100),
+            second=sec,
+            microsecond=0,
+        )
+
+        return calendar
 
     
     @staticmethod

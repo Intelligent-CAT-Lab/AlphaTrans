@@ -147,7 +147,10 @@ class UrlValidatorTest(unittest.TestCase):
         urlVal = UrlValidator.UrlValidator3(self.__schemes, 0)
         for sIndex in range(len(self.testScheme)):
             testPair = self.testScheme[sIndex]
-            result = urlVal.isValidScheme(testPair.item)
+            try:
+                result = urlVal.isValidScheme(testPair.item)
+            except AttributeError:
+                result = urlVal._isValidScheme(testPair.item)
             self.assertEqual(
                 testPair.valid,
                 result,

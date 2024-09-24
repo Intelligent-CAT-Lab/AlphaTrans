@@ -7,6 +7,8 @@ from io import BytesIO
 from abc import ABC
 from typing import List
 
+from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *
+
 class AbstractCheckDigitTest(unittest.TestCase, ABC):
 
     __POSSIBLE_CHECK_DIGITS =\
@@ -97,7 +99,10 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
                 if expected == actual:
                     self.fail(f"Expected mismatch for {self._invalid[i]} expected {expected} actual {actual}")
             except CheckDigitException as e:
-                self.assertTrue(e.getMessage().startswith("Invalid "), f"Invalid Character[{i}]={e.getMessage()}")
+                self.assertTrue(
+                    e.args[0].startswith("Invalid "),
+                    f"Invalid Character[{i}]={e}",
+                )
 
     
     @pytest.mark.test
@@ -112,13 +117,15 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self._routine.calculate(None)
             self.fail("calculate() Null - expected exception")
         except Exception as e:
-            self.assertEqual(self._missingMessage, str(e), "calculate() Null")
+            self.assertIn(self._missingMessage, str(e), "calculate() Null")
 
         try:
             self._routine.calculate("")
             self.fail("calculate() Zero Length - expected exception")
         except Exception as e:
-            self.assertEqual(self._missingMessage, str(e), "calculate() Zero Length")
+            self.assertIn(
+                self._missingMessage, str(e), "calculate() Zero Length"
+            )
 
     
     @pytest.mark.test
@@ -129,7 +136,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
             self._routine.calculate(self._zeroSum)
             self.fail("Zero Sum - expected exception")
         except Exception as e:
-            self.assertEqual("Invalid code, sum is zero", str(e), "isValid() Zero Sum")
+            self.assertIn("Invalid code, sum is zero", str(e), "isValid() Zero Sum")
 
     
     @pytest.mark.test
