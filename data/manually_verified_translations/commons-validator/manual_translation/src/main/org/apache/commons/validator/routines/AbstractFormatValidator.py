@@ -99,6 +99,20 @@ class AbstractFormatValidator(ABC):
                         continue
                 raise ValueError(f"Could not parse date: {value}")
         elif (format_str.count('-') == 2 and value.count('-') == 2):
+            format_map = {
+                "yyyy": "%Y",
+                "dd": "%d",
+                "MMMM": "%B",
+                "MMM": "%b", 
+                "MM": "%m",
+                "HH": "%H",
+                "mm": "%M",
+                "hh": "%I",
+                "ss": "%S",
+                "a": "%p",
+                "AM/PM": "%p",
+                "yy": "%y"
+            }
             known_formats = [
                 "%Y-%m-%d",
                 "%y-%m-%d",
@@ -106,6 +120,11 @@ class AbstractFormatValidator(ABC):
                 "%y-%m-%d",
                 "%H-%M-%S"
             ]
+            py_format_str = format_str
+            for java_fmt, py_fmt in format_map.items():
+                py_format_str = py_format_str.replace(java_fmt, py_fmt)
+            if "%H" in py_format_str:
+                known_formats = [py_format_str]
             for known_format in known_formats:
                 try:
                     dt = datetime.datetime.strptime(value, known_format)
