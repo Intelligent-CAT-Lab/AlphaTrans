@@ -24,8 +24,8 @@ class FloatValidatorTest(AbstractNumberValidatorTest):
         self._testPattern = "#,###.#"
 
         self._max = float(sys.float_info.max)
-        self._maxPlusOne = max_ * 10
-        self._min = max_ * -1
+        self._maxPlusOne = self._max * 10
+        self._min = self._max * -1
         self._minMinusOne = self._min * 10
 
         self._invalidStrict = [None, "", "X", "X12", "12X", "1X2"]
