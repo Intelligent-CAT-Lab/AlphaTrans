@@ -409,12 +409,16 @@ class TimeValidatorTest(unittest.TestCase):
 
     def testPatternInvalid(self) -> None:
 
-        for i, pattern in enumerate(self._patternInvalid):
-            text = f"{i} value=[{pattern[0]}] passed "
-            date = self._validator.validate2(pattern[0], "HH-mm-ss")
-            self.assertIsNone(date, f"validate() {text}{date}")
+        for i in range(len(self._patternInvalid)):
+            text = f"{i} value=[{self._patternInvalid[i]}] passed "
+            date = self._validator.validate2(self._patternInvalid[i], "HH-mm-ss")
+            self.assertIsNone(
+                date,
+                "validate() " + text + str(date)
+            )
             self.assertFalse(
-                self._validator.isValid1(pattern[0], "HH-mm-ss"), f"isValid() {text}"
+                self._validator.isValid1(self._patternInvalid[i], "HH-mm-ss"),
+                "isValid() " + text
             )
 
     def testPatternValid(self) -> None:
