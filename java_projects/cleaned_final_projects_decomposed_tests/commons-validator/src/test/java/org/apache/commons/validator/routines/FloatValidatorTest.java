@@ -70,7 +70,18 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test FloatValidator validate Methods */
-    public void testFloatValidatorMethods() {
+    
+
+    /**
+     * Test Float validation for values too small to handle. (slightly different from max/min which
+     * are the largest +ve/-ve
+     */
+    
+
+    /** Test Float Range/Min/Max */
+
+    
+    public void testFloatValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
         String patternVal = "1,23,45";
@@ -79,83 +90,1493 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = "12,345";
         String XXXX = "XXXX";
         Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
         assertEquals(
                 "validate(A) default",
                 expected,
                 FloatValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testFloatValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 FloatValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testFloatValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 FloatValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testFloatValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testFloatValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
         assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testFloatValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
         assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testFloatValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
         assertTrue(
                 "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testFloatValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testFloatValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
         assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testFloatValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
         assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testFloatValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
         assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testFloatValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testFloatValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
         assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testFloatValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
         assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testFloatValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
+        FloatValidator.getInstance();
         assertFalse("isValid(B) pattern", FloatValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testFloatValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) pattern", FloatValidator.getInstance().isValid1(XXXX, pattern));
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String localeVal = "12.345";
+        String germanPatternVal = "1.23.45";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Float expected = Float.valueOf(12345);
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                FloatValidator.getInstance().validate0(defaultVal));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                FloatValidator.getInstance().validate2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                FloatValidator.getInstance().validate1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
+        FloatValidator.getInstance();
+        assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
+        FloatValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
+        FloatValidator.getInstance();
+        assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
+        FloatValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
+        FloatValidator.getInstance();
+        assertFalse("isValid(B) pattern", FloatValidator.getInstance().isValid1(XXXX, pattern));
+        FloatValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 FloatValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /**
-     * Test Float validation for values too small to handle. (slightly different from max/min which
-     * are the largest +ve/-ve
-     */
-    public void testFloatSmallestValues() {
+    
+    public void testFloatSmallestValues_test0_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
-
         Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
         String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatSmallestValues_test1_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
         assertEquals(
                 "Smallest +ve",
                 smallestPositive,
                 FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+    }
 
+    
+    public void testFloatSmallestValues_test2_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
         Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
         String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatSmallestValues_test3_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+        Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
+        String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
         assertEquals(
                 "Smallest -ve",
                 smallestNegative,
                 FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
+    }
 
+    
+    public void testFloatSmallestValues_test4_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+        Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
+        String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest -ve",
+                smallestNegative,
+                FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
         Double tooSmallPositive = Double.valueOf(((double) Float.MIN_VALUE / (double) 10));
         String strTooSmallPositive = fmt.format(tooSmallPositive);
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatSmallestValues_test5_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+        Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
+        String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest -ve",
+                smallestNegative,
+                FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
+        Double tooSmallPositive = Double.valueOf(((double) Float.MIN_VALUE / (double) 10));
+        String strTooSmallPositive = fmt.format(tooSmallPositive);
+        FloatValidator.getInstance();
         assertFalse(
                 "Too small +ve",
                 FloatValidator.getInstance().isValid1(strTooSmallPositive, pattern));
+    }
 
+    
+    public void testFloatSmallestValues_test6_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+        Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
+        String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest -ve",
+                smallestNegative,
+                FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
+        Double tooSmallPositive = Double.valueOf(((double) Float.MIN_VALUE / (double) 10));
+        String strTooSmallPositive = fmt.format(tooSmallPositive);
+        FloatValidator.getInstance();
+        assertFalse(
+                "Too small +ve",
+                FloatValidator.getInstance().isValid1(strTooSmallPositive, pattern));
         Double tooSmallNegative = Double.valueOf(tooSmallPositive.doubleValue() * -1);
         String strTooSmallNegative = fmt.format(tooSmallNegative);
+        FloatValidator.getInstance();
+    }
+
+    
+    public void testFloatSmallestValues_test7_decomposed()  {
+        String pattern = "#.#################################################################";
+        DecimalFormat fmt = new DecimalFormat(pattern);
+        Float smallestPositive = Float.valueOf(Float.MIN_VALUE);
+        String strSmallestPositive = fmt.format(smallestPositive);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest +ve",
+                smallestPositive,
+                FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
+        Float smallestNegative = Float.valueOf(Float.MIN_VALUE * -1);
+        String strSmallestNegative = fmt.format(smallestNegative);
+        FloatValidator.getInstance();
+        assertEquals(
+                "Smallest -ve",
+                smallestNegative,
+                FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
+        Double tooSmallPositive = Double.valueOf(((double) Float.MIN_VALUE / (double) 10));
+        String strTooSmallPositive = fmt.format(tooSmallPositive);
+        FloatValidator.getInstance();
+        assertFalse(
+                "Too small +ve",
+                FloatValidator.getInstance().isValid1(strTooSmallPositive, pattern));
+        Double tooSmallNegative = Double.valueOf(tooSmallPositive.doubleValue() * -1);
+        String strTooSmallNegative = fmt.format(tooSmallNegative);
+        FloatValidator.getInstance();
         assertFalse(
                 "Too small -ve",
                 FloatValidator.getInstance().isValid1(strTooSmallNegative, pattern));
     }
 
-    /** Test Float Range/Min/Max */
-    public void testFloatRangeMinMax() {
+    
+    public void testFloatRangeMinMax_test0_decomposed()  {
+        FloatValidator validator = (FloatValidator) strictValidator;
+        Float number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testFloatRangeMinMax_test1_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");
         Float number10 = validator.validate1("10", "#");
@@ -163,21 +1584,62 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         Float number19 = validator.validate1("19", "#");
         Float number20 = validator.validate1("20", "#");
         Float number21 = validator.validate1("21", "#");
+    }
 
+    
+    public void testFloatRangeMinMax_test2_decomposed()  {
+        FloatValidator validator = (FloatValidator) strictValidator;
+        Float number9 = validator.validate1("9", "#");
+        Float number10 = validator.validate1("10", "#");
+        Float number11 = validator.validate1("11", "#");
+        Float number19 = validator.validate1("19", "#");
+        Float number20 = validator.validate1("20", "#");
+        Float number21 = validator.validate1("21", "#");
         assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
         assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
         assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
         assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+    }
 
+    
+    public void testFloatRangeMinMax_test3_decomposed()  {
+        FloatValidator validator = (FloatValidator) strictValidator;
+        Float number9 = validator.validate1("9", "#");
+        Float number10 = validator.validate1("10", "#");
+        Float number11 = validator.validate1("11", "#");
+        Float number19 = validator.validate1("19", "#");
+        Float number20 = validator.validate1("20", "#");
+        Float number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
         assertFalse("minValue() < min", validator.minValue1(number9, 10));
         assertTrue("minValue() = min", validator.minValue1(number10, 10));
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
+    }
 
+    
+    public void testFloatRangeMinMax_test4_decomposed()  {
+        FloatValidator validator = (FloatValidator) strictValidator;
+        Float number9 = validator.validate1("9", "#");
+        Float number10 = validator.validate1("10", "#");
+        Float number11 = validator.validate1("11", "#");
+        Float number19 = validator.validate1("19", "#");
+        Float number20 = validator.validate1("20", "#");
+        Float number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+        assertFalse("minValue() < min", validator.minValue1(number9, 10));
+        assertTrue("minValue() = min", validator.minValue1(number10, 10));
+        assertTrue("minValue() > min", validator.minValue1(number11, 10));
         assertTrue("maxValue() < max", validator.maxValue1(number19, 20));
         assertTrue("maxValue() = max", validator.maxValue1(number20, 20));
         assertFalse("maxValue() > max", validator.maxValue1(number21, 20));
     }
-
-    
 }

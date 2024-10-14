@@ -37,7 +37,13 @@ public class ISBNValidatorTest extends TestCase {
         super(name);
     }
 
-    public void testIsValid() throws Exception {
+    
+    public void testIsValid_test0_decomposed() throws Exception {
+        ISBNValidator validator = new ISBNValidator();
+    }
+
+    
+    public void testIsValid_test1_decomposed() throws Exception {
         ISBNValidator validator = new ISBNValidator();
         assertFalse(validator.isValid(null));
         assertFalse(validator.isValid(""));
@@ -49,13 +55,10 @@ public class ISBNValidatorTest extends TestCase {
         assertFalse(validator.isValid("--1 930110 99 5"));
         assertFalse(validator.isValid("1 930110 99 5--"));
         assertFalse(validator.isValid("1 930110-99 5-"));
-
         assertTrue(validator.isValid(VALID_ISBN_RAW));
         assertTrue(validator.isValid(VALID_ISBN_DASHES));
         assertTrue(validator.isValid(VALID_ISBN_SPACES));
         assertTrue(validator.isValid(VALID_ISBN_X));
         assertFalse(validator.isValid(INVALID_ISBN));
     }
-
-    
 }

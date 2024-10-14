@@ -205,7 +205,8 @@ public class IBANCheckDigitTest extends AbstractCheckDigitTest {
         return code.substring(2, 4);
     }
 
-    public void testOther() throws Exception {
+    
+    public void testOther_test0_decomposed() throws Exception {
         BufferedReader rdr = null;
         try {
             rdr =
@@ -229,6 +230,4 @@ public class IBANCheckDigitTest extends AbstractCheckDigitTest {
             }
         }
     }
-
-    
 }

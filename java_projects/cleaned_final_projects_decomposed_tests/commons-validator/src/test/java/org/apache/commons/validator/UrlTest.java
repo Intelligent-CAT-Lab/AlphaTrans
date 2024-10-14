@@ -42,39 +42,9 @@ public class UrlTest extends TestCase {
         }
     }
 
-    public void testIsValid0() {
-        testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
-        setUp();
-        int options =
-                UrlValidator.ALLOW_2_SLASHES
-                        + UrlValidator.ALLOW_ALL_SCHEMES
-                        + UrlValidator.NO_FRAGMENTS;
+    
 
-        testIsValid1(testUrlPartsOptions, options);
-    }
-
-    public void testIsValidScheme() {
-        if (printStatus) {
-            System.out.print("\n testIsValidScheme() ");
-        }
-        String[] schemes = {"http", "gopher"};
-        UrlValidator urlVal = new UrlValidator(schemes, 0);
-        for (int sIndex = 0; sIndex < testScheme.length; sIndex++) {
-            ResultPair testPair = testScheme[sIndex];
-            boolean result = urlVal.isValidScheme(testPair.item);
-            assertEquals(testPair.item, testPair.valid, result);
-            if (printStatus) {
-                if (result == testPair.valid) {
-                    System.out.print('.');
-                } else {
-                    System.out.print('X');
-                }
-            }
-        }
-        if (printStatus) {
-            System.out.println();
-        }
-    }
+    
 
     /**
      * Create set of tests by taking the testUrlXXX arrays and running through all possible
@@ -127,20 +97,9 @@ public class UrlTest extends TestCase {
         }
     }
 
-    public void testValidator202() {
-        String[] schemes = {"http", "https"};
-        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
-        urlValidator.isValid(
-                "http://www.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.log");
-    }
+    
 
-    public void testValidator204() {
-        String[] schemes = {"http", "https"};
-        UrlValidator urlValidator = UrlValidator.UrlValidator2(schemes);
-        assertTrue(
-                urlValidator.isValid(
-                        "http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5"));
-    }
+    
 
     static boolean incrementTestPartsIndex(int[] testPartsIndex, Object[] testParts) {
         boolean carry = true; // add 1 to lowest order part.
@@ -181,9 +140,7 @@ public class UrlTest extends TestCase {
         return carryMsg.toString();
     }
 
-    public void testValidateUrl() {
-        assertTrue(true);
-    }
+    
 
     /**
      * Only used to debug the unit tests.
@@ -194,8 +151,8 @@ public class UrlTest extends TestCase {
 
         UrlTest fct = new UrlTest("url test");
         fct.setUp();
-        fct.testIsValid0();
-        fct.testIsValidScheme();
+        fct.testIsValid0_test2_decomposed();
+        fct.testIsValidScheme_test2_decomposed();
     }
 
     /**
@@ -295,4 +252,112 @@ public class UrlTest extends TestCase {
     };
 
     
+    public void testIsValid0_test0_decomposed()  {
+        testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
+    }
+
+    
+    public void testIsValid0_test1_decomposed()  {
+        testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
+        setUp();
+    }
+
+    
+    public void testIsValid0_test2_decomposed()  {
+        testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
+        setUp();
+        int options =
+                UrlValidator.ALLOW_2_SLASHES
+                        + UrlValidator.ALLOW_ALL_SCHEMES
+                        + UrlValidator.NO_FRAGMENTS;
+        testIsValid1(testUrlPartsOptions, options);
+    }
+
+    
+    public void testIsValidScheme_test0_decomposed()  {
+        if (printStatus) {
+            System.out.print("\n testIsValidScheme() ");
+        }
+        String[] schemes = {"http", "gopher"};
+        UrlValidator urlVal = new UrlValidator(schemes, 0);
+    }
+
+    
+    public void testIsValidScheme_test1_decomposed()  {
+        if (printStatus) {
+            System.out.print("\n testIsValidScheme() ");
+        }
+        String[] schemes = {"http", "gopher"};
+        UrlValidator urlVal = new UrlValidator(schemes, 0);
+        for (int sIndex = 0; sIndex < testScheme.length; sIndex++) {
+            ResultPair testPair = testScheme[sIndex];
+            boolean result = urlVal.isValidScheme(testPair.item);
+            assertEquals(testPair.item, testPair.valid, result);
+            if (printStatus) {
+                if (result == testPair.valid) {
+                    System.out.print('.');
+                } else {
+                    System.out.print('X');
+                }
+            }
+        }
+    }
+
+    
+    public void testIsValidScheme_test2_decomposed()  {
+        if (printStatus) {
+            System.out.print("\n testIsValidScheme() ");
+        }
+        String[] schemes = {"http", "gopher"};
+        UrlValidator urlVal = new UrlValidator(schemes, 0);
+        for (int sIndex = 0; sIndex < testScheme.length; sIndex++) {
+            ResultPair testPair = testScheme[sIndex];
+            boolean result = urlVal.isValidScheme(testPair.item);
+            assertEquals(testPair.item, testPair.valid, result);
+            if (printStatus) {
+                if (result == testPair.valid) {
+                    System.out.print('.');
+                } else {
+                    System.out.print('X');
+                }
+            }
+        }
+        if (printStatus) {
+            System.out.println();
+        }
+    }
+
+    
+    public void testValidator202_test0_decomposed()  {
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
+    }
+
+    
+    public void testValidator202_test1_decomposed()  {
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
+        urlValidator.isValid(
+                "http://www.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.log");
+    }
+
+    
+    public void testValidator204_test0_decomposed()  {
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = UrlValidator.UrlValidator2(schemes);
+    }
+
+    
+    public void testValidator204_test1_decomposed()  {
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = UrlValidator.UrlValidator2(schemes);
+        assertTrue(
+                urlValidator.isValid(
+                        "http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5"));
+    }
+
+    
+    public void testValidateUrl_test0_decomposed()  {
+        assertTrue(true);
+    }
 }

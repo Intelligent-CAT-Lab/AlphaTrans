@@ -148,157 +148,25 @@ public class TimeValidatorTest extends TestCase {
     }
 
     /** Test Valid Dates with "pattern" validation */
-    public void testPatternValid() {
-        for (int i = 0; i < patternValid.length; i++) {
-            String text = i + " value=[" + patternValid[i] + "] failed ";
-            Calendar calendar = validator.validate2(patternValid[i], "HH-mm-ss");
-            assertNotNull("validateObj() " + text, calendar);
-            Date date = calendar.getTime();
-            assertTrue("isValid() " + text, validator.isValid1(patternValid[i], "HH-mm-ss"));
-            assertEquals("compare " + text, patternExpect[i], date);
-        }
-    }
+    
 
     /** Test Invalid Dates with "pattern" validation */
-    public void testPatternInvalid() {
-        for (int i = 0; i < patternInvalid.length; i++) {
-            String text = i + " value=[" + patternInvalid[i] + "] passed ";
-            Object date = validator.validate2(patternInvalid[i], "HH-mm-ss");
-            assertNull("validate() " + text + date, date);
-            assertFalse("isValid() " + text, validator.isValid1(patternInvalid[i], "HH-mm-ss"));
-        }
-    }
+    
 
     /** Test Valid Dates with "locale" validation */
-    public void testLocaleValid() {
-        for (int i = 0; i < localeValid.length; i++) {
-            String text = i + " value=[" + localeValid[i] + "] failed ";
-            Calendar calendar = validator.validate4(localeValid[i], Locale.UK);
-            assertNotNull("validate() " + text, calendar);
-            Date date = calendar.getTime();
-            assertTrue("isValid() " + text, validator.isValid2(localeValid[i], Locale.UK));
-            assertEquals("compare " + text, localeExpect[i], date);
-        }
-    }
+    
 
     /** Test Invalid Dates with "locale" validation */
-    public void testLocaleInvalid() {
-        for (int i = 0; i < localeInvalid.length; i++) {
-            String text = i + " value=[" + localeInvalid[i] + "] passed ";
-            Object date = validator.validate4(localeInvalid[i], Locale.US);
-            assertNull("validate() " + text + date, date);
-            assertFalse("isValid() " + text, validator.isValid2(localeInvalid[i], Locale.UK));
-        }
-    }
+    
 
     /** Test time zone methods. */
-    public void testTimeZone() {
-        Locale.setDefault(Locale.UK);
-        TimeZone.setDefault(GMT);
-
-        Calendar result = null;
-
-        result = validator.validate0("18:01");
-        assertNotNull("default result", result);
-        assertEquals("default zone", GMT, result.getTimeZone());
-        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
-        result = null;
-
-        result = validator.validate1("16:49", EST);
-        assertNotNull("zone result", result);
-        assertEquals("zone zone", EST, result.getTimeZone());
-        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
-        result = null;
-
-        result = validator.validate3("14-34", "HH-mm", EST);
-        assertNotNull("pattern result", result);
-        assertEquals("pattern zone", EST, result.getTimeZone());
-        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
-        result = null;
-
-        result = validator.validate5("7:18 PM", Locale.US, EST);
-        assertNotNull("locale result", result);
-        assertEquals("locale zone", EST, result.getTimeZone());
-        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
-        result = null;
-
-        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
-        assertNotNull("pattern result", result);
-        assertEquals("pattern zone", EST, result.getTimeZone());
-        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
-        assertEquals("pattern day", 11, result.get(Calendar.MONTH)); // months are 0-11
-        assertEquals("pattern day", 31, result.get(Calendar.DATE));
-        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
-        result = null;
-
-        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
-        assertNotNull("pattern result", result);
-        assertEquals("pattern zone", GMT, result.getTimeZone());
-        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
-        assertEquals("pattern day", 11, result.get(Calendar.MONTH)); // months are 0-11
-        assertEquals("pattern day", 31, result.get(Calendar.DATE));
-        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
-        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
-        result = null;
-    }
+    
 
     /** Test Invalid Dates with "locale" validation */
-    public void testFormat() {
-        Locale.setDefault(Locale.UK);
-
-        Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
-        assertNotNull("Test Date ", test);
-        assertEquals("Format pattern", "16-49-23", validator.format1(test, "HH-mm-ss"));
-        assertEquals("Format locale", "4:49 PM", validator.format2(test, Locale.US));
-        assertEquals("Format default", "16:49", validator.format0(test));
-    }
+    
 
     /** Test compare date methods */
-    public void testCompare() {
-        int testTime = 154523;
-        int min = 100;
-        int hour = 10000;
-
-        Calendar milliGreater = createTime(GMT, testTime, 500); // > milli sec
-        Calendar value = createTime(GMT, testTime, 400); // test value
-        Calendar milliLess = createTime(GMT, testTime, 300); // < milli sec
-
-        Calendar secGreater = createTime(GMT, testTime + 1, 100); // +1 sec
-        Calendar secLess = createTime(GMT, testTime - 1, 100); // -1 sec
-
-        Calendar minGreater = createTime(GMT, testTime + min, 100); // +1 min
-        Calendar minLess = createTime(GMT, testTime - min, 100); // -1 min
-
-        Calendar hourGreater = createTime(GMT, testTime + hour, 100); // +1 hour
-        Calendar hourLess = createTime(GMT, testTime - hour, 100); // -1 hour
-
-        assertEquals("mili LT", -1, validator.compareTime(value, milliGreater)); // > milli
-        assertEquals("mili EQ", 0, validator.compareTime(value, value)); // same time
-        assertEquals("mili GT", 1, validator.compareTime(value, milliLess)); // < milli
-
-        assertEquals("secs LT", -1, validator.compareSeconds(value, secGreater)); // +1 sec
-        assertEquals("secs =1", 0, validator.compareSeconds(value, milliGreater)); // > milli
-        assertEquals("secs =2", 0, validator.compareSeconds(value, value)); // same time
-        assertEquals("secs =3", 0, validator.compareSeconds(value, milliLess)); // < milli
-        assertEquals("secs GT", 1, validator.compareSeconds(value, secLess)); // -1 sec
-
-        assertEquals("mins LT", -1, validator.compareMinutes(value, minGreater)); // +1 min
-        assertEquals("mins =1", 0, validator.compareMinutes(value, secGreater)); // +1 sec
-        assertEquals("mins =2", 0, validator.compareMinutes(value, value)); // same time
-        assertEquals("mins =3", 0, validator.compareMinutes(value, secLess)); // -1 sec
-        assertEquals("mins GT", 1, validator.compareMinutes(value, minLess)); // -1 min
-
-        assertEquals("hour LT", -1, validator.compareHours(value, hourGreater)); // +1 hour
-        assertEquals("hour =1", 0, validator.compareHours(value, minGreater)); // +1 min
-        assertEquals("hour =2", 0, validator.compareHours(value, value)); // same time
-        assertEquals("hour =3", 0, validator.compareHours(value, minLess)); // -1 min
-        assertEquals("hour GT", 1, validator.compareHours(value, hourLess)); // -1 hour
-    }
+    
 
     /**
      * Create a calendar instance for a specified time zone, date and time.
@@ -337,4 +205,812 @@ public class TimeValidatorTest extends TestCase {
     }
 
     
+    public void testPatternValid_test0_decomposed()  {
+        for (int i = 0; i < patternValid.length; i++) {
+            String text = i + " value=[" + patternValid[i] + "] failed ";
+            Calendar calendar = validator.validate2(patternValid[i], "HH-mm-ss");
+            assertNotNull("validateObj() " + text, calendar);
+            Date date = calendar.getTime();
+            assertTrue("isValid() " + text, validator.isValid1(patternValid[i], "HH-mm-ss"));
+            assertEquals("compare " + text, patternExpect[i], date);
+        }
+    }
+
+    
+    public void testPatternInvalid_test0_decomposed()  {
+        for (int i = 0; i < patternInvalid.length; i++) {
+            String text = i + " value=[" + patternInvalid[i] + "] passed ";
+            Object date = validator.validate2(patternInvalid[i], "HH-mm-ss");
+            assertNull("validate() " + text + date, date);
+            assertFalse("isValid() " + text, validator.isValid1(patternInvalid[i], "HH-mm-ss"));
+        }
+    }
+
+    
+    public void testLocaleValid_test0_decomposed()  {
+        for (int i = 0; i < localeValid.length; i++) {
+            String text = i + " value=[" + localeValid[i] + "] failed ";
+            Calendar calendar = validator.validate4(localeValid[i], Locale.UK);
+            assertNotNull("validate() " + text, calendar);
+            Date date = calendar.getTime();
+            assertTrue("isValid() " + text, validator.isValid2(localeValid[i], Locale.UK));
+            assertEquals("compare " + text, localeExpect[i], date);
+        }
+    }
+
+    
+    public void testLocaleInvalid_test0_decomposed()  {
+        for (int i = 0; i < localeInvalid.length; i++) {
+            String text = i + " value=[" + localeInvalid[i] + "] passed ";
+            Object date = validator.validate4(localeInvalid[i], Locale.US);
+            assertNull("validate() " + text + date, date);
+            assertFalse("isValid() " + text, validator.isValid2(localeInvalid[i], Locale.UK));
+        }
+    }
+
+    
+    public void testTimeZone_test0_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+    }
+
+    
+    public void testTimeZone_test1_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test2_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+    }
+
+    
+    public void testTimeZone_test3_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+    }
+
+    
+    public void testTimeZone_test4_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test5_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+    }
+
+    
+    public void testTimeZone_test6_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+    }
+
+    
+    public void testTimeZone_test7_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test8_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+    }
+
+    
+    public void testTimeZone_test9_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+    }
+
+    
+    public void testTimeZone_test10_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test11_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+    }
+
+    
+    public void testTimeZone_test12_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+    }
+
+    
+    public void testTimeZone_test13_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test14_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+    }
+
+    
+    public void testTimeZone_test15_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+    }
+
+    
+    public void testTimeZone_test16_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
+    }
+
+    
+    public void testTimeZone_test17_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", GMT, result.getTimeZone());
+    }
+
+    
+    public void testTimeZone_test18_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", GMT, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+    }
+
+    
+    public void testTimeZone_test19_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", GMT, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+    }
+
+    
+    public void testTimeZone_test20_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeZone.setDefault(GMT);
+        Calendar result = null;
+        result = validator.validate0("18:01");
+        assertNotNull("default result", result);
+        assertEquals("default zone", GMT, result.getTimeZone());
+        assertEquals("default hour", 18, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("default minute", 01, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate1("16:49", EST);
+        assertNotNull("zone result", result);
+        assertEquals("zone zone", EST, result.getTimeZone());
+        assertEquals("zone hour", 16, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate3("14-34", "HH-mm", EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern hour", 14, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate5("7:18 PM", Locale.US, EST);
+        assertNotNull("locale result", result);
+        assertEquals("locale zone", EST, result.getTimeZone());
+        assertEquals("locale hour", 19, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", EST, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+        result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
+        assertNotNull("pattern result", result);
+        assertEquals("pattern zone", GMT, result.getTimeZone());
+        assertEquals("pattern day", 2005, result.get(Calendar.YEAR));
+        assertEquals("pattern day", 11, result.get(Calendar.MONTH));
+        assertEquals("pattern day", 31, result.get(Calendar.DATE));
+        assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
+        assertEquals("pattern minute", 05, result.get(Calendar.MINUTE));
+        result = null;
+    }
+
+    
+    public void testFormat_test0_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeValidator.getInstance();
+    }
+
+    
+    public void testFormat_test1_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeValidator.getInstance();
+        Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
+    }
+
+    
+    public void testFormat_test2_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeValidator.getInstance();
+        Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
+        assertNotNull("Test Date ", test);
+        assertEquals("Format pattern", "16-49-23", validator.format1(test, "HH-mm-ss"));
+    }
+
+    
+    public void testFormat_test3_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeValidator.getInstance();
+        Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
+        assertNotNull("Test Date ", test);
+        assertEquals("Format pattern", "16-49-23", validator.format1(test, "HH-mm-ss"));
+        assertEquals("Format locale", "4:49 PM", validator.format2(test, Locale.US));
+    }
+
+    
+    public void testFormat_test4_decomposed()  {
+        Locale.setDefault(Locale.UK);
+        TimeValidator.getInstance();
+        Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
+        assertNotNull("Test Date ", test);
+        assertEquals("Format pattern", "16-49-23", validator.format1(test, "HH-mm-ss"));
+        assertEquals("Format locale", "4:49 PM", validator.format2(test, Locale.US));
+        assertEquals("Format default", "16:49", validator.format0(test));
+    }
+
+    
+    public void testCompare_test0_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+    }
+
+    
+    public void testCompare_test1_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+        Calendar value = createTime(GMT, testTime, 400);
+        Calendar milliLess = createTime(GMT, testTime, 300);
+        Calendar secGreater = createTime(GMT, testTime + 1, 100);
+        Calendar secLess = createTime(GMT, testTime - 1, 100);
+        Calendar minGreater = createTime(GMT, testTime + min, 100);
+        Calendar minLess = createTime(GMT, testTime - min, 100);
+        Calendar hourGreater = createTime(GMT, testTime + hour, 100);
+        Calendar hourLess = createTime(GMT, testTime - hour, 100);
+    }
+
+    
+    public void testCompare_test2_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+        Calendar value = createTime(GMT, testTime, 400);
+        Calendar milliLess = createTime(GMT, testTime, 300);
+        Calendar secGreater = createTime(GMT, testTime + 1, 100);
+        Calendar secLess = createTime(GMT, testTime - 1, 100);
+        Calendar minGreater = createTime(GMT, testTime + min, 100);
+        Calendar minLess = createTime(GMT, testTime - min, 100);
+        Calendar hourGreater = createTime(GMT, testTime + hour, 100);
+        Calendar hourLess = createTime(GMT, testTime - hour, 100);
+        assertEquals("mili LT", -1, validator.compareTime(value, milliGreater));
+        assertEquals("mili EQ", 0, validator.compareTime(value, value));
+        assertEquals("mili GT", 1, validator.compareTime(value, milliLess));
+    }
+
+    
+    public void testCompare_test3_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+        Calendar value = createTime(GMT, testTime, 400);
+        Calendar milliLess = createTime(GMT, testTime, 300);
+        Calendar secGreater = createTime(GMT, testTime + 1, 100);
+        Calendar secLess = createTime(GMT, testTime - 1, 100);
+        Calendar minGreater = createTime(GMT, testTime + min, 100);
+        Calendar minLess = createTime(GMT, testTime - min, 100);
+        Calendar hourGreater = createTime(GMT, testTime + hour, 100);
+        Calendar hourLess = createTime(GMT, testTime - hour, 100);
+        assertEquals("mili LT", -1, validator.compareTime(value, milliGreater));
+        assertEquals("mili EQ", 0, validator.compareTime(value, value));
+        assertEquals("mili GT", 1, validator.compareTime(value, milliLess));
+        assertEquals("secs LT", -1, validator.compareSeconds(value, secGreater));
+        assertEquals("secs =1", 0, validator.compareSeconds(value, milliGreater));
+        assertEquals("secs =2", 0, validator.compareSeconds(value, value));
+        assertEquals("secs =3", 0, validator.compareSeconds(value, milliLess));
+        assertEquals("secs GT", 1, validator.compareSeconds(value, secLess));
+    }
+
+    
+    public void testCompare_test4_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+        Calendar value = createTime(GMT, testTime, 400);
+        Calendar milliLess = createTime(GMT, testTime, 300);
+        Calendar secGreater = createTime(GMT, testTime + 1, 100);
+        Calendar secLess = createTime(GMT, testTime - 1, 100);
+        Calendar minGreater = createTime(GMT, testTime + min, 100);
+        Calendar minLess = createTime(GMT, testTime - min, 100);
+        Calendar hourGreater = createTime(GMT, testTime + hour, 100);
+        Calendar hourLess = createTime(GMT, testTime - hour, 100);
+        assertEquals("mili LT", -1, validator.compareTime(value, milliGreater));
+        assertEquals("mili EQ", 0, validator.compareTime(value, value));
+        assertEquals("mili GT", 1, validator.compareTime(value, milliLess));
+        assertEquals("secs LT", -1, validator.compareSeconds(value, secGreater));
+        assertEquals("secs =1", 0, validator.compareSeconds(value, milliGreater));
+        assertEquals("secs =2", 0, validator.compareSeconds(value, value));
+        assertEquals("secs =3", 0, validator.compareSeconds(value, milliLess));
+        assertEquals("secs GT", 1, validator.compareSeconds(value, secLess));
+        assertEquals("mins LT", -1, validator.compareMinutes(value, minGreater));
+        assertEquals("mins =1", 0, validator.compareMinutes(value, secGreater));
+        assertEquals("mins =2", 0, validator.compareMinutes(value, value));
+        assertEquals("mins =3", 0, validator.compareMinutes(value, secLess));
+        assertEquals("mins GT", 1, validator.compareMinutes(value, minLess));
+    }
+
+    
+    public void testCompare_test5_decomposed()  {
+        int testTime = 154523;
+        int min = 100;
+        int hour = 10000;
+        Calendar milliGreater = createTime(GMT, testTime, 500);
+        Calendar value = createTime(GMT, testTime, 400);
+        Calendar milliLess = createTime(GMT, testTime, 300);
+        Calendar secGreater = createTime(GMT, testTime + 1, 100);
+        Calendar secLess = createTime(GMT, testTime - 1, 100);
+        Calendar minGreater = createTime(GMT, testTime + min, 100);
+        Calendar minLess = createTime(GMT, testTime - min, 100);
+        Calendar hourGreater = createTime(GMT, testTime + hour, 100);
+        Calendar hourLess = createTime(GMT, testTime - hour, 100);
+        assertEquals("mili LT", -1, validator.compareTime(value, milliGreater));
+        assertEquals("mili EQ", 0, validator.compareTime(value, value));
+        assertEquals("mili GT", 1, validator.compareTime(value, milliLess));
+        assertEquals("secs LT", -1, validator.compareSeconds(value, secGreater));
+        assertEquals("secs =1", 0, validator.compareSeconds(value, milliGreater));
+        assertEquals("secs =2", 0, validator.compareSeconds(value, value));
+        assertEquals("secs =3", 0, validator.compareSeconds(value, milliLess));
+        assertEquals("secs GT", 1, validator.compareSeconds(value, secLess));
+        assertEquals("mins LT", -1, validator.compareMinutes(value, minGreater));
+        assertEquals("mins =1", 0, validator.compareMinutes(value, secGreater));
+        assertEquals("mins =2", 0, validator.compareMinutes(value, value));
+        assertEquals("mins =3", 0, validator.compareMinutes(value, secLess));
+        assertEquals("mins GT", 1, validator.compareMinutes(value, minLess));
+        assertEquals("hour LT", -1, validator.compareHours(value, hourGreater));
+        assertEquals("hour =1", 0, validator.compareHours(value, minGreater));
+        assertEquals("hour =2", 0, validator.compareHours(value, value));
+        assertEquals("hour =3", 0, validator.compareHours(value, minLess));
+        assertEquals("hour GT", 1, validator.compareHours(value, hourLess));
+    }
 }

@@ -72,13 +72,15 @@ public class ISINValidatorTest extends TestCase {
         super(name);
     }
 
-    public void testIsValidTrue() {
+    
+    public void testIsValidTrue_test0_decomposed()  {
         for (String f : validFormat) {
             assertTrue(f, VALIDATOR_TRUE.isValid(f));
         }
     }
 
-    public void testInvalidTrue() {
+    
+    public void testInvalidTrue_test0_decomposed()  {
         for (String f : invalidFormat) {
             assertFalse(f, VALIDATOR_TRUE.isValid(f));
         }
@@ -87,17 +89,17 @@ public class ISINValidatorTest extends TestCase {
         }
     }
 
-    public void testIsValidFalse() {
+    
+    public void testIsValidFalse_test0_decomposed()  {
         for (String f : validFormat) {
             assertTrue(f, VALIDATOR_FALSE.isValid(f));
         }
     }
 
-    public void testInvalidFalse() {
+    
+    public void testInvalidFalse_test0_decomposed()  {
         for (String f : invalidFormat) {
             assertFalse(f, VALIDATOR_FALSE.isValid(f));
         }
     }
-
-    
 }

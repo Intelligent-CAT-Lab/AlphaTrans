@@ -64,182 +64,25 @@ public class RegexValidatorTest extends TestCase {
     }
 
     /** Test instance methods with single regular expression. */
-    public void testSingle() {
-        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
-        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
-
-        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
-        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
-        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
-        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
-
-        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
-        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
-        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
-        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
-
-        checkArray(
-                "Sensitive match() valid",
-                new String[] {"ac", "DE", "1"},
-                sensitive.match("ac-DE-1"));
-        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
-        checkArray(
-                "Insensitive match() valid",
-                new String[] {"AB", "de", "1"},
-                insensitive.match("AB-de-1"));
-        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
-        assertEquals(
-                "validate one",
-                "ABC",
-                (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
-        checkArray(
-                "match one",
-                new String[] {"ABC"},
-                (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC"));
-    }
+    
 
     /** Test with multiple regular expressions (case sensitive). */
-    public void testMultipleSensitive() {
-
-        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
-        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
-        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
-        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
-
-        String value = "aac FDE 321";
-        String expect = "aacFDE321";
-        String[] array = new String[] {"aac", "FDE", "321"};
-
-        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
-        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
-        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
-        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
-
-        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
-        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
-        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
-        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
-
-        checkArray("Sensitive match() Multiple", array, multiple.match(value));
-        checkArray("Sensitive match() 1st", null, single1.match(value));
-        checkArray("Sensitive match() 2nd", array, single2.match(value));
-        checkArray("Sensitive match() 3rd", null, single3.match(value));
-
-        value = "AAC*FDE*321";
-        assertEquals("isValid() Invalid", false, multiple.isValid(value));
-        assertEquals("validate() Invalid", null, multiple.validate(value));
-        assertEquals("match() Multiple", null, multiple.match(value));
-    }
+    
 
     /** Test with multiple regular expressions (case in-sensitive). */
-    public void testMultipleInsensitive() {
-
-        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
-        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
-        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
-        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
-
-        String value = "AAC FDE 321";
-        String expect = "AACFDE321";
-        String[] array = new String[] {"AAC", "FDE", "321"};
-
-        assertEquals("isValid() Multiple", true, multiple.isValid(value));
-        assertEquals("isValid() 1st", false, single1.isValid(value));
-        assertEquals("isValid() 2nd", true, single2.isValid(value));
-        assertEquals("isValid() 3rd", false, single3.isValid(value));
-
-        assertEquals("validate() Multiple", expect, multiple.validate(value));
-        assertEquals("validate() 1st", null, single1.validate(value));
-        assertEquals("validate() 2nd", expect, single2.validate(value));
-        assertEquals("validate() 3rd", null, single3.validate(value));
-
-        checkArray("match() Multiple", array, multiple.match(value));
-        checkArray("match() 1st", null, single1.match(value));
-        checkArray("match() 2nd", array, single2.match(value));
-        checkArray("match() 3rd", null, single3.match(value));
-
-        value = "AAC*FDE*321";
-        assertEquals("isValid() Invalid", false, multiple.isValid(value));
-        assertEquals("validate() Invalid", null, multiple.validate(value));
-        assertEquals("match() Multiple", null, multiple.match(value));
-    }
+    
 
     /** Test Null value */
-    public void testNullValue() {
-
-        RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
-        assertEquals("Instance isValid()", false, validator.isValid(null));
-        assertEquals("Instance validate()", null, validator.validate(null));
-        assertEquals("Instance match()", null, validator.match(null));
-    }
+    
 
     /** Test exceptions */
-    public void testMissingRegex() {
-
-        try {
-            RegexValidator.RegexValidator3((String) null);
-            fail("Single Null - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Single Null", "Regular expression[0] is missing", e.getMessage());
-        }
-
-        try {
-            RegexValidator.RegexValidator3("");
-            fail("Single Zero Length - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Single Zero Length", "Regular expression[0] is missing", e.getMessage());
-        }
-
-        try {
-            RegexValidator.RegexValidator1((String[]) null);
-            fail("Null Array - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Null Array", "Regular expressions are missing", e.getMessage());
-        }
-
-        try {
-            RegexValidator.RegexValidator1(new String[0]);
-            fail("Zero Length Array - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Zero Length Array", "Regular expressions are missing", e.getMessage());
-        }
-
-        String[] expressions = new String[] {"ABC", null};
-        try {
-            RegexValidator.RegexValidator1(expressions);
-            fail("Array has Null - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Array has Null", "Regular expression[1] is missing", e.getMessage());
-        }
-
-        expressions = new String[] {"", "ABC"};
-        try {
-            RegexValidator.RegexValidator1(expressions);
-            fail("Array has Zero Length - expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertEquals(
-                    "Array has Zero Length", "Regular expression[0] is missing", e.getMessage());
-        }
-    }
+    
 
     /** Test exceptions */
-    public void testExceptions() {
-        String invalidRegex = "^([abCD12]*$";
-        try {
-            RegexValidator.RegexValidator3(invalidRegex);
-        } catch (PatternSyntaxException e) {
-        }
-    }
+    
 
     /** Test toString() method */
-    public void testToString() {
-        RegexValidator single = RegexValidator.RegexValidator3(REGEX);
-        assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
-
-        RegexValidator multiple = RegexValidator.RegexValidator1(new String[] {REGEX, REGEX});
-        assertEquals(
-                "Multiple", "RegexValidator{" + REGEX + "," + REGEX + "}", multiple.toString());
-    }
+    
 
     /**
      * Compare two arrays
@@ -269,4 +112,1243 @@ public class RegexValidatorTest extends TestCase {
     }
 
     
+    public void testSingle_test0_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+    }
+
+    
+    public void testSingle_test1_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+    }
+
+    
+    public void testSingle_test2_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+    }
+
+    
+    public void testSingle_test3_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+    }
+
+    
+    public void testSingle_test4_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+    }
+
+    
+    public void testSingle_test5_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+    }
+
+    
+    public void testSingle_test6_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+    }
+
+    
+    public void testSingle_test7_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+    }
+
+    
+    public void testSingle_test8_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+    }
+
+    
+    public void testSingle_test9_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+    }
+
+    
+    public void testSingle_test10_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+    }
+
+    
+    public void testSingle_test11_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+    }
+
+    
+    public void testSingle_test12_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+    }
+
+    
+    public void testSingle_test13_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        assertEquals(
+                "validate one",
+                "ABC",
+                (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
+    }
+
+    
+    public void testSingle_test14_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        assertEquals(
+                "validate one",
+                "ABC",
+                (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+    }
+
+    
+    public void testSingle_test15_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        assertEquals(
+                "validate one",
+                "ABC",
+                (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC");
+    }
+
+    
+    public void testSingle_test16_decomposed()  {
+        RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
+        RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
+        assertEquals("Sensitive isValid() valid", true, sensitive.isValid("ac-DE-1"));
+        assertEquals("Sensitive isValid() invalid", false, sensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() valid", true, insensitive.isValid("AB-de-1"));
+        assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
+        assertEquals("Sensitive validate() valid", "acDE1", sensitive.validate("ac-DE-1"));
+        assertEquals("Sensitive validate() invalid", null, sensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() valid", "ABde1", insensitive.validate("AB-de-1"));
+        assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
+        sensitive.match("ac-DE-1");
+        checkArray(
+                "Sensitive match() valid",
+                new String[] {"ac", "DE", "1"},
+                sensitive.match("ac-DE-1"));
+        sensitive.match("AB-de-1");
+        checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
+        insensitive.match("AB-de-1");
+        checkArray(
+                "Insensitive match() valid",
+                new String[] {"AB", "de", "1"},
+                insensitive.match("AB-de-1"));
+        insensitive.match("ABd-de-1");
+        checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        assertEquals(
+                "validate one",
+                "ABC",
+                (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
+        RegexValidator.RegexValidator3("^([A-Z]*)$");
+        (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC");
+        checkArray(
+                "match one",
+                new String[] {"ABC"},
+                (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC"));
+    }
+
+    
+    public void testMultipleSensitive_test0_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+    }
+
+    
+    public void testMultipleSensitive_test1_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+    }
+
+    
+    public void testMultipleSensitive_test2_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+    }
+
+    
+    public void testMultipleSensitive_test3_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+    }
+
+    
+    public void testMultipleSensitive_test4_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+    }
+
+    
+    public void testMultipleSensitive_test5_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+    }
+
+    
+    public void testMultipleSensitive_test6_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+    }
+
+    
+    public void testMultipleSensitive_test7_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+    }
+
+    
+    public void testMultipleSensitive_test8_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+    }
+
+    
+    public void testMultipleSensitive_test9_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+    }
+
+    
+    public void testMultipleSensitive_test10_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+    }
+
+    
+    public void testMultipleSensitive_test11_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+        single3.match(value);
+    }
+
+    
+    public void testMultipleSensitive_test12_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("Sensitive match() 3rd", null, single3.match(value));
+    }
+
+    
+    public void testMultipleSensitive_test13_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("Sensitive match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+    }
+
+    
+    public void testMultipleSensitive_test14_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("Sensitive match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+        assertEquals("validate() Invalid", null, multiple.validate(value));
+    }
+
+    
+    public void testMultipleSensitive_test15_decomposed()  {
+        RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
+        RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
+        RegexValidator single2 = RegexValidator.RegexValidator3(REGEX_2);
+        RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
+        String value = "aac FDE 321";
+        String expect = "aacFDE321";
+        String[] array = new String[] {"aac", "FDE", "321"};
+        assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("Sensitive isValid() 1st", false, single1.isValid(value));
+        assertEquals("Sensitive isValid() 2nd", true, single2.isValid(value));
+        assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
+        assertEquals("Sensitive validate() Multiple", expect, multiple.validate(value));
+        assertEquals("Sensitive validate() 1st", null, single1.validate(value));
+        assertEquals("Sensitive validate() 2nd", expect, single2.validate(value));
+        assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("Sensitive match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("Sensitive match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("Sensitive match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("Sensitive match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+        assertEquals("validate() Invalid", null, multiple.validate(value));
+        assertEquals("match() Multiple", null, multiple.match(value));
+    }
+
+    
+    public void testMultipleInsensitive_test0_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+    }
+
+    
+    public void testMultipleInsensitive_test1_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+    }
+
+    
+    public void testMultipleInsensitive_test2_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+    }
+
+    
+    public void testMultipleInsensitive_test3_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+    }
+
+    
+    public void testMultipleInsensitive_test4_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+    }
+
+    
+    public void testMultipleInsensitive_test5_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+    }
+
+    
+    public void testMultipleInsensitive_test6_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+    }
+
+    
+    public void testMultipleInsensitive_test7_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+    }
+
+    
+    public void testMultipleInsensitive_test8_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+    }
+
+    
+    public void testMultipleInsensitive_test9_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+    }
+
+    
+    public void testMultipleInsensitive_test10_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+    }
+
+    
+    public void testMultipleInsensitive_test11_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+        single3.match(value);
+    }
+
+    
+    public void testMultipleInsensitive_test12_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("match() 3rd", null, single3.match(value));
+    }
+
+    
+    public void testMultipleInsensitive_test13_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+    }
+
+    
+    public void testMultipleInsensitive_test14_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+        assertEquals("validate() Invalid", null, multiple.validate(value));
+    }
+
+    
+    public void testMultipleInsensitive_test15_decomposed()  {
+        RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
+        RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
+        RegexValidator single2 = RegexValidator.RegexValidator2(REGEX_2, false);
+        RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
+        String value = "AAC FDE 321";
+        String expect = "AACFDE321";
+        String[] array = new String[] {"AAC", "FDE", "321"};
+        assertEquals("isValid() Multiple", true, multiple.isValid(value));
+        assertEquals("isValid() 1st", false, single1.isValid(value));
+        assertEquals("isValid() 2nd", true, single2.isValid(value));
+        assertEquals("isValid() 3rd", false, single3.isValid(value));
+        assertEquals("validate() Multiple", expect, multiple.validate(value));
+        assertEquals("validate() 1st", null, single1.validate(value));
+        assertEquals("validate() 2nd", expect, single2.validate(value));
+        assertEquals("validate() 3rd", null, single3.validate(value));
+        multiple.match(value);
+        checkArray("match() Multiple", array, multiple.match(value));
+        single1.match(value);
+        checkArray("match() 1st", null, single1.match(value));
+        single2.match(value);
+        checkArray("match() 2nd", array, single2.match(value));
+        single3.match(value);
+        checkArray("match() 3rd", null, single3.match(value));
+        value = "AAC*FDE*321";
+        assertEquals("isValid() Invalid", false, multiple.isValid(value));
+        assertEquals("validate() Invalid", null, multiple.validate(value));
+        assertEquals("match() Multiple", null, multiple.match(value));
+    }
+
+    
+    public void testNullValue_test0_decomposed()  {
+        RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
+    }
+
+    
+    public void testNullValue_test1_decomposed()  {
+        RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Instance isValid()", false, validator.isValid(null));
+    }
+
+    
+    public void testNullValue_test2_decomposed()  {
+        RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Instance isValid()", false, validator.isValid(null));
+        assertEquals("Instance validate()", null, validator.validate(null));
+    }
+
+    
+    public void testNullValue_test3_decomposed()  {
+        RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Instance isValid()", false, validator.isValid(null));
+        assertEquals("Instance validate()", null, validator.validate(null));
+        assertEquals("Instance match()", null, validator.match(null));
+    }
+
+    
+    public void testMissingRegex_test0_decomposed()  {
+        try {
+            RegexValidator.RegexValidator3((String) null);
+            fail("Single Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Null", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator3("");
+            fail("Single Zero Length - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Zero Length", "Regular expression[0] is missing", e.getMessage());
+        }
+    }
+
+    
+    public void testMissingRegex_test1_decomposed()  {
+        try {
+            RegexValidator.RegexValidator3((String) null);
+            fail("Single Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Null", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator3("");
+            fail("Single Zero Length - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Zero Length", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1((String[]) null);
+            fail("Null Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Null Array", "Regular expressions are missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1(new String[0]);
+            fail("Zero Length Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Zero Length Array", "Regular expressions are missing", e.getMessage());
+        }
+    }
+
+    
+    public void testMissingRegex_test2_decomposed()  {
+        try {
+            RegexValidator.RegexValidator3((String) null);
+            fail("Single Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Null", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator3("");
+            fail("Single Zero Length - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Zero Length", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1((String[]) null);
+            fail("Null Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Null Array", "Regular expressions are missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1(new String[0]);
+            fail("Zero Length Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Zero Length Array", "Regular expressions are missing", e.getMessage());
+        }
+        String[] expressions = new String[] {"ABC", null};
+        try {
+            RegexValidator.RegexValidator1(expressions);
+            fail("Array has Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Array has Null", "Regular expression[1] is missing", e.getMessage());
+        }
+    }
+
+    
+    public void testMissingRegex_test3_decomposed()  {
+        try {
+            RegexValidator.RegexValidator3((String) null);
+            fail("Single Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Null", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator3("");
+            fail("Single Zero Length - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Single Zero Length", "Regular expression[0] is missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1((String[]) null);
+            fail("Null Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Null Array", "Regular expressions are missing", e.getMessage());
+        }
+        try {
+            RegexValidator.RegexValidator1(new String[0]);
+            fail("Zero Length Array - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Zero Length Array", "Regular expressions are missing", e.getMessage());
+        }
+        String[] expressions = new String[] {"ABC", null};
+        try {
+            RegexValidator.RegexValidator1(expressions);
+            fail("Array has Null - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Array has Null", "Regular expression[1] is missing", e.getMessage());
+        }
+        expressions = new String[] {"", "ABC"};
+        try {
+            RegexValidator.RegexValidator1(expressions);
+            fail("Array has Zero Length - expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals(
+                    "Array has Zero Length", "Regular expression[0] is missing", e.getMessage());
+        }
+    }
+
+    
+    public void testExceptions_test0_decomposed()  {
+        String invalidRegex = "^([abCD12]*$";
+        try {
+            RegexValidator.RegexValidator3(invalidRegex);
+        } catch (PatternSyntaxException e) {
+        }
+    }
+
+    
+    public void testToString_test0_decomposed()  {
+        RegexValidator single = RegexValidator.RegexValidator3(REGEX);
+    }
+
+    
+    public void testToString_test1_decomposed()  {
+        RegexValidator single = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
+    }
+
+    
+    public void testToString_test2_decomposed()  {
+        RegexValidator single = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
+        RegexValidator multiple = RegexValidator.RegexValidator1(new String[] {REGEX, REGEX});
+    }
+
+    
+    public void testToString_test3_decomposed()  {
+        RegexValidator single = RegexValidator.RegexValidator3(REGEX);
+        assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
+        RegexValidator multiple = RegexValidator.RegexValidator1(new String[] {REGEX, REGEX});
+        assertEquals(
+                "Multiple", "RegexValidator{" + REGEX + "," + REGEX + "}", multiple.toString());
+    }
 }

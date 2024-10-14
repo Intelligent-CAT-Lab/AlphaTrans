@@ -107,7 +107,12 @@ public class ByteValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test ByteValidator validate Methods */
-    public void testByteValidatorMethods() {
+    
+
+    /** Test Byte Range/Min/Max */
+
+    
+    public void testByteValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00";
         String patternVal = "1,23";
@@ -116,45 +121,1255 @@ public class ByteValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = ",123";
         String XXXX = "XXXX";
         Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
         assertEquals(
                 "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testByteValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 ByteValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testByteValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 ByteValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testByteValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testByteValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
         assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testByteValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
         assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testByteValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
         assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testByteValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testByteValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
         assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testByteValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
         assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testByteValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
         assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testByteValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testByteValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
         assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testByteValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
         assertFalse("isValid(B) locale ", ByteValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testByteValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) locale ", ByteValidator.getInstance().isValid2(XXXX, locale));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) locale ", ByteValidator.getInstance().isValid2(XXXX, locale));
+        ByteValidator.getInstance();
         assertFalse("isValid(B) pattern", ByteValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testByteValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) locale ", ByteValidator.getInstance().isValid2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) pattern", ByteValidator.getInstance().isValid1(XXXX, pattern));
+        ByteValidator.getInstance();
+    }
+
+    
+    public void testByteValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00";
+        String patternVal = "1,23";
+        String germanPatternVal = "1.23";
+        String localeVal = ".123";
+        String defaultVal = ",123";
+        String XXXX = "XXXX";
+        Byte expected = Byte.valueOf((byte) 123);
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, ByteValidator.getInstance().validate0(defaultVal));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ByteValidator.getInstance().validate2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ByteValidator.getInstance().validate1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ByteValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) default", ByteValidator.getInstance().isValid0(defaultVal));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) locale ", ByteValidator.getInstance().isValid2(localeVal, locale));
+        ByteValidator.getInstance();
+        assertTrue("isValid(A) pattern", ByteValidator.getInstance().isValid1(patternVal, pattern));
+        ByteValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ByteValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertNull("validate(B) default", ByteValidator.getInstance().validate0(XXXX));
+        ByteValidator.getInstance();
+        assertNull("validate(B) locale ", ByteValidator.getInstance().validate2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertNull("validate(B) pattern", ByteValidator.getInstance().validate1(XXXX, pattern));
+        ByteValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ByteValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) default", ByteValidator.getInstance().isValid0(XXXX));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) locale ", ByteValidator.getInstance().isValid2(XXXX, locale));
+        ByteValidator.getInstance();
+        assertFalse("isValid(B) pattern", ByteValidator.getInstance().isValid1(XXXX, pattern));
+        ByteValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 ByteValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /** Test Byte Range/Min/Max */
-    public void testByteRangeMinMax() {
+    
+    public void testByteRangeMinMax_test0_decomposed()  {
+        ByteValidator validator = (ByteValidator) strictValidator;
+        Byte number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testByteRangeMinMax_test1_decomposed()  {
+        ByteValidator validator = (ByteValidator) strictValidator;
+        Byte number9 = validator.validate1("9", "#");
+        Byte number10 = validator.validate1("10", "#");
+        Byte number11 = validator.validate1("11", "#");
+        Byte number19 = validator.validate1("19", "#");
+        Byte number20 = validator.validate1("20", "#");
+        Byte number21 = validator.validate1("21", "#");
+    }
+
+    
+    public void testByteRangeMinMax_test2_decomposed()  {
         ByteValidator validator = (ByteValidator) strictValidator;
         Byte number9 = validator.validate1("9", "#");
         Byte number10 = validator.validate1("10", "#");
@@ -164,21 +1379,69 @@ public class ByteValidatorTest extends AbstractNumberValidatorTest {
         Byte number21 = validator.validate1("21", "#");
         byte min = (byte) 10;
         byte max = (byte) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+    }
 
+    
+    public void testByteRangeMinMax_test3_decomposed()  {
+        ByteValidator validator = (ByteValidator) strictValidator;
+        Byte number9 = validator.validate1("9", "#");
+        Byte number10 = validator.validate1("10", "#");
+        Byte number11 = validator.validate1("11", "#");
+        Byte number19 = validator.validate1("19", "#");
+        Byte number20 = validator.validate1("20", "#");
+        Byte number21 = validator.validate1("21", "#");
+        byte min = (byte) 10;
+        byte max = (byte) 20;
         assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
         assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
         assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
         assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
         assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
+    }
 
+    
+    public void testByteRangeMinMax_test4_decomposed()  {
+        ByteValidator validator = (ByteValidator) strictValidator;
+        Byte number9 = validator.validate1("9", "#");
+        Byte number10 = validator.validate1("10", "#");
+        Byte number11 = validator.validate1("11", "#");
+        Byte number19 = validator.validate1("19", "#");
+        Byte number20 = validator.validate1("20", "#");
+        Byte number21 = validator.validate1("21", "#");
+        byte min = (byte) 10;
+        byte max = (byte) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
         assertFalse("minValue() < min", validator.minValue1(number9, min));
         assertTrue("minValue() = min", validator.minValue1(number10, min));
         assertTrue("minValue() > min", validator.minValue1(number11, min));
+    }
 
+    
+    public void testByteRangeMinMax_test5_decomposed()  {
+        ByteValidator validator = (ByteValidator) strictValidator;
+        Byte number9 = validator.validate1("9", "#");
+        Byte number10 = validator.validate1("10", "#");
+        Byte number11 = validator.validate1("11", "#");
+        Byte number19 = validator.validate1("19", "#");
+        Byte number20 = validator.validate1("20", "#");
+        Byte number21 = validator.validate1("21", "#");
+        byte min = (byte) 10;
+        byte max = (byte) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
+        assertFalse("minValue() < min", validator.minValue1(number9, min));
+        assertTrue("minValue() = min", validator.minValue1(number10, min));
+        assertTrue("minValue() > min", validator.minValue1(number11, min));
         assertTrue("maxValue() < max", validator.maxValue1(number19, max));
         assertTrue("maxValue() = max", validator.maxValue1(number20, max));
         assertFalse("maxValue() > max", validator.maxValue1(number21, max));
     }
-
-    
 }

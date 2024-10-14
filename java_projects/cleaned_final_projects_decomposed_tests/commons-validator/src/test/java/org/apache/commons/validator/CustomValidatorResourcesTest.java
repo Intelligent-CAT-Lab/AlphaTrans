@@ -45,7 +45,9 @@ public class CustomValidatorResourcesTest extends TestCase {
     protected void tearDown() {}
 
     /** Test creating a custom validator resources. */
-    public void testCustomResources() {
+
+    
+    public void testCustomResources_test0_decomposed()  {
         InputStream in = null;
         try {
             in = this.getClass().getResourceAsStream("TestNumber-config.xml");
@@ -60,6 +62,4 @@ public class CustomValidatorResourcesTest extends TestCase {
             }
         }
     }
-
-    
 }

@@ -70,7 +70,12 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test BigIntegerValidator validate Methods */
-    public void testBigIntegerValidatorMethods() {
+    
+
+    /** Test BigInteger Range/Min/Max */
+
+    
+    public void testBigIntegerValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
         String patternVal = "1,23,45";
@@ -79,56 +84,1455 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = "12,345";
         String XXXX = "XXXX";
         BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
         assertEquals(
                 "validate(A) default",
                 expected,
                 BigIntegerValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 BigIntegerValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 BigIntegerValidator.getInstance()
                         .validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testBigIntegerValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
         assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
         assertTrue(
                 "isValid(A) locale ",
                 BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
         assertTrue(
                 "isValid(A) pattern",
                 BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 BigIntegerValidator.getInstance()
                         .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testBigIntegerValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
         assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
         assertNull(
                 "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
         assertNull(
                 "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testBigIntegerValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
         assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
         assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
+        BigIntegerValidator.getInstance();
         assertFalse(
                 "isValid(B) pattern", BigIntegerValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertFalse(
+                "isValid(B) pattern", BigIntegerValidator.getInstance().isValid1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+    }
+
+    
+    public void testBigIntegerValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        BigInteger expected = new BigInteger("12345");
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                BigIntegerValidator.getInstance().validate0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                BigIntegerValidator.getInstance().validate2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                BigIntegerValidator.getInstance().validate1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                BigIntegerValidator.getInstance()
+                        .validate3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ",
+                BigIntegerValidator.getInstance().isValid2(localeVal, locale));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
+        BigIntegerValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                BigIntegerValidator.getInstance()
+                        .isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
+        BigIntegerValidator.getInstance();
+        assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
+        BigIntegerValidator.getInstance();
+        assertFalse(
+                "isValid(B) pattern", BigIntegerValidator.getInstance().isValid1(XXXX, pattern));
+        BigIntegerValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 BigIntegerValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /** Test BigInteger Range/Min/Max */
-    public void testBigIntegerRangeMinMax() {
+    
+    public void testBigIntegerRangeMinMax_test0_decomposed()  {
+        BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
+        BigInteger number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testBigIntegerRangeMinMax_test1_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");
         BigInteger number10 = validator.validate1("10", "#");
@@ -136,21 +1540,62 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigInteger number19 = validator.validate1("19", "#");
         BigInteger number20 = validator.validate1("20", "#");
         BigInteger number21 = validator.validate1("21", "#");
+    }
 
+    
+    public void testBigIntegerRangeMinMax_test2_decomposed()  {
+        BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
+        BigInteger number9 = validator.validate1("9", "#");
+        BigInteger number10 = validator.validate1("10", "#");
+        BigInteger number11 = validator.validate1("11", "#");
+        BigInteger number19 = validator.validate1("19", "#");
+        BigInteger number20 = validator.validate1("20", "#");
+        BigInteger number21 = validator.validate1("21", "#");
         assertFalse("isInRange() < min", validator.isInRange(number9, 10, 20));
         assertTrue("isInRange() = min", validator.isInRange(number10, 10, 20));
         assertTrue("isInRange() in range", validator.isInRange(number11, 10, 20));
         assertTrue("isInRange() = max", validator.isInRange(number20, 10, 20));
         assertFalse("isInRange() > max", validator.isInRange(number21, 10, 20));
+    }
 
+    
+    public void testBigIntegerRangeMinMax_test3_decomposed()  {
+        BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
+        BigInteger number9 = validator.validate1("9", "#");
+        BigInteger number10 = validator.validate1("10", "#");
+        BigInteger number11 = validator.validate1("11", "#");
+        BigInteger number19 = validator.validate1("19", "#");
+        BigInteger number20 = validator.validate1("20", "#");
+        BigInteger number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange(number21, 10, 20));
         assertFalse("minValue() < min", validator.minValue(number9, 10));
         assertTrue("minValue() = min", validator.minValue(number10, 10));
         assertTrue("minValue() > min", validator.minValue(number11, 10));
+    }
 
+    
+    public void testBigIntegerRangeMinMax_test4_decomposed()  {
+        BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
+        BigInteger number9 = validator.validate1("9", "#");
+        BigInteger number10 = validator.validate1("10", "#");
+        BigInteger number11 = validator.validate1("11", "#");
+        BigInteger number19 = validator.validate1("19", "#");
+        BigInteger number20 = validator.validate1("20", "#");
+        BigInteger number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange(number21, 10, 20));
+        assertFalse("minValue() < min", validator.minValue(number9, 10));
+        assertTrue("minValue() = min", validator.minValue(number10, 10));
+        assertTrue("minValue() > min", validator.minValue(number11, 10));
         assertTrue("maxValue() < max", validator.maxValue(number19, 20));
         assertTrue("maxValue() = max", validator.maxValue(number20, 20));
         assertFalse("maxValue() > max", validator.maxValue(number21, 20));
     }
-
-    
 }

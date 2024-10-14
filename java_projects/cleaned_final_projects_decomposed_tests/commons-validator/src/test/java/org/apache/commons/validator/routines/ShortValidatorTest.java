@@ -69,7 +69,12 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test ShortValidator validate Methods */
-    public void testShortValidatorMethods() {
+    
+
+    /** Test Short Range/Min/Max */
+
+    
+    public void testShortValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
         String patternVal = "1,23,45";
@@ -78,48 +83,1336 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = "12,345";
         String XXXX = "XXXX";
         Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
         assertEquals(
                 "validate(A) default",
                 expected,
                 ShortValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testShortValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 ShortValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testShortValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 ShortValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testShortValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testShortValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
         assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testShortValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
         assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testShortValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
         assertTrue(
                 "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testShortValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testShortValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
         assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testShortValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
         assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testShortValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
         assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testShortValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testShortValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
         assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testShortValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
         assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testShortValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
+        ShortValidator.getInstance();
         assertFalse("isValid(B) pattern", ShortValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testShortValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) pattern", ShortValidator.getInstance().isValid1(XXXX, pattern));
+        ShortValidator.getInstance();
+    }
+
+    
+    public void testShortValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Short expected = Short.valueOf((short) 12345);
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                ShortValidator.getInstance().validate0(defaultVal));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                ShortValidator.getInstance().validate2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                ShortValidator.getInstance().validate1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
+        ShortValidator.getInstance();
+        assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
+        ShortValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
+        ShortValidator.getInstance();
+        assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
+        ShortValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
+        ShortValidator.getInstance();
+        assertFalse("isValid(B) pattern", ShortValidator.getInstance().isValid1(XXXX, pattern));
+        ShortValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 ShortValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /** Test Short Range/Min/Max */
-    public void testShortRangeMinMax() {
+    
+    public void testShortRangeMinMax_test0_decomposed()  {
+        ShortValidator validator = (ShortValidator) strictValidator;
+        Short number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testShortRangeMinMax_test1_decomposed()  {
+        ShortValidator validator = (ShortValidator) strictValidator;
+        Short number9 = validator.validate1("9", "#");
+        Short number10 = validator.validate1("10", "#");
+        Short number11 = validator.validate1("11", "#");
+        Short number19 = validator.validate1("19", "#");
+        Short number20 = validator.validate1("20", "#");
+        Short number21 = validator.validate1("21", "#");
+    }
+
+    
+    public void testShortRangeMinMax_test2_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
         Short number10 = validator.validate1("10", "#");
@@ -129,21 +1422,69 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         Short number21 = validator.validate1("21", "#");
         short min = (short) 10;
         short max = (short) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+    }
 
+    
+    public void testShortRangeMinMax_test3_decomposed()  {
+        ShortValidator validator = (ShortValidator) strictValidator;
+        Short number9 = validator.validate1("9", "#");
+        Short number10 = validator.validate1("10", "#");
+        Short number11 = validator.validate1("11", "#");
+        Short number19 = validator.validate1("19", "#");
+        Short number20 = validator.validate1("20", "#");
+        Short number21 = validator.validate1("21", "#");
+        short min = (short) 10;
+        short max = (short) 20;
         assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
         assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
         assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
         assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
         assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
+    }
 
+    
+    public void testShortRangeMinMax_test4_decomposed()  {
+        ShortValidator validator = (ShortValidator) strictValidator;
+        Short number9 = validator.validate1("9", "#");
+        Short number10 = validator.validate1("10", "#");
+        Short number11 = validator.validate1("11", "#");
+        Short number19 = validator.validate1("19", "#");
+        Short number20 = validator.validate1("20", "#");
+        Short number21 = validator.validate1("21", "#");
+        short min = (short) 10;
+        short max = (short) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
         assertFalse("minValue() < min", validator.minValue1(number9, min));
         assertTrue("minValue() = min", validator.minValue1(number10, min));
         assertTrue("minValue() > min", validator.minValue1(number11, min));
+    }
 
+    
+    public void testShortRangeMinMax_test5_decomposed()  {
+        ShortValidator validator = (ShortValidator) strictValidator;
+        Short number9 = validator.validate1("9", "#");
+        Short number10 = validator.validate1("10", "#");
+        Short number11 = validator.validate1("11", "#");
+        Short number19 = validator.validate1("19", "#");
+        Short number20 = validator.validate1("20", "#");
+        Short number21 = validator.validate1("21", "#");
+        short min = (short) 10;
+        short max = (short) 20;
+        assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, min, max));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, min, max));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, min, max));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
+        assertFalse("minValue() < min", validator.minValue1(number9, min));
+        assertTrue("minValue() = min", validator.minValue1(number10, min));
+        assertTrue("minValue() > min", validator.minValue1(number11, min));
         assertTrue("maxValue() < max", validator.maxValue1(number19, max));
         assertTrue("maxValue() = max", validator.maxValue1(number20, max));
         assertFalse("maxValue() > max", validator.maxValue1(number21, max));
     }
-
-    
 }

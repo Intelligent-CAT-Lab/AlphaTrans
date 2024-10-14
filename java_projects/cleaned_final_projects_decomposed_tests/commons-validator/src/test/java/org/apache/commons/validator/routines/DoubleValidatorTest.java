@@ -69,7 +69,12 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test DoubleValidator validate Methods */
-    public void testDoubleValidatorMethods() {
+    
+
+    /** Test Double Range/Min/Max */
+
+    
+    public void testDoubleValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
         String patternVal = "1,23,45";
@@ -78,48 +83,1325 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = "12,345";
         String XXXX = "XXXX";
         Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
         assertEquals(
                 "validate(A) default",
                 expected,
                 DoubleValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testDoubleValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 DoubleValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testDoubleValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 DoubleValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testDoubleValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testDoubleValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
         assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testDoubleValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
         assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testDoubleValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
         assertTrue(
                 "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testDoubleValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testDoubleValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
         assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testDoubleValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
         assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testDoubleValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
         assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testDoubleValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testDoubleValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
         assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testDoubleValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
         assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testDoubleValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
+        DoubleValidator.getInstance();
         assertFalse("isValid(B) pattern", DoubleValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testDoubleValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) pattern", DoubleValidator.getInstance().isValid1(XXXX, pattern));
+        DoubleValidator.getInstance();
+    }
+
+    
+    public void testDoubleValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Double expected = Double.valueOf(12345);
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) default",
+                expected,
+                DoubleValidator.getInstance().validate0(defaultVal));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                DoubleValidator.getInstance().validate2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                DoubleValidator.getInstance().validate1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
+        DoubleValidator.getInstance();
+        assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
+        DoubleValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
+        DoubleValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
+        DoubleValidator.getInstance();
+        assertFalse("isValid(B) pattern", DoubleValidator.getInstance().isValid1(XXXX, pattern));
+        DoubleValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 DoubleValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /** Test Double Range/Min/Max */
-    public void testDoubleRangeMinMax() {
+    
+    public void testDoubleRangeMinMax_test0_decomposed()  {
+        DoubleValidator validator = (DoubleValidator) strictValidator;
+        Double number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testDoubleRangeMinMax_test1_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");
         Double number10 = validator.validate1("10", "#");
@@ -127,21 +1409,62 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         Double number19 = validator.validate1("19", "#");
         Double number20 = validator.validate1("20", "#");
         Double number21 = validator.validate1("21", "#");
+    }
 
+    
+    public void testDoubleRangeMinMax_test2_decomposed()  {
+        DoubleValidator validator = (DoubleValidator) strictValidator;
+        Double number9 = validator.validate1("9", "#");
+        Double number10 = validator.validate1("10", "#");
+        Double number11 = validator.validate1("11", "#");
+        Double number19 = validator.validate1("19", "#");
+        Double number20 = validator.validate1("20", "#");
+        Double number21 = validator.validate1("21", "#");
         assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
         assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
         assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
         assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+    }
 
+    
+    public void testDoubleRangeMinMax_test3_decomposed()  {
+        DoubleValidator validator = (DoubleValidator) strictValidator;
+        Double number9 = validator.validate1("9", "#");
+        Double number10 = validator.validate1("10", "#");
+        Double number11 = validator.validate1("11", "#");
+        Double number19 = validator.validate1("19", "#");
+        Double number20 = validator.validate1("20", "#");
+        Double number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
         assertFalse("minValue() < min", validator.minValue1(number9, 10));
         assertTrue("minValue() = min", validator.minValue1(number10, 10));
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
+    }
 
+    
+    public void testDoubleRangeMinMax_test4_decomposed()  {
+        DoubleValidator validator = (DoubleValidator) strictValidator;
+        Double number9 = validator.validate1("9", "#");
+        Double number10 = validator.validate1("10", "#");
+        Double number11 = validator.validate1("11", "#");
+        Double number19 = validator.validate1("19", "#");
+        Double number20 = validator.validate1("20", "#");
+        Double number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+        assertFalse("minValue() < min", validator.minValue1(number9, 10));
+        assertTrue("minValue() = min", validator.minValue1(number10, 10));
+        assertTrue("minValue() > min", validator.minValue1(number11, 10));
         assertTrue("maxValue() < max", validator.maxValue1(number19, 20));
         assertTrue("maxValue() = max", validator.maxValue1(number20, 20));
         assertFalse("maxValue() > max", validator.maxValue1(number21, 20));
     }
-
-    
 }

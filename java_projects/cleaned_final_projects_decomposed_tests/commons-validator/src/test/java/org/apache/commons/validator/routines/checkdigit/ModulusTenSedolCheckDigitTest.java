@@ -53,12 +53,11 @@ public class ModulusTenSedolCheckDigitTest extends AbstractCheckDigitTest {
         "B07LF5F", // proper check digit is '5', see above
     };
 
-    public void testVALIDATOR_346() {
+    
+    public void testVALIDATOR_346_test0_decomposed()  {
         for (int i = 0; i < invalidCheckDigits.length; i++) {
             String invalidCheckDigit = invalidCheckDigits[i];
             assertFalse("Should fail: " + invalidCheckDigit, routine.isValid(invalidCheckDigit));
         }
     }
-
-    
 }

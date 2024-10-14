@@ -52,204 +52,13 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
     }
 
     /** Test CalendarValidator validate Methods */
-    public void testCalendarValidatorMethods() {
-        Locale.setDefault(Locale.US);
-        Locale locale = Locale.GERMAN;
-        String pattern = "yyyy-MM-dd";
-        String patternVal = "2005-12-31";
-        String germanVal = "31 Dez 2005";
-        String germanPattern = "dd MMM yyyy";
-        String localeVal = "31.12.2005";
-        String defaultVal = "12/31/05";
-        String XXXX = "XXXX";
-        Date expected = createCalendar(null, 20051231, 0).getTime();
-        assertEquals(
-                "validate(A) default",
-                expected,
-                CalendarValidator.getInstance().validate0(defaultVal).getTime());
-        assertEquals(
-                "validate(A) locale ",
-                expected,
-                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
-        assertEquals(
-                "validate(A) pattern",
-                expected,
-                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
-        assertEquals(
-                "validate(A) both",
-                expected,
-                CalendarValidator.getInstance()
-                        .validate6(germanVal, germanPattern, Locale.GERMAN)
-                        .getTime());
-
-        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
-        assertTrue(
-                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
-        assertTrue(
-                "isValid(A) pattern",
-                CalendarValidator.getInstance().isValid1(patternVal, pattern));
-        assertTrue(
-                "isValid(A) both",
-                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
-
-        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
-        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
-        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
-        assertNull(
-                "validate(B) both",
-                CalendarValidator.getInstance()
-                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
-
-        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
-        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
-        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
-        assertFalse(
-                "isValid(B) both",
-                CalendarValidator.getInstance()
-                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
-
-        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
-        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
-        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
-
-        assertEquals(
-                "validate(C) default",
-                expectedZone,
-                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
-        assertEquals(
-                "validate(C) locale ",
-                expectedZone,
-                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
-        assertEquals(
-                "validate(C) pattern",
-                expectedZone,
-                CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());
-        assertEquals(
-                "validate(C) both",
-                expectedZone,
-                CalendarValidator.getInstance()
-                        .validate7(germanVal, germanPattern, Locale.GERMAN, zone)
-                        .getTime());
-    }
+    
 
     /** Test compare date methods */
-    public void testCompare() {
-        int sameTime = 124522;
-        int testDate = 20050823;
-        Calendar diffHour = createCalendar(GMT, testDate, 115922); // same date, different time
-        Calendar diffMin = createCalendar(GMT, testDate, 124422); // same date, different time
-        Calendar diffSec = createCalendar(GMT, testDate, 124521); // same date, different time
-
-        Calendar value = createCalendar(GMT, testDate, sameTime); // test value
-        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime); // +1 day
-        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime); // -1 day
-
-        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime); // +1 week
-        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime); // -1 week
-
-        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime); // +1 month
-        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime); // same month
-        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime); // -1 month
-
-        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime); // +1 quarter (Feb Start)
-        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime); // +1 quarter
-        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime); // same quarter
-        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime); // -1 quarter
-
-        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime); // +1 year
-        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime); // same year
-        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime); // -1 year
-
-        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
-        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
-        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
-        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
-        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
-
-        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824)); // +1 day
-        assertEquals(
-                "date EQ", 0, calValidator.compareDates(value, diffHour)); // same day, diff hour
-        assertEquals(
-                "date(B)",
-                0,
-                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR)); // same day, diff hour
-        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822)); // -1 day
-
-        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830)); // +1 week
-        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824)); // +1 day
-        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822)); // same week
-        assertEquals(
-                "week =3",
-                0,
-                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH)); // same week
-        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822)); // -1 day
-        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816)); // -1 week
-
-        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901)); // +1 month
-        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830)); // +1 week
-        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801)); // same month
-        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816)); // -1 week
-        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731)); // -1 month
-
-        assertEquals(
-                "qtrA <1",
-                -1,
-                calValidator.compareQuarters0(value, cal20051101)); // +1 quarter (Feb)
-        assertEquals(
-                "qtrA <2", -1, calValidator.compareQuarters0(value, cal20051001)); // +1 quarter
-        assertEquals("qtrA =1", 0, calValidator.compareQuarters0(value, cal20050901)); // +1 month
-        assertEquals(
-                "qtrA =2", 0, calValidator.compareQuarters0(value, cal20050701)); // same quarter
-        assertEquals("qtrA =3", 0, calValidator.compareQuarters0(value, cal20050731)); // -1 month
-        assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630)); // -1 quarter
-
-        assertEquals(
-                "qtrB LT",
-                -1,
-                calValidator.compareQuarters1(value, cal20051101, 2)); // +1 quarter (Feb)
-        assertEquals(
-                "qtrB =1", 0, calValidator.compareQuarters1(value, cal20051001, 2)); // same quarter
-        assertEquals(
-                "qtrB =2", 0, calValidator.compareQuarters1(value, cal20050901, 2)); // +1 month
-        assertEquals(
-                "qtrB =3", 1, calValidator.compareQuarters1(value, cal20050701, 2)); // same quarter
-        assertEquals(
-                "qtrB =4", 1, calValidator.compareQuarters1(value, cal20050731, 2)); // -1 month
-        assertEquals(
-                "qtrB GT", 1, calValidator.compareQuarters1(value, cal20050630, 2)); // -1 quarter
-
-        assertEquals("year LT", -1, calValidator.compareYears(value, cal20060101)); // +1 year
-        assertEquals("year EQ", 0, calValidator.compareYears(value, cal20050101)); // same year
-        assertEquals("year GT", 1, calValidator.compareYears(value, cal20041231)); // -1 year
-
-        try {
-            calValidator.compare(value, value, -1);
-            fail("Invalid Compare field - expected IllegalArgumentException to be thrown");
-        } catch (IllegalArgumentException e) {
-            assertEquals("check message", "Invalid field: -1", e.getMessage());
-        }
-    }
+    
 
     /** Test Date/Time style Validator (there isn't an implementation for this) */
-    public void testDateTimeStyle() {
-        Locale origDefault = Locale.getDefault();
-        Locale.setDefault(Locale.UK);
-
-        AbstractCalendarValidator dateTimeValidator =
-                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    protected Object processParsedValue(Object value, Format formatter) {
-                        return value;
-                    }
-                };
-        assertTrue("validate(A) default", dateTimeValidator.isValid0("31/12/05 14:23"));
-        assertTrue(
-                "validate(A) locale ", dateTimeValidator.isValid2("12/31/05 2:23 PM", Locale.US));
-
-        Locale.setDefault(origDefault);
-    }
+    
 
     /** Test format methods */
     @Override
@@ -291,35 +100,3509 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
     }
 
     /** Test adjustToTimeZone() method */
-    public void testAdjustToTimeZone() {
 
+    
+    public void testCalendarValidatorMethods_test0_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+    }
+
+    
+    public void testCalendarValidatorMethods_test1_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test2_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test3_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test4_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test5_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test6_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test7_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test8_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test9_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test10_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testCalendarValidatorMethods_test11_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test12_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testCalendarValidatorMethods_test13_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test14_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testCalendarValidatorMethods_test15_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test16_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+    }
+
+    
+    public void testCalendarValidatorMethods_test17_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test18_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testCalendarValidatorMethods_test19_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test20_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+    }
+
+    
+    public void testCalendarValidatorMethods_test21_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test22_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+    }
+
+    
+    public void testCalendarValidatorMethods_test23_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test24_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+    }
+
+    
+    public void testCalendarValidatorMethods_test25_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test26_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testCalendarValidatorMethods_test27_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test28_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testCalendarValidatorMethods_test29_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test30_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testCalendarValidatorMethods_test31_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test32_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+    }
+
+    
+    public void testCalendarValidatorMethods_test33_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+    }
+
+    
+    public void testCalendarValidatorMethods_test34_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test35_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test36_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test37_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate5(localeVal,locale,zone);
+        assertEquals(
+                "validate(C) locale ",
+                expectedZone,
+                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test38_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate5(localeVal,locale,zone);
+        assertEquals(
+                "validate(C) locale ",
+                expectedZone,
+                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test39_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate5(localeVal,locale,zone);
+        assertEquals(
+                "validate(C) locale ",
+                expectedZone,
+                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate3(patternVal,pattern,zone);
+        assertEquals(
+                "validate(C) pattern",
+                expectedZone,
+                CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());
+    }
+
+    
+    public void testCalendarValidatorMethods_test40_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate5(localeVal,locale,zone);
+        assertEquals(
+                "validate(C) locale ",
+                expectedZone,
+                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate3(patternVal,pattern,zone);
+        assertEquals(
+                "validate(C) pattern",
+                expectedZone,
+                CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());
+        CalendarValidator.getInstance();
+    }
+
+    
+    public void testCalendarValidatorMethods_test41_decomposed()  {
+        Locale.setDefault(Locale.US);
+        Locale locale = Locale.GERMAN;
+        String pattern = "yyyy-MM-dd";
+        String patternVal = "2005-12-31";
+        String germanVal = "31 Dez 2005";
+        String germanPattern = "dd MMM yyyy";
+        String localeVal = "31.12.2005";
+        String defaultVal = "12/31/05";
+        String XXXX = "XXXX";
+        Date expected = createCalendar(null, 20051231, 0).getTime();
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate0(defaultVal);
+        assertEquals(
+                "validate(A) default",
+                expected,
+                CalendarValidator.getInstance().validate0(defaultVal).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate4(localeVal,locale);
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate2(patternVal,pattern);
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate6(germanVal,germanPattern,Locale.GERMAN);
+        assertEquals(
+                "validate(A) both",
+                expected,
+                CalendarValidator.getInstance()
+                        .validate6(germanVal, germanPattern, Locale.GERMAN)
+                        .getTime());
+        CalendarValidator.getInstance();
+        assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) pattern",
+                CalendarValidator.getInstance().isValid1(patternVal, pattern));
+        CalendarValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                CalendarValidator.getInstance()
+                        .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
+        CalendarValidator.getInstance();
+        assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
+        CalendarValidator.getInstance();
+        assertFalse(
+                "isValid(B) both",
+                CalendarValidator.getInstance()
+                        .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
+        TimeZone zone = (TimeZone.getDefault().getRawOffset() == EET.getRawOffset() ? EST : EET);
+        Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
+        assertFalse("default/EET same ", expected.getTime() == expectedZone.getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate1(defaultVal,zone);
+        assertEquals(
+                "validate(C) default",
+                expectedZone,
+                CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate5(localeVal,locale,zone);
+        assertEquals(
+                "validate(C) locale ",
+                expectedZone,
+                CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate3(patternVal,pattern,zone);
+        assertEquals(
+                "validate(C) pattern",
+                expectedZone,
+                CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());
+        CalendarValidator.getInstance();
+        CalendarValidator.getInstance().validate7(germanVal,germanPattern,Locale.GERMAN,zone);
+        assertEquals(
+                "validate(C) both",
+                expectedZone,
+                CalendarValidator.getInstance()
+                        .validate7(germanVal, germanPattern, Locale.GERMAN, zone)
+                        .getTime());
+    }
+
+    
+    public void testCompare_test0_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+    }
+
+    
+    public void testCompare_test1_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+    }
+
+    
+    public void testCompare_test2_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+    }
+
+    
+    public void testCompare_test3_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+    }
+
+    
+    public void testCompare_test4_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+    }
+
+    
+    public void testCompare_test5_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+    }
+
+    
+    public void testCompare_test6_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+    }
+
+    
+    public void testCompare_test7_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+    }
+
+    
+    public void testCompare_test8_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+    }
+
+    
+    public void testCompare_test9_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901));
+        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830));
+        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801));
+        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816));
+        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
+    }
+
+    
+    public void testCompare_test10_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901));
+        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830));
+        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801));
+        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816));
+        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
+        assertEquals(
+                "qtrA <1",
+                -1,
+                calValidator.compareQuarters0(value, cal20051101));
+        assertEquals(
+                "qtrA <2", -1, calValidator.compareQuarters0(value, cal20051001));
+        assertEquals("qtrA =1", 0, calValidator.compareQuarters0(value, cal20050901));
+        assertEquals(
+                "qtrA =2", 0, calValidator.compareQuarters0(value, cal20050701));
+        assertEquals("qtrA =3", 0, calValidator.compareQuarters0(value, cal20050731));
+        assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630));
+    }
+
+    
+    public void testCompare_test11_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901));
+        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830));
+        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801));
+        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816));
+        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
+        assertEquals(
+                "qtrA <1",
+                -1,
+                calValidator.compareQuarters0(value, cal20051101));
+        assertEquals(
+                "qtrA <2", -1, calValidator.compareQuarters0(value, cal20051001));
+        assertEquals("qtrA =1", 0, calValidator.compareQuarters0(value, cal20050901));
+        assertEquals(
+                "qtrA =2", 0, calValidator.compareQuarters0(value, cal20050701));
+        assertEquals("qtrA =3", 0, calValidator.compareQuarters0(value, cal20050731));
+        assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630));
+        assertEquals(
+                "qtrB LT",
+                -1,
+                calValidator.compareQuarters1(value, cal20051101, 2));
+        assertEquals(
+                "qtrB =1", 0, calValidator.compareQuarters1(value, cal20051001, 2));
+        assertEquals(
+                "qtrB =2", 0, calValidator.compareQuarters1(value, cal20050901, 2));
+        assertEquals(
+                "qtrB =3", 1, calValidator.compareQuarters1(value, cal20050701, 2));
+        assertEquals(
+                "qtrB =4", 1, calValidator.compareQuarters1(value, cal20050731, 2));
+        assertEquals(
+                "qtrB GT", 1, calValidator.compareQuarters1(value, cal20050630, 2));
+    }
+
+    
+    public void testCompare_test12_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901));
+        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830));
+        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801));
+        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816));
+        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
+        assertEquals(
+                "qtrA <1",
+                -1,
+                calValidator.compareQuarters0(value, cal20051101));
+        assertEquals(
+                "qtrA <2", -1, calValidator.compareQuarters0(value, cal20051001));
+        assertEquals("qtrA =1", 0, calValidator.compareQuarters0(value, cal20050901));
+        assertEquals(
+                "qtrA =2", 0, calValidator.compareQuarters0(value, cal20050701));
+        assertEquals("qtrA =3", 0, calValidator.compareQuarters0(value, cal20050731));
+        assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630));
+        assertEquals(
+                "qtrB LT",
+                -1,
+                calValidator.compareQuarters1(value, cal20051101, 2));
+        assertEquals(
+                "qtrB =1", 0, calValidator.compareQuarters1(value, cal20051001, 2));
+        assertEquals(
+                "qtrB =2", 0, calValidator.compareQuarters1(value, cal20050901, 2));
+        assertEquals(
+                "qtrB =3", 1, calValidator.compareQuarters1(value, cal20050701, 2));
+        assertEquals(
+                "qtrB =4", 1, calValidator.compareQuarters1(value, cal20050731, 2));
+        assertEquals(
+                "qtrB GT", 1, calValidator.compareQuarters1(value, cal20050630, 2));
+        assertEquals("year LT", -1, calValidator.compareYears(value, cal20060101));
+        assertEquals("year EQ", 0, calValidator.compareYears(value, cal20050101));
+        assertEquals("year GT", 1, calValidator.compareYears(value, cal20041231));
+    }
+
+    
+    public void testCompare_test13_decomposed()  {
+        int sameTime = 124522;
+        int testDate = 20050823;
+        Calendar diffHour = createCalendar(GMT, testDate, 115922);
+        Calendar diffMin = createCalendar(GMT, testDate, 124422);
+        Calendar diffSec = createCalendar(GMT, testDate, 124521);
+        Calendar value = createCalendar(GMT, testDate, sameTime);
+        Calendar cal20050824 = createCalendar(GMT, 20050824, sameTime);
+        Calendar cal20050822 = createCalendar(GMT, 20050822, sameTime);
+        Calendar cal20050830 = createCalendar(GMT, 20050830, sameTime);
+        Calendar cal20050816 = createCalendar(GMT, 20050816, sameTime);
+        Calendar cal20050901 = createCalendar(GMT, 20050901, sameTime);
+        Calendar cal20050801 = createCalendar(GMT, 20050801, sameTime);
+        Calendar cal20050731 = createCalendar(GMT, 20050731, sameTime);
+        Calendar cal20051101 = createCalendar(GMT, 20051101, sameTime);
+        Calendar cal20051001 = createCalendar(GMT, 20051001, sameTime);
+        Calendar cal20050701 = createCalendar(GMT, 20050701, sameTime);
+        Calendar cal20050630 = createCalendar(GMT, 20050630, sameTime);
+        Calendar cal20060101 = createCalendar(GMT, 20060101, sameTime);
+        Calendar cal20050101 = createCalendar(GMT, 20050101, sameTime);
+        Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
+        assertEquals("hour GT", 1, calValidator.compare(value, diffHour, Calendar.HOUR_OF_DAY));
+        assertEquals("hour EQ", 0, calValidator.compare(value, diffMin, Calendar.HOUR_OF_DAY));
+        assertEquals("mins GT", 1, calValidator.compare(value, diffMin, Calendar.MINUTE));
+        assertEquals("mins EQ", 0, calValidator.compare(value, diffSec, Calendar.MINUTE));
+        assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
+        assertEquals("date LT", -1, calValidator.compareDates(value, cal20050824));
+        assertEquals(
+                "date EQ", 0, calValidator.compareDates(value, diffHour));
+        assertEquals(
+                "date(B)",
+                0,
+                calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
+        assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
+        assertEquals("week LT", -1, calValidator.compareWeeks(value, cal20050830));
+        assertEquals("week =1", 0, calValidator.compareWeeks(value, cal20050824));
+        assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals(
+                "week =3",
+                0,
+                calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
+        assertEquals("week =4", 0, calValidator.compareWeeks(value, cal20050822));
+        assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
+        assertEquals("mnth LT", -1, calValidator.compareMonths(value, cal20050901));
+        assertEquals("mnth =1", 0, calValidator.compareMonths(value, cal20050830));
+        assertEquals("mnth =2", 0, calValidator.compareMonths(value, cal20050801));
+        assertEquals("mnth =3", 0, calValidator.compareMonths(value, cal20050816));
+        assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
+        assertEquals(
+                "qtrA <1",
+                -1,
+                calValidator.compareQuarters0(value, cal20051101));
+        assertEquals(
+                "qtrA <2", -1, calValidator.compareQuarters0(value, cal20051001));
+        assertEquals("qtrA =1", 0, calValidator.compareQuarters0(value, cal20050901));
+        assertEquals(
+                "qtrA =2", 0, calValidator.compareQuarters0(value, cal20050701));
+        assertEquals("qtrA =3", 0, calValidator.compareQuarters0(value, cal20050731));
+        assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630));
+        assertEquals(
+                "qtrB LT",
+                -1,
+                calValidator.compareQuarters1(value, cal20051101, 2));
+        assertEquals(
+                "qtrB =1", 0, calValidator.compareQuarters1(value, cal20051001, 2));
+        assertEquals(
+                "qtrB =2", 0, calValidator.compareQuarters1(value, cal20050901, 2));
+        assertEquals(
+                "qtrB =3", 1, calValidator.compareQuarters1(value, cal20050701, 2));
+        assertEquals(
+                "qtrB =4", 1, calValidator.compareQuarters1(value, cal20050731, 2));
+        assertEquals(
+                "qtrB GT", 1, calValidator.compareQuarters1(value, cal20050630, 2));
+        assertEquals("year LT", -1, calValidator.compareYears(value, cal20060101));
+        assertEquals("year EQ", 0, calValidator.compareYears(value, cal20050101));
+        assertEquals("year GT", 1, calValidator.compareYears(value, cal20041231));
+        try {
+            calValidator.compare(value, value, -1);
+            fail("Invalid Compare field - expected IllegalArgumentException to be thrown");
+        } catch (IllegalArgumentException e) {
+            assertEquals("check message", "Invalid field: -1", e.getMessage());
+        }
+    }
+
+    
+    public void testDateTimeStyle_test0_decomposed()  {
+        Locale origDefault = Locale.getDefault();
+        Locale.setDefault(Locale.UK);
+        AbstractCalendarValidator dateTimeValidator =
+                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected Object processParsedValue(Object value, Format formatter) {
+                        return value;
+                    }
+                };
+    }
+
+    
+    public void testDateTimeStyle_test1_decomposed()  {
+        Locale origDefault = Locale.getDefault();
+        Locale.setDefault(Locale.UK);
+        AbstractCalendarValidator dateTimeValidator =
+                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected Object processParsedValue(Object value, Format formatter) {
+                        return value;
+                    }
+                };
+        assertTrue("validate(A) default", dateTimeValidator.isValid0("31/12/05 14:23"));
+    }
+
+    
+    public void testDateTimeStyle_test2_decomposed()  {
+        Locale origDefault = Locale.getDefault();
+        Locale.setDefault(Locale.UK);
+        AbstractCalendarValidator dateTimeValidator =
+                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected Object processParsedValue(Object value, Format formatter) {
+                        return value;
+                    }
+                };
+        assertTrue("validate(A) default", dateTimeValidator.isValid0("31/12/05 14:23"));
+        assertTrue(
+                "validate(A) locale ", dateTimeValidator.isValid2("12/31/05 2:23 PM", Locale.US));
+    }
+
+    
+    public void testDateTimeStyle_test3_decomposed()  {
+        Locale origDefault = Locale.getDefault();
+        Locale.setDefault(Locale.UK);
+        AbstractCalendarValidator dateTimeValidator =
+                new AbstractCalendarValidator(true, DateFormat.SHORT, DateFormat.SHORT) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected Object processParsedValue(Object value, Format formatter) {
+                        return value;
+                    }
+                };
+        assertTrue("validate(A) default", dateTimeValidator.isValid0("31/12/05 14:23"));
+        assertTrue(
+                "validate(A) locale ", dateTimeValidator.isValid2("12/31/05 2:23 PM", Locale.US));
+        Locale.setDefault(origDefault);
+    }
+
+    
+    public void testAdjustToTimeZone_test0_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+    }
+
+    
+    public void testAdjustToTimeZone_test1_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+    }
 
+    
+    public void testAdjustToTimeZone_test2_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
         Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
         Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+    }
 
+    
+    public void testAdjustToTimeZone_test3_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
         Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
         Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+    }
 
+    
+    public void testAdjustToTimeZone_test4_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
         assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
         assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
         assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+    }
 
+    
+    public void testAdjustToTimeZone_test5_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+    }
+
+    
+    public void testAdjustToTimeZone_test6_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+    }
+
+    
+    public void testAdjustToTimeZone_test7_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+    }
+
+    
+    public void testAdjustToTimeZone_test8_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
         CalendarValidator.adjustToTimeZone(calEST, GMT);
         assertEquals("EST to GMT", dateGMT, calEST.getTime());
         assertFalse("Check EST = GMT", dateEST == calEST.getTime());
         CalendarValidator.adjustToTimeZone(calEST, EST);
         assertEquals("back to EST", dateEST, calEST.getTime());
         assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+    }
 
+    
+    public void testAdjustToTimeZone_test9_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+    }
+
+    
+    public void testAdjustToTimeZone_test10_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+    }
+
+    
+    public void testAdjustToTimeZone_test11_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+    }
+
+    
+    public void testAdjustToTimeZone_test12_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
         CalendarValidator.adjustToTimeZone(calCET, GMT);
         assertEquals("CET to GMT", dateGMT, calCET.getTime());
         assertFalse("Check CET = GMT", dateCET == calCET.getTime());
         CalendarValidator.adjustToTimeZone(calCET, EET);
         assertEquals("back to CET", dateCET, calCET.getTime());
         assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+    }
 
+    
+    public void testAdjustToTimeZone_test13_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
+    }
+
+    
+    public void testAdjustToTimeZone_test14_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
+        assertTrue("SAME: UTC = GMT", UTC.hasSameRules(GMT));
+        assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
+    }
+
+    
+    public void testAdjustToTimeZone_test15_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
+        assertTrue("SAME: UTC = GMT", UTC.hasSameRules(GMT));
+        assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
+        assertFalse("SAME: Check GMT(A)", GMT.equals(calUTC.getTimeZone()));
+        assertTrue("SAME: Check UTC(A)", UTC.equals(calUTC.getTimeZone()));
+    }
+
+    
+    public void testAdjustToTimeZone_test16_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
+        assertTrue("SAME: UTC = GMT", UTC.hasSameRules(GMT));
+        assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
+        assertFalse("SAME: Check GMT(A)", GMT.equals(calUTC.getTimeZone()));
+        assertTrue("SAME: Check UTC(A)", UTC.equals(calUTC.getTimeZone()));
+        CalendarValidator.adjustToTimeZone(calUTC, GMT);
+    }
+
+    
+    public void testAdjustToTimeZone_test17_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
+        Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
+        assertTrue("SAME: UTC = GMT", UTC.hasSameRules(GMT));
+        assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
+        assertFalse("SAME: Check GMT(A)", GMT.equals(calUTC.getTimeZone()));
+        assertTrue("SAME: Check UTC(A)", UTC.equals(calUTC.getTimeZone()));
+        CalendarValidator.adjustToTimeZone(calUTC, GMT);
+        assertEquals("SAME: Check time (B)", calUTC.getTime(), calGMT.getTime());
+        assertTrue("SAME: Check GMT(B)", GMT.equals(calUTC.getTimeZone()));
+    }
+
+    
+    public void testAdjustToTimeZone_test18_decomposed()  {
+        Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
+        Date dateEST = calEST.getTime();
+        Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
+        Date dateGMT = calGMT.getTime();
+        Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
+        Date dateCET = calCET.getTime();
+        assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
+        assertFalse("Check GMT != EST", dateGMT.getTime() == dateEST.getTime());
+        assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, GMT);
+        assertEquals("EST to GMT", dateGMT, calEST.getTime());
+        assertFalse("Check EST = GMT", dateEST == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calEST, EST);
+        assertEquals("back to EST", dateEST, calEST.getTime());
+        assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, GMT);
+        assertEquals("CET to GMT", dateGMT, calCET.getTime());
+        assertFalse("Check CET = GMT", dateCET == calCET.getTime());
+        CalendarValidator.adjustToTimeZone(calCET, EET);
+        assertEquals("back to CET", dateCET, calCET.getTime());
+        assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
         Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
         assertTrue("SAME: UTC = GMT", UTC.hasSameRules(GMT));
         assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
@@ -330,6 +3613,4 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("SAME: Check GMT(B)", GMT.equals(calUTC.getTimeZone()));
         assertFalse("SAME: Check UTC(B)", UTC.equals(calUTC.getTimeZone()));
     }
-
-    
 }

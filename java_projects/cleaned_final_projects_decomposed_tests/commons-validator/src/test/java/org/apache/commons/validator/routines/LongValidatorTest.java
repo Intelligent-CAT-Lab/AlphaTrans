@@ -108,7 +108,12 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
     }
 
     /** Test LongValidator validate Methods */
-    public void testLongValidatorMethods() {
+    
+
+    /** Test Long Range/Min/Max */
+
+    
+    public void testLongValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
         String patternVal = "1,23,45";
@@ -117,45 +122,1244 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         String defaultVal = "12,345";
         String XXXX = "XXXX";
         Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test1_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
         assertEquals(
                 "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+    }
+
+    
+    public void testLongValidatorMethods_test2_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test3_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
         assertEquals(
                 "validate(A) locale ",
                 expected,
                 LongValidator.getInstance().validate2(localeVal, locale));
+    }
+
+    
+    public void testLongValidatorMethods_test4_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test5_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
         assertEquals(
                 "validate(A) pattern",
                 expected,
                 LongValidator.getInstance().validate1(patternVal, pattern));
+    }
+
+    
+    public void testLongValidatorMethods_test6_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test7_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
         assertEquals(
                 "validate(A) both",
                 expected,
                 LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testLongValidatorMethods_test8_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test9_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
         assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+    }
+
+    
+    public void testLongValidatorMethods_test10_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test11_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
         assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+    }
+
+    
+    public void testLongValidatorMethods_test12_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test13_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
         assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+    }
+
+    
+    public void testLongValidatorMethods_test14_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test15_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
         assertTrue(
                 "isValid(A) both",
                 LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testLongValidatorMethods_test16_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test17_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
         assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+    }
+
+    
+    public void testLongValidatorMethods_test18_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test19_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
         assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+    }
+
+    
+    public void testLongValidatorMethods_test20_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test21_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
         assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+    }
+
+    
+    public void testLongValidatorMethods_test22_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test23_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
         assertNull(
                 "validate(B) both",
                 LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+    }
 
+    
+    public void testLongValidatorMethods_test24_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test25_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
         assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+    }
+
+    
+    public void testLongValidatorMethods_test26_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test27_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
         assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
+    }
+
+    
+    public void testLongValidatorMethods_test28_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test29_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
+        LongValidator.getInstance();
         assertFalse("isValid(B) pattern", LongValidator.getInstance().isValid1(XXXX, pattern));
+    }
+
+    
+    public void testLongValidatorMethods_test30_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) pattern", LongValidator.getInstance().isValid1(XXXX, pattern));
+        LongValidator.getInstance();
+    }
+
+    
+    public void testLongValidatorMethods_test31_decomposed()  {
+        Locale locale = Locale.GERMAN;
+        String pattern = "0,00,00";
+        String patternVal = "1,23,45";
+        String germanPatternVal = "1.23.45";
+        String localeVal = "12.345";
+        String defaultVal = "12,345";
+        String XXXX = "XXXX";
+        Long expected = Long.valueOf(12345);
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) locale ",
+                expected,
+                LongValidator.getInstance().validate2(localeVal, locale));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) pattern",
+                expected,
+                LongValidator.getInstance().validate1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertEquals(
+                "validate(A) both",
+                expected,
+                LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
+        LongValidator.getInstance();
+        assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
+        LongValidator.getInstance();
+        assertTrue(
+                "isValid(A) both",
+                LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
+        LongValidator.getInstance();
+        assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
+        LongValidator.getInstance();
+        assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
+        LongValidator.getInstance();
+        assertNull(
+                "validate(B) both",
+                LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
+        LongValidator.getInstance();
+        assertFalse("isValid(B) pattern", LongValidator.getInstance().isValid1(XXXX, pattern));
+        LongValidator.getInstance();
         assertFalse(
                 "isValid(B) both",
                 LongValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    /** Test Long Range/Min/Max */
-    public void testLongRangeMinMax() {
+    
+    public void testLongRangeMinMax_test0_decomposed()  {
+        LongValidator validator = (LongValidator) strictValidator;
+        Long number9 = validator.validate1("9", "#");
+    }
+
+    
+    public void testLongRangeMinMax_test1_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");
         Long number10 = validator.validate1("10", "#");
@@ -163,21 +1367,62 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         Long number19 = validator.validate1("19", "#");
         Long number20 = validator.validate1("20", "#");
         Long number21 = validator.validate1("21", "#");
+    }
 
+    
+    public void testLongRangeMinMax_test2_decomposed()  {
+        LongValidator validator = (LongValidator) strictValidator;
+        Long number9 = validator.validate1("9", "#");
+        Long number10 = validator.validate1("10", "#");
+        Long number11 = validator.validate1("11", "#");
+        Long number19 = validator.validate1("19", "#");
+        Long number20 = validator.validate1("20", "#");
+        Long number21 = validator.validate1("21", "#");
         assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
         assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
         assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
         assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+    }
 
+    
+    public void testLongRangeMinMax_test3_decomposed()  {
+        LongValidator validator = (LongValidator) strictValidator;
+        Long number9 = validator.validate1("9", "#");
+        Long number10 = validator.validate1("10", "#");
+        Long number11 = validator.validate1("11", "#");
+        Long number19 = validator.validate1("19", "#");
+        Long number20 = validator.validate1("20", "#");
+        Long number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
         assertFalse("minValue() < min", validator.minValue1(number9, 10));
         assertTrue("minValue() = min", validator.minValue1(number10, 10));
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
+    }
 
+    
+    public void testLongRangeMinMax_test4_decomposed()  {
+        LongValidator validator = (LongValidator) strictValidator;
+        Long number9 = validator.validate1("9", "#");
+        Long number10 = validator.validate1("10", "#");
+        Long number11 = validator.validate1("11", "#");
+        Long number19 = validator.validate1("19", "#");
+        Long number20 = validator.validate1("20", "#");
+        Long number21 = validator.validate1("21", "#");
+        assertFalse("isInRange() < min", validator.isInRange1(number9, 10, 20));
+        assertTrue("isInRange() = min", validator.isInRange1(number10, 10, 20));
+        assertTrue("isInRange() in range", validator.isInRange1(number11, 10, 20));
+        assertTrue("isInRange() = max", validator.isInRange1(number20, 10, 20));
+        assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
+        assertFalse("minValue() < min", validator.minValue1(number9, 10));
+        assertTrue("minValue() = min", validator.minValue1(number10, 10));
+        assertTrue("minValue() > min", validator.minValue1(number11, 10));
         assertTrue("maxValue() < max", validator.maxValue1(number19, 20));
         assertTrue("maxValue() = max", validator.maxValue1(number20, 20));
         assertFalse("maxValue() > max", validator.maxValue1(number21, 20));
     }
-
-    
 }
