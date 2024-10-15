@@ -43,7 +43,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create call graph for test methods')
-    parser.add_argument('project_name', type=str, help='Name of the project')
+    parser.add_argument('--project_name', type=str, help='Name of the project')
     parser.add_argument('--evosuite', action='store_true', help='Use evosuite schemas')
     parser.add_argument('--suffix', type=str, default='', help='Suffix for schema directory')
     args = parser.parse_args()
