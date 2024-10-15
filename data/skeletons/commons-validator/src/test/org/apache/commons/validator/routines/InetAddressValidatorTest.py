@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.InetAddressValidator import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -18,28 +19,49 @@ class InetAddressValidatorTest(unittest.TestCase):
     def _setUp(self) -> None:
         pass
 
-    def testIPv6(self) -> None:
+    def testIPv6_test0_decomposed(self) -> None:
         pass
 
-    def testBrokenInetAddresses(self) -> None:
+    def testBrokenInetAddresses_test1_decomposed(self) -> None:
         pass
 
-    def testReservedInetAddresses(self) -> None:
+    def testBrokenInetAddresses_test0_decomposed(self) -> None:
         pass
 
-    def testInetAddressesByClass(self) -> None:
+    def testReservedInetAddresses_test0_decomposed(self) -> None:
         pass
 
-    def testVALIDATOR_445(self) -> None:
+    def testInetAddressesByClass_test0_decomposed(self) -> None:
         pass
 
-    def testVALIDATOR_419(self) -> None:
+    def testVALIDATOR_445_test1_decomposed(self) -> None:
         pass
 
-    def testVALIDATOR_335(self) -> None:
+    def testVALIDATOR_445_test0_decomposed(self) -> None:
         pass
 
-    def testInetAddressesFromTheWild(self) -> None:
+    def testVALIDATOR_419_test5_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_419_test4_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_419_test3_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_419_test2_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_419_test1_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_419_test0_decomposed(self) -> None:
+        pass
+
+    def testVALIDATOR_335_test0_decomposed(self) -> None:
+        pass
+
+    def testInetAddressesFromTheWild_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.ISBNValidator import *
 from src.main.org.apache.commons.validator.ISBNValidator import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,40 +22,112 @@ class ISBNValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testConversionErrors(self) -> None:
+    def testConversionErrors_test2_decomposed(self) -> None:
         pass
 
-    def testInvalid(self) -> None:
+    def testConversionErrors_test1_decomposed(self) -> None:
         pass
 
-    def testNull(self) -> None:
+    def testConversionErrors_test0_decomposed(self) -> None:
         pass
 
-    def testValidateISBN13(self) -> None:
+    def testInvalid_test4_decomposed(self) -> None:
         pass
 
-    def testValidateISBN10Convert(self) -> None:
+    def testInvalid_test3_decomposed(self) -> None:
         pass
 
-    def testValidateISBN10(self) -> None:
+    def testInvalid_test2_decomposed(self) -> None:
         pass
 
-    def testIsValidISBN13(self) -> None:
+    def testInvalid_test1_decomposed(self) -> None:
         pass
 
-    def testIsValidISBN10(self) -> None:
+    def testInvalid_test0_decomposed(self) -> None:
         pass
 
-    def testInvalidISBN13Format(self) -> None:
+    def testNull_test7_decomposed(self) -> None:
         pass
 
-    def testValidISBN13Format(self) -> None:
+    def testNull_test6_decomposed(self) -> None:
         pass
 
-    def testInvalidISBN10Format(self) -> None:
+    def testNull_test5_decomposed(self) -> None:
         pass
 
-    def testValidISBN10Format(self) -> None:
+    def testNull_test4_decomposed(self) -> None:
+        pass
+
+    def testNull_test3_decomposed(self) -> None:
+        pass
+
+    def testNull_test2_decomposed(self) -> None:
+        pass
+
+    def testNull_test1_decomposed(self) -> None:
+        pass
+
+    def testNull_test0_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN13_test2_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN13_test1_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN13_test0_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN10Convert_test1_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN10Convert_test0_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN10_test2_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN10_test1_decomposed(self) -> None:
+        pass
+
+    def testValidateISBN10_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN13_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN13_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN13_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN10_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN10_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValidISBN10_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidISBN13Format_test1_decomposed(self) -> None:
+        pass
+
+    def testInvalidISBN13Format_test0_decomposed(self) -> None:
+        pass
+
+    def testValidISBN13Format_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidISBN10Format_test1_decomposed(self) -> None:
+        pass
+
+    def testInvalidISBN10Format_test0_decomposed(self) -> None:
+        pass
+
+    def testValidISBN10Format_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

@@ -8,6 +8,7 @@ from src.main.org.apache.commons.validator.routines.CreditCardValidator import *
 from src.main.org.apache.commons.validator.routines.CodeValidator import *
 from src.main.org.apache.commons.validator.CreditCardValidator import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -40,10 +41,28 @@ class CreditCardValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testAddAllowedCardType(self) -> None:
+    def testAddAllowedCardType_test3_decomposed(self) -> None:
         pass
 
-    def testIsValid(self) -> None:
+    def testAddAllowedCardType_test2_decomposed(self) -> None:
+        pass
+
+    def testAddAllowedCardType_test1_decomposed(self) -> None:
+        pass
+
+    def testAddAllowedCardType_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValid_test3_decomposed(self) -> None:
+        pass
+
+    def testIsValid_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValid_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValid_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

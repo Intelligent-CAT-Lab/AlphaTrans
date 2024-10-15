@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.TimeValidator import *
 import zoneinfo
 import unittest
+import os
 import datetime
 import typing
 from typing import *
@@ -35,6 +36,114 @@ class TimeValidatorTest(unittest.TestCase):
     def _setUp(self) -> None:
         pass
 
+    def testCompare_test5_decomposed(self) -> None:
+        pass
+
+    def testCompare_test4_decomposed(self) -> None:
+        pass
+
+    def testCompare_test3_decomposed(self) -> None:
+        pass
+
+    def testCompare_test2_decomposed(self) -> None:
+        pass
+
+    def testCompare_test1_decomposed(self) -> None:
+        pass
+
+    def testCompare_test0_decomposed(self) -> None:
+        pass
+
+    def testFormat_test4_decomposed(self) -> None:
+        pass
+
+    def testFormat_test3_decomposed(self) -> None:
+        pass
+
+    def testFormat_test2_decomposed(self) -> None:
+        pass
+
+    def testFormat_test1_decomposed(self) -> None:
+        pass
+
+    def testFormat_test0_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test20_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test19_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test18_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test17_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test16_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test15_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test14_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test13_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test12_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test11_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test10_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test9_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test8_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test7_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test6_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test5_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test4_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test3_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test2_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test1_decomposed(self) -> None:
+        pass
+
+    def testTimeZone_test0_decomposed(self) -> None:
+        pass
+
+    def testLocaleInvalid_test0_decomposed(self) -> None:
+        pass
+
+    def testLocaleValid_test0_decomposed(self) -> None:
+        pass
+
+    def testPatternInvalid_test0_decomposed(self) -> None:
+        pass
+
+    def testPatternValid_test0_decomposed(self) -> None:
+        pass
+
     @staticmethod
     def _createDate(
         zone: typing.Union[zoneinfo.ZoneInfo, datetime.timezone],
@@ -55,27 +164,6 @@ class TimeValidatorTest(unittest.TestCase):
         datetime.timedelta,
         datetime.timezone,
     ]:
-        pass
-
-    def testCompare(self) -> None:
-        pass
-
-    def testFormat(self) -> None:
-        pass
-
-    def testTimeZone(self) -> None:
-        pass
-
-    def testLocaleInvalid(self) -> None:
-        pass
-
-    def testLocaleValid(self) -> None:
-        pass
-
-    def testPatternInvalid(self) -> None:
-        pass
-
-    def testPatternValid(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

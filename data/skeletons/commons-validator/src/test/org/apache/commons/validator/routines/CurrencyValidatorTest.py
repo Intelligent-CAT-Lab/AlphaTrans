@@ -5,6 +5,7 @@ from src.main.org.apache.commons.validator.routines.CurrencyValidator import *
 from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -27,22 +28,79 @@ class CurrencyValidatorTest(unittest.TestCase):
     def _setUp(self) -> None:
         pass
 
-    def testPattern(self) -> None:
+    def testPattern_test6_decomposed(self) -> None:
         pass
 
-    def testIntegerInvalid(self) -> None:
+    def testPattern_test5_decomposed(self) -> None:
         pass
 
-    def testIntegerValid(self) -> None:
+    def testPattern_test4_decomposed(self) -> None:
         pass
 
-    def testInvalid(self) -> None:
+    def testPattern_test3_decomposed(self) -> None:
         pass
 
-    def testValid(self) -> None:
+    def testPattern_test2_decomposed(self) -> None:
         pass
 
-    def testFormatType(self) -> None:
+    def testPattern_test1_decomposed(self) -> None:
+        pass
+
+    def testPattern_test0_decomposed(self) -> None:
+        pass
+
+    def testIntegerInvalid_test1_decomposed(self) -> None:
+        pass
+
+    def testIntegerInvalid_test0_decomposed(self) -> None:
+        pass
+
+    def testIntegerValid_test3_decomposed(self) -> None:
+        pass
+
+    def testIntegerValid_test2_decomposed(self) -> None:
+        pass
+
+    def testIntegerValid_test1_decomposed(self) -> None:
+        pass
+
+    def testIntegerValid_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalid_test3_decomposed(self) -> None:
+        pass
+
+    def testInvalid_test2_decomposed(self) -> None:
+        pass
+
+    def testInvalid_test1_decomposed(self) -> None:
+        pass
+
+    def testInvalid_test0_decomposed(self) -> None:
+        pass
+
+    def testValid_test3_decomposed(self) -> None:
+        pass
+
+    def testValid_test2_decomposed(self) -> None:
+        pass
+
+    def testValid_test1_decomposed(self) -> None:
+        pass
+
+    def testValid_test0_decomposed(self) -> None:
+        pass
+
+    def testFormatType_test3_decomposed(self) -> None:
+        pass
+
+    def testFormatType_test2_decomposed(self) -> None:
+        pass
+
+    def testFormatType_test1_decomposed(self) -> None:
+        pass
+
+    def testFormatType_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

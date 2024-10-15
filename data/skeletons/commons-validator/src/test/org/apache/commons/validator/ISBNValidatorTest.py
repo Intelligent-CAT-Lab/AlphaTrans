@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.ISBNValidator import *
 from src.main.org.apache.commons.validator.ISBNValidator import *
 import unittest
+import os
 import io
 
 # Imports End
@@ -20,7 +21,10 @@ class ISBNValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testIsValid(self) -> None:
+    def testIsValid_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValid_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.checkdigit.ISINCheckDigit import *
 from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *
 from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import *
+import os
 import typing
 from typing import *
 import io
@@ -21,7 +22,7 @@ class ISINCheckDigitTest(AbstractCheckDigitTest):
     def _setUp(self) -> None:
         pass
 
-    def testVALIDATOR_345(self) -> None:
+    def testVALIDATOR_345_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.UrlValidator import *
 from src.test.org.apache.commons.validator.ResultPair import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -33,11 +34,41 @@ class UrlTest(unittest.TestCase):
     def _setUp(self) -> None:
         pass
 
-    @staticmethod
-    def main(argv: typing.List[typing.List[str]]) -> None:
+    def testValidateUrl_test0_decomposed(self) -> None:
         pass
 
-    def testValidateUrl(self) -> None:
+    def testValidator204_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator204_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator202_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator202_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValidScheme_test0_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test2_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test1_decomposed(self) -> None:
+        pass
+
+    def testIsValid0_test0_decomposed(self) -> None:
+        pass
+
+    @staticmethod
+    def main(argv: typing.List[typing.List[str]]) -> None:
         pass
 
     @staticmethod
@@ -46,19 +77,7 @@ class UrlTest(unittest.TestCase):
     ) -> bool:
         pass
 
-    def testValidator204(self) -> None:
-        pass
-
-    def testValidator202(self) -> None:
-        pass
-
     def testIsValid1(self, testObjects: typing.List[typing.Any], options: int) -> None:
-        pass
-
-    def testIsValidScheme(self) -> None:
-        pass
-
-    def testIsValid0(self) -> None:
         pass
 
     def __init__(self, testName: str) -> None:

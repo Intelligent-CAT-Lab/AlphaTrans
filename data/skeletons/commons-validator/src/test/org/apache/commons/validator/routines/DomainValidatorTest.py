@@ -23,65 +23,119 @@ class DomainValidatorTest(unittest.TestCase):
     def setUp(self) -> None:
         pass
 
+    def testGetArray_test0_decomposed(self) -> None:
+        pass
+
+    def testEnumIsPublic_test0_decomposed(self) -> None:
+        pass
+
+    def test_LOCAL_TLDS_sortedAndLowerCase_test1_decomposed(self) -> None:
+        pass
+
+    def test_LOCAL_TLDS_sortedAndLowerCase_test0_decomposed(self) -> None:
+        pass
+
+    def test_GENERIC_TLDS_sortedAndLowerCase_test1_decomposed(self) -> None:
+        pass
+
+    def test_GENERIC_TLDS_sortedAndLowerCase_test0_decomposed(self) -> None:
+        pass
+
+    def test_COUNTRY_CODE_TLDS_sortedAndLowerCase_test1_decomposed(self) -> None:
+        pass
+
+    def test_COUNTRY_CODE_TLDS_sortedAndLowerCase_test0_decomposed(self) -> None:
+        pass
+
+    def test_INFRASTRUCTURE_TLDS_sortedAndLowerCase_test1_decomposed(self) -> None:
+        pass
+
+    def test_INFRASTRUCTURE_TLDS_sortedAndLowerCase_test0_decomposed(self) -> None:
+        pass
+
+    def testIsIDNtoASCIIBroken_test2_decomposed(self) -> None:
+        pass
+
+    def testIsIDNtoASCIIBroken_test1_decomposed(self) -> None:
+        pass
+
+    def testIsIDNtoASCIIBroken_test0_decomposed(self) -> None:
+        pass
+
+    def testUnicodeToASCII_test1_decomposed(self) -> None:
+        pass
+
+    def testUnicodeToASCII_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator306_test3_decomposed(self) -> None:
+        pass
+
+    def testValidator306_test2_decomposed(self) -> None:
+        pass
+
+    def testValidator306_test1_decomposed(self) -> None:
+        pass
+
+    def testValidator306_test0_decomposed(self) -> None:
+        pass
+
+    def testValidator297_test0_decomposed(self) -> None:
+        pass
+
+    def testDomainNoDots_test0_decomposed(self) -> None:
+        pass
+
+    def testRFC2396toplabel_test0_decomposed(self) -> None:
+        pass
+
+    def testRFC2396domainlabel_test0_decomposed(self) -> None:
+        pass
+
+    def testIDNJava6OrLater_test2_decomposed(self) -> None:
+        pass
+
+    def testIDNJava6OrLater_test1_decomposed(self) -> None:
+        pass
+
+    def testIDNJava6OrLater_test0_decomposed(self) -> None:
+        pass
+
+    def testIDN_test0_decomposed(self) -> None:
+        pass
+
+    def testAllowLocal_test2_decomposed(self) -> None:
+        pass
+
+    def testAllowLocal_test1_decomposed(self) -> None:
+        pass
+
+    def testAllowLocal_test0_decomposed(self) -> None:
+        pass
+
+    def testTopLevelDomains_test4_decomposed(self) -> None:
+        pass
+
+    def testTopLevelDomains_test3_decomposed(self) -> None:
+        pass
+
+    def testTopLevelDomains_test2_decomposed(self) -> None:
+        pass
+
+    def testTopLevelDomains_test1_decomposed(self) -> None:
+        pass
+
+    def testTopLevelDomains_test0_decomposed(self) -> None:
+        pass
+
+    def testInvalidDomains_test0_decomposed(self) -> None:
+        pass
+
+    def testValidDomains_test0_decomposed(self) -> None:
+        pass
+
     @staticmethod
     def main(a: typing.List[typing.List[str]]) -> None:
-        pass
-
-    def testGetArray(self) -> None:
-        pass
-
-    def testEnumIsPublic(self) -> None:
-        pass
-
-    def test_LOCAL_TLDS_sortedAndLowerCase(self) -> None:
-        pass
-
-    def test_GENERIC_TLDS_sortedAndLowerCase(self) -> None:
-        pass
-
-    def test_COUNTRY_CODE_TLDS_sortedAndLowerCase(self) -> None:
-        pass
-
-    def test_INFRASTRUCTURE_TLDS_sortedAndLowerCase(self) -> None:
-        pass
-
-    def testIsIDNtoASCIIBroken(self) -> None:
-        pass
-
-    def testUnicodeToASCII(self) -> None:
-        pass
-
-    def testValidator306(self) -> None:
-        pass
-
-    def testValidator297(self) -> None:
-        pass
-
-    def testDomainNoDots(self) -> None:
-        pass
-
-    def testRFC2396toplabel(self) -> None:
-        pass
-
-    def testRFC2396domainlabel(self) -> None:
-        pass
-
-    def testIDNJava6OrLater(self) -> None:
-        pass
-
-    def testIDN(self) -> None:
-        pass
-
-    def testAllowLocal(self) -> None:
-        pass
-
-    def testTopLevelDomains(self) -> None:
-        pass
-
-    def testInvalidDomains(self) -> None:
-        pass
-
-    def testValidDomains(self) -> None:
         pass
 
     @staticmethod

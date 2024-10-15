@@ -2,6 +2,7 @@ from __future__ import annotations
 
 # Imports Begin
 import unittest
+import os
 import io
 
 # Imports End
@@ -19,7 +20,7 @@ class CustomValidatorResourcesTest(unittest.TestCase):
     def _setUp(self) -> None:
         pass
 
-    def testCustomResources(self) -> None:
+    def testCustomResources_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

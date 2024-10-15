@@ -3,6 +3,7 @@ from __future__ import annotations
 # Imports Begin
 from src.main.org.apache.commons.validator.routines.ISINValidator import *
 import unittest
+import os
 import typing
 from typing import *
 import io
@@ -21,16 +22,16 @@ class ISINValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def testInvalidFalse(self) -> None:
+    def testInvalidFalse_test0_decomposed(self) -> None:
         pass
 
-    def testIsValidFalse(self) -> None:
+    def testIsValidFalse_test0_decomposed(self) -> None:
         pass
 
-    def testInvalidTrue(self) -> None:
+    def testInvalidTrue_test0_decomposed(self) -> None:
         pass
 
-    def testIsValidTrue(self) -> None:
+    def testIsValidTrue_test0_decomposed(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:
