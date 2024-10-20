@@ -29,6 +29,10 @@ def get_eligible_tests(fragment, processed_fragments, args):
     global_call_graph = {}
     with open(f'data/call_graphs/{args.project_name}/call_graph.json', 'r') as f:
         global_call_graph = json.load(f)
+    
+    executed_tests = {}
+    with open(f'data/source_test_execution{args.suffix}/{args.project_name}/tests.json', 'r') as f:
+        executed_tests = json.load(f)
 
     test_focal_method_map = {}
     for class_ in global_call_graph:
@@ -53,23 +57,8 @@ def get_eligible_tests(fragment, processed_fragments, args):
             test_class = test.split('|')[1]
             test_method = test.split('|')[2]
 
-            test_schema_data = {}
-            with open(f'{args.translation_dir}/{test_schema}_python_partial.json', 'r') as f:
-                test_schema_data = json.load(f)
-
-            if test_class not in test_schema_data['classes']:
-                continue
-
-            if test_method not in test_schema_data['classes'][test_class]['methods']:
-                continue
-
-            if 'Test' not in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
-                continue
-
-            if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
-                continue
-
-            if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+            test_class_path = test_schema[test_schema.find('src.test.')+len('src.test.'):]
+            if test_method.split(':')[1] not in executed_tests[test_class_path]:
                 continue
 
             executable_tests.append({'schema_name': test_schema, 'class_name': test_class, 'fragment_name': test_method, 'fragment_type': 'method', 'is_test_method': True})

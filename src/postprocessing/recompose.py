@@ -3,13 +3,6 @@ import json
 import os
 
 
-def has_test_method(methods):
-    for method in methods:
-        if 'Test' in [x.split('(')[0] for x in methods[method]['annotations']]:
-            return True
-    return False
-
-
 def main(args):
 
     total_fragments = 0
@@ -243,8 +236,8 @@ def main(args):
                         continue
 
                 # ignore constructors in test files
-                # if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema and has_test_method(data['classes'][class_]['methods']):
-                #     continue
+                if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema:
+                    continue
 
                 if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']] or 'ParameterizedTest' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:
                     recomposed_file += '\n    @pytest.mark.skip(reason="Ignore")\n'
