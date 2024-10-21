@@ -26,8 +26,16 @@ def main(args):
         if call_location == caller_location:
             continue
 
-        if callee_location.endswith(':0:0:0:0') or caller_name in ['<obinit>', '<clinit>'] or callee_name in ['<obinit>', '<clinit>']:
+        if caller_name in ['<obinit>', '<clinit>'] or callee_name in ['<obinit>', '<clinit>']:
             continue
+
+        is_library_callee = False
+        if callee_location.endswith(':0:0:0:0'):
+            is_library_callee = True
+            if callee_location.endswith('Assert.class:0:0:0:0'):
+                callee_location = 'Assert.class:0:0:0:0'
+        #     print(caller_name, callee_location, callee_name)
+        #     continue
 
         callee_path = callee_location[callee_location.find(':')+1:callee_location.find(':', callee_location.find(':')+1)]
         callee_path = callee_path[callee_path.find(project):]
@@ -75,64 +83,71 @@ def main(args):
         else:
             caller_start_line += 1
 
-        callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0]) - 1
-        callee_end_line = callee_start_line + 5
+        if not is_library_callee:
 
-        callable_body = ''
-        with open(f'{projects_dir}/{callee_path}', 'r') as f:
-            callable_body = f.readlines()[callee_start_line-1:callee_end_line]
-
-        searched = False
-        while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
-                or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
-
-            searched = True
-            
-            callable_body = ''
-            with open(f'{projects_dir}/{callee_path}', 'r') as f:
-                callable_body = f.readlines()[callee_start_line-1:callee_end_line]
-            callee_start_line -= 1
-        
-        if searched:
-            callee_start_line += 2
+            callee_start_line = int(callee_location[callee_location.find(':', callee_location.find(':')+1)+1:].split(':')[0]) - 1
+            callee_end_line = callee_start_line + 5
 
             callable_body = ''
             with open(f'{projects_dir}/{callee_path}', 'r') as f:
                 callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+
+            searched = False
+            while not (any([callable_body[0].strip().startswith(x) for x in start_terminations]) 
+                    or any([callable_body[0].strip().endswith(x) for x in end_terminations])):
+
+                searched = True
+                
+                callable_body = ''
+                with open(f'{projects_dir}/{callee_path}', 'r') as f:
+                    callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+                callee_start_line -= 1
             
-            for i in range(len(callable_body)):
-                if callable_body[i].strip() == '':
-                    callee_start_line += 1
-                if callable_body[i].strip() != '':
-                    break
-        else:
-            callee_start_line += 1
+            if searched:
+                callee_start_line += 2
 
-        caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.').replace('.java', '')
-        callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')
+                callable_body = ''
+                with open(f'{projects_dir}/{callee_path}', 'r') as f:
+                    callable_body = f.readlines()[callee_start_line-1:callee_end_line]
+                
+                for i in range(len(callable_body)):
+                    if callable_body[i].strip() == '':
+                        callee_start_line += 1
+                    if callable_body[i].strip() != '':
+                        break
+            else:
+                callee_start_line += 1
 
-        callee_method_class_name, callee_method_key_name = None, None
-        callee_schema = {}
-        is_available = False
-        with open(f'data/schemas{args.suffix}/{project}/{callee_schema_name}.json') as f:
-            callee_schema = json.load(f)
-            for class_ in callee_schema['classes']:
+            callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')
 
-                if callee_name == class_ and callee_start_line == callee_schema['classes'][class_]['start']:
-                    callee_method_class_name = class_
-                    callee_method_key_name = class_
-                    is_available = True
-                    break
+            callee_method_class_name, callee_method_key_name = None, None
+            callee_schema = {}
+            is_available = False
+            with open(f'data/schemas{args.suffix}/{project}/{callee_schema_name}.json') as f:
+                callee_schema = json.load(f)
+                for class_ in callee_schema['classes']:
 
-                for method in callee_schema['classes'][class_]['methods']:
-                    if callee_name == method.split(':')[1] and callee_start_line == callee_schema['classes'][class_]['methods'][method]['start']:                        
+                    if callee_name == class_ and callee_start_line == callee_schema['classes'][class_]['start']:
                         callee_method_class_name = class_
-                        callee_method_key_name = method
+                        callee_method_key_name = class_
                         is_available = True
                         break
 
-        assert is_available, f'callee is not available: {callee_name} in {callee_schema_name}'
+                    for method in callee_schema['classes'][class_]['methods']:
+                        if callee_name == method.split(':')[1] and callee_start_line == callee_schema['classes'][class_]['methods'][method]['start']:                        
+                            callee_method_class_name = class_
+                            callee_method_key_name = method
+                            is_available = True
+                            break
 
+            assert is_available, f'callee is not available: {callee_name} in {callee_schema_name}'
+        
+        else:
+            callee_schema_name = 'library'
+            callee_method_class_name = callee_location
+            callee_method_key_name = callee_name
+
+        caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.').replace('.java', '')
         caller_schema = {}
         is_available = False
         with open(f'data/schemas{args.suffix}/{project}/{caller_schema_name}.json') as f:
