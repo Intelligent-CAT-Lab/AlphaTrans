@@ -8,6 +8,8 @@ import argparse
 
 def main(args):
 
+    os.makedirs('data/crawl', exist_ok=True)
+
     java_module_documentation = {}
     java_module_documentation.setdefault(args.module_name, {})
 
@@ -117,7 +119,7 @@ def main(args):
                     else:
                         print(f'Warning: No field details found in {button_name} {interface_class_url}')
     
-    with open(f'{args.module_name}_module_doc.json', 'w', encoding='utf-8') as f:
+    with open(f'data/crawl/{args.module_name}_module_doc.json', 'w') as f:
         json.dump(java_module_documentation, f, indent=4)
 
 
