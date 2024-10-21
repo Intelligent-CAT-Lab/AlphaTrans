@@ -123,9 +123,9 @@ def main(args):
                 # print('Code constructs:', code_constructs)
                 # print('----------------------------------------------')
 
-                data['classes'][class_]['methods'][method_]['global_variables'] = global_variables
-                data['classes'][class_]['methods'][method_]['local_variables'] = local_variables
-                data['classes'][class_]['methods'][method_]['library_calls'] = library_call_map
+                # data['classes'][class_]['methods'][method_]['global_variables'] = global_variables
+                # data['classes'][class_]['methods'][method_]['local_variables'] = local_variables
+                # data['classes'][class_]['methods'][method_]['library_calls'] = library_call_map
                 data['classes'][class_]['methods'][method_]['code_constructs'] = code_constructs
         
         with open(f'{schemas_path}/{schema_file}', 'w') as f:
