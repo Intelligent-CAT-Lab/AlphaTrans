@@ -68,44 +68,44 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "247-1508:testIPv6_test0_decomposed": {
-                    "start": 247,
-                    "end": 1508,
+                "143-1404:testIPv6": {
+                    "start": 143,
+                    "end": 1404,
                     "body": [
-                        "    public void testIPv6_test0_decomposed()  {\n",
+                        "    public void testIPv6() {\n",
                         "        assertFalse(\n",
                         "                \"IPV6 empty string should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"\"));\n",
+                        "                validator.isValidInet6Address(\"\")); // empty string\n",
                         "        assertTrue(\n",
                         "                \"IPV6 ::1 should be valid\",\n",
-                        "                validator.isValidInet6Address(\"::1\"));\n",
+                        "                validator.isValidInet6Address(\"::1\")); // loopback, compressed, non-routable\n",
                         "        assertTrue(\n",
                         "                \"IPV6 :: should be valid\",\n",
-                        "                validator.isValidInet6Address(\"::\"));\n",
+                        "                validator.isValidInet6Address(\"::\")); // unspecified, compressed, non-routable\n",
                         "        assertTrue(\n",
                         "                \"IPV6 0:0:0:0:0:0:0:1 should be valid\",\n",
-                        "                validator.isValidInet6Address(\"0:0:0:0:0:0:0:1\"));\n",
+                        "                validator.isValidInet6Address(\"0:0:0:0:0:0:0:1\")); // loopback, full\n",
                         "        assertTrue(\n",
                         "                \"IPV6 0:0:0:0:0:0:0:0 should be valid\",\n",
-                        "                validator.isValidInet6Address(\"0:0:0:0:0:0:0:0\"));\n",
+                        "                validator.isValidInet6Address(\"0:0:0:0:0:0:0:0\")); // unspecified, full\n",
                         "        assertTrue(\n",
                         "                \"IPV6 2001:DB8:0:0:8:800:200C:417A should be valid\",\n",
-                        "                validator.isValidInet6Address(\"2001:DB8:0:0:8:800:200C:417A\"));\n",
+                        "                validator.isValidInet6Address(\"2001:DB8:0:0:8:800:200C:417A\")); // unicast, full\n",
                         "        assertTrue(\n",
                         "                \"IPV6 FF01:0:0:0:0:0:0:101 should be valid\",\n",
-                        "                validator.isValidInet6Address(\"FF01:0:0:0:0:0:0:101\"));\n",
+                        "                validator.isValidInet6Address(\"FF01:0:0:0:0:0:0:101\")); // multicast, full\n",
                         "        assertTrue(\n",
                         "                \"IPV6 2001:DB8::8:800:200C:417A should be valid\",\n",
-                        "                validator.isValidInet6Address(\"2001:DB8::8:800:200C:417A\"));\n",
+                        "                validator.isValidInet6Address(\"2001:DB8::8:800:200C:417A\")); // unicast, compressed\n",
                         "        assertTrue(\n",
                         "                \"IPV6 FF01::101 should be valid\",\n",
-                        "                validator.isValidInet6Address(\"FF01::101\"));\n",
+                        "                validator.isValidInet6Address(\"FF01::101\")); // multicast, compressed\n",
                         "        assertFalse(\n",
                         "                \"IPV6 2001:DB8:0:0:8:800:200C:417A:221 should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"2001:DB8:0:0:8:800:200C:417A:221\"));\n",
+                        "                validator.isValidInet6Address(\"2001:DB8:0:0:8:800:200C:417A:221\")); // unicast, full\n",
                         "        assertFalse(\n",
                         "                \"IPV6 FF01::101::2 should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"FF01::101::2\"));\n",
+                        "                validator.isValidInet6Address(\"FF01::101::2\")); // multicast, compressed\n",
                         "        assertTrue(\n",
                         "                \"IPV6 fe80::217:f2ff:fe07:ed62 should be valid\",\n",
                         "                validator.isValidInet6Address(\"fe80::217:f2ff:fe07:ed62\"));\n",
@@ -127,33 +127,33 @@
                         "        assertFalse(\n",
                         "                \"IPV6 02001:0000:1234:0000:0000:C1C0:ABCD:0876 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"02001:0000:1234:0000:0000:C1C0:ABCD:0876\"));\n",
+                        "                        \"02001:0000:1234:0000:0000:C1C0:ABCD:0876\")); // extra 0 not allowed!\n",
                         "        assertFalse(\n",
                         "                \"IPV6 2001:0000:1234:0000:00001:C1C0:ABCD:0876 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"2001:0000:1234:0000:00001:C1C0:ABCD:0876\"));\n",
+                        "                        \"2001:0000:1234:0000:00001:C1C0:ABCD:0876\")); // extra 0 not allowed!\n",
                         "        assertFalse(\n",
                         "                \"IPV6 2001:0000:1234:0000:0000:C1C0:ABCD:0876 0 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"2001:0000:1234:0000:0000:C1C0:ABCD:0876 0\"));\n",
+                        "                        \"2001:0000:1234:0000:0000:C1C0:ABCD:0876 0\")); // junk after valid address\n",
                         "        assertFalse(\n",
                         "                \"IPV6 2001:0000:1234: 0000:0000:C1C0:ABCD:0876 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"2001:0000:1234: 0000:0000:C1C0:ABCD:0876\"));\n",
+                        "                        \"2001:0000:1234: 0000:0000:C1C0:ABCD:0876\")); // internal space\n",
                         "        assertFalse(\n",
                         "                \"IPV6 3ffe:0b00:0000:0001:0000:0000:000a should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"3ffe:0b00:0000:0001:0000:0000:000a\"));\n",
+                        "                        \"3ffe:0b00:0000:0001:0000:0000:000a\")); // seven segments\n",
                         "        assertFalse(\n",
                         "                \"IPV6 FF02:0000:0000:0000:0000:0000:0000:0000:0001 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"FF02:0000:0000:0000:0000:0000:0000:0000:0001\"));\n",
+                        "                        \"FF02:0000:0000:0000:0000:0000:0000:0000:0001\")); // nine segments\n",
                         "        assertFalse(\n",
                         "                \"IPV6 3ffe:b00::1::a should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"3ffe:b00::1::a\"));\n",
+                        "                validator.isValidInet6Address(\"3ffe:b00::1::a\")); // double \"::\"\n",
                         "        assertFalse(\n",
                         "                \"IPV6 ::1111:2222:3333:4444:5555:6666:: should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"::1111:2222:3333:4444:5555:6666::\"));\n",
+                        "                validator.isValidInet6Address(\"::1111:2222:3333:4444:5555:6666::\")); // double \"::\"\n",
                         "        assertTrue(\"IPV6 2::10 should be valid\", validator.isValidInet6Address(\"2::10\"));\n",
                         "        assertTrue(\"IPV6 ff02::1 should be valid\", validator.isValidInet6Address(\"ff02::1\"));\n",
                         "        assertTrue(\"IPV6 fe80:: should be valid\", validator.isValidInet6Address(\"fe80::\"));\n",
@@ -209,7 +209,7 @@
                         "                validator.isValidInet6Address(\"1:2:3:4:5::7:8\"));\n",
                         "        assertFalse(\n",
                         "                \"IPV6 1:2:3::4:5::7:8 should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"1:2:3::4:5::7:8\"));\n",
+                        "                validator.isValidInet6Address(\"1:2:3::4:5::7:8\")); // Double \"::\"\n",
                         "        assertFalse(\n",
                         "                \"IPV6 12345::6:7:8 should be invalid\",\n",
                         "                validator.isValidInet6Address(\"12345::6:7:8\"));\n",
@@ -386,29 +386,29 @@
                         "        assertFalse(\n",
                         "                \"IPV6 2001:1:1:1:1:1:255Z255X255Y255 should be invalid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"2001:1:1:1:1:1:255Z255X255Y255\"));\n",
+                        "                        \"2001:1:1:1:1:1:255Z255X255Y255\")); // garbage instead of \".\" in IPv4\n",
                         "        assertFalse(\n",
                         "                \"IPV6 ::ffff:192x168.1.26 should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"::ffff:192x168.1.26\"));\n",
+                        "                validator.isValidInet6Address(\"::ffff:192x168.1.26\")); // ditto\n",
                         "        assertTrue(\n",
                         "                \"IPV6 ::ffff:192.168.1.1 should be valid\",\n",
                         "                validator.isValidInet6Address(\"::ffff:192.168.1.1\"));\n",
                         "        assertTrue(\n",
                         "                \"IPV6 0:0:0:0:0:0:13.1.68.3 should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"0:0:0:0:0:0:13.1.68.3\"));\n",
+                        "                        \"0:0:0:0:0:0:13.1.68.3\")); // IPv4-compatible IPv6 address, full, deprecated\n",
                         "        assertTrue(\n",
                         "                \"IPV6 0:0:0:0:0:FFFF:129.144.52.38 should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"0:0:0:0:0:FFFF:129.144.52.38\"));\n",
+                        "                        \"0:0:0:0:0:FFFF:129.144.52.38\")); // IPv4-mapped IPv6 address, full\n",
                         "        assertTrue(\n",
                         "                \"IPV6 ::13.1.68.3 should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"::13.1.68.3\"));\n",
+                        "                        \"::13.1.68.3\")); // IPv4-compatible IPv6 address, compressed, deprecated\n",
                         "        assertTrue(\n",
                         "                \"IPV6 ::FFFF:129.144.52.38 should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"::FFFF:129.144.52.38\"));\n",
+                        "                        \"::FFFF:129.144.52.38\")); // IPv4-mapped IPv6 address, compressed\n",
                         "        assertTrue(\n",
                         "                \"IPV6 fe80:0:0:0:204:61ff:254.157.241.86 should be valid\",\n",
                         "                validator.isValidInet6Address(\"fe80:0:0:0:204:61ff:254.157.241.86\"));\n",
@@ -447,7 +447,7 @@
                         "        assertTrue(\n",
                         "                \"IPV6 ::ffff:192.0.2.128 should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"::ffff:192.0.2.128\"));\n",
+                        "                        \"::ffff:192.0.2.128\")); // but this is OK, since there's a single digit\n",
                         "        assertFalse(\n",
                         "                \"IPV6 XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:1.2.3.4 should be invalid\",\n",
                         "                validator.isValidInet6Address(\"XXXX:XXXX:XXXX:XXXX:XXXX:XXXX:1.2.3.4\"));\n",
@@ -1327,7 +1327,7 @@
                         "        assertTrue(\n",
                         "                \"IPV6 ::0:a:b:c:d:e:f should be valid\",\n",
                         "                validator.isValidInet6Address(\n",
-                        "                        \"::0:a:b:c:d:e:f\"));\n",
+                        "                        \"::0:a:b:c:d:e:f\")); // syntactically correct, but bad form (::0:... could\n",
                         "        assertTrue(\n",
                         "                \"IPV6 a:b:c:d:e:f:0:: should be valid\",\n",
                         "                validator.isValidInet6Address(\"a:b:c:d:e:f:0::\"));\n",
@@ -1346,7 +1346,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testIPv6_test0_decomposed()",
+                    "signature": "testIPv6()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1357,7 +1357,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testIPv6_test0_decomposed(self) -> None:\n",
+                        "    def testIPv6(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1371,18 +1371,18 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "236-244:testBrokenInetAddresses_test1_decomposed": {
-                    "start": 236,
-                    "end": 244,
+                "127-135:testBrokenInetAddresses": {
+                    "start": 127,
+                    "end": 135,
                     "body": [
-                        "    public void testBrokenInetAddresses_test1_decomposed()  {\n",
+                        "    public void testBrokenInetAddresses() {\n",
                         "        assertFalse(\"IP with characters should be invalid\", validator.isValid(\"124.14.32.abc\"));\n",
                         "        assertFalse(\"IP with leading zeroes should be invalid\", validator.isValid(\"124.14.32.01\"));\n",
                         "        assertFalse(\"IP with three groups should be invalid\", validator.isValid(\"23.64.12\"));\n",
                         "        assertFalse(\"IP with five groups should be invalid\", validator.isValid(\"26.34.23.77.234\"));\n",
                         "        assertFalse(\n",
                         "                \"IP empty string should be invalid\",\n",
-                        "                validator.isValidInet6Address(\"\"));\n",
+                        "                validator.isValidInet6Address(\"\")); // empty string\n",
                         "    }\n"
                     ],
                     "is_constructor": false,
@@ -1396,7 +1396,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testBrokenInetAddresses_test1_decomposed()",
+                    "signature": "testBrokenInetAddresses()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1412,7 +1412,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testBrokenInetAddresses_test1_decomposed(self) -> None:\n",
+                        "    def testBrokenInetAddresses(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1426,58 +1426,11 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "228-233:testBrokenInetAddresses_test0_decomposed": {
-                    "start": 228,
-                    "end": 233,
+                "121-124:testReservedInetAddresses": {
+                    "start": 121,
+                    "end": 124,
                     "body": [
-                        "    public void testBrokenInetAddresses_test0_decomposed()  {\n",
-                        "        assertFalse(\"IP with characters should be invalid\", validator.isValid(\"124.14.32.abc\"));\n",
-                        "        assertFalse(\"IP with leading zeroes should be invalid\", validator.isValid(\"124.14.32.01\"));\n",
-                        "        assertFalse(\"IP with three groups should be invalid\", validator.isValid(\"23.64.12\"));\n",
-                        "        assertFalse(\"IP with five groups should be invalid\", validator.isValid(\"26.34.23.77.234\"));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testBrokenInetAddresses_test0_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testBrokenInetAddresses_test0_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "222-225:testReservedInetAddresses_test0_decomposed": {
-                    "start": 222,
-                    "end": 225,
-                    "body": [
-                        "    public void testReservedInetAddresses_test0_decomposed()  {\n",
+                        "    public void testReservedInetAddresses() {\n",
                         "        assertTrue(\"localhost IP should be valid\", validator.isValid(\"127.0.0.1\"));\n",
                         "        assertTrue(\"broadcast IP should be valid\", validator.isValid(\"255.255.255.255\"));\n",
                         "    }\n"
@@ -1493,7 +1446,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testReservedInetAddresses_test0_decomposed()",
+                    "signature": "testReservedInetAddresses()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1504,7 +1457,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testReservedInetAddresses_test0_decomposed(self) -> None:\n",
+                        "    def testReservedInetAddresses(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1518,19 +1471,23 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "208-219:testInetAddressesByClass_test0_decomposed": {
-                    "start": 208,
-                    "end": 219,
+                "103-118:testInetAddressesByClass": {
+                    "start": 103,
+                    "end": 118,
                     "body": [
-                        "    public void testInetAddressesByClass_test0_decomposed()  {\n",
+                        "    public void testInetAddressesByClass() {\n",
                         "        assertTrue(\"class A IP should be valid\", validator.isValid(\"24.25.231.12\"));\n",
                         "        assertFalse(\"illegal class A IP should be invalid\", validator.isValid(\"2.41.32.324\"));\n",
+                        "\n",
                         "        assertTrue(\"class B IP should be valid\", validator.isValid(\"135.14.44.12\"));\n",
                         "        assertFalse(\"illegal class B IP should be invalid\", validator.isValid(\"154.123.441.123\"));\n",
+                        "\n",
                         "        assertTrue(\"class C IP should be valid\", validator.isValid(\"213.25.224.32\"));\n",
                         "        assertFalse(\"illegal class C IP should be invalid\", validator.isValid(\"201.543.23.11\"));\n",
+                        "\n",
                         "        assertTrue(\"class D IP should be valid\", validator.isValid(\"229.35.159.6\"));\n",
                         "        assertFalse(\"illegal class D IP should be invalid\", validator.isValid(\"231.54.11.987\"));\n",
+                        "\n",
                         "        assertTrue(\"class E IP should be valid\", validator.isValid(\"248.85.24.92\"));\n",
                         "        assertFalse(\"illegal class E IP should be invalid\", validator.isValid(\"250.21.323.48\"));\n",
                         "    }\n"
@@ -1546,7 +1503,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testInetAddressesByClass_test0_decomposed()",
+                    "signature": "testInetAddressesByClass()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1557,7 +1514,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testInetAddressesByClass_test0_decomposed(self) -> None:\n",
+                        "    def testInetAddressesByClass(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1571,11 +1528,11 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "182-205:testVALIDATOR_445_test1_decomposed": {
-                    "start": 182,
-                    "end": 205,
+                "77-100:testVALIDATOR_445": {
+                    "start": 77,
+                    "end": 100,
                     "body": [
-                        "    public void testVALIDATOR_445_test1_decomposed()  {\n",
+                        "    public void testVALIDATOR_445() {\n",
                         "        String[] valid = {\n",
                         "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876\",\n",
                         "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/123\",\n",
@@ -1611,7 +1568,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testVALIDATOR_445_test1_decomposed()",
+                    "signature": "testVALIDATOR_445()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1622,7 +1579,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testVALIDATOR_445_test1_decomposed(self) -> None:\n",
+                        "    def testVALIDATOR_445(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1636,73 +1593,11 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "159-179:testVALIDATOR_445_test0_decomposed": {
-                    "start": 159,
-                    "end": 179,
+                "59-74:testVALIDATOR_419": {
+                    "start": 59,
+                    "end": 74,
                     "body": [
-                        "    public void testVALIDATOR_445_test0_decomposed()  {\n",
-                        "        String[] valid = {\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876\",\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/123\",\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/0\",\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876%0\",\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876%abcdefgh\",\n",
-                        "        };\n",
-                        "        String[] invalid = {\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/129\", // too big\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/-0\", // sign not allowed\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/+0\", // sign not allowed\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/10O\", // non-digit\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876/0%0\", // /bits before %node-id\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876%abc defgh\", // space in node id\n",
-                        "            \"2001:0000:1234:0000:0000:C1C0:ABCD:0876%abc%defgh\", // '%' in node id\n",
-                        "        };\n",
-                        "        for (String item : valid) {\n",
-                        "            assertTrue(String.format(\"%s should be valid\", item), validator.isValid(item));\n",
-                        "        }\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_445_test0_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_445_test0_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "142-156:testVALIDATOR_419_test5_decomposed": {
-                    "start": 142,
-                    "end": 156,
-                    "body": [
-                        "    public void testVALIDATOR_419_test5_decomposed()  {\n",
+                        "    public void testVALIDATOR_419() {\n",
                         "        String addr;\n",
                         "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
                         "        assertTrue(addr, validator.isValid(addr));\n",
@@ -1712,6 +1607,7 @@
                         "        assertTrue(addr, validator.isValid(addr));\n",
                         "        addr = \"::FFFF:129.144.52.38\";\n",
                         "        assertTrue(addr, validator.isValid(addr));\n",
+                        "\n",
                         "        addr = \"::ffff:192.168.1.1:192.168.1.1\";\n",
                         "        assertFalse(addr, validator.isValid(addr));\n",
                         "        addr = \"::192.168.1.1:192.168.1.1\";\n",
@@ -1729,7 +1625,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testVALIDATOR_419_test5_decomposed()",
+                    "signature": "testVALIDATOR_419()",
                     "parameters": [],
                     "calls": [
                         [
@@ -1740,7 +1636,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testVALIDATOR_419_test5_decomposed(self) -> None:\n",
+                        "    def testVALIDATOR_419(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -1754,261 +1650,11 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "127-139:testVALIDATOR_419_test4_decomposed": {
-                    "start": 127,
-                    "end": 139,
+                "53-57:testVALIDATOR_335": {
+                    "start": 53,
+                    "end": 57,
                     "body": [
-                        "    public void testVALIDATOR_419_test4_decomposed()  {\n",
-                        "        String addr;\n",
-                        "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"0:0:0:0:0:FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::ffff:192.168.1.1:192.168.1.1\";\n",
-                        "        assertFalse(addr, validator.isValid(addr));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_419_test4_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_419_test4_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "114-124:testVALIDATOR_419_test3_decomposed": {
-                    "start": 114,
-                    "end": 124,
-                    "body": [
-                        "    public void testVALIDATOR_419_test3_decomposed()  {\n",
-                        "        String addr;\n",
-                        "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"0:0:0:0:0:FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_419_test3_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_419_test3_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "103-111:testVALIDATOR_419_test2_decomposed": {
-                    "start": 103,
-                    "end": 111,
-                    "body": [
-                        "    public void testVALIDATOR_419_test2_decomposed()  {\n",
-                        "        String addr;\n",
-                        "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"0:0:0:0:0:FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"::13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_419_test2_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_419_test2_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "94-100:testVALIDATOR_419_test1_decomposed": {
-                    "start": 94,
-                    "end": 100,
-                    "body": [
-                        "    public void testVALIDATOR_419_test1_decomposed()  {\n",
-                        "        String addr;\n",
-                        "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "        addr = \"0:0:0:0:0:FFFF:129.144.52.38\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_419_test1_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_419_test1_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "87-91:testVALIDATOR_419_test0_decomposed": {
-                    "start": 87,
-                    "end": 91,
-                    "body": [
-                        "    public void testVALIDATOR_419_test0_decomposed()  {\n",
-                        "        String addr;\n",
-                        "        addr = \"0:0:0:0:0:0:13.1.68.3\";\n",
-                        "        assertTrue(addr, validator.isValid(addr));\n",
-                        "    }\n"
-                    ],
-                    "is_constructor": false,
-                    "annotations": [],
-                    "modifiers": [
-                        "public"
-                    ],
-                    "return_types": [
-                        [
-                            "void",
-                            "void"
-                        ]
-                    ],
-                    "signature": "testVALIDATOR_419_test0_decomposed()",
-                    "parameters": [],
-                    "calls": [
-                        [
-                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
-                            "InetAddressValidator",
-                            "73-75:isValid"
-                        ]
-                    ],
-                    "is_overload": false,
-                    "partial_translation": [
-                        "    def testVALIDATOR_419_test0_decomposed(self) -> None:\n",
-                        "        pass\n\n"
-                    ],
-                    "translation": [],
-                    "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
-                    "test_execution": "pending",
-                    "elapsed_time": 0,
-                    "generation_timestamp": 0,
-                    "model_name": "deepseek-coder-33b-instruct",
-                    "include_implementation": true
-                },
-                "80-84:testVALIDATOR_335_test0_decomposed": {
-                    "start": 80,
-                    "end": 84,
-                    "body": [
-                        "    public void testVALIDATOR_335_test0_decomposed()  {\n",
+                        "    public void testVALIDATOR_335() {\n",
                         "        assertTrue(\n",
                         "                \"2001:0438:FFFE:0000:0000:0000:0000:0A35 should be valid\",\n",
                         "                validator.isValid(\"2001:0438:FFFE:0000:0000:0000:0000:0A35\"));\n",
@@ -2025,7 +1671,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testVALIDATOR_335_test0_decomposed()",
+                    "signature": "testVALIDATOR_335()",
                     "parameters": [],
                     "calls": [
                         [
@@ -2036,7 +1682,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testVALIDATOR_335_test0_decomposed(self) -> None:\n",
+                        "    def testVALIDATOR_335(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -2050,11 +1696,11 @@
                     "model_name": "deepseek-coder-33b-instruct",
                     "include_implementation": true
                 },
-                "72-77:testInetAddressesFromTheWild_test0_decomposed": {
-                    "start": 72,
-                    "end": 77,
+                "46-51:testInetAddressesFromTheWild": {
+                    "start": 46,
+                    "end": 51,
                     "body": [
-                        "    public void testInetAddressesFromTheWild_test0_decomposed()  {\n",
+                        "    public void testInetAddressesFromTheWild() {\n",
                         "        assertTrue(\"www.apache.org IP should be valid\", validator.isValid(\"140.211.11.130\"));\n",
                         "        assertTrue(\"www.l.google.com IP should be valid\", validator.isValid(\"72.14.253.103\"));\n",
                         "        assertTrue(\"fsf.org IP should be valid\", validator.isValid(\"199.232.41.5\"));\n",
@@ -2072,7 +1718,7 @@
                             "void"
                         ]
                     ],
-                    "signature": "testInetAddressesFromTheWild_test0_decomposed()",
+                    "signature": "testInetAddressesFromTheWild()",
                     "parameters": [],
                     "calls": [
                         [
@@ -2083,7 +1729,7 @@
                     ],
                     "is_overload": false,
                     "partial_translation": [
-                        "    def testInetAddressesFromTheWild_test0_decomposed(self) -> None:\n",
+                        "    def testInetAddressesFromTheWild(self) -> None:\n",
                         "        pass\n\n"
                     ],
                     "translation": [],
@@ -2179,7 +1825,6 @@
         "import unittest",
         "import pytest",
         "import io",
-        "import os",
         "import unittest",
         "from src.main.org.apache.commons.validator.routines.InetAddressValidator import *"
     ]
