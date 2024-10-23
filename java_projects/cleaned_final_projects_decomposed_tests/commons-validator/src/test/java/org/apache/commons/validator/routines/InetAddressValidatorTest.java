@@ -16,6 +16,7 @@
  */
 
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -68,7 +69,7 @@ public class InetAddressValidatorTest extends TestCase {
      * href="http://download.dartware.com/thirdparty/test-ipv6-regex.pl">Perl script</a>.
      */
 
-    
+    @Test
     public void testInetAddressesFromTheWild_test0_decomposed()  {
         assertTrue("www.apache.org IP should be valid", validator.isValid("140.211.11.130"));
         assertTrue("www.l.google.com IP should be valid", validator.isValid("72.14.253.103"));
@@ -76,21 +77,21 @@ public class InetAddressValidatorTest extends TestCase {
         assertTrue("appscs.ign.com IP should be valid", validator.isValid("216.35.123.87"));
     }
 
-    
+    @Test
     public void testVALIDATOR_335_test0_decomposed()  {
         assertTrue(
                 "2001:0438:FFFE:0000:0000:0000:0000:0A35 should be valid",
                 validator.isValid("2001:0438:FFFE:0000:0000:0000:0000:0A35"));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test0_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
         assertTrue(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test1_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
@@ -99,7 +100,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertTrue(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test2_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
@@ -110,7 +111,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertTrue(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test3_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
@@ -123,7 +124,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertTrue(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test4_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
@@ -138,7 +139,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertFalse(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_419_test5_decomposed()  {
         String addr;
         addr = "0:0:0:0:0:0:13.1.68.3";
@@ -155,7 +156,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertFalse(addr, validator.isValid(addr));
     }
 
-    
+    @Test
     public void testVALIDATOR_445_test0_decomposed()  {
         String[] valid = {
             "2001:0000:1234:0000:0000:C1C0:ABCD:0876",
@@ -178,7 +179,7 @@ public class InetAddressValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testVALIDATOR_445_test1_decomposed()  {
         String[] valid = {
             "2001:0000:1234:0000:0000:C1C0:ABCD:0876",
@@ -204,7 +205,7 @@ public class InetAddressValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testInetAddressesByClass_test0_decomposed()  {
         assertTrue("class A IP should be valid", validator.isValid("24.25.231.12"));
         assertFalse("illegal class A IP should be invalid", validator.isValid("2.41.32.324"));
@@ -218,13 +219,13 @@ public class InetAddressValidatorTest extends TestCase {
         assertFalse("illegal class E IP should be invalid", validator.isValid("250.21.323.48"));
     }
 
-    
+    @Test
     public void testReservedInetAddresses_test0_decomposed()  {
         assertTrue("localhost IP should be valid", validator.isValid("127.0.0.1"));
         assertTrue("broadcast IP should be valid", validator.isValid("255.255.255.255"));
     }
 
-    
+    @Test
     public void testBrokenInetAddresses_test0_decomposed()  {
         assertFalse("IP with characters should be invalid", validator.isValid("124.14.32.abc"));
         assertFalse("IP with leading zeroes should be invalid", validator.isValid("124.14.32.01"));
@@ -232,7 +233,7 @@ public class InetAddressValidatorTest extends TestCase {
         assertFalse("IP with five groups should be invalid", validator.isValid("26.34.23.77.234"));
     }
 
-    
+    @Test
     public void testBrokenInetAddresses_test1_decomposed()  {
         assertFalse("IP with characters should be invalid", validator.isValid("124.14.32.abc"));
         assertFalse("IP with leading zeroes should be invalid", validator.isValid("124.14.32.01"));
@@ -243,7 +244,7 @@ public class InetAddressValidatorTest extends TestCase {
                 validator.isValidInet6Address(""));
     }
 
-    
+    @Test
     public void testIPv6_test0_decomposed()  {
         assertFalse(
                 "IPV6 empty string should be invalid",

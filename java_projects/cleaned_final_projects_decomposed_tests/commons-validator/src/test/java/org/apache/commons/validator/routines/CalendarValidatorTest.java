@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -101,7 +102,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
 
     /** Test adjustToTimeZone() method */
 
-    
+    @Test
     public void testCalendarValidatorMethods_test0_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -115,7 +116,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Date expected = createCalendar(null, 20051231, 0).getTime();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test1_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -130,7 +131,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test2_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -150,7 +151,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate0(defaultVal).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test3_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -171,7 +172,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test4_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -197,7 +198,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate4(localeVal, locale).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test5_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -224,7 +225,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test6_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -256,7 +257,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate2(patternVal, pattern).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test7_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -289,7 +290,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test8_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -329,7 +330,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                         .getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test9_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -370,7 +371,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test10_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -412,7 +413,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("isValid(A) default", CalendarValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test11_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -455,7 +456,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test12_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -500,7 +501,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 "isValid(A) locale ", CalendarValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test13_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -546,7 +547,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test14_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -595,7 +596,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test15_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -645,7 +646,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test16_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -698,7 +699,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test17_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -752,7 +753,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test18_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -807,7 +808,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) default", CalendarValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test19_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -863,7 +864,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test20_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -920,7 +921,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) locale ", CalendarValidator.getInstance().validate4(XXXX, locale));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test21_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -978,7 +979,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test22_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1037,7 +1038,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) pattern", CalendarValidator.getInstance().validate2(XXXX, pattern));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test23_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1097,7 +1098,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test24_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1161,7 +1162,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                         .validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test25_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1226,7 +1227,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test26_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1292,7 +1293,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) default", CalendarValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test27_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1359,7 +1360,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test28_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1427,7 +1428,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) locale ", CalendarValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test29_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1496,7 +1497,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test30_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1566,7 +1567,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) pattern", CalendarValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test31_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1637,7 +1638,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test32_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1712,7 +1713,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                         .isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test33_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1789,7 +1790,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test34_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1868,7 +1869,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test35_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1952,7 +1953,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate1(defaultVal, zone).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test36_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2037,7 +2038,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test37_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2127,7 +2128,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate5(localeVal, locale, zone).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test38_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2218,7 +2219,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test39_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2314,7 +2315,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 CalendarValidator.getInstance().validate3(patternVal, pattern, zone).getTime());
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test40_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2411,7 +2412,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.getInstance();
     }
 
-    
+    @Test
     public void testCalendarValidatorMethods_test41_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2515,14 +2516,14 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                         .getTime());
     }
 
-    
+    @Test
     public void testCompare_test0_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
         Calendar diffHour = createCalendar(GMT, testDate, 115922);
     }
 
-    
+    @Test
     public void testCompare_test1_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2546,7 +2547,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Calendar cal20041231 = createCalendar(GMT, 20041231, sameTime);
     }
 
-    
+    @Test
     public void testCompare_test2_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2575,7 +2576,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("secs GT", 1, calValidator.compare(value, diffSec, Calendar.SECOND));
     }
 
-    
+    @Test
     public void testCompare_test3_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2607,7 +2608,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 "date EQ", 0, calValidator.compareDates(value, diffHour));
     }
 
-    
+    @Test
     public void testCompare_test4_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2643,7 +2644,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 calValidator.compare(value, diffHour, Calendar.DAY_OF_YEAR));
     }
 
-    
+    @Test
     public void testCompare_test5_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2680,7 +2681,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("date GT", 1, calValidator.compareDates(value, cal20050822));
     }
 
-    
+    @Test
     public void testCompare_test6_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2720,7 +2721,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("week =2", 0, calValidator.compareWeeks(value, cal20050822));
     }
 
-    
+    @Test
     public void testCompare_test7_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2764,7 +2765,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 calValidator.compare(value, cal20050822, Calendar.WEEK_OF_MONTH));
     }
 
-    
+    @Test
     public void testCompare_test8_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2810,7 +2811,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("week GT", 1, calValidator.compareWeeks(value, cal20050816));
     }
 
-    
+    @Test
     public void testCompare_test9_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2861,7 +2862,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("mnth GT", 1, calValidator.compareMonths(value, cal20050731));
     }
 
-    
+    @Test
     public void testCompare_test10_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2923,7 +2924,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("qtrA GT", 1, calValidator.compareQuarters0(value, cal20050630));
     }
 
-    
+    @Test
     public void testCompare_test11_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2999,7 +3000,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 "qtrB GT", 1, calValidator.compareQuarters1(value, cal20050630, 2));
     }
 
-    
+    @Test
     public void testCompare_test12_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -3078,7 +3079,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("year GT", 1, calValidator.compareYears(value, cal20041231));
     }
 
-    
+    @Test
     public void testCompare_test13_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -3163,7 +3164,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         }
     }
 
-    
+    @Test
     public void testDateTimeStyle_test0_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -3178,7 +3179,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 };
     }
 
-    
+    @Test
     public void testDateTimeStyle_test1_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -3194,7 +3195,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("validate(A) default", dateTimeValidator.isValid0("31/12/05 14:23"));
     }
 
-    
+    @Test
     public void testDateTimeStyle_test2_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -3212,7 +3213,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
                 "validate(A) locale ", dateTimeValidator.isValid2("12/31/05 2:23 PM", Locale.US));
     }
 
-    
+    @Test
     public void testDateTimeStyle_test3_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -3231,19 +3232,19 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Locale.setDefault(origDefault);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test0_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test1_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
         Calendar calGMT = createCalendar(GMT, DATE_2005_11_23, TIME_12_03_45);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test2_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3252,7 +3253,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Calendar calCET = createCalendar(EET, DATE_2005_11_23, TIME_12_03_45);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test3_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3263,7 +3264,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check GMT != CET", dateGMT.getTime() == dateCET.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test4_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3276,7 +3277,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check CET != EST", dateCET.getTime() == dateEST.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test5_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3290,7 +3291,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.adjustToTimeZone(calEST, GMT);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test6_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3306,7 +3307,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check EST = GMT", dateEST == calEST.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test7_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3323,7 +3324,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.adjustToTimeZone(calEST, EST);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test8_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3342,7 +3343,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check EST != GMT", dateGMT == calEST.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test9_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3362,7 +3363,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.adjustToTimeZone(calCET, GMT);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test10_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3384,7 +3385,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check CET = GMT", dateCET == calCET.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test11_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3407,7 +3408,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.adjustToTimeZone(calCET, EET);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test12_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3432,7 +3433,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("Check CET != GMT", dateGMT == calCET.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test13_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3458,7 +3459,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         Calendar calUTC = createCalendar(UTC, DATE_2005_11_23, TIME_12_03_45);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test14_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3486,7 +3487,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("SAME: Check time (A)", calUTC.getTime(), calGMT.getTime());
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test15_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3516,7 +3517,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("SAME: Check UTC(A)", UTC.equals(calUTC.getTimeZone()));
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test16_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3547,7 +3548,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         CalendarValidator.adjustToTimeZone(calUTC, GMT);
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test17_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();
@@ -3580,7 +3581,7 @@ public class CalendarValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("SAME: Check GMT(B)", GMT.equals(calUTC.getTimeZone()));
     }
 
-    
+    @Test
     public void testAdjustToTimeZone_test18_decomposed()  {
         Calendar calEST = createCalendar(EST, DATE_2005_11_23, TIME_12_03_45);
         Date dateEST = calEST.getTime();

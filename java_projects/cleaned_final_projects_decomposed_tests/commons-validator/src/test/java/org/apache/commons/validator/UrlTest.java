@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -251,18 +252,18 @@ public class UrlTest extends TestCase {
         new ResultPair("telnet", false)
     };
 
-    
+    @Test
     public void testIsValid0_test0_decomposed()  {
         testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
     }
 
-    
+    @Test
     public void testIsValid0_test1_decomposed()  {
         testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
         setUp();
     }
 
-    
+    @Test
     public void testIsValid0_test2_decomposed()  {
         testIsValid1(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
         setUp();
@@ -273,7 +274,7 @@ public class UrlTest extends TestCase {
         testIsValid1(testUrlPartsOptions, options);
     }
 
-    
+    @Test
     public void testIsValidScheme_test0_decomposed()  {
         if (printStatus) {
             System.out.print("\n testIsValidScheme() ");
@@ -282,7 +283,7 @@ public class UrlTest extends TestCase {
         UrlValidator urlVal = new UrlValidator(schemes, 0);
     }
 
-    
+    @Test
     public void testIsValidScheme_test1_decomposed()  {
         if (printStatus) {
             System.out.print("\n testIsValidScheme() ");
@@ -303,7 +304,7 @@ public class UrlTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsValidScheme_test2_decomposed()  {
         if (printStatus) {
             System.out.print("\n testIsValidScheme() ");
@@ -327,13 +328,13 @@ public class UrlTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testValidator202_test0_decomposed()  {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
     }
 
-    
+    @Test
     public void testValidator202_test1_decomposed()  {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
@@ -341,13 +342,13 @@ public class UrlTest extends TestCase {
                 "http://www.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.logoworks.comwww.log");
     }
 
-    
+    @Test
     public void testValidator204_test0_decomposed()  {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = UrlValidator.UrlValidator2(schemes);
     }
 
-    
+    @Test
     public void testValidator204_test1_decomposed()  {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = UrlValidator.UrlValidator2(schemes);
@@ -356,7 +357,7 @@ public class UrlTest extends TestCase {
                         "http://tech.yahoo.com/rc/desktops/102;_ylt=Ao8yevQHlZ4On0O3ZJGXLEQFLZA5"));
     }
 
-    
+    @Test
     public void testValidateUrl_test0_decomposed()  {
         assertTrue(true);
     }

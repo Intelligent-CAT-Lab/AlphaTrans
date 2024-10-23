@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -30,7 +31,7 @@ public class GenericValidatorTest extends TestCase {
         super(name);
     }
 
-    
+    @Test
     public void testMinLength_test0_decomposed()  {
         assertTrue("Min=5 End=0", GenericValidator.minLength1("12345\n\r", 5, 0));
         assertFalse("Min=6 End=0", GenericValidator.minLength1("12345\n\r", 6, 0));
@@ -46,7 +47,7 @@ public class GenericValidatorTest extends TestCase {
         assertFalse("Min=8 End=2", GenericValidator.minLength1("12345\n\r", 8, 2));
     }
 
-    
+    @Test
     public void testMaxLength_test0_decomposed()  {
         assertFalse("Max=4 End=0", GenericValidator.maxLength1("12345\n\r", 4, 0));
         assertTrue("Max=5 End=0", GenericValidator.maxLength1("12345\n\r", 5, 0));

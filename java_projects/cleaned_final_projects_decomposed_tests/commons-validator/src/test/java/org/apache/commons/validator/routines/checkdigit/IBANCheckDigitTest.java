@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines.checkdigit;
+import org.junit.Test;
 
 import org.junit.Assert;
 
@@ -205,7 +206,7 @@ public class IBANCheckDigitTest extends AbstractCheckDigitTest {
         return code.substring(2, 4);
     }
 
-    
+    @Test
     public void testOther_test0_decomposed() throws Exception {
         BufferedReader rdr = null;
         try {

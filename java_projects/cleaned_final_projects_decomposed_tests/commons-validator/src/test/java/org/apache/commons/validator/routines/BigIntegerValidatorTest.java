@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.Locale;
@@ -74,7 +75,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test BigInteger Range/Min/Max */
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -87,7 +88,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -104,7 +105,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -122,7 +123,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -144,7 +145,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -167,7 +168,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -194,7 +195,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -222,7 +223,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -255,7 +256,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                         .validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -289,7 +290,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -324,7 +325,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", BigIntegerValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -360,7 +361,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -399,7 +400,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -439,7 +440,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -482,7 +483,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -526,7 +527,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -574,7 +575,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                         .isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -623,7 +624,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -673,7 +674,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", BigIntegerValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -724,7 +725,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -777,7 +778,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 "validate(B) locale ", BigIntegerValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -831,7 +832,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -887,7 +888,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 "validate(B) pattern", BigIntegerValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -944,7 +945,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1004,7 +1005,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1065,7 +1066,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1127,7 +1128,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", BigIntegerValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1190,7 +1191,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1254,7 +1255,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", BigIntegerValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1319,7 +1320,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1386,7 +1387,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(B) pattern", BigIntegerValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1454,7 +1455,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigIntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testBigIntegerValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1525,13 +1526,13 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
                 BigIntegerValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testBigIntegerRangeMinMax_test0_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testBigIntegerRangeMinMax_test1_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");
@@ -1542,7 +1543,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         BigInteger number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testBigIntegerRangeMinMax_test2_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");
@@ -1558,7 +1559,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange(number21, 10, 20));
     }
 
-    
+    @Test
     public void testBigIntegerRangeMinMax_test3_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");
@@ -1577,7 +1578,7 @@ public class BigIntegerValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue(number11, 10));
     }
 
-    
+    @Test
     public void testBigIntegerRangeMinMax_test4_decomposed()  {
         BigIntegerValidator validator = (BigIntegerValidator) strictValidator;
         BigInteger number9 = validator.validate1("9", "#");

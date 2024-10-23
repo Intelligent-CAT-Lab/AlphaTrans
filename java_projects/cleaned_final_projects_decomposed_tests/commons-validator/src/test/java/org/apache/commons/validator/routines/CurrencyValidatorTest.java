@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -77,25 +78,25 @@ public class CurrencyValidatorTest extends TestCase {
 
     /** Test currency values with a pattern */
 
-    
+    @Test
     public void testFormatType_test0_decomposed()  {
         CurrencyValidator.getInstance();
     }
 
-    
+    @Test
     public void testFormatType_test1_decomposed()  {
         CurrencyValidator.getInstance();
         assertEquals("Format Type A", 1, CurrencyValidator.getInstance().getFormatType());
     }
 
-    
+    @Test
     public void testFormatType_test2_decomposed()  {
         CurrencyValidator.getInstance();
         assertEquals("Format Type A", 1, CurrencyValidator.getInstance().getFormatType());
         CurrencyValidator.getInstance();
     }
 
-    
+    @Test
     public void testFormatType_test3_decomposed()  {
         CurrencyValidator.getInstance();
         assertEquals("Format Type A", 1, CurrencyValidator.getInstance().getFormatType());
@@ -106,14 +107,14 @@ public class CurrencyValidatorTest extends TestCase {
                 CurrencyValidator.getInstance().getFormatType());
     }
 
-    
+    @Test
     public void testValid_test0_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
         BigDecimalValidator validator = CurrencyValidator.getInstance();
     }
 
-    
+    @Test
     public void testValid_test1_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -125,7 +126,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertEquals("Default locale", expected, validator.validate0(UK_POUND + "1,234.56"));
     }
 
-    
+    @Test
     public void testValid_test2_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -161,7 +162,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertEquals("US no symbol", expected, validator.validate2("1,234.56", Locale.US));
     }
 
-    
+    @Test
     public void testValid_test3_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -198,19 +199,19 @@ public class CurrencyValidatorTest extends TestCase {
         Locale.setDefault(origDefault);
     }
 
-    
+    @Test
     public void testInvalid_test0_decomposed()  {
         BigDecimalValidator validator = CurrencyValidator.getInstance();
     }
 
-    
+    @Test
     public void testInvalid_test1_decomposed()  {
         BigDecimalValidator validator = CurrencyValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));
         assertFalse("isValid() Empty Value", validator.isValid0(""));
     }
 
-    
+    @Test
     public void testInvalid_test2_decomposed()  {
         BigDecimalValidator validator = CurrencyValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));
@@ -219,7 +220,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertNull("validate() Empty Value", validator.validate0(""));
     }
 
-    
+    @Test
     public void testInvalid_test3_decomposed()  {
         BigDecimalValidator validator = CurrencyValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));
@@ -234,14 +235,14 @@ public class CurrencyValidatorTest extends TestCase {
                 "US wrong negative", validator.isValid2("-" + US_DOLLAR + "1,234.56", Locale.US));
     }
 
-    
+    @Test
     public void testIntegerValid_test0_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
         CurrencyValidator validator = CurrencyValidator.CurrencyValidator1();
     }
 
-    
+    @Test
     public void testIntegerValid_test1_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -251,7 +252,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertEquals("Default locale", expected, validator.validate0(UK_POUND + "1,234"));
     }
 
-    
+    @Test
     public void testIntegerValid_test2_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -269,7 +270,7 @@ public class CurrencyValidatorTest extends TestCase {
                 validator.validate2("(" + US_DOLLAR + "1,234)", Locale.US));
     }
 
-    
+    @Test
     public void testIntegerValid_test3_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -288,12 +289,12 @@ public class CurrencyValidatorTest extends TestCase {
         Locale.setDefault(origDefault);
     }
 
-    
+    @Test
     public void testIntegerInvalid_test0_decomposed()  {
         CurrencyValidator validator = new CurrencyValidator(true, false);
     }
 
-    
+    @Test
     public void testIntegerInvalid_test1_decomposed()  {
         CurrencyValidator validator = new CurrencyValidator(true, false);
         assertFalse("UK positive", validator.isValid2(UK_POUND + "1,234.56", Locale.UK));
@@ -302,14 +303,14 @@ public class CurrencyValidatorTest extends TestCase {
         assertFalse("US negative", validator.isValid2("(" + US_DOLLAR + "1,234.56)", Locale.US));
     }
 
-    
+    @Test
     public void testPattern_test0_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
         BigDecimalValidator validator = CurrencyValidator.getInstance();
     }
 
-    
+    @Test
     public void testPattern_test1_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -321,7 +322,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertEquals("default", expected, validator.validate1(UK_POUND + "1,234.567", pattern));
     }
 
-    
+    @Test
     public void testPattern_test2_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -337,7 +338,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertEquals("no symbol -ve", negative, validator.validate1("[1,234.567]", pattern));
     }
 
-    
+    @Test
     public void testPattern_test3_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -365,7 +366,7 @@ public class CurrencyValidatorTest extends TestCase {
                 "no symbol -ve", negative, validator.validate3("[1,234.567]", pattern, Locale.US));
     }
 
-    
+    @Test
     public void testPattern_test4_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -394,7 +395,7 @@ public class CurrencyValidatorTest extends TestCase {
         assertFalse("invalid symbol", validator.isValid1(US_DOLLAR + "1,234.567", pattern));
     }
 
-    
+    @Test
     public void testPattern_test5_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -425,7 +426,7 @@ public class CurrencyValidatorTest extends TestCase {
                 "invalid symbol", validator.isValid3(UK_POUND + "1,234.567", pattern, Locale.US));
     }
 
-    
+    @Test
     public void testPattern_test6_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);

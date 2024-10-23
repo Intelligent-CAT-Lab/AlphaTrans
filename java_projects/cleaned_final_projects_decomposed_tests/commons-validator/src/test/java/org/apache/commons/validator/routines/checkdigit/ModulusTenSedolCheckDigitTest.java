@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines.checkdigit;
+import org.junit.Test;
 
 /**
  * ModulusTenCheckDigit SEDOL Test.
@@ -53,7 +54,7 @@ public class ModulusTenSedolCheckDigitTest extends AbstractCheckDigitTest {
         "B07LF5F", // proper check digit is '5', see above
     };
 
-    
+    @Test
     public void testVALIDATOR_346_test0_decomposed()  {
         for (int i = 0; i < invalidCheckDigits.length; i++) {
             String invalidCheckDigit = invalidCheckDigits[i];

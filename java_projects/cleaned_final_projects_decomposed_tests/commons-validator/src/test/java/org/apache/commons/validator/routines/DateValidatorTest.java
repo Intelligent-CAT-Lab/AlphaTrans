@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -59,12 +60,12 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
 
     /** Test compare date methods */
 
-    
+    @Test
     public void testLocaleProviders_test0_decomposed() throws Exception {
         String localeProviders = System.getProperty("java.locale.providers");
     }
 
-    
+    @Test
     public void testLocaleProviders_test1_decomposed() throws Exception {
         String localeProviders = System.getProperty("java.locale.providers");
         if (localeProviders != null) { // may be null before Java 9
@@ -80,7 +81,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         Date date = dateformat.parse(txt);
     }
 
-    
+    @Test
     public void testLocaleProviders_test2_decomposed() throws Exception {
         String localeProviders = System.getProperty("java.locale.providers");
         if (localeProviders != null) { // may be null before Java 9
@@ -97,7 +98,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertNotNull(date);
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test0_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -111,7 +112,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         Date expected = createCalendar(null, 20051231, 0).getTime();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test1_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -126,7 +127,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test2_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -143,7 +144,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 "validate(A) default", expected, DateValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test3_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -161,7 +162,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test4_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -183,7 +184,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate4(localeVal, locale));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test5_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -206,7 +207,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test6_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -233,7 +234,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate2(patternVal, pattern));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test7_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -261,7 +262,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test8_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -293,7 +294,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate6(germanVal, germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test9_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -326,7 +327,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test10_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -360,7 +361,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("isValid(A) default", DateValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test11_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -395,7 +396,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test12_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -431,7 +432,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("isValid(A) locale ", DateValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test13_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -468,7 +469,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test14_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -506,7 +507,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertTrue("isValid(A) pattern", DateValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test15_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -545,7 +546,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test16_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -587,7 +588,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().isValid3(germanVal, germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test17_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -630,7 +631,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test18_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -674,7 +675,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) default", DateValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test19_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -719,7 +720,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test20_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -765,7 +766,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) locale ", DateValidator.getInstance().validate4(XXXX, locale));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test21_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -812,7 +813,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test22_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -860,7 +861,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertNull("validate(B) pattern", DateValidator.getInstance().validate2(XXXX, pattern));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test23_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -909,7 +910,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test24_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -961,7 +962,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate6("31 Dec 2005", germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test25_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1014,7 +1015,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test26_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1068,7 +1069,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) default", DateValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test27_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1123,7 +1124,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test28_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1179,7 +1180,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) locale ", DateValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test29_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1236,7 +1237,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test30_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1294,7 +1295,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertFalse("isValid(B) pattern", DateValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test31_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1353,7 +1354,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test32_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1415,7 +1416,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().isValid3("31 Dec 2005", germanPattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test33_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1479,7 +1480,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         Date expectedZone = createCalendar(zone, 20051231, 0).getTime();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test34_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1545,7 +1546,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test35_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1615,7 +1616,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate1(defaultVal, zone));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test36_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1686,7 +1687,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test37_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1761,7 +1762,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate5(localeVal, locale, zone));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test38_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1837,7 +1838,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test39_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1917,7 +1918,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 DateValidator.getInstance().validate3(patternVal, pattern, zone));
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test40_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -1998,7 +1999,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         DateValidator.getInstance();
     }
 
-    
+    @Test
     public void testDateValidatorMethods_test41_decomposed()  {
         Locale.setDefault(Locale.US);
         Locale locale = Locale.GERMAN;
@@ -2084,14 +2085,14 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                         .validate7(germanVal, germanPattern, Locale.GERMAN, zone));
     }
 
-    
+    @Test
     public void testCompare_test0_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
         Date diffHour = createDate(GMT, testDate, 115922);
     }
 
-    
+    @Test
     public void testCompare_test1_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2114,7 +2115,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         Date date20041231 = createDate(GMT, 20041231, sameTime);
     }
 
-    
+    @Test
     public void testCompare_test2_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2143,7 +2144,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("date GT", 1, dateValidator.compareDates(value, date20050822, GMT));
     }
 
-    
+    @Test
     public void testCompare_test3_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2179,7 +2180,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("week GT", 1, dateValidator.compareWeeks(value, date20050816, GMT));
     }
 
-    
+    @Test
     public void testCompare_test4_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2225,7 +2226,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 "mnth GT", 1, dateValidator.compareMonths(value, date20050731, GMT));
     }
 
-    
+    @Test
     public void testCompare_test5_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2291,7 +2292,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 dateValidator.compareQuarters0(value, date20050630, GMT));
     }
 
-    
+    @Test
     public void testCompare_test6_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2385,7 +2386,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
                 dateValidator.compareQuarters1(value, date20050110, GMT, 2));
     }
 
-    
+    @Test
     public void testCompare_test7_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2484,7 +2485,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         assertEquals("year GT", 1, dateValidator.compareYears(value, date20041231, GMT));
     }
 
-    
+    @Test
     public void testCompare_test8_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;
@@ -2584,7 +2585,7 @@ public class DateValidatorTest extends AbstractCalendarValidatorTest {
         Date sameDayTwoAm = createDate(GMT, testDate, 20000);
     }
 
-    
+    @Test
     public void testCompare_test9_decomposed()  {
         int sameTime = 124522;
         int testDate = 20050823;

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -54,12 +55,12 @@ public class CreditCardValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsValid_test0_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator1();
     }
 
-    
+    @Test
     public void testIsValid_test1_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator1();
         assertFalse(ccv.isValid(null));
@@ -75,7 +76,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue(ccv.isValid(VALID_DISCOVER));
     }
 
-    
+    @Test
     public void testIsValid_test2_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator1();
         assertFalse(ccv.isValid(null));
@@ -92,7 +93,7 @@ public class CreditCardValidatorTest extends TestCase {
         ccv = new CreditCardValidator(CreditCardValidator.AMEX);
     }
 
-    
+    @Test
     public void testIsValid_test3_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator1();
         assertFalse(ccv.isValid(null));
@@ -110,12 +111,12 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid("4417123456789113"));
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test0_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(CreditCardValidator.NONE);
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test1_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(CreditCardValidator.NONE);
         assertFalse(ccv.isValid(VALID_VISA));
@@ -124,7 +125,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid(VALID_DISCOVER));
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test2_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(CreditCardValidator.NONE);
         assertFalse(ccv.isValid(VALID_VISA));
@@ -134,7 +135,7 @@ public class CreditCardValidatorTest extends TestCase {
         ccv.addAllowedCardType(new DinersClub());
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test3_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(CreditCardValidator.NONE);
         assertFalse(ccv.isValid(VALID_VISA));

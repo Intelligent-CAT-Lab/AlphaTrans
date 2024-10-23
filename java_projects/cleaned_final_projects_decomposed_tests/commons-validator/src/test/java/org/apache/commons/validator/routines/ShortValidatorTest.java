@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.util.Locale;
 
@@ -73,7 +74,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test Short Range/Min/Max */
 
-    
+    @Test
     public void testShortValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -86,7 +87,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -103,7 +104,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -121,7 +122,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -143,7 +144,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -166,7 +167,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -193,7 +194,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -221,7 +222,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -253,7 +254,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -286,7 +287,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -320,7 +321,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", ShortValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -355,7 +356,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -391,7 +392,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) locale ", ShortValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -428,7 +429,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -467,7 +468,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(A) pattern", ShortValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -507,7 +508,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -550,7 +551,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -594,7 +595,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -639,7 +640,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", ShortValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -685,7 +686,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -732,7 +733,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) locale ", ShortValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -780,7 +781,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -829,7 +830,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) pattern", ShortValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -879,7 +880,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -932,7 +933,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -986,7 +987,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1041,7 +1042,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", ShortValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1097,7 +1098,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1154,7 +1155,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", ShortValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1212,7 +1213,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1271,7 +1272,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) pattern", ShortValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1331,7 +1332,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         ShortValidator.getInstance();
     }
 
-    
+    @Test
     public void testShortValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1394,13 +1395,13 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
                 ShortValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test0_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test1_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
@@ -1411,7 +1412,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         Short number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test2_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
@@ -1425,7 +1426,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() < min", validator.isInRange1(number9, min, max));
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test3_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
@@ -1443,7 +1444,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange1(number21, min, max));
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test4_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");
@@ -1464,7 +1465,7 @@ public class ShortValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue1(number11, min));
     }
 
-    
+    @Test
     public void testShortRangeMinMax_test5_decomposed()  {
         ShortValidator validator = (ShortValidator) strictValidator;
         Short number9 = validator.validate1("9", "#");

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -409,7 +410,7 @@ public class DomainValidatorTest extends TestCase {
         return sorted && strictlySorted && lowerCase;
     }
 
-    
+    @Test
     public void testValidDomains_test0_decomposed()  {
         assertTrue("apache.org should validate", validator.isValid("apache.org"));
         assertTrue("www.google.com should validate", validator.isValid("www.google.com"));
@@ -424,7 +425,7 @@ public class DomainValidatorTest extends TestCase {
                 validator.isValid("i.have.an-example.domain.name"));
     }
 
-    
+    @Test
     public void testInvalidDomains_test0_decomposed()  {
         assertFalse("bare TLD .org shouldn't validate", validator.isValid(".org"));
         assertFalse(
@@ -451,13 +452,13 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("Null shouldn't validate as domain name", validator.isValid(null));
     }
 
-    
+    @Test
     public void testTopLevelDomains_test0_decomposed()  {
         assertTrue(".arpa should validate as iTLD", validator.isValidInfrastructureTld(".arpa"));
         assertFalse(".com shouldn't validate as iTLD", validator.isValidInfrastructureTld(".com"));
     }
 
-    
+    @Test
     public void testTopLevelDomains_test1_decomposed()  {
         assertTrue(".arpa should validate as iTLD", validator.isValidInfrastructureTld(".arpa"));
         assertFalse(".com shouldn't validate as iTLD", validator.isValidInfrastructureTld(".com"));
@@ -465,7 +466,7 @@ public class DomainValidatorTest extends TestCase {
         assertFalse(".us shouldn't validate as gTLD", validator.isValidGenericTld(".us"));
     }
 
-    
+    @Test
     public void testTopLevelDomains_test2_decomposed()  {
         assertTrue(".arpa should validate as iTLD", validator.isValidInfrastructureTld(".arpa"));
         assertFalse(".com shouldn't validate as iTLD", validator.isValidInfrastructureTld(".com"));
@@ -475,7 +476,7 @@ public class DomainValidatorTest extends TestCase {
         assertFalse(".org shouldn't validate as ccTLD", validator.isValidCountryCodeTld(".org"));
     }
 
-    
+    @Test
     public void testTopLevelDomains_test3_decomposed()  {
         assertTrue(".arpa should validate as iTLD", validator.isValidInfrastructureTld(".arpa"));
         assertFalse(".com shouldn't validate as iTLD", validator.isValidInfrastructureTld(".com"));
@@ -487,7 +488,7 @@ public class DomainValidatorTest extends TestCase {
         assertTrue(".BiZ should validate as TLD", validator.isValidTld(".BiZ"));
     }
 
-    
+    @Test
     public void testTopLevelDomains_test4_decomposed()  {
         assertTrue(".arpa should validate as iTLD", validator.isValidInfrastructureTld(".arpa"));
         assertFalse(".com shouldn't validate as iTLD", validator.isValidInfrastructureTld(".com"));
@@ -504,13 +505,13 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("null shouldn't validate as TLD", validator.isValid(null));
     }
 
-    
+    @Test
     public void testAllowLocal_test0_decomposed()  {
         DomainValidator noLocal = DomainValidator.getInstance1(false);
         DomainValidator allowLocal = DomainValidator.getInstance1(true);
     }
 
-    
+    @Test
     public void testAllowLocal_test1_decomposed()  {
         DomainValidator noLocal = DomainValidator.getInstance1(false);
         DomainValidator allowLocal = DomainValidator.getInstance1(true);
@@ -519,7 +520,7 @@ public class DomainValidatorTest extends TestCase {
                 "localhost.localdomain should validate", noLocal.isValid("localhost.localdomain"));
     }
 
-    
+    @Test
     public void testAllowLocal_test2_decomposed()  {
         DomainValidator noLocal = DomainValidator.getInstance1(false);
         DomainValidator allowLocal = DomainValidator.getInstance1(true);
@@ -538,18 +539,18 @@ public class DomainValidatorTest extends TestCase {
                 "domain name with spaces shouldn't validate", allowLocal.isValid(" apache.org "));
     }
 
-    
+    @Test
     public void testIDN_test0_decomposed()  {
         assertTrue(
                 "b\u00fccher.ch in IDN should validate", validator.isValid("www.xn--bcher-kva.ch"));
     }
 
-    
+    @Test
     public void testIDNJava6OrLater_test0_decomposed()  {
         String version = System.getProperty("java.version");
     }
 
-    
+    @Test
     public void testIDNJava6OrLater_test1_decomposed()  {
         String version = System.getProperty("java.version");
         if (version.compareTo("1.6") < 0) {
@@ -559,7 +560,7 @@ public class DomainValidatorTest extends TestCase {
         assertTrue("b\u00fccher.ch should validate", validator.isValid("www.b\u00fccher.ch"));
     }
 
-    
+    @Test
     public void testIDNJava6OrLater_test2_decomposed()  {
         String version = System.getProperty("java.version");
         if (version.compareTo("1.6") < 0) {
@@ -574,7 +575,7 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("www.\uFFFD.ch FFFD should fail", validator.isValid("www.\uFFFD.ch"));
     }
 
-    
+    @Test
     public void testRFC2396domainlabel_test0_decomposed()  {
         assertTrue("a.ch should validate", validator.isValid("a.ch"));
         assertTrue("9.ch should validate", validator.isValid("9.ch"));
@@ -585,7 +586,7 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("-.ch should not validate", validator.isValid("-.ch"));
     }
 
-    
+    @Test
     public void testRFC2396toplabel_test0_decomposed()  {
         assertTrue("a.c (alpha) should validate", validator.isValidDomainSyntax("a.c"));
         assertTrue("a.cc (alpha alpha) should validate", validator.isValidDomainSyntax("a.cc"));
@@ -599,7 +600,7 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("a.-9 (- alphanum) should fail", validator.isValidDomainSyntax("a.-9"));
     }
 
-    
+    @Test
     public void testDomainNoDots_test0_decomposed()  {
         assertTrue("a (alpha) should validate", validator.isValidDomainSyntax("a"));
         assertTrue("9 (alphanum) should validate", validator.isValidDomainSyntax("9"));
@@ -609,20 +610,20 @@ public class DomainValidatorTest extends TestCase {
         assertFalse("- (-) should fail", validator.isValidDomainSyntax("-"));
     }
 
-    
+    @Test
     public void testValidator297_test0_decomposed()  {
         assertTrue(
                 "xn--d1abbgf6aiiy.xn--p1ai should validate",
                 validator.isValid("xn--d1abbgf6aiiy.xn--p1ai"));
     }
 
-    
+    @Test
     public void testValidator306_test0_decomposed()  {
         final String longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A";
         assertEquals(63, longString.length());
     }
 
-    
+    @Test
     public void testValidator306_test1_decomposed()  {
         final String longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A";
         assertEquals(63, longString.length());
@@ -638,7 +639,7 @@ public class DomainValidatorTest extends TestCase {
                 "64 chars TLD should fail", validator.isValidDomainSyntax("test.x" + longString));
     }
 
-    
+    @Test
     public void testValidator306_test2_decomposed()  {
         final String longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A";
         assertEquals(63, longString.length());
@@ -663,7 +664,7 @@ public class DomainValidatorTest extends TestCase {
         assertEquals(253, longDomain.length());
     }
 
-    
+    @Test
     public void testValidator306_test3_decomposed()  {
         final String longString = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789A";
         assertEquals(63, longString.length());
@@ -691,7 +692,7 @@ public class DomainValidatorTest extends TestCase {
                 "254 chars domain should fail", validator.isValidDomainSyntax(longDomain + "x"));
     }
 
-    
+    @Test
     public void testUnicodeToASCII_test0_decomposed()  {
         String[] asciidots = {
             "", ",", ".", // fails IDN.toASCII, but should pass wrapped version
@@ -703,7 +704,7 @@ public class DomainValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testUnicodeToASCII_test1_decomposed()  {
         String[] asciidots = {
             "", ",", ".", // fails IDN.toASCII, but should pass wrapped version
@@ -738,14 +739,14 @@ public class DomainValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsIDNtoASCIIBroken_test0_decomposed()  {
         System.out.println(">>DomainValidatorTest.testIsIDNtoASCIIBroken()");
         final String input = ".";
         final boolean ok = input.equals(IDN.toASCII(input));
     }
 
-    
+    @Test
     public void testIsIDNtoASCIIBroken_test1_decomposed()  {
         System.out.println(">>DomainValidatorTest.testIsIDNtoASCIIBroken()");
         final String input = ".";
@@ -770,7 +771,7 @@ public class DomainValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsIDNtoASCIIBroken_test2_decomposed()  {
         System.out.println(">>DomainValidatorTest.testIsIDNtoASCIIBroken()");
         final String input = ".";
@@ -797,56 +798,56 @@ public class DomainValidatorTest extends TestCase {
         assertTrue(true);
     }
 
-    
+    @Test
     public void test_INFRASTRUCTURE_TLDS_sortedAndLowerCase_test0_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("INFRASTRUCTURE_TLDS");
     }
 
-    
+    @Test
     public void test_INFRASTRUCTURE_TLDS_sortedAndLowerCase_test1_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("INFRASTRUCTURE_TLDS");
         assertTrue(sorted);
     }
 
-    
+    @Test
     public void test_COUNTRY_CODE_TLDS_sortedAndLowerCase_test0_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("COUNTRY_CODE_TLDS");
     }
 
-    
+    @Test
     public void test_COUNTRY_CODE_TLDS_sortedAndLowerCase_test1_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("COUNTRY_CODE_TLDS");
         assertTrue(sorted);
     }
 
-    
+    @Test
     public void test_GENERIC_TLDS_sortedAndLowerCase_test0_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("GENERIC_TLDS");
     }
 
-    
+    @Test
     public void test_GENERIC_TLDS_sortedAndLowerCase_test1_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("GENERIC_TLDS");
         assertTrue(sorted);
     }
 
-    
+    @Test
     public void test_LOCAL_TLDS_sortedAndLowerCase_test0_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("LOCAL_TLDS");
     }
 
-    
+    @Test
     public void test_LOCAL_TLDS_sortedAndLowerCase_test1_decomposed() throws Exception {
         final boolean sorted = isSortedLowerCase0("LOCAL_TLDS");
         assertTrue(sorted);
     }
 
-    
+    @Test
     public void testEnumIsPublic_test0_decomposed()  {
         assertTrue(Modifier.isPublic(DomainValidator.ArrayType.class.getModifiers()));
     }
 
-    
+    @Test
     public void testGetArray_test0_decomposed()  {
         assertNotNull(DomainValidator.getTLDEntries(ArrayType.COUNTRY_CODE_MINUS));
         assertNotNull(DomainValidator.getTLDEntries(ArrayType.COUNTRY_CODE_PLUS));

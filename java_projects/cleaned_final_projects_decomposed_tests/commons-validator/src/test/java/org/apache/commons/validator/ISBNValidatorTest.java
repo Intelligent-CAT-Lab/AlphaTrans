@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -37,12 +38,12 @@ public class ISBNValidatorTest extends TestCase {
         super(name);
     }
 
-    
+    @Test
     public void testIsValid_test0_decomposed() throws Exception {
         ISBNValidator validator = new ISBNValidator();
     }
 
-    
+    @Test
     public void testIsValid_test1_decomposed() throws Exception {
         ISBNValidator validator = new ISBNValidator();
         assertFalse(validator.isValid(null));

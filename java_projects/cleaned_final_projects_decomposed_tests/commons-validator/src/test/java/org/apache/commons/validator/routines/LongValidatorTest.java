@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.util.Locale;
 
@@ -112,7 +113,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test Long Range/Min/Max */
 
-    
+    @Test
     public void testLongValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -125,7 +126,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -140,7 +141,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 "validate(A) default", expected, LongValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -156,7 +157,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -176,7 +177,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -197,7 +198,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -222,7 +223,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -248,7 +249,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -278,7 +279,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -309,7 +310,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -341,7 +342,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", LongValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -374,7 +375,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -408,7 +409,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) locale ", LongValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -443,7 +444,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -479,7 +480,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) pattern", LongValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -516,7 +517,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -556,7 +557,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -597,7 +598,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -639,7 +640,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", LongValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -682,7 +683,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -726,7 +727,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) locale ", LongValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -771,7 +772,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -817,7 +818,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) pattern", LongValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -864,7 +865,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -914,7 +915,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -965,7 +966,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1017,7 +1018,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", LongValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1070,7 +1071,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1124,7 +1125,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", LongValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1179,7 +1180,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1235,7 +1236,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) pattern", LongValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1292,7 +1293,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         LongValidator.getInstance();
     }
 
-    
+    @Test
     public void testLongValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1352,13 +1353,13 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
                 LongValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testLongRangeMinMax_test0_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testLongRangeMinMax_test1_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");
@@ -1369,7 +1370,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         Long number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testLongRangeMinMax_test2_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");
@@ -1385,7 +1386,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
     }
 
-    
+    @Test
     public void testLongRangeMinMax_test3_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");
@@ -1404,7 +1405,7 @@ public class LongValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
     }
 
-    
+    @Test
     public void testLongRangeMinMax_test4_decomposed()  {
         LongValidator validator = (LongValidator) strictValidator;
         Long number9 = validator.validate1("9", "#");

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.util.Locale;
 
@@ -73,7 +74,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test Double Range/Min/Max */
 
-    
+    @Test
     public void testDoubleValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -86,7 +87,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -103,7 +104,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -121,7 +122,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -143,7 +144,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -166,7 +167,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -193,7 +194,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -221,7 +222,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -253,7 +254,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -286,7 +287,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -320,7 +321,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", DoubleValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -355,7 +356,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -391,7 +392,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) locale ", DoubleValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -428,7 +429,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -467,7 +468,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(A) pattern", DoubleValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -507,7 +508,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -550,7 +551,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -594,7 +595,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -639,7 +640,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", DoubleValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -685,7 +686,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -732,7 +733,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) locale ", DoubleValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -780,7 +781,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -829,7 +830,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) pattern", DoubleValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -879,7 +880,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -932,7 +933,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -986,7 +987,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1041,7 +1042,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", DoubleValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1097,7 +1098,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1154,7 +1155,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", DoubleValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1212,7 +1213,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1271,7 +1272,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) pattern", DoubleValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1331,7 +1332,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         DoubleValidator.getInstance();
     }
 
-    
+    @Test
     public void testDoubleValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1394,13 +1395,13 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
                 DoubleValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testDoubleRangeMinMax_test0_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testDoubleRangeMinMax_test1_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");
@@ -1411,7 +1412,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         Double number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testDoubleRangeMinMax_test2_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");
@@ -1427,7 +1428,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
     }
 
-    
+    @Test
     public void testDoubleRangeMinMax_test3_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");
@@ -1446,7 +1447,7 @@ public class DoubleValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
     }
 
-    
+    @Test
     public void testDoubleRangeMinMax_test4_decomposed()  {
         DoubleValidator validator = (DoubleValidator) strictValidator;
         Double number9 = validator.validate1("9", "#");

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -111,18 +112,18 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testSingle_test0_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
     }
 
-    
+    @Test
     public void testSingle_test1_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
     }
 
-    
+    @Test
     public void testSingle_test2_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -132,7 +133,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Insensitive isValid() invalid", false, insensitive.isValid("ABd-de-1"));
     }
 
-    
+    @Test
     public void testSingle_test3_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -146,7 +147,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Insensitive validate() invalid", null, insensitive.validate("ABd-de-1"));
     }
 
-    
+    @Test
     public void testSingle_test4_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -161,7 +162,7 @@ public class RegexValidatorTest extends TestCase {
         sensitive.match("ac-DE-1");
     }
 
-    
+    @Test
     public void testSingle_test5_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -180,7 +181,7 @@ public class RegexValidatorTest extends TestCase {
                 sensitive.match("ac-DE-1"));
     }
 
-    
+    @Test
     public void testSingle_test6_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -200,7 +201,7 @@ public class RegexValidatorTest extends TestCase {
         sensitive.match("AB-de-1");
     }
 
-    
+    @Test
     public void testSingle_test7_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -221,7 +222,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Sensitive match() invalid", null, sensitive.match("AB-de-1"));
     }
 
-    
+    @Test
     public void testSingle_test8_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -243,7 +244,7 @@ public class RegexValidatorTest extends TestCase {
         insensitive.match("AB-de-1");
     }
 
-    
+    @Test
     public void testSingle_test9_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -269,7 +270,7 @@ public class RegexValidatorTest extends TestCase {
                 insensitive.match("AB-de-1"));
     }
 
-    
+    @Test
     public void testSingle_test10_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -296,7 +297,7 @@ public class RegexValidatorTest extends TestCase {
         insensitive.match("ABd-de-1");
     }
 
-    
+    @Test
     public void testSingle_test11_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -324,7 +325,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Insensitive match() invalid", null, insensitive.match("ABd-de-1"));
     }
 
-    
+    @Test
     public void testSingle_test12_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -353,7 +354,7 @@ public class RegexValidatorTest extends TestCase {
         RegexValidator.RegexValidator3("^([A-Z]*)$");
     }
 
-    
+    @Test
     public void testSingle_test13_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -386,7 +387,7 @@ public class RegexValidatorTest extends TestCase {
                 (RegexValidator.RegexValidator3("^([A-Z]*)$")).validate("ABC"));
     }
 
-    
+    @Test
     public void testSingle_test14_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -420,7 +421,7 @@ public class RegexValidatorTest extends TestCase {
         RegexValidator.RegexValidator3("^([A-Z]*)$");
     }
 
-    
+    @Test
     public void testSingle_test15_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -455,7 +456,7 @@ public class RegexValidatorTest extends TestCase {
         (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC");
     }
 
-    
+    @Test
     public void testSingle_test16_decomposed()  {
         RegexValidator sensitive = RegexValidator.RegexValidator3(REGEX);
         RegexValidator insensitive = RegexValidator.RegexValidator2(REGEX, false);
@@ -494,12 +495,12 @@ public class RegexValidatorTest extends TestCase {
                 (RegexValidator.RegexValidator3("^([A-Z]*)$")).match("ABC"));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test0_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test1_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -507,7 +508,7 @@ public class RegexValidatorTest extends TestCase {
         RegexValidator single3 = RegexValidator.RegexValidator3(REGEX_3);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test2_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -519,7 +520,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Sensitive isValid() Multiple", true, multiple.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test3_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -534,7 +535,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Sensitive isValid() 3rd", false, single3.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test4_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -553,7 +554,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Sensitive validate() 3rd", null, single3.validate(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test5_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -573,7 +574,7 @@ public class RegexValidatorTest extends TestCase {
         multiple.match(value);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test6_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -594,7 +595,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Sensitive match() Multiple", array, multiple.match(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test7_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -616,7 +617,7 @@ public class RegexValidatorTest extends TestCase {
         single1.match(value);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test8_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -639,7 +640,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Sensitive match() 1st", null, single1.match(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test9_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -663,7 +664,7 @@ public class RegexValidatorTest extends TestCase {
         single2.match(value);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test10_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -688,7 +689,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Sensitive match() 2nd", array, single2.match(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test11_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -714,7 +715,7 @@ public class RegexValidatorTest extends TestCase {
         single3.match(value);
     }
 
-    
+    @Test
     public void testMultipleSensitive_test12_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -741,7 +742,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("Sensitive match() 3rd", null, single3.match(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test13_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -770,7 +771,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("isValid() Invalid", false, multiple.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test14_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -800,7 +801,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("validate() Invalid", null, multiple.validate(value));
     }
 
-    
+    @Test
     public void testMultipleSensitive_test15_decomposed()  {
         RegexValidator multiple = RegexValidator.RegexValidator1(MULTIPLE_REGEX);
         RegexValidator single1 = RegexValidator.RegexValidator3(REGEX_1);
@@ -831,12 +832,12 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("match() Multiple", null, multiple.match(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test0_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test1_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -844,7 +845,7 @@ public class RegexValidatorTest extends TestCase {
         RegexValidator single3 = RegexValidator.RegexValidator2(REGEX_3, false);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test2_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -856,7 +857,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("isValid() Multiple", true, multiple.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test3_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -871,7 +872,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("isValid() 3rd", false, single3.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test4_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -890,7 +891,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("validate() 3rd", null, single3.validate(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test5_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -910,7 +911,7 @@ public class RegexValidatorTest extends TestCase {
         multiple.match(value);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test6_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -931,7 +932,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("match() Multiple", array, multiple.match(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test7_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -953,7 +954,7 @@ public class RegexValidatorTest extends TestCase {
         single1.match(value);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test8_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -976,7 +977,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("match() 1st", null, single1.match(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test9_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1000,7 +1001,7 @@ public class RegexValidatorTest extends TestCase {
         single2.match(value);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test10_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1025,7 +1026,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("match() 2nd", array, single2.match(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test11_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1051,7 +1052,7 @@ public class RegexValidatorTest extends TestCase {
         single3.match(value);
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test12_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1078,7 +1079,7 @@ public class RegexValidatorTest extends TestCase {
         checkArray("match() 3rd", null, single3.match(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test13_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1107,7 +1108,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("isValid() Invalid", false, multiple.isValid(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test14_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1137,7 +1138,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("validate() Invalid", null, multiple.validate(value));
     }
 
-    
+    @Test
     public void testMultipleInsensitive_test15_decomposed()  {
         RegexValidator multiple = new RegexValidator(MULTIPLE_REGEX, false);
         RegexValidator single1 = RegexValidator.RegexValidator2(REGEX_1, false);
@@ -1168,25 +1169,25 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("match() Multiple", null, multiple.match(value));
     }
 
-    
+    @Test
     public void testNullValue_test0_decomposed()  {
         RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
     }
 
-    
+    @Test
     public void testNullValue_test1_decomposed()  {
         RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Instance isValid()", false, validator.isValid(null));
     }
 
-    
+    @Test
     public void testNullValue_test2_decomposed()  {
         RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Instance isValid()", false, validator.isValid(null));
         assertEquals("Instance validate()", null, validator.validate(null));
     }
 
-    
+    @Test
     public void testNullValue_test3_decomposed()  {
         RegexValidator validator = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Instance isValid()", false, validator.isValid(null));
@@ -1194,7 +1195,7 @@ public class RegexValidatorTest extends TestCase {
         assertEquals("Instance match()", null, validator.match(null));
     }
 
-    
+    @Test
     public void testMissingRegex_test0_decomposed()  {
         try {
             RegexValidator.RegexValidator3((String) null);
@@ -1210,7 +1211,7 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testMissingRegex_test1_decomposed()  {
         try {
             RegexValidator.RegexValidator3((String) null);
@@ -1238,7 +1239,7 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testMissingRegex_test2_decomposed()  {
         try {
             RegexValidator.RegexValidator3((String) null);
@@ -1273,7 +1274,7 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testMissingRegex_test3_decomposed()  {
         try {
             RegexValidator.RegexValidator3((String) null);
@@ -1316,7 +1317,7 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testExceptions_test0_decomposed()  {
         String invalidRegex = "^([abCD12]*$";
         try {
@@ -1325,25 +1326,25 @@ public class RegexValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testToString_test0_decomposed()  {
         RegexValidator single = RegexValidator.RegexValidator3(REGEX);
     }
 
-    
+    @Test
     public void testToString_test1_decomposed()  {
         RegexValidator single = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
     }
 
-    
+    @Test
     public void testToString_test2_decomposed()  {
         RegexValidator single = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());
         RegexValidator multiple = RegexValidator.RegexValidator1(new String[] {REGEX, REGEX});
     }
 
-    
+    @Test
     public void testToString_test3_decomposed()  {
         RegexValidator single = RegexValidator.RegexValidator3(REGEX);
         assertEquals("Single", "RegexValidator{" + REGEX + "}", single.toString());

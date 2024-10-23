@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -72,13 +73,13 @@ public class CodeValidatorTest extends TestCase {
 
     /** Test Regular Expression. */
 
-    
+    @Test
     public void testCheckDigit_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testCheckDigit_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -87,7 +88,7 @@ public class CodeValidatorTest extends TestCase {
         assertNull("No CheckDigit", validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testCheckDigit_test2_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -98,7 +99,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No CheckDigit valid", validEAN, validator.validate(validEAN));
     }
 
-    
+    @Test
     public void testCheckDigit_test3_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -111,7 +112,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No CheckDigit (is) valid", true, validator.isValid(validEAN));
     }
 
-    
+    @Test
     public void testCheckDigit_test4_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -126,7 +127,7 @@ public class CodeValidatorTest extends TestCase {
                 CodeValidator.CodeValidator4((String) null, -1, EAN13CheckDigit.EAN13_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testCheckDigit_test5_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -142,7 +143,7 @@ public class CodeValidatorTest extends TestCase {
         assertNotNull("EAN CheckDigit", validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testCheckDigit_test6_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -160,7 +161,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("EAN CheckDigit valid", validEAN, validator.validate(validEAN));
     }
 
-    
+    @Test
     public void testCheckDigit_test7_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -180,7 +181,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("EAN CheckDigit (is) valid", true, validator.isValid(validEAN));
     }
 
-    
+    @Test
     public void testCheckDigit_test8_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -201,13 +202,13 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("EAN CheckDigit ex", null, validator.validate("978193011099X"));
     }
 
-    
+    @Test
     public void testLength_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testLength_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -220,7 +221,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No min", -1, validator.getMinLength());
     }
 
-    
+    @Test
     public void testLength_test2_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -234,7 +235,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No max", -1, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testLength_test3_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -254,7 +255,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No Length 22", length_22, validator.validate(length_22));
     }
 
-    
+    @Test
     public void testLength_test4_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -275,7 +276,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, -1, null, 11, (String) null);
     }
 
-    
+    @Test
     public void testLength_test5_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -297,7 +298,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 - min", 11, validator.getMinLength());
     }
 
-    
+    @Test
     public void testLength_test6_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -320,7 +321,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 - max", -1, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testLength_test7_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -349,7 +350,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 - 22", length_22, validator.validate(length_22));
     }
 
-    
+    @Test
     public void testLength_test8_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -379,7 +380,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, 21, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testLength_test9_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -410,7 +411,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Max 21 - min", -1, validator.getMinLength());
     }
 
-    
+    @Test
     public void testLength_test10_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -442,7 +443,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Max 21 - max", 21, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testLength_test11_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -480,7 +481,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Max 21 - 22", null, validator.validate(length_22));
     }
 
-    
+    @Test
     public void testLength_test12_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -519,7 +520,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, 21, null, 11, (String) null);
     }
 
-    
+    @Test
     public void testLength_test13_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -559,7 +560,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 / Max 21 - min", 11, validator.getMinLength());
     }
 
-    
+    @Test
     public void testLength_test14_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -600,7 +601,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 / Max 21 - max", 21, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testLength_test15_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -647,7 +648,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Min 11 / Max 21 - 22", null, validator.validate(length_22));
     }
 
-    
+    @Test
     public void testLength_test16_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -695,7 +696,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, 11, null, 11, (String) null);
     }
 
-    
+    @Test
     public void testLength_test17_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -744,7 +745,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Exact 11 - min", 11, validator.getMinLength());
     }
 
-    
+    @Test
     public void testLength_test18_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -794,7 +795,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Exact 11 - max", 11, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testLength_test19_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -847,13 +848,13 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Exact 11 - 12", null, validator.validate(length_12));
     }
 
-    
+    @Test
     public void testRegex_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testRegex_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -865,7 +866,7 @@ public class CodeValidatorTest extends TestCase {
         assertNull("No Regex", validator.getRegexValidator());
     }
 
-    
+    @Test
     public void testRegex_test2_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -882,7 +883,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("No Regex invalid", invalid, validator.validate(invalid));
     }
 
-    
+    @Test
     public void testRegex_test3_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -901,7 +902,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, -1, null, -1, regex);
     }
 
-    
+    @Test
     public void testRegex_test4_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -921,7 +922,7 @@ public class CodeValidatorTest extends TestCase {
         assertNotNull("No Regex", validator.getRegexValidator());
     }
 
-    
+    @Test
     public void testRegex_test5_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -946,7 +947,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Regex invalid", null, validator.validate(invalid));
     }
 
-    
+    @Test
     public void testRegex_test6_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -973,7 +974,7 @@ public class CodeValidatorTest extends TestCase {
         RegexValidator.RegexValidator3(regex);
     }
 
-    
+    @Test
     public void testRegex_test7_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1003,7 +1004,7 @@ public class CodeValidatorTest extends TestCase {
                         RegexValidator.RegexValidator3(regex), 6, (CheckDigit) null);
     }
 
-    
+    @Test
     public void testRegex_test8_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1037,7 +1038,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Reformat 123.456", null, validator.validate("123.456"));
     }
 
-    
+    @Test
     public void testRegex_test9_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1073,7 +1074,7 @@ public class CodeValidatorTest extends TestCase {
         RegexValidator.RegexValidator3(regex);
     }
 
-    
+    @Test
     public void testRegex_test10_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1112,7 +1113,7 @@ public class CodeValidatorTest extends TestCase {
                         RegexValidator.RegexValidator3(regex), 6, (CheckDigit) null);
     }
 
-    
+    @Test
     public void testRegex_test11_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1152,7 +1153,7 @@ public class CodeValidatorTest extends TestCase {
         validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testRegex_test12_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1196,7 +1197,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getRegexValidator().toString());
     }
 
-    
+    @Test
     public void testRegex_test13_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1243,13 +1244,13 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Reformat 2 123456", "123456", validator.validate("123456"));
     }
 
-    
+    @Test
     public void testNoInput_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testNoInput_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, -1, (String) null);
@@ -1259,20 +1260,20 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Trimmed", "A", validator.validate(" A  "));
     }
 
-    
+    @Test
     public void testValidator294_1_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, 0, (String) null);
     }
 
-    
+    @Test
     public void testValidator294_1_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, 0, (String) null);
         assertEquals("Null", null, validator.validate(null));
     }
 
-    
+    @Test
     public void testValidator294_1_test2_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, 0, (String) null);
@@ -1280,7 +1281,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(3, (CheckDigit) null, 0, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testValidator294_1_test3_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, -1, null, 0, (String) null);
@@ -1289,33 +1290,33 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Null", null, validator.validate(null));
     }
 
-    
+    @Test
     public void testValidator294_2_test0_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, 0, null, -1, (String) null);
     }
 
-    
+    @Test
     public void testValidator294_2_test1_decomposed()  {
         CodeValidator validator =
                 new CodeValidator(3, (CheckDigit) null, 0, null, -1, (String) null);
         assertEquals("Null", null, validator.validate(null));
     }
 
-    
+    @Test
     public void testConstructors_test0_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
     }
 
-    
+    @Test
     public void testConstructors_test1_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
         validator = CodeValidator.CodeValidator2(regex, EAN13CheckDigit.EAN13_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testConstructors_test2_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1323,7 +1324,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 1 - regex", regex, validator.getRegexValidator());
     }
 
-    
+    @Test
     public void testConstructors_test3_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1332,7 +1333,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 1 - min length", -1, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test4_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1342,7 +1343,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 1 - max length", -1, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test5_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1356,7 +1357,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testConstructors_test6_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1371,7 +1372,7 @@ public class CodeValidatorTest extends TestCase {
         validator = CodeValidator.CodeValidator1(regex, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testConstructors_test7_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1387,7 +1388,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 2 - regex", regex, validator.getRegexValidator());
     }
 
-    
+    @Test
     public void testConstructors_test8_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1404,7 +1405,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 2 - min length", 13, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test9_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1422,7 +1423,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 2 - max length", 13, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test10_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1444,7 +1445,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testConstructors_test11_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1467,7 +1468,7 @@ public class CodeValidatorTest extends TestCase {
         validator = new CodeValidator(0, EAN13CheckDigit.EAN13_CHECK_DIGIT, 20, regex, 10, null);
     }
 
-    
+    @Test
     public void testConstructors_test12_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1491,7 +1492,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 3 - regex", regex, validator.getRegexValidator());
     }
 
-    
+    @Test
     public void testConstructors_test13_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1516,7 +1517,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 3 - min length", 10, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test14_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1542,7 +1543,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 3 - max length", 20, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test15_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1572,7 +1573,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testConstructors_test16_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1603,7 +1604,7 @@ public class CodeValidatorTest extends TestCase {
         validator = CodeValidator.CodeValidator5("^[0-9]*$", EAN13CheckDigit.EAN13_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testConstructors_test17_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1635,7 +1636,7 @@ public class CodeValidatorTest extends TestCase {
         validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testConstructors_test18_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1671,7 +1672,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getRegexValidator().toString());
     }
 
-    
+    @Test
     public void testConstructors_test19_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1708,7 +1709,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 4 - min length", -1, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test20_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1746,7 +1747,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 4 - max length", -1, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test21_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1788,7 +1789,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testConstructors_test22_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1831,7 +1832,7 @@ public class CodeValidatorTest extends TestCase {
         validator = CodeValidator.CodeValidator4("^[0-9]*$", 13, EAN13CheckDigit.EAN13_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testConstructors_test23_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1875,7 +1876,7 @@ public class CodeValidatorTest extends TestCase {
         validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testConstructors_test24_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1923,7 +1924,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getRegexValidator().toString());
     }
 
-    
+    @Test
     public void testConstructors_test25_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -1972,7 +1973,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 5 - min length", 13, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test26_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2022,7 +2023,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 5 - max length", 13, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test27_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2076,7 +2077,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getCheckDigit());
     }
 
-    
+    @Test
     public void testConstructors_test28_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2132,7 +2133,7 @@ public class CodeValidatorTest extends TestCase {
                 new CodeValidator(3, EAN13CheckDigit.EAN13_CHECK_DIGIT, 20, null, 10, "^[0-9]*$");
     }
 
-    
+    @Test
     public void testConstructors_test29_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2189,7 +2190,7 @@ public class CodeValidatorTest extends TestCase {
         validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testConstructors_test30_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2250,7 +2251,7 @@ public class CodeValidatorTest extends TestCase {
                 validator.getRegexValidator().toString());
     }
 
-    
+    @Test
     public void testConstructors_test31_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2312,7 +2313,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 6 - min length", 10, validator.getMinLength());
     }
 
-    
+    @Test
     public void testConstructors_test32_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");
@@ -2375,7 +2376,7 @@ public class CodeValidatorTest extends TestCase {
         assertEquals("Constructor 6 - max length", 20, validator.getMaxLength());
     }
 
-    
+    @Test
     public void testConstructors_test33_decomposed()  {
         CodeValidator validator = null;
         RegexValidator regex = RegexValidator.RegexValidator3("^[0-9]*$");

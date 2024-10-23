@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines.checkdigit;
+import org.junit.Test;
 
 /**
  * ISBN-10/ISBN-13 Check Digit Test.
@@ -53,7 +54,7 @@ public class ISBNCheckDigitTest extends AbstractCheckDigitTest {
 
     /** Set up routine & valid codes. */
 
-    
+    @Test
     public void testInvalidLength_test0_decomposed()  {
         assertFalse("isValid() Lth 9 ", routine.isValid("123456789"));
         assertFalse("isValid() Lth 11", routine.isValid("12345678901"));
@@ -61,7 +62,7 @@ public class ISBNCheckDigitTest extends AbstractCheckDigitTest {
         assertFalse("isValid() Lth 14", routine.isValid("12345678901234"));
     }
 
-    
+    @Test
     public void testInvalidLength_test1_decomposed()  {
         assertFalse("isValid() Lth 9 ", routine.isValid("123456789"));
         assertFalse("isValid() Lth 11", routine.isValid("12345678901"));

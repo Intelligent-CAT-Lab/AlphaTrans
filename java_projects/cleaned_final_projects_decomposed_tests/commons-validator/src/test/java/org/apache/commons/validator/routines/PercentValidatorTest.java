@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -64,25 +65,25 @@ public class PercentValidatorTest extends TestCase {
 
     /** Test Invalid percentage values */
 
-    
+    @Test
     public void testFormatType_test0_decomposed()  {
         PercentValidator.getInstance();
     }
 
-    
+    @Test
     public void testFormatType_test1_decomposed()  {
         PercentValidator.getInstance();
         assertEquals("Format Type A", 2, PercentValidator.getInstance().getFormatType());
     }
 
-    
+    @Test
     public void testFormatType_test2_decomposed()  {
         PercentValidator.getInstance();
         assertEquals("Format Type A", 2, PercentValidator.getInstance().getFormatType());
         PercentValidator.getInstance();
     }
 
-    
+    @Test
     public void testFormatType_test3_decomposed()  {
         PercentValidator.getInstance();
         assertEquals("Format Type A", 2, PercentValidator.getInstance().getFormatType());
@@ -93,14 +94,14 @@ public class PercentValidatorTest extends TestCase {
                 PercentValidator.getInstance().getFormatType());
     }
 
-    
+    @Test
     public void testValid_test0_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
         BigDecimalValidator validator = PercentValidator.getInstance();
     }
 
-    
+    @Test
     public void testValid_test1_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -111,7 +112,7 @@ public class PercentValidatorTest extends TestCase {
         assertEquals("Default locale", expected, validator.validate0("12%"));
     }
 
-    
+    @Test
     public void testValid_test2_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -123,7 +124,7 @@ public class PercentValidatorTest extends TestCase {
         assertEquals("Default negtve", negative, validator.validate0("-12%"));
     }
 
-    
+    @Test
     public void testValid_test3_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -141,7 +142,7 @@ public class PercentValidatorTest extends TestCase {
         assertEquals("US No symbol", expected, validator.validate2("12", Locale.US));
     }
 
-    
+    @Test
     public void testValid_test4_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -160,7 +161,7 @@ public class PercentValidatorTest extends TestCase {
         assertEquals("100%", hundred, validator.validate0("100%"));
     }
 
-    
+    @Test
     public void testValid_test5_decomposed()  {
         Locale origDefault = Locale.getDefault();
         Locale.setDefault(Locale.UK);
@@ -180,19 +181,19 @@ public class PercentValidatorTest extends TestCase {
         Locale.setDefault(origDefault);
     }
 
-    
+    @Test
     public void testInvalid_test0_decomposed()  {
         BigDecimalValidator validator = PercentValidator.getInstance();
     }
 
-    
+    @Test
     public void testInvalid_test1_decomposed()  {
         BigDecimalValidator validator = PercentValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));
         assertFalse("isValid() Empty Value", validator.isValid0(""));
     }
 
-    
+    @Test
     public void testInvalid_test2_decomposed()  {
         BigDecimalValidator validator = PercentValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));
@@ -201,7 +202,7 @@ public class PercentValidatorTest extends TestCase {
         assertNull("validate() Empty Value", validator.validate0(""));
     }
 
-    
+    @Test
     public void testInvalid_test3_decomposed()  {
         BigDecimalValidator validator = PercentValidator.getInstance();
         assertFalse("isValid() Null Value", validator.isValid0(null));

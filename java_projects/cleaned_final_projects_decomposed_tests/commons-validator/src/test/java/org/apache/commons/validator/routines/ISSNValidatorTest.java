@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -98,31 +99,31 @@ public class ISSNValidatorTest extends TestCase {
 
     /** Test valid EAN-13 ISSN codes and extract the ISSN */
 
-    
+    @Test
     public void testIsValidISSN_test0_decomposed()  {
         for (String f : validFormat) {
             assertTrue(f, VALIDATOR.isValid(f));
         }
     }
 
-    
+    @Test
     public void testNull_test0_decomposed()  {
         assertFalse("isValid", VALIDATOR.isValid(null));
     }
 
-    
+    @Test
     public void testInvalid_test0_decomposed()  {
         for (String f : invalidFormat) {
             assertFalse(f, VALIDATOR.isValid(f));
         }
     }
 
-    
+    @Test
     public void testIsValidISSNConvertNull_test0_decomposed()  {
         assertNull(VALIDATOR.convertToEAN13(null, "00"));
     }
 
-    
+    @Test
     public void testIsValidISSNConvertSuffix_test0_decomposed()  {
         try {
             assertNull(VALIDATOR.convertToEAN13(null, null));
@@ -162,7 +163,7 @@ public class ISSNValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsValidISSNConvert_test0_decomposed()  {
         CheckDigit ean13cd = EAN13CheckDigit.EAN13_CHECK_DIGIT;
         Random r = new Random();
@@ -173,7 +174,7 @@ public class ISSNValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testIsValidISSNConvert_test1_decomposed()  {
         CheckDigit ean13cd = EAN13CheckDigit.EAN13_CHECK_DIGIT;
         Random r = new Random();
@@ -187,7 +188,7 @@ public class ISSNValidatorTest extends TestCase {
         assertEquals("9771234567003", VALIDATOR.convertToEAN13("1234-5679", "00"));
     }
 
-    
+    @Test
     public void testConversionErrors_test0_decomposed()  {
         String input = null;
         try {
@@ -198,7 +199,7 @@ public class ISSNValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testConversionErrors_test1_decomposed()  {
         String input = null;
         try {
@@ -221,7 +222,7 @@ public class ISSNValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testValidCheckDigitEan13_test0_decomposed()  {
         assertNull(VALIDATOR.extractFromEAN13("9771234567001"));
         assertNull(VALIDATOR.extractFromEAN13("9771234567002"));
@@ -235,7 +236,7 @@ public class ISSNValidatorTest extends TestCase {
         assertNull(VALIDATOR.extractFromEAN13("9771234567000"));
     }
 
-    
+    @Test
     public void testIsValidExtract_test0_decomposed()  {
         assertEquals("12345679", VALIDATOR.extractFromEAN13("9771234567003"));
         assertEquals("00014664", VALIDATOR.extractFromEAN13("9770001466006"));

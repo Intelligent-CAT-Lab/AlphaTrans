@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines.checkdigit;
+import org.junit.Test;
 
 /**
  * CUSIP Check Digit Test.
@@ -58,7 +59,7 @@ public class CUSIPCheckDigitTest extends AbstractCheckDigitTest {
 
     private static String validCheckDigits[] = {"DUS0421C5"};
 
-    
+    @Test
     public void testVALIDATOR_336_InvalidCheckDigits_test0_decomposed()  {
         for (int i = 0; i < invalidCheckDigits.length; i++) {
             String invalidCheckDigit = invalidCheckDigits[i];
@@ -66,7 +67,7 @@ public class CUSIPCheckDigitTest extends AbstractCheckDigitTest {
         }
     }
 
-    
+    @Test
     public void testVALIDATOR_336_ValidCheckDigits_test0_decomposed()  {
         for (int i = 0; i < validCheckDigits.length; i++) {
             String validCheckDigit = validCheckDigits[i];

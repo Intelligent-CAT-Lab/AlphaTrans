@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.util.Locale;
 
@@ -100,7 +101,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test Integer Range/Min/Max */
 
-    
+    @Test
     public void testIntegerValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -113,7 +114,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -130,7 +131,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -148,7 +149,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -170,7 +171,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -193,7 +194,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -220,7 +221,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -248,7 +249,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -280,7 +281,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -313,7 +314,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -347,7 +348,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", IntegerValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -382,7 +383,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -419,7 +420,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(A) locale ", IntegerValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -457,7 +458,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -497,7 +498,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(A) pattern", IntegerValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -538,7 +539,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -582,7 +583,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -627,7 +628,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -673,7 +674,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", IntegerValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -720,7 +721,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -768,7 +769,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) locale ", IntegerValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -817,7 +818,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -867,7 +868,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) pattern", IntegerValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -918,7 +919,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -972,7 +973,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1027,7 +1028,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1083,7 +1084,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", IntegerValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1140,7 +1141,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1198,7 +1199,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", IntegerValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1257,7 +1258,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1317,7 +1318,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) pattern", IntegerValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1378,7 +1379,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         IntegerValidator.getInstance();
     }
 
-    
+    @Test
     public void testIntegerValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1442,13 +1443,13 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
                 IntegerValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testIntegerRangeMinMax_test0_decomposed()  {
         IntegerValidator validator = (IntegerValidator) strictValidator;
         Integer number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testIntegerRangeMinMax_test1_decomposed()  {
         IntegerValidator validator = (IntegerValidator) strictValidator;
         Integer number9 = validator.validate1("9", "#");
@@ -1459,7 +1460,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         Integer number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testIntegerRangeMinMax_test2_decomposed()  {
         IntegerValidator validator = (IntegerValidator) strictValidator;
         Integer number9 = validator.validate1("9", "#");
@@ -1475,7 +1476,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
     }
 
-    
+    @Test
     public void testIntegerRangeMinMax_test3_decomposed()  {
         IntegerValidator validator = (IntegerValidator) strictValidator;
         Integer number9 = validator.validate1("9", "#");
@@ -1494,7 +1495,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
     }
 
-    
+    @Test
     public void testIntegerRangeMinMax_test4_decomposed()  {
         IntegerValidator validator = (IntegerValidator) strictValidator;
         Integer number9 = validator.validate1("9", "#");
@@ -1516,7 +1517,7 @@ public class IntegerValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("maxValue() > max", validator.maxValue1(number21, 20));
     }
 
-    
+    @Test
     public void testMinMaxValues_test0_decomposed()  {
         assertTrue("2147483647 is max integer", validator.isValid0("2147483647"));
         assertFalse("2147483648 > max integer", validator.isValid0("2147483648"));

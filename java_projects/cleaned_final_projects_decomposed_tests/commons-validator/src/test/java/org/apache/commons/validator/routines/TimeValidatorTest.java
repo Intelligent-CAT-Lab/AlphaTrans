@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -204,7 +205,7 @@ public class TimeValidatorTest extends TestCase {
         return calendar.getTime();
     }
 
-    
+    @Test
     public void testPatternValid_test0_decomposed()  {
         for (int i = 0; i < patternValid.length; i++) {
             String text = i + " value=[" + patternValid[i] + "] failed ";
@@ -216,7 +217,7 @@ public class TimeValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testPatternInvalid_test0_decomposed()  {
         for (int i = 0; i < patternInvalid.length; i++) {
             String text = i + " value=[" + patternInvalid[i] + "] passed ";
@@ -226,7 +227,7 @@ public class TimeValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testLocaleValid_test0_decomposed()  {
         for (int i = 0; i < localeValid.length; i++) {
             String text = i + " value=[" + localeValid[i] + "] failed ";
@@ -238,7 +239,7 @@ public class TimeValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testLocaleInvalid_test0_decomposed()  {
         for (int i = 0; i < localeInvalid.length; i++) {
             String text = i + " value=[" + localeInvalid[i] + "] passed ";
@@ -248,7 +249,7 @@ public class TimeValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testTimeZone_test0_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -256,7 +257,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate0("18:01");
     }
 
-    
+    @Test
     public void testTimeZone_test1_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -266,7 +267,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("default zone", GMT, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test2_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -278,7 +279,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("default minute", 01, result.get(Calendar.MINUTE));
     }
 
-    
+    @Test
     public void testTimeZone_test3_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -292,7 +293,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate1("16:49", EST);
     }
 
-    
+    @Test
     public void testTimeZone_test4_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -308,7 +309,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("zone zone", EST, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test5_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -326,7 +327,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("zone minute", 49, result.get(Calendar.MINUTE));
     }
 
-    
+    @Test
     public void testTimeZone_test6_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -346,7 +347,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate3("14-34", "HH-mm", EST);
     }
 
-    
+    @Test
     public void testTimeZone_test7_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -368,7 +369,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern zone", EST, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test8_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -392,7 +393,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern minute", 34, result.get(Calendar.MINUTE));
     }
 
-    
+    @Test
     public void testTimeZone_test9_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -418,7 +419,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate5("7:18 PM", Locale.US, EST);
     }
 
-    
+    @Test
     public void testTimeZone_test10_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -446,7 +447,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("locale zone", EST, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test11_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -476,7 +477,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("locale minute", 18, result.get(Calendar.MINUTE));
     }
 
-    
+    @Test
     public void testTimeZone_test12_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -508,7 +509,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate7("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN, EST);
     }
 
-    
+    @Test
     public void testTimeZone_test13_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -542,7 +543,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern zone", EST, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test14_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -578,7 +579,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern day", 11, result.get(Calendar.MONTH));
     }
 
-    
+    @Test
     public void testTimeZone_test15_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -616,7 +617,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
     }
 
-    
+    @Test
     public void testTimeZone_test16_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -657,7 +658,7 @@ public class TimeValidatorTest extends TestCase {
         result = validator.validate6("31/Dez/05 21-05", "dd/MMM/yy HH-mm", Locale.GERMAN);
     }
 
-    
+    @Test
     public void testTimeZone_test17_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -700,7 +701,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern zone", GMT, result.getTimeZone());
     }
 
-    
+    @Test
     public void testTimeZone_test18_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -745,7 +746,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern day", 11, result.get(Calendar.MONTH));
     }
 
-    
+    @Test
     public void testTimeZone_test19_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -792,7 +793,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("pattern hour", 21, result.get(Calendar.HOUR_OF_DAY));
     }
 
-    
+    @Test
     public void testTimeZone_test20_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeZone.setDefault(GMT);
@@ -841,20 +842,20 @@ public class TimeValidatorTest extends TestCase {
         result = null;
     }
 
-    
+    @Test
     public void testFormat_test0_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeValidator.getInstance();
     }
 
-    
+    @Test
     public void testFormat_test1_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeValidator.getInstance();
         Object test = TimeValidator.getInstance().validate2("16:49:23", "HH:mm:ss");
     }
 
-    
+    @Test
     public void testFormat_test2_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeValidator.getInstance();
@@ -863,7 +864,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("Format pattern", "16-49-23", validator.format1(test, "HH-mm-ss"));
     }
 
-    
+    @Test
     public void testFormat_test3_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeValidator.getInstance();
@@ -873,7 +874,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("Format locale", "4:49 PM", validator.format2(test, Locale.US));
     }
 
-    
+    @Test
     public void testFormat_test4_decomposed()  {
         Locale.setDefault(Locale.UK);
         TimeValidator.getInstance();
@@ -884,7 +885,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("Format default", "16:49", validator.format0(test));
     }
 
-    
+    @Test
     public void testCompare_test0_decomposed()  {
         int testTime = 154523;
         int min = 100;
@@ -892,7 +893,7 @@ public class TimeValidatorTest extends TestCase {
         Calendar milliGreater = createTime(GMT, testTime, 500);
     }
 
-    
+    @Test
     public void testCompare_test1_decomposed()  {
         int testTime = 154523;
         int min = 100;
@@ -908,7 +909,7 @@ public class TimeValidatorTest extends TestCase {
         Calendar hourLess = createTime(GMT, testTime - hour, 100);
     }
 
-    
+    @Test
     public void testCompare_test2_decomposed()  {
         int testTime = 154523;
         int min = 100;
@@ -927,7 +928,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("mili GT", 1, validator.compareTime(value, milliLess));
     }
 
-    
+    @Test
     public void testCompare_test3_decomposed()  {
         int testTime = 154523;
         int min = 100;
@@ -951,7 +952,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("secs GT", 1, validator.compareSeconds(value, secLess));
     }
 
-    
+    @Test
     public void testCompare_test4_decomposed()  {
         int testTime = 154523;
         int min = 100;
@@ -980,7 +981,7 @@ public class TimeValidatorTest extends TestCase {
         assertEquals("mins GT", 1, validator.compareMinutes(value, minLess));
     }
 
-    
+    @Test
     public void testCompare_test5_decomposed()  {
         int testTime = 154523;
         int min = 100;

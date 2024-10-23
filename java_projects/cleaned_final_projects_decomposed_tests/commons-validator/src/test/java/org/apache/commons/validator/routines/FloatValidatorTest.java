@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -80,7 +81,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
 
     /** Test Float Range/Min/Max */
 
-    
+    @Test
     public void testFloatValidatorMethods_test0_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -93,7 +94,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test1_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -110,7 +111,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate0(defaultVal));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test2_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -128,7 +129,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test3_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -150,7 +151,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate2(localeVal, locale));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test4_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -173,7 +174,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test5_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -200,7 +201,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test6_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -228,7 +229,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test7_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -260,7 +261,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test8_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -293,7 +294,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test9_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -327,7 +328,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) default", FloatValidator.getInstance().isValid0(defaultVal));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test10_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -362,7 +363,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test11_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -398,7 +399,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("isValid(A) locale ", FloatValidator.getInstance().isValid2(localeVal, locale));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test12_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -435,7 +436,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test13_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -474,7 +475,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 "isValid(A) pattern", FloatValidator.getInstance().isValid1(patternVal, pattern));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test14_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -514,7 +515,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test15_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -557,7 +558,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().isValid3(germanPatternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test16_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -601,7 +602,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test17_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -646,7 +647,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) default", FloatValidator.getInstance().validate0(XXXX));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test18_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -692,7 +693,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test19_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -739,7 +740,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) locale ", FloatValidator.getInstance().validate2(XXXX, locale));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test20_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -787,7 +788,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test21_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -836,7 +837,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertNull("validate(B) pattern", FloatValidator.getInstance().validate1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test22_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -886,7 +887,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test23_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -939,7 +940,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test24_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -993,7 +994,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test25_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1048,7 +1049,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) default", FloatValidator.getInstance().isValid0(XXXX));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test26_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1104,7 +1105,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test27_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1161,7 +1162,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) locale ", FloatValidator.getInstance().isValid2(XXXX, locale));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test28_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1219,7 +1220,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test29_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1278,7 +1279,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isValid(B) pattern", FloatValidator.getInstance().isValid1(XXXX, pattern));
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test30_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1338,7 +1339,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatValidatorMethods_test31_decomposed()  {
         Locale locale = Locale.GERMAN;
         String pattern = "0,00,00";
@@ -1401,7 +1402,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().isValid3(patternVal, pattern, Locale.GERMAN));
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test0_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1410,7 +1411,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test1_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1423,7 +1424,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate1(strSmallestPositive, pattern));
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test2_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1439,7 +1440,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test3_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1459,7 +1460,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().validate1(strSmallestNegative, pattern));
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test4_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1482,7 +1483,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test5_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1508,7 +1509,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().isValid1(strTooSmallPositive, pattern));
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test6_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1537,7 +1538,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         FloatValidator.getInstance();
     }
 
-    
+    @Test
     public void testFloatSmallestValues_test7_decomposed()  {
         String pattern = "#.#################################################################";
         DecimalFormat fmt = new DecimalFormat(pattern);
@@ -1569,13 +1570,13 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
                 FloatValidator.getInstance().isValid1(strTooSmallNegative, pattern));
     }
 
-    
+    @Test
     public void testFloatRangeMinMax_test0_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");
     }
 
-    
+    @Test
     public void testFloatRangeMinMax_test1_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");
@@ -1586,7 +1587,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         Float number21 = validator.validate1("21", "#");
     }
 
-    
+    @Test
     public void testFloatRangeMinMax_test2_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");
@@ -1602,7 +1603,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertFalse("isInRange() > max", validator.isInRange1(number21, 10, 20));
     }
 
-    
+    @Test
     public void testFloatRangeMinMax_test3_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");
@@ -1621,7 +1622,7 @@ public class FloatValidatorTest extends AbstractNumberValidatorTest {
         assertTrue("minValue() > min", validator.minValue1(number11, 10));
     }
 
-    
+    @Test
     public void testFloatRangeMinMax_test4_decomposed()  {
         FloatValidator validator = (FloatValidator) strictValidator;
         Float number9 = validator.validate1("9", "#");

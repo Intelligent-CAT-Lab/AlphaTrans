@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.apache.commons.validator.routines;
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -122,18 +123,18 @@ public class CreditCardValidatorTest extends TestCase {
 
     /** Test using separators */
 
-    
+    @Test
     public void testIsValid_test0_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator0();
     }
 
-    
+    @Test
     public void testIsValid_test1_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator0();
         assertNull(ccv.validate(null));
     }
 
-    
+    @Test
     public void testIsValid_test2_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator0();
         assertNull(ccv.validate(null));
@@ -157,7 +158,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid(ERROR_DISCOVER65));
     }
 
-    
+    @Test
     public void testIsValid_test3_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator0();
         assertNull(ccv.validate(null));
@@ -182,7 +183,7 @@ public class CreditCardValidatorTest extends TestCase {
         ccv = new CreditCardValidator(0, CreditCardValidator.AMEX, null, null);
     }
 
-    
+    @Test
     public void testIsValid_test4_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.CreditCardValidator0();
         assertNull(ccv.validate(null));
@@ -208,12 +209,12 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid("4417123456789113"));
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test0_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(0, CreditCardValidator.NONE, null, null);
     }
 
-    
+    @Test
     public void testAddAllowedCardType_test1_decomposed()  {
         CreditCardValidator ccv = new CreditCardValidator(0, CreditCardValidator.NONE, null, null);
         assertFalse(ccv.isValid(VALID_VISA));
@@ -223,7 +224,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid(VALID_DINERS));
     }
 
-    
+    @Test
     public void testArrayConstructor_test0_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -235,7 +236,7 @@ public class CreditCardValidatorTest extends TestCase {
                         });
     }
 
-    
+    @Test
     public void testArrayConstructor_test1_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -257,7 +258,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid(ERROR_DISCOVER));
     }
 
-    
+    @Test
     public void testArrayConstructor_test2_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -284,13 +285,13 @@ public class CreditCardValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testAmexValidator_test0_decomposed()  {
         CodeValidator validator = CreditCardValidator.AMEX_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testAmexValidator_test1_decomposed()  {
         CodeValidator validator = CreditCardValidator.AMEX_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -313,7 +314,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid", validator.isValid(ERROR_AMEX));
     }
 
-    
+    @Test
     public void testAmexValidator_test2_decomposed()  {
         CodeValidator validator = CreditCardValidator.AMEX_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -338,7 +339,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_AMEX, validator.validate(VALID_AMEX));
     }
 
-    
+    @Test
     public void testAmexValidator_test3_decomposed()  {
         CodeValidator validator = CreditCardValidator.AMEX_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -373,20 +374,20 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Valid-D", validator.isValid("378734493671000"));
     }
 
-    
+    @Test
     public void testAmexOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.AMEX, null, null);
     }
 
-    
+    @Test
     public void testAmexOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.AMEX, null, null);
         assertFalse("Invalid", validator.isValid(ERROR_AMEX));
     }
 
-    
+    @Test
     public void testAmexOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.AMEX, null, null);
@@ -395,7 +396,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_AMEX, validator.validate(VALID_AMEX));
     }
 
-    
+    @Test
     public void testAmexOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.AMEX, null, null);
@@ -410,13 +411,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testDinersValidator_test0_decomposed()  {
         CodeValidator validator = CreditCardValidator.DINERS_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testDinersValidator_test1_decomposed()  {
         CodeValidator validator = CreditCardValidator.DINERS_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -455,7 +456,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid", validator.isValid(ERROR_DINERS));
     }
 
-    
+    @Test
     public void testDinersValidator_test2_decomposed()  {
         CodeValidator validator = CreditCardValidator.DINERS_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -496,7 +497,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_DINERS, validator.validate(VALID_DINERS));
     }
 
-    
+    @Test
     public void testDinersValidator_test3_decomposed()  {
         CodeValidator validator = CreditCardValidator.DINERS_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -546,20 +547,20 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Valid-C", validator.isValid("36432685260294"));
     }
 
-    
+    @Test
     public void testDinersOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DINERS, null, null);
     }
 
-    
+    @Test
     public void testDinersOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DINERS, null, null);
         assertFalse("Invalid", validator.isValid(ERROR_DINERS));
     }
 
-    
+    @Test
     public void testDinersOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DINERS, null, null);
@@ -568,7 +569,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_DINERS, validator.validate(VALID_DINERS));
     }
 
-    
+    @Test
     public void testDinersOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DINERS, null, null);
@@ -583,13 +584,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testDiscoverValidator_test0_decomposed()  {
         CodeValidator validator = CreditCardValidator.DISCOVER_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testDiscoverValidator_test1_decomposed()  {
         CodeValidator validator = CreditCardValidator.DISCOVER_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -621,7 +622,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid65", validator.isValid(ERROR_DISCOVER65));
     }
 
-    
+    @Test
     public void testDiscoverValidator_test2_decomposed()  {
         CodeValidator validator = CreditCardValidator.DISCOVER_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -656,7 +657,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_DISCOVER65, validator.validate(VALID_DISCOVER65));
     }
 
-    
+    @Test
     public void testDiscoverValidator_test3_decomposed()  {
         CodeValidator validator = CreditCardValidator.DISCOVER_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -701,13 +702,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Valid-C", validator.isValid("6011000000000012"));
     }
 
-    
+    @Test
     public void testDiscoverOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DISCOVER, null, null);
     }
 
-    
+    @Test
     public void testDiscoverOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DISCOVER, null, null);
@@ -715,7 +716,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid65", validator.isValid(ERROR_DISCOVER65));
     }
 
-    
+    @Test
     public void testDiscoverOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DISCOVER, null, null);
@@ -726,7 +727,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_DISCOVER65, validator.validate(VALID_DISCOVER65));
     }
 
-    
+    @Test
     public void testDiscoverOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.DISCOVER, null, null);
@@ -744,13 +745,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testMastercardValidator_test0_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testMastercardValidator_test1_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -775,7 +776,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid", validator.isValid(ERROR_MASTERCARD));
     }
 
-    
+    @Test
     public void testMastercardValidator_test2_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -802,7 +803,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_MASTERCARD, validator.validate(VALID_MASTERCARD));
     }
 
-    
+    @Test
     public void testMastercardValidator_test3_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -840,7 +841,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Valid-E", validator.isValid("5555555555554444"));
     }
 
-    
+    @Test
     public void testMastercardValidator_test4_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -879,7 +880,7 @@ public class CreditCardValidatorTest extends TestCase {
         RegexValidator rev = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testMastercardValidator_test5_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -920,7 +921,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("222099", rev.isValid("222099" + PAD));
     }
 
-    
+    @Test
     public void testMastercardValidator_test6_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -965,7 +966,7 @@ public class CreditCardValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testMastercardValidator_test7_decomposed()  {
         CodeValidator validator = CreditCardValidator.MASTERCARD_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -1011,20 +1012,20 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("272100", rev.isValid("272100" + PAD));
     }
 
-    
+    @Test
     public void testMastercardOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.MASTERCARD, null, null);
     }
 
-    
+    @Test
     public void testMastercardOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.MASTERCARD, null, null);
         assertFalse("Invalid", validator.isValid(ERROR_MASTERCARD));
     }
 
-    
+    @Test
     public void testMastercardOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.MASTERCARD, null, null);
@@ -1033,7 +1034,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_MASTERCARD, validator.validate(VALID_MASTERCARD));
     }
 
-    
+    @Test
     public void testMastercardOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.MASTERCARD, null, null);
@@ -1048,13 +1049,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVisaValidator_test0_decomposed()  {
         CodeValidator validator = CreditCardValidator.VISA_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testVisaValidator_test1_decomposed()  {
         CodeValidator validator = CreditCardValidator.VISA_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -1075,7 +1076,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid-S", validator.isValid(ERROR_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVisaValidator_test2_decomposed()  {
         CodeValidator validator = CreditCardValidator.VISA_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -1099,7 +1100,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_SHORT_VISA, validator.validate(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVisaValidator_test3_decomposed()  {
         CodeValidator validator = CreditCardValidator.VISA_VALIDATOR;
         RegexValidator regex = validator.getRegexValidator();
@@ -1134,13 +1135,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Valid-E", validator.isValid("4012888888881881"));
     }
 
-    
+    @Test
     public void testVisaOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VISA, null, null);
     }
 
-    
+    @Test
     public void testVisaOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VISA, null, null);
@@ -1148,7 +1149,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid-S", validator.isValid(ERROR_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVisaOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VISA, null, null);
@@ -1159,7 +1160,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_SHORT_VISA, validator.validate(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVisaOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VISA, null, null);
@@ -1176,13 +1177,13 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testVPayOption_test0_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VPAY, null, null);
     }
 
-    
+    @Test
     public void testVPayOption_test1_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VPAY, null, null);
@@ -1191,7 +1192,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid", validator.isValid(ERROR_VPAY));
     }
 
-    
+    @Test
     public void testVPayOption_test2_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VPAY, null, null);
@@ -1202,7 +1203,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(VALID_VPAY2, validator.validate(VALID_VPAY2));
     }
 
-    
+    @Test
     public void testVPayOption_test3_decomposed()  {
         CreditCardValidator validator =
                 new CreditCardValidator(0, CreditCardValidator.VPAY, null, null);
@@ -1219,7 +1220,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue("Visa Short", validator.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testMastercardUsingSeparators_test0_decomposed()  {
         String MASTERCARD_REGEX_SEP =
                 "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$";
@@ -1227,7 +1228,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CodeValidator.CodeValidator5(MASTERCARD_REGEX_SEP, LuhnCheckDigit.LUHN_CHECK_DIGIT);
     }
 
-    
+    @Test
     public void testMastercardUsingSeparators_test1_decomposed()  {
         String MASTERCARD_REGEX_SEP =
                 "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$";
@@ -1236,7 +1237,7 @@ public class CreditCardValidatorTest extends TestCase {
         RegexValidator regex = validator.getRegexValidator();
     }
 
-    
+    @Test
     public void testMastercardUsingSeparators_test2_decomposed()  {
         String MASTERCARD_REGEX_SEP =
                 "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$";
@@ -1250,7 +1251,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals("MixedB", "5134567890123456", regex.validate("5134 5678-9012 3456"));
     }
 
-    
+    @Test
     public void testMastercardUsingSeparators_test3_decomposed()  {
         String MASTERCARD_REGEX_SEP =
                 "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$";
@@ -1269,7 +1270,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse("Invalid Grouping C", regex.isValid("5134-5678-901-23456"));
     }
 
-    
+    @Test
     public void testMastercardUsingSeparators_test4_decomposed()  {
         String MASTERCARD_REGEX_SEP =
                 "^(5[1-5]\\d{2})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})(?:[- ])?(\\d{4})$";
@@ -1292,12 +1293,12 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals("Valid-D", "5123456789012346", validator.validate("5123456789012346"));
     }
 
-    
+    @Test
     public void testGeneric_test0_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.genericCreditCardValidator2();
     }
 
-    
+    @Test
     public void testGeneric_test1_decomposed()  {
         CreditCardValidator ccv = CreditCardValidator.genericCreditCardValidator2();
         for (String s : VALID_CARDS) {
@@ -1308,7 +1309,7 @@ public class CreditCardValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testRangeGeneratorNoLuhn_test0_decomposed()  {
         CodeValidator cv =
                 CreditCardValidator.createRangeValidator(
@@ -1319,7 +1320,7 @@ public class CreditCardValidatorTest extends TestCase {
                         null);
     }
 
-    
+    @Test
     public void testRangeGeneratorNoLuhn_test1_decomposed()  {
         CodeValidator cv =
                 CreditCardValidator.createRangeValidator(
@@ -1341,7 +1342,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(cv.isValid("66000000"));
     }
 
-    
+    @Test
     public void testRangeGenerator_test0_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1361,7 +1362,7 @@ public class CreditCardValidatorTest extends TestCase {
                         });
     }
 
-    
+    @Test
     public void testRangeGenerator_test1_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1387,13 +1388,13 @@ public class CreditCardValidatorTest extends TestCase {
         }
     }
 
-    
+    @Test
     public void testValidLength_test0_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
     }
 
-    
+    @Test
     public void testValidLength_test1_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1401,7 +1402,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(15, new CreditCardRange(0, "", "", 14, 14, null)));
     }
 
-    
+    @Test
     public void testValidLength_test2_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1411,7 +1412,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(13, new CreditCardRange(0, "", "", 14, 14, null)));
     }
 
-    
+    @Test
     public void testValidLength_test3_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1423,7 +1424,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 15, 17, null)));
     }
 
-    
+    @Test
     public void testValidLength_test4_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1437,7 +1438,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(15, new CreditCardRange(0, "", "", 15, 17, null)));
     }
 
-    
+    @Test
     public void testValidLength_test5_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1453,7 +1454,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(16, new CreditCardRange(0, "", "", 15, 17, null)));
     }
 
-    
+    @Test
     public void testValidLength_test6_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1471,7 +1472,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(17, new CreditCardRange(0, "", "", 15, 17, null)));
     }
 
-    
+    @Test
     public void testValidLength_test7_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1491,7 +1492,7 @@ public class CreditCardValidatorTest extends TestCase {
                 CreditCardValidator.validLength(18, new CreditCardRange(0, "", "", 15, 17, null)));
     }
 
-    
+    @Test
     public void testValidLength_test8_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1514,7 +1515,7 @@ public class CreditCardValidatorTest extends TestCase {
                         14, new CreditCardRange(1, "", "", 0, 0, new int[] {15, 17})));
     }
 
-    
+    @Test
     public void testValidLength_test9_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1540,7 +1541,7 @@ public class CreditCardValidatorTest extends TestCase {
                         15, new CreditCardRange(1, "", "", 0, 0, new int[] {15, 17})));
     }
 
-    
+    @Test
     public void testValidLength_test10_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1569,7 +1570,7 @@ public class CreditCardValidatorTest extends TestCase {
                         16, new CreditCardRange(1, "", "", 0, 0, new int[] {15, 17})));
     }
 
-    
+    @Test
     public void testValidLength_test11_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1601,7 +1602,7 @@ public class CreditCardValidatorTest extends TestCase {
                         17, new CreditCardRange(1, "", "", 0, 0, new int[] {15, 17})));
     }
 
-    
+    @Test
     public void testValidLength_test12_decomposed()  {
         assertTrue(
                 CreditCardValidator.validLength(14, new CreditCardRange(0, "", "", 14, 14, null)));
@@ -1636,7 +1637,7 @@ public class CreditCardValidatorTest extends TestCase {
                         18, new CreditCardRange(1, "", "", 0, 0, new int[] {15, 17})));
     }
 
-    
+    @Test
     public void testDisjointRange_test0_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1648,7 +1649,7 @@ public class CreditCardValidatorTest extends TestCase {
                         null);
     }
 
-    
+    @Test
     public void testDisjointRange_test1_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1662,7 +1663,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertEquals(16, VALID_VISA.length());
     }
 
-    
+    @Test
     public void testDisjointRange_test2_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1678,7 +1679,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertTrue(ccv.isValid(VALID_SHORT_VISA));
     }
 
-    
+    @Test
     public void testDisjointRange_test3_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1698,7 +1699,7 @@ public class CreditCardValidatorTest extends TestCase {
         assertFalse(ccv.isValid(VALID_DINERS));
     }
 
-    
+    @Test
     public void testDisjointRange_test4_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
@@ -1726,7 +1727,7 @@ public class CreditCardValidatorTest extends TestCase {
                         null);
     }
 
-    
+    @Test
     public void testDisjointRange_test5_decomposed()  {
         CreditCardValidator ccv =
                 new CreditCardValidator(
