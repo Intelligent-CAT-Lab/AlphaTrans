@@ -249,8 +249,8 @@ def is_test_method(test_file, node, code):
             for annotation in sibling.children:
                 if annotation.type in ['marker_annotation', 'annotation']:
                     annotation_text = extract_text_by_bytes(code, annotation.start_byte, annotation.end_byte)
-                    if '@Override' in annotation_text:
-                        test_status = False
+                    if '@Test' in annotation_text:
+                        test_status = True
     
     return test_status, annotation_text
 
@@ -311,7 +311,7 @@ def find_test_methods(test_file, node, code, main_application_methods):
             throws = get_throws(child, code)
             # Extract statements for the test method
             statements = extract_method_statements(child, code, main_application_methods)
-            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '' if annotation_text is None else annotation_text}
+            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '@Test' if annotation_text is None else annotation_text}
         # Recursively search within nested nodes
         methods.update(find_test_methods(test_file, child, code, main_application_methods))
     return methods
@@ -465,7 +465,7 @@ def find_ignored_test_methods(test_file, node, code):
             throws = get_throws(child, code)
             # Extract statements for the test method
             statements = extract_method_statements(child, code, [])
-            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '' if annotation_text is None else annotation_text}
+            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '@Test' if annotation_text is None else annotation_text}
         # Recursively search within nested nodes
         methods.update(find_ignored_test_methods(test_file, child, code))
     return methods
@@ -572,6 +572,18 @@ def main(args):
 
         # Insert the newly generated methods into the class
         new_java_code = insert_methods_into_class(root_node, all_new_methods, java_code)
+
+        # import org.junit.Test;
+        new_java_code = new_java_code.split('\n')
+        import_line_index = 0
+        for line in new_java_code:
+            if line.strip().startswith('import') or line.strip().startswith('package'):
+                break
+            else:
+                import_line_index += 1
+        
+        new_java_code.insert(import_line_index+1, 'import org.junit.Test;') if ('import org.junit.Test;' not in '\n'.join(new_java_code) and 'import org.junit.jupiter.api.Test;' not in '\n'.join(new_java_code)) and '@Test' in '\n'.join(new_java_code) else None
+        new_java_code = '\n'.join(new_java_code)
 
         # Output the newly generated Java code
         with open(test_file, 'w') as f:
