@@ -244,10 +244,13 @@ def main(args):
                     class_declaration = class_declaration.replace(':', '(unittest.TestCase):')
                 elif '():' in class_declaration:
                     class_declaration = class_declaration.replace('():', '(unittest.TestCase):')
-                else:
+                elif '):' in class_declaration and 'unittest.TestCase' not in class_declaration:
                     class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
+                # else:
+                #     class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
             if 'src.test' in schema_fname and 'import unittest' not in python_imports:
                 python_imports.append('import unittest')
+            if 'src.test' in schema_fname and 'import pytest' not in python_imports:
                 python_imports.append('import pytest')
             
             # if schema['classes'][class_]['is_enum']:
@@ -368,9 +371,9 @@ def main(args):
 
                 updated_method_name = method_name
                 if 'protected' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '_' + method_name
+                    updated_method_name = '_' + method_name if method_name not in ['setUp', 'tearDown'] else method_name
                 elif 'private' in schema['classes'][class_]['methods'][method]['modifiers']:
-                    updated_method_name = '__' + method_name
+                    updated_method_name = '__' + method_name if method_name not in ['setUp', 'tearDown'] else method_name
 
                 if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
                     if class_ == method_name:
@@ -530,8 +533,8 @@ def main(args):
         with open(fp, 'w') as f:
             f.write('')
 
-        os.makedirs(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.project_name}', exist_ok=True)
-        with open(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
+        os.makedirs(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}', exist_ok=True)
+        with open(f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{formatted_schema_fname}_python_partial.json', 'w') as f:
             json.dump(target_schema, f, indent=4)
 
     # find all .py files in a given directory
@@ -554,6 +557,7 @@ if __name__ == '__main__':
     parser.add_argument('--model_name', type=str, dest='model_name', help='name of the model')
     parser.add_argument('--type', type=str, dest='type', help='prompt type signature/body')
     parser.add_argument('--suffix', type=str, dest='suffix', help='suffix')
+    parser.add_argument('--temperature', type=float, dest='temperature', help='temperature')
     args = parser.parse_args()
     
     main(args)
