@@ -30,12 +30,6 @@ class TimeValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def _tearDown(self) -> None:
-        pass
-
-    def _setUp(self) -> None:
-        pass
-
     def testCompare_test5_decomposed(self) -> None:
         pass
 
@@ -142,6 +136,12 @@ class TimeValidatorTest(unittest.TestCase):
         pass
 
     def testPatternValid_test0_decomposed(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     @staticmethod

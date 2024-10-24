@@ -30,7 +30,7 @@ class AbstractCheckDigitTest(unittest.TestCase, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         pass
 
     def _checkDigit(self, code: str) -> str:

@@ -2,7 +2,10 @@ from __future__ import annotations
 
 # Imports Begin
 from src.main.org.apache.commons.pool2.impl.BaseObjectPoolConfig import *
+import typing
+from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -19,7 +22,9 @@ class GenericObjectPoolConfig(BaseObjectPoolConfig):
     # Class Fields End
 
     # Class Methods Begin
-    def _toStringAppendFields(self, builder: str) -> None:
+    def _toStringAppendFields(
+        self, builder: typing.Union[typing.List[str], io.StringIO]
+    ) -> None:
         pass
 
     def clone(self) -> GenericObjectPoolConfig:

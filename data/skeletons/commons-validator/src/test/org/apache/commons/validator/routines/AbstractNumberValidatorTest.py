@@ -39,10 +39,10 @@ class AbstractNumberValidatorTest(unittest.TestCase, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _tearDown(self) -> None:
+    def tearDown(self) -> None:
         pass
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         pass
 
     def testSerialization(self) -> None:

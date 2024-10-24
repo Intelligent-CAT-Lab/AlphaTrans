@@ -11,6 +11,7 @@ from typing import *
 from io import BytesIO
 import io
 from io import StringIO
+from io import IOBase
 import pathlib
 from abc import ABC
 
@@ -25,11 +26,13 @@ class AbstractExporter(ABC):
     __vertexProperties: typing.Dict[str, Mapper[typing.Any, typing.Any]] = None
     __edgeProperties: typing.Dict[str, Mapper[typing.Any, typing.Any]] = None
     __name: str = None
-    __writer: typing.Union[io.TextIOWrapper, io.BufferedWriter] = None
+    __writer: typing.Union[io.TextIOWrapper, io.BufferedWriter, io.TextIOBase] = None
     # Class Fields End
 
     # Class Methods Begin
-    def to2(self, writer: typing.Union[io.TextIOWrapper, io.BufferedWriter]) -> None:
+    def to2(
+        self, writer: typing.Union[io.TextIOWrapper, io.BufferedWriter, io.TextIOBase]
+    ) -> None:
         pass
 
     def to1(
@@ -40,7 +43,9 @@ class AbstractExporter(ABC):
     def to0(self, outputFile: pathlib.Path) -> None:
         pass
 
-    def _getWriter(self) -> typing.Union[io.TextIOWrapper, io.BufferedWriter]:
+    def _getWriter(
+        self,
+    ) -> typing.Union[io.TextIOWrapper, io.BufferedWriter, io.TextIOBase]:
         pass
 
     def _getGraph(self) -> Graph[typing.Any, typing.Any]:

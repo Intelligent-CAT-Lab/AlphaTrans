@@ -7,6 +7,7 @@ import typing
 from typing import *
 import numbers
 import io
+from io import IOBase
 
 # Imports End
 
@@ -55,7 +56,7 @@ class ExtendedBufferedReader(io.BufferedReader):
         pass
 
     def __init__(
-        self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]
+        self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase]
     ) -> None:
         pass
 

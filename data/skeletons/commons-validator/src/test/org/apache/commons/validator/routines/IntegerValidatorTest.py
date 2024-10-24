@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.IntegerValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import unittest
 import os
 import numbers
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class IntegerValidatorTest(AbstractNumberValidatorTest):
+class IntegerValidatorTest(AbstractNumberValidatorTest, unittest.TestCase):
 
     # Class Fields Begin
     __INT_MIN_VAL: int = None
@@ -25,9 +26,6 @@ class IntegerValidatorTest(AbstractNumberValidatorTest):
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testMinMaxValues_test0_decomposed(self) -> None:
         pass
 
@@ -140,6 +138,9 @@ class IntegerValidatorTest(AbstractNumberValidatorTest):
         pass
 
     def testIntegerValidatorMethods_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

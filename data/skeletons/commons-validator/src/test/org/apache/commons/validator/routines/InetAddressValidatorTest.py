@@ -16,9 +16,6 @@ class InetAddressValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testIPv6_test0_decomposed(self) -> None:
         pass
 
@@ -62,6 +59,9 @@ class InetAddressValidatorTest(unittest.TestCase):
         pass
 
     def testInetAddressesFromTheWild_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

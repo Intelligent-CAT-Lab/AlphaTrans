@@ -31,9 +31,6 @@ class UrlTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testValidateUrl_test0_decomposed(self) -> None:
         pass
 
@@ -65,6 +62,9 @@ class UrlTest(unittest.TestCase):
         pass
 
     def testIsValid0_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     @staticmethod

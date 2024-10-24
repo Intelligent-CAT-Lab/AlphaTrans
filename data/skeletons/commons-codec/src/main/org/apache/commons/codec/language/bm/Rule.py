@@ -9,6 +9,7 @@ from src.main.org.apache.commons.codec.Resources import *
 import typing
 from typing import *
 import io
+from io import StringIO
 from abc import ABC
 
 # Imports End
@@ -41,7 +42,7 @@ class RPattern(ABC):
 class Phoneme(PhonemeExpr):
 
     # Class Fields Begin
-    __phonemeText: str = None
+    __phonemeText: typing.Union[typing.List[str], io.StringIO] = None
     __languages: LanguageSet = None
     COMPARATOR: typing.Callable[[Phoneme, Phoneme], int] = None
     # Class Fields End

@@ -344,7 +344,7 @@ class CSVFormat:
         pass
 
     def parse(
-        self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader]
+        self, reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase]
     ) -> CSVParser:
         pass
 
@@ -470,7 +470,7 @@ class CSVFormat:
 
     def __printWithQuotes1(
         self,
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         appendable: typing.Union[typing.List, io.TextIOBase],
     ) -> None:
         pass
@@ -486,7 +486,7 @@ class CSVFormat:
 
     def __printWithEscapes1(
         self,
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         appendable: typing.Union[typing.List, io.TextIOBase],
     ) -> None:
         pass
@@ -498,7 +498,7 @@ class CSVFormat:
 
     def __print5(
         self,
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         out: typing.Union[typing.List, io.TextIOBase],
         newRecord: bool,
     ) -> None:

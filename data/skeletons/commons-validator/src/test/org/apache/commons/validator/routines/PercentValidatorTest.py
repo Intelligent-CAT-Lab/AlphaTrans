@@ -20,12 +20,6 @@ class PercentValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def _tearDown(self) -> None:
-        pass
-
-    def _setUp(self) -> None:
-        pass
-
     def testInvalid_test3_decomposed(self) -> None:
         pass
 
@@ -66,6 +60,12 @@ class PercentValidatorTest(unittest.TestCase):
         pass
 
     def testFormatType_test0_decomposed(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

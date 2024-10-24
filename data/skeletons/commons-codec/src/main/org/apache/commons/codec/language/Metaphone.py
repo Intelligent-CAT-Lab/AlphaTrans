@@ -6,6 +6,7 @@ from src.main.org.apache.commons.codec.EncoderException import *
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -50,16 +51,24 @@ class Metaphone(StringEncoder):
     def __isLastChar(self, wdsz: int, n: int) -> bool:
         pass
 
-    def __regionMatch(self, string: str, index: int, test: str) -> bool:
+    def __regionMatch(
+        self, string: typing.Union[typing.List[str], io.StringIO], index: int, test: str
+    ) -> bool:
         pass
 
-    def __isNextChar(self, string: str, index: int, c: str) -> bool:
+    def __isNextChar(
+        self, string: typing.Union[typing.List[str], io.StringIO], index: int, c: str
+    ) -> bool:
         pass
 
-    def __isPreviousChar(self, string: str, index: int, c: str) -> bool:
+    def __isPreviousChar(
+        self, string: typing.Union[typing.List[str], io.StringIO], index: int, c: str
+    ) -> bool:
         pass
 
-    def __isVowel(self, string: str, index: int) -> bool:
+    def __isVowel(
+        self, string: typing.Union[typing.List[str], io.StringIO], index: int
+    ) -> bool:
         pass
 
     # Class Methods End

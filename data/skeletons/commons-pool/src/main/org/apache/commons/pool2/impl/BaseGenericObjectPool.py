@@ -15,6 +15,7 @@ import datetime
 import typing
 from typing import *
 import io
+from io import StringIO
 from abc import ABC
 
 # Imports End
@@ -163,7 +164,9 @@ class BaseGenericObjectPool(BaseObject, ABC):
     # Class Fields End
 
     # Class Methods Begin
-    def _toStringAppendFields(self, builder: str) -> None:
+    def _toStringAppendFields(
+        self, builder: typing.Union[typing.List[str], io.StringIO]
+    ) -> None:
         pass
 
     def setSoftMinEvictableIdleTimeMillis(

@@ -4,6 +4,7 @@ from __future__ import annotations
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -21,7 +22,13 @@ class B64:
         pass
 
     @staticmethod
-    def b64from24bit(b2: int, b1: int, b0: int, outLen: int, buffer: str) -> None:
+    def b64from24bit(
+        b2: int,
+        b1: int,
+        b0: int,
+        outLen: int,
+        buffer: typing.Union[typing.List[str], io.StringIO],
+    ) -> None:
         pass
 
     # Class Methods End

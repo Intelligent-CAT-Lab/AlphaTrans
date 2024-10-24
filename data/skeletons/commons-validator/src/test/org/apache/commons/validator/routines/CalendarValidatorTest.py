@@ -4,13 +4,14 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.CalendarValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest import *
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class CalendarValidatorTest(AbstractCalendarValidatorTest):
+class CalendarValidatorTest(AbstractCalendarValidatorTest, unittest.TestCase):
 
     # Class Fields Begin
     __DATE_2005_11_23: int = None
@@ -19,12 +20,6 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
     # Class Fields End
 
     # Class Methods Begin
-    def testFormat(self) -> None:
-        pass
-
-    def _setUp(self) -> None:
-        pass
-
     def testAdjustToTimeZone_test18_decomposed(self) -> None:
         pass
 
@@ -260,6 +255,12 @@ class CalendarValidatorTest(AbstractCalendarValidatorTest):
         pass
 
     def testCalendarValidatorMethods_test0_decomposed(self) -> None:
+        pass
+
+    def testFormat(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

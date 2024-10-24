@@ -4,22 +4,20 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.DateValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractCalendarValidatorTest import *
 from src.main.org.apache.commons.validator.routines.AbstractCalendarValidator import *
+import unittest
 import os
 import io
 
 # Imports End
 
 
-class DateValidatorTest(AbstractCalendarValidatorTest):
+class DateValidatorTest(AbstractCalendarValidatorTest, unittest.TestCase):
 
     # Class Fields Begin
     __dateValidator: DateValidator = None
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testCompare_test9_decomposed(self) -> None:
         pass
 
@@ -183,6 +181,9 @@ class DateValidatorTest(AbstractCalendarValidatorTest):
         pass
 
     def testLocaleProviders_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

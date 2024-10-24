@@ -18,7 +18,7 @@ class VerhoeffCheckDigitTest(AbstractCheckDigitTest):
     def testZeroSum(self) -> None:
         pass
 
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

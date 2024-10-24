@@ -7,6 +7,7 @@ from src.main.org.apache.commons.codec.EncoderException import *
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -14,8 +15,8 @@ import io
 class DoubleMetaphoneResult:
 
     # Class Fields Begin
-    __primary: str = None
-    __alternate: str = None
+    __primary: typing.Union[typing.List[str], io.StringIO] = None
+    __alternate: typing.Union[typing.List[str], io.StringIO] = None
     __maxLength: int = None
     # Class Fields End
 

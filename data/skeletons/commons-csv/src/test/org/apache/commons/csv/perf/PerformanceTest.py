@@ -13,6 +13,7 @@ import os
 import typing
 from typing import *
 import io
+from io import IOBase
 import pathlib
 
 # Imports End
@@ -56,7 +57,7 @@ class PerformanceTest(unittest.TestCase):
 
     def __parse(
         self,
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         traverseColumns: bool,
     ) -> int:
         pass

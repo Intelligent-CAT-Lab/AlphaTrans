@@ -15,7 +15,7 @@ class ModulusTenABACheckDigitTest(AbstractCheckDigitTest):
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

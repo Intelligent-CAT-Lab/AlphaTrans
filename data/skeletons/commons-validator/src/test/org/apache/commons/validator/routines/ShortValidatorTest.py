@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.ShortValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import unittest
 import os
 import numbers
 import io
@@ -11,15 +12,12 @@ import io
 # Imports End
 
 
-class ShortValidatorTest(AbstractNumberValidatorTest):
+class ShortValidatorTest(AbstractNumberValidatorTest, unittest.TestCase):
 
     # Class Fields Begin
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testShortRangeMinMax_test5_decomposed(self) -> None:
         pass
 
@@ -132,6 +130,9 @@ class ShortValidatorTest(AbstractNumberValidatorTest):
         pass
 
     def testShortValidatorMethods_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

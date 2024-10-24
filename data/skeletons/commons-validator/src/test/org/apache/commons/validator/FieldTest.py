@@ -19,12 +19,6 @@ class FieldTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def tearDown(self) -> None:
-        pass
-
-    def setUp(self) -> None:
-        pass
-
     def testOverrideSomePosition_test35_decomposed(self) -> None:
         pass
 
@@ -503,6 +497,12 @@ class FieldTest(unittest.TestCase):
         pass
 
     def testEmptyArgs_test0_decomposed(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     @staticmethod

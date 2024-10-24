@@ -11,6 +11,7 @@ from src.main.org.apache.commons.csv.CSVFormat import *
 import typing
 from typing import *
 import io
+from io import IOBase
 import pathlib
 from abc import ABC
 
@@ -117,7 +118,9 @@ class PerformanceTest:
         pass
 
     @staticmethod
-    def __createReader() -> typing.Union[io.TextIOWrapper, io.BufferedReader]:
+    def __createReader() -> (
+        typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase]
+    ):
         pass
 
     # Class Methods End

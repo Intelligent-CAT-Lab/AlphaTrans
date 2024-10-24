@@ -4,6 +4,7 @@ from __future__ import annotations
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -27,7 +28,7 @@ class Token:
     # Class Fields Begin
     __INITIAL_TOKEN_LENGTH: int = None
     type: typing.Type = None
-    content: str = None
+    content: typing.Union[typing.List[str], io.StringIO] = None
     isReady: bool = None
     isQuoted: bool = None
     # Class Fields End

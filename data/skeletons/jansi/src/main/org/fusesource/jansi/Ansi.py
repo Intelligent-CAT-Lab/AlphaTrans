@@ -134,7 +134,7 @@ class Ansi:
     __holder: contextvars.ContextVar[typing.TypeVar("T", bound=bool)] = None
     __FIRST_ESC_CHAR: str = None
     __SECOND_ESC_CHAR: str = None
-    __builder: str = None
+    __builder: typing.Union[typing.List[str], io.StringIO] = None
     __attributeOptions: typing.List[int] = None
     # Class Fields End
 
@@ -412,7 +412,12 @@ class Ansi:
     def fg0(self, color: Ansi.Color) -> Ansi:
         pass
 
-    def __init__(self, constructorId: int, builder: str, parent: Ansi) -> None:
+    def __init__(
+        self,
+        constructorId: int,
+        builder: typing.Union[typing.List[str], io.StringIO],
+        parent: Ansi,
+    ) -> None:
         pass
 
     @staticmethod
@@ -432,7 +437,7 @@ class Ansi:
         pass
 
     @staticmethod
-    def ansi1(builder: str) -> Ansi:
+    def ansi1(builder: typing.Union[typing.List[str], io.StringIO]) -> Ansi:
         pass
 
     @staticmethod
@@ -574,7 +579,9 @@ class NoAnsi(Ansi):
         pass
 
     @staticmethod
-    def __determineStringBuilder(args: typing.Any) -> str:
+    def __determineStringBuilder(
+        args: typing.Any,
+    ) -> typing.Union[typing.List[str], io.StringIO]:
         pass
 
     # Class Methods End

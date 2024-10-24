@@ -17,6 +17,7 @@ import numbers
 from io import BytesIO
 import io
 from io import StringIO
+from io import IOBase
 import pathlib
 
 # Imports End
@@ -148,13 +149,14 @@ class CSVParser:
 
     @staticmethod
     def CSVParser1(
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format_: CSVFormat
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
+        format_: CSVFormat,
     ) -> CSVParser:
         pass
 
     def __init__(
         self,
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         format_: CSVFormat,
         characterOffset: int,
         recordNumber: int,
@@ -167,7 +169,8 @@ class CSVParser:
 
     @staticmethod
     def parse3(
-        reader: typing.Union[io.TextIOWrapper, io.BufferedReader], format_: CSVFormat
+        reader: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
+        format_: CSVFormat,
     ) -> CSVParser:
         pass
 

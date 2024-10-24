@@ -13,6 +13,7 @@ from src.main.org.apache.commons.codec.Resources import *
 import typing
 from typing import *
 import io
+from io import StringIO
 
 # Imports End
 
@@ -20,7 +21,7 @@ import io
 class Branch:
 
     # Class Fields Begin
-    __builder: str = None
+    __builder: typing.Union[typing.List[str], io.StringIO] = None
     __cachedString: str = None
     __lastReplacement: str = None
     # Class Fields End

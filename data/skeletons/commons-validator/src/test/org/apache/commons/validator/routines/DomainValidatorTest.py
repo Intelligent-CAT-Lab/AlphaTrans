@@ -20,9 +20,6 @@ class DomainValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def setUp(self) -> None:
-        pass
-
     def testGetArray_test0_decomposed(self) -> None:
         pass
 
@@ -132,6 +129,9 @@ class DomainValidatorTest(unittest.TestCase):
         pass
 
     def testValidDomains_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     @staticmethod

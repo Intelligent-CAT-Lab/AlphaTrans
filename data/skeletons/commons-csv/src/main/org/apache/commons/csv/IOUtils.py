@@ -24,22 +24,22 @@ class IOUtils:
 
     @staticmethod
     def copyLarge1(
-        input_: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        output: typing.Union[io.TextIOWrapper, io.BufferedWriter],
+        input_: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
+        output: typing.Union[io.TextIOWrapper, io.BufferedWriter, io.TextIOBase],
         buffer: typing.List[str],
     ) -> int:
         pass
 
     @staticmethod
     def copyLarge0(
-        input_: typing.Union[io.TextIOWrapper, io.BufferedReader],
-        output: typing.Union[io.TextIOWrapper, io.BufferedWriter],
+        input_: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
+        output: typing.Union[io.TextIOWrapper, io.BufferedWriter, io.TextIOBase],
     ) -> int:
         pass
 
     @staticmethod
     def copy1(
-        input_: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        input_: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         output: typing.Union[typing.List, io.TextIOBase],
         buffer: typing.Union[str, typing.List[str], io.StringIO],
     ) -> int:
@@ -47,7 +47,7 @@ class IOUtils:
 
     @staticmethod
     def copy0(
-        input_: typing.Union[io.TextIOWrapper, io.BufferedReader],
+        input_: typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase],
         output: typing.Union[typing.List, io.TextIOBase],
     ) -> int:
         pass

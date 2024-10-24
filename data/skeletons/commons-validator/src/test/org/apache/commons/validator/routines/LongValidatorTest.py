@@ -4,6 +4,7 @@ from __future__ import annotations
 from src.main.org.apache.commons.validator.routines.LongValidator import *
 from src.test.org.apache.commons.validator.routines.AbstractNumberValidatorTest import *
 from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *
+import unittest
 import os
 import numbers
 import io
@@ -11,7 +12,7 @@ import io
 # Imports End
 
 
-class LongValidatorTest(AbstractNumberValidatorTest):
+class LongValidatorTest(AbstractNumberValidatorTest, unittest.TestCase):
 
     # Class Fields Begin
     __LONG_MIN_VAL: int = None
@@ -26,9 +27,6 @@ class LongValidatorTest(AbstractNumberValidatorTest):
     # Class Fields End
 
     # Class Methods Begin
-    def _setUp(self) -> None:
-        pass
-
     def testLongRangeMinMax_test4_decomposed(self) -> None:
         pass
 
@@ -138,6 +136,9 @@ class LongValidatorTest(AbstractNumberValidatorTest):
         pass
 
     def testLongValidatorMethods_test0_decomposed(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

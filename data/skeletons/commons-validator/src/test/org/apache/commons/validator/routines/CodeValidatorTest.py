@@ -18,12 +18,6 @@ class CodeValidatorTest(unittest.TestCase):
     # Class Fields End
 
     # Class Methods Begin
-    def _tearDown(self) -> None:
-        pass
-
-    def _setUp(self) -> None:
-        pass
-
     def testConstructors_test33_decomposed(self) -> None:
         pass
 
@@ -277,6 +271,12 @@ class CodeValidatorTest(unittest.TestCase):
         pass
 
     def testCheckDigit_test0_decomposed(self) -> None:
+        pass
+
+    def tearDown(self) -> None:
+        pass
+
+    def setUp(self) -> None:
         pass
 
     def __init__(self, name: str) -> None:

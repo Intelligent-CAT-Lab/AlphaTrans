@@ -10,6 +10,7 @@ import typing
 from typing import *
 import numbers
 import io
+from io import StringIO
 
 # Imports End
 
@@ -49,7 +50,9 @@ class Lexer:
     def __isMetaChar(self, ch: int) -> bool:
         pass
 
-    def trimTrailingSpaces(self, buffer: str) -> None:
+    def trimTrailingSpaces(
+        self, buffer: typing.Union[typing.List[str], io.StringIO]
+    ) -> None:
         pass
 
     def readEscape(self) -> int:
