@@ -33,7 +33,10 @@ def main(args):
         if callee_location.endswith(':0:0:0:0'):
             is_library_callee = True
             if callee_location.endswith('Assert.class:0:0:0:0'):
-                callee_location = 'Assert.class:0:0:0:0'
+                callee_location = 'Assert'
+            else:
+                callee_location = callee_location.replace('.class:0:0:0:0', '')
+                callee_location = callee_location.replace('file:///modules/', '')
         #     print(caller_name, callee_location, callee_name)
         #     continue
 
