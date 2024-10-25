@@ -165,12 +165,14 @@ def get_reverse_traversal(args):
                 dependent_fragments = [f'{x[0]}|{x[1]}|{x[2]}' for x in data['classes'][class_]['methods'][method_]['calls'] if ':' in x[2] and full_fragment_name != f'{x[0]}|{x[1]}|{x[2]}']
 
                 is_test_method = False
-                if 'src.test' in schema_base_name:
-                    test_class_path = schema_base_name[schema_base_name.find('src.test.')+len('src.test.'):]
-                    if test_class_path not in executed_tests:
-                        is_test_method = False
-                    elif method_.split(':')[1] in executed_tests[test_class_path]:
-                        is_test_method = True
+                if any(['Test' in x for x in data['classes'][class_]['methods'][method_]['annotations']]):
+                    is_test_method = True
+                # if 'src.test' in schema_base_name:
+                #     test_class_path = schema_base_name[schema_base_name.find('src.test.')+len('src.test.'):]
+                #     if test_class_path not in executed_tests:
+                #         is_test_method = False
+                #     elif method_.split(':')[1] in executed_tests[test_class_path]:
+                #         is_test_method = True
 
                 if any([x not in processed_fragments for x in dependent_fragments]) and not args.translate_evosuite:
                     waiting_queue[full_fragment_name] = [dependent_fragments, schema_base_name, class_, method_, is_test_method]

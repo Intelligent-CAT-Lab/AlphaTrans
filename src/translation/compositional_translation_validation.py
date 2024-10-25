@@ -57,9 +57,22 @@ def get_eligible_tests(fragment, processed_fragments, args):
             test_class = test.split('|')[1]
             test_method = test.split('|')[2]
 
-            test_class_path = test_schema[test_schema.find('src.test.')+len('src.test.'):]
-            if test_method.split(':')[1] not in executed_tests[test_class_path]:
+            test_schema_data = {}
+            with open(f'{args.translation_dir}/{test_schema}_python_partial.json', 'r') as f:
+                test_schema_data = json.load(f)
+            if test_class not in test_schema_data['classes']:
                 continue
+            if test_method not in test_schema_data['classes'][test_class]['methods']:
+                continue
+            if 'Test' not in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+                continue
+            if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+                continue
+            if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
+                continue
+            # test_class_path = test_schema[test_schema.find('src.test.')+len('src.test.'):]
+            # if test_method.split(':')[1] not in executed_tests[test_class_path]:
+            #     continue
 
             executable_tests.append({'schema_name': test_schema, 'class_name': test_class, 'fragment_name': test_method, 'fragment_type': 'method', 'is_test_method': True})
     
@@ -218,7 +231,8 @@ def prompt_model(model_info, client, prompt, total_input_tokens, args):
     max_new_tokens = model_info[args.model_name]['total'] - total_input_tokens
     max_new_tokens = min(max_new_tokens, model_info[args.model_name]['max_new_tokens'])
 
-    parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
+    parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY if args.temperature == 0.0 else DecodingMethod.SAMPLE,
+                                            temperature=args.temperature,
                                             min_new_tokens=1,
                                             max_new_tokens=max_new_tokens,
                                             return_options=TextGenerationReturnOptions(input_text=True),
@@ -560,7 +574,7 @@ def main(args):
 
     # constant variables
     args.prompt_type = 'body' if args.include_implementation else 'signature'
-    args.translation_dir = f'data/schemas_decomposed_tests/translations/{args.model_name}/{args.prompt_type}/{args.project_name}'
+    args.translation_dir = f'data/schemas_decomposed_tests/translations/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}'
 
     # extract the reverse-topological order of fragments based on call graph
     fragment_traversal = get_reverse_traversal(args)
@@ -594,6 +608,7 @@ if __name__ == '__main__':
     parser_.add_argument('--validate_by_graal', action='store_true', help='validate translation by GraalVM')
     parser_.add_argument('--translate_evosuite', action='store_true', help='translate evosuite generated tests')
     parser_.add_argument('--debug', action='store_true', help='debug mode')
+    parser_.add_argument('--temperature', type=float, dest='temperature', help='temperature for generation')
     parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix for the translated files')
     parser_.add_argument('--recursion_depth', type=int, dest='recursion_depth', help='depth of recursion for translation')
     args = parser_.parse_args()

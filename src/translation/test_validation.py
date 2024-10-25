@@ -9,6 +9,7 @@ def test_validation(args, eligible_tests):
     os.system(f'python3 src/postprocessing/recompose.py --project_name={args.project_name} \
                                                         --model_name={args.model_name} \
                                                         --output_dir=data/recomposed_projects \
+                                                        --temperature={args.temperature} \
                                                         --type={args.prompt_type} \
                                                         --suffix={args.suffix}')
 
