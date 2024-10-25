@@ -266,6 +266,9 @@ class PromptGenerator:
                 out_of_class_dependencies = []
                 for callee_schema, callee_class, callee_method in self.schema_data['classes'][self.class_name]['methods'][self.fragment_name]['calls']:
 
+                    if callee_schema == 'library':
+                        continue
+
                     callee_schema_data = {}
                     with open(f'{self.args.translation_dir}/{callee_schema}_python_partial.json', 'r') as f:
                         callee_schema_data = json.load(f)
