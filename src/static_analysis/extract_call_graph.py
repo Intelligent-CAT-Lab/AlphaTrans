@@ -32,11 +32,30 @@ def main(args):
         is_library_callee = False
         if callee_location.endswith(':0:0:0:0'):
             is_library_callee = True
-            if callee_location.endswith('Assert.class:0:0:0:0'):
-                callee_location = 'Assert'
-            else:
-                callee_location = callee_location.replace('.class:0:0:0:0', '')
-                callee_location = callee_location.replace('file:///modules/', '')
+
+            if 'evosuite-standalone-runtime-1.2.0.jar' in callee_location:
+                callee_location = callee_location[callee_location.find('evosuite-standalone-runtime-1.2.0.jar')+len('evosuite-standalone-runtime-1.2.0.jar'):]
+            if 'target/classes' in callee_location:
+                callee_location = callee_location[callee_location.find('target/classes/')+len('target/classes/'):]
+            if 'target/test-classes' in callee_location:
+                callee_location = callee_location[callee_location.find('target/test-classes/')+len('target/test-classes/'):]
+            
+            map_ = {'Assert.class:0:0:0:0': 'Assert', 'EvoAssertions.class:0:0:0:0': 'EvoAssertions', 'Log.class:0:0:0:0': 'Log', 'LogFactory.class:0:0:0:0': 'LogFactory', 'TestCase.class:0:0:0:0': 'TestCase', 'Assumptions.class:0:0:0:0': 'Assumptions', 'Assertions.class:0:0:0:0': 'Assertions', 'Assumptions.class:0:0:0:0': 'Assumptions', 'Assume.class:0:0:0:0': 'Assume', 'IOUtils.class:0:0:0:0': 'IOUtils', 'Arguments.class:0:0:0:0': 'Arguments'}
+
+            for k in map_:
+                if callee_location.endswith(k):
+                    callee_location = map_[k]
+                    break
+            
+            callee_location = callee_location.replace('.class:0:0:0:0', '').replace('.sig:0:0:0:0', '')
+            if 'file:///' in callee_location:
+                callee_location = '/'.join(callee_location[callee_location.find('file:///') + len('file:///'):].split('/')[1:])
+            
+            if 'ali/' in callee_location:
+                print(callee_location)
+            
+            assert 'file:///' not in callee_location, f'callee_location: {callee_location}'
+            assert '.class:0:0:0:0' not in callee_location, f'callee_location: {callee_location}'
         #     print(caller_name, callee_location, callee_name)
         #     continue
 
@@ -122,6 +141,11 @@ def main(args):
                 callee_start_line += 1
 
             callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')
+
+            # if callee_name == 'getCompBuffer' and 'JavaFastPFOR' in callee_schema_name:
+            #     callee_start_line = 84
+            # if callee_name == 'RoaringIntPacking' and 'JavaFastPFOR' in callee_schema_name:
+            #     continue
 
             callee_method_class_name, callee_method_key_name = None, None
             callee_schema = {}
