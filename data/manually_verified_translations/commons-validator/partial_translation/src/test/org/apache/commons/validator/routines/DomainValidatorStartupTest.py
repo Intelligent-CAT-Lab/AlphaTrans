@@ -13,7 +13,7 @@ from src.main.org.apache.commons.validator.routines.DomainValidator import *
 
 class DomainValidatorStartupTest(unittest.TestCase):
 
-    def testInstanceOverride(self) -> None:
+    def testInstanceOverride_test11_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
@@ -42,7 +42,196 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidCountryCodeTld("cp"))
         self.assertFalse(validator.isValidCountryCodeTld("ch"))
 
-    def testCannotUpdate(self) -> None:
+    def testInstanceOverride_test10_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+        validator = DomainValidator.getInstance1(False)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+        validator = DomainValidator.getInstance2(False, items)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertTrue(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertTrue(validator.isValidCountryCodeTld("ch"))
+
+        validator = DomainValidator.getInstance1(False)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+
+    def testInstanceOverride_test9_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, [["cp"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, [["ch"]])
+        validator = DomainValidator.getInstance1(False)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+        validator = DomainValidator.getInstance2(False, items)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertTrue(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertTrue(validator.isValidCountryCodeTld("ch"))
+        validator = DomainValidator.getInstance1(False)
+
+    def testInstanceOverride_test8_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, [["cp"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, [["ch"]])
+
+        validator = DomainValidator.getInstance1(False)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+        validator = DomainValidator.getInstance2(False, items)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertTrue(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertTrue(validator.isValidCountryCodeTld("ch"))
+
+    def testInstanceOverride_test7_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, [["cp"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, [["ch"]])
+
+        validator = DomainValidator.getInstance1(False)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+        validator = DomainValidator.getInstance2(False, items)
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertTrue(validator.isValidGenericTld("com"))
+
+    def testInstanceOverride_test6_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+        validator = DomainValidator.getInstance1(False)
+
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+        validator = DomainValidator.getInstance2(False, items)
+
+    def testInstanceOverride_test5_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, [["cp"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, [["ch"]])
+
+        validator = DomainValidator.getInstance1(False)
+
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [
+            Item(ArrayType.GENERIC_MINUS, [""]),
+            Item(ArrayType.COUNTRY_CODE_MINUS, [""]),
+        ]
+
+    def testInstanceOverride_test4_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, [["gp"]])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, [["com"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, [["cp"]])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, [["ch"]])
+
+        validator = DomainValidator.getInstance1(False)
+
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+        items = [Item(ArrayType.GENERIC_MINUS, [""])]
+
+    def testInstanceOverride_test3_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+        validator = DomainValidator.getInstance1(False)
+
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+        self.assertTrue(validator.isValidCountryCodeTld("cp"))
+        self.assertFalse(validator.isValidCountryCodeTld("ch"))
+
+    def testInstanceOverride_test2_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+        validator = DomainValidator.getInstance1(False)
+
+        self.assertTrue(validator.isValidGenericTld("gp"))
+        self.assertFalse(validator.isValidGenericTld("com"))
+
+    def testInstanceOverride_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+        validator = DomainValidator.getInstance1(False)
+
+    def testInstanceOverride_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["gp"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["cp"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+    def testCannotUpdate_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
         dv = DomainValidator.getInstance0()
@@ -56,7 +245,16 @@ class DomainValidatorStartupTest(unittest.TestCase):
                 str(re), "Can only invoke this method before calling getInstance"
             )
 
-    def testVALIDATOR_412d(self) -> None:
+    def testCannotUpdate_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        dv = DomainValidator.getInstance0()
+
+    def testCannotUpdate_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+
+    def testVALIDATOR_412d_test3_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.LOCAL_PLUS, ["local", "pvt"])
         validator = DomainValidator.getInstance1(True)
@@ -65,7 +263,23 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValid("abc.local"))
         self.assertTrue(validator.isValid("abc.pvt"))
 
-    def testVALIDATOR_412c(self) -> None:
+    def testVALIDATOR_412d_test2_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.LOCAL_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance1(True)
+        self.assertTrue(validator.isValidLocalTld("local"))
+        self.assertTrue(validator.isValidLocalTld("pvt"))
+
+    def testVALIDATOR_412d_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.LOCAL_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance1(True)
+
+    def testVALIDATOR_412d_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.LOCAL_PLUS, ["local", "pvt"])
+
+    def testVALIDATOR_412c_test4_decomposed(self) -> None:
 
         validator = DomainValidator.getInstance1(True)
         self.assertFalse(validator.isValidLocalTld("local"))
@@ -73,7 +287,29 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValidLocalTld("pvt"))
         self.assertFalse(validator.isValid("abc.pvt"))
 
-    def testVALIDATOR_412b(self) -> None:
+    def testVALIDATOR_412c_test3_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance1(True)
+        self.assertFalse(validator.isValidLocalTld("local"))
+        self.assertFalse(validator.isValid("abc.local"))
+        self.assertFalse(validator.isValidLocalTld("pvt"))
+
+    def testVALIDATOR_412c_test2_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance1(True)
+        self.assertFalse(validator.isValidLocalTld("local"))
+        self.assertFalse(validator.isValid("abc.local"))
+
+    def testVALIDATOR_412c_test1_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance1(True)
+        self.assertFalse(validator.isValidLocalTld("local"))
+
+    def testVALIDATOR_412c_test0_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance1(True)
+
+    def testVALIDATOR_412b_test5_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
         validator = DomainValidator.getInstance0()
@@ -82,7 +318,37 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertTrue(validator.isValidGenericTld("pvt"))
         self.assertTrue(validator.isValid("abc.pvt"))
 
-    def testVALIDATOR_412a(self) -> None:
+    def testVALIDATOR_412b_test4_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance0()
+        self.assertTrue(validator.isValidGenericTld("local"))
+        self.assertTrue(validator.isValid("abc.local"))
+        self.assertTrue(validator.isValidGenericTld("pvt"))
+
+    def testVALIDATOR_412b_test3_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance0()
+        self.assertTrue(validator.isValidGenericTld("local"))
+        self.assertTrue(validator.isValid("abc.local"))
+
+    def testVALIDATOR_412b_test2_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance0()
+        self.assertTrue(validator.isValidGenericTld("local"))
+
+    def testVALIDATOR_412b_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
+        validator = DomainValidator.getInstance0()
+
+    def testVALIDATOR_412b_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["local", "pvt"])
+
+    def testVALIDATOR_412a_test4_decomposed(self) -> None:
 
         validator = DomainValidator.getInstance0()
 
@@ -91,7 +357,28 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValidGenericTld("pvt"))
         self.assertFalse(validator.isValid("abc.pvt"))
 
-    def testUpdateGeneric5(self) -> None:
+    def testVALIDATOR_412a_test3_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance0()
+        self.assertFalse(validator.isValidGenericTld("local"))
+        self.assertFalse(validator.isValid("abc.local"))
+        self.assertFalse(validator.isValidGenericTld("pvt"))
+
+    def testVALIDATOR_412a_test2_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance0()
+        self.assertFalse(validator.isValidGenericTld("local"))
+        self.assertFalse(validator.isValid("abc.local"))
+
+    def testVALIDATOR_412a_test1_decomposed(self) -> None:
+
+        validator = DomainValidator.getInstance0()
+        self.assertFalse(validator.isValidGenericTld("local"))
+
+    def testVALIDATOR_412a_test0_decomposed(self) -> None:
+        DomainValidator.getInstance0()
+
+    def testUpdateGeneric5_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
@@ -101,7 +388,22 @@ class DomainValidatorStartupTest(unittest.TestCase):
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidGenericTld("com"))
 
-    def testUpdateGeneric4(self) -> None:
+    def testUpdateGeneric5_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["xx"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateGeneric5_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["xx"])
+
+    def testUpdateGeneric4_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
@@ -110,7 +412,20 @@ class DomainValidatorStartupTest(unittest.TestCase):
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidGenericTld("com"))
 
-    def testUpdateGeneric3(self) -> None:
+    def testUpdateGeneric4_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateGeneric4_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["com"])
+
+    def testUpdateGeneric3_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
@@ -118,69 +433,138 @@ class DomainValidatorStartupTest(unittest.TestCase):
         self.assertFalse(validator.isValidGenericTld("ch"))
         self.assertTrue(validator.isValidGenericTld("com"))
 
-    def testUpdateGeneric2(self) -> None:
+    def testUpdateGeneric3_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateGeneric3_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_MINUS, ["ch"])
+
+    def testUpdateGeneric2_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidGenericTld("ch"))
 
-    def testUpdateGeneric1(self) -> None:
+    def testUpdateGeneric2_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateGeneric2_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.GENERIC_PLUS, ["ch"])
+
+    def testUpdateGeneric1_test1_decomposed(self) -> None:
 
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidGenericTld("ch"))
 
-    def testUpdateCountryCode3c(self) -> None:
+    def testUpdateGeneric1_test0_decomposed(self) -> None:
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode3c_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["xx"])
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidCountryCodeTld("ch"))
 
-    def testUpdateCountryCode3b(self) -> None:
+    def testUpdateCountryCode3c_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["xx"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode3c_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["xx"])
+
+    def testUpdateCountryCode3b_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidCountryCodeTld("ch"))
 
-    def testUpdateCountryCode3a(self) -> None:
+    def testUpdateCountryCode3b_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode3b_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["ch"])
+
+    def testUpdateCountryCode3a_test1_decomposed(self) -> None:
 
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidCountryCodeTld("ch"))
 
-    def testUpdateCountryCode2(self) -> None:
+    def testUpdateCountryCode3a_test0_decomposed(self) -> None:
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode2_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["com"])
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidCountryCodeTld("com"))
 
-    def testUpdateCountryCode1b(self) -> None:
+    def testUpdateCountryCode2_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["com"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode2_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_MINUS, ["com"])
+
+    def testUpdateCountryCode1b_test2_decomposed(self) -> None:
 
         DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
         validator = DomainValidator.getInstance0()
         self.assertTrue(validator.isValidCountryCodeTld("com"))
 
-    def testUpdateCountryCode1a(self) -> None:
+    def testUpdateCountryCode1b_test1_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateCountryCode1b_test0_decomposed(self) -> None:
+
+        DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_PLUS, ["com"])
+
+    def testUpdateCountryCode1a_test1_decomposed(self) -> None:
 
         validator = DomainValidator.getInstance0()
         self.assertFalse(validator.isValidCountryCodeTld("com"))
 
-    def testUpdateBaseArrayLocal(self) -> None:
+    def testUpdateCountryCode1a_test0_decomposed(self) -> None:
+        validator = DomainValidator.getInstance0()
+
+    def testUpdateBaseArrayLocal_test0_decomposed(self) -> None:
 
         with pytest.raises(ValueError):
             DomainValidator.updateTLDOverride(ArrayType.LOCAL_RO, ["com"])
 
-    def testUpdateBaseArrayInfra(self) -> None:
+    def testUpdateBaseArrayInfra_test0_decomposed(self) -> None:
 
         with pytest.raises(ValueError):
             DomainValidator.updateTLDOverride(ArrayType.INFRASTRUCTURE_RO, ["com"])
 
-    def testUpdateBaseArrayGeneric(self) -> None:
+    def testUpdateBaseArrayGeneric_test0_decomposed(self) -> None:
 
         with pytest.raises(ValueError):
             DomainValidator.updateTLDOverride(ArrayType.GENERIC_RO, ["com"])
 
-    def testUpdateBaseArrayCC(self) -> None:
+    def testUpdateBaseArrayCC_test0_decomposed(self) -> None:
 
         with pytest.raises(ValueError):
             DomainValidator.updateTLDOverride(ArrayType.COUNTRY_CODE_RO, ["com"])

@@ -50,7 +50,7 @@ class IBANValidatorTest(unittest.TestCase):
         None  # LLM could not translate this field
     )
 
-    def testSorted(self) -> None:
+    def testSorted_test2_decomposed(self) -> None:
 
         validator = IBANValidator.IBANValidator1()
         vals = validator.getDefaultValidators()
@@ -65,55 +65,74 @@ class IBANValidatorTest(unittest.TestCase):
                     + vals[i - 1].countryCode
                 )
 
-    def testSetValidatorLen_1(self) -> None:
+    def testSorted_test1_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+        vals = validator.getDefaultValidators()
+
+    def testSorted_test0_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+
+    def testSetValidatorLen_1_test1_decomposed(self) -> None:
 
         validator = IBANValidator.IBANValidator1()
         self.assertIsNotNone(validator.setValidator1("GB", -1, ""), "should be present")
         self.assertIsNone(validator.setValidator1("GB", -1, ""), "no longer present")
 
-    def testSetValidatorLen35(self) -> None:
+    def testSetValidatorLen_1_test0_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+
+    def testSetValidatorLen35_test1_decomposed(self) -> None:
         validator = IBANValidator.IBANValidator1()
         with self.assertRaises(RuntimeError):
             validator.setValidator1("GB", 35, "GB")
 
-    def testSetValidatorLen7(self) -> None:
+    def testSetValidatorLen35_test0_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+
+    def testSetValidatorLen7_test1_decomposed(self) -> None:
         validator = IBANValidator.IBANValidator1()
         with self.assertRaises(RuntimeError):
             validator.setValidator1("GB", 7, "GB")
 
-    def testSetValidatorLC(self) -> None:
+    def testSetValidatorLen7_test0_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+
+    def testSetValidatorLC_test1_decomposed(self) -> None:
         validator = IBANValidator.IBANValidator1()
         with self.assertRaises(RuntimeError):
             validator.setValidator1("gb", 15, "GB")
 
-    def testSetDefaultValidator2(self) -> None:
+    def testSetValidatorLC_test0_decomposed(self) -> None:
+        validator = IBANValidator.IBANValidator1()
+
+    def testSetDefaultValidator2_test0_decomposed(self) -> None:
         with self.assertRaises(RuntimeError):
             self.__VALIDATOR.setValidator1("GB", -1, "GB")
 
-    def testSetDefaultValidator1(self) -> None:
+    def testSetDefaultValidator1_test0_decomposed(self) -> None:
         with self.assertRaises(RuntimeError):
             self.__VALIDATOR.setValidator1("GB", 15, "GB")
 
-    def testGetValidator(self) -> None:
+    def testGetValidator_test0_decomposed(self) -> None:
 
         self.assertIsNotNone(self.__VALIDATOR.getValidator("GB"))
         self.assertIsNone(self.__VALIDATOR.getValidator("gb"))
 
-    def testHasValidator(self) -> None:
+    def testHasValidator_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__VALIDATOR.hasValidator("GB"))
         self.assertFalse(self.__VALIDATOR.hasValidator("gb"))
 
-    def testNull(self) -> None:
+    def testNull_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__VALIDATOR.isValid(None), "isValid(null)")
 
-    def testInValid(self) -> None:
+    def testInValid_test0_decomposed(self) -> None:
 
         for f in self.__invalidIBANFormat:
             self.assertFalse(self.__VALIDATOR.isValid(f), f"Expected {f} to be invalid")
 
-    def testValid(self) -> None:
+    def testValid_test0_decomposed(self) -> None:
 
         pass  # LLM could not translate this method
 
