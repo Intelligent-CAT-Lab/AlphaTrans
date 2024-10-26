@@ -236,7 +236,7 @@ def main(args):
                         continue
 
                 # ignore constructors in test files
-                if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema:
+                if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema and 'unittest.TestCase' in data['classes'][class_]['python_class_declaration']:
                     continue
 
                 if 'Ignore' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']] or 'ParameterizedTest' in [x.split('(')[0] for x in data['classes'][class_]['methods'][method]['annotations']]:

@@ -58,6 +58,14 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
 
     status = output['status']
     feedback = output['feedback']
+    is_dct = False
+    graal_feedback = ''
+    if isinstance(feedback, dict):
+        is_dct = True
+        for test_id in feedback:
+            graal_feedback += f'{test_id}: {feedback[test_id]}\n'
+    if is_dct:
+        feedback = graal_feedback        
     message = output['message']
 
     return status, feedback, message
