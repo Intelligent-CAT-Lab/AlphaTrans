@@ -15,10 +15,10 @@ def main(args):
     for line in tqdm.tqdm(method_call_graph):
         splitted_line = [x.strip() for x in line.split('|') if x.strip() != '']
 
-        if len(splitted_line) != 5:
+        if len(splitted_line) != 7:
             continue
 
-        call_location, caller_name, caller_location, callee_name, callee_location = splitted_line
+        call_location, caller_name, caller_location, caller_signature, callee_name, callee_location, callee_signature = splitted_line
 
         if args.suffix == '_evosuite' and 'ESTest' not in call_location:
             continue
@@ -172,7 +172,7 @@ def main(args):
         else:
             callee_schema_name = 'library'
             callee_method_class_name = callee_location
-            callee_method_key_name = callee_name
+            callee_method_key_name = callee_signature
 
         caller_schema_name = caller_path[caller_path.find(project):].replace('/', '.').replace('.java', '')
         caller_schema = {}
