@@ -1,5 +1,5 @@
 # AlphaTrans
-This repository contains artifacts of the paper "AlphaTrans: A Neuro-Symbolic Compositional Approach for Repository-Level Code Translation and Validation".
+This repository contains artifacts of the paper "Repository-Level Compositional Code Translation and Validation".
 
 ## Pre-requisites
 The `setup.sh` files contains multiple scripts to setup the proper conda environment, install all dependencies, download, build, and create project databases for CodeQL, and install GraalVM. Please execute the following in order to successfully setup AlphaTrans requirements.
