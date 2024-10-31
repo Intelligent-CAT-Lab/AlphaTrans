@@ -98,11 +98,24 @@ class EmailValidatorTest(unittest.TestCase):
     ]
     __validator: EmailValidator = None
 
-    def testValidator473_4(self) -> None:
+    def testValidator473_4_test3_decomposed(self) -> None:
 
         pass  # LLM could not translate this method
 
-    def testValidator473_3(self) -> None:
+    def testValidator473_4_test2_decomposed(self) -> None:
+
+        pass  # LLM could not translate this method
+
+    def testValidator473_4_test1_decomposed(self) -> None:
+
+        self.assertFalse(self.__validator._isValidDomain("test.local"))
+        items = [Item(DomainValidator.ArrayType.GENERIC_PLUS, ["local"])]
+
+    def testValidator473_4_test0_decomposed(self) -> None:
+
+        self.assertFalse(self.__validator._isValidDomain("test.local"))
+
+    def testValidator473_3_test0_decomposed(self) -> None:
 
         items = []
         try:
@@ -110,7 +123,7 @@ class EmailValidatorTest(unittest.TestCase):
         except ValueError:
             pass
 
-    def testValidator473_2(self) -> None:
+    def testValidator473_2_test0_decomposed(self) -> None:
 
         items = []
         try:
@@ -118,26 +131,33 @@ class EmailValidatorTest(unittest.TestCase):
         except ValueError:
             pass
 
-    def testValidator473_1(self) -> None:
+    def testValidator473_1_test0_decomposed(self) -> None:
 
         with pytest.raises(ValueError):
             EmailValidator(0, False, False, None)
 
-    def testValidator374(self) -> None:
+    def testValidator374_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("abc@school.school"))
 
-    def testValidator359(self) -> None:
+    def testValidator359_test1_decomposed(self) -> None:
 
         val = EmailValidator.getInstance1(False, True)
         self.assertFalse(val.isValid("test@.com"))
 
-    def testEmailAtTLD(self) -> None:
+    def testValidator359_test0_decomposed(self) -> None:
+        val = EmailValidator.getInstance1(False, True)
+
+    def testEmailAtTLD_test1_decomposed(self) -> None:
 
         val = EmailValidator.getInstance1(False, True)
         self.assertTrue(val.isValid("test@com"))
 
-    def testValidator365(self) -> None:
+    def testEmailAtTLD_test0_decomposed(self) -> None:
+
+        val = EmailValidator.getInstance1(False, True)
+
+    def testValidator365_test0_decomposed(self) -> None:
 
         email = (
             "Loremipsumdolorsitametconsecteturadipiscingelit.Nullavitaeligulamattisrhoncusnuncegestasmattisleo."
@@ -167,7 +187,7 @@ class EmailValidatorTest(unittest.TestCase):
 
         self.assertFalse(self.__validator.isValid(email))
 
-    def testValidator293(self) -> None:
+    def testValidator293_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("abc-@abc.com"))
         self.assertTrue(self.__validator.isValid("abc_@abc.com"))
@@ -176,7 +196,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("abc@abc_def.com"))
 
     @pytest.mark.skip(reason="Ignore")
-    def testEmailFromPerl(self) -> None:
+    def testEmailFromPerl_test0_decomposed(self) -> None:
 
         errors = 0
         for index in range(len(self.__testEmailFromPerl)):
@@ -189,7 +209,7 @@ class EmailValidatorTest(unittest.TestCase):
 
         self.assertEqual("Expected 0 errors", 0, errors)
 
-    def testEmailUserName(self) -> None:
+    def testEmailUserName_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("joe1blow@apache.org"))
         self.assertTrue(self.__validator.isValid("joe$blow@apache.org"))
@@ -262,7 +282,7 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("Abc@def@example.com"))
         self.assertTrue(self.__validator.isValid("space\\ monkey@example.com"))
 
-    def testEmailWithSlashes(self) -> None:
+    def testEmailWithSlashes_test0_decomposed(self) -> None:
 
         self.assertTrue(
             "/ and ! valid in username",
@@ -276,7 +296,7 @@ class EmailValidatorTest(unittest.TestCase):
             self.__validator.isValid("joe@apac not valid in domain"),
         )
 
-    def testEmailLocalhost(self) -> None:
+    def testEmailLocalhost_test2_decomposed(self) -> None:
 
         noLocal = EmailValidator.getInstance2(False)
         allowLocal = EmailValidator.getInstance2(True)
@@ -297,7 +317,22 @@ class EmailValidatorTest(unittest.TestCase):
             "@localhost should be accepted but wasn't", noLocal.isValid("joe@localhost")
         )
 
-    def testEmailWithControlChars(self) -> None:
+    def testEmailLocalhost_test1_decomposed(self) -> None:
+
+        noLocal = EmailValidator.getInstance2(False)
+        allowLocal = EmailValidator.getInstance2(True)
+        self.assertEqual(self.__validator, noLocal)
+        self.assertTrue(
+            "@localhost.localdomain should be accepted but wasn't",
+            allowLocal.isValid("joe@localhost.localdomain"),
+        )
+
+    def testEmailLocalhost_test0_decomposed(self) -> None:
+
+        noLocal = EmailValidator.getInstance2(False)
+        allowLocal = EmailValidator.getInstance2(True)
+
+    def testEmailWithControlChars_test0_decomposed(self) -> None:
 
         for c in range(32):
             self.assertFalse(
@@ -309,7 +344,7 @@ class EmailValidatorTest(unittest.TestCase):
             self.__validator.isValid("foo" + chr(127) + "bar@domain.com"),
         )
 
-    def testEmailWithSpaces(self) -> None:
+    def testEmailWithSpaces_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("joeblow @apache.org"))
         self.assertFalse(self.__validator.isValid("joeblow@ apache.org"))
@@ -321,13 +356,13 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertTrue(self.__validator.isValid('" joeblow"@apache.org'))
         self.assertTrue(self.__validator.isValid('" joe blow "@apache.org'))
 
-    def testEmailWithCommas(self) -> None:
+    def testEmailWithCommas_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("joeblow@apa,che.org"))
         self.assertFalse(self.__validator.isValid("joeblow@apache.o,rg"))
         self.assertFalse(self.__validator.isValid("joeblow@apache,org"))
 
-    def testValidator235(self) -> None:
+    def testValidator235_test2_decomposed(self) -> None:
 
         version = platform.python_version()
         if version.split(".")[1] < 6:
@@ -359,17 +394,32 @@ class EmailValidatorTest(unittest.TestCase):
             "www.\uFFFD.ch FFFD should fail",
         )
 
-    def testVALIDATOR_278(self) -> None:
+    def testValidator235_test1_decomposed(self) -> None:
+
+        version = platform.python_version()
+        if version.split(".")[0] < "3":
+            print("Cannot run Unicode IDN tests")
+            return
+
+        self.assertTrue(
+            self.__validator.isValid("someone@xn--d1abbgf6aiiy.xn--p1ai"),
+            "xn--d1abbgf6aiiy.xn--p1ai should validate",
+        )
+
+    def testValidator235_test0_decomposed(self) -> None:
+        version = platform.python_version()
+
+    def testVALIDATOR_278_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("someone@-test.com"))
         self.assertFalse(self.__validator.isValid("someone@test-.com"))
 
-    def testVALIDATOR_315(self) -> None:
+    def testVALIDATOR_315_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("me@at&t.net"))
         self.assertTrue(self.__validator.isValid("me@att.net"))
 
-    def testEmailWithBogusCharacter(self) -> None:
+    def testEmailWithBogusCharacter_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("andy.noble@\u008fdata-workshop.com"))
         self.assertTrue(self.__validator.isValid("andy.o'reilly@data-workshop.com"))
@@ -379,18 +429,18 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertFalse(self.__validator.isValid("test@%*.com"))
         self.assertFalse(self.__validator.isValid("test@^&#.com"))
 
-    def testEmailWithDotEnd(self) -> None:
+    def testEmailWithDotEnd_test0_decomposed(self) -> None:
 
         self.assertFalse(self.__validator.isValid("andy.noble@data-workshop.com."))
 
-    def testEmailWithDash(self) -> None:
+    def testEmailWithDash_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("andy.noble@data-workshop.com"))
         self.assertFalse(self.__validator.isValid("andy-noble@data-workshop.-com"))
         self.assertFalse(self.__validator.isValid("andy-noble@data-workshop.c-om"))
         self.assertFalse(self.__validator.isValid("andy-noble@data-workshop.co-m"))
 
-    def testEmailExtension(self) -> None:
+    def testEmailExtension_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("jsmith@apache.org"))
         self.assertTrue(self.__validator.isValid("jsmith@apache.com"))
@@ -401,12 +451,12 @@ class EmailValidatorTest(unittest.TestCase):
         self.assertTrue(self.__validator.isValid("someone@yahoo.museum"))
         self.assertFalse(self.__validator.isValid("someone@yahoo.mu-seum"))
 
-    def testEmailWithNumericAddress(self) -> None:
+    def testEmailWithNumericAddress_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("someone@[216.109.118.76]"))
         self.assertTrue(self.__validator.isValid("someone@yahoo.com"))
 
-    def testEmail(self) -> None:
+    def testEmail_test0_decomposed(self) -> None:
 
         self.assertTrue(self.__validator.isValid("jsmith@apache.org"))
 
