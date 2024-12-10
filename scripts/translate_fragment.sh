@@ -13,7 +13,7 @@ python3 src/translation/compositional_translation_validation.py \
     --include_call_graph \
     --debug \
     --suffix=_decomposed_tests \
-    --temperature=$temperature \
+    --temperature=$TEMPERATURE \
     --validate_by_graal \
     --recursion_depth=2 \
     --use_vllm \
