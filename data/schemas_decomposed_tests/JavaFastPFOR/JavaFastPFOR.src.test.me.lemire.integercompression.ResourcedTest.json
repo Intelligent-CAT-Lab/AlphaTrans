@@ -1,0 +1,571 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/integercompression/ResourcedTest.java",
+    "imports": {
+        "14-14:import BufferedReader": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "18-18:import IOException": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "15-15:import File": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "17-17:import FileReader": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import java.io.FileReader;\n"
+            ]
+        },
+        "10-10:import ArrayList": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "20-20:import Test": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "11-11:import IntegratedIntCompressor": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedIntCompressor;\n"
+            ]
+        },
+        "12-12:import SkippableIntegratedIntegerCODEC": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC;\n"
+            ]
+        },
+        "16-16:import Assert": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import org.junit.Assert;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ResourcedTest": {
+            "start": 26,
+            "end": 26,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "98-128:IntCompressorTest_test3_decomposed": {
+                    "start": 98,
+                    "end": 128,
+                    "body": [
+                        "    public void IntCompressorTest_test3_decomposed() throws IOException {\n",
+                        "        File f = new File(\"src/test/resources/integers.txt\");\n",
+                        "        System.out.println(\"loading test data from \"+ f.getAbsolutePath());\n",
+                        "        BufferedReader bfr = new BufferedReader(new FileReader(f));\n",
+                        "        String line;\n",
+                        "        ArrayList<Integer> ai = new ArrayList<Integer>();\n",
+                        "        while ((line = bfr.readLine()) != null) {\n",
+                        "\t\t\tai.add(Integer.parseInt(line));\n",
+                        "\t\t}\n",
+                        "        bfr.close();\n",
+                        "        int[] data = new int[ai.size()];\n",
+                        "        for (int k = 0; k < data.length; ++k)\n",
+                        "\t\t\tdata[k] = ai.get(k).intValue();\n",
+                        "        ai = null;\n",
+                        "        for (SkippableIntegerCODEC C : codecs) {\n",
+                        "\t\t\tIntCompressor iic = new IntCompressor(0, C);\n",
+                        "\t\t\tint[] compressed = iic.compress(data);\n",
+                        "\t\t\tint[] recovered = iic.uncompress(compressed);\n",
+                        "\t\t\tAssert.assertArrayEquals(recovered, data);\n",
+                        "\n",
+                        "\t\t}\n",
+                        "        for (SkippableIntegerCODEC C : codecs) {\n",
+                        "\t\t\tif (C instanceof SkippableIntegratedIntegerCODEC) {\n",
+                        "\t\t\t\tIntegratedIntCompressor iic = new IntegratedIntCompressor(0, (SkippableIntegratedIntegerCODEC) C);\n",
+                        "\t\t\t\tint[] compressed = iic.compress(data);\n",
+                        "\t\t\t\tint[] recovered = iic.uncompress(compressed);\n",
+                        "\t\t\t\tAssert.assertArrayEquals(recovered, data);\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressorTest_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "26-36:IntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "49-63:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "71-79:uncompress"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(int[],int[])"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "29-39:IntegratedIntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "52-65:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedIntCompressor",
+                            "IntegratedIntCompressor",
+                            "73-81:uncompress"
+                        ]
+                    ]
+                },
+                "74-95:IntCompressorTest_test2_decomposed": {
+                    "start": 74,
+                    "end": 95,
+                    "body": [
+                        "    public void IntCompressorTest_test2_decomposed() throws IOException {\n",
+                        "        File f = new File(\"src/test/resources/integers.txt\");\n",
+                        "        System.out.println(\"loading test data from \"+ f.getAbsolutePath());\n",
+                        "        BufferedReader bfr = new BufferedReader(new FileReader(f));\n",
+                        "        String line;\n",
+                        "        ArrayList<Integer> ai = new ArrayList<Integer>();\n",
+                        "        while ((line = bfr.readLine()) != null) {\n",
+                        "\t\t\tai.add(Integer.parseInt(line));\n",
+                        "\t\t}\n",
+                        "        bfr.close();\n",
+                        "        int[] data = new int[ai.size()];\n",
+                        "        for (int k = 0; k < data.length; ++k)\n",
+                        "\t\t\tdata[k] = ai.get(k).intValue();\n",
+                        "        ai = null;\n",
+                        "        for (SkippableIntegerCODEC C : codecs) {\n",
+                        "\t\t\tIntCompressor iic = new IntCompressor(0, C);\n",
+                        "\t\t\tint[] compressed = iic.compress(data);\n",
+                        "\t\t\tint[] recovered = iic.uncompress(compressed);\n",
+                        "\t\t\tAssert.assertArrayEquals(recovered, data);\n",
+                        "\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressorTest_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "26-36:IntCompressor"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "49-63:compress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntCompressor",
+                            "IntCompressor",
+                            "71-79:uncompress"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(int[],int[])"
+                        ]
+                    ]
+                },
+                "58-71:IntCompressorTest_test1_decomposed": {
+                    "start": 58,
+                    "end": 71,
+                    "body": [
+                        "    public void IntCompressorTest_test1_decomposed() throws IOException {\n",
+                        "        File f = new File(\"src/test/resources/integers.txt\");\n",
+                        "        System.out.println(\"loading test data from \"+ f.getAbsolutePath());\n",
+                        "        BufferedReader bfr = new BufferedReader(new FileReader(f));\n",
+                        "        String line;\n",
+                        "        ArrayList<Integer> ai = new ArrayList<Integer>();\n",
+                        "        while ((line = bfr.readLine()) != null) {\n",
+                        "\t\t\tai.add(Integer.parseInt(line));\n",
+                        "\t\t}\n",
+                        "        bfr.close();\n",
+                        "        int[] data = new int[ai.size()];\n",
+                        "        for (int k = 0; k < data.length; ++k)\n",
+                        "\t\t\tdata[k] = ai.get(k).intValue();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressorTest_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ]
+                    ]
+                },
+                "46-55:IntCompressorTest_test0_decomposed": {
+                    "start": 46,
+                    "end": 55,
+                    "body": [
+                        "    public void IntCompressorTest_test0_decomposed() throws IOException {\n",
+                        "        File f = new File(\"src/test/resources/integers.txt\");\n",
+                        "        System.out.println(\"loading test data from \"+ f.getAbsolutePath());\n",
+                        "        BufferedReader bfr = new BufferedReader(new FileReader(f));\n",
+                        "        String line;\n",
+                        "        ArrayList<Integer> ai = new ArrayList<Integer>();\n",
+                        "        while ((line = bfr.readLine()) != null) {\n",
+                        "\t\t\tai.add(Integer.parseInt(line));\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressorTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "27-36:codecs": {
+                    "start": 27,
+                    "end": 36,
+                    "body": [
+                        "\tSkippableIntegerCODEC[] codecs = { new JustCopy(), new VariableByte(),\n",
+                        "\t\t\tnew SkippableComposition(new BinaryPacking(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new NewPFD(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new NewPFDS9(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new NewPFDS16(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new OptPFD(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new OptPFDS9(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(new OptPFDS16(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "\t\t\tnew SkippableComposition(FastPFOR.FastPFOR1(), new VariableByte()), new Simple9(), new Simple16() };\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableIntegerCODEC[]",
+                            "SkippableIntegerCODEC[]"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

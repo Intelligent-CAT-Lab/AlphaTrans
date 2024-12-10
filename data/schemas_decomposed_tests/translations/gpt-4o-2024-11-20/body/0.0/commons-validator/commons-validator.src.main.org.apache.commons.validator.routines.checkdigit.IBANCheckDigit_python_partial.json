@@ -1,0 +1,509 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/checkdigit/IBANCheckDigit.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IBANCheckDigit": {
+            "start": 41,
+            "end": 41,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "CheckDigit"
+            ],
+            "extends": [],
+            "methods": {
+                "94-104:calculate": {
+                    "start": 94,
+                    "end": 104,
+                    "body": [
+                        "    public String calculate(String code) throws CheckDigitException {\n",
+                        "        if (code == null || code.length() < MIN_CODE_LEN) {\n",
+                        "            throw CheckDigitException.CheckDigitException1(\n",
+                        "                    \"Invalid Code length=\" + (code == null ? 0 : code.length()));\n",
+                        "        }\n",
+                        "        code = code.substring(0, 2) + \"00\" + code.substring(4); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        int modulusResult = calculateModulus(code);\n",
+                        "        int charValue = (98 - modulusResult); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        String checkDigit = Integer.toString(charValue);\n",
+                        "        return (charValue > 9 ? checkDigit : \"0\" + checkDigit); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "calculate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit",
+                            "IBANCheckDigit",
+                            "113-131:calculateModulus"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "toString(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def calculate(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "66-80:isValid": {
+                    "start": 66,
+                    "end": 80,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        if (code == null || code.length() < MIN_CODE_LEN) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        String check = code.substring(2, 4); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        if (\"00\".equals(check) || \"01\".equals(check) || \"99\".equals(check)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            int modulusResult = calculateModulus(code);\n",
+                        "            return (modulusResult == 1);\n",
+                        "        } catch (CheckDigitException ex) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit",
+                            "IBANCheckDigit",
+                            "113-131:calculateModulus"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "57-57:IBANCheckDigit": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    public IBANCheckDigit() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IBANCheckDigit()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "113-131:calculateModulus": {
+                    "start": 113,
+                    "end": 131,
+                    "body": [
+                        "    private int calculateModulus(String code) throws CheckDigitException {\n",
+                        "        String reformattedCode =\n",
+                        "                code.substring(4) + code.substring(0, 4); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        long total = 0;\n",
+                        "        for (int i = 0; i < reformattedCode.length(); i++) {\n",
+                        "            int charValue = Character.getNumericValue(reformattedCode.charAt(i));\n",
+                        "            if (charValue < 0 || charValue > MAX_ALPHANUMERIC_VALUE) {\n",
+                        "                throw CheckDigitException.CheckDigitException1(\n",
+                        "                        \"Invalid Character[\" + i + \"] = '\" + charValue + \"'\");\n",
+                        "            }\n",
+                        "            total =\n",
+                        "                    (charValue > 9 ? total * 100 : total * 10)\n",
+                        "                            + charValue; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            if (total > MAX) {\n",
+                        "                total = total % MODULUS;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return (int) (total % MODULUS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateModulus(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "getNumericValue(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __calculateModulus(self, code: str) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "50-50:IBAN_CHECK_DIGIT": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    public static final CheckDigit IBAN_CHECK_DIGIT = new IBANCheckDigit();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    IBAN_CHECK_DIGIT: CheckDigit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "54-54:MODULUS": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private static final long MODULUS = 97;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MODULUS: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "52-52:MAX": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final long MAX = 999999999;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:MAX_ALPHANUMERIC_VALUE": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private static final int MAX_ALPHANUMERIC_VALUE = 35; // Character.getNumericValue('Z')\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX_ALPHANUMERIC_VALUE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:serialVersionUID": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final long serialVersionUID = -3600191725934382801L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-43:MIN_CODE_LEN": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final int MIN_CODE_LEN = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MIN_CODE_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IBANCheckDigit(CheckDigit):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *"
+    ]
+}

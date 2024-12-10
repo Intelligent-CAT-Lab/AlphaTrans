@@ -1,0 +1,602 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-cli/src/main/java/org/apache/commons/cli/PatternOptionBuilder.java",
+    "imports": {
+        "20-20:import File": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "22-22:import URL": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.net.URL;\n"
+            ]
+        },
+        "21-21:import FileInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.FileInputStream;\n"
+            ]
+        },
+        "23-23:import Date": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Date;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PatternOptionBuilder": {
+            "start": 70,
+            "end": 70,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "146-191:parsePattern": {
+                    "start": 146,
+                    "end": 191,
+                    "body": [
+                        "    public static Options parsePattern(final String pattern) {\n",
+                        "        char opt = ' ';\n",
+                        "        boolean required = false;\n",
+                        "        Class<?> type = null;\n",
+                        "\n",
+                        "        final Options options = new Options();\n",
+                        "\n",
+                        "        for (int i = 0; i < pattern.length(); i++) {\n",
+                        "            final char ch = pattern.charAt(i);\n",
+                        "\n",
+                        "            if (!isValueCode(ch)) {\n",
+                        "                if (opt != ' ') {\n",
+                        "                    final Option option =\n",
+                        "                            Option.builder1(String.valueOf(opt))\n",
+                        "                                    .hasArg1(type != null)\n",
+                        "                                    .required1(required)\n",
+                        "                                    .type(type)\n",
+                        "                                    .build();\n",
+                        "\n",
+                        "                    options.addOption0(option);\n",
+                        "                    required = false;\n",
+                        "                    type = null;\n",
+                        "                    opt = ' ';\n",
+                        "                }\n",
+                        "\n",
+                        "                opt = ch;\n",
+                        "            } else if (ch == '!') {\n",
+                        "                required = true;\n",
+                        "            } else {\n",
+                        "                type = (Class<?>) getValueClass(ch);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (opt != ' ') {\n",
+                        "            final Option option =\n",
+                        "                    Option.builder1(String.valueOf(opt))\n",
+                        "                            .hasArg1(type != null)\n",
+                        "                            .required1(required)\n",
+                        "                            .type(type)\n",
+                        "                            .build();\n",
+                        "\n",
+                        "            options.addOption0(option);\n",
+                        "        }\n",
+                        "\n",
+                        "        return options;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "signature": "parsePattern(String)",
+                    "parameters": [
+                        "pattern"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "Options"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                            "PatternOptionBuilder",
+                            "135-138:isValueCode"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "110-115:build"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "231-234:type"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "220-223:required1"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Builder",
+                            "143-146:hasArg1"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "297-299:builder1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(char)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "62-79:addOption0"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PatternOptionBuilder",
+                            "PatternOptionBuilder",
+                            "104-127:getValueClass"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def parsePattern(pattern: str) -> Options:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "135-138:isValueCode": {
+                    "start": 135,
+                    "end": 138,
+                    "body": [
+                        "    public static boolean isValueCode(final char ch) {\n",
+                        "        return ch == '@' || ch == ':' || ch == '%' || ch == '+' || ch == '#' || ch == '<'\n",
+                        "                || ch == '>' || ch == '*' || ch == '/' || ch == '!';\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValueCode(char)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isValueCode(ch: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "104-127:getValueClass": {
+                    "start": 104,
+                    "end": 127,
+                    "body": [
+                        "    public static Object getValueClass(final char ch) {\n",
+                        "        switch (ch) {\n",
+                        "            case '@':\n",
+                        "                return PatternOptionBuilder.OBJECT_VALUE;\n",
+                        "            case ':':\n",
+                        "                return PatternOptionBuilder.STRING_VALUE;\n",
+                        "            case '%':\n",
+                        "                return PatternOptionBuilder.NUMBER_VALUE;\n",
+                        "            case '+':\n",
+                        "                return PatternOptionBuilder.CLASS_VALUE;\n",
+                        "            case '#':\n",
+                        "                return PatternOptionBuilder.DATE_VALUE;\n",
+                        "            case '<':\n",
+                        "                return PatternOptionBuilder.EXISTING_FILE_VALUE;\n",
+                        "            case '>':\n",
+                        "                return PatternOptionBuilder.FILE_VALUE;\n",
+                        "            case '*':\n",
+                        "                return PatternOptionBuilder.FILES_VALUE;\n",
+                        "            case '/':\n",
+                        "                return PatternOptionBuilder.URL_VALUE;\n",
+                        "        }\n",
+                        "\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "getValueClass(char)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getValueClass(ch: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "96-96:URL_VALUE": {
+                    "start": 96,
+                    "end": 96,
+                    "body": [
+                        "    public static final Class<URL> URL_VALUE = URL.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<URL>",
+                            "java.lang.Class<URL>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    URL_VALUE: typing.Type[typing.Union[urllib.parse.ParseResult, urllib.parse.SplitResult, urllib.parse.DefragResult, str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "93-93:FILES_VALUE": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    public static final Class<File[]> FILES_VALUE = File[].class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<File[]>",
+                            "java.lang.Class<File[]>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FILES_VALUE: typing.Type[typing.List[pathlib.Path]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "90-90:FILE_VALUE": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    public static final Class<File> FILE_VALUE = File.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<File>",
+                            "java.lang.Class<File>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FILE_VALUE: typing.Type[pathlib.Path] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "87-87:EXISTING_FILE_VALUE": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    public static final Class<FileInputStream> EXISTING_FILE_VALUE = FileInputStream.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<FileInputStream>",
+                            "java.lang.Class<FileInputStream>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    EXISTING_FILE_VALUE: typing.Type[typing.Union[io.FileIO, io.BufferedReader, io.TextIOWrapper]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "84-84:CLASS_VALUE": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    public static final Class<?> CLASS_VALUE = Class.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    CLASS_VALUE: typing.Type[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "81-81:DATE_VALUE": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    public static final Class<Date> DATE_VALUE = Date.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Date>",
+                            "java.lang.Class<Date>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DATE_VALUE: typing.Type[typing.Union[datetime.date, datetime.datetime]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "78-78:NUMBER_VALUE": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    public static final Class<Number> NUMBER_VALUE = Number.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Number>",
+                            "java.lang.Class<Number>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    NUMBER_VALUE: typing.Type[typing.Union[int, float, numbers.Number]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "75-75:OBJECT_VALUE": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    public static final Class<Object> OBJECT_VALUE = Object.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<Object>",
+                            "java.lang.Class<Object>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    OBJECT_VALUE: typing.Type[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "72-72:STRING_VALUE": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "    public static final Class<String> STRING_VALUE = String.class;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Class<String>",
+                            "java.lang.Class<String>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    STRING_VALUE: typing.Type[str] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class PatternOptionBuilder:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import numbers",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import urllib",
+        "from src.main.org.apache.commons.cli.Option import *",
+        "from src.main.org.apache.commons.cli.Options import *"
+    ]
+}

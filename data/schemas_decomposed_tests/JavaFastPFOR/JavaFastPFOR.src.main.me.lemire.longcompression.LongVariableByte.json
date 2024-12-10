@@ -1,0 +1,752 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/longcompression/LongVariableByte.java",
+    "imports": {
+        "9-9:import ByteBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "10-10:import ByteOrder": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.nio.ByteOrder;\n"
+            ]
+        },
+        "11-11:import LongBuffer": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.nio.LongBuffer;\n"
+            ]
+        },
+        "13-13:import IntWrapper": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        }
+    },
+    "classes": {
+        "LongVariableByte": {
+            "start": 24,
+            "end": 24,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "ByteLongCODEC",
+                "LongCODEC",
+                "SkippableLongCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "300-327:headlessUncompress": {
+                    "start": 300,
+                    "end": 327,
+                    "body": [
+                        "    public void headlessUncompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos, int num) {\n",
+                        "        int s = 0;\n",
+                        "        long val = 0;\n",
+                        "        int p = inpos.get();\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        int finaloutpos = num + tmpoutpos;\n",
+                        "        for (long v = 0, shift = 0; tmpoutpos < finaloutpos;) {\n",
+                        "            val = in[p];\n",
+                        "            long c = val >>> s;\n",
+                        "            // Shift to next byte\n",
+                        "            s += 8;\n",
+                        "            // Shift to next long if s == 64\n",
+                        "            p += s>>6;\n",
+                        "            // cycle from 63 to 0\n",
+                        "            s = s & 63;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "                out[tmpoutpos++] = v;\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else\n",
+                        "                shift += 7;\n",
+                        "            assert shift < 64;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.set(p + (s!=0 ? 1 : 0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(long[], IntWrapper, int, long[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ]
+                },
+                "295-297:toString": {
+                    "start": 295,
+                    "end": 297,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return this.getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ]
+                },
+                "236-292:uncompress1": {
+                    "start": 236,
+                    "end": 292,
+                    "body": [
+                        "    public void uncompress1(byte[] in, IntWrapper inpos, int inlength,\n",
+                        "                            long[] out, IntWrapper outpos) {\n",
+                        "        int p = inpos.get();\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        for (long v = 0; p < finalp; out[tmpoutpos++] = v) {\n",
+                        "            v = in[p] & 0x7F;\n",
+                        "            if (in[p] < 0) {\n",
+                        "                p += 1;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 1] & 0x7F) << 7) | v;\n",
+                        "            if (in[p + 1] < 0) {\n",
+                        "                p += 2;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 2] & 0x7F) << 14) | v;\n",
+                        "            if (in[p + 2] < 0 ) {\n",
+                        "                p += 3;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 3] & 0x7F) << 21) | v;\n",
+                        "            if (in[p + 3] < 0) {\n",
+                        "                p += 4;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 4] & 0x7F) << 28) | v;\n",
+                        "            if (in[p + 4] < 0) {\n",
+                        "                p += 5;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 5] & 0x7F) << 35) | v;\n",
+                        "            if (in[p + 5] < 0) {\n",
+                        "                p += 6;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 6] & 0x7F) << 42) | v;\n",
+                        "            if (in[p + 6] < 0) {\n",
+                        "                p += 7;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 7] & 0x7F) << 49) | v;\n",
+                        "            if (in[p + 7] < 0) {\n",
+                        "                p += 8;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 8] & 0x7F) << 56) | v;\n",
+                        "            if (in[p + 8] < 0) {\n",
+                        "                p += 9;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = (((long) in[p + 9] & 0x7F) << 63) | v;\n",
+                        "            p += 10;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(p);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress1(byte[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ]
+                },
+                "206-233:uncompress1": {
+                    "start": 206,
+                    "end": 233,
+                    "body": [
+                        "    public void uncompress1(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "                            IntWrapper outpos) {\n",
+                        "        int s = 0;\n",
+                        "        long val = 0;\n",
+                        "        int p = inpos.get();\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        for (long v = 0, shift = 0; p < finalp;) {\n",
+                        "            val = in[p];\n",
+                        "            long c = (byte) (val >>> s);\n",
+                        "            // Shift to next byte\n",
+                        "            s += 8;\n",
+                        "            // Shift to next long if s==64\n",
+                        "            p += s>>6;\n",
+                        "            // cycle from 63 to 0\n",
+                        "            s = s & 63;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "                out[tmpoutpos++] = v;\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else\n",
+                        "                shift += 7;\n",
+                        "            assert shift < 64;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress1(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ]
+                },
+                "127-203:compress1": {
+                    "start": 127,
+                    "end": 203,
+                    "body": [
+                        "    public void compress1(long[] in, IntWrapper inpos, int inlength, byte[] out,\n",
+                        "                          IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int outpostmp = outpos.get();\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = in[k];\n",
+                        "            if (val >= 0 && val < (1 << 7)) {\n",
+                        "                out[outpostmp++] = (byte) (val | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1 << 14)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(1, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1 << 21)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(2, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1 << 28)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(3, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1L << 35)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(4, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1L << 42)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(4, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(5, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1L << 49)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(4, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(5, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(6, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1L << 56)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(4, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(5, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(6, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(7, (val)) | (1 << 7));\n",
+                        "            } else if (val >= 0 && val < (1L << 63)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(4, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(5, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(6, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(7, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(8, (val)) | (1 << 7));\n",
+                        "            } else {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(4, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(5, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(6, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(7, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(8, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(9, (val)) | (1 << 7));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        outpos.set(outpostmp);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress1(long[], IntWrapper, int, byte[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "26-28:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "30-32:extract7bitsmaskless"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ]
+                },
+                "40-124:headlessCompress": {
+                    "start": 40,
+                    "end": 124,
+                    "body": [
+                        "    public void headlessCompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        // Worst case: we write 10 bytes per long, hence 2 longs for a long, hence 16 bytes per long\n",
+                        "        ByteBuffer buf = makeBuffer(inlength * 16);\n",
+                        "        buf.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = in[k];\n",
+                        "            if (val >= 0 && val < (1 << 7)) {\n",
+                        "                buf.put((byte) (val | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1 << 14)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(1, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1 << 21)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(2, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1 << 28)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(3, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1L << 35)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(4, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1L << 42)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) extract7bits(4, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(5, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1L << 49)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) extract7bits(4, val));\n",
+                        "                buf.put((byte) extract7bits(5, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(6, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1L << 56)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) extract7bits(4, val));\n",
+                        "                buf.put((byte) extract7bits(5, val));\n",
+                        "                buf.put((byte) extract7bits(6, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(7, (val)) | (1 << 7)));\n",
+                        "            } else if (val >= 0 && val < (1L << 63)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) extract7bits(4, val));\n",
+                        "                buf.put((byte) extract7bits(5, val));\n",
+                        "                buf.put((byte) extract7bits(6, val));\n",
+                        "                buf.put((byte) extract7bits(7, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(8, (val)) | (1 << 7)));\n",
+                        "            } else {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) extract7bits(4, val));\n",
+                        "                buf.put((byte) extract7bits(5, val));\n",
+                        "                buf.put((byte) extract7bits(6, val));\n",
+                        "                buf.put((byte) extract7bits(7, val));\n",
+                        "                buf.put((byte) extract7bits(8, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(9, (val)) | (1 << 7)));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        while (buf.position() % 8 != 0)\n",
+                        "            buf.put((byte) 0);\n",
+                        "        final int length = buf.position();\n",
+                        "        buf.flip();\n",
+                        "        LongBuffer ibuf = buf.asLongBuffer();\n",
+                        "        ibuf.get(out, outpos.get(), length / 8);\n",
+                        "        outpos.add(length / 8);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "336-338:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asLongBuffer()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "26-28:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "30-32:extract7bitsmaskless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/LongBuffer",
+                            "get(long[],int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ]
+                },
+                "34-37:compress0": {
+                    "start": 34,
+                    "end": 37,
+                    "body": [
+                        "    public void compress0(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "                          IntWrapper outpos) {\n",
+                        "        headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongVariableByte",
+                            "LongVariableByte",
+                            "40-124:headlessCompress"
+                        ]
+                    ]
+                },
+                "336-338:makeBuffer": {
+                    "start": 336,
+                    "end": 338,
+                    "body": [
+                        "    protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "        return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ]
+                },
+                "30-32:extract7bitsmaskless": {
+                    "start": 30,
+                    "end": 32,
+                    "body": [
+                        "    private static byte extract7bitsmaskless(int i, long val) {\n",
+                        "        return (byte) ((val >>> (7 * i)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bitsmaskless(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": []
+                },
+                "26-28:extract7bits": {
+                    "start": 26,
+                    "end": 28,
+                    "body": [
+                        "    private static byte extract7bits(int i, long val) {\n",
+                        "        return (byte) ((val >>> (7 * i)) & ((1 << 7) - 1));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bits(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}

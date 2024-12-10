@@ -1,0 +1,740 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/ISSNValidator.java",
+    "imports": {
+        "23-23:import Serializable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "19-19:import CheckDigitException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigitException;\n"
+            ]
+        },
+        "20-20:import EAN13CheckDigit": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit;\n"
+            ]
+        },
+        "21-21:import ISSNCheckDigit": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISSNValidator": {
+            "start": 64,
+            "end": 64,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "177-201:extractFromEAN13": {
+                    "start": 177,
+                    "end": 201,
+                    "body": [
+                        "    public String extractFromEAN13(String ean13) {\n",
+                        "        String input = ean13.trim();\n",
+                        "        if (input.length() != EAN_ISSN_LEN) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Invalid length \" + input.length() + \" for '\" + input + \"'\");\n",
+                        "        }\n",
+                        "        if (!input.startsWith(ISSN_PREFIX)) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Prefix must be \" + ISSN_PREFIX + \" to contain an ISSN: '\" + ean13 + \"'\");\n",
+                        "        }\n",
+                        "        Object result = validateEan(input);\n",
+                        "        if (result == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        input = result.toString();\n",
+                        "        try {\n",
+                        "            String issnBase = input.substring(3, 10); // TODO: how to derive these\n",
+                        "            String checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase);\n",
+                        "            String issn = issnBase + checkDigit;\n",
+                        "            return issn;\n",
+                        "        } catch (CheckDigitException e) { // Should not happen\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "extractFromEAN13(String)",
+                    "parameters": [
+                        "ean13"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISSNValidator",
+                            "ISSNValidator",
+                            "107-109:validateEan"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def extractFromEAN13(self, ean13: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "144-165:convertToEAN13": {
+                    "start": 144,
+                    "end": 165,
+                    "body": [
+                        "    public String convertToEAN13(String issn, String suffix) {\n",
+                        "\n",
+                        "        if (suffix == null || !suffix.matches(\"\\\\d\\\\d\")) {\n",
+                        "            throw new IllegalArgumentException(\"Suffix must be two digits: '\" + suffix + \"'\");\n",
+                        "        }\n",
+                        "\n",
+                        "        Object result = validate(issn);\n",
+                        "        if (result == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        final String input = result.toString();\n",
+                        "        String ean13 = ISSN_PREFIX + input.substring(0, input.length() - 1) + suffix;\n",
+                        "        try {\n",
+                        "            String checkDigit = EAN13CheckDigit.EAN13_CHECK_DIGIT.calculate(ean13);\n",
+                        "            ean13 += checkDigit;\n",
+                        "            return ean13;\n",
+                        "        } catch (CheckDigitException e) { // Should not happen\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + ean13 + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToEAN13(String, String)",
+                    "parameters": [
+                        "issn",
+                        "suffix"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISSNValidator",
+                            "ISSNValidator",
+                            "130-132:validate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "matches(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def convertToEAN13(self, issn: str, suffix: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "130-132:validate": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "    public Object validate(String code) {\n",
+                        "        return VALIDATOR.validate(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validate(self, code: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "117-119:isValid": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        return VALIDATOR.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "107-109:validateEan": {
+                    "start": 107,
+                    "end": 109,
+                    "body": [
+                        "    public Object validateEan(String code) {\n",
+                        "        return EAN_VALIDATOR.validate(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validateEan(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def validateEan(self, code: str) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "94-96:getInstance": {
+                    "start": 94,
+                    "end": 96,
+                    "body": [
+                        "    public static ISSNValidator getInstance() {\n",
+                        "        return ISSN_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISSNValidator",
+                            "ISSNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> ISSNValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "87-87:ISSN_VALIDATOR": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private static final ISSNValidator ISSN_VALIDATOR = new ISSNValidator();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISSNValidator",
+                            "ISSNValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_VALIDATOR: ISSNValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "82-84:EAN_VALIDATOR": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "    private static final CodeValidator EAN_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator4(\n",
+                        "                    EAN_ISSN_REGEX, EAN_ISSN_LEN, EAN13CheckDigit.EAN13_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "79-80:VALIDATOR": {
+                    "start": 79,
+                    "end": 80,
+                    "body": [
+                        "    private static final CodeValidator VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator4(ISSN_REGEX, ISSN_LEN, ISSNCheckDigit.ISSN_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: CodeValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "77-77:EAN_ISSN_LEN": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private static final int EAN_ISSN_LEN = 13;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "75-75:EAN_ISSN_REGEX": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final String EAN_ISSN_REGEX = \"^(977)(?:(\\\\d{10}))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EAN_ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "73-73:ISSN_PREFIX": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final String ISSN_PREFIX = \"977\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "71-71:ISSN_LEN": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final int ISSN_LEN = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "68-69:ISSN_REGEX": {
+                    "start": 68,
+                    "end": 69,
+                    "body": [
+                        "    private static final String ISSN_REGEX =\n",
+                        "            \"(?:ISSN )?(\\\\d{4})-(\\\\d{3}[0-9X])$\"; // We don't include the '-' in the code, so it is\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ISSN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "66-66:serialVersionUID": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private static final long serialVersionUID = 4319515687976420405L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ISSNValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.CodeValidator import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.ISSNCheckDigit import *"
+    ]
+}

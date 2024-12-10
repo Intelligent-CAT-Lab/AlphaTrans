@@ -1,12 +1,16 @@
 import argparse
 import json
-from dotenv import load_dotenv
 import tqdm
 import os
 import time
 import re
 import math
 import datetime
+from openai import OpenAI
+import tiktoken
+import requests
+
+from dotenv import load_dotenv
 from src.compositional_glue_tests.script import NOT_EXERCISED, SUCCESS, ERROR, FAILURE
 from syntactic_validation import syntactic_validation
 from field_exercise_validation import field_exercise_validation
@@ -15,20 +19,16 @@ from graal_validation import graal_validation
 from get_reverse_traversal import get_reverse_traversal
 from prompt_generator import PromptGenerator
 
-from genai.client import Client
-from genai.credentials import Credentials
-from genai.schema import (
-    DecodingMethod,
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
-
 
 def get_eligible_tests(fragment, processed_fragments, args):
 
     global_call_graph = {}
     with open(f'data/call_graphs/{args.project_name}/call_graph.json', 'r') as f:
         global_call_graph = json.load(f)
+    
+    executed_tests = {}
+    with open(f'data/source_test_execution{args.suffix}/{args.project_name}/tests.json', 'r') as f:
+        executed_tests = json.load(f)
 
     test_focal_method_map = {}
     for class_ in global_call_graph:
@@ -56,21 +56,19 @@ def get_eligible_tests(fragment, processed_fragments, args):
             test_schema_data = {}
             with open(f'{args.translation_dir}/{test_schema}_python_partial.json', 'r') as f:
                 test_schema_data = json.load(f)
-
             if test_class not in test_schema_data['classes']:
                 continue
-
             if test_method not in test_schema_data['classes'][test_class]['methods']:
                 continue
-
             if 'Test' not in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
                 continue
-
             if 'Ignore' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
                 continue
-
             if 'Disabled' in [x.split('(')[0] for x in test_schema_data['classes'][test_class]['methods'][test_method]['annotations']]:
                 continue
+            # test_class_path = test_schema[test_schema.find('src.test.')+len('src.test.'):]
+            # if test_method.split(':')[1] not in executed_tests[test_class_path]:
+            #     continue
 
             executable_tests.append({'schema_name': test_schema, 'class_name': test_class, 'fragment_name': test_method, 'fragment_type': 'method', 'is_test_method': True})
     
@@ -217,10 +215,13 @@ def get_adaptive_budget(fragment, args, feedback=False):
         return 1
 
 
-def get_total_input_tokens(prompt, client, model_info):
-    total_tokens = 0
-    for response in client.text.tokenization.create(model_id=model_info[args.model_name]['model_id'], input=prompt):
-        total_tokens = response.results[0].token_count
+def get_total_input_tokens(prompt, args, model_info):
+    if args.use_openai and args.model_name == 'gpt-4o-2024-11-20':
+        encoding = tiktoken.encoding_for_model('gpt-4o')
+        total_tokens = len(encoding.encode(prompt))
+    elif args.use_vllm:
+        response = requests.post(url='/'.join(os.environ['VLLM_API_URL'].split('/')[:-1]) + '/tokenize', headers={'accept': 'application/json', 'VLLM_API_KEY': os.environ['VLLM_API_KEY'], 'Content-Type': 'application/json'}, json={'model': model_info[args.model_name]['model_id'], 'prompt': prompt, 'add_special_tokens': True})
+        total_tokens = response.json()['count']
 
     return total_tokens
 
@@ -229,17 +230,39 @@ def prompt_model(model_info, client, prompt, total_input_tokens, args):
     max_new_tokens = model_info[args.model_name]['total'] - total_input_tokens
     max_new_tokens = min(max_new_tokens, model_info[args.model_name]['max_new_tokens'])
 
-    parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                            min_new_tokens=1,
-                                            max_new_tokens=max_new_tokens,
-                                            return_options=TextGenerationReturnOptions(input_text=True),
-                                            time_limit=60000,
-                                        )
+    if args.use_openai:
+        completion = client.chat.completions.create(
+            model=args.model_name,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            max_tokens=max_new_tokens,
+            temperature=args.temperature,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0
+        )
 
-    for response in client.text.generation.create(model_id=model_info[args.model_name]['model_id'], input=prompt, parameters=parameters):
-        generation = response.results[0].input_text + response.results[0].generated_text
+        generation = completion.choices[0].message.content
 
-    generation = generation[generation.find('### Response:') + len('### Response:'):]
+    elif args.use_vllm:
+        completion = client.completions.create(
+            model=model_info[args.model_name]['model_id'],
+            prompt=prompt,
+            temperature=args.temperature,
+            echo=True,
+            max_tokens=max_new_tokens
+        )
+
+        generation = completion.choices[0].text
+        generation = generation[generation.find('### Response:') + len('### Response:'):]
+    
+    else:
+        raise ValueError('No API specified')
 
     return generation
 
@@ -328,12 +351,25 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
     if recursion_depth == 0:
         return
 
-    # constant variables
     model_info = {
                     'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
                     'llama-3-70b-instruct': {'total': 8192, 'max_new_tokens': 2048, 'model_id': 'meta-llama/llama-3-70b-instruct'},
+                    'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
+                    'llama-3-1-405b-instruct-fp8': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'meta-llama/llama-3-1-405b-instruct-fp8'},
+                    'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'Qwen/Qwen2.5-Coder-32B-Instruct'}
                 }
-    client = Client(credentials=Credentials.from_env())
+
+    if args.use_vllm:
+        client = OpenAI(
+            api_key=os.environ["VLLM_API_KEY"],  
+            base_url=os.environ["VLLM_API_URL"],
+        )
+    elif args.use_openai:
+        client = OpenAI(
+            api_key=os.environ["OPENAI_API_KEY"],
+        )
+    else:
+        raise ValueError('No API specified')
 
     if budget == {}:
         adaptive_budget = get_adaptive_budget(fragment, args)
@@ -359,7 +395,7 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
             print(prompt, flush=True)
             print('=======================GENERATING=======================', flush=True)
 
-        total_input_tokens = get_total_input_tokens(prompt, client, model_info)
+        total_input_tokens = get_total_input_tokens(prompt, args, model_info)
         
         # if prompt size exceeds model token limit, mark translation out_of_context and move on to next fragment
         if total_input_tokens >= model_info[args.model_name]['total']:
@@ -571,7 +607,8 @@ def main(args):
 
     # constant variables
     args.prompt_type = 'body' if args.include_implementation else 'signature'
-    args.translation_dir = f'data/schemas_decomposed_tests/translations/{args.model_name}/{args.prompt_type}/{args.project_name}'
+    args.use_openai = True if not args.use_vllm else False
+    args.translation_dir = f'data/schemas{args.suffix}/translations/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}'
 
     # extract the reverse-topological order of fragments based on call graph
     fragment_traversal = get_reverse_traversal(args)
@@ -605,7 +642,9 @@ if __name__ == '__main__':
     parser_.add_argument('--validate_by_graal', action='store_true', help='validate translation by GraalVM')
     parser_.add_argument('--translate_evosuite', action='store_true', help='translate evosuite generated tests')
     parser_.add_argument('--debug', action='store_true', help='debug mode')
+    parser_.add_argument('--temperature', type=float, dest='temperature', help='temperature for generation')
     parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix for the translated files')
     parser_.add_argument('--recursion_depth', type=int, dest='recursion_depth', help='depth of recursion for translation')
+    parser_.add_argument('--use_vllm', action='store_true', help='use VLLM engine for prompting')
     args = parser_.parse_args()
     main(args)

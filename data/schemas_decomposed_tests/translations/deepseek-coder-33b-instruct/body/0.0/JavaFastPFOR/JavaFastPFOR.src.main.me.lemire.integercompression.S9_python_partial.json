@@ -1,0 +1,382 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/S9.java",
+    "imports": {},
+    "classes": {
+        "S9": {
+            "start": 17,
+            "end": 17,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "124-197:uncompress": {
+                    "start": 124,
+                    "end": 197,
+                    "body": [
+                        "\tpublic static void uncompress(int[] in, int tmpinpos, int inlength, int[] out, int currentPos, int outlength) {\n",
+                        "\t\tint finallength = currentPos + outlength;\n",
+                        "\n",
+                        "\t\twhile (currentPos < finallength) {\n",
+                        "\t\t\tint val = in[tmpinpos++];\n",
+                        "\t\t\tint header = val >>> 28;\n",
+                        "\t\t\tswitch (header) {\n",
+                        "\t\t\tcase 0: { // number : 28, bitwidth : 1\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 28 ? finallength - currentPos : 28;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (k + 4)) >>> 31;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 1: { // number : 14, bitwidth : 2\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 14 ? finallength - currentPos : 14;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (2 * k + 4)) >>> 30;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 2: { // number : 9, bitwidth : 3\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 9 ? finallength - currentPos : 9;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (3 * k + 5)) >>> 29;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 3: { // number : 7, bitwidth : 4\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 7 ? finallength - currentPos : 7;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (4 * k + 4)) >>> 28;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 4: { // number : 5, bitwidth : 5\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 5 ? finallength - currentPos : 5;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (5 * k + 7)) >>> 27;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 5: { // number : 4, bitwidth : 7\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 4 ? finallength - currentPos : 4;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (7 * k + 4)) >>> 25;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 6: { // number : 3, bitwidth : 9\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 3 ? finallength - currentPos : 3;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (9 * k + 5)) >>> 23;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 7: { // number : 2, bitwidth : 14\n",
+                        "\t\t\t\tfinal int howmany = finallength - currentPos < 2 ? finallength - currentPos : 2;\n",
+                        "\t\t\t\tfor (int k = 0; k < howmany; ++k) {\n",
+                        "\t\t\t\t\tout[currentPos++] = (val << (14 * k + 4)) >>> 18;\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcase 8: { // number : 1, bitwidth : 28\n",
+                        "\t\t\t\tout[currentPos++] = (val << 4) >>> 4;\n",
+                        "\t\t\t\tbreak;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tdefault: {\n",
+                        "\t\t\t\tthrow new RuntimeException(\"shouldn't happen\");\n",
+                        "\t\t\t}\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress(int[], int, int, int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "tmpinpos",
+                        "inlength",
+                        "out",
+                        "currentPos",
+                        "outlength"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def uncompress(in_: typing.List[int], tmpinpos: int, inlength: int, out: typing.List[int], currentPos: int, outlength: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "76-106:compress": {
+                    "start": 76,
+                    "end": 106,
+                    "body": [
+                        "\tpublic static int compress(int[] in, int currentPos, int inlength, int out[], int tmpoutpos) {\n",
+                        "\t\tint origtmpoutpos = tmpoutpos;\n",
+                        "\t\tint finalpos = currentPos + inlength;\n",
+                        "\t\touter: while (currentPos < finalpos) {\n",
+                        "\t\t\tmainloop: for (int selector = 0; selector < 8; selector++) {\n",
+                        "\t\t\t\tint res = 0;\n",
+                        "\t\t\t\tint compressedNum = codeNum[selector];\n",
+                        "\t\t\t\tif (finalpos <= currentPos + compressedNum - 1)\n",
+                        "\t\t\t\t\tcompressedNum = finalpos - currentPos;\n",
+                        "\t\t\t\tint b = bitLength[selector];\n",
+                        "\t\t\t\tint max = 1 << b;\n",
+                        "\t\t\t\tint i = 0;\n",
+                        "\t\t\t\tfor (; i < compressedNum; i++) {\n",
+                        "\t\t\t\t\tif (Util.smallerorequalthan(max, in[currentPos + i]))\n",
+                        "\t\t\t\t\t\tcontinue mainloop;\n",
+                        "\t\t\t\t\tres = (res << b) + in[currentPos + i];\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tif (compressedNum != codeNum[selector])\n",
+                        "\t\t\t\t\tres <<= (codeNum[selector] - compressedNum) * b;\n",
+                        "\t\t\t\tres |= selector << 28;\n",
+                        "\t\t\t\tout[tmpoutpos++] = res;\n",
+                        "\t\t\t\tcurrentPos += compressedNum;\n",
+                        "\t\t\t\tcontinue outer;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tfinal int selector = 8;\n",
+                        "\t\t\tif (in[currentPos] >= 1 << bitLength[selector])\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\tout[tmpoutpos++] = in[currentPos++] | (selector << 28);\n",
+                        "\t\t}\n",
+                        "\t\treturn tmpoutpos - origtmpoutpos;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compress(int[], int, int, int[], int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength",
+                        "out",
+                        "tmpoutpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "20-22:smallerorequalthan"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def compress(in_: typing.List[int], currentPos: int, inlength: int, out: typing.List[int], tmpoutpos: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "31-58:estimatecompress": {
+                    "start": 31,
+                    "end": 58,
+                    "body": [
+                        "\tpublic static int estimatecompress(int[] in, int currentPos, int inlength) {\n",
+                        "\t\tint tmpoutpos = 0;\n",
+                        "\t\tint finalpos = currentPos + inlength;\n",
+                        "\t\touter: while (currentPos < finalpos) {\n",
+                        "\t\t\tmainloop: for (int selector = 0; selector < 8; selector++) {\n",
+                        "\n",
+                        "\t\t\t\tint compressedNum = codeNum[selector];\n",
+                        "\t\t\t\tif (finalpos <= currentPos + compressedNum - 1)\n",
+                        "\t\t\t\t\tcompressedNum = finalpos - currentPos;\n",
+                        "\t\t\t\tint b = bitLength[selector];\n",
+                        "\t\t\t\tint max = 1 << b;\n",
+                        "\t\t\t\tint i = 0;\n",
+                        "\t\t\t\tfor (; i < compressedNum; i++)\n",
+                        "\t\t\t\t\tif (Util.smallerorequalthan(max , in[currentPos + i]))\n",
+                        "\t\t\t\t\t\tcontinue mainloop;\n",
+                        "\t\t\t\tcurrentPos += compressedNum;\n",
+                        "\t\t\t\t++tmpoutpos;\n",
+                        "\t\t\t\tcontinue outer;\n",
+                        "\t\t\t}\n",
+                        "\t\t\tfinal int selector = 8;\n",
+                        "\t\t\tif (in[currentPos] >= 1 << bitLength[selector])\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\ttmpoutpos++;\n",
+                        "\t\t\tcurrentPos++;\n",
+                        "\n",
+                        "\t\t}\n",
+                        "\t\treturn tmpoutpos;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "estimatecompress(int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "20-22:smallerorequalthan"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def estimatecompress(in_: typing.List[int], currentPos: int, inlength: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "201-201:codeNum": {
+                    "start": 201,
+                    "end": 201,
+                    "body": [
+                        "\tprivate final static int codeNum[] = { 28, 14, 9, 7, 5, 4, 3, 2, 1 };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __codeNum: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "199-199:bitLength": {
+                    "start": 199,
+                    "end": 199,
+                    "body": [
+                        "\tprivate final static int bitLength[] = { 1, 2, 3, 4, 5, 7, 9, 14, 28 };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __bitLength: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class S9:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

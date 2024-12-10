@@ -1,0 +1,997 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/test/java/org/apache/commons/graph/scc/TarjanTestCase.java",
+    "imports": {
+        "37-37:import Set": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "35-35:import Collections": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.Collections;\n"
+            ]
+        },
+        "36-36:import HashSet": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "31-31:import DirectedMutableGraph": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.DirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import AbstractGraphConnection": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "33-33:import Test": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "30-30:import BaseLabeledWeightedEdge": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "28-28:import BaseLabeledEdge": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "29-29:import BaseLabeledVertex": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "32-32:import Ignore": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.junit.Ignore;\n"
+            ]
+        },
+        "24-24:import static Assert.assertEquals": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.findStronglyConnectedComponent": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.findStronglyConnectedComponent;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.newDirectedMutableGraph": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newDirectedMutableGraph;\n"
+            ]
+        },
+        "25-25:import static Assert.assertFalse": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TarjanTestCase": {
+            "start": 44,
+            "end": 44,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "161-211:verifyHasStronglyConnectedComponents_test18_decomposed": {
+                    "start": 161,
+                    "end": 211,
+                    "body": [
+                        "    public void verifyHasStronglyConnectedComponents_test18_decomposed()  {\n",
+                        "        final BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        final BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        final BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        final BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        final BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        final BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        final BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        final BaseLabeledVertex h = new BaseLabeledVertex(\"H\");\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(a);\n",
+                        "                                addVertex(b);\n",
+                        "                                addVertex(c);\n",
+                        "                                addVertex(d);\n",
+                        "                                addVertex(e);\n",
+                        "                                addVertex(f);\n",
+                        "                                addVertex(g);\n",
+                        "                                addVertex(h);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> F\")).from(a).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> B\")).from(a).to(b);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B -> D\")).from(b).to(d);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"C -> G\")).from(c).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> A\")).from(d).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> G\")).from(d).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> C\")).from(e).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> F\")).from(e).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"F -> E\")).from(f).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"G -> H\")).from(g).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"H -> C\")).from(h).to(c);\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "        Set<Set<BaseLabeledVertex>> expected = new HashSet<Set<BaseLabeledVertex>>();\n",
+                        "        Set<BaseLabeledVertex> scc1 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc1, a, b, d);\n",
+                        "        expected.add(scc1);\n",
+                        "        Set<BaseLabeledVertex> scc2 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc2, e, f);\n",
+                        "        expected.add(scc2);\n",
+                        "        Set<BaseLabeledVertex> scc3 = new HashSet<BaseLabeledVertex>();\n",
+                        "        Collections.addAll(scc3, g, h, c);\n",
+                        "        expected.add(scc3);\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "        Set<Set<BaseLabeledVertex>> actual = findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "        assertFalse(actual.isEmpty());\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Ignore",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "verifyHasStronglyConnectedComponents_test18_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<Set<BaseLabeledVertex>>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<BaseLabeledVertex>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/scc/SccAlgorithmSelector",
+                            "applyingTarjan()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collections",
+                            "addAll(java.util.Collection,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.util.Set)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "137-157:testSparse_test3_decomposed": {
+                    "start": 137,
+                    "end": 157,
+                    "body": [
+                        "    public void testSparse_test3_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n",
+                        "\n",
+                        "                            @Override\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "        final int expected = 6;\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "        Set<Set<BaseLabeledVertex>> actual = findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "        assertEquals(actual.size(), expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSparse_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/scc/SccAlgorithmSelector",
+                            "applyingTarjan()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "size()"
+                        ]
+                    ]
+                },
+                "115-134:testSparse_test2_decomposed": {
+                    "start": 115,
+                    "end": 134,
+                    "body": [
+                        "    public void testSparse_test2_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n",
+                        "\n",
+                        "                            @Override\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "        final int expected = 6;\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "        Set<Set<BaseLabeledVertex>> actual = findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSparse_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/scc/SccAlgorithmSelector",
+                            "applyingTarjan()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ]
+                    ]
+                },
+                "94-112:testSparse_test1_decomposed": {
+                    "start": 94,
+                    "end": 112,
+                    "body": [
+                        "    public void testSparse_test1_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n",
+                        "\n",
+                        "                            @Override\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "        final int expected = 6;\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSparse_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ]
+                    ]
+                },
+                "75-91:testSparse_test0_decomposed": {
+                    "start": 75,
+                    "end": 91,
+                    "body": [
+                        "    public void testSparse_test0_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n",
+                        "\n",
+                        "                            @Override\n",
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSparse_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ]
+                    ]
+                },
+                "68-72:testNullGraph_test1_decomposed": {
+                    "start": 68,
+                    "end": 72,
+                    "body": [
+                        "    public void testNullGraph_test1_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph = null;\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "        findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/scc/SccAlgorithmSelector",
+                            "applyingTarjan()"
+                        ]
+                    ]
+                },
+                "62-65:testNullGraph_test0_decomposed": {
+                    "start": 62,
+                    "end": 65,
+                    "body": [
+                        "    public void testNullGraph_test0_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph = null;\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ]
+                    ]
+                },
+                "54-59:testEmptyGraph_test1_decomposed": {
+                    "start": 54,
+                    "end": 59,
+                    "body": [
+                        "    public void testEmptyGraph_test1_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>();\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "        findStronglyConnectedComponent(graph).applyingTarjan();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/scc/SccAlgorithmSelector",
+                            "applyingTarjan()"
+                        ]
+                    ]
+                },
+                "47-51:testEmptyGraph_test0_decomposed": {
+                    "start": 47,
+                    "end": 51,
+                    "body": [
+                        "    public void testEmptyGraph_test0_decomposed()  {\n",
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                new DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>();\n",
+                        "        findStronglyConnectedComponent(graph);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "154-161:findStronglyConnectedComponent"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Integer>>(...) { ... }": {
+            "start": 78,
+            "end": 79,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TarjanTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "82-89:connect0": {
+                    "start": 82,
+                    "end": 89,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ]
+                },
+                "101-108:connect0": {
+                    "start": 101,
+                    "end": 108,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ]
+                },
+                "122-129:connect0": {
+                    "start": 122,
+                    "end": 129,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ]
+                },
+                "144-151:connect0": {
+                    "start": 144,
+                    "end": 151,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(new BaseLabeledVertex(\"A\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"B\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"C\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"D\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"E\"));\n",
+                        "                                addVertex(new BaseLabeledVertex(\"F\"));\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ]
+                },
+                "76-79:": {
+                    "start": 76,
+                    "end": 79,
+                    "body": [
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "95-98:": {
+                    "start": 95,
+                    "end": 98,
+                    "body": [
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "116-119:": {
+                    "start": 116,
+                    "end": 119,
+                    "body": [
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "138-141:": {
+                    "start": 138,
+                    "end": 141,
+                    "body": [
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Integer>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledEdge>(...) { ... }": {
+            "start": 172,
+            "end": 172,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TarjanTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "174-195:connect0": {
+                    "start": 174,
+                    "end": 195,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                addVertex(a);\n",
+                        "                                addVertex(b);\n",
+                        "                                addVertex(c);\n",
+                        "                                addVertex(d);\n",
+                        "                                addVertex(e);\n",
+                        "                                addVertex(f);\n",
+                        "                                addVertex(g);\n",
+                        "                                addVertex(h);\n",
+                        "\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> F\")).from(a).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"A -> B\")).from(a).to(b);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"B -> D\")).from(b).to(d);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"C -> G\")).from(c).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> A\")).from(d).to(a);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"D -> G\")).from(d).to(g);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> C\")).from(e).to(c);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"E -> F\")).from(e).to(f);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"F -> E\")).from(f).to(e);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"G -> H\")).from(g).to(h);\n",
+                        "                                addEdge(new BaseLabeledEdge(\"H -> C\")).from(h).to(c);\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/TailVertexConnector",
+                            "to"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/HeadVertexConnector",
+                            "from"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addEdge"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ]
+                    ]
+                },
+                "170-172:": {
+                    "start": 170,
+                    "end": 172,
+                    "body": [
+                        "        DirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<BaseLabeledVertex, BaseLabeledEdge>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}

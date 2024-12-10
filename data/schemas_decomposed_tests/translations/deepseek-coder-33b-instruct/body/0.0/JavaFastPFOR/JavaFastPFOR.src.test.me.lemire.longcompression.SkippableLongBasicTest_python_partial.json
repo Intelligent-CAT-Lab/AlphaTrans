@@ -1,0 +1,425 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/longcompression/SkippableLongBasicTest.java",
+    "imports": {
+        "10-10:import Arrays": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "12-12:import Test": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "14-14:import IntWrapper": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "15-15:import TestUtils": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import me.lemire.integercompression.TestUtils;\n"
+            ]
+        },
+        "16-16:import VariableByte": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import me.lemire.integercompression.VariableByte;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SkippableLongBasicTest": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "107-147:varyingLengthTest2_test0_decomposed": {
+                    "start": 107,
+                    "end": 147,
+                    "body": [
+                        "    public void varyingLengthTest2_test0_decomposed()  {\n",
+                        "        int N = 128;\n",
+                        "        long[] data = new long[N];\n",
+                        "        data[127] = -1;\n",
+                        "        for (SkippableLongCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.varyingLengthTest2] codec = \"+c);\n",
+                        "\n",
+                        "            try {\n",
+                        "                // CODEC Simple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC Simple16 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple16\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "            \tlong[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "            \tlong[] answer = LongTestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k]) {\n",
+                        "                    \tthrow new RuntimeException(\"L=\" + L + \": bug at k = \"+k+\" \"+answer[k]+\" \"+data[k]+\" for \"+c.toString());\n",
+                        "                    }\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "            \tlong[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "            \tlong[] answer = LongTestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "forName(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "113-119:compressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "121-128:uncompressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def varyingLengthTest2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "81-104:varyingLengthTest_test0_decomposed": {
+                    "start": 81,
+                    "end": 104,
+                    "body": [
+                        "    public void varyingLengthTest_test0_decomposed()  {\n",
+                        "        int N = 4096;\n",
+                        "        long[] data = new long[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k;\n",
+                        "        for (SkippableLongCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.varyingLengthTest] codec = \"+c);\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "            \tlong[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "            \tlong[] answer = LongTestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug \"+c.toString()+\" \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "            \tlong[] comp = LongTestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "            \tlong[] answer = LongTestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "113-119:compressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.longcompression.LongTestUtils",
+                            "LongTestUtils",
+                            "121-128:uncompressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def varyingLengthTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "47-78:consistentTest_test0_decomposed": {
+                    "start": 47,
+                    "end": 78,
+                    "body": [
+                        "    public void consistentTest_test0_decomposed()  {\n",
+                        "        int N = 4096;\n",
+                        "        long[] data = new long[N];\n",
+                        "        long[] rev = new long[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k % 128;\n",
+                        "        for (SkippableLongCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.consistentTest] codec = \"\n",
+                        "                    + c);\n",
+                        "            long[] outBuf = new long[N + 1024];\n",
+                        "            for (int n = 0; n <= N; ++n) {\n",
+                        "                IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "                IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "                c.headlessCompress(data, inPos, n, outBuf, outPos);\n",
+                        "\n",
+                        "                IntWrapper inPoso = IntWrapper.IntWrapper1();\n",
+                        "                IntWrapper outPoso = IntWrapper.IntWrapper1();\n",
+                        "                c.headlessUncompress(outBuf, inPoso, outPos.get(), rev,\n",
+                        "                        outPoso, n);\n",
+                        "                if (outPoso.get() != n) {\n",
+                        "                    throw new RuntimeException(\"bug \"+n);\n",
+                        "                }\n",
+                        "                if (inPoso.get() != outPos.get()) {\n",
+                        "                    throw new RuntimeException(\"bug \"+n+\" \"+inPoso.get()+\" \"+outPos.get());\n",
+                        "                }\n",
+                        "                for (int j = 0; j < n; ++j)\n",
+                        "                    if (data[j] != rev[j]) {\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "                    }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "consistentTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "45-47:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "67-69:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def consistentTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "26-28:codecs": {
+                    "start": 26,
+                    "end": 28,
+                    "body": [
+                        "    final SkippableLongCODEC[] codecs = {\n",
+                        "            new LongJustCopy(),\n",
+                        "            new LongVariableByte(), };\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "SkippableLongCODEC[]",
+                            "SkippableLongCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codecs: typing.List[SkippableLongCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class SkippableLongBasicTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.longcompression.LongJustCopy import *",
+        "from src.test.me.lemire.longcompression.LongTestUtils import *",
+        "from src.main.me.lemire.longcompression.LongVariableByte import *",
+        "from src.main.me.lemire.longcompression.SkippableLongCODEC import *"
+    ]
+}

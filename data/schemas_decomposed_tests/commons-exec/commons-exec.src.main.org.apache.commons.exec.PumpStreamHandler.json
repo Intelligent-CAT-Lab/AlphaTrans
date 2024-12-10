@@ -1,0 +1,1191 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/PumpStreamHandler.java",
+    "imports": {
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "22-22:import OutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "21-21:import InputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "23-23:import PipedOutputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.PipedOutputStream;\n"
+            ]
+        },
+        "25-25:import Instant": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.time.Instant;\n"
+            ]
+        },
+        "24-24:import Duration": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "26-26:import Executors": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.concurrent.Executors;\n"
+            ]
+        },
+        "27-27:import ThreadFactory": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.concurrent.ThreadFactory;\n"
+            ]
+        },
+        "29-29:import DebugUtils": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.util.DebugUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PumpStreamHandler": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "ExecuteStreamHandler"
+            ],
+            "extends": [],
+            "methods": {
+                "258-260:setStopTimeout1": {
+                    "start": 258,
+                    "end": 260,
+                    "body": [
+                        "    public void setStopTimeout1(final long timeout) {\n",
+                        "        this.stopTimeout = Duration.ofMillis(timeout);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setStopTimeout1(long)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofMillis(long)"
+                        ]
+                    ]
+                },
+                "235-239:setProcessOutputStream": {
+                    "start": 235,
+                    "end": 239,
+                    "body": [
+                        "    public void setProcessOutputStream(final InputStream is) {\n",
+                        "        if (outputStream != null) {\n",
+                        "            createProcessOutputPump(is, outputStream);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setProcessOutputStream(InputStream)",
+                    "parameters": [
+                        "is"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "132-134:createProcessOutputPump"
+                        ]
+                    ]
+                },
+                "212-227:setProcessInputStream": {
+                    "start": 212,
+                    "end": 227,
+                    "body": [
+                        "    public void setProcessInputStream(final OutputStream os) {\n",
+                        "        if (inputStream != null) {\n",
+                        "            if (inputStream == System.in) {\n",
+                        "                inputThread = createSystemInPump(inputStream, os);\n",
+                        "            } else {\n",
+                        "                inputThread = createPump1(inputStream, os, true);\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            try {\n",
+                        "                os.close();\n",
+                        "            } catch (final IOException e) {\n",
+                        "                final String msg = \"Got exception while closing output stream\";\n",
+                        "                DebugUtils.handleException(msg, e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setProcessInputStream(OutputStream)",
+                    "parameters": [
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "167-170:createSystemInPump"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "156-158:createPump1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "close()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ]
+                    ]
+                },
+                "200-204:setProcessErrorStream": {
+                    "start": 200,
+                    "end": 204,
+                    "body": [
+                        "    public void setProcessErrorStream(final InputStream is) {\n",
+                        "        if (errorOutputStream != null) {\n",
+                        "            createProcessErrorPump(is, errorOutputStream);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setProcessErrorStream(InputStream)",
+                    "parameters": [
+                        "is"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "122-124:createProcessErrorPump"
+                        ]
+                    ]
+                },
+                "357-359:stopThread": {
+                    "start": 357,
+                    "end": 359,
+                    "body": [
+                        "    protected void stopThread(final Thread thread, final long timeoutMillis) {\n",
+                        "        stop1(thread, Duration.ofMillis(timeoutMillis));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stopThread(Thread, long)",
+                    "parameters": [
+                        "thread",
+                        "timeoutMillis"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "331-348:stop1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofMillis(long)"
+                        ]
+                    ]
+                },
+                "292-322:stop0": {
+                    "start": 292,
+                    "end": 322,
+                    "body": [
+                        "    //@Override\n",
+                        "    public void stop0() throws IOException {\n",
+                        "        if (inputStreamPumper != null) {\n",
+                        "            inputStreamPumper.stopProcessing();\n",
+                        "        }\n",
+                        "        stop1(outputThread, stopTimeout);\n",
+                        "        stop1(errorThread, stopTimeout);\n",
+                        "        stop1(inputThread, stopTimeout);\n",
+                        "\n",
+                        "        if (errorOutputStream != null && errorOutputStream != outputStream) {\n",
+                        "            try {\n",
+                        "                errorOutputStream.flush();\n",
+                        "            } catch (final IOException e) {\n",
+                        "                final String msg = \"Got exception while flushing the error stream : \" + e.getMessage();\n",
+                        "                DebugUtils.handleException(msg, e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (outputStream != null) {\n",
+                        "            try {\n",
+                        "                outputStream.flush();\n",
+                        "            } catch (final IOException e) {\n",
+                        "                final String msg = \"Got exception while flushing the output stream\";\n",
+                        "                DebugUtils.handleException(msg, e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (caught != null) {\n",
+                        "            throw caught;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.InputStreamPumper",
+                            "InputStreamPumper",
+                            "78-80:stopProcessing"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "331-348:stop1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "flush()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ]
+                    ]
+                },
+                "285-287:stop": {
+                    "start": 285,
+                    "end": 287,
+                    "body": [
+                        "    public void stop() throws IOException {\n",
+                        "        stop0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "292-322:stop0"
+                        ]
+                    ]
+                },
+                "269-274:start0": {
+                    "start": 269,
+                    "end": 274,
+                    "body": [
+                        "    //@Override\n",
+                        "    public void start0() {\n",
+                        "        start1(outputThread);\n",
+                        "        start1(errorThread);\n",
+                        "        start1(inputThread);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "279-283:start1"
+                        ]
+                    ]
+                },
+                "262-264:start": {
+                    "start": 262,
+                    "end": 264,
+                    "body": [
+                        "    public void start() throws IOException {\n",
+                        "        start0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "269-274:start0"
+                        ]
+                    ]
+                },
+                "247-249:setStopTimeout0": {
+                    "start": 247,
+                    "end": 249,
+                    "body": [
+                        "    public void setStopTimeout0(final Duration timeout) {\n",
+                        "        this.stopTimeout = timeout != null ? timeout : Duration.ZERO;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setStopTimeout0(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": []
+                },
+                "186-188:getOut": {
+                    "start": 186,
+                    "end": 188,
+                    "body": [
+                        "    protected OutputStream getOut() {\n",
+                        "        return outputStream;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ],
+                    "signature": "getOut()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "177-179:getErr": {
+                    "start": 177,
+                    "end": 179,
+                    "body": [
+                        "    protected OutputStream getErr() {\n",
+                        "        return errorOutputStream;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ],
+                    "signature": "getErr()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "156-158:createPump1": {
+                    "start": 156,
+                    "end": 158,
+                    "body": [
+                        "    protected Thread createPump1(final InputStream is, final OutputStream os, final boolean closeWhenExhausted) {\n",
+                        "        return ThreadUtil.newThread(threadFactory, new StreamPumper(is, os, closeWhenExhausted, -1), \"CommonsExecStreamPumper-\", true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ],
+                    "signature": "createPump1(InputStream, OutputStream, boolean)",
+                    "parameters": [
+                        "is",
+                        "os",
+                        "closeWhenExhausted"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ThreadUtil",
+                            "ThreadUtil",
+                            "36-44:newThread"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.StreamPumper",
+                            "StreamPumper",
+                            "81-86:StreamPumper"
+                        ]
+                    ]
+                },
+                "144-146:createPump0": {
+                    "start": 144,
+                    "end": 146,
+                    "body": [
+                        "    protected Thread createPump0(final InputStream is, final OutputStream os) {\n",
+                        "        return createPump1(is, os, os instanceof PipedOutputStream);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ],
+                    "signature": "createPump0(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "156-158:createPump1"
+                        ]
+                    ]
+                },
+                "132-134:createProcessOutputPump": {
+                    "start": 132,
+                    "end": 134,
+                    "body": [
+                        "    protected void createProcessOutputPump(final InputStream is, final OutputStream os) {\n",
+                        "        outputThread = createPump0(is, os);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "createProcessOutputPump(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "144-146:createPump0"
+                        ]
+                    ]
+                },
+                "122-124:createProcessErrorPump": {
+                    "start": 122,
+                    "end": 124,
+                    "body": [
+                        "    protected void createProcessErrorPump(final InputStream is, final OutputStream os) {\n",
+                        "        errorThread = createPump0(is, os);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "createProcessErrorPump(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "144-146:createPump0"
+                        ]
+                    ]
+                },
+                "97-99:PumpStreamHandler3": {
+                    "start": 97,
+                    "end": 99,
+                    "body": [
+                        "    public static PumpStreamHandler PumpStreamHandler3(final OutputStream outputStream, final OutputStream errorOutputStream, final InputStream inputStream) {\n",
+                        "        return new PumpStreamHandler(Executors.defaultThreadFactory(), outputStream, errorOutputStream, inputStream);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "PumpStreamHandler",
+                            "PumpStreamHandler"
+                        ]
+                    ],
+                    "signature": "PumpStreamHandler3(OutputStream, OutputStream, InputStream)",
+                    "parameters": [
+                        "outputStream",
+                        "errorOutputStream",
+                        "inputStream"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "108-114:PumpStreamHandler"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "defaultThreadFactory()"
+                        ]
+                    ]
+                },
+                "86-88:PumpStreamHandler2": {
+                    "start": 86,
+                    "end": 88,
+                    "body": [
+                        "    public static PumpStreamHandler PumpStreamHandler2(final OutputStream outputStream, final OutputStream errorOutputStream) {\n",
+                        "        return PumpStreamHandler3(outputStream, errorOutputStream, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "PumpStreamHandler",
+                            "PumpStreamHandler"
+                        ]
+                    ],
+                    "signature": "PumpStreamHandler2(OutputStream, OutputStream)",
+                    "parameters": [
+                        "outputStream",
+                        "errorOutputStream"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "97-99:PumpStreamHandler3"
+                        ]
+                    ]
+                },
+                "76-78:PumpStreamHandler1": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "    public static PumpStreamHandler PumpStreamHandler1(final OutputStream allOutputStream) {\n",
+                        "        return PumpStreamHandler2(allOutputStream, allOutputStream);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "PumpStreamHandler",
+                            "PumpStreamHandler"
+                        ]
+                    ],
+                    "signature": "PumpStreamHandler1(OutputStream)",
+                    "parameters": [
+                        "allOutputStream"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ]
+                    ]
+                },
+                "67-69:PumpStreamHandler0": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    public static PumpStreamHandler PumpStreamHandler0() {\n",
+                        "        return PumpStreamHandler2(System.out, System.err);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "PumpStreamHandler",
+                            "PumpStreamHandler"
+                        ]
+                    ],
+                    "signature": "PumpStreamHandler0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ]
+                    ]
+                },
+                "331-348:stop1": {
+                    "start": 331,
+                    "end": 348,
+                    "body": [
+                        "    private void stop1(final Thread thread, final Duration timeout) {\n",
+                        "        if (thread != null) {\n",
+                        "            try {\n",
+                        "                if (timeout.equals(Duration.ZERO)) {\n",
+                        "                    thread.join();\n",
+                        "                } else {\n",
+                        "                    final Duration timeToWait = timeout.plus(STOP_TIMEOUT_ADDITION);\n",
+                        "                    final Instant startTime = Instant.now();\n",
+                        "                    thread.join(timeToWait.toMillis());\n",
+                        "                    if (Instant.now().isAfter(startTime.plus(timeToWait))) {\n",
+                        "                        caught = new ExecuteException(\"The stop timeout of \" + timeout + \" ms was exceeded\", Executor.INVALID_EXITVALUE, null);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } catch (final InterruptedException e) {\n",
+                        "                thread.interrupt();\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop1(Thread, Duration)",
+                    "parameters": [
+                        "thread",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "join()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "plus(java.time.Duration)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "now()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "join(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toMillis()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "isAfter(java.time.Instant)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "plus(java.time.temporal.TemporalAmount)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteException",
+                            "ExecuteException",
+                            "55-58:ExecuteException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "interrupt()"
+                        ]
+                    ]
+                },
+                "279-283:start1": {
+                    "start": 279,
+                    "end": 283,
+                    "body": [
+                        "    private void start1(final Thread thread) {\n",
+                        "        if (thread != null) {\n",
+                        "            thread.start();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start1(Thread)",
+                    "parameters": [
+                        "thread"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "start()"
+                        ]
+                    ]
+                },
+                "167-170:createSystemInPump": {
+                    "start": 167,
+                    "end": 170,
+                    "body": [
+                        "    private Thread createSystemInPump(final InputStream is, final OutputStream os) {\n",
+                        "        inputStreamPumper = new InputStreamPumper(is, os);\n",
+                        "        return ThreadUtil.newThread(threadFactory, inputStreamPumper, \"CommonsExecStreamPumper-\", true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ],
+                    "signature": "createSystemInPump(InputStream, OutputStream)",
+                    "parameters": [
+                        "is",
+                        "os"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.InputStreamPumper",
+                            "InputStreamPumper",
+                            "50-54:InputStreamPumper"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ThreadUtil",
+                            "ThreadUtil",
+                            "36-44:newThread"
+                        ]
+                    ]
+                },
+                "108-114:PumpStreamHandler": {
+                    "start": 108,
+                    "end": 114,
+                    "body": [
+                        "    private PumpStreamHandler(final ThreadFactory threadFactory, final OutputStream outputStream, final OutputStream errorOutputStream,\n",
+                        "            final InputStream inputStream) {\n",
+                        "        this.threadFactory = threadFactory;\n",
+                        "        this.outputStream = outputStream;\n",
+                        "        this.errorOutputStream = errorOutputStream;\n",
+                        "        this.inputStream = inputStream;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "PumpStreamHandler(ThreadFactory, OutputStream, OutputStream, InputStream)",
+                    "parameters": [
+                        "threadFactory",
+                        "outputStream",
+                        "errorOutputStream",
+                        "inputStream"
+                    ],
+                    "calls": []
+                },
+                "190-192:getStopTimeout": {
+                    "start": 190,
+                    "end": 192,
+                    "body": [
+                        "    Duration getStopTimeout() {\n",
+                        "        return stopTimeout;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "signature": "getStopTimeout()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "62-62:threadFactory": {
+                    "start": 62,
+                    "end": 62,
+                    "body": [
+                        "    private final ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ]
+                },
+                "57-57:caught": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private IOException caught;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "IOException",
+                            "java.io.IOException"
+                        ]
+                    ]
+                },
+                "54-54:stopTimeout": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private Duration stopTimeout = Duration.ZERO;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ]
+                },
+                "51-51:inputStreamPumper": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private InputStreamPumper inputStreamPumper;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InputStreamPumper",
+                            "InputStreamPumper"
+                        ]
+                    ]
+                },
+                "49-49:inputStream": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private final InputStream inputStream;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InputStream",
+                            "java.io.InputStream"
+                        ]
+                    ]
+                },
+                "47-47:errorOutputStream": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final OutputStream errorOutputStream;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ]
+                },
+                "45-45:outputStream": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final OutputStream outputStream;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OutputStream",
+                            "java.io.OutputStream"
+                        ]
+                    ]
+                },
+                "43-43:inputThread": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private Thread inputThread;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ]
+                },
+                "41-41:errorThread": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private Thread errorThread;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ]
+                },
+                "39-39:outputThread": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private Thread outputThread;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Thread",
+                            "java.lang.Thread"
+                        ]
+                    ]
+                },
+                "37-37:STOP_TIMEOUT_ADDITION": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final Duration STOP_TIMEOUT_ADDITION = Duration.ofSeconds(2);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

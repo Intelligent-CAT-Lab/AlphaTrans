@@ -1,0 +1,1360 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/ExecuteWatchdog.java",
+    "imports": {
+        "20-20:import Duration": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "21-21:import Objects": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "24-24:import Supplier": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.function.Supplier;\n"
+            ]
+        },
+        "22-22:import Executors": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.concurrent.Executors;\n"
+            ]
+        },
+        "23-23:import ThreadFactory": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.concurrent.ThreadFactory;\n"
+            ]
+        },
+        "26-26:import DebugUtils": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.util.DebugUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ExecuteWatchdog": {
+            "start": 52,
+            "end": 52,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Builder"
+            ],
+            "implements": [
+                "TimeoutObserver"
+            ],
+            "extends": [],
+            "methods": {
+                "286-308:timeoutOccured": {
+                    "start": 286,
+                    "end": 308,
+                    "body": [
+                        "    public synchronized void timeoutOccured(final Watchdog w) {\n",
+                        "        try {\n",
+                        "            try {\n",
+                        "                // We must check if the process was not stopped\n",
+                        "                // before being here\n",
+                        "                if (process != null) {\n",
+                        "                    process.exitValue();\n",
+                        "                }\n",
+                        "            } catch (final IllegalThreadStateException itse) {\n",
+                        "                // the process is not terminated, if this is really\n",
+                        "                // a timeout and not a manual stop then destroy it.\n",
+                        "                if (watch) {\n",
+                        "                    killedProcess = true;\n",
+                        "                    process.destroy();\n",
+                        "                }\n",
+                        "            }\n",
+                        "        } catch (final Exception e) {\n",
+                        "            caught = e;\n",
+                        "            DebugUtils.handleException(\"Getting the exit value of the process failed\", e);\n",
+                        "        } finally {\n",
+                        "            cleanUp();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "timeoutOccured(Watchdog)",
+                    "parameters": [
+                        "w"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "exitValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "destroy()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.DebugUtils",
+                            "DebugUtils",
+                            "42-53:handleException"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "186-189:cleanUp"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def timeoutOccured(self, w: Watchdog) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "147-149:ExecuteWatchdog0": {
+                    "start": 147,
+                    "end": 149,
+                    "body": [
+                        "    public static ExecuteWatchdog ExecuteWatchdog0(final long timeoutMillis) {\n",
+                        "        return new ExecuteWatchdog(Executors.defaultThreadFactory(), Duration.ofMillis(timeoutMillis));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ExecuteWatchdog",
+                            "ExecuteWatchdog"
+                        ]
+                    ],
+                    "signature": "ExecuteWatchdog0(long)",
+                    "parameters": [
+                        "timeoutMillis"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "157-169:ExecuteWatchdog"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "defaultThreadFactory()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofMillis(long)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def ExecuteWatchdog0(timeoutMillis: int) -> ExecuteWatchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "274-280:stop": {
+                    "start": 274,
+                    "end": 280,
+                    "body": [
+                        "    public synchronized void stop() {\n",
+                        "        if (hasWatchdog) {\n",
+                        "            watchdog.stop();\n",
+                        "        }\n",
+                        "        watch = false;\n",
+                        "        process = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "182-185:stop"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def stop(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "255-269:start": {
+                    "start": 255,
+                    "end": 269,
+                    "body": [
+                        "    public synchronized void start(final Process processToMonitor) {\n",
+                        "        Objects.requireNonNull(processToMonitor, \"processToMonitor\");\n",
+                        "        if (process != null) {\n",
+                        "            throw new IllegalStateException(\"Already running.\");\n",
+                        "        }\n",
+                        "        caught = null;\n",
+                        "        killedProcess = false;\n",
+                        "        watch = true;\n",
+                        "        process = processToMonitor;\n",
+                        "        processStarted = true;\n",
+                        "        notifyAll();\n",
+                        "        if (hasWatchdog) {\n",
+                        "            watchdog.start();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start(Process)",
+                    "parameters": [
+                        "processToMonitor"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "notifyAll()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "174-177:start"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def start(self, processToMonitor: subprocess.Popen) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "241-243:killedProcess": {
+                    "start": 241,
+                    "end": 243,
+                    "body": [
+                        "    public synchronized boolean killedProcess() {\n",
+                        "        return killedProcess;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "killedProcess()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def killedProcess(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "231-234:isWatching": {
+                    "start": 231,
+                    "end": 234,
+                    "body": [
+                        "    public synchronized boolean isWatching() {\n",
+                        "        ensureStarted();\n",
+                        "        return watch;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isWatching()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "204-212:ensureStarted"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isWatching(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "220-224:failedToStart": {
+                    "start": 220,
+                    "end": 224,
+                    "body": [
+                        "    public synchronized void failedToStart(final Exception e) {\n",
+                        "        processStarted = true;\n",
+                        "        caught = e;\n",
+                        "        notifyAll();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "failedToStart(Exception)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "notifyAll()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def failedToStart(self, e: Exception) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "194-198:destroyProcess": {
+                    "start": 194,
+                    "end": 198,
+                    "body": [
+                        "    public synchronized void destroyProcess() {\n",
+                        "        ensureStarted();\n",
+                        "        timeoutOccured(null);\n",
+                        "        stop();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "destroyProcess()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "204-212:ensureStarted"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "286-308:timeoutOccured"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "274-280:stop"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def destroyProcess(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "186-189:cleanUp": {
+                    "start": 186,
+                    "end": 189,
+                    "body": [
+                        "    protected synchronized void cleanUp() {\n",
+                        "        watch = false;\n",
+                        "        process = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "synchronized",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cleanUp()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _cleanUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "177-181:checkException": {
+                    "start": 177,
+                    "end": 181,
+                    "body": [
+                        "    public synchronized void checkException() throws Exception {\n",
+                        "        if (caught != null) {\n",
+                        "            throw caught;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkException()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def checkException(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "110-112:builder": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    public static Builder builder() {\n",
+                        "        return new Builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "builder()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def builder() -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "204-212:ensureStarted": {
+                    "start": 204,
+                    "end": 212,
+                    "body": [
+                        "    private void ensureStarted() {\n",
+                        "        while (!processStarted && caught == null) {\n",
+                        "            try {\n",
+                        "                wait();\n",
+                        "            } catch (final InterruptedException e) {\n",
+                        "                throw new IllegalStateException(e.getMessage(), e);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ensureStarted()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "wait()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String,java.lang.Throwable)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __ensureStarted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "157-169:ExecuteWatchdog": {
+                    "start": 157,
+                    "end": 169,
+                    "body": [
+                        "    private ExecuteWatchdog(final ThreadFactory threadFactory, final Duration timeout) {\n",
+                        "        this.killedProcess = false;\n",
+                        "        this.watch = false;\n",
+                        "        this.hasWatchdog = !INFINITE_TIMEOUT_DURATION.equals(timeout);\n",
+                        "        this.processStarted = false;\n",
+                        "        this.threadFactory = threadFactory != null ? threadFactory : Executors.defaultThreadFactory();\n",
+                        "        if (this.hasWatchdog) {\n",
+                        "            this.watchdog = Watchdog.builder().setThreadFactory(this.threadFactory).setTimeout(timeout).get();\n",
+                        "            this.watchdog.addTimeoutObserver(this);\n",
+                        "        } else {\n",
+                        "            this.watchdog = null;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ExecuteWatchdog(ThreadFactory, Duration)",
+                    "parameters": [
+                        "threadFactory",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "defaultThreadFactory()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "48-50:get"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "69-72:setTimeout"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "58-61:setThreadFactory"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "82-84:builder"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "127-129:addTimeoutObserver"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, threadFactory: threading.Thread, timeout: datetime.timedelta) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "245-247:setProcessNotStarted": {
+                    "start": 245,
+                    "end": 247,
+                    "body": [
+                        "    void setProcessNotStarted() {\n",
+                        "        processStarted = false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setProcessNotStarted()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setProcessNotStarted(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "102-102:INFINITE_TIMEOUT_DURATION": {
+                    "start": 102,
+                    "end": 102,
+                    "body": [
+                        "    public static final Duration INFINITE_TIMEOUT_DURATION = Duration.ofMillis(INFINITE_TIMEOUT);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    INFINITE_TIMEOUT_DURATION: datetime.timedelta = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "99-99:INFINITE_TIMEOUT": {
+                    "start": 99,
+                    "end": 99,
+                    "body": [
+                        "    public static final long INFINITE_TIMEOUT = -1;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    INFINITE_TIMEOUT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "138-138:threadFactory": {
+                    "start": 138,
+                    "end": 138,
+                    "body": [
+                        "    private final ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "133-133:processStarted": {
+                    "start": 133,
+                    "end": 133,
+                    "body": [
+                        "    private volatile boolean processStarted;\n"
+                    ],
+                    "modifiers": [
+                        "private",
+                        "volatile"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __processStarted: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "130-130:watchdog": {
+                    "start": 130,
+                    "end": 130,
+                    "body": [
+                        "    private final Watchdog watchdog;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Watchdog",
+                            "Watchdog"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __watchdog: Watchdog = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "127-127:killedProcess": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private boolean killedProcess;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __killedProcess: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "124-124:caught": {
+                    "start": 124,
+                    "end": 124,
+                    "body": [
+                        "    private Exception caught;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Exception",
+                            "java.lang.Exception"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __caught: Exception = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "121-121:watch": {
+                    "start": 121,
+                    "end": 121,
+                    "body": [
+                        "    private boolean watch;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __watch: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "118-118:hasWatchdog": {
+                    "start": 118,
+                    "end": 118,
+                    "body": [
+                        "    private final boolean hasWatchdog;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __hasWatchdog: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "115-115:process": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private Process process;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Process",
+                            "java.lang.Process"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __process: subprocess.Popen = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ExecuteWatchdog(TimeoutObserver):\n\n"
+        },
+        "Builder": {
+            "start": 59,
+            "end": 59,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "ExecuteWatchdog",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "70-72:get": {
+                    "start": 70,
+                    "end": 72,
+                    "body": [
+                        "        public ExecuteWatchdog get() {\n",
+                        "            return new ExecuteWatchdog(threadFactory, timeout);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ExecuteWatchdog",
+                            "ExecuteWatchdog"
+                        ]
+                    ],
+                    "signature": "get()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "157-169:ExecuteWatchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def get(self) -> ExecuteWatchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "91-94:setTimeout": {
+                    "start": 91,
+                    "end": 94,
+                    "body": [
+                        "        public Builder setTimeout(final Duration timeout) {\n",
+                        "            this.timeout = timeout;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setTimeout(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setTimeout(self, timeout: datetime.timedelta) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "80-83:setThreadFactory": {
+                    "start": 80,
+                    "end": 83,
+                    "body": [
+                        "        public Builder setThreadFactory(final ThreadFactory threadFactory) {\n",
+                        "            this.threadFactory = threadFactory;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setThreadFactory(ThreadFactory)",
+                    "parameters": [
+                        "threadFactory"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "62-62:timeout": {
+                    "start": 62,
+                    "end": 62,
+                    "body": [
+                        "        private Duration timeout;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __timeout: datetime.timedelta = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "61-61:threadFactory": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "        private ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Builder():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import threading",
+        "import datetime",
+        "from src.main.org.apache.commons.exec.TimeoutObserver import *",
+        "from src.main.org.apache.commons.exec.Watchdog import *",
+        "from src.main.org.apache.commons.exec.util.DebugUtils import *"
+    ]
+}

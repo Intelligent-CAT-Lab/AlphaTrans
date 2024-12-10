@@ -1,0 +1,571 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/util/mime/MimeUtility.java",
+    "imports": {
+        "20-20:import IOException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "19-19:import ByteArrayOutputStream": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "21-21:import UnsupportedEncodingException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "24-24:import Map": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "22-22:import HashMap": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MimeUtility": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "79-145:decodeText": {
+                    "start": 79,
+                    "end": 145,
+                    "body": [
+                        "    public static String decodeText(String text) throws UnsupportedEncodingException {\n",
+                        "        if (text.indexOf(ENCODED_TOKEN_MARKER) < 0) {\n",
+                        "            return text;\n",
+                        "        }\n",
+                        "\n",
+                        "        int offset = 0;\n",
+                        "        int endOffset = text.length();\n",
+                        "\n",
+                        "        int startWhiteSpace = -1;\n",
+                        "        int endWhiteSpace = -1;\n",
+                        "\n",
+                        "        StringBuilder decodedText = new StringBuilder(text.length());\n",
+                        "\n",
+                        "        boolean previousTokenEncoded = false;\n",
+                        "\n",
+                        "        while (offset < endOffset) {\n",
+                        "            char ch = text.charAt(offset);\n",
+                        "\n",
+                        "            if (LINEAR_WHITESPACE.indexOf(ch) != -1) { // whitespace found\n",
+                        "                startWhiteSpace = offset;\n",
+                        "                while (offset < endOffset) {\n",
+                        "                    ch = text.charAt(offset);\n",
+                        "                    if (LINEAR_WHITESPACE.indexOf(ch) != -1) { // whitespace found\n",
+                        "                        offset++;\n",
+                        "                    } else {\n",
+                        "                        endWhiteSpace = offset;\n",
+                        "                        break;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                int wordStart = offset;\n",
+                        "\n",
+                        "                while (offset < endOffset) {\n",
+                        "                    ch = text.charAt(offset);\n",
+                        "                    if (LINEAR_WHITESPACE.indexOf(ch) == -1) { // not white space\n",
+                        "                        offset++;\n",
+                        "                    } else {\n",
+                        "                        break;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                String word = text.substring(wordStart, offset);\n",
+                        "                if (word.startsWith(ENCODED_TOKEN_MARKER)) {\n",
+                        "                    try {\n",
+                        "                        String decodedWord = decodeWord(word);\n",
+                        "\n",
+                        "                        if (!previousTokenEncoded && startWhiteSpace != -1) {\n",
+                        "                            decodedText.append(text.substring(startWhiteSpace, endWhiteSpace));\n",
+                        "                            startWhiteSpace = -1;\n",
+                        "                        }\n",
+                        "                        previousTokenEncoded = true;\n",
+                        "                        decodedText.append(decodedWord);\n",
+                        "                        continue;\n",
+                        "\n",
+                        "                    } catch (ParseException e) {\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                if (startWhiteSpace != -1) {\n",
+                        "                    decodedText.append(text.substring(startWhiteSpace, endWhiteSpace));\n",
+                        "                    startWhiteSpace = -1;\n",
+                        "                }\n",
+                        "                previousTokenEncoded = false;\n",
+                        "                decodedText.append(word);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return decodedText.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeText(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "158-208:decodeWord"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "216-226:javaCharset": {
+                    "start": 216,
+                    "end": 226,
+                    "body": [
+                        "    private static String javaCharset(String charset) {\n",
+                        "        if (charset == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        String mappedCharset = MIME2JAVA.get(charset.toLowerCase(Locale.ENGLISH));\n",
+                        "        if (mappedCharset == null) {\n",
+                        "            return charset;\n",
+                        "        }\n",
+                        "        return mappedCharset;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "javaCharset(String)",
+                    "parameters": [
+                        "charset"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toLowerCase(java.util.Locale)"
+                        ]
+                    ]
+                },
+                "158-208:decodeWord": {
+                    "start": 158,
+                    "end": 208,
+                    "body": [
+                        "    private static String decodeWord(String word)\n",
+                        "            throws ParseException, UnsupportedEncodingException {\n",
+                        "\n",
+                        "        if (!word.startsWith(ENCODED_TOKEN_MARKER)) {\n",
+                        "            throw new ParseException(\"Invalid RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        int charsetPos = word.indexOf('?', 2);\n",
+                        "        if (charsetPos == -1) {\n",
+                        "            throw new ParseException(\"Missing charset in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String charset = word.substring(2, charsetPos).toLowerCase(Locale.ENGLISH);\n",
+                        "\n",
+                        "        int encodingPos = word.indexOf('?', charsetPos + 1);\n",
+                        "        if (encodingPos == -1) {\n",
+                        "            throw new ParseException(\"Missing encoding in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String encoding = word.substring(charsetPos + 1, encodingPos);\n",
+                        "\n",
+                        "        int encodedTextPos = word.indexOf(ENCODED_TOKEN_FINISHER, encodingPos + 1);\n",
+                        "        if (encodedTextPos == -1) {\n",
+                        "            throw new ParseException(\"Missing encoded text in RFC 2047 encoded-word: \" + word);\n",
+                        "        }\n",
+                        "\n",
+                        "        String encodedText = word.substring(encodingPos + 1, encodedTextPos);\n",
+                        "\n",
+                        "        if (encodedText.length() == 0) {\n",
+                        "            return \"\";\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            ByteArrayOutputStream out = new ByteArrayOutputStream(encodedText.length());\n",
+                        "\n",
+                        "            byte[] encodedData = encodedText.getBytes(US_ASCII_CHARSET);\n",
+                        "\n",
+                        "            if (encoding.equals(BASE64_ENCODING_MARKER)) {\n",
+                        "                Base64Decoder.decode(encodedData, out);\n",
+                        "            } else if (encoding.equals(\n",
+                        "                    QUOTEDPRINTABLE_ENCODING_MARKER)) { // maybe quoted printable.\n",
+                        "                QuotedPrintableDecoder.decode(encodedData, out);\n",
+                        "            } else {\n",
+                        "                throw new UnsupportedEncodingException(\"Unknown RFC 2047 encoding: \" + encoding);\n",
+                        "            }\n",
+                        "            byte[] decodedData = out.toByteArray();\n",
+                        "            return new String(decodedData, javaCharset(charset));\n",
+                        "        } catch (IOException e) {\n",
+                        "            throw new UnsupportedEncodingException(\"Invalid RFC 2047 encoding\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeWord(String)",
+                    "parameters": [
+                        "word"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toLowerCase(java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.ParseException",
+                            "ParseException",
+                            "32-34:ParseException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.Base64Decoder",
+                            "Base64Decoder",
+                            "138-181:decode"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder",
+                            "QuotedPrintableDecoder",
+                            "44-82:decode"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/UnsupportedEncodingException",
+                            "UnsupportedEncodingException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(byte[],java.lang.String)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "216-226:javaCharset"
+                        ]
+                    ]
+                },
+                "68-68:MimeUtility": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private MimeUtility() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MimeUtility()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "52-52:MIME2JAVA": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final Map<String, String> MIME2JAVA = new HashMap<String, String>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ]
+                },
+                "49-49:LINEAR_WHITESPACE": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private static final String LINEAR_WHITESPACE = \" \\t\\r\\n\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "46-46:ENCODED_TOKEN_FINISHER": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final String ENCODED_TOKEN_FINISHER = \"?=\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "43-43:ENCODED_TOKEN_MARKER": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final String ENCODED_TOKEN_MARKER = \"=?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "40-40:QUOTEDPRINTABLE_ENCODING_MARKER": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final String QUOTEDPRINTABLE_ENCODING_MARKER = \"Q\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "37-37:BASE64_ENCODING_MARKER": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final String BASE64_ENCODING_MARKER = \"B\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "34-34:US_ASCII_CHARSET": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final String US_ASCII_CHARSET = \"US-ASCII\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "54-65:run_static_init": {
+                    "start": 54,
+                    "end": 65,
+                    "body": [
+                        "    static {\n",
+                        "        MIME2JAVA.put(\"iso-2022-cn\", \"ISO2022CN\");\n",
+                        "        MIME2JAVA.put(\"iso-2022-kr\", \"ISO2022KR\");\n",
+                        "        MIME2JAVA.put(\"utf-8\", \"UTF8\");\n",
+                        "        MIME2JAVA.put(\"utf8\", \"UTF8\");\n",
+                        "        MIME2JAVA.put(\"ja_jp.iso2022-7\", \"ISO2022JP\");\n",
+                        "        MIME2JAVA.put(\"ja_jp.eucjp\", \"EUCJIS\");\n",
+                        "        MIME2JAVA.put(\"euc-kr\", \"KSC5601\");\n",
+                        "        MIME2JAVA.put(\"euckr\", \"KSC5601\");\n",
+                        "        MIME2JAVA.put(\"us-ascii\", \"ISO-8859-1\");\n",
+                        "        MIME2JAVA.put(\"x-us-ascii\", \"ISO-8859-1\");\n",
+                        "    }\n"
+                    ]
+                }
+            }
+        }
+    }
+}

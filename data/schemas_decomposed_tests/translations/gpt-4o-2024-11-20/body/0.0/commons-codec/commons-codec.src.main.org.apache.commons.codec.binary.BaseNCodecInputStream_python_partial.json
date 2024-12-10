@@ -1,0 +1,742 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/binary/BaseNCodecInputStream.java",
+    "imports": {
+        "25-25:import IOException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "26-26:import InputStream": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "24-24:import FilterInputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.FilterInputStream;\n"
+            ]
+        },
+        "27-27:import Objects": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "22-22:import Context": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.binary.BaseNCodec.Context;\n"
+            ]
+        },
+        "20-20:import static BaseNCodec.EOF": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.apache.commons.codec.binary.BaseNCodec.EOF;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseNCodecInputStream": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "202-220:skip": {
+                    "start": 202,
+                    "end": 220,
+                    "body": [
+                        "    public long skip(final long n) throws IOException {\n",
+                        "        if (n < 0) {\n",
+                        "            throw new IllegalArgumentException(\"Negative skip length: \" + n);\n",
+                        "        }\n",
+                        "\n",
+                        "        final byte[] b = new byte[512];\n",
+                        "        long todo = n;\n",
+                        "\n",
+                        "        while (todo > 0) {\n",
+                        "            int len = (int) Math.min(b.length, todo);\n",
+                        "            len = this.read1(b, 0, len);\n",
+                        "            if (len == EOF) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            todo -= len;\n",
+                        "        }\n",
+                        "\n",
+                        "        return n - todo;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "skip(long)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(long,long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def skip(self, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "191-193:reset": {
+                    "start": 191,
+                    "end": 193,
+                    "body": [
+                        "    public synchronized void reset() throws IOException {\n",
+                        "        throw new IOException(\"mark/reset not supported\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "reset()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def reset(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "99-101:markSupported": {
+                    "start": 99,
+                    "end": 101,
+                    "body": [
+                        "    public boolean markSupported() {\n",
+                        "        return false; // not an easy job to support marks\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "markSupported()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def markSupported(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "91-91:mark": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    public synchronized void mark(final int readLimit) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "mark(int)",
+                    "parameters": [
+                        "readLimit"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def mark(self, readLimit: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "61-64:available": {
+                    "start": 61,
+                    "end": 64,
+                    "body": [
+                        "    public int available() throws IOException {\n",
+                        "\n",
+                        "        return context.eof ? 0 : 1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "available()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def available(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "133-178:read1": {
+                    "start": 133,
+                    "end": 178,
+                    "body": [
+                        "    public int read1(final byte array[], final int offset, final int len) throws IOException {\n",
+                        "        Objects.requireNonNull(array, \"array\");\n",
+                        "        if (offset < 0 || len < 0) {\n",
+                        "            throw new IndexOutOfBoundsException();\n",
+                        "        }\n",
+                        "        if (offset > array.length || offset + len > array.length) {\n",
+                        "            throw new IndexOutOfBoundsException();\n",
+                        "        }\n",
+                        "        if (len == 0) {\n",
+                        "            return 0;\n",
+                        "        }\n",
+                        "        int readLen = 0;\n",
+                        "        /*\n",
+                        "         Rationale for while-loop on (readLen == 0):\n",
+                        "         -----\n",
+                        "         Base32.readResults() usually returns > 0 or EOF (-1).  In the\n",
+                        "         rare case where it returns 0, we just keep trying.\n",
+                        "\n",
+                        "         This is essentially an undocumented contract for InputStream\n",
+                        "         implementors that want their code to work properly with\n",
+                        "         java.io.InputStreamReader, since the latter hates it when\n",
+                        "         InputStream.read(byte[]) returns a zero.  Unfortunately our\n",
+                        "         readResults() call must return 0 if a large amount of the data\n",
+                        "         being decoded was non-base32, so this while-loop enables proper\n",
+                        "         interop with InputStreamReader for that scenario.\n",
+                        "         -----\n",
+                        "         This is a fix for CODEC-101\n",
+                        "        */\n",
+                        "        while (readLen < len) {\n",
+                        "            if (!baseNCodec.hasData(context)) {\n",
+                        "                final int c = in.read(buf);\n",
+                        "                if (doEncode) {\n",
+                        "                    baseNCodec.encode2(buf, 0, c, context);\n",
+                        "                } else {\n",
+                        "                    baseNCodec.decode1(buf, 0, c, context);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            final int read =\n",
+                        "                    baseNCodec.readResults(array, offset + readLen, len - readLen, context);\n",
+                        "            if (read < 0) {\n",
+                        "                return readLen != 0 ? readLen : -1;\n",
+                        "            }\n",
+                        "            readLen += read;\n",
+                        "        }\n",
+                        "        return readLen;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "read1(byte[], int, int)",
+                    "parameters": [
+                        "array",
+                        "offset",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IndexOutOfBoundsException",
+                            "IndexOutOfBoundsException()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "675-686:readResults"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "603-605:hasData"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "490-490:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "413-413:decode1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def read1(self, array: typing.List[int], offset: int, len_: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "109-119:read0": {
+                    "start": 109,
+                    "end": 119,
+                    "body": [
+                        "    public int read0() throws IOException {\n",
+                        "        int r = read1(singleByte, 0, 1);\n",
+                        "        while (r == 0) {\n",
+                        "            r = read1(singleByte, 0, 1);\n",
+                        "        }\n",
+                        "        if (r > 0) {\n",
+                        "            final byte b = singleByte[0];\n",
+                        "            return b < 0 ? 256 + b : b;\n",
+                        "        }\n",
+                        "        return EOF;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "read0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecInputStream",
+                            "BaseNCodecInputStream",
+                            "133-178:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def read0(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "76-78:isStrictDecoding": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "    public boolean isStrictDecoding() {\n",
+                        "        return baseNCodec.isStrictDecoding();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isStrictDecoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "658-660:isStrictDecoding"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isStrictDecoding(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-52:BaseNCodecInputStream": {
+                    "start": 46,
+                    "end": 52,
+                    "body": [
+                        "    protected BaseNCodecInputStream(\n",
+                        "            final InputStream input, final BaseNCodec baseNCodec, final boolean doEncode) {\n",
+                        "        super(input);\n",
+                        "        this.doEncode = doEncode;\n",
+                        "        this.baseNCodec = baseNCodec;\n",
+                        "        this.buf = new byte[doEncode ? 4096 : 8192];\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "BaseNCodecInputStream(InputStream, BaseNCodec, boolean)",
+                    "parameters": [
+                        "input",
+                        "baseNCodec",
+                        "doEncode"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FilterInputStream",
+                            "FilterInputStream(java.io.InputStream)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, input_: typing.Union[io.BytesIO, io.StringIO, io.BufferedReader], baseNCodec: BaseNCodec, doEncode: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "44-44:context": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private final Context context = new Context();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Context",
+                            "Context"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __context: Context = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "42-42:buf": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private final byte[] buf;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __buf: typing.List[int] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "40-40:singleByte": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private final byte[] singleByte = new byte[1];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __singleByte: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-38:doEncode": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final boolean doEncode;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __doEncode: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "36-36:baseNCodec": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final BaseNCodec baseNCodec;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "BaseNCodec",
+                            "BaseNCodec"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __baseNCodec: BaseNCodec = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BaseNCodecInputStream():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.binary.BaseNCodec import *"
+    ]
+}

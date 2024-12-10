@@ -1,0 +1,742 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/PoolImplUtils.java",
+    "imports": {
+        "22-22:import Type": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.lang.reflect.Type;\n"
+            ]
+        },
+        "23-23:import TypeVariable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.lang.reflect.TypeVariable;\n"
+            ]
+        },
+        "28-28:import TimeUnit": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.concurrent.TimeUnit;\n"
+            ]
+        },
+        "24-24:import Duration": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "25-25:import Instant": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.time.Instant;\n"
+            ]
+        },
+        "21-21:import ParameterizedType": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.lang.reflect.ParameterizedType;\n"
+            ]
+        },
+        "26-26:import ChronoUnit": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.time.temporal.ChronoUnit;\n"
+            ]
+        },
+        "27-27:import Objects": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "19-19:import PooledObjectFactory": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.pool2.PooledObjectFactory;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PoolImplUtils": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "44-65:getFactoryType": {
+                    "start": 44,
+                    "end": 65,
+                    "body": [
+                        "    static Class<?> getFactoryType(final Class<? extends PooledObjectFactory> factoryClass) {\n",
+                        "        final Class<PooledObjectFactory> type = PooledObjectFactory.class;\n",
+                        "        final Object genericType = getGenericType(type, factoryClass);\n",
+                        "        if (genericType instanceof Integer) {\n",
+                        "            final ParameterizedType pi = getParameterizedType(type, factoryClass);\n",
+                        "            if (pi != null) {\n",
+                        "                final Type[] bounds =\n",
+                        "                        ((TypeVariable)\n",
+                        "                                        pi.getActualTypeArguments()[\n",
+                        "                                                ((Integer) genericType).intValue()])\n",
+                        "                                .getBounds();\n",
+                        "                if (bounds != null && bounds.length > 0) {\n",
+                        "                    final Type bound0 = bounds[0];\n",
+                        "                    if (bound0 instanceof Class) {\n",
+                        "                        return (Class<?>) bound0;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return Object.class;\n",
+                        "        }\n",
+                        "        return (Class<?>) genericType;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "SuppressWarnings(\"rawtypes\")"
+                    ],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Class<?>",
+                            "java.lang.Class<?>"
+                        ]
+                    ],
+                    "signature": "getFactoryType(Class<? extends PooledObjectFactory<>>)",
+                    "parameters": [
+                        "factoryClass"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "75-99:getGenericType"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "109-121:getParameterizedType"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/TypeVariable",
+                            "getBounds()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/ParameterizedType",
+                            "getActualTypeArguments()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getFactoryType(factoryClass: typing.Type[PooledObjectFactory[typing.Any]]) -> typing.Type[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "222-224:toDuration": {
+                    "start": 222,
+                    "end": 224,
+                    "body": [
+                        "    static Duration toDuration(final long amount, final TimeUnit timeUnit) {\n",
+                        "        return Duration.of(amount, PoolImplUtils.toChronoUnit(timeUnit));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "signature": "toDuration(long, TimeUnit)",
+                    "parameters": [
+                        "amount",
+                        "timeUnit"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "of(long,java.time.temporal.TemporalUnit)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "182-201:toChronoUnit"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def toDuration(amount: int, timeUnit: datetime.timedelta) -> datetime.timedelta:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "210-212:nonNull": {
+                    "start": 210,
+                    "end": 212,
+                    "body": [
+                        "    static Duration nonNull(final Duration value, final Duration defaultValue) {\n",
+                        "        return value != null ? value : Objects.requireNonNull(defaultValue, \"defaultValue\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "signature": "nonNull(Duration, Duration)",
+                    "parameters": [
+                        "value",
+                        "defaultValue"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def nonNull(value: datetime.timedelta, defaultValue: datetime.timedelta) -> datetime.timedelta:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "182-201:toChronoUnit": {
+                    "start": 182,
+                    "end": 201,
+                    "body": [
+                        "    static ChronoUnit toChronoUnit(final TimeUnit timeUnit) {\n",
+                        "        switch (Objects.requireNonNull(timeUnit)) {\n",
+                        "            case NANOSECONDS:\n",
+                        "                return ChronoUnit.NANOS;\n",
+                        "            case MICROSECONDS:\n",
+                        "                return ChronoUnit.MICROS;\n",
+                        "            case MILLISECONDS:\n",
+                        "                return ChronoUnit.MILLIS;\n",
+                        "            case SECONDS:\n",
+                        "                return ChronoUnit.SECONDS;\n",
+                        "            case MINUTES:\n",
+                        "                return ChronoUnit.MINUTES;\n",
+                        "            case HOURS:\n",
+                        "                return ChronoUnit.HOURS;\n",
+                        "            case DAYS:\n",
+                        "                return ChronoUnit.DAYS;\n",
+                        "            default:\n",
+                        "                throw new IllegalArgumentException(timeUnit.toString());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ChronoUnit",
+                            "java.time.temporal.ChronoUnit"
+                        ]
+                    ],
+                    "signature": "toChronoUnit(TimeUnit)",
+                    "parameters": [
+                        "timeUnit"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Enum",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def toChronoUnit(timeUnit: datetime.timedelta) -> datetime.timedelta:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "172-174:min": {
+                    "start": 172,
+                    "end": 174,
+                    "body": [
+                        "    static Instant min(final Instant a, final Instant b) {\n",
+                        "        return a.compareTo(b) < 0 ? a : b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "min(Instant, Instant)",
+                    "parameters": [
+                        "a",
+                        "b"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "compareTo(java.time.Instant)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def min_(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "159-161:max": {
+                    "start": 159,
+                    "end": 161,
+                    "body": [
+                        "    static Instant max(final Instant a, final Instant b) {\n",
+                        "        return a.compareTo(b) > 0 ? a : b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "max(Instant, Instant)",
+                    "parameters": [
+                        "a",
+                        "b"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "compareTo(java.time.Instant)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def max_(a: datetime.datetime, b: datetime.datetime) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "146-148:isPositive": {
+                    "start": 146,
+                    "end": 148,
+                    "body": [
+                        "    static boolean isPositive(final Duration delay) {\n",
+                        "        return delay != null && !delay.isNegative() && !delay.isZero();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isPositive(Duration)",
+                    "parameters": [
+                        "delay"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isZero()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isPositive(delay: datetime.timedelta) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "133-144:getTypeParameter": {
+                    "start": 133,
+                    "end": 144,
+                    "body": [
+                        "    private static Object getTypeParameter(final Class<?> clazz, final Type argType) {\n",
+                        "        if (argType instanceof Class<?>) {\n",
+                        "            return argType;\n",
+                        "        }\n",
+                        "        final TypeVariable<?>[] tvs = clazz.getTypeParameters();\n",
+                        "        for (int i = 0; i < tvs.length; i++) {\n",
+                        "            if (tvs[i].equals(argType)) {\n",
+                        "                return Integer.valueOf(i);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "getTypeParameter(Class<?>, Type)",
+                    "parameters": [
+                        "clazz",
+                        "argType"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getTypeParameters()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "valueOf(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getTypeParameter(clazz: typing.Type[typing.Any], argType: typing.Type) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "109-121:getParameterizedType": {
+                    "start": 109,
+                    "end": 121,
+                    "body": [
+                        "    private static <T> ParameterizedType getParameterizedType(\n",
+                        "            final Class<T> type, final Class<? extends T> clazz) {\n",
+                        "        for (final Type iface : clazz.getGenericInterfaces()) {\n",
+                        "            if (iface instanceof ParameterizedType) {\n",
+                        "                final ParameterizedType pi = (ParameterizedType) iface;\n",
+                        "                if (pi.getRawType() instanceof Class\n",
+                        "                        && type.isAssignableFrom((Class<?>) pi.getRawType())) {\n",
+                        "                    return pi;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "ParameterizedType",
+                            "java.lang.reflect.ParameterizedType"
+                        ]
+                    ],
+                    "signature": "getParameterizedType(Class<T>, Class<? extends T>)",
+                    "parameters": [
+                        "type",
+                        "clazz"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getGenericInterfaces()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "isAssignableFrom(java.lang.Class)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/ParameterizedType",
+                            "getRawType()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getParameterizedType(type_: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Generic[typing.TypeVar('T')]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "75-99:getGenericType": {
+                    "start": 75,
+                    "end": 99,
+                    "body": [
+                        "    private static <T> Object getGenericType(final Class<T> type, final Class<? extends T> clazz) {\n",
+                        "        if (type == null || clazz == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        final ParameterizedType pi = getParameterizedType(type, clazz);\n",
+                        "        if (pi != null) {\n",
+                        "            return getTypeParameter(clazz, pi.getActualTypeArguments()[0]);\n",
+                        "        }\n",
+                        "\n",
+                        "        @SuppressWarnings(\"unchecked\")\n",
+                        "        final Class<? extends T> superClass = (Class<? extends T>) clazz.getSuperclass();\n",
+                        "\n",
+                        "        final Object result = getGenericType(type, superClass);\n",
+                        "        if (result instanceof Class<?>) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "        if (result instanceof Integer) {\n",
+                        "            final ParameterizedType superClassType =\n",
+                        "                    (ParameterizedType) clazz.getGenericSuperclass();\n",
+                        "            return getTypeParameter(\n",
+                        "                    clazz, superClassType.getActualTypeArguments()[((Integer) result).intValue()]);\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "getGenericType(Class<T>, Class<? extends T>)",
+                    "parameters": [
+                        "type",
+                        "clazz"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "109-121:getParameterizedType"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSuperclass()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "75-99:getGenericType"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "133-144:getTypeParameter"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/ParameterizedType",
+                            "getActualTypeArguments()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getGenericSuperclass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getGenericType(type_: typing.Type[typing.Any], clazz: typing.Type[typing.Any]) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class PoolImplUtils:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import os",
+        "from src.main.org.apache.commons.pool2.PooledObjectFactory import *"
+    ]
+}

@@ -1,0 +1,546 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/EvictionTimer.java",
+    "imports": {
+        "19-19:import WeakReference": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.ref.WeakReference;\n"
+            ]
+        },
+        "22-22:import Entry": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Map.Entry;\n"
+            ]
+        },
+        "24-24:import TimeUnit": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.concurrent.TimeUnit;\n"
+            ]
+        },
+        "20-20:import Duration": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "21-21:import HashMap": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "23-23:import ScheduledThreadPoolExecutor": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.concurrent.ScheduledThreadPoolExecutor;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Reaper": {
+            "start": 52,
+            "end": 52,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "EvictionTimer",
+            "nests": [],
+            "implements": [
+                "Runnable"
+            ],
+            "extends": [],
+            "methods": {
+                "54-68:run": {
+                    "start": 54,
+                    "end": 68,
+                    "body": [
+                        "        public void run() {\n",
+                        "            synchronized (EvictionTimer.class) {\n",
+                        "                for (final Entry<WeakReference<Runnable>, WeakRunner> entry : taskMap.entrySet()) {\n",
+                        "                    if (entry.getKey().get() == null) {\n",
+                        "                        executor.remove(entry.getValue());\n",
+                        "                        taskMap.remove(entry.getKey());\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                if (taskMap.isEmpty() && executor != null) {\n",
+                        "                    executor.shutdown();\n",
+                        "                    executor.setCorePoolSize(0);\n",
+                        "                    executor = null;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "entrySet()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ref/Reference",
+                            "get()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getKey()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "remove(java.lang.Runnable)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ScheduledThreadPoolExecutor",
+                            "shutdown()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "setCorePoolSize(int)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        },
+        "EvictionTimer": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Reaper",
+                "WeakRunner"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "173-177:toString": {
+                    "start": 173,
+                    "end": 177,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder builder = new StringBuilder();\n",
+                        "        builder.append(\"EvictionTimer []\");\n",
+                        "        return builder.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "137-139:getNumTasks": {
+                    "start": 137,
+                    "end": 139,
+                    "body": [
+                        "    static synchronized int getNumTasks() {\n",
+                        "        return taskMap.size();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getNumTasks()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "size()"
+                        ]
+                    ]
+                },
+                "115-132:cancel": {
+                    "start": 115,
+                    "end": 132,
+                    "body": [
+                        "    static synchronized void cancel(\n",
+                        "            final BaseGenericObjectPool<?>.Evictor evictor,\n",
+                        "            final Duration timeout,\n",
+                        "            final boolean restarting) {\n",
+                        "        if (evictor != null) {\n",
+                        "            evictor.cancel();\n",
+                        "            remove(evictor);\n",
+                        "        }\n",
+                        "        if (!restarting && executor != null && taskMap.isEmpty()) {\n",
+                        "            executor.shutdown();\n",
+                        "            try {\n",
+                        "                executor.awaitTermination(timeout.toMillis(), TimeUnit.MILLISECONDS);\n",
+                        "            } catch (final InterruptedException e) {\n",
+                        "            }\n",
+                        "            executor.setCorePoolSize(0);\n",
+                        "            executor = null;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cancel(Evictor<>, Duration, boolean)",
+                    "parameters": [
+                        "evictor",
+                        "timeout",
+                        "restarting"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/BaseGenericObjectPool$Evictor",
+                            "cancel()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.EvictionTimer",
+                            "EvictionTimer",
+                            "146-154:remove"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ScheduledThreadPoolExecutor",
+                            "shutdown()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "awaitTermination(long,java.util.concurrent.TimeUnit)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toMillis()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "setCorePoolSize(int)"
+                        ]
+                    ]
+                },
+                "167-167:EvictionTimer": {
+                    "start": 167,
+                    "end": 167,
+                    "body": [
+                        "    private EvictionTimer() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EvictionTimer()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "146-154:remove": {
+                    "start": 146,
+                    "end": 154,
+                    "body": [
+                        "    private static void remove(final BaseGenericObjectPool<?>.Evictor evictor) {\n",
+                        "        for (final Entry<WeakReference<Runnable>, WeakRunner> entry : taskMap.entrySet()) {\n",
+                        "            if (entry.getKey().get() == evictor) {\n",
+                        "                executor.remove(entry.getValue());\n",
+                        "                taskMap.remove(entry.getKey());\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "remove(Evictor<>)",
+                    "parameters": [
+                        "evictor"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "entrySet()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ref/Reference",
+                            "get()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getKey()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "remove(java.lang.Runnable)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "remove(java.lang.Object)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "104-105:taskMap": {
+                    "start": 104,
+                    "end": 105,
+                    "body": [
+                        "    private static final HashMap<WeakReference<Runnable>, WeakRunner> taskMap =\n",
+                        "            new HashMap<>(); // @GuardedBy(\"EvictionTimer.class\")\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "HashMap<WeakReference<Runnable>,WeakRunner>",
+                            "java.util.HashMap<WeakReference<Runnable>,WeakRunner>"
+                        ]
+                    ]
+                },
+                "101-101:executor": {
+                    "start": 101,
+                    "end": 101,
+                    "body": [
+                        "    private static ScheduledThreadPoolExecutor executor; // @GuardedBy(\"EvictionTimer.class\")\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ScheduledThreadPoolExecutor",
+                            "java.util.concurrent.ScheduledThreadPoolExecutor"
+                        ]
+                    ]
+                }
+            }
+        },
+        "WeakRunner": {
+            "start": 75,
+            "end": 75,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "EvictionTimer",
+            "nests": [],
+            "implements": [
+                "Runnable"
+            ],
+            "extends": [],
+            "methods": {
+                "89-97:run": {
+                    "start": 89,
+                    "end": 97,
+                    "body": [
+                        "        public void run() {\n",
+                        "            final Runnable task = ref.get();\n",
+                        "            if (task != null) {\n",
+                        "                task.run();\n",
+                        "            } else {\n",
+                        "                executor.remove(this);\n",
+                        "                taskMap.remove(ref);\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/ref/Reference",
+                            "get()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runnable",
+                            "run()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadPoolExecutor",
+                            "remove(java.lang.Runnable)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "remove(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "84-86:WeakRunner": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "        private WeakRunner(final WeakReference<Runnable> ref) {\n",
+                        "            this.ref = ref;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "WeakRunner(WeakReference<Runnable>)",
+                    "parameters": [
+                        "ref"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "77-77:ref": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "        private final WeakReference<Runnable> ref;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "WeakReference<Runnable>",
+                            "java.lang.ref.WeakReference<Runnable>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,751 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/binary/Base16.java",
+    "imports": {
+        "20-20:import CodecPolicy": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.CodecPolicy;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base16": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BaseNCodec"
+            ],
+            "methods": {
+                "399-401:isInAlphabet0": {
+                    "start": 399,
+                    "end": 401,
+                    "body": [
+                        "    public boolean isInAlphabet0(final byte octet) {\n",
+                        "        return (octet & 0xff) < decodeTable.length && decodeTable[octet] != -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isInAlphabet0(byte)",
+                    "parameters": [
+                        "octet"
+                    ],
+                    "calls": []
+                },
+                "286-288:Base162": {
+                    "start": 286,
+                    "end": 288,
+                    "body": [
+                        "    public static Base16 Base162() {\n",
+                        "        return Base161(false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Base16",
+                            "Base16"
+                        ]
+                    ],
+                    "signature": "Base162()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "282-284:Base161"
+                        ]
+                    ]
+                },
+                "282-284:Base161": {
+                    "start": 282,
+                    "end": 284,
+                    "body": [
+                        "    public static Base16 Base161(final boolean lowerCase) {\n",
+                        "        return new Base16(lowerCase, DECODING_POLICY_DEFAULT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Base16",
+                            "Base16"
+                        ]
+                    ],
+                    "signature": "Base161(boolean)",
+                    "parameters": [
+                        "lowerCase"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "265-280:Base16"
+                        ]
+                    ]
+                },
+                "265-280:Base16": {
+                    "start": 265,
+                    "end": 280,
+                    "body": [
+                        "    public Base16(final boolean lowerCase, final CodecPolicy decodingPolicy) {\n",
+                        "        super(  2,\n",
+                        "                BYTES_PER_UNENCODED_BLOCK,\n",
+                        "                BYTES_PER_ENCODED_BLOCK,\n",
+                        "                0,\n",
+                        "                0,\n",
+                        "                PAD_DEFAULT,\n",
+                        "                decodingPolicy);\n",
+                        "        if (lowerCase) {\n",
+                        "            this.encodeTable = LOWER_CASE_ENCODE_TABLE;\n",
+                        "            this.decodeTable = LOWER_CASE_DECODE_TABLE;\n",
+                        "        } else {\n",
+                        "            this.encodeTable = UPPER_CASE_ENCODE_TABLE;\n",
+                        "            this.decodeTable = UPPER_CASE_DECODE_TABLE;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Base16(boolean, CodecPolicy)",
+                    "parameters": [
+                        "lowerCase",
+                        "decodingPolicy"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "333-357:BaseNCodec"
+                        ]
+                    ]
+                },
+                "409-416:validateTrailingCharacter": {
+                    "start": 409,
+                    "end": 416,
+                    "body": [
+                        "    private void validateTrailingCharacter() {\n",
+                        "        if (isStrictDecoding()) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Strict decoding: Last encoded character is a valid base 16 alphabet\"\n",
+                        "                            + \"character but not a possible encoding. \"\n",
+                        "                            + \"Decoding requires at least two characters to create one byte.\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "validateTrailingCharacter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "658-660:isStrictDecoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "349-360:decodeOctet": {
+                    "start": 349,
+                    "end": 360,
+                    "body": [
+                        "    private int decodeOctet(final byte octet) {\n",
+                        "        int decoded = -1;\n",
+                        "        if ((octet & 0xff) < decodeTable.length) {\n",
+                        "            decoded = decodeTable[octet];\n",
+                        "        }\n",
+                        "\n",
+                        "        if (decoded == -1) {\n",
+                        "            throw new IllegalArgumentException(\"Invalid octet in encoded value: \" + (int) octet);\n",
+                        "        }\n",
+                        "\n",
+                        "        return decoded;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decodeOctet(byte)",
+                    "parameters": [
+                        "octet"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "363-389:encode2": {
+                    "start": 363,
+                    "end": 389,
+                    "body": [
+                        "    void encode2(final byte[] data, final int offset, final int length, final Context context) {\n",
+                        "        if (context.eof) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (length < 0) {\n",
+                        "            context.eof = true;\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int size = length * BYTES_PER_ENCODED_BLOCK;\n",
+                        "        if (size < 0) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Input length exceeds maximum size for encoded data: \" + length);\n",
+                        "        }\n",
+                        "\n",
+                        "        final byte[] buffer = ensureBufferSize(size, context);\n",
+                        "\n",
+                        "        final int end = offset + length;\n",
+                        "        for (int i = offset; i < end; i++) {\n",
+                        "            final int value = data[i];\n",
+                        "            final int high = (value >> BITS_PER_ENCODED_BYTE) & MASK_4BITS;\n",
+                        "            final int low = value & MASK_4BITS;\n",
+                        "            buffer[context.pos++] = encodeTable[high];\n",
+                        "            buffer[context.pos++] = encodeTable[low];\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "encode2(byte[], int, int, Context)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "context"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "545-555:ensureBufferSize"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "303-347:decode1": {
+                    "start": 303,
+                    "end": 347,
+                    "body": [
+                        "    void decode1(final byte[] data, int offset, final int length, final Context context) {\n",
+                        "        if (context.eof || length < 0) {\n",
+                        "            context.eof = true;\n",
+                        "            if (context.ibitWorkArea != 0) {\n",
+                        "                validateTrailingCharacter();\n",
+                        "            }\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int dataLen = Math.min(data.length - offset, length);\n",
+                        "        final int availableChars = (context.ibitWorkArea != 0 ? 1 : 0) + dataLen;\n",
+                        "\n",
+                        "        if (availableChars == 1 && availableChars == dataLen) {\n",
+                        "            context.ibitWorkArea = decodeOctet(data[offset]) + 1;\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int charsToProcess =\n",
+                        "                availableChars % BYTES_PER_ENCODED_BLOCK == 0 ? availableChars : availableChars - 1;\n",
+                        "\n",
+                        "        final byte[] buffer = ensureBufferSize(charsToProcess / BYTES_PER_ENCODED_BLOCK, context);\n",
+                        "\n",
+                        "        int result;\n",
+                        "        int i = 0;\n",
+                        "        if (dataLen < availableChars) {\n",
+                        "            result = (context.ibitWorkArea - 1) << BITS_PER_ENCODED_BYTE;\n",
+                        "            result |= decodeOctet(data[offset++]);\n",
+                        "            i = 2;\n",
+                        "\n",
+                        "            buffer[context.pos++] = (byte) result;\n",
+                        "\n",
+                        "            context.ibitWorkArea = 0;\n",
+                        "        }\n",
+                        "\n",
+                        "        while (i < charsToProcess) {\n",
+                        "            result = decodeOctet(data[offset++]) << BITS_PER_ENCODED_BYTE;\n",
+                        "            result |= decodeOctet(data[offset++]);\n",
+                        "            i += 2;\n",
+                        "            buffer[context.pos++] = (byte) result;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (i < dataLen) {\n",
+                        "            context.ibitWorkArea = decodeOctet(data[i]) + 1;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decode1(byte[], int, int, Context)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "context"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "545-555:ensureBufferSize"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "409-416:validateTrailingCharacter"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base16",
+                            "Base16",
+                            "349-360:decodeOctet"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "262-262:encodeTable": {
+                    "start": 262,
+                    "end": 262,
+                    "body": [
+                        "    private final byte[] encodeTable;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "259-259:decodeTable": {
+                    "start": 259,
+                    "end": 259,
+                    "body": [
+                        "    private final byte[] decodeTable;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "256-256:MASK_4BITS": {
+                    "start": 256,
+                    "end": 256,
+                    "body": [
+                        "    private static final int MASK_4BITS = 0x0f;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "251-253:LOWER_CASE_ENCODE_TABLE": {
+                    "start": 251,
+                    "end": 253,
+                    "body": [
+                        "    private static final byte[] LOWER_CASE_ENCODE_TABLE = {\n",
+                        "        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "141-245:LOWER_CASE_DECODE_TABLE": {
+                    "start": 141,
+                    "end": 245,
+                    "body": [
+                        "    private static final byte[] LOWER_CASE_DECODE_TABLE = {\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 00-0f\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 10-1f\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 20-2f\n",
+                        "        0,\n",
+                        "        1,\n",
+                        "        2,\n",
+                        "        3,\n",
+                        "        4,\n",
+                        "        5,\n",
+                        "        6,\n",
+                        "        7,\n",
+                        "        8,\n",
+                        "        9,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 30-3f 0-9\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 40-4f\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 50-5f\n",
+                        "        -1,\n",
+                        "        10,\n",
+                        "        11,\n",
+                        "        12,\n",
+                        "        13,\n",
+                        "        14,\n",
+                        "        15 // 60-66 a-f\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "132-134:UPPER_CASE_ENCODE_TABLE": {
+                    "start": 132,
+                    "end": 134,
+                    "body": [
+                        "    private static final byte[] UPPER_CASE_ENCODE_TABLE = {\n",
+                        "        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "54-126:UPPER_CASE_DECODE_TABLE": {
+                    "start": 54,
+                    "end": 126,
+                    "body": [
+                        "    private static final byte[] UPPER_CASE_DECODE_TABLE = {\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 00-0f\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 10-1f\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 20-2f\n",
+                        "        0,\n",
+                        "        1,\n",
+                        "        2,\n",
+                        "        3,\n",
+                        "        4,\n",
+                        "        5,\n",
+                        "        6,\n",
+                        "        7,\n",
+                        "        8,\n",
+                        "        9,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1,\n",
+                        "        -1, // 30-3f 0-9\n",
+                        "        -1,\n",
+                        "        10,\n",
+                        "        11,\n",
+                        "        12,\n",
+                        "        13,\n",
+                        "        14,\n",
+                        "        15 // 40-46 A-F\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "46-46:BYTES_PER_UNENCODED_BLOCK": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final int BYTES_PER_UNENCODED_BLOCK = 1;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "45-45:BYTES_PER_ENCODED_BLOCK": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final int BYTES_PER_ENCODED_BLOCK = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "43-43:BITS_PER_ENCODED_BYTE": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final int BITS_PER_ENCODED_BYTE = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

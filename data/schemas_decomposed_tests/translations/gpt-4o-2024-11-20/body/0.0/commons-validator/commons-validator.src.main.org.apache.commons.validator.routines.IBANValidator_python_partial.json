@@ -1,0 +1,1026 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/IBANValidator.java",
+    "imports": {
+        "22-22:import Map": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "23-23:import ConcurrentHashMap": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.concurrent.ConcurrentHashMap;\n"
+            ]
+        },
+        "21-21:import Arrays": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "19-19:import IBANCheckDigit": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.IBANCheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Validator": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "IBANValidator",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "58-81:Validator": {
+                    "start": 58,
+                    "end": 81,
+                    "body": [
+                        "        public Validator(String cc, int len, String format) {\n",
+                        "            if (!(cc.length() == 2\n",
+                        "                    && Character.isUpperCase(cc.charAt(0))\n",
+                        "                    && Character.isUpperCase(cc.charAt(1)))) {\n",
+                        "                throw new IllegalArgumentException(\n",
+                        "                        \"Invalid country Code; must be exactly 2 upper-case characters\");\n",
+                        "            }\n",
+                        "            if (len > MAX_LEN || len < MIN_LEN) {\n",
+                        "                throw new IllegalArgumentException(\n",
+                        "                        \"Invalid length parameter, must be in range \"\n",
+                        "                                + MIN_LEN\n",
+                        "                                + \" to \"\n",
+                        "                                + MAX_LEN\n",
+                        "                                + \" inclusive: \"\n",
+                        "                                + len);\n",
+                        "            }\n",
+                        "            if (!format.startsWith(cc)) {\n",
+                        "                throw new IllegalArgumentException(\n",
+                        "                        \"countryCode '\" + cc + \"' does not agree with format: \" + format);\n",
+                        "            }\n",
+                        "            this.countryCode = cc;\n",
+                        "            this.lengthOfIBAN = len;\n",
+                        "            this.validator = RegexValidator.RegexValidator3(format);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Validator(String, int, String)",
+                    "parameters": [
+                        "cc",
+                        "len",
+                        "format"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isUpperCase(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "98-100:RegexValidator3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, cc: str, len_: int, format_: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "49-49:lengthOfIBAN": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "        final int lengthOfIBAN; // used to avoid unnecessary regex matching\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    lengthOfIBAN: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:validator": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "        final RegexValidator validator;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    validator: RegexValidator = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:countryCode": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "        final String countryCode;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    countryCode: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:MAX_LEN": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "        private static final int MAX_LEN = 34; // defined by [3]\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:MIN_LEN": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "        private static final int MIN_LEN = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MIN_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Validator:\n\n"
+        },
+        "IBANValidator": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Validator"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "297-305:setValidator1": {
+                    "start": 297,
+                    "end": 305,
+                    "body": [
+                        "    public Validator setValidator1(String countryCode, int length, String format) {\n",
+                        "        if (this == DEFAULT_IBAN_VALIDATOR) {\n",
+                        "            throw new IllegalStateException(\"The singleton validator cannot be modified\");\n",
+                        "        }\n",
+                        "        if (length < 0) {\n",
+                        "            return formatValidators.remove(countryCode);\n",
+                        "        }\n",
+                        "        return setValidator0(new Validator(countryCode, length, format));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Validator",
+                            "Validator"
+                        ]
+                    ],
+                    "signature": "setValidator1(String, int, String)",
+                    "parameters": [
+                        "countryCode",
+                        "length",
+                        "format"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "IBANValidator",
+                            "279-284:setValidator0"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "Validator",
+                            "58-81:Validator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setValidator1(self, countryCode: str, length: int, format_: str) -> Validator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "279-284:setValidator0": {
+                    "start": 279,
+                    "end": 284,
+                    "body": [
+                        "    public Validator setValidator0(Validator validator) {\n",
+                        "        if (this == DEFAULT_IBAN_VALIDATOR) {\n",
+                        "            throw new IllegalStateException(\"The singleton validator cannot be modified\");\n",
+                        "        }\n",
+                        "        return formatValidators.put(validator.countryCode, validator);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Validator",
+                            "Validator"
+                        ]
+                    ],
+                    "signature": "setValidator0(Validator)",
+                    "parameters": [
+                        "validator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,org.apache.commons.validator.routines.IBANValidator.Validator)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setValidator0(self, validator: Validator) -> Validator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "264-270:getValidator": {
+                    "start": 264,
+                    "end": 270,
+                    "body": [
+                        "    public Validator getValidator(String code) {\n",
+                        "        if (code == null || code.length() < 2) { // ensure we can extract the code\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        String key = code.substring(0, 2);\n",
+                        "        return formatValidators.get(key);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Validator",
+                            "Validator"
+                        ]
+                    ],
+                    "signature": "getValidator(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getValidator(self, code: str) -> Validator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "254-256:getDefaultValidators": {
+                    "start": 254,
+                    "end": 256,
+                    "body": [
+                        "    public Validator[] getDefaultValidators() {\n",
+                        "        return Arrays.copyOf(DEFAULT_FORMATS, DEFAULT_FORMATS.length);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Validator[]",
+                            "Validator[]"
+                        ]
+                    ],
+                    "signature": "getDefaultValidators()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(java.lang.Object[],int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getDefaultValidators(self) -> typing.List[Validator]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "245-247:hasValidator": {
+                    "start": 245,
+                    "end": 247,
+                    "body": [
+                        "    public boolean hasValidator(String code) {\n",
+                        "        return getValidator(code) != null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasValidator(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "IBANValidator",
+                            "264-270:getValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def hasValidator(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "229-237:isValid": {
+                    "start": 229,
+                    "end": 237,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        Validator formatValidator = getValidator(code);\n",
+                        "        if (formatValidator == null\n",
+                        "                || code.length() != formatValidator.lengthOfIBAN\n",
+                        "                || !formatValidator.validator.isValid(code)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        return IBANCheckDigit.IBAN_CHECK_DIGIT.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "IBANValidator",
+                            "264-270:getValidator"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "132-142:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "63-63:isValid"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "206-208:IBANValidator1": {
+                    "start": 206,
+                    "end": 208,
+                    "body": [
+                        "    public static IBANValidator IBANValidator1() {\n",
+                        "        return new IBANValidator(DEFAULT_FORMATS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "IBANValidator",
+                            "IBANValidator"
+                        ]
+                    ],
+                    "signature": "IBANValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "IBANValidator",
+                            "202-204:IBANValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def IBANValidator1() -> IBANValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "202-204:IBANValidator": {
+                    "start": 202,
+                    "end": 204,
+                    "body": [
+                        "    public IBANValidator(Validator[] formatMap) {\n",
+                        "        this.formatValidators = createValidators(formatMap);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IBANValidator(Validator[])",
+                    "parameters": [
+                        "formatMap"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.IBANValidator",
+                            "IBANValidator",
+                            "215-221:createValidators"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, formatMap: typing.List[Validator]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "197-199:getInstance": {
+                    "start": 197,
+                    "end": 199,
+                    "body": [
+                        "    public static IBANValidator getInstance() {\n",
+                        "        return DEFAULT_IBAN_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "IBANValidator",
+                            "IBANValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> IBANValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "215-221:createValidators": {
+                    "start": 215,
+                    "end": 221,
+                    "body": [
+                        "    private Map<String, Validator> createValidators(Validator[] formatMap) {\n",
+                        "        Map<String, Validator> m = new ConcurrentHashMap<String, Validator>();\n",
+                        "        for (Validator v : formatMap) {\n",
+                        "            m.put(v.countryCode, v);\n",
+                        "        }\n",
+                        "        return m;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,Validator>",
+                            "java.util.Map<String,Validator>"
+                        ]
+                    ],
+                    "signature": "createValidators(Validator[])",
+                    "parameters": [
+                        "formatMap"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ConcurrentHashMap",
+                            "ConcurrentHashMap<String,Validator>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,org.apache.commons.validator.routines.IBANValidator.Validator)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __createValidators(self, formatMap: typing.List[Validator]) -> typing.Dict[str, Validator]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "190-190:DEFAULT_IBAN_VALIDATOR": {
+                    "start": 190,
+                    "end": 190,
+                    "body": [
+                        "    public static final IBANValidator DEFAULT_IBAN_VALIDATOR = IBANValidator.IBANValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "IBANValidator",
+                            "IBANValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DEFAULT_IBAN_VALIDATOR: IBANValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "109-187:DEFAULT_FORMATS": {
+                    "start": 109,
+                    "end": 187,
+                    "body": [
+                        "    private static final Validator[] DEFAULT_FORMATS = {\n",
+                        "        new Validator(\"AD\", 24, \"AD\\\\d{10}[A-Z0-9]{12}\"), // Andorra\n",
+                        "        new Validator(\"AE\", 23, \"AE\\\\d{21}\"), // United Arab Emirates (The)\n",
+                        "        new Validator(\"AL\", 28, \"AL\\\\d{10}[A-Z0-9]{16}\"), // Albania\n",
+                        "        new Validator(\"AT\", 20, \"AT\\\\d{18}\"), // Austria\n",
+                        "        new Validator(\"AZ\", 28, \"AZ\\\\d{2}[A-Z]{4}[A-Z0-9]{20}\"), // Azerbaijan\n",
+                        "        new Validator(\"BA\", 20, \"BA\\\\d{18}\"), // Bosnia and Herzegovina\n",
+                        "        new Validator(\"BE\", 16, \"BE\\\\d{14}\"), // Belgium\n",
+                        "        new Validator(\"BG\", 22, \"BG\\\\d{2}[A-Z]{4}\\\\d{6}[A-Z0-9]{8}\"), // Bulgaria\n",
+                        "        new Validator(\"BH\", 22, \"BH\\\\d{2}[A-Z]{4}[A-Z0-9]{14}\"), // Bahrain\n",
+                        "        new Validator(\"BR\", 29, \"BR\\\\d{25}[A-Z]{1}[A-Z0-9]{1}\"), // Brazil\n",
+                        "        new Validator(\"BY\", 28, \"BY\\\\d{2}[A-Z0-9]{4}\\\\d{4}[A-Z0-9]{16}\"), // Republic of Belarus\n",
+                        "        new Validator(\"CH\", 21, \"CH\\\\d{7}[A-Z0-9]{12}\"), // Switzerland\n",
+                        "        new Validator(\"CR\", 22, \"CR\\\\d{20}\"), // Costa Rica\n",
+                        "        new Validator(\"CY\", 28, \"CY\\\\d{10}[A-Z0-9]{16}\"), // Cyprus\n",
+                        "        new Validator(\"CZ\", 24, \"CZ\\\\d{22}\"), // Czechia\n",
+                        "        new Validator(\"DE\", 22, \"DE\\\\d{20}\"), // Germany\n",
+                        "        new Validator(\"DK\", 18, \"DK\\\\d{16}\"), // Denmark\n",
+                        "        new Validator(\"DO\", 28, \"DO\\\\d{2}[A-Z0-9]{4}\\\\d{20}\"), // Dominican Republic\n",
+                        "        new Validator(\"EE\", 20, \"EE\\\\d{18}\"), // Estonia\n",
+                        "        new Validator(\"EG\", 29, \"EG\\\\d{27}\"), // Egypt\n",
+                        "        new Validator(\"ES\", 24, \"ES\\\\d{22}\"), // Spain\n",
+                        "        new Validator(\"FI\", 18, \"FI\\\\d{16}\"), // Finland\n",
+                        "        new Validator(\"FO\", 18, \"FO\\\\d{16}\"), // Faroe Islands\n",
+                        "        new Validator(\"FR\", 27, \"FR\\\\d{12}[A-Z0-9]{11}\\\\d{2}\"), // France\n",
+                        "        new Validator(\"GB\", 22, \"GB\\\\d{2}[A-Z]{4}\\\\d{14}\"), // United Kingdom\n",
+                        "        new Validator(\"GE\", 22, \"GE\\\\d{2}[A-Z]{2}\\\\d{16}\"), // Georgia\n",
+                        "        new Validator(\"GI\", 23, \"GI\\\\d{2}[A-Z]{4}[A-Z0-9]{15}\"), // Gibraltar\n",
+                        "        new Validator(\"GL\", 18, \"GL\\\\d{16}\"), // Greenland\n",
+                        "        new Validator(\"GR\", 27, \"GR\\\\d{9}[A-Z0-9]{16}\"), // Greece\n",
+                        "        new Validator(\"GT\", 28, \"GT\\\\d{2}[A-Z0-9]{24}\"), // Guatemala\n",
+                        "        new Validator(\"HR\", 21, \"HR\\\\d{19}\"), // Croatia\n",
+                        "        new Validator(\"HU\", 28, \"HU\\\\d{26}\"), // Hungary\n",
+                        "        new Validator(\"IE\", 22, \"IE\\\\d{2}[A-Z]{4}\\\\d{14}\"), // Ireland\n",
+                        "        new Validator(\"IL\", 23, \"IL\\\\d{21}\"), // Israel\n",
+                        "        new Validator(\"IQ\", 23, \"IQ\\\\d{2}[A-Z]{4}\\\\d{15}\"), // Iraq\n",
+                        "        new Validator(\"IS\", 26, \"IS\\\\d{24}\"), // Iceland\n",
+                        "        new Validator(\"IT\", 27, \"IT\\\\d{2}[A-Z]{1}\\\\d{10}[A-Z0-9]{12}\"), // Italy\n",
+                        "        new Validator(\"JO\", 30, \"JO\\\\d{2}[A-Z]{4}\\\\d{4}[A-Z0-9]{18}\"), // Jordan\n",
+                        "        new Validator(\"KW\", 30, \"KW\\\\d{2}[A-Z]{4}[A-Z0-9]{22}\"), // Kuwait\n",
+                        "        new Validator(\"KZ\", 20, \"KZ\\\\d{5}[A-Z0-9]{13}\"), // Kazakhstan\n",
+                        "        new Validator(\"LB\", 28, \"LB\\\\d{6}[A-Z0-9]{20}\"), // Lebanon\n",
+                        "        new Validator(\"LC\", 32, \"LC\\\\d{2}[A-Z]{4}[A-Z0-9]{24}\"), // Saint Lucia\n",
+                        "        new Validator(\"LI\", 21, \"LI\\\\d{7}[A-Z0-9]{12}\"), // Liechtenstein\n",
+                        "        new Validator(\"LT\", 20, \"LT\\\\d{18}\"), // Lithuania\n",
+                        "        new Validator(\"LU\", 20, \"LU\\\\d{5}[A-Z0-9]{13}\"), // Luxembourg\n",
+                        "        new Validator(\"LV\", 21, \"LV\\\\d{2}[A-Z]{4}[A-Z0-9]{13}\"), // Latvia\n",
+                        "        new Validator(\"MC\", 27, \"MC\\\\d{12}[A-Z0-9]{11}\\\\d{2}\"), // Monaco\n",
+                        "        new Validator(\"MD\", 24, \"MD\\\\d{2}[A-Z0-9]{20}\"), // Moldova\n",
+                        "        new Validator(\"ME\", 22, \"ME\\\\d{20}\"), // Montenegro\n",
+                        "        new Validator(\"MK\", 19, \"MK\\\\d{5}[A-Z0-9]{10}\\\\d{2}\"), // Macedonia\n",
+                        "        new Validator(\"MR\", 27, \"MR\\\\d{25}\"), // Mauritania\n",
+                        "        new Validator(\"MT\", 31, \"MT\\\\d{2}[A-Z]{4}\\\\d{5}[A-Z0-9]{18}\"), // Malta\n",
+                        "        new Validator(\"MU\", 30, \"MU\\\\d{2}[A-Z]{4}\\\\d{19}[A-Z]{3}\"), // Mauritius\n",
+                        "        new Validator(\"NL\", 18, \"NL\\\\d{2}[A-Z]{4}\\\\d{10}\"), // Netherlands (The)\n",
+                        "        new Validator(\"NO\", 15, \"NO\\\\d{13}\"), // Norway\n",
+                        "        new Validator(\"PK\", 24, \"PK\\\\d{2}[A-Z]{4}[A-Z0-9]{16}\"), // Pakistan\n",
+                        "        new Validator(\"PL\", 28, \"PL\\\\d{26}\"), // Poland\n",
+                        "        new Validator(\"PS\", 29, \"PS\\\\d{2}[A-Z]{4}[A-Z0-9]{21}\"), // Palestine, State of\n",
+                        "        new Validator(\"PT\", 25, \"PT\\\\d{23}\"), // Portugal\n",
+                        "        new Validator(\"QA\", 29, \"QA\\\\d{2}[A-Z]{4}[A-Z0-9]{21}\"), // Qatar\n",
+                        "        new Validator(\"RO\", 24, \"RO\\\\d{2}[A-Z]{4}[A-Z0-9]{16}\"), // Romania\n",
+                        "        new Validator(\"RS\", 22, \"RS\\\\d{20}\"), // Serbia\n",
+                        "        new Validator(\"SA\", 24, \"SA\\\\d{4}[A-Z0-9]{18}\"), // Saudi Arabia\n",
+                        "        new Validator(\"SC\", 31, \"SC\\\\d{2}[A-Z]{4}\\\\d{20}[A-Z]{3}\"), // Seychelles\n",
+                        "        new Validator(\"SE\", 24, \"SE\\\\d{22}\"), // Sweden\n",
+                        "        new Validator(\"SI\", 19, \"SI\\\\d{17}\"), // Slovenia\n",
+                        "        new Validator(\"SK\", 24, \"SK\\\\d{22}\"), // Slovakia\n",
+                        "        new Validator(\"SM\", 27, \"SM\\\\d{2}[A-Z]{1}\\\\d{10}[A-Z0-9]{12}\"), // San Marino\n",
+                        "        new Validator(\"ST\", 25, \"ST\\\\d{23}\"), // Sao Tome and Principe\n",
+                        "        new Validator(\"SV\", 28, \"SV\\\\d{2}[A-Z]{4}\\\\d{20}\"), // El Salvador\n",
+                        "        new Validator(\"TL\", 23, \"TL\\\\d{21}\"), // Timor-Leste\n",
+                        "        new Validator(\"TN\", 24, \"TN\\\\d{22}\"), // Tunisia\n",
+                        "        new Validator(\"TR\", 26, \"TR\\\\d{8}[A-Z0-9]{16}\"), // Turkey\n",
+                        "        new Validator(\"UA\", 29, \"UA\\\\d{8}[A-Z0-9]{19}\"), // Ukraine\n",
+                        "        new Validator(\"VA\", 22, \"VA\\\\d{20}\"), // Vatican City State\n",
+                        "        new Validator(\"VG\", 24, \"VG\\\\d{2}[A-Z]{4}\\\\d{16}\"), // Virgin Islands\n",
+                        "        new Validator(\"XK\", 20, \"XK\\\\d{18}\"), // Kosovo\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Validator[]",
+                            "Validator[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DEFAULT_FORMATS: typing.List[Validator] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "32-32:formatValidators": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private final Map<String, Validator> formatValidators;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<String,Validator>",
+                            "java.util.Map<String,Validator>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __formatValidators: typing.Dict[str, Validator] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IBANValidator:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.ValidatorResources import *",
+        "from src.main.org.apache.commons.validator.routines.RegexValidator import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *"
+    ]
+}

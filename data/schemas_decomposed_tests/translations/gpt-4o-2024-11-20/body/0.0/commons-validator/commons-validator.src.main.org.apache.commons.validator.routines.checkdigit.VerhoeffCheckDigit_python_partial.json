@@ -1,0 +1,422 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/checkdigit/VerhoeffCheckDigit.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        }
+    },
+    "classes": {
+        "VerhoeffCheckDigit": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "CheckDigit"
+            ],
+            "extends": [],
+            "methods": {
+                "98-104:calculate": {
+                    "start": 98,
+                    "end": 104,
+                    "body": [
+                        "    public String calculate(String code) throws CheckDigitException {\n",
+                        "        if (code == null || code.length() == 0) {\n",
+                        "            throw CheckDigitException.CheckDigitException1(\"Code is missing\");\n",
+                        "        }\n",
+                        "        int checksum = calculateChecksum(code, false);\n",
+                        "        return Integer.toString(INV_TABLE[checksum]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "calculate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.VerhoeffCheckDigit",
+                            "VerhoeffCheckDigit",
+                            "114-128:calculateChecksum"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "toString(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def calculate(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "78-87:isValid": {
+                    "start": 78,
+                    "end": 87,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        if (code == null || code.length() == 0) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            return (calculateChecksum(code, true) == 0);\n",
+                        "        } catch (CheckDigitException e) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.VerhoeffCheckDigit",
+                            "VerhoeffCheckDigit",
+                            "114-128:calculateChecksum"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, code: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "114-128:calculateChecksum": {
+                    "start": 114,
+                    "end": 128,
+                    "body": [
+                        "    private int calculateChecksum(String code, boolean includesCheckDigit)\n",
+                        "            throws CheckDigitException {\n",
+                        "        int checksum = 0;\n",
+                        "        for (int i = 0; i < code.length(); i++) {\n",
+                        "            int idx = code.length() - (i + 1);\n",
+                        "            int num = Character.getNumericValue(code.charAt(idx));\n",
+                        "            if (num < 0 || num > 9) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "                throw CheckDigitException.CheckDigitException1(\n",
+                        "                        \"Invalid Character[\" + i + \"] = '\" + ((int) code.charAt(idx)) + \"'\");\n",
+                        "            }\n",
+                        "            int pos = includesCheckDigit ? i : i + 1;\n",
+                        "            checksum = D_TABLE[checksum][P_TABLE[pos % 8][num]]; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        }\n",
+                        "        return checksum;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateChecksum(String, boolean)",
+                    "parameters": [
+                        "code",
+                        "includesCheckDigit"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "getNumericValue(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __calculateChecksum(self, code: str, includesCheckDigit: bool) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "38-38:VERHOEFF_CHECK_DIGIT": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    public static final CheckDigit VERHOEFF_CHECK_DIGIT = new VerhoeffCheckDigit();\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    VERHOEFF_CHECK_DIGIT: CheckDigit = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "69-69:INV_TABLE": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "    private static final int[] INV_TABLE = new int[] {0, 4, 3, 2, 1, 5, 6, 7, 8, 9};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __INV_TABLE: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "56-66:P_TABLE": {
+                    "start": 56,
+                    "end": 66,
+                    "body": [
+                        "    private static final int[][] P_TABLE =\n",
+                        "            new int[][] {\n",
+                        "                {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},\n",
+                        "                {1, 5, 7, 6, 2, 8, 3, 0, 9, 4},\n",
+                        "                {5, 8, 0, 3, 7, 9, 6, 1, 4, 2},\n",
+                        "                {8, 9, 1, 6, 0, 4, 3, 5, 2, 7},\n",
+                        "                {9, 4, 5, 3, 1, 2, 6, 8, 7, 0},\n",
+                        "                {4, 2, 8, 6, 5, 7, 3, 9, 0, 1},\n",
+                        "                {2, 7, 9, 3, 8, 0, 6, 4, 1, 5},\n",
+                        "                {7, 0, 4, 6, 9, 1, 3, 2, 5, 8}\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __P_TABLE: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "41-53:D_TABLE": {
+                    "start": 41,
+                    "end": 53,
+                    "body": [
+                        "    private static final int[][] D_TABLE =\n",
+                        "            new int[][] {\n",
+                        "                {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},\n",
+                        "                {1, 2, 3, 4, 0, 6, 7, 8, 9, 5},\n",
+                        "                {2, 3, 4, 0, 1, 7, 8, 9, 5, 6},\n",
+                        "                {3, 4, 0, 1, 2, 8, 9, 5, 6, 7},\n",
+                        "                {4, 0, 1, 2, 3, 9, 5, 6, 7, 8},\n",
+                        "                {5, 9, 8, 7, 6, 0, 4, 3, 2, 1},\n",
+                        "                {6, 5, 9, 8, 7, 1, 0, 4, 3, 2},\n",
+                        "                {7, 6, 5, 9, 8, 2, 1, 0, 4, 3},\n",
+                        "                {8, 7, 6, 5, 9, 3, 2, 1, 0, 4},\n",
+                        "                {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}\n",
+                        "            };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __D_TABLE: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "35-35:serialVersionUID": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private static final long serialVersionUID = 4138993995483695178L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class VerhoeffCheckDigit(CheckDigit):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException import *"
+    ]
+}

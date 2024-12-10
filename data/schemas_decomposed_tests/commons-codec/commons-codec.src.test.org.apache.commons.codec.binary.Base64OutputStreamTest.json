@@ -1,0 +1,1913 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/test/java/org/apache/commons/codec/binary/Base64OutputStreamTest.java",
+    "imports": {
+        "30-30:import OutputStream": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "29-29:import ByteArrayOutputStream": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "27-27:import Test": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "26-26:import CodecPolicy": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.codec.CodecPolicy;\n"
+            ]
+        },
+        "24-24:import static Assert.fail": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        },
+        "21-21:import static Assert.assertEquals": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "20-20:import static Assert.assertArrayEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "22-22:import static Assert.assertFalse": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.Assert.assertFalse;\n"
+            ]
+        },
+        "23-23:import static Assert.assertTrue": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Base64OutputStreamTest": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "591-611:testStrictDecoding_test0_decomposed": {
+                    "start": 591,
+                    "end": 611,
+                    "body": [
+                        "    public void testStrictDecoding_test0_decomposed() throws Exception {\n",
+                        "        for (final String s : Base64Test.BASE64_IMPOSSIBLE_CASES) {\n",
+                        "            final byte[] encoded = StringUtils.getBytesUtf8(s);\n",
+                        "            ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "            BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream1(bout, false);\n",
+                        "            assertFalse(out.isStrictDecoding());\n",
+                        "            out.write(encoded);\n",
+                        "            out.close();\n",
+                        "            assertTrue(bout.size() > 0);\n",
+                        "\n",
+                        "            bout = new ByteArrayOutputStream();\n",
+                        "            out = new Base64OutputStream(bout, false, 0, null, CodecPolicy.STRICT);\n",
+                        "            assertTrue(out.isStrictDecoding());\n",
+                        "            try {\n",
+                        "                out.write(encoded);\n",
+                        "                out.close();\n",
+                        "                fail();\n",
+                        "            } catch (final IllegalArgumentException ex) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testStrictDecoding_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse(boolean)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "136-138:isStrictDecoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FilterOutputStream",
+                            "write(byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "74-78:close"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "size()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "124-131:Base64OutputStream"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail()"
+                        ]
+                    ]
+                },
+                "581-588:testWriteToNullCoverage_test0_decomposed": {
+                    "start": 581,
+                    "end": 588,
+                    "body": [
+                        "    public void testWriteToNullCoverage_test0_decomposed() throws Exception {\n",
+                        "        final ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "        try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {\n",
+                        "            out.write0(null, 0, 0);\n",
+                        "            fail(\"Expcted Base64OutputStream.write(null) to throw a NullPointerException\");\n",
+                        "        } catch (final NullPointerException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWriteToNullCoverage_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "72-74:Base64OutputStream0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ]
+                    ]
+                },
+                "541-578:testWriteOutOfBounds_test0_decomposed": {
+                    "start": 541,
+                    "end": 578,
+                    "body": [
+                        "    public void testWriteOutOfBounds_test0_decomposed() throws Exception {\n",
+                        "        final byte[] buf = new byte[1024];\n",
+                        "        final ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "        try (final BaseNCodecOutputStream out = Base64OutputStream.Base64OutputStream0(bout)) {\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, -1, 1);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, -1, 1) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, 1, -1);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, 1, -1) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, buf.length + 1, 0);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, buf.length + 1, 0) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                out.write0(buf, buf.length - 1, 2);\n",
+                        "                fail(\n",
+                        "                        \"Expected Base64OutputStream.write(buf, buf.length - 1, 2) to throw a\"\n",
+                        "                                + \" IndexOutOfBoundsException\");\n",
+                        "            } catch (final IndexOutOfBoundsException ioobe) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testWriteOutOfBounds_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "72-74:Base64OutputStream0"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ]
+                    ]
+                },
+                "517-538:testBase64OutputStreamByteByByte_test9_decomposed": {
+                    "start": 517,
+                    "end": 538,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test9_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 0, LF);\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "        for (int i = 0; i <= 150; i++) {\n",
+                        "            final byte[][] randomData = BaseNTestData.randomData(codec, i);\n",
+                        "            encoded = randomData[1];\n",
+                        "            decoded = randomData[0];\n",
+                        "            testByteByByte(encoded, decoded, 0, LF);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64",
+                            "Base64",
+                            "460-463:Base641"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.BaseNTestData",
+                            "BaseNTestData",
+                            "167-173:randomData"
+                        ]
+                    ]
+                },
+                "499-514:testBase64OutputStreamByteByByte_test8_decomposed": {
+                    "start": 499,
+                    "end": 514,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test8_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 0, LF);\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64",
+                            "Base64",
+                            "460-463:Base641"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "482-496:testBase64OutputStreamByteByByte_test7_decomposed": {
+                    "start": 482,
+                    "end": 496,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test7_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 0, LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "467-479:testBase64OutputStreamByteByByte_test6_decomposed": {
+                    "start": 467,
+                    "end": 479,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test6_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "454-464:testBase64OutputStreamByteByByte_test5_decomposed": {
+                    "start": 454,
+                    "end": 464,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test5_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByteByByte(encoded, decoded, 64, LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "443-451:testBase64OutputStreamByteByByte_test4_decomposed": {
+                    "start": 443,
+                    "end": 451,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test4_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "433-440:testBase64OutputStreamByteByByte_test3_decomposed": {
+                    "start": 433,
+                    "end": 440,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test3_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "425-430:testBase64OutputStreamByteByByte_test2_decomposed": {
+                    "start": 425,
+                    "end": 430,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test2_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "418-422:testBase64OutputStreamByteByByte_test1_decomposed": {
+                    "start": 418,
+                    "end": 422,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test1_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByteByByte(encoded, decoded, 76, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ]
+                    ]
+                },
+                "412-415:testBase64OutputStreamByteByByte_test0_decomposed": {
+                    "start": 412,
+                    "end": 415,
+                    "body": [
+                        "    public void testBase64OutputStreamByteByByte_test0_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByteByByte_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ]
+                },
+                "388-409:testBase64OutputStreamByChunk_test9_decomposed": {
+                    "start": 388,
+                    "end": 409,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test9_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, 0, LF);\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "        for (int i = 0; i <= 150; i++) {\n",
+                        "            final byte[][] randomData = BaseNTestData.randomData(codec, i);\n",
+                        "            encoded = randomData[1];\n",
+                        "            decoded = randomData[0];\n",
+                        "            testByChunk(encoded, decoded, 0, LF);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64",
+                            "Base64",
+                            "460-463:Base641"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.BaseNTestData",
+                            "BaseNTestData",
+                            "167-173:randomData"
+                        ]
+                    ]
+                },
+                "370-385:testBase64OutputStreamByChunk_test8_decomposed": {
+                    "start": 370,
+                    "end": 385,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test8_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, 0, LF);\n",
+                        "        final BaseNCodec codec = Base64.Base641(0, null, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64",
+                            "Base64",
+                            "460-463:Base641"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "353-367:testBase64OutputStreamByChunk_test7_decomposed": {
+                    "start": 353,
+                    "end": 367,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test7_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, 0, LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "338-350:testBase64OutputStreamByChunk_test6_decomposed": {
+                    "start": 338,
+                    "end": 350,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test6_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "        final String singleLine = Base64TestData.ENCODED_64_CHARS_PER_LINE.replace(\"\\n\", \"\");\n",
+                        "        encoded = StringUtils.getBytesUtf8(singleLine);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "325-335:testBase64OutputStreamByChunk_test5_decomposed": {
+                    "start": 325,
+                    "end": 335,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test5_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "        decoded = BaseNTestData.DECODED;\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.PEM_CHUNK_SIZE, LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "314-322:testBase64OutputStreamByChunk_test4_decomposed": {
+                    "start": 314,
+                    "end": 322,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test4_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(Base64TestData.ENCODED_64_CHARS_PER_LINE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "304-311:testBase64OutputStreamByChunk_test3_decomposed": {
+                    "start": 304,
+                    "end": 311,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test3_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "        decoded = new byte[] {(byte) 0};\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "296-301:testBase64OutputStreamByChunk_test2_decomposed": {
+                    "start": 296,
+                    "end": 301,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test2_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "        encoded = StringUtils.getBytesUtf8(\"AA==\\r\\n\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "289-293:testBase64OutputStreamByChunk_test1_decomposed": {
+                    "start": 289,
+                    "end": 293,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test1_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "        testByChunk(encoded, decoded, BaseNCodec.MIME_CHUNK_SIZE, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                },
+                "283-286:testBase64OutputStreamByChunk_test0_decomposed": {
+                    "start": 283,
+                    "end": 286,
+                    "body": [
+                        "    public void testBase64OutputStreamByChunk_test0_decomposed() throws Exception {\n",
+                        "        byte[] encoded = StringUtils.getBytesUtf8(\"SGVsbG8gV29ybGQ=\\r\\n\");\n",
+                        "        byte[] decoded = StringUtils.getBytesUtf8(STRING_FIXTURE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64OutputStreamByChunk_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ]
+                },
+                "278-280:testBase64EmptyOutputStreamPemChunkSize_test0_decomposed": {
+                    "start": 278,
+                    "end": 280,
+                    "body": [
+                        "    public void testBase64EmptyOutputStreamPemChunkSize_test0_decomposed() throws Exception {\n",
+                        "        testBase64EmptyOutputStream(BaseNCodec.PEM_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStreamPemChunkSize_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "65-70:testBase64EmptyOutputStream"
+                        ]
+                    ]
+                },
+                "273-275:testBase64EmptyOutputStreamMimeChunkSize_test0_decomposed": {
+                    "start": 273,
+                    "end": 275,
+                    "body": [
+                        "    public void testBase64EmptyOutputStreamMimeChunkSize_test0_decomposed() throws Exception {\n",
+                        "        testBase64EmptyOutputStream(BaseNCodec.MIME_CHUNK_SIZE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStreamMimeChunkSize_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "65-70:testBase64EmptyOutputStream"
+                        ]
+                    ]
+                },
+                "257-270:testCodec98NPE_test4_decomposed": {
+                    "start": 257,
+                    "end": 270,
+                    "body": [
+                        "    public void testCodec98NPE_test4_decomposed() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "        final byte[] codec98_1024 = new byte[1024];\n",
+                        "        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);\n",
+                        "        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);\n",
+                        "        try (final BaseNCodecOutputStream stream =\n",
+                        "                Base64OutputStream.Base64OutputStream1(data, false)) {\n",
+                        "            stream.write0(codec98_1024, 0, 1024);\n",
+                        "        }\n",
+                        "        final byte[] decodedBytes = data.toByteArray();\n",
+                        "        final String decoded = StringUtils.newStringUtf8(decodedBytes);\n",
+                        "        assertEquals(\n",
+                        "                \"codec-98 NPE Base64OutputStream\", Base64TestData.CODEC_98_NPE_DECODED, decoded);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "243-254:testCodec98NPE_test3_decomposed": {
+                    "start": 243,
+                    "end": 254,
+                    "body": [
+                        "    public void testCodec98NPE_test3_decomposed() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "        final byte[] codec98_1024 = new byte[1024];\n",
+                        "        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);\n",
+                        "        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);\n",
+                        "        try (final BaseNCodecOutputStream stream =\n",
+                        "                Base64OutputStream.Base64OutputStream1(data, false)) {\n",
+                        "            stream.write0(codec98_1024, 0, 1024);\n",
+                        "        }\n",
+                        "        final byte[] decodedBytes = data.toByteArray();\n",
+                        "        final String decoded = StringUtils.newStringUtf8(decodedBytes);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "396-398:newStringUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ]
+                    ]
+                },
+                "230-240:testCodec98NPE_test2_decomposed": {
+                    "start": 230,
+                    "end": 240,
+                    "body": [
+                        "    public void testCodec98NPE_test2_decomposed() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "        final byte[] codec98_1024 = new byte[1024];\n",
+                        "        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);\n",
+                        "        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);\n",
+                        "        try (final BaseNCodecOutputStream stream =\n",
+                        "                Base64OutputStream.Base64OutputStream1(data, false)) {\n",
+                        "            stream.write0(codec98_1024, 0, 1024);\n",
+                        "        }\n",
+                        "        final byte[] decodedBytes = data.toByteArray();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ]
+                    ]
+                },
+                "218-227:testCodec98NPE_test1_decomposed": {
+                    "start": 218,
+                    "end": 227,
+                    "body": [
+                        "    public void testCodec98NPE_test1_decomposed() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "        final byte[] codec98_1024 = new byte[1024];\n",
+                        "        System.arraycopy(codec98, 0, codec98_1024, 0, codec98.length);\n",
+                        "        final ByteArrayOutputStream data = new ByteArrayOutputStream(1024);\n",
+                        "        try (final BaseNCodecOutputStream stream =\n",
+                        "                Base64OutputStream.Base64OutputStream1(data, false)) {\n",
+                        "            stream.write0(codec98_1024, 0, 1024);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ]
+                    ]
+                },
+                "213-215:testCodec98NPE_test0_decomposed": {
+                    "start": 213,
+                    "end": 215,
+                    "body": [
+                        "    public void testCodec98NPE_test0_decomposed() throws Exception {\n",
+                        "        final byte[] codec98 = StringUtils.getBytesUtf8(Base64TestData.CODEC_98_NPE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCodec98NPE_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ]
+                    ]
+                },
+                "144-190:testByteByByte": {
+                    "start": 144,
+                    "end": 190,
+                    "body": [
+                        "    private void testByteByByte(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();\n",
+                        "        OutputStream out =\n",
+                        "                Base64OutputStream.Base64OutputStream2(byteOut, true, chunkSize, separator);\n",
+                        "        for (final byte element : decoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        byte[] output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        for (final byte element : encoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        for (final byte element : encoded) {\n",
+                        "            out.write(element);\n",
+                        "            out.flush();\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte flush() base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = byteOut;\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, false);\n",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, true, chunkSize, separator);\n",
+                        "        }\n",
+                        "        for (final byte element : decoded) {\n",
+                        "            out.write(element);\n",
+                        "        }\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "\n",
+                        "        assertArrayEquals(\"Streaming byte-by-byte base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByteByByte(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "101-107:Base64OutputStream2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(java.lang.String,byte[],byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "flush()"
+                        ]
+                    ]
+                },
+                "99-129:testByChunk": {
+                    "start": 99,
+                    "end": 129,
+                    "body": [
+                        "    private void testByChunk(\n",
+                        "            final byte[] encoded, final byte[] decoded, final int chunkSize, final byte[] separator)\n",
+                        "            throws Exception {\n",
+                        "\n",
+                        "        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();\n",
+                        "        OutputStream out =\n",
+                        "                Base64OutputStream.Base64OutputStream2(byteOut, true, chunkSize, separator);\n",
+                        "        out.write(decoded);\n",
+                        "        out.close();\n",
+                        "        byte[] output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 encode\", encoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = Base64OutputStream.Base64OutputStream1(byteOut, false);\n",
+                        "        out.write(encoded);\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 decode\", decoded, output);\n",
+                        "\n",
+                        "        byteOut = new ByteArrayOutputStream();\n",
+                        "        out = byteOut;\n",
+                        "        for (int i = 0; i < 10; i++) {\n",
+                        "            out = Base64OutputStream.Base64OutputStream1(out, false);\n",
+                        "            out = Base64OutputStream.Base64OutputStream2(out, true, chunkSize, separator);\n",
+                        "        }\n",
+                        "        out.write(decoded);\n",
+                        "        out.close();\n",
+                        "        output = byteOut.toByteArray();\n",
+                        "\n",
+                        "        assertArrayEquals(\"Streaming chunked base64 wrap-wrap-wrap!\", decoded, output);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testByChunk(byte[], byte[], int, byte[])",
+                    "parameters": [
+                        "encoded",
+                        "decoded",
+                        "chunkSize",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "101-107:Base64OutputStream2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(java.lang.String,byte[],byte[])"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Base64OutputStream",
+                            "Base64OutputStream",
+                            "83-86:Base64OutputStream1"
+                        ]
+                    ]
+                },
+                "65-70:testBase64EmptyOutputStream": {
+                    "start": 65,
+                    "end": 70,
+                    "body": [
+                        "    private void testBase64EmptyOutputStream(final int chunkSize) throws Exception {\n",
+                        "        final byte[] emptyEncoded = {};\n",
+                        "        final byte[] emptyDecoded = {};\n",
+                        "        testByteByByte(emptyEncoded, emptyDecoded, chunkSize, CR_LF);\n",
+                        "        testByChunk(emptyEncoded, emptyDecoded, chunkSize, CR_LF);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testBase64EmptyOutputStream(int)",
+                    "parameters": [
+                        "chunkSize"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "144-190:testByteByByte"
+                        ],
+                        [
+                            "commons-codec.src.test.org.apache.commons.codec.binary.Base64OutputStreamTest",
+                            "Base64OutputStreamTest",
+                            "99-129:testByChunk"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "41-41:STRING_FIXTURE": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final String STRING_FIXTURE = \"Hello World\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "39-39:LF": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final byte[] LF = {(byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "37-37:CR_LF": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final byte[] CR_LF = {(byte) '\\r', (byte) '\\n'};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

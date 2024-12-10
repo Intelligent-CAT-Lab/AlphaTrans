@@ -1,0 +1,382 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec49Test.java",
+    "imports": {
+        "20-20:import ByteArrayOutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "21-21:import PipedInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.PipedInputStream;\n"
+            ]
+        },
+        "22-22:import PipedOutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.PipedOutputStream;\n"
+            ]
+        },
+        "23-23:import Duration": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "25-25:import CommandLine": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "27-27:import DefaultExecutor": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "26-26:import DefaultExecuteResultHandler": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecuteResultHandler;\n"
+            ]
+        },
+        "28-28:import Executor": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "29-29:import OS": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.OS;\n"
+            ]
+        },
+        "30-30:import PumpStreamHandler": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.PumpStreamHandler;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec49Test": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "83-106:testExec49_2_test0_decomposed": {
+                    "start": 83,
+                    "end": 106,
+                    "body": [
+                        "    public void testExec49_2_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            final CommandLine cl = CommandLine.parse0(\"/bin/ls\");\n",
+                        "            cl.addArgument0(\"/opt\");\n",
+                        "            // redirect only stdout to pipedOutputStream\n",
+                        "            try (PipedOutputStream pipedOutputStream = new PipedOutputStream()) {\n",
+                        "                final PumpStreamHandler psh = PumpStreamHandler.PumpStreamHandler2(pipedOutputStream, new ByteArrayOutputStream());\n",
+                        "                exec.setStreamHandler(psh);\n",
+                        "                // start an asynchronous process to enable the main thread\n",
+                        "                System.out.println(\"Preparing to execute process - commandLine=\" + cl.toString());\n",
+                        "                final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();\n",
+                        "                exec.execute1(cl, handler);\n",
+                        "                System.out.println(\"Process spun off successfully - process=\" + cl.getExecutable());\n",
+                        "                try (PipedInputStream pis = new PipedInputStream(pipedOutputStream)) {\n",
+                        "                    while (pis.read() >= 0) {\n",
+                        "//                 System.out.println(\"pis.available() \" + pis.available());\n",
+                        "//                 System.out.println(\"x \" + x);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                handler.waitFor1(WAIT);\n",
+                        "                handler.getExitValue(); // will fail if process has not finished\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec49_2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedOutputStream",
+                            "PipedOutputStream()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "413-415:toString"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "356-361:getExecutable"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedInputStream",
+                            "PipedInputStream(java.io.PipedOutputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedInputStream",
+                            "read()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "125-130:waitFor1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "67-72:getExitValue"
+                        ]
+                    ]
+                },
+                "57-80:testExec49_1_test0_decomposed": {
+                    "start": 57,
+                    "end": 80,
+                    "body": [
+                        "    public void testExec49_1_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            final CommandLine cl = CommandLine.parse0(\"/bin/ls\");\n",
+                        "            cl.addArgument0(\"/opt\");\n",
+                        "            // redirect stdout/stderr to pipedOutputStream\n",
+                        "            try (PipedOutputStream pipedOutputStream = new PipedOutputStream()) {\n",
+                        "                final PumpStreamHandler psh = PumpStreamHandler.PumpStreamHandler1(pipedOutputStream);\n",
+                        "                exec.setStreamHandler(psh);\n",
+                        "                // start an asynchronous process to enable the main thread\n",
+                        "                System.out.println(\"Preparing to execute process - commandLine=\" + cl.toString());\n",
+                        "                final DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();\n",
+                        "                exec.execute1(cl, handler);\n",
+                        "                System.out.println(\"Process spun off successfully - process=\" + cl.getExecutable());\n",
+                        "                try (PipedInputStream pis = new PipedInputStream(pipedOutputStream)) {\n",
+                        "                    while (pis.read() >= 0) {\n",
+                        "//                 System.out.println(\"pis.available() \" + pis.available());\n",
+                        "//                 System.out.println(\"x \" + x);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                handler.waitFor1(WAIT);\n",
+                        "                handler.getExitValue(); // will fail if process has not finished\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec49_1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedOutputStream",
+                            "PipedOutputStream()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "76-78:PumpStreamHandler1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "43-46:DefaultExecuteResultHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "413-415:toString"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "70-70:execute1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "356-361:getExecutable"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedInputStream",
+                            "PipedInputStream(java.io.PipedOutputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedInputStream",
+                            "read()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "125-130:waitFor1"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.DefaultExecuteResultHandler",
+                            "DefaultExecuteResultHandler",
+                            "67-72:getExitValue"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "39-39:exec": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ]
+                },
+                "38-38:WAIT": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final Duration WAIT = Duration.ofSeconds(10);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,382 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/scc/TarjanAlgorithm.java",
+    "imports": {
+        "28-28:import Map": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "29-29:import Set": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "26-26:import HashMap": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "27-27:import LinkedHashSet": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "30-30:import Stack": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.Stack;\n"
+            ]
+        },
+        "24-24:import DirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "22-22:import static Math.min": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static java.lang.Math.min;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TarjanAlgorithm": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "SccAlgorithm<V>"
+            ],
+            "extends": [],
+            "methods": {
+                "100-119:perform": {
+                    "start": 100,
+                    "end": 119,
+                    "body": [
+                        "    public Set<Set<V>> perform() {\n",
+                        "        final Map<V, TarjanVertexMetaInfo> verticesMetaInfo =\n",
+                        "                new HashMap<V, TarjanVertexMetaInfo>();\n",
+                        "        final Stack<V> s = new Stack<V>();\n",
+                        "        final Set<Set<V>> stronglyConnectedComponents = new LinkedHashSet<Set<V>>();\n",
+                        "        Integer index = 0;\n",
+                        "\n",
+                        "        for (V vertex : graph.getVertices0()) {\n",
+                        "            TarjanVertexMetaInfo vertexMetaInfo = getMetaInfo(vertex, verticesMetaInfo);\n",
+                        "            final Set<V> stronglyConnectedComponent = new LinkedHashSet<V>();\n",
+                        "\n",
+                        "            if (vertexMetaInfo.hasUndefinedIndex()) {\n",
+                        "                strongConnect(\n",
+                        "                        graph, vertex, verticesMetaInfo, s, stronglyConnectedComponent, index);\n",
+                        "                stronglyConnectedComponents.add(stronglyConnectedComponent);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return stronglyConnectedComponents;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<Set<V>>",
+                            "java.util.Set<Set<V>>"
+                        ]
+                    ],
+                    "signature": "perform()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<V,TarjanVertexMetaInfo>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "Stack<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedHashSet",
+                            "LinkedHashSet<Set<V>>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "42-50:getMetaInfo"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedHashSet",
+                            "LinkedHashSet<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "38-40:hasUndefinedIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "52-85:strongConnect"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.util.Set)"
+                        ]
+                    ]
+                },
+                "90-92:TarjanAlgorithm": {
+                    "start": 90,
+                    "end": 92,
+                    "body": [
+                        "    public TarjanAlgorithm(DirectedGraph<V, E> graph) {\n",
+                        "        this.graph = graph;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "TarjanAlgorithm(DirectedGraph<V,E>)",
+                    "parameters": [
+                        "graph"
+                    ],
+                    "calls": []
+                },
+                "52-85:strongConnect": {
+                    "start": 52,
+                    "end": 85,
+                    "body": [
+                        "    private static <V, E> void strongConnect(\n",
+                        "            DirectedGraph<V, E> graph,\n",
+                        "            V vertex,\n",
+                        "            Map<V, TarjanVertexMetaInfo> verticesMetaInfo,\n",
+                        "            Stack<V> s,\n",
+                        "            Set<V> stronglyConnectedComponent,\n",
+                        "            Integer index) {\n",
+                        "        TarjanVertexMetaInfo vertexMetaInfo = getMetaInfo(vertex, verticesMetaInfo);\n",
+                        "        vertexMetaInfo.setIndex(index);\n",
+                        "        vertexMetaInfo.setLowLink(index);\n",
+                        "        index++;\n",
+                        "        s.push(vertex);\n",
+                        "\n",
+                        "        for (V adjacent : graph.getOutbound(vertex)) {\n",
+                        "            TarjanVertexMetaInfo adjacentMetaInfo = getMetaInfo(adjacent, verticesMetaInfo);\n",
+                        "            if (adjacentMetaInfo.hasUndefinedIndex()) {\n",
+                        "                strongConnect(\n",
+                        "                        graph, adjacent, verticesMetaInfo, s, stronglyConnectedComponent, index);\n",
+                        "                vertexMetaInfo.setLowLink(\n",
+                        "                        min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getLowLink()));\n",
+                        "            } else if (s.contains(adjacent)) {\n",
+                        "                vertexMetaInfo.setLowLink(\n",
+                        "                        min(vertexMetaInfo.getLowLink(), adjacentMetaInfo.getIndex()));\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (vertexMetaInfo.getLowLink() == vertexMetaInfo.getIndex()) {\n",
+                        "            V v;\n",
+                        "            do {\n",
+                        "                v = s.pop();\n",
+                        "                stronglyConnectedComponent.add(v);\n",
+                        "            } while (!vertex.equals(v));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "strongConnect(DirectedGraph<V,E>, V, Map<V,TarjanVertexMetaInfo>, Stack<V>, Set<V>, Integer)",
+                    "parameters": [
+                        "graph",
+                        "vertex",
+                        "verticesMetaInfo",
+                        "s",
+                        "stronglyConnectedComponent",
+                        "index"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "42-50:getMetaInfo"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "42-44:setIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "46-48:setLowLink"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "push(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/DirectedGraph",
+                            "getOutbound(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "38-40:hasUndefinedIndex"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanAlgorithm",
+                            "TarjanAlgorithm",
+                            "52-85:strongConnect"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "34-36:getLowLink"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Vector",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "30-32:getIndex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "pop()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "42-50:getMetaInfo": {
+                    "start": 42,
+                    "end": 50,
+                    "body": [
+                        "    private static <V> TarjanVertexMetaInfo getMetaInfo(\n",
+                        "            V vertex, Map<V, TarjanVertexMetaInfo> verticesMetaInfo) {\n",
+                        "        TarjanVertexMetaInfo vertexMetaInfo = verticesMetaInfo.get(vertex);\n",
+                        "        if (vertexMetaInfo == null) {\n",
+                        "            vertexMetaInfo = new TarjanVertexMetaInfo();\n",
+                        "            verticesMetaInfo.put(vertex, vertexMetaInfo);\n",
+                        "        }\n",
+                        "        return vertexMetaInfo;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo"
+                        ]
+                    ],
+                    "signature": "getMetaInfo(V, Map<V,TarjanVertexMetaInfo>)",
+                    "parameters": [
+                        "vertex",
+                        "verticesMetaInfo"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo",
+                            "TarjanVertexMetaInfo"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,org.apache.commons.graph.scc.TarjanVertexMetaInfo)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "87-87:graph": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private final DirectedGraph<V, E> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DirectedGraph<V,E>",
+                            "DirectedGraph<V,E>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

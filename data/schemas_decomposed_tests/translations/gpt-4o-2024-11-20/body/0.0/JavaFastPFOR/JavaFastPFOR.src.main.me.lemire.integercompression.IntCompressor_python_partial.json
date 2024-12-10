@@ -1,0 +1,274 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/IntCompressor.java",
+    "imports": {
+        "3-3:import Arrays": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IntCompressor": {
+            "start": 10,
+            "end": 10,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "71-79:uncompress": {
+                    "start": 71,
+                    "end": 79,
+                    "body": [
+                        "    public int[] uncompress(int[] compressed) {\n",
+                        "        int[] decompressed = new int[compressed[0]];\n",
+                        "        IntWrapper inpos = new IntWrapper(1);\n",
+                        "        codec.headlessUncompress(compressed, inpos, \n",
+                        "                compressed.length - inpos.intValue(), \n",
+                        "                decompressed, new IntWrapper(0), \n",
+                        "                decompressed.length);\n",
+                        "        return decompressed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "uncompress(int[])",
+                    "parameters": [
+                        "compressed"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "66-68:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress(self, compressed: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-63:compress": {
+                    "start": 49,
+                    "end": 63,
+                    "body": [
+                        "    public  int[] compress(int[] input) {\n",
+                        "        int [] compressed = new int[input.length + input.length / 100 + 1024];\n",
+                        "        compressed[0] = input.length;\n",
+                        "        IntWrapper outpos = new IntWrapper(1);\n",
+                        "        try {\n",
+                        "            codec.headlessCompress(input, new IntWrapper(0),\n",
+                        "                    input.length, compressed, outpos);\n",
+                        "        } catch (IndexOutOfBoundsException ioebe) {\n",
+                        "            throw new\n",
+                        "            UncompressibleInputException(\"Your input is too poorly compressible \"\n",
+                        "                    + \"with the current codec : \"+codec);\n",
+                        "        }\n",
+                        "        compressed = Arrays.copyOf(compressed,outpos.intValue());\n",
+                        "        return compressed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "compress(int[])",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "44-46:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.UncompressibleInputException",
+                            "UncompressibleInputException",
+                            "13-15:UncompressibleInputException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "74-76:intValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress(self, input_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "26-36:IntCompressor": {
+                    "start": 26,
+                    "end": 36,
+                    "body": [
+                        "public IntCompressor(int constructorId, SkippableIntegerCODEC c) {\n",
+                        "    if (constructorId == 0) {\n",
+                        "\n",
+                        "      codec = c;\n",
+                        "        }\n",
+                        "    else {\n",
+                        "\n",
+                        "        codec = new SkippableComposition(new BinaryPacking(),\n",
+                        "                new VariableByte());\n",
+                        "        }\n",
+                        "}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IntCompressor(int, SkippableIntegerCODEC)",
+                    "parameters": [
+                        "constructorId",
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableComposition",
+                            "SkippableComposition",
+                            "31-35:SkippableComposition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, c: SkippableIntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "13-13:codec": {
+                    "start": 13,
+                    "end": 13,
+                    "body": [
+                        "    SkippableIntegerCODEC codec;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codec: SkippableIntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IntCompressor:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.SkippableComposition import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.UncompressibleInputException import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *"
+    ]
+}

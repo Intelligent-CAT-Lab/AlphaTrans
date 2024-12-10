@@ -1,0 +1,496 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/binary/BaseNCodecOutputStream.java",
+    "imports": {
+        "25-25:import IOException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "26-26:import OutputStream": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "24-24:import FilterOutputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.FilterOutputStream;\n"
+            ]
+        },
+        "27-27:import Objects": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "22-22:import Context": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.binary.BaseNCodec.Context;\n"
+            ]
+        },
+        "20-20:import static BaseNCodec.EOF": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.apache.commons.codec.binary.BaseNCodec.EOF;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseNCodecOutputStream": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "FilterOutputStream"
+            ],
+            "methods": {
+                "176-178:write": {
+                    "start": 176,
+                    "end": 178,
+                    "body": [
+                        "    public void write(final int i) throws IOException {\n",
+                        "        write1(i);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write(int)",
+                    "parameters": [
+                        "i"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "180-183:write1"
+                        ]
+                    ]
+                },
+                "74-78:close": {
+                    "start": 74,
+                    "end": 78,
+                    "body": [
+                        "    public void close() throws IOException {\n",
+                        "        eof();\n",
+                        "        flush0();\n",
+                        "        out.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "86-92:eof"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "100-102:flush0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "close()"
+                        ]
+                    ]
+                },
+                "180-183:write1": {
+                    "start": 180,
+                    "end": 183,
+                    "body": [
+                        "    public void write1(final int i) throws IOException {\n",
+                        "        singleByte[0] = (byte) i;\n",
+                        "        write0(singleByte, 0, 1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write1(int)",
+                    "parameters": [
+                        "i"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "151-167:write0"
+                        ]
+                    ]
+                },
+                "151-167:write0": {
+                    "start": 151,
+                    "end": 167,
+                    "body": [
+                        "    public void write0(final byte array[], final int offset, final int len) throws IOException {\n",
+                        "        Objects.requireNonNull(array, \"array\");\n",
+                        "        if (offset < 0 || len < 0) {\n",
+                        "            throw new IndexOutOfBoundsException();\n",
+                        "        }\n",
+                        "        if (offset > array.length || offset + len > array.length) {\n",
+                        "            throw new IndexOutOfBoundsException();\n",
+                        "        }\n",
+                        "        if (len > 0) {\n",
+                        "            if (doEncode) {\n",
+                        "                baseNCodec.encode2(array, offset, len, context);\n",
+                        "            } else {\n",
+                        "                baseNCodec.decode1(array, offset, len, context);\n",
+                        "            }\n",
+                        "            flush1(false);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "write0(byte[], int, int)",
+                    "parameters": [
+                        "array",
+                        "offset",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IndexOutOfBoundsException",
+                            "IndexOutOfBoundsException()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "490-490:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "413-413:decode1"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "112-124:flush1"
+                        ]
+                    ]
+                },
+                "136-138:isStrictDecoding": {
+                    "start": 136,
+                    "end": 138,
+                    "body": [
+                        "    public boolean isStrictDecoding() {\n",
+                        "        return baseNCodec.isStrictDecoding();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isStrictDecoding()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "658-660:isStrictDecoding"
+                        ]
+                    ]
+                },
+                "100-102:flush0": {
+                    "start": 100,
+                    "end": 102,
+                    "body": [
+                        "    public void flush0() throws IOException {\n",
+                        "        flush1(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "flush0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodecOutputStream",
+                            "BaseNCodecOutputStream",
+                            "112-124:flush1"
+                        ]
+                    ]
+                },
+                "86-92:eof": {
+                    "start": 86,
+                    "end": 92,
+                    "body": [
+                        "    public void eof() throws IOException {\n",
+                        "        if (doEncode) {\n",
+                        "            baseNCodec.encode2(singleByte, 0, EOF, context);\n",
+                        "        } else {\n",
+                        "            baseNCodec.decode1(singleByte, 0, EOF, context);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "eof()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "490-490:encode2"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "413-413:decode1"
+                        ]
+                    ]
+                },
+                "56-61:BaseNCodecOutputStream": {
+                    "start": 56,
+                    "end": 61,
+                    "body": [
+                        "    public BaseNCodecOutputStream(\n",
+                        "            final OutputStream output, final BaseNCodec basedCodec, final boolean doEncode) {\n",
+                        "        super(output);\n",
+                        "        this.baseNCodec = basedCodec;\n",
+                        "        this.doEncode = doEncode;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "BaseNCodecOutputStream(OutputStream, BaseNCodec, boolean)",
+                    "parameters": [
+                        "output",
+                        "basedCodec",
+                        "doEncode"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FilterOutputStream",
+                            "FilterOutputStream(java.io.OutputStream)"
+                        ]
+                    ]
+                },
+                "112-124:flush1": {
+                    "start": 112,
+                    "end": 124,
+                    "body": [
+                        "    private void flush1(final boolean propagate) throws IOException {\n",
+                        "        final int avail = baseNCodec.available(context);\n",
+                        "        if (avail > 0) {\n",
+                        "            final byte[] buf = new byte[avail];\n",
+                        "            final int c = baseNCodec.readResults(buf, 0, avail, context);\n",
+                        "            if (c > 0) {\n",
+                        "                out.write(buf, 0, c);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (propagate) {\n",
+                        "            out.flush();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "flush1(boolean)",
+                    "parameters": [
+                        "propagate"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "365-367:available"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.BaseNCodec",
+                            "BaseNCodec",
+                            "675-686:readResults"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(byte[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "flush()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "47-47:context": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final Context context = new Context();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Context",
+                            "Context"
+                        ]
+                    ]
+                },
+                "45-45:singleByte": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final byte[] singleByte = new byte[1];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "43-43:baseNCodec": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final BaseNCodec baseNCodec;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "BaseNCodec",
+                            "BaseNCodec"
+                        ]
+                    ]
+                },
+                "41-41:doEncode": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final boolean doEncode;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

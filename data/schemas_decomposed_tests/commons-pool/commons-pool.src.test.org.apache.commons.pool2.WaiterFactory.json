@@ -1,0 +1,852 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/test/java/org/apache/commons/pool2/WaiterFactory.java",
+    "imports": {
+        "22-22:import Map": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "21-21:import Iterator": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "20-20:import HashMap": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        }
+    },
+    "classes": {
+        "WaiterFactory": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "193-196:validateObject1": {
+                    "start": 193,
+                    "end": 196,
+                    "body": [
+                        "    public boolean validateObject1(final PooledObject<Waiter> obj) {\n",
+                        "        doWait(validateLatency);\n",
+                        "        return obj.getObject().isValid();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "validateObject1(PooledObject<Waiter>)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "151-156:doWait"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "118-121:isValid"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/PooledObject",
+                            "getObject()"
+                        ]
+                    ]
+                },
+                "189-191:validateObject0": {
+                    "start": 189,
+                    "end": 191,
+                    "body": [
+                        "    public boolean validateObject0(final K key, final PooledObject<Waiter> obj) {\n",
+                        "        return validateObject1(obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "validateObject0(K, PooledObject<Waiter>)",
+                    "parameters": [
+                        "key",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "193-196:validateObject1"
+                        ]
+                    ]
+                },
+                "177-187:reset": {
+                    "start": 177,
+                    "end": 187,
+                    "body": [
+                        "    public synchronized void reset() {\n",
+                        "        activeCount = 0;\n",
+                        "        if (activeCounts.isEmpty()) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        final Iterator<K> it = activeCounts.keySet().iterator();\n",
+                        "        while (it.hasNext()) {\n",
+                        "            final K key = it.next();\n",
+                        "            activeCounts.put(key, Integer.valueOf(0));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "reset()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "keySet()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "valueOf(int)"
+                        ]
+                    ]
+                },
+                "169-175:passivateObject1": {
+                    "start": 169,
+                    "end": 175,
+                    "body": [
+                        "    public void passivateObject1(final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        obj.getObject().setActive(false);\n",
+                        "        doWait(passivateLatency);\n",
+                        "        if (Math.random() < passivateInvalidationProbability) {\n",
+                        "            obj.getObject().setValid(false);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "passivateObject1(PooledObject<Waiter>)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "137-150:setActive"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/PooledObject",
+                            "getObject()"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "151-156:doWait"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "random()"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "156-158:setValid"
+                        ]
+                    ]
+                },
+                "165-167:passivateObject0": {
+                    "start": 165,
+                    "end": 167,
+                    "body": [
+                        "    public void passivateObject0(final K key, final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        passivateObject1(obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "passivateObject0(K, PooledObject<Waiter>)",
+                    "parameters": [
+                        "key",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "169-175:passivateObject1"
+                        ]
+                    ]
+                },
+                "161-163:getMaxActive": {
+                    "start": 161,
+                    "end": 163,
+                    "body": [
+                        "    public synchronized long getMaxActive() {\n",
+                        "        return maxActive;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getMaxActive()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "151-156:doWait": {
+                    "start": 151,
+                    "end": 156,
+                    "body": [
+                        "    protected void doWait(final long latency) {\n",
+                        "        if (latency == 0) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        Waiter.sleepQuietly(latency);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "doWait(long)",
+                    "parameters": [
+                        "latency"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "173-178:sleepQuietly"
+                        ]
+                    ]
+                },
+                "142-149:destroyObject1": {
+                    "start": 142,
+                    "end": 149,
+                    "body": [
+                        "    public void destroyObject1(final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        doWait(destroyLatency);\n",
+                        "        obj.getObject().setValid(false);\n",
+                        "        obj.getObject().setActive(false);\n",
+                        "        synchronized (this) {\n",
+                        "            activeCount--;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "destroyObject1(PooledObject<Waiter>)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "151-156:doWait"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "156-158:setValid"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/PooledObject",
+                            "getObject()"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "137-150:setActive"
+                        ]
+                    ]
+                },
+                "134-140:destroyObject0": {
+                    "start": 134,
+                    "end": 140,
+                    "body": [
+                        "    public void destroyObject0(final K key, final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        destroyObject1(obj);\n",
+                        "        synchronized (this) {\n",
+                        "            final Integer count = activeCounts.get(key);\n",
+                        "            activeCounts.put(key, Integer.valueOf(count.intValue() - 1));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "destroyObject0(K, PooledObject<Waiter>)",
+                    "parameters": [
+                        "key",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "142-149:destroyObject1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ]
+                    ]
+                },
+                "129-132:activateObject1": {
+                    "start": 129,
+                    "end": 132,
+                    "body": [
+                        "    public void activateObject1(final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        doWait(activateLatency);\n",
+                        "        obj.getObject().setActive(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "activateObject1(PooledObject<Waiter>)",
+                    "parameters": [
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "151-156:doWait"
+                        ],
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.Waiter",
+                            "Waiter",
+                            "137-150:setActive"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/PooledObject",
+                            "getObject()"
+                        ]
+                    ]
+                },
+                "125-127:activateObject0": {
+                    "start": 125,
+                    "end": 127,
+                    "body": [
+                        "    public void activateObject0(final K key, final PooledObject<Waiter> obj) throws Exception {\n",
+                        "        activateObject1(obj);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "activateObject0(K, PooledObject<Waiter>)",
+                    "parameters": [
+                        "key",
+                        "obj"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.test.org.apache.commons.pool2.WaiterFactory",
+                            "WaiterFactory",
+                            "129-132:activateObject1"
+                        ]
+                    ]
+                },
+                "106-123:WaiterFactory2": {
+                    "start": 106,
+                    "end": 123,
+                    "body": [
+                        "    public static WaiterFactory WaiterFactory2(\n",
+                        "            final long activateLatency,\n",
+                        "            final long destroyLatency,\n",
+                        "            final long makeLatency,\n",
+                        "            final long passivateLatency,\n",
+                        "            final long validateLatency,\n",
+                        "            final long waiterLatency) {\n",
+                        "        return new WaiterFactory(\n",
+                        "                activateLatency,\n",
+                        "                destroyLatency,\n",
+                        "                makeLatency,\n",
+                        "                passivateLatency,\n",
+                        "                validateLatency,\n",
+                        "                waiterLatency,\n",
+                        "                Long.MAX_VALUE,\n",
+                        "                Long.MAX_VALUE,\n",
+                        "                0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "WaiterFactory<>",
+                            "WaiterFactory<>"
+                        ]
+                    ],
+                    "signature": "WaiterFactory2(long, long, long, long, long, long)",
+                    "parameters": [
+                        "activateLatency",
+                        "destroyLatency",
+                        "makeLatency",
+                        "passivateLatency",
+                        "validateLatency",
+                        "waiterLatency"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/WaiterFactory",
+                            "WaiterFactory<>(long,long,long,long,long,long,long,long,double)"
+                        ]
+                    ]
+                },
+                "86-104:WaiterFactory1": {
+                    "start": 86,
+                    "end": 104,
+                    "body": [
+                        "    public static WaiterFactory WaiterFactory1(\n",
+                        "            final long activateLatency,\n",
+                        "            final long destroyLatency,\n",
+                        "            final long makeLatency,\n",
+                        "            final long passivateLatency,\n",
+                        "            final long validateLatency,\n",
+                        "            final long waiterLatency,\n",
+                        "            final long maxActive) {\n",
+                        "        return new WaiterFactory(\n",
+                        "                activateLatency,\n",
+                        "                destroyLatency,\n",
+                        "                makeLatency,\n",
+                        "                passivateLatency,\n",
+                        "                validateLatency,\n",
+                        "                waiterLatency,\n",
+                        "                maxActive,\n",
+                        "                Long.MAX_VALUE,\n",
+                        "                0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "WaiterFactory<>",
+                            "WaiterFactory<>"
+                        ]
+                    ],
+                    "signature": "WaiterFactory1(long, long, long, long, long, long, long)",
+                    "parameters": [
+                        "activateLatency",
+                        "destroyLatency",
+                        "makeLatency",
+                        "passivateLatency",
+                        "validateLatency",
+                        "waiterLatency",
+                        "maxActive"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/WaiterFactory",
+                            "WaiterFactory<>(long,long,long,long,long,long,long,long,double)"
+                        ]
+                    ]
+                },
+                "65-84:WaiterFactory": {
+                    "start": 65,
+                    "end": 84,
+                    "body": [
+                        "    public WaiterFactory(\n",
+                        "            final long activateLatency,\n",
+                        "            final long destroyLatency,\n",
+                        "            final long makeLatency,\n",
+                        "            final long passivateLatency,\n",
+                        "            final long validateLatency,\n",
+                        "            final long waiterLatency,\n",
+                        "            final long maxActive,\n",
+                        "            final long maxActivePerKey,\n",
+                        "            final double passivateInvalidationProbability) {\n",
+                        "        this.activateLatency = activateLatency;\n",
+                        "        this.destroyLatency = destroyLatency;\n",
+                        "        this.makeLatency = makeLatency;\n",
+                        "        this.passivateLatency = passivateLatency;\n",
+                        "        this.validateLatency = validateLatency;\n",
+                        "        this.waiterLatency = waiterLatency;\n",
+                        "        this.maxActive = maxActive;\n",
+                        "        this.maxActivePerKey = maxActivePerKey;\n",
+                        "        this.passivateInvalidationProbability = passivateInvalidationProbability;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "WaiterFactory(long, long, long, long, long, long, long, long, double)",
+                    "parameters": [
+                        "activateLatency",
+                        "destroyLatency",
+                        "makeLatency",
+                        "passivateLatency",
+                        "validateLatency",
+                        "waiterLatency",
+                        "maxActive",
+                        "maxActivePerKey",
+                        "passivateInvalidationProbability"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "63-63:maxActivePerKey": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    private final long maxActivePerKey; // GKOP 1.x calls this maxActive\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "60-60:maxActive": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    private final long maxActive; // GKOP 1.x calls this maxTotal\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "57-57:activeCounts": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private final Map<K, Integer> activeCounts = new HashMap<>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<K,Integer>",
+                            "java.util.Map<K,Integer>"
+                        ]
+                    ]
+                },
+                "54-54:activeCount": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private long activeCount;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "51-51:passivateInvalidationProbability": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private final double passivateInvalidationProbability;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ]
+                },
+                "48-48:waiterLatency": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private final long waiterLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "45-45:validateLatency": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final long validateLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "42-42:passivateLatency": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private final long passivateLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "39-39:makeLatency": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final long makeLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "36-36:destroyLatency": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final long destroyLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "33-33:activateLatency": {
+                    "start": 33,
+                    "end": 33,
+                    "body": [
+                        "    private final long activateLatency;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

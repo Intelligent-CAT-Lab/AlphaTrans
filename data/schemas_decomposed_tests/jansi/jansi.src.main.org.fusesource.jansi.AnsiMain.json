@@ -1,0 +1,1028 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/AnsiMain.java",
+    "imports": {
+        "18-18:import BufferedReader": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "22-22:import IOException": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "19-19:import Closeable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Closeable;\n"
+            ]
+        },
+        "20-20:import File": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "21-21:import FileInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.FileInputStream;\n"
+            ]
+        },
+        "23-23:import InputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "24-24:import InputStreamReader": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.InputStreamReader;\n"
+            ]
+        },
+        "25-25:import PrintStream": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.PrintStream;\n"
+            ]
+        },
+        "26-26:import Properties": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Properties;\n"
+            ]
+        },
+        "28-28:import Attribute": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.fusesource.jansi.Ansi.Attribute;\n"
+            ]
+        },
+        "29-29:import CLibrary": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.fusesource.jansi.internal.CLibrary;\n"
+            ]
+        },
+        "30-30:import JansiLoader": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.fusesource.jansi.internal.JansiLoader;\n"
+            ]
+        },
+        "31-31:import Kernel32": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.fusesource.jansi.internal.Kernel32;\n"
+            ]
+        },
+        "32-32:import MingwSupport": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.fusesource.jansi.internal.MingwSupport;\n"
+            ]
+        },
+        "34-34:import static StandardCharsets.UTF_8": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import static java.nio.charset.StandardCharsets.UTF_8;\n"
+            ]
+        },
+        "35-35:import static Ansi.ansi0": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import static org.fusesource.jansi.Ansi.ansi0;\n"
+            ]
+        },
+        "36-36:import static Kernel32.GetConsoleScreenBufferInfo": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import static org.fusesource.jansi.internal.Kernel32.GetConsoleScreenBufferInfo;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AnsiMain": {
+            "start": 55,
+            "end": 55,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "56-192:main": {
+                    "start": 56,
+                    "end": 192,
+                    "body": [
+                        "    public static void main(String... args) throws IOException {\n",
+                        "        System.out.println(\"Jansi \" + getJansiVersion());\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        // info on native library\n",
+                        "        System.out.println(\"library.jansi.path= \" + System.getProperty(\"library.jansi.path\", \"\"));\n",
+                        "        System.out.println(\"library.jansi.version= \" + System.getProperty(\"library.jansi.version\", \"\"));\n",
+                        "        boolean loaded = JansiLoader.initialize();\n",
+                        "        if (loaded) {\n",
+                        "            System.out.println(\"Jansi native library loaded from \" + JansiLoader.getNativeLibraryPath());\n",
+                        "            if (JansiLoader.getNativeLibrarySourceUrl() != null) {\n",
+                        "                System.out.println(\"   which was auto-extracted from \" + JansiLoader.getNativeLibrarySourceUrl());\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            String prev = System.getProperty(AnsiConsole.JANSI_GRACEFUL);\n",
+                        "            try {\n",
+                        "                System.setProperty(AnsiConsole.JANSI_GRACEFUL, \"false\");\n",
+                        "                JansiLoader.initialize();\n",
+                        "            } catch (Throwable e) {\n",
+                        "                e.printStackTrace(System.out);\n",
+                        "            } finally {\n",
+                        "                if (prev != null) {\n",
+                        "                    System.setProperty(AnsiConsole.JANSI_GRACEFUL, prev);\n",
+                        "                } else {\n",
+                        "                    System.clearProperty(AnsiConsole.JANSI_GRACEFUL);\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        System.out.println(\"os.name= \" + System.getProperty(\"os.name\") + \", \"\n",
+                        "                + \"os.version= \" + System.getProperty(\"os.version\") + \", \"\n",
+                        "                + \"os.arch= \" + System.getProperty(\"os.arch\"));\n",
+                        "        System.out.println(\"file.encoding= \" + System.getProperty(\"file.encoding\"));\n",
+                        "        System.out.println(\"sun.stdout.encoding= \" + System.getProperty(\"sun.stdout.encoding\") + \", \"\n",
+                        "                + \"sun.stderr.encoding= \" + System.getProperty(\"sun.stderr.encoding\"));\n",
+                        "        System.out.println(\"stdout.encoding= \" + System.getProperty(\"stdout.encoding\") + \", \" + \"stderr.encoding= \"\n",
+                        "                + System.getProperty(\"stderr.encoding\"));\n",
+                        "        System.out.println(\"java.version= \" + System.getProperty(\"java.version\") + \", \"\n",
+                        "                + \"java.vendor= \" + System.getProperty(\"java.vendor\") + \",\"\n",
+                        "                + \" java.home= \" + System.getProperty(\"java.home\"));\n",
+                        "        System.out.println(\"Console: \" + System.console());\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        System.out.println(AnsiConsole.JANSI_GRACEFUL + \"= \" + System.getProperty(AnsiConsole.JANSI_GRACEFUL, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_MODE + \"= \" + System.getProperty(AnsiConsole.JANSI_MODE, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_OUT_MODE + \"= \" + System.getProperty(AnsiConsole.JANSI_OUT_MODE, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_ERR_MODE + \"= \" + System.getProperty(AnsiConsole.JANSI_ERR_MODE, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_COLORS + \"= \" + System.getProperty(AnsiConsole.JANSI_COLORS, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_OUT_COLORS + \"= \" + System.getProperty(AnsiConsole.JANSI_OUT_COLORS, \"\"));\n",
+                        "        System.out.println(AnsiConsole.JANSI_ERR_COLORS + \"= \" + System.getProperty(AnsiConsole.JANSI_ERR_COLORS, \"\"));\n",
+                        "        System.out.println(\n",
+                        "                AnsiConsole.JANSI_PASSTHROUGH + \"= \" + AnsiConsole.getBoolean(AnsiConsole.JANSI_PASSTHROUGH));\n",
+                        "        System.out.println(AnsiConsole.JANSI_STRIP + \"= \" + AnsiConsole.getBoolean(AnsiConsole.JANSI_STRIP));\n",
+                        "        System.out.println(AnsiConsole.JANSI_FORCE + \"= \" + AnsiConsole.getBoolean(AnsiConsole.JANSI_FORCE));\n",
+                        "        System.out.println(AnsiConsole.JANSI_NORESET + \"= \" + AnsiConsole.getBoolean(AnsiConsole.JANSI_NORESET));\n",
+                        "        System.out.println(Ansi.DISABLE + \"= \" + AnsiConsole.getBoolean(Ansi.DISABLE));\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        System.out.println(\"IS_WINDOWS: \" + AnsiConsole.IS_WINDOWS);\n",
+                        "        if (AnsiConsole.IS_WINDOWS) {\n",
+                        "            System.out.println(\"IS_CONEMU: \" + AnsiConsole.IS_CONEMU);\n",
+                        "            System.out.println(\"IS_CYGWIN: \" + AnsiConsole.IS_CYGWIN);\n",
+                        "            System.out.println(\"IS_MSYSTEM: \" + AnsiConsole.IS_MSYSTEM);\n",
+                        "        }\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        diagnoseTty(false); // System.out\n",
+                        "        diagnoseTty(true); // System.err\n",
+                        "\n",
+                        "        AnsiConsole.systemInstall();\n",
+                        "\n",
+                        "        System.out.println();\n",
+                        "\n",
+                        "        System.out.println(\"Resulting Jansi modes for stout/stderr streams:\");\n",
+                        "        System.out.println(\"  - System.out: \" + AnsiConsole.out().toString());\n",
+                        "        System.out.println(\"  - System.err: \" + AnsiConsole.err().toString());\n",
+                        "        System.out.println(\"Processor types description:\");\n",
+                        "        for (AnsiType type : AnsiType.values()) {\n",
+                        "            System.out.println(\"  - \" + type + \": \" + type.getDescription());\n",
+                        "        }\n",
+                        "        System.out.println(\"Colors support description:\");\n",
+                        "        for (AnsiColors colors : AnsiColors.values()) {\n",
+                        "            System.out.println(\"  - \" + colors + \": \" + colors.getDescription());\n",
+                        "        }\n",
+                        "        System.out.println(\"Modes description:\");\n",
+                        "        for (AnsiMode mode : AnsiMode.values()) {\n",
+                        "            System.out.println(\"  - \" + mode + \": \" + mode.getDescription());\n",
+                        "        }\n",
+                        "\n",
+                        "        try {\n",
+                        "            System.out.println();\n",
+                        "\n",
+                        "            testAnsi(false);\n",
+                        "            testAnsi(true);\n",
+                        "\n",
+                        "            if (args.length == 0) {\n",
+                        "                printJansiLogoDemo();\n",
+                        "                return;\n",
+                        "            }\n",
+                        "\n",
+                        "            System.out.println();\n",
+                        "\n",
+                        "            if (args.length == 1) {\n",
+                        "                File f = new File(args[0]);\n",
+                        "                if (f.exists()) {\n",
+                        "                    // write file content\n",
+                        "                    System.out.println(\n",
+                        "                            ansi0().bold().a1(\"\\\"\" + args[0] + \"\\\" content:\").reset());\n",
+                        "                    writeFileContent(f);\n",
+                        "                    return;\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            // write args without Jansi then with Jansi AnsiConsole\n",
+                        "            System.out.println(ansi0().bold().a1(\"original args:\").reset());\n",
+                        "            int i = 1;\n",
+                        "            for (String arg : args) {\n",
+                        "                AnsiConsole.system_out.print(i++ + \": \");\n",
+                        "                AnsiConsole.system_out.println(arg);\n",
+                        "            }\n",
+                        "\n",
+                        "            System.out.println(ansi0().bold().a1(\"Jansi filtered args:\").reset());\n",
+                        "            i = 1;\n",
+                        "            for (String arg : args) {\n",
+                        "                System.out.print(i++ + \": \");\n",
+                        "                System.out.println(arg);\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            AnsiConsole.systemUninstall();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "main(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "73-91:initialize"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "194-197:getJansiVersion"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "93-95:getNativeLibraryPath"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.JansiLoader",
+                            "JansiLoader",
+                            "97-99:getNativeLibrarySourceUrl"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "setProperty(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace(java.io.PrintStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "clearProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "console()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiConsole",
+                            "AnsiConsole",
+                            "460-468:getBoolean"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "199-232:diagnoseTty"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiConsole",
+                            "AnsiConsole",
+                            "519-532:systemInstall"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiPrintStream",
+                            "AnsiPrintStream",
+                            "93-100:toString"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiConsole",
+                            "AnsiConsole",
+                            "478-481:out"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiConsole",
+                            "AnsiConsole",
+                            "500-503:err"
+                        ],
+                        [
+                            "library",
+                            "org/fusesource/jansi/AnsiType",
+                            "values()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiType",
+                            "AnsiType",
+                            "36-38:getDescription"
+                        ],
+                        [
+                            "library",
+                            "org/fusesource/jansi/AnsiColors",
+                            "values()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiColors",
+                            "AnsiColors",
+                            "34-36:getDescription"
+                        ],
+                        [
+                            "library",
+                            "org/fusesource/jansi/AnsiMode",
+                            "values()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMode",
+                            "AnsiMode",
+                            "34-36:getDescription"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "234-295:testAnsi"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "311-322:printJansiLogoDemo"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "exists()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.Object)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "766-768:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "778-782:a1"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "770-772:bold"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "191-197:ansi0"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "324-335:writeFileContent"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "print(java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiConsole",
+                            "AnsiConsole",
+                            "546-559:systemUninstall"
+                        ]
+                    ]
+                },
+                "337-343:closeQuietly": {
+                    "start": 337,
+                    "end": 343,
+                    "body": [
+                        "    private static void closeQuietly(Closeable c) {\n",
+                        "        try {\n",
+                        "            c.close();\n",
+                        "        } catch (IOException ioe) {\n",
+                        "            ioe.printStackTrace(System.err);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "closeQuietly(Closeable)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/Closeable",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace(java.io.PrintStream)"
+                        ]
+                    ]
+                },
+                "324-335:writeFileContent": {
+                    "start": 324,
+                    "end": 335,
+                    "body": [
+                        "    private static void writeFileContent(File f) throws IOException {\n",
+                        "        InputStream in = new FileInputStream(f);\n",
+                        "        try {\n",
+                        "            byte[] buf = new byte[1024];\n",
+                        "            int l = 0;\n",
+                        "            while ((l = in.read(buf)) >= 0) {\n",
+                        "                System.out.write(buf, 0, l);\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            closeQuietly(in);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "writeFileContent(File)",
+                    "parameters": [
+                        "f"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FileInputStream",
+                            "FileInputStream(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "write(byte[],int,int)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "337-343:closeQuietly"
+                        ]
+                    ]
+                },
+                "311-322:printJansiLogoDemo": {
+                    "start": 311,
+                    "end": 322,
+                    "body": [
+                        "    private static void printJansiLogoDemo() throws IOException {\n",
+                        "        BufferedReader in =\n",
+                        "                new BufferedReader(new InputStreamReader(AnsiMain.class.getResourceAsStream(\"jansi.txt\"), UTF_8));\n",
+                        "        try {\n",
+                        "            String l;\n",
+                        "            while ((l = in.readLine()) != null) {\n",
+                        "                System.out.println(l);\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            closeQuietly(in);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "printJansiLogoDemo()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStreamReader",
+                            "InputStreamReader(java.io.InputStream,java.nio.charset.Charset)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getResourceAsStream(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "337-343:closeQuietly"
+                        ]
+                    ]
+                },
+                "297-309:getPomPropertiesVersion": {
+                    "start": 297,
+                    "end": 309,
+                    "body": [
+                        "    private static String getPomPropertiesVersion(String path) throws IOException {\n",
+                        "        InputStream in = AnsiMain.class.getResourceAsStream(\"/META-INF/maven/\" + path + \"/pom.properties\");\n",
+                        "        if (in == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            Properties p = new Properties();\n",
+                        "            p.load(in);\n",
+                        "            return p.getProperty(\"version\");\n",
+                        "        } finally {\n",
+                        "            closeQuietly(in);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getPomPropertiesVersion(String)",
+                    "parameters": [
+                        "path"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getResourceAsStream(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "Properties()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "load(java.io.InputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.AnsiMain",
+                            "AnsiMain",
+                            "337-343:closeQuietly"
+                        ]
+                    ]
+                },
+                "234-295:testAnsi": {
+                    "start": 234,
+                    "end": 295,
+                    "body": [
+                        "    private static void testAnsi(boolean stderr) {\n",
+                        "        @SuppressWarnings(\"resource\")\n",
+                        "        PrintStream s = stderr ? System.err : System.out;\n",
+                        "        s.print(\"test on System.\" + (stderr ? \"err\" : \"out\") + \":\");\n",
+                        "        for (Ansi.Color c : Ansi.Color.values()) {\n",
+                        "            s.print(\" \" + ansi0().fg0(c) + c + ansi0().reset());\n",
+                        "        }\n",
+                        "        s.println();\n",
+                        "        s.print(\"            bright:\");\n",
+                        "        for (Ansi.Color c : Ansi.Color.values()) {\n",
+                        "            s.print(\" \" + ansi0().fgBright(c) + c + ansi0().reset());\n",
+                        "        }\n",
+                        "        s.println();\n",
+                        "        s.print(\"              bold:\");\n",
+                        "        for (Ansi.Color c : Ansi.Color.values()) {\n",
+                        "            s.print(\" \" + ansi0().bold().fg0(c) + c + ansi0().reset());\n",
+                        "        }\n",
+                        "        s.println();\n",
+                        "        s.print(\"             faint:\");\n",
+                        "        for (Ansi.Color c : Ansi.Color.values()) {\n",
+                        "            s.print(\" \" + ansi0().a0(Attribute.INTENSITY_FAINT).fg0(c) + c + ansi0().reset());\n",
+                        "        }\n",
+                        "        s.println();\n",
+                        "        s.print(\"        bold+faint:\");\n",
+                        "        for (Ansi.Color c : Ansi.Color.values()) {\n",
+                        "            s.print(\" \" + ansi0().bold().a0(Attribute.INTENSITY_FAINT).fg0(c) + c + ansi0().reset());\n",
+                        "        }\n",
+                        "        s.println();\n",
+                        "        Ansi ansi = ansi0();\n",
+                        "        ansi.a1(\"        256 colors: \");\n",
+                        "        for (int i = 0; i < 6 * 6 * 6; i++) {\n",
+                        "            if (i > 0 && i % 36 == 0) {\n",
+                        "                ansi.reset();\n",
+                        "                ansi.newline();\n",
+                        "                ansi.a1(\"                    \");\n",
+                        "            } else if (i > 0 && i % 6 == 0) {\n",
+                        "                ansi.reset();\n",
+                        "                ansi.a1(\"  \");\n",
+                        "            }\n",
+                        "            int a0 = i % 6;\n",
+                        "            int a1 = (i / 6) % 6;\n",
+                        "            int a2 = i / 36;\n",
+                        "            ansi.bg1(16 + a0 + a2 * 6 + a1 * 36).a3(' ');\n",
+                        "        }\n",
+                        "        ansi.reset();\n",
+                        "        s.println(ansi);\n",
+                        "        ansi = ansi0();\n",
+                        "        ansi.a1(\"         truecolor: \");\n",
+                        "        for (int i = 0; i < 256; i++) {\n",
+                        "            if (i > 0 && i % 48 == 0) {\n",
+                        "                ansi.reset();\n",
+                        "                ansi.newline();\n",
+                        "                ansi.a1(\"                    \");\n",
+                        "            }\n",
+                        "            int r = 255 - i;\n",
+                        "            int g = i * 2 > 255 ? 255 - 2 * i : 2 * i;\n",
+                        "            int b = i;\n",
+                        "            ansi.bgRgb1(r, g, b).fgRgb1(255 - r, 255 - g, 255 - b).a3(i % 2 == 0 ? '/' : '\\\\');\n",
+                        "        }\n",
+                        "        ansi.reset();\n",
+                        "        s.println(ansi);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testAnsi(boolean)",
+                    "parameters": [
+                        "stderr"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "191-197:ansi0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "print(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "org/fusesource/jansi/Ansi$Color",
+                            "values()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "766-768:reset"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "404-407:fg0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "510-513:fgBright"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "770-772:bold"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "576-579:a0"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "778-782:a1"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "856-860:newline"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "790-794:a3"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "466-471:bg1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.Object)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "420-427:fgRgb1"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.Ansi",
+                            "Ansi",
+                            "477-484:bgRgb1"
+                        ]
+                    ]
+                },
+                "199-232:diagnoseTty": {
+                    "start": 199,
+                    "end": 232,
+                    "body": [
+                        "    private static void diagnoseTty(boolean stderr) {\n",
+                        "        int isatty;\n",
+                        "        int width;\n",
+                        "        if (AnsiConsole.IS_WINDOWS) {\n",
+                        "            long console = Kernel32.GetStdHandle(stderr ? Kernel32.STD_ERROR_HANDLE : Kernel32.STD_OUTPUT_HANDLE);\n",
+                        "            int[] mode = new int[1];\n",
+                        "            isatty = Kernel32.GetConsoleMode(console, mode);\n",
+                        "            if ((AnsiConsole.IS_CONEMU || AnsiConsole.IS_CYGWIN || AnsiConsole.IS_MSYSTEM) && isatty == 0) {\n",
+                        "                MingwSupport mingw = new MingwSupport();\n",
+                        "                String name = mingw.getConsoleName(!stderr);\n",
+                        "                if (name != null && !name.isEmpty()) {\n",
+                        "                    isatty = 1;\n",
+                        "                    width = mingw.getTerminalWidth(name);\n",
+                        "                } else {\n",
+                        "                    isatty = 0;\n",
+                        "                    width = 0;\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                Kernel32.CONSOLE_SCREEN_BUFFER_INFO info = new Kernel32.CONSOLE_SCREEN_BUFFER_INFO();\n",
+                        "                GetConsoleScreenBufferInfo(console, info);\n",
+                        "                width = info.windowWidth();\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            int fd = stderr ? CLibrary.STDERR_FILENO : CLibrary.STDOUT_FILENO;\n",
+                        "            isatty = CLibrary.LOADED ? CLibrary.isatty(fd) : 0;\n",
+                        "            CLibrary.WinSize ws = new CLibrary.WinSize((short) 0, (short) 0);\n",
+                        "            CLibrary.ioctl(fd, CLibrary.TIOCGWINSZ, ws);\n",
+                        "            width = ws.ws_col;\n",
+                        "        }\n",
+                        "\n",
+                        "        System.out.println(\"isatty(STD\" + (stderr ? \"ERR\" : \"OUT\") + \"_FILENO): \" + isatty + \", System.\"\n",
+                        "                + (stderr ? \"err\" : \"out\") + \" \" + ((isatty == 0) ? \"is *NOT*\" : \"is\") + \" a terminal\");\n",
+                        "        System.out.println(\"width(STD\" + (stderr ? \"ERR\" : \"OUT\") + \"_FILENO): \" + width);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "diagnoseTty(boolean)",
+                    "parameters": [
+                        "stderr"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "182-182:GetStdHandle"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "210-210:GetConsoleMode"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "40-67:MingwSupport"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "69-86:getConsoleName"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "isEmpty()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "88-103:getTerminalWidth"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "CONSOLE_SCREEN_BUFFER_INFO",
+                            "CONSOLE_SCREEN_BUFFER_INFO"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "176-178:GetConsoleScreenBufferInfo"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "CONSOLE_SCREEN_BUFFER_INFO",
+                            "145-147:windowWidth"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.CLibrary",
+                            "WinSize",
+                            "127-130:WinSize"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.CLibrary",
+                            "CLibrary",
+                            "75-75:isatty"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.CLibrary",
+                            "CLibrary",
+                            "104-104:ioctl"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ]
+                    ]
+                },
+                "194-197:getJansiVersion": {
+                    "start": 194,
+                    "end": 197,
+                    "body": [
+                        "    private static String getJansiVersion() {\n",
+                        "        Package p = AnsiMain.class.getPackage();\n",
+                        "        return (p == null) ? null : p.getImplementationVersion();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getJansiVersion()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getPackage()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Package",
+                            "getImplementationVersion()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

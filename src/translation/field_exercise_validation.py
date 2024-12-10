@@ -5,13 +5,14 @@ from subprocess import Popen
 
 def field_exercise_validation(fragment, args):
 
-    prefix_path = f"data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}"
+    prefix_path = f"data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}"
     os.makedirs(prefix_path, exist_ok=True)
     
     os.system(f"python3 src/postprocessing/recompose.py --project_name={args.project_name} \
                                                         --model_name={args.model_name} \
                                                         --output_dir=data/recomposed_projects \
                                                         --type={args.prompt_type} \
+                                                        --temperature={args.temperature} \
                                                         --fragment_name={fragment['fragment_name']} \
                                                         --suffix={args.suffix}")
 

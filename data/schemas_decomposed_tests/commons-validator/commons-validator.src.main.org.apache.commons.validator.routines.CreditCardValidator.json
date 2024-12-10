@@ -1,0 +1,1309 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/CreditCardValidator.java",
+    "imports": {
+        "22-22:import Serializable": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "25-25:import List": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "23-23:import ArrayList": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "24-24:import Collections": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Collections;\n"
+            ]
+        },
+        "19-19:import CheckDigit": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigit;\n"
+            ]
+        },
+        "20-20:import LuhnCheckDigit": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.LuhnCheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "new RegexValidator(...) { ... }": {
+            "start": 470,
+            "end": 470,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "CreditCardValidator",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "503-505:match": {
+                    "start": 503,
+                    "end": 505,
+                    "body": [
+                        "                    public String[] match(String value) {\n",
+                        "                        return new String[] {validate(value)};\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "match(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "new RegexValidator(...) { ... }",
+                            "475-495:validate"
+                        ]
+                    ]
+                },
+                "498-500:isValid": {
+                    "start": 498,
+                    "end": 500,
+                    "body": [
+                        "                    public boolean isValid(String value) {\n",
+                        "                        return validate(value) != null;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "new RegexValidator(...) { ... }",
+                            "475-495:validate"
+                        ]
+                    ]
+                },
+                "475-495:validate": {
+                    "start": 475,
+                    "end": 495,
+                    "body": [
+                        "                    public String validate(String value) {\n",
+                        "                        if (super.match(value) != null) {\n",
+                        "                            int length = value.length();\n",
+                        "                            for (CreditCardRange range : ccr) {\n",
+                        "                                if (validLength(length, range)) {\n",
+                        "                                    if (range.high == null) { // single prefix only\n",
+                        "                                        if (value.startsWith(range.low)) {\n",
+                        "                                            return value;\n",
+                        "                                        }\n",
+                        "                                    } else if (range.low.compareTo(value)\n",
+                        "                                                    <= 0 // no need to trim value here\n",
+                        "                                            && range.high.compareTo(\n",
+                        "                                                            value.substring(0, range.high.length()))\n",
+                        "                                                    >= 0) {\n",
+                        "                                        return value;\n",
+                        "                                    }\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                        return null;\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "151-167:match"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "455-465:validLength"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "compareTo"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring"
+                        ]
+                    ]
+                },
+                "469-470:": {
+                    "start": 469,
+                    "end": 470,
+                    "body": [
+                        "        return CodeValidator.CodeValidator2(\n",
+                        "                new RegexValidator(new String[] {\"(\\\\d+)\"}, true) {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "(String[], boolean)",
+                    "parameters": [
+                        "regexs",
+                        "caseSensitive"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "472-472:ccr": {
+                    "start": 472,
+                    "end": 472,
+                    "body": [
+                        "                    private CreditCardRange[] ccr = creditCardRanges.clone();\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CreditCardRange[]",
+                            "CreditCardRange[]"
+                        ]
+                    ]
+                },
+                "471-471:serialVersionUID": {
+                    "start": 471,
+                    "end": 471,
+                    "body": [
+                        "                    private static final long serialVersionUID = 1L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "CreditCardRange": {
+            "start": 88,
+            "end": 88,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "CreditCardValidator",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "108-123:CreditCardRange": {
+                    "start": 108,
+                    "end": 123,
+                    "body": [
+                        "        public CreditCardRange(\n",
+                        "                int constructorId, String low, String high, int minLen, int maxLen, int[] lengths) {\n",
+                        "            if (constructorId == 0) {\n",
+                        "                this.low = low;\n",
+                        "                this.high = high;\n",
+                        "                this.minLen = minLen;\n",
+                        "                this.maxLen = maxLen;\n",
+                        "                this.lengths = null;\n",
+                        "            } else {\n",
+                        "                this.low = low;\n",
+                        "                this.high = high;\n",
+                        "                this.minLen = -1;\n",
+                        "                this.maxLen = -1;\n",
+                        "                this.lengths = lengths.clone();\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CreditCardRange(int, String, String, int, int, int[])",
+                    "parameters": [
+                        "constructorId",
+                        "low",
+                        "high",
+                        "minLen",
+                        "maxLen",
+                        "lengths"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "93-93:lengths": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "        final int lengths[]; // e.g. 16,18,19\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "92-92:maxLen": {
+                    "start": 92,
+                    "end": 92,
+                    "body": [
+                        "        final int maxLen; // e.g. 19 or -1\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "91-91:minLen": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "        final int minLen; // e.g. 16 or -1\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "90-90:high": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "        final String high; // e.g. 34 or 65\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "89-89:low": {
+                    "start": 89,
+                    "end": 89,
+                    "body": [
+                        "        final String low; // e.g. 34 or 644\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            }
+        },
+        "CreditCardValidator": {
+            "start": 75,
+            "end": 75,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "CreditCardRange",
+                "new RegexValidator(...) { ... }"
+            ],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "467-508:createRangeValidator": {
+                    "start": 467,
+                    "end": 508,
+                    "body": [
+                        "    static CodeValidator createRangeValidator(\n",
+                        "            final CreditCardRange[] creditCardRanges, final CheckDigit digitCheck) {\n",
+                        "        return CodeValidator.CodeValidator2(\n",
+                        "                new RegexValidator(new String[] {\"(\\\\d+)\"}, true) {\n",
+                        "                    private static final long serialVersionUID = 1L;\n",
+                        "                    private CreditCardRange[] ccr = creditCardRanges.clone();\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public String validate(String value) {\n",
+                        "                        if (super.match(value) != null) {\n",
+                        "                            int length = value.length();\n",
+                        "                            for (CreditCardRange range : ccr) {\n",
+                        "                                if (validLength(length, range)) {\n",
+                        "                                    if (range.high == null) { // single prefix only\n",
+                        "                                        if (value.startsWith(range.low)) {\n",
+                        "                                            return value;\n",
+                        "                                        }\n",
+                        "                                    } else if (range.low.compareTo(value)\n",
+                        "                                                    <= 0 // no need to trim value here\n",
+                        "                                            && range.high.compareTo(\n",
+                        "                                                            value.substring(0, range.high.length()))\n",
+                        "                                                    >= 0) {\n",
+                        "                                        return value;\n",
+                        "                                    }\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                        return null;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public boolean isValid(String value) {\n",
+                        "                        return validate(value) != null;\n",
+                        "                    }\n",
+                        "\n",
+                        "                    @Override\n",
+                        "                    public String[] match(String value) {\n",
+                        "                        return new String[] {validate(value)};\n",
+                        "                    }\n",
+                        "                },\n",
+                        "                digitCheck);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "signature": "createRangeValidator(CreditCardRange[], CheckDigit)",
+                    "parameters": [
+                        "creditCardRanges",
+                        "digitCheck"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "116-119:CodeValidator2"
+                        ]
+                    ]
+                },
+                "455-465:validLength": {
+                    "start": 455,
+                    "end": 465,
+                    "body": [
+                        "    static boolean validLength(int valueLength, CreditCardRange range) {\n",
+                        "        if (range.lengths != null) {\n",
+                        "            for (int length : range.lengths) {\n",
+                        "                if (valueLength == length) {\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        return valueLength >= range.minLen && valueLength <= range.maxLen;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "validLength(int, CreditCardRange)",
+                    "parameters": [
+                        "valueLength",
+                        "range"
+                    ],
+                    "calls": []
+                },
+                "441-453:validate": {
+                    "start": 441,
+                    "end": 453,
+                    "body": [
+                        "    public Object validate(String card) {\n",
+                        "        if (card == null || card.length() == 0) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        Object result = null;\n",
+                        "        for (CodeValidator cardType : cardTypes) {\n",
+                        "            result = cardType.validate(card);\n",
+                        "            if (result != null) {\n",
+                        "                return result;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "card"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ]
+                },
+                "423-433:isValid": {
+                    "start": 423,
+                    "end": 433,
+                    "body": [
+                        "    public boolean isValid(String card) {\n",
+                        "        if (card == null || card.length() == 0) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        for (CodeValidator cardType : cardTypes) {\n",
+                        "            if (cardType.isValid(card)) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "card"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ]
+                },
+                "413-415:genericCreditCardValidator2": {
+                    "start": 413,
+                    "end": 415,
+                    "body": [
+                        "    public static CreditCardValidator genericCreditCardValidator2() {\n",
+                        "        return genericCreditCardValidator0(MIN_CC_LENGTH, MAX_CC_LENGTH);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CreditCardValidator",
+                            "CreditCardValidator"
+                        ]
+                    ],
+                    "signature": "genericCreditCardValidator2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "384-392:genericCreditCardValidator0"
+                        ]
+                    ]
+                },
+                "402-404:genericCreditCardValidator1": {
+                    "start": 402,
+                    "end": 404,
+                    "body": [
+                        "    public static CreditCardValidator genericCreditCardValidator1(int length) {\n",
+                        "        return genericCreditCardValidator0(length, length);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CreditCardValidator",
+                            "CreditCardValidator"
+                        ]
+                    ],
+                    "signature": "genericCreditCardValidator1(int)",
+                    "parameters": [
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "384-392:genericCreditCardValidator0"
+                        ]
+                    ]
+                },
+                "384-392:genericCreditCardValidator0": {
+                    "start": 384,
+                    "end": 392,
+                    "body": [
+                        "    public static CreditCardValidator genericCreditCardValidator0(int minLen, int maxLen) {\n",
+                        "        return new CreditCardValidator(\n",
+                        "                1,\n",
+                        "                0,\n",
+                        "                null,\n",
+                        "                new CodeValidator[] {\n",
+                        "                    new CodeValidator(1, LUHN_VALIDATOR, maxLen, null, minLen, \"(\\\\d+)\")\n",
+                        "                });\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CreditCardValidator",
+                            "CreditCardValidator"
+                        ]
+                    ],
+                    "signature": "genericCreditCardValidator0(int, int)",
+                    "parameters": [
+                        "minLen",
+                        "maxLen"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "293-348:CreditCardValidator"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "87-109:CodeValidator"
+                        ]
+                    ]
+                },
+                "293-348:CreditCardValidator": {
+                    "start": 293,
+                    "end": 348,
+                    "body": [
+                        "    public CreditCardValidator(\n",
+                        "            int constructorId,\n",
+                        "            long options,\n",
+                        "            CreditCardRange[] creditCardRanges,\n",
+                        "            CodeValidator[] creditCardValidators) {\n",
+                        "        super();\n",
+                        "\n",
+                        "        if (constructorId == 0) {\n",
+                        "            if (isOn(options, VISA)) {\n",
+                        "                this.cardTypes.add(VISA_VALIDATOR);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, VPAY)) {\n",
+                        "                this.cardTypes.add(VPAY_VALIDATOR);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, AMEX)) {\n",
+                        "                this.cardTypes.add(AMEX_VALIDATOR);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, MASTERCARD)) {\n",
+                        "                this.cardTypes.add(MASTERCARD_VALIDATOR);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, MASTERCARD_PRE_OCT2016)) {\n",
+                        "                this.cardTypes.add(MASTERCARD_VALIDATOR_PRE_OCT2016);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, DISCOVER)) {\n",
+                        "                this.cardTypes.add(DISCOVER_VALIDATOR);\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isOn(options, DINERS)) {\n",
+                        "                this.cardTypes.add(DINERS_VALIDATOR);\n",
+                        "            }\n",
+                        "        } else if (constructorId == 1) {\n",
+                        "            if (creditCardValidators == null) {\n",
+                        "                throw new IllegalArgumentException(\"Card validators are missing\");\n",
+                        "            }\n",
+                        "            Collections.addAll(cardTypes, creditCardValidators);\n",
+                        "        } else if (constructorId == 2) {\n",
+                        "            if (creditCardRanges == null) {\n",
+                        "                throw new IllegalArgumentException(\"Card ranges are missing\");\n",
+                        "            }\n",
+                        "            Collections.addAll(cardTypes, createRangeValidator(creditCardRanges, LUHN_VALIDATOR));\n",
+                        "        } else if (constructorId == 3) {\n",
+                        "            if (creditCardValidators == null) {\n",
+                        "                throw new IllegalArgumentException(\"Card validators are missing\");\n",
+                        "            }\n",
+                        "            if (creditCardRanges == null) {\n",
+                        "                throw new IllegalArgumentException(\"Card ranges are missing\");\n",
+                        "            }\n",
+                        "            Collections.addAll(cardTypes, creditCardValidators);\n",
+                        "            Collections.addAll(cardTypes, createRangeValidator(creditCardRanges, LUHN_VALIDATOR));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CreditCardValidator(int, long, CreditCardRange[], CodeValidator[])",
+                    "parameters": [
+                        "constructorId",
+                        "options",
+                        "creditCardRanges",
+                        "creditCardValidators"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "518-520:isOn"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(org.apache.commons.validator.routines.CodeValidator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collections",
+                            "addAll(java.util.Collection,java.lang.Object[])"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "467-508:createRangeValidator"
+                        ]
+                    ]
+                },
+                "283-285:CreditCardValidator0": {
+                    "start": 283,
+                    "end": 285,
+                    "body": [
+                        "    public static CreditCardValidator CreditCardValidator0() {\n",
+                        "        return new CreditCardValidator(0, AMEX + VISA + MASTERCARD + DISCOVER, null, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CreditCardValidator",
+                            "CreditCardValidator"
+                        ]
+                    ],
+                    "signature": "CreditCardValidator0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CreditCardValidator",
+                            "CreditCardValidator",
+                            "293-348:CreditCardValidator"
+                        ]
+                    ]
+                },
+                "518-520:isOn": {
+                    "start": 518,
+                    "end": 520,
+                    "body": [
+                        "    private boolean isOn(long options, long flag) {\n",
+                        "        return (options & flag) > 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isOn(long, long)",
+                    "parameters": [
+                        "options",
+                        "flag"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "276-277:VPAY_VALIDATOR": {
+                    "start": 276,
+                    "end": 277,
+                    "body": [
+                        "    public static final CodeValidator VPAY_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator5(\"^(4)(\\\\d{12,18})$\", LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "266-267:VISA_VALIDATOR": {
+                    "start": 266,
+                    "end": 267,
+                    "body": [
+                        "    public static final CodeValidator VISA_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator5(\"^(4)(\\\\d{12}|\\\\d{15})$\", LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "257-259:MASTERCARD_VALIDATOR_PRE_OCT2016": {
+                    "start": 257,
+                    "end": 259,
+                    "body": [
+                        "    @Deprecated\n",
+                        "    public static final CodeValidator MASTERCARD_VALIDATOR_PRE_OCT2016 =\n",
+                        "            CodeValidator.CodeValidator5(\"^(5[1-5]\\\\d{14})$\", LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "249-250:MASTERCARD_VALIDATOR": {
+                    "start": 249,
+                    "end": 250,
+                    "body": [
+                        "    public static final CodeValidator MASTERCARD_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator2(MASTERCARD_REGEX, LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "227-228:DISCOVER_VALIDATOR": {
+                    "start": 227,
+                    "end": 228,
+                    "body": [
+                        "    public static final CodeValidator DISCOVER_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator2(DISCOVER_REGEX, LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "207-209:DINERS_VALIDATOR": {
+                    "start": 207,
+                    "end": 209,
+                    "body": [
+                        "    public static final CodeValidator DINERS_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator5(\n",
+                        "                    \"^(30[0-5]\\\\d{11}|3095\\\\d{10}|36\\\\d{12}|3[8-9]\\\\d{12})$\", LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "195-196:AMEX_VALIDATOR": {
+                    "start": 195,
+                    "end": 196,
+                    "body": [
+                        "    public static final CodeValidator AMEX_VALIDATOR =\n",
+                        "            CodeValidator.CodeValidator5(\"^(3[47]\\\\d{13})$\", LUHN_VALIDATOR);\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "180-181:MASTERCARD_PRE_OCT2016": {
+                    "start": 180,
+                    "end": 181,
+                    "body": [
+                        "    @Deprecated\n",
+                        "    public static final long MASTERCARD_PRE_OCT2016 = 1 << 6; // CHECKSTYLE IGNORE MagicNumber\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "173-173:VPAY": {
+                    "start": 173,
+                    "end": 173,
+                    "body": [
+                        "    public static final long VPAY = 1 << 5; // CHECKSTYLE IGNORE MagicNumber\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "166-166:DINERS": {
+                    "start": 166,
+                    "end": 166,
+                    "body": [
+                        "    public static final long DINERS = 1 << 4; // CHECKSTYLE IGNORE MagicNumber\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "163-163:DISCOVER": {
+                    "start": 163,
+                    "end": 163,
+                    "body": [
+                        "    public static final long DISCOVER = 1 << 3; // CHECKSTYLE IGNORE MagicNumber\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "160-160:MASTERCARD": {
+                    "start": 160,
+                    "end": 160,
+                    "body": [
+                        "    public static final long MASTERCARD = 1 << 2;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "157-157:VISA": {
+                    "start": 157,
+                    "end": 157,
+                    "body": [
+                        "    public static final long VISA = 1 << 1;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "154-154:AMEX": {
+                    "start": 154,
+                    "end": 154,
+                    "body": [
+                        "    public static final long AMEX = 1 << 0;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "151-151:NONE": {
+                    "start": 151,
+                    "end": 151,
+                    "body": [
+                        "    public static final long NONE = 0;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "236-246:MASTERCARD_REGEX": {
+                    "start": 236,
+                    "end": 246,
+                    "body": [
+                        "    private static final RegexValidator MASTERCARD_REGEX =\n",
+                        "            RegexValidator.RegexValidator1(\n",
+                        "                    new String[] {\n",
+                        "                        \"^(5[1-5]\\\\d{14})$\", // 51 - 55 (pre Oct 2016)\n",
+                        "                        \"^(2221\\\\d{12})$\", // 222100 - 222199\n",
+                        "                        \"^(222[2-9]\\\\d{12})$\", // 222200 - 222999\n",
+                        "                        \"^(22[3-9]\\\\d{13})$\", // 223000 - 229999\n",
+                        "                        \"^(2[3-6]\\\\d{14})$\", // 230000 - 269999\n",
+                        "                        \"^(27[01]\\\\d{13})$\", // 270000 - 271999\n",
+                        "                        \"^(2720\\\\d{12})$\", // 272000 - 272099\n",
+                        "                    });\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ]
+                },
+                "217-224:DISCOVER_REGEX": {
+                    "start": 217,
+                    "end": 224,
+                    "body": [
+                        "    private static final RegexValidator DISCOVER_REGEX =\n",
+                        "            RegexValidator.RegexValidator1(\n",
+                        "                    new String[] {\n",
+                        "                        \"^(6011\\\\d{12,13})$\",\n",
+                        "                        \"^(64[4-9]\\\\d{13})$\",\n",
+                        "                        \"^(65\\\\d{14})$\",\n",
+                        "                        \"^(62[2-8]\\\\d{13})$\"\n",
+                        "                    });\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ]
+                },
+                "187-187:LUHN_VALIDATOR": {
+                    "start": 187,
+                    "end": 187,
+                    "body": [
+                        "    private static final CheckDigit LUHN_VALIDATOR = LuhnCheckDigit.LUHN_CHECK_DIGIT;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ]
+                },
+                "184-184:cardTypes": {
+                    "start": 184,
+                    "end": 184,
+                    "body": [
+                        "    private final List<CodeValidator> cardTypes = new ArrayList<CodeValidator>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<CodeValidator>",
+                            "java.util.List<CodeValidator>"
+                        ]
+                    ]
+                },
+                "81-81:MAX_CC_LENGTH": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    private static final int MAX_CC_LENGTH = 19; // maximum allowed length\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "79-79:MIN_CC_LENGTH": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    private static final int MIN_CC_LENGTH = 12; // minimum allowed length\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "77-77:serialVersionUID": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private static final long serialVersionUID = 5955978921148959496L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

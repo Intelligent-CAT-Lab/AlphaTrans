@@ -1,0 +1,620 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/test/java/org/apache/commons/graph/utils/GraphUtils.java",
+    "imports": {
+        "32-32:import List": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "31-31:import ArrayList": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "29-29:import UndirectedMutableGraph": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "28-28:import BaseMutableGraph": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseMutableGraph;\n"
+            ]
+        },
+        "25-25:import GraphException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.GraphException;\n"
+            ]
+        },
+        "26-26:import BaseLabeledEdge": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledEdge;\n"
+            ]
+        },
+        "27-27:import BaseLabeledVertex": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "22-22:import static String.format": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static java.lang.String.format;\n"
+            ]
+        },
+        "23-23:import static String.valueOf": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static java.lang.String.valueOf;\n"
+            ]
+        }
+    },
+    "classes": {
+        "GraphUtils": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "134-205:buildSudokuGraph": {
+                    "start": 134,
+                    "end": 205,
+                    "body": [
+                        "    public static BaseLabeledVertex[][] buildSudokuGraph(\n",
+                        "            UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> sudoku) {\n",
+                        "        BaseLabeledVertex[][] grid = new BaseLabeledVertex[9][9];\n",
+                        "        for (int row = 0; row < 9; row++) {\n",
+                        "            for (int col = 0; col < 9; col++) {\n",
+                        "                grid[row][col] = new BaseLabeledVertex(format(\"%s, %s\", row, col));\n",
+                        "                sudoku.addVertex(grid[row][col]);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        int[] rowsOffsets = new int[] {0, 3, 6};\n",
+                        "        int[] colsOffsets = new int[] {0, 3, 6};\n",
+                        "\n",
+                        "        for (int rof = 0; rof < 3; rof++) {\n",
+                        "            for (int cof = 0; cof < 3; cof++) {\n",
+                        "                List<BaseLabeledVertex> boxes = new ArrayList<BaseLabeledVertex>();\n",
+                        "                for (int row = rowsOffsets[rof]; row < 3 + rowsOffsets[rof]; row++) {\n",
+                        "                    for (int col = colsOffsets[cof]; col < 3 + colsOffsets[cof]; col++) {\n",
+                        "                        boxes.add(grid[row][col]);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "\n",
+                        "                for (BaseLabeledVertex v1 : boxes) {\n",
+                        "                    for (BaseLabeledVertex v2 : boxes) {\n",
+                        "\n",
+                        "                        BaseLabeledEdge e = new BaseLabeledEdge(format(\"%s -> %s\", v1, v2));\n",
+                        "                        if (!v1.equals(v2)) {\n",
+                        "                            try {\n",
+                        "                                sudoku.addEdge(v1, e, v2);\n",
+                        "                            } catch (GraphException ge) {\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        for (int j = 0; j < 9; j++) {\n",
+                        "            for (int i = 0; i < 9; i++) {\n",
+                        "                for (int h = 0; h < 9; h++) {\n",
+                        "                    BaseLabeledVertex v1 = grid[j][i];\n",
+                        "                    BaseLabeledVertex v2 = grid[j][h];\n",
+                        "\n",
+                        "                    if (!v1.equals(v2)) {\n",
+                        "                        BaseLabeledEdge e = new BaseLabeledEdge(format(\"%s -> %s\", v1, v2));\n",
+                        "                        try {\n",
+                        "                            sudoku.addEdge(v1, e, v2);\n",
+                        "                        } catch (GraphException ge) {\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        for (int j = 0; j < 9; j++) {\n",
+                        "            for (int i = 0; i < 9; i++) {\n",
+                        "                for (int h = 0; h < 9; h++) {\n",
+                        "                    BaseLabeledVertex v1 = grid[i][j];\n",
+                        "                    BaseLabeledVertex v2 = grid[h][j];\n",
+                        "\n",
+                        "                    if (!v1.equals(v2)) {\n",
+                        "                        BaseLabeledEdge e = new BaseLabeledEdge(format(\"%s -> %s\", v1, v2));\n",
+                        "                        try {\n",
+                        "                            sudoku.addEdge(v1, e, v2);\n",
+                        "                        } catch (GraphException ge) {\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return grid;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "BaseLabeledVertex[][]",
+                            "BaseLabeledVertex[][]"
+                        ]
+                    ],
+                    "signature": "buildSudokuGraph(UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledEdge>)",
+                    "parameters": [
+                        "sudoku"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<BaseLabeledVertex>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "41-52:equals"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def buildSudokuGraph(sudoku: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]) -> typing.List[typing.List[BaseLabeledVertex]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "106-127:buildCrownGraph": {
+                    "start": 106,
+                    "end": 127,
+                    "body": [
+                        "    public static void buildCrownGraph(\n",
+                        "            int nVertices, UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g) {\n",
+                        "        List<BaseLabeledVertex> tmp = new ArrayList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        for (int i = 0; i < nVertices; i++) {\n",
+                        "            BaseLabeledVertex v = new BaseLabeledVertex(valueOf(i));\n",
+                        "            g.addVertex(v);\n",
+                        "            tmp.add(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        for (int i = 0; i < nVertices; i++) {\n",
+                        "            int next = i + 1;\n",
+                        "            if (i == (nVertices - 1)) {\n",
+                        "                next = 0;\n",
+                        "            }\n",
+                        "            BaseLabeledEdge e = new BaseLabeledEdge(format(\"%s -> %s\", i, next));\n",
+                        "            try {\n",
+                        "                g.addEdge(tmp.get(i), e, tmp.get(next));\n",
+                        "            } catch (GraphException ge) {\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "buildCrownGraph(int, UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledEdge>)",
+                    "parameters": [
+                        "nVertices",
+                        "g"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<BaseLabeledVertex>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def buildCrownGraph(nVertices: int, g: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "87-104:buildCompleteGraph": {
+                    "start": 87,
+                    "end": 104,
+                    "body": [
+                        "    public static void buildCompleteGraph(\n",
+                        "            int nVertices, BaseMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g) {\n",
+                        "        for (int i = 0; i < nVertices; i++) {\n",
+                        "            BaseLabeledVertex v = new BaseLabeledVertex(valueOf(i));\n",
+                        "            g.addVertex(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        for (BaseLabeledVertex v1 : g.getVertices0()) {\n",
+                        "            for (BaseLabeledVertex v2 : g.getVertices0()) {\n",
+                        "                if (!v1.equals(v2)) {\n",
+                        "                    try {\n",
+                        "                        g.addEdge(v1, new BaseLabeledEdge(format(\"%s -> %s\", v1, v2)), v2);\n",
+                        "                    } catch (GraphException e) {\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "buildCompleteGraph(int, BaseMutableGraph<BaseLabeledVertex,BaseLabeledEdge>)",
+                    "parameters": [
+                        "nVertices",
+                        "g"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "41-52:equals"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def buildCompleteGraph(nVertices: int, g: BaseMutableGraph[BaseLabeledVertex,BaseLabeledEdge]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "43-79:buildBipartedGraph": {
+                    "start": 43,
+                    "end": 79,
+                    "body": [
+                        "    public static void buildBipartedGraph(\n",
+                        "            int nVertices, UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledEdge> g) {\n",
+                        "        for (int i = 0; i < nVertices; i++) {\n",
+                        "            BaseLabeledVertex v = new BaseLabeledVertex(valueOf(i));\n",
+                        "            g.addVertex(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        List<BaseLabeledVertex> fistPartition = new ArrayList<BaseLabeledVertex>();\n",
+                        "        List<BaseLabeledVertex> secondPartition = new ArrayList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        int count = 0;\n",
+                        "        for (BaseLabeledVertex v1 : g.getVertices0()) {\n",
+                        "            if (count++ == nVertices / 2) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            fistPartition.add(v1);\n",
+                        "        }\n",
+                        "\n",
+                        "        count = 0;\n",
+                        "        for (BaseLabeledVertex v2 : g.getVertices0()) {\n",
+                        "            if (count++ < nVertices / 2) {\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            secondPartition.add(v2);\n",
+                        "        }\n",
+                        "\n",
+                        "        for (BaseLabeledVertex v1 : fistPartition) {\n",
+                        "            for (BaseLabeledVertex v2 : secondPartition) {\n",
+                        "                if (!v1.equals(v2)) {\n",
+                        "                    try {\n",
+                        "                        g.addEdge(v1, new BaseLabeledEdge(format(\"%s -> %s\", v1, v2)), v2);\n",
+                        "                    } catch (GraphException e) {\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "buildBipartedGraph(int, UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledEdge>)",
+                    "parameters": [
+                        "nVertices",
+                        "g"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<BaseLabeledVertex>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "41-52:equals"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledEdge",
+                            "BaseLabeledEdge",
+                            "35-37:BaseLabeledEdge"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def buildBipartedGraph(nVertices: int, g: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledEdge]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "208-208:GraphUtils": {
+                    "start": 208,
+                    "end": 208,
+                    "body": [
+                        "    private GraphUtils() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "GraphUtils()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class GraphUtils:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.GraphException import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledEdge import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.main.org.apache.commons.graph.model.BaseMutableGraph import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *"
+    ]
+}

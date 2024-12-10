@@ -9,6 +9,7 @@ def test_validation(args, eligible_tests):
     os.system(f'python3 src/postprocessing/recompose.py --project_name={args.project_name} \
                                                         --model_name={args.model_name} \
                                                         --output_dir=data/recomposed_projects \
+                                                        --temperature={args.temperature} \
                                                         --type={args.prompt_type} \
                                                         --suffix={args.suffix}')
 
@@ -41,12 +42,12 @@ def test_validation(args, eligible_tests):
 
         current_dir = os.getcwd()
         env = os.environ.copy()
-        env['PYTHONPATH'] = f'{current_dir}/data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}'
+        env['PYTHONPATH'] = f'{current_dir}/data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}'
         
         try:
             subprocess.run(
                 [
-                    'pytest', f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{test_path}::{test_class}::{test_method}',
+                    'pytest', f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.temperature}/{test_path}::{test_class}::{test_method}',
                     '--cov=src.main',
                     '--cov=src.test',
                     '--cov-report=term-missing',
@@ -66,7 +67,7 @@ def test_validation(args, eligible_tests):
             test_execution_results[f'{test_path}::{test_class}::{test_method}']['test_outcome'] = 'exercised-failed'
             failed_tests.append(actual_test_name)
         else:
-            covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.project_name}')
+            covered_methods = calculate_method_coverage(args, f'data/recomposed_projects/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}')
             test_execution_results[f'{test_path}::{test_class}::{test_method}']['covered_methods'] = covered_methods
 
         assert os.path.exists(f'{args.project_name}-{args.model_name}-pytest-report.xml')

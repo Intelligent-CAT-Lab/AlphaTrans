@@ -1,0 +1,1146 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/EmailValidator.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "20-20:import Matcher": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "21-21:import Pattern": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        }
+    },
+    "classes": {
+        "EmailValidator": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "221-228:isValidUser": {
+                    "start": 221,
+                    "end": 228,
+                    "body": [
+                        "    protected boolean isValidUser(String user) {\n",
+                        "\n",
+                        "        if (user == null || user.length() > MAX_USERNAME_LEN) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return USER_PATTERN.matcher(user).matches();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidUser(String)",
+                    "parameters": [
+                        "user"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidUser(self, user: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "200-213:isValidDomain": {
+                    "start": 200,
+                    "end": 213,
+                    "body": [
+                        "    protected boolean isValidDomain(String domain) {\n",
+                        "        Matcher ipDomainMatcher = IP_DOMAIN_PATTERN.matcher(domain);\n",
+                        "\n",
+                        "        if (ipDomainMatcher.matches()) {\n",
+                        "            InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();\n",
+                        "            return inetAddressValidator.isValid(ipDomainMatcher.group(1));\n",
+                        "        }\n",
+                        "        if (allowTld) {\n",
+                        "            return domainValidator.isValid(domain)\n",
+                        "                    || (!domain.startsWith(\".\") && domainValidator.isValidTld(domain));\n",
+                        "        } else {\n",
+                        "            return domainValidator.isValid(domain);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidDomain(String)",
+                    "parameters": [
+                        "domain"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "63-65:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "73-75:isValid"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                            "DomainValidator",
+                            "237-250:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                            "DomainValidator",
+                            "275-282:isValidTld"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "169-192:isValid": {
+                    "start": 169,
+                    "end": 192,
+                    "body": [
+                        "    public boolean isValid(String email) {\n",
+                        "        if (email == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (email.endsWith(\".\")) { // check this first - it's cheap!\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        Matcher emailMatcher = EMAIL_PATTERN.matcher(email);\n",
+                        "        if (!emailMatcher.matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidUser(emailMatcher.group(1))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidDomain(emailMatcher.group(2))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "email"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "221-228:isValidUser"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "200-213:isValidDomain"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, email: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "158-160:EmailValidator0": {
+                    "start": 158,
+                    "end": 160,
+                    "body": [
+                        "    public static EmailValidator EmailValidator0(boolean allowLocal) {\n",
+                        "        return new EmailValidator(1, allowLocal, false, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "EmailValidator0(boolean)",
+                    "parameters": [
+                        "allowLocal"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "123-144:EmailValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def EmailValidator0(allowLocal: bool) -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "123-144:EmailValidator": {
+                    "start": 123,
+                    "end": 144,
+                    "body": [
+                        "    public EmailValidator(\n",
+                        "            int constructorId,\n",
+                        "            boolean allowLocal,\n",
+                        "            boolean allowTld,\n",
+                        "            DomainValidator domainValidator) {\n",
+                        "        super();\n",
+                        "        if (constructorId == 0) {\n",
+                        "            this.allowTld = allowTld;\n",
+                        "            if (domainValidator == null) {\n",
+                        "                throw new IllegalArgumentException(\"DomainValidator cannot be null\");\n",
+                        "            } else {\n",
+                        "                if (domainValidator.isAllowLocal() != allowLocal) {\n",
+                        "                    throw new IllegalArgumentException(\n",
+                        "                            \"DomainValidator must agree with allowLocal setting\");\n",
+                        "                }\n",
+                        "                this.domainValidator = domainValidator;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            this.allowTld = allowTld;\n",
+                        "            this.domainValidator = DomainValidator.getInstance1(allowLocal);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EmailValidator(int, boolean, boolean, DomainValidator)",
+                    "parameters": [
+                        "constructorId",
+                        "allowLocal",
+                        "allowTld",
+                        "domainValidator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                            "DomainValidator",
+                            "342-344:isAllowLocal"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.DomainValidator",
+                            "DomainValidator",
+                            "115-121:getInstance1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, allowLocal: bool, allowTld: bool, domainValidator: DomainValidator) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "110-112:getInstance2": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    public static EmailValidator getInstance2(boolean allowLocal) {\n",
+                        "        return getInstance1(allowLocal, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "getInstance2(boolean)",
+                    "parameters": [
+                        "allowLocal"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "88-102:getInstance1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance2(allowLocal: bool) -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "88-102:getInstance1": {
+                    "start": 88,
+                    "end": 102,
+                    "body": [
+                        "    public static EmailValidator getInstance1(boolean allowLocal, boolean allowTld) {\n",
+                        "        if (allowLocal) {\n",
+                        "            if (allowTld) {\n",
+                        "                return EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD;\n",
+                        "            } else {\n",
+                        "                return EMAIL_VALIDATOR_WITH_LOCAL;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            if (allowTld) {\n",
+                        "                return EMAIL_VALIDATOR_WITH_TLD;\n",
+                        "            } else {\n",
+                        "                return EMAIL_VALIDATOR;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "getInstance1(boolean, boolean)",
+                    "parameters": [
+                        "allowLocal",
+                        "allowTld"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance1(allowLocal: bool, allowTld: bool) -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "77-79:getInstance0": {
+                    "start": 77,
+                    "end": 79,
+                    "body": [
+                        "    public static EmailValidator getInstance0() {\n",
+                        "        return EMAIL_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "getInstance0()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance0() -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "70-70:domainValidator": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "    private final DomainValidator domainValidator;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DomainValidator",
+                            "DomainValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __domainValidator: DomainValidator = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "67-68:EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD": {
+                    "start": 67,
+                    "end": 68,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD =\n",
+                        "            new EmailValidator(1, true, true, null);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL_WITH_TLD: EmailValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "63-64:EMAIL_VALIDATOR_WITH_LOCAL": {
+                    "start": 63,
+                    "end": 64,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR_WITH_LOCAL =\n",
+                        "            new EmailValidator(1, true, false, null);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_VALIDATOR_WITH_LOCAL: EmailValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "59-60:EMAIL_VALIDATOR_WITH_TLD": {
+                    "start": 59,
+                    "end": 60,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR_WITH_TLD =\n",
+                        "            new EmailValidator(1, false, true, null);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_VALIDATOR_WITH_TLD: EmailValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "56-56:EMAIL_VALIDATOR": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR = new EmailValidator(1, false, false, null);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "53-53:allowTld": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private final boolean allowTld;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __allowTld: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "51-51:MAX_USERNAME_LEN": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private static final int MAX_USERNAME_LEN = 64;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __MAX_USERNAME_LEN: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "49-49:USER_PATTERN": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private static final Pattern USER_PATTERN = Pattern.compile(USER_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __USER_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "48-48:IP_DOMAIN_PATTERN": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final Pattern IP_DOMAIN_PATTERN = Pattern.compile(IP_DOMAIN_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "47-47:EMAIL_PATTERN": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "45-45:USER_REGEX": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final String USER_REGEX = \"^\" + WORD + \"(\\\\.\" + WORD + \")*$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __USER_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "44-44:IP_DOMAIN_REGEX": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private static final String IP_DOMAIN_REGEX = \"^\\\\[(.*)\\\\]$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __IP_DOMAIN_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "43-43:EMAIL_REGEX": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final String EMAIL_REGEX = \"^(.+)@(\\\\S+)$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_REGEX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "41-41:WORD": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final String WORD = \"((\" + VALID_CHARS + \"|')+|\" + QUOTED_USER + \")\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __WORD: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-40:QUOTED_USER": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final String QUOTED_USER = \"(\\\"(\\\\\\\\\\\"|[^\\\"])*\\\")\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __QUOTED_USER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "39-39:VALID_CHARS": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final String VALID_CHARS = \"(\\\\\\\\.)|[^\\\\s\" + SPECIAL_CHARS + \"]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALID_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "38-38:SPECIAL_CHARS": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final String SPECIAL_CHARS = \"\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SPECIAL_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "36-36:serialVersionUID": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private static final long serialVersionUID = 1705927040799295880L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class EmailValidator():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.validator.routines.InetAddressValidator import *",
+        "from src.main.org.apache.commons.validator.routines.DomainValidator import *"
+    ]
+}

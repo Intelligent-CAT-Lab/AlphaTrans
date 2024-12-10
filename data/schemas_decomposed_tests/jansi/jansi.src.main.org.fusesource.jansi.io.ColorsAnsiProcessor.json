@@ -1,0 +1,355 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/io/ColorsAnsiProcessor.java",
+    "imports": {
+        "18-18:import IOException": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "19-19:import OutputStream": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "21-21:import Iterator": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "20-20:import ArrayList": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "23-23:import AnsiColors": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.fusesource.jansi.AnsiColors;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ColorsAnsiProcessor": {
+            "start": 28,
+            "end": 28,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AnsiProcessor"
+            ],
+            "methods": {
+                "142-144:processCharsetSelect0": {
+                    "start": 142,
+                    "end": 144,
+                    "body": [
+                        "    protected boolean processCharsetSelect0(ArrayList<Object> options) {\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "processCharsetSelect0(ArrayList<Object>)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": []
+                },
+                "137-139:processOperatingSystemCommand": {
+                    "start": 137,
+                    "end": 139,
+                    "body": [
+                        "    protected boolean processOperatingSystemCommand(ArrayList<Object> options) {\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "processOperatingSystemCommand(ArrayList<Object>)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": []
+                },
+                "38-134:processEscapeCommand": {
+                    "start": 38,
+                    "end": 134,
+                    "body": [
+                        "    protected boolean processEscapeCommand(ArrayList<Object> options, int command) throws IOException {\n",
+                        "        if (command == 'm' && (colors == AnsiColors.Colors256 || colors == AnsiColors.Colors16)) {\n",
+                        "            // Validate all options are ints...\n",
+                        "            boolean has38or48 = false;\n",
+                        "            for (Object next : options) {\n",
+                        "                if (next != null && next.getClass() != Integer.class) {\n",
+                        "                    throw new IllegalArgumentException();\n",
+                        "                }\n",
+                        "                Integer value = (Integer) next;\n",
+                        "                has38or48 |= value == 38 || value == 48;\n",
+                        "            }\n",
+                        "            // SGR commands do not contain an extended color, so just transfer the buffer\n",
+                        "            if (!has38or48) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "            StringBuilder sb = new StringBuilder(32);\n",
+                        "            sb.append('\\033').append('[');\n",
+                        "            boolean first = true;\n",
+                        "            Iterator<Object> optionsIterator = options.iterator();\n",
+                        "            while (optionsIterator.hasNext()) {\n",
+                        "                Object next = optionsIterator.next();\n",
+                        "                if (next != null) {\n",
+                        "                    int value = (Integer) next;\n",
+                        "                    if (value == 38 || value == 48) {\n",
+                        "                        // extended color like `esc[38;5;<index>m` or `esc[38;2;<r>;<g>;<b>m`\n",
+                        "                        int arg2or5 = getNextOptionInt(optionsIterator);\n",
+                        "                        if (arg2or5 == 2) {\n",
+                        "                            // 24 bit color style like `esc[38;2;<r>;<g>;<b>m`\n",
+                        "                            int r = getNextOptionInt(optionsIterator);\n",
+                        "                            int g = getNextOptionInt(optionsIterator);\n",
+                        "                            int b = getNextOptionInt(optionsIterator);\n",
+                        "                            if (colors == AnsiColors.Colors256) {\n",
+                        "                                int col = Colors.roundRgbColor(r, g, b, 256);\n",
+                        "                                if (!first) {\n",
+                        "                                    sb.append(';');\n",
+                        "                                }\n",
+                        "                                first = false;\n",
+                        "                                sb.append(value);\n",
+                        "                                sb.append(';');\n",
+                        "                                sb.append(5);\n",
+                        "                                sb.append(';');\n",
+                        "                                sb.append(col);\n",
+                        "                            } else {\n",
+                        "                                int col = Colors.roundRgbColor(r, g, b, 16);\n",
+                        "                                if (!first) {\n",
+                        "                                    sb.append(';');\n",
+                        "                                }\n",
+                        "                                first = false;\n",
+                        "                                sb.append(\n",
+                        "                                        value == 38\n",
+                        "                                                ? col >= 8 ? 90 + col - 8 : 30 + col\n",
+                        "                                                : col >= 8 ? 100 + col - 8 : 40 + col);\n",
+                        "                            }\n",
+                        "                        } else if (arg2or5 == 5) {\n",
+                        "                            // 256 color style like `esc[38;5;<index>m`\n",
+                        "                            int paletteIndex = getNextOptionInt(optionsIterator);\n",
+                        "                            if (colors == AnsiColors.Colors256) {\n",
+                        "                                if (!first) {\n",
+                        "                                    sb.append(';');\n",
+                        "                                }\n",
+                        "                                first = false;\n",
+                        "                                sb.append(value);\n",
+                        "                                sb.append(';');\n",
+                        "                                sb.append(5);\n",
+                        "                                sb.append(';');\n",
+                        "                                sb.append(paletteIndex);\n",
+                        "                            } else {\n",
+                        "                                int col = Colors.roundColor0(paletteIndex, 16);\n",
+                        "                                if (!first) {\n",
+                        "                                    sb.append(';');\n",
+                        "                                }\n",
+                        "                                first = false;\n",
+                        "                                sb.append(\n",
+                        "                                        value == 38\n",
+                        "                                                ? col >= 8 ? 90 + col - 8 : 30 + col\n",
+                        "                                                : col >= 8 ? 100 + col - 8 : 40 + col);\n",
+                        "                            }\n",
+                        "                        } else {\n",
+                        "                            throw new IllegalArgumentException();\n",
+                        "                        }\n",
+                        "                    } else {\n",
+                        "                        if (!first) {\n",
+                        "                            sb.append(';');\n",
+                        "                        }\n",
+                        "                        first = false;\n",
+                        "                        sb.append(value);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "            sb.append('m');\n",
+                        "            os.write(sb.toString().getBytes());\n",
+                        "            return true;\n",
+                        "\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "processEscapeCommand(ArrayList<Object>, int)",
+                    "parameters": [
+                        "options",
+                        "command"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "46-52:getNextOptionInt"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.Colors",
+                            "Colors",
+                            "92-94:roundRgbColor"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(int)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.Colors",
+                            "Colors",
+                            "82-90:roundColor0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "32-35:ColorsAnsiProcessor": {
+                    "start": 32,
+                    "end": 35,
+                    "body": [
+                        "    public ColorsAnsiProcessor(OutputStream os, AnsiColors colors) {\n",
+                        "        super(os);\n",
+                        "        this.colors = colors;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ColorsAnsiProcessor(OutputStream, AnsiColors)",
+                    "parameters": [
+                        "os",
+                        "colors"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.io.AnsiProcessor",
+                            "AnsiProcessor",
+                            "37-39:AnsiProcessor"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "30-30:colors": {
+                    "start": 30,
+                    "end": 30,
+                    "body": [
+                        "    private final AnsiColors colors;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "AnsiColors",
+                            "AnsiColors"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

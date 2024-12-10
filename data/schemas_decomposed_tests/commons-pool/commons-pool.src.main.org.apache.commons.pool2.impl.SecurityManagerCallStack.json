@@ -1,0 +1,268 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/SecurityManagerCallStack.java",
+    "imports": {
+        "22-22:import Stream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.stream.Stream;\n"
+            ]
+        },
+        "20-20:import List": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "19-19:import WeakReference": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.lang.ref.WeakReference;\n"
+            ]
+        },
+        "21-21:import Collectors": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.stream.Collectors;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PrivateSecurityManager": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "SecurityManagerCallStack",
+            "nests": [
+                "new Function<Class<?>,WeakReference<Class<?>>>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [
+                "SecurityManager"
+            ],
+            "methods": {
+                "44-48:getCallStack": {
+                    "start": 44,
+                    "end": 48,
+                    "body": [
+                        "        private List<WeakReference<Class<?>>> getCallStack() {\n",
+                        "            final Stream<WeakReference<Class<?>>> map =\n",
+                        "                    Stream.of(getClassContext()).map(WeakReference::new);\n",
+                        "            return map.collect(Collectors.toList());\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "List<WeakReference<Class<?>>>",
+                            "java.util.List<WeakReference<Class<?>>>"
+                        ]
+                    ],
+                    "signature": "getCallStack()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/stream/Stream",
+                            "map(java.util.function.Function)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/Stream",
+                            "of(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/SecurityManager",
+                            "getClassContext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/Stream",
+                            "collect(java.util.stream.Collector)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/Collectors",
+                            "toList()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        },
+        "SecurityManagerCallStack": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "PrivateSecurityManager",
+                "Snapshot"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "74-76:clear": {
+                    "start": 74,
+                    "end": 76,
+                    "body": [
+                        "    public void clear() {\n",
+                        "        snapshot = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "66-66:snapshot": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private volatile Snapshot snapshot;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Snapshot",
+                            "Snapshot"
+                        ]
+                    ]
+                }
+            }
+        },
+        "Snapshot": {
+            "start": 52,
+            "end": 52,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "SecurityManagerCallStack",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "61-63:Snapshot": {
+                    "start": 61,
+                    "end": 63,
+                    "body": [
+                        "        private Snapshot(final List<WeakReference<Class<?>>> stack) {\n",
+                        "            this.stack = stack;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Snapshot(List<WeakReference<Class<?>>>)",
+                    "parameters": [
+                        "stack"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "54-54:stack": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "        private final List<WeakReference<Class<?>>> stack;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<WeakReference<Class<?>>>",
+                            "java.util.List<WeakReference<Class<?>>>"
+                        ]
+                    ]
+                },
+                "53-53:timestampMillis": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "        private final long timestampMillis = System.currentTimeMillis();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "new Function<Class<?>,WeakReference<Class<?>>>(...) { ... }": {
+            "start": 46,
+            "end": 46,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "PrivateSecurityManager",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "45-46:apply": {
+                    "start": 45,
+                    "end": 46,
+                    "body": [
+                        "            final Stream<WeakReference<Class<?>>> map =\n",
+                        "                    Stream.of(getClassContext()).map(WeakReference::new);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "WeakReference<>",
+                            "java.lang.ref.WeakReference<>"
+                        ]
+                    ],
+                    "signature": "apply(T)",
+                    "parameters": [
+                        "referent"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        }
+    }
+}

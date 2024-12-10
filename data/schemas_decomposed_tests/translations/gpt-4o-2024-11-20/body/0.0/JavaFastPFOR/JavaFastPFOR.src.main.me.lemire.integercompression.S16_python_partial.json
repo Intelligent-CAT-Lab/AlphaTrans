@@ -1,0 +1,610 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/S16.java",
+    "imports": {},
+    "classes": {
+        "S16": {
+            "start": 16,
+            "end": 16,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "167-177:uncompress": {
+                    "start": 167,
+                    "end": 177,
+                    "body": [
+                        "\tpublic static void uncompress(final int[] in, int tmpinpos, final int inlength, final int[] out, int currentPos,\n",
+                        "\t\t\tint outlength) {\n",
+                        "\t\tfinal int finalpos = tmpinpos + inlength;\n",
+                        "\t\twhile (tmpinpos < finalpos) {\n",
+                        "\t\t\tfinal int howmany = decompressblock(out, currentPos, in, tmpinpos, outlength);\n",
+                        "\t\t\toutlength -= howmany;\n",
+                        "\t\t\tcurrentPos += howmany;\n",
+                        "\t\t\ttmpinpos += 1;\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress(int[], int, int, int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "tmpinpos",
+                        "inlength",
+                        "out",
+                        "currentPos",
+                        "outlength"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "140-149:decompressblock"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def uncompress(in_: typing.List[int], tmpinpos: int, inlength: int, out: typing.List[int], currentPos: int, outlength: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "140-149:decompressblock": {
+                    "start": 140,
+                    "end": 149,
+                    "body": [
+                        "\tpublic static final int decompressblock(int[] out, int outOffset, int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j = 0, bits = 0;\n",
+                        "\t\tnumIdx = in[inOffset] >>> S16_BITSSIZE;\n",
+                        "\t\tint num = S16_NUM[numIdx] < n ? S16_NUM[numIdx] : n;\n",
+                        "\t\tfor (j = 0, bits = 0; j < num; j++) {\n",
+                        "\t\t\tout[outOffset + j] = (in[inOffset] >>> bits) & (0xffffffff >>> (32 - S16_BITS[numIdx][j]));\n",
+                        "\t\t\tbits += S16_BITS[numIdx][j];\n",
+                        "\t\t}\n",
+                        "\t\treturn num;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decompressblock(int[], int, int[], int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decompressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "88-106:compressblock": {
+                    "start": 88,
+                    "end": 106,
+                    "body": [
+                        "\tpublic static final int compressblock(int[] out, int outOffset, int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j, num, bits;\n",
+                        "\t\tfor (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {\n",
+                        "\t\t\tout[outOffset] = numIdx << S16_BITSSIZE;\n",
+                        "\t\t\tnum = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;\n",
+                        "\n",
+                        "\t\t\tfor (j = 0, bits = 0; (j < num) && (in[inOffset + j] < SHIFTED_S16_BITS[numIdx][j]);) {\n",
+                        "\t\t\t\tout[outOffset] |= (in[inOffset + j] << bits);\n",
+                        "\t\t\t\tbits += S16_BITS[numIdx][j];\n",
+                        "\t\t\t\tj++;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (j == num) {\n",
+                        "\t\t\t\treturn num;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\treturn -1;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compressblock(int[], int, int[], int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def compressblock(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "58-70:estimatecompress": {
+                    "start": 58,
+                    "end": 70,
+                    "body": [
+                        "\tpublic static int estimatecompress(final int[] in, int currentPos, int inlength) {\n",
+                        "\t\tfinal int finalin = currentPos + inlength;\n",
+                        "\t\tint counter = 0;\n",
+                        "\t\twhile (currentPos < finalin) {\n",
+                        "\t\t\tint inoffset = fakecompressblock(in, currentPos, inlength);\n",
+                        "\t\t\tif (inoffset == -1)\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\tcurrentPos += inoffset;\n",
+                        "\t\t\tinlength -= inoffset;\n",
+                        "\t\t\t++counter;\n",
+                        "\t\t}\n",
+                        "\t\treturn counter;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "estimatecompress(int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "108-123:fakecompressblock"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def estimatecompress(in_: typing.List[int], currentPos: int, inlength: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "34-45:compress": {
+                    "start": 34,
+                    "end": 45,
+                    "body": [
+                        "\tpublic static int compress(final int[] in, int currentPos, int inlength, final int out[], final int tmpoutpos) {\n",
+                        "\t\tint outpos = tmpoutpos;\n",
+                        "\t\tfinal int finalin = currentPos + inlength;\n",
+                        "\t\twhile (currentPos < finalin) {\n",
+                        "\t\t\tint inoffset = compressblock(out, outpos++, in, currentPos, inlength);\n",
+                        "\t\t\tif (inoffset == -1)\n",
+                        "\t\t\t\tthrow new RuntimeException(\"Too big a number\");\n",
+                        "\t\t\tcurrentPos += inoffset;\n",
+                        "\t\t\tinlength -= inoffset;\n",
+                        "\t\t}\n",
+                        "\t\treturn outpos - tmpoutpos;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compress(int[], int, int, int[], int)",
+                    "parameters": [
+                        "in",
+                        "currentPos",
+                        "inlength",
+                        "out",
+                        "tmpoutpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.S16",
+                            "S16",
+                            "88-106:compressblock"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def compress(in_: typing.List[int], currentPos: int, inlength: int, out: typing.List[int], tmpoutpos: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "179-187:shiftme": {
+                    "start": 179,
+                    "end": 187,
+                    "body": [
+                        "\tprivate static int[][] shiftme(int[][] x) {\n",
+                        "\t\tint[][] answer = new int[x.length][];\n",
+                        "\t\tfor (int k = 0; k < x.length; ++k) {\n",
+                        "\t\t\tanswer[k] = new int[x[k].length];\n",
+                        "\t\t\tfor (int z = 0; z < answer[k].length; ++z)\n",
+                        "\t\t\t\tanswer[k][z] = 1 << x[k][z];\n",
+                        "\t\t}\n",
+                        "\t\treturn answer;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "signature": "shiftme(int[][])",
+                    "parameters": [
+                        "x"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __shiftme(x: typing.List[typing.List[int]]) -> typing.List[typing.List[int]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "108-123:fakecompressblock": {
+                    "start": 108,
+                    "end": 123,
+                    "body": [
+                        "\tprivate static final int fakecompressblock(int[] in, int inOffset, int n) {\n",
+                        "\t\tint numIdx, j, num;\n",
+                        "\t\tfor (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {\n",
+                        "\t\t\tnum = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx] : n;\n",
+                        "\n",
+                        "\t\t\tfor (j = 0; (j < num) && (in[inOffset + j] < SHIFTED_S16_BITS[numIdx][j]);) {\n",
+                        "\t\t\t\tj++;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (j == num) {\n",
+                        "\t\t\t\treturn num;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\treturn -1;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "fakecompressblock(int[], int, int)",
+                    "parameters": [
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __fakecompressblock(in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "203-203:SHIFTED_S16_BITS": {
+                    "start": 203,
+                    "end": 203,
+                    "body": [
+                        "\tprivate static final int[][] SHIFTED_S16_BITS = shiftme(S16_BITS);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SHIFTED_S16_BITS: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "195-202:S16_BITS": {
+                    "start": 195,
+                    "end": 202,
+                    "body": [
+                        "\tprivate static final int[][] S16_BITS = {\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "\t\t\t{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2 },\n",
+                        "\t\t\t{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, { 4, 3, 3, 3, 3, 3, 3, 3, 3 }, { 3, 4, 4, 4, 4, 3, 3, 3 },\n",
+                        "\t\t\t{ 4, 4, 4, 4, 4, 4, 4 }, { 5, 5, 5, 5, 4, 4 }, { 4, 4, 5, 5, 5, 5 }, { 6, 6, 6, 5, 5 }, { 5, 5, 6, 6, 6 },\n",
+                        "\t\t\t{ 7, 7, 7, 7 }, { 10, 9, 9, }, { 14, 14 }, { 28 } };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITS: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "192-192:S16_NUM": {
+                    "start": 192,
+                    "end": 192,
+                    "body": [
+                        "\tprivate static final int[] S16_NUM = { 28, 21, 21, 21, 14, 9, 8, 7, 6, 6, 5, 5, 4, 3, 2, 1 };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUM: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "190-190:S16_BITSSIZE": {
+                    "start": 190,
+                    "end": 190,
+                    "body": [
+                        "\tprivate static final int S16_BITSSIZE = 28;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITSSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "189-189:S16_NUMSIZE": {
+                    "start": 189,
+                    "end": 189,
+                    "body": [
+                        "\tprivate static final int S16_NUMSIZE = 16;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUMSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class S16:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os"
+    ]
+}

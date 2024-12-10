@@ -1,0 +1,2061 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/MultipartStream.java",
+    "imports": {
+        "25-25:import IOException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "26-26:import InputStream": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "24-24:import ByteArrayOutputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "27-27:import UnsupportedEncodingException": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "21-21:import FileUploadIOException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.fileupload.FileUploadBase.FileUploadIOException;\n"
+            ]
+        },
+        "22-22:import Closeable": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.fileupload.util.Closeable;\n"
+            ]
+        },
+        "19-19:import static String.format": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static java.lang.String.format;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MultipartStream": {
+            "start": 77,
+            "end": 77,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "IllegalBoundaryException",
+                "ItemInputStream",
+                "MalformedStreamException",
+                "ProgressNotifier"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "302-304:MultipartStream3": {
+                    "start": 302,
+                    "end": 304,
+                    "body": [
+                        "    public static MultipartStream MultipartStream3(InputStream input, byte[] boundary) {\n",
+                        "        return new MultipartStream(input, boundary, DEFAULT_BUFSIZE, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "MultipartStream",
+                            "MultipartStream"
+                        ]
+                    ],
+                    "signature": "MultipartStream3(InputStream, byte[])",
+                    "parameters": [
+                        "input",
+                        "boundary"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "252-279:MultipartStream"
+                        ]
+                    ]
+                },
+                "233-236:MultipartStream1": {
+                    "start": 233,
+                    "end": 236,
+                    "body": [
+                        "    public static MultipartStream MultipartStream1(\n",
+                        "            InputStream input, byte[] boundary, int bufSize) {\n",
+                        "        return new MultipartStream(input, boundary, bufSize, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "MultipartStream",
+                            "MultipartStream"
+                        ]
+                    ],
+                    "signature": "MultipartStream1(InputStream, byte[], int)",
+                    "parameters": [
+                        "input",
+                        "boundary",
+                        "bufSize"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "252-279:MultipartStream"
+                        ]
+                    ]
+                },
+                "216-218:MultipartStream0": {
+                    "start": 216,
+                    "end": 218,
+                    "body": [
+                        "    public static MultipartStream MultipartStream0() {\n",
+                        "        return MultipartStream2(null, null, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "MultipartStream",
+                            "MultipartStream"
+                        ]
+                    ],
+                    "signature": "MultipartStream0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "289-292:MultipartStream2"
+                        ]
+                    ]
+                },
+                "567-583:findSeparator": {
+                    "start": 567,
+                    "end": 583,
+                    "body": [
+                        "    protected int findSeparator() {\n",
+                        "\n",
+                        "        int bufferPos = this.head;\n",
+                        "        int tablePos = 0;\n",
+                        "\n",
+                        "        while (bufferPos < this.tail) {\n",
+                        "            while (tablePos >= 0 && buffer[bufferPos] != boundary[tablePos]) {\n",
+                        "                tablePos = boundaryTable[tablePos];\n",
+                        "            }\n",
+                        "            bufferPos++;\n",
+                        "            tablePos++;\n",
+                        "            if (tablePos == boundaryLength) {\n",
+                        "                return bufferPos - boundaryLength;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "findSeparator()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "550-558:findByte": {
+                    "start": 550,
+                    "end": 558,
+                    "body": [
+                        "    protected int findByte(byte value, int pos) {\n",
+                        "        for (int i = pos; i < tail; i++) {\n",
+                        "            if (buffer[i] == value) {\n",
+                        "                return i;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "findByte(byte, int)",
+                    "parameters": [
+                        "value",
+                        "pos"
+                    ],
+                    "calls": []
+                },
+                "532-539:arrayequals": {
+                    "start": 532,
+                    "end": 539,
+                    "body": [
+                        "    public static boolean arrayequals(byte[] a, byte[] b, int count) {\n",
+                        "        for (int i = 0; i < count; i++) {\n",
+                        "            if (a[i] != b[i]) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "arrayequals(byte[], byte[], int)",
+                    "parameters": [
+                        "a",
+                        "b",
+                        "count"
+                    ],
+                    "calls": []
+                },
+                "440-480:readHeaders": {
+                    "start": 440,
+                    "end": 480,
+                    "body": [
+                        "    public String readHeaders() throws FileUploadIOException, MalformedStreamException {\n",
+                        "        int i = 0;\n",
+                        "        byte b;\n",
+                        "        ByteArrayOutputStream baos = new ByteArrayOutputStream();\n",
+                        "        int size = 0;\n",
+                        "        while (i < HEADER_SEPARATOR.length) {\n",
+                        "            try {\n",
+                        "                b = readByte();\n",
+                        "            } catch (FileUploadIOException e) {\n",
+                        "                throw e;\n",
+                        "            } catch (IOException e) {\n",
+                        "                throw new MalformedStreamException(\"Stream ended unexpectedly\");\n",
+                        "            }\n",
+                        "            if (++size > HEADER_PART_SIZE_MAX) {\n",
+                        "                throw new MalformedStreamException(\n",
+                        "                        format(\n",
+                        "                                \"Header section has more than %s bytes (maybe it is not properly\"\n",
+                        "                                        + \" terminated)\",\n",
+                        "                                Integer.valueOf(HEADER_PART_SIZE_MAX)));\n",
+                        "            }\n",
+                        "            if (b == HEADER_SEPARATOR[i]) {\n",
+                        "                i++;\n",
+                        "            } else {\n",
+                        "                i = 0;\n",
+                        "            }\n",
+                        "            baos.write(b);\n",
+                        "        }\n",
+                        "\n",
+                        "        String headers = null;\n",
+                        "        if (headerEncoding != null) {\n",
+                        "            try {\n",
+                        "                headers = baos.toString(headerEncoding);\n",
+                        "            } catch (UnsupportedEncodingException e) {\n",
+                        "                headers = baos.toString();\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            headers = baos.toString();\n",
+                        "        }\n",
+                        "\n",
+                        "        return headers;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "readHeaders()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "332-344:readByte"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MalformedStreamException",
+                            "598-600:MalformedStreamException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "write(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "398-404:setBoundary": {
+                    "start": 398,
+                    "end": 404,
+                    "body": [
+                        "    public void setBoundary(byte[] boundary) throws IllegalBoundaryException {\n",
+                        "        if (boundary.length != boundaryLength - BOUNDARY_PREFIX.length) {\n",
+                        "            throw new IllegalBoundaryException(\"The length of a boundary token cannot be changed\");\n",
+                        "        }\n",
+                        "        System.arraycopy(boundary, 0, this.boundary, BOUNDARY_PREFIX.length, boundary.length);\n",
+                        "        computeBoundaryTable();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setBoundary(byte[])",
+                    "parameters": [
+                        "boundary"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "IllegalBoundaryException",
+                            "616-618:IllegalBoundaryException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "407-426:computeBoundaryTable"
+                        ]
+                    ]
+                },
+                "356-381:readBoundary": {
+                    "start": 356,
+                    "end": 381,
+                    "body": [
+                        "    public boolean readBoundary() throws FileUploadIOException, MalformedStreamException {\n",
+                        "        byte[] marker = new byte[2];\n",
+                        "        boolean nextChunk = false;\n",
+                        "\n",
+                        "        head += boundaryLength;\n",
+                        "        try {\n",
+                        "            marker[0] = readByte();\n",
+                        "            if (marker[0] == LF) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "\n",
+                        "            marker[1] = readByte();\n",
+                        "            if (arrayequals(marker, STREAM_TERMINATOR, 2)) {\n",
+                        "                nextChunk = false;\n",
+                        "            } else if (arrayequals(marker, FIELD_SEPARATOR, 2)) {\n",
+                        "                nextChunk = true;\n",
+                        "            } else {\n",
+                        "                throw new MalformedStreamException(\"Unexpected characters follow a boundary\");\n",
+                        "            }\n",
+                        "        } catch (FileUploadIOException e) {\n",
+                        "            throw e;\n",
+                        "        } catch (IOException e) {\n",
+                        "            throw new MalformedStreamException(\"Stream ended unexpectedly\");\n",
+                        "        }\n",
+                        "        return nextChunk;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "readBoundary()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "332-344:readByte"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "532-539:arrayequals"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MalformedStreamException",
+                            "598-600:MalformedStreamException"
+                        ]
+                    ]
+                },
+                "332-344:readByte": {
+                    "start": 332,
+                    "end": 344,
+                    "body": [
+                        "    public byte readByte() throws IOException {\n",
+                        "        if (head == tail) {\n",
+                        "            head = 0;\n",
+                        "            tail = input.read(buffer, head, bufSize);\n",
+                        "            if (tail == -1) {\n",
+                        "                throw new IOException(\"No more data is available\");\n",
+                        "            }\n",
+                        "            if (notifier != null) {\n",
+                        "                notifier.noteBytesRead(tail);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return buffer[head++];\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "readByte()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read(byte[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ProgressNotifier",
+                            "110-116:noteBytesRead"
+                        ]
+                    ]
+                },
+                "322-324:setHeaderEncoding": {
+                    "start": 322,
+                    "end": 324,
+                    "body": [
+                        "    public void setHeaderEncoding(String encoding) {\n",
+                        "        headerEncoding = encoding;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setHeaderEncoding(String)",
+                    "parameters": [
+                        "encoding"
+                    ],
+                    "calls": []
+                },
+                "312-314:getHeaderEncoding": {
+                    "start": 312,
+                    "end": 314,
+                    "body": [
+                        "    public String getHeaderEncoding() {\n",
+                        "        return headerEncoding;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getHeaderEncoding()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "289-292:MultipartStream2": {
+                    "start": 289,
+                    "end": 292,
+                    "body": [
+                        "    public static MultipartStream MultipartStream2(\n",
+                        "            InputStream input, byte[] boundary, ProgressNotifier pNotifier) {\n",
+                        "        return new MultipartStream(input, boundary, DEFAULT_BUFSIZE, pNotifier);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "MultipartStream",
+                            "MultipartStream"
+                        ]
+                    ],
+                    "signature": "MultipartStream2(InputStream, byte[], ProgressNotifier)",
+                    "parameters": [
+                        "input",
+                        "boundary",
+                        "pNotifier"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "252-279:MultipartStream"
+                        ]
+                    ]
+                },
+                "252-279:MultipartStream": {
+                    "start": 252,
+                    "end": 279,
+                    "body": [
+                        "    public MultipartStream(\n",
+                        "            InputStream input, byte[] boundary, int bufSize, ProgressNotifier pNotifier) {\n",
+                        "\n",
+                        "        if (boundary == null) {\n",
+                        "            throw new IllegalArgumentException(\"boundary may not be null\");\n",
+                        "        }\n",
+                        "        this.boundaryLength = boundary.length + BOUNDARY_PREFIX.length;\n",
+                        "        if (bufSize < this.boundaryLength + 1) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"The buffer size specified for the MultipartStream is too small\");\n",
+                        "        }\n",
+                        "\n",
+                        "        this.input = input;\n",
+                        "        this.bufSize = Math.max(bufSize, boundaryLength * 2);\n",
+                        "        this.buffer = new byte[this.bufSize];\n",
+                        "        this.notifier = pNotifier;\n",
+                        "\n",
+                        "        this.boundary = new byte[this.boundaryLength];\n",
+                        "        this.boundaryTable = new int[this.boundaryLength + 1];\n",
+                        "        this.keepRegion = this.boundary.length;\n",
+                        "\n",
+                        "        System.arraycopy(BOUNDARY_PREFIX, 0, this.boundary, 0, BOUNDARY_PREFIX.length);\n",
+                        "        System.arraycopy(boundary, 0, this.boundary, BOUNDARY_PREFIX.length, boundary.length);\n",
+                        "        computeBoundaryTable();\n",
+                        "\n",
+                        "        head = 0;\n",
+                        "        tail = 0;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MultipartStream(InputStream, byte[], int, ProgressNotifier)",
+                    "parameters": [
+                        "input",
+                        "boundary",
+                        "bufSize",
+                        "pNotifier"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "max(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "407-426:computeBoundaryTable"
+                        ]
+                    ]
+                },
+                "407-426:computeBoundaryTable": {
+                    "start": 407,
+                    "end": 426,
+                    "body": [
+                        "    private void computeBoundaryTable() {\n",
+                        "        int position = 2;\n",
+                        "        int candidate = 0;\n",
+                        "\n",
+                        "        boundaryTable[0] = -1;\n",
+                        "        boundaryTable[1] = 0;\n",
+                        "\n",
+                        "        while (position <= boundaryLength) {\n",
+                        "            if (boundary[position - 1] == boundary[candidate]) {\n",
+                        "                boundaryTable[position] = candidate + 1;\n",
+                        "                candidate++;\n",
+                        "                position++;\n",
+                        "            } else if (candidate > 0) {\n",
+                        "                candidate = boundaryTable[candidate];\n",
+                        "            } else {\n",
+                        "                boundaryTable[position] = 0;\n",
+                        "                position++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "computeBoundaryTable()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "502-504:newInputStream": {
+                    "start": 502,
+                    "end": 504,
+                    "body": [
+                        "    ItemInputStream newInputStream() {\n",
+                        "        return new ItemInputStream();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "ItemInputStream",
+                            "ItemInputStream"
+                        ]
+                    ],
+                    "signature": "newInputStream()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "639-641:ItemInputStream"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "166-166:BOUNDARY_PREFIX": {
+                    "start": 166,
+                    "end": 166,
+                    "body": [
+                        "    protected static final byte[] BOUNDARY_PREFIX = {CR, LF, DASH, DASH};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "163-163:STREAM_TERMINATOR": {
+                    "start": 163,
+                    "end": 163,
+                    "body": [
+                        "    protected static final byte[] STREAM_TERMINATOR = {DASH, DASH};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "157-157:FIELD_SEPARATOR": {
+                    "start": 157,
+                    "end": 157,
+                    "body": [
+                        "    protected static final byte[] FIELD_SEPARATOR = {CR, LF};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "151-151:HEADER_SEPARATOR": {
+                    "start": 151,
+                    "end": 151,
+                    "body": [
+                        "    protected static final byte[] HEADER_SEPARATOR = {CR, LF, CR, LF};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "148-148:DEFAULT_BUFSIZE": {
+                    "start": 148,
+                    "end": 148,
+                    "body": [
+                        "    protected static final int DEFAULT_BUFSIZE = 4096;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "145-145:HEADER_PART_SIZE_MAX": {
+                    "start": 145,
+                    "end": 145,
+                    "body": [
+                        "    public static final int HEADER_PART_SIZE_MAX = 10240;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "139-139:DASH": {
+                    "start": 139,
+                    "end": 139,
+                    "body": [
+                        "    public static final byte DASH = 0x2D;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ]
+                },
+                "136-136:LF": {
+                    "start": 136,
+                    "end": 136,
+                    "body": [
+                        "    public static final byte LF = 0x0A;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ]
+                },
+                "133-133:CR": {
+                    "start": 133,
+                    "end": 133,
+                    "body": [
+                        "    public static final byte CR = 0x0D;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ]
+                },
+                "208-208:notifier": {
+                    "start": 208,
+                    "end": 208,
+                    "body": [
+                        "    private final ProgressNotifier notifier;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ProgressNotifier",
+                            "ProgressNotifier"
+                        ]
+                    ]
+                },
+                "205-205:headerEncoding": {
+                    "start": 205,
+                    "end": 205,
+                    "body": [
+                        "    private String headerEncoding;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "202-202:tail": {
+                    "start": 202,
+                    "end": 202,
+                    "body": [
+                        "    private int tail;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "196-196:head": {
+                    "start": 196,
+                    "end": 196,
+                    "body": [
+                        "    private int head;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "190-190:buffer": {
+                    "start": 190,
+                    "end": 190,
+                    "body": [
+                        "    private final byte[] buffer;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "187-187:bufSize": {
+                    "start": 187,
+                    "end": 187,
+                    "body": [
+                        "    private final int bufSize;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "184-184:boundaryTable": {
+                    "start": 184,
+                    "end": 184,
+                    "body": [
+                        "    private final int[] boundaryTable;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "181-181:boundary": {
+                    "start": 181,
+                    "end": 181,
+                    "body": [
+                        "    private final byte[] boundary;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ]
+                },
+                "178-178:keepRegion": {
+                    "start": 178,
+                    "end": 178,
+                    "body": [
+                        "    private final int keepRegion;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "172-172:boundaryLength": {
+                    "start": 172,
+                    "end": 172,
+                    "body": [
+                        "    private int boundaryLength;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "169-169:input": {
+                    "start": 169,
+                    "end": 169,
+                    "body": [
+                        "    private final InputStream input;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InputStream",
+                            "java.io.InputStream"
+                        ]
+                    ]
+                }
+            }
+        },
+        "ItemInputStream": {
+            "start": 622,
+            "end": 622,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MultipartStream",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "Closeable",
+                "InputStream"
+            ],
+            "methods": {
+                "841-843:isClosed": {
+                    "start": 841,
+                    "end": 843,
+                    "body": [
+                        "        public boolean isClosed() {\n",
+                        "            return closed;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isClosed()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "782-796:skip": {
+                    "start": 782,
+                    "end": 796,
+                    "body": [
+                        "        public long skip(long bytes) throws IOException {\n",
+                        "            if (closed) {\n",
+                        "                throw new FileItemStream.ItemSkippedException();\n",
+                        "            }\n",
+                        "            int av = available();\n",
+                        "            if (av == 0) {\n",
+                        "                av = makeAvailable();\n",
+                        "                if (av == 0) {\n",
+                        "                    return 0;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            long res = Math.min(av, bytes);\n",
+                        "            head += res;\n",
+                        "            return res;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "skip(long)",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "671-676:available"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(long,long)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.FileItemStream",
+                            "ItemSkippedException",
+                            "ItemSkippedException"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "804-833:makeAvailable"
+                        ]
+                    ]
+                },
+                "688-690:read": {
+                    "start": 688,
+                    "end": 690,
+                    "body": [
+                        "        public int read() throws IOException {\n",
+                        "            return read0();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "read()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "692-705:read0"
+                        ]
+                    ]
+                },
+                "671-676:available": {
+                    "start": 671,
+                    "end": 676,
+                    "body": [
+                        "        public int available() throws IOException {\n",
+                        "            if (pos == -1) {\n",
+                        "                return tail - head - pad;\n",
+                        "            }\n",
+                        "            return pos - head;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "available()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "752-772:close1": {
+                    "start": 752,
+                    "end": 772,
+                    "body": [
+                        "        public void close1(boolean pCloseUnderlying) throws IOException {\n",
+                        "            if (closed) {\n",
+                        "                return;\n",
+                        "            }\n",
+                        "            if (pCloseUnderlying) {\n",
+                        "                closed = true;\n",
+                        "                input.close();\n",
+                        "            } else {\n",
+                        "                for (; ; ) {\n",
+                        "                    int av = available();\n",
+                        "                    if (av == 0) {\n",
+                        "                        av = makeAvailable();\n",
+                        "                        if (av == 0) {\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    skip(av);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            closed = true;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close1(boolean)",
+                    "parameters": [
+                        "pCloseUnderlying"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "close()"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "671-676:available"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "804-833:makeAvailable"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "782-796:skip"
+                        ]
+                    ]
+                },
+                "742-744:close0": {
+                    "start": 742,
+                    "end": 744,
+                    "body": [
+                        "        public void close0() throws IOException {\n",
+                        "            close1(false);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "752-772:close1"
+                        ]
+                    ]
+                },
+                "716-735:read1": {
+                    "start": 716,
+                    "end": 735,
+                    "body": [
+                        "        public int read1(byte[] b, int off, int len) throws IOException {\n",
+                        "            if (closed) {\n",
+                        "                throw new FileItemStream.ItemSkippedException();\n",
+                        "            }\n",
+                        "            if (len == 0) {\n",
+                        "                return 0;\n",
+                        "            }\n",
+                        "            int res = available();\n",
+                        "            if (res == 0) {\n",
+                        "                res = makeAvailable();\n",
+                        "                if (res == 0) {\n",
+                        "                    return -1;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            res = Math.min(res, len);\n",
+                        "            System.arraycopy(buffer, head, b, off, res);\n",
+                        "            head += res;\n",
+                        "            total += res;\n",
+                        "            return res;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "read1(byte[], int, int)",
+                    "parameters": [
+                        "b",
+                        "off",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "671-676:available"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.FileItemStream",
+                            "ItemSkippedException",
+                            "ItemSkippedException"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "804-833:makeAvailable"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ]
+                    ]
+                },
+                "692-705:read0": {
+                    "start": 692,
+                    "end": 705,
+                    "body": [
+                        "        public int read0() throws IOException {\n",
+                        "            if (closed) {\n",
+                        "                throw new FileItemStream.ItemSkippedException();\n",
+                        "            }\n",
+                        "            if (available() == 0 && makeAvailable() == 0) {\n",
+                        "                return -1;\n",
+                        "            }\n",
+                        "            ++total;\n",
+                        "            int b = buffer[head++];\n",
+                        "            if (b >= 0) {\n",
+                        "                return b;\n",
+                        "            }\n",
+                        "            return b + BYTE_POSITIVE_OFFSET;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "read0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.FileItemStream",
+                            "ItemSkippedException",
+                            "ItemSkippedException"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "671-676:available"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "804-833:makeAvailable"
+                        ]
+                    ]
+                },
+                "660-662:getBytesRead": {
+                    "start": 660,
+                    "end": 662,
+                    "body": [
+                        "        public long getBytesRead() {\n",
+                        "            return total;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getBytesRead()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "804-833:makeAvailable": {
+                    "start": 804,
+                    "end": 833,
+                    "body": [
+                        "        private int makeAvailable() throws IOException {\n",
+                        "            if (pos != -1) {\n",
+                        "                return 0;\n",
+                        "            }\n",
+                        "\n",
+                        "            total += tail - head - pad;\n",
+                        "            System.arraycopy(buffer, tail - pad, buffer, 0, pad);\n",
+                        "\n",
+                        "            head = 0;\n",
+                        "            tail = pad;\n",
+                        "\n",
+                        "            for (; ; ) {\n",
+                        "                int bytesRead = input.read(buffer, tail, bufSize - tail);\n",
+                        "                if (bytesRead == -1) {\n",
+                        "                    final String msg = \"Stream ended unexpectedly\";\n",
+                        "                    throw new MalformedStreamException(msg);\n",
+                        "                }\n",
+                        "                if (notifier != null) {\n",
+                        "                    notifier.noteBytesRead(bytesRead);\n",
+                        "                }\n",
+                        "                tail += bytesRead;\n",
+                        "\n",
+                        "                findSeparator();\n",
+                        "                int av = available();\n",
+                        "\n",
+                        "                if (av > 0 || pos != -1) {\n",
+                        "                    return av;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "makeAvailable()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read(byte[],int,int)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "671-676:available"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MalformedStreamException",
+                            "598-600:MalformedStreamException"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ProgressNotifier",
+                            "110-116:noteBytesRead"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "644-653:findSeparator"
+                        ]
+                    ]
+                },
+                "644-653:findSeparator": {
+                    "start": 644,
+                    "end": 653,
+                    "body": [
+                        "        private void findSeparator() {\n",
+                        "            pos = MultipartStream.this.findSeparator();\n",
+                        "            if (pos == -1) {\n",
+                        "                if (tail - head > keepRegion) {\n",
+                        "                    pad = keepRegion;\n",
+                        "                } else {\n",
+                        "                    pad = tail - head;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "findSeparator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "MultipartStream",
+                            "567-583:findSeparator"
+                        ]
+                    ]
+                },
+                "639-641:ItemInputStream": {
+                    "start": 639,
+                    "end": 641,
+                    "body": [
+                        "        ItemInputStream() {\n",
+                        "            findSeparator();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ItemInputStream()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ItemInputStream",
+                            "644-653:findSeparator"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "679-679:BYTE_POSITIVE_OFFSET": {
+                    "start": 679,
+                    "end": 679,
+                    "body": [
+                        "        private static final int BYTE_POSITIVE_OFFSET = 256;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "636-636:closed": {
+                    "start": 636,
+                    "end": 636,
+                    "body": [
+                        "        private boolean closed;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "633-633:pos": {
+                    "start": 633,
+                    "end": 633,
+                    "body": [
+                        "        private int pos;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "630-630:pad": {
+                    "start": 630,
+                    "end": 630,
+                    "body": [
+                        "        private int pad;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "625-625:total": {
+                    "start": 625,
+                    "end": 625,
+                    "body": [
+                        "        private long total;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "IllegalBoundaryException": {
+            "start": 604,
+            "end": 604,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MultipartStream",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "IOException"
+            ],
+            "methods": {
+                "616-618:IllegalBoundaryException": {
+                    "start": 616,
+                    "end": 618,
+                    "body": [
+                        "        public IllegalBoundaryException(String message) {\n",
+                        "            super(message);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IllegalBoundaryException(String)",
+                    "parameters": [
+                        "message"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "607-607:serialVersionUID": {
+                    "start": 607,
+                    "end": 607,
+                    "body": [
+                        "        private static final long serialVersionUID = -161533165102632918L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "MalformedStreamException": {
+            "start": 586,
+            "end": 586,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MultipartStream",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "IOException"
+            ],
+            "methods": {
+                "598-600:MalformedStreamException": {
+                    "start": 598,
+                    "end": 600,
+                    "body": [
+                        "        public MalformedStreamException(String message) {\n",
+                        "            super(message);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MalformedStreamException(String)",
+                    "parameters": [
+                        "message"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "589-589:serialVersionUID": {
+                    "start": 589,
+                    "end": 589,
+                    "body": [
+                        "        private static final long serialVersionUID = 6466926458059796677L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "ProgressNotifier": {
+            "start": 80,
+            "end": 80,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MultipartStream",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "125-129:notifyListener": {
+                    "start": 125,
+                    "end": 129,
+                    "body": [
+                        "        private void notifyListener() {\n",
+                        "            if (listener != null) {\n",
+                        "                listener.update(bytesRead, contentLength, items);\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "notifyListener()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ProgressListener",
+                            "ProgressListener",
+                            "31-31:update"
+                        ]
+                    ]
+                },
+                "119-122:noteItem": {
+                    "start": 119,
+                    "end": 122,
+                    "body": [
+                        "        void noteItem() {\n",
+                        "            ++items;\n",
+                        "            notifyListener();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "noteItem()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ProgressNotifier",
+                            "125-129:notifyListener"
+                        ]
+                    ]
+                },
+                "110-116:noteBytesRead": {
+                    "start": 110,
+                    "end": 116,
+                    "body": [
+                        "        void noteBytesRead(int pBytes) {\n",
+                        "            /* Indicates, that the given number of bytes have been read from\n",
+                        "             * the input stream.\n",
+                        "             */\n",
+                        "            bytesRead += pBytes;\n",
+                        "            notifyListener();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "noteBytesRead(int)",
+                    "parameters": [
+                        "pBytes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.MultipartStream",
+                            "ProgressNotifier",
+                            "125-129:notifyListener"
+                        ]
+                    ]
+                },
+                "100-103:ProgressNotifier": {
+                    "start": 100,
+                    "end": 103,
+                    "body": [
+                        "        ProgressNotifier(ProgressListener pListener, long pContentLength) {\n",
+                        "            listener = pListener;\n",
+                        "            contentLength = pContentLength;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ProgressNotifier(ProgressListener, long)",
+                    "parameters": [
+                        "pListener",
+                        "pContentLength"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "92-92:items": {
+                    "start": 92,
+                    "end": 92,
+                    "body": [
+                        "        private int items;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "89-89:bytesRead": {
+                    "start": 89,
+                    "end": 89,
+                    "body": [
+                        "        private long bytesRead;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "86-86:contentLength": {
+                    "start": 86,
+                    "end": 86,
+                    "body": [
+                        "        private final long contentLength;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "83-83:listener": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "        private final ProgressListener listener;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ProgressListener",
+                            "ProgressListener"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

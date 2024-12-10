@@ -1,18 +1,24 @@
 import json
 import os
+from src.icl.icl_ranking import rank_icl
 
 
 class PromptGenerator:
         
-    def __init__(self, is_feedback, args, fragment_details, feedback=''):
+    def __init__(self, is_feedback, args, fragment_details, feedback='', use_icl_pool=False):
         self.is_feedback = is_feedback
         self.args = args
         self.prompt = ''
         self.feedback = feedback
         self.prompt_status = 'success'
+        self.use_icl_pool = use_icl_pool
+        self.fragment_details = fragment_details
 
         self.meta_data = {
-                            'persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
+                            'deepseek-coder-33b-instruct-persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
+                            'gpt-4o-2024-11-20-persona': '',
+                            'llama-3-1-405b-instruct-fp8-persona': '',
+                            'Qwen2.5-Coder-32B-Instruct-persona': '',
                             'icl': {
                                 'field': 'Java code:\n```\npublic class Calculator {\n    public int x;\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    x: int = \n```\n\nPython field translation:\n```\n    x: int = 0\n```',
                                 'method': 'Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```',
@@ -29,8 +35,7 @@ class PromptGenerator:
     
     def build_base_prompt(self):
         # add persona
-        if self.args.model_name == 'deepseek-coder-33b-instruct':
-            self.prompt += self.meta_data['persona']
+        self.prompt += self.meta_data[f'{self.args.model_name}-persona']
         
         self.double_line_break()
 
@@ -91,10 +96,26 @@ class PromptGenerator:
             else:
                 self.adaptive_icl = self.meta_data['icl']['feedback']
         else:
+            # if not self.use_icl_pool or self.fragment_details['fragment_type'] != 'method':
             if used_assertions:
                 self.adaptive_icl = test_icl
             else:
                 self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
+            # else:
+            #     matched_icl = rank_icl(self.args.project_name, 1, 'library_api', self.args.suffix, f"{self.fragment_details['schema_name']}|{self.fragment_details['class_name']}|{self.fragment_details['fragment_name']}")
+            #     if len(matched_icl) == 0:
+            #         if used_assertions:
+            #             self.adaptive_icl = test_icl
+            #         else:
+            #             self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
+                    
+            #         return
+                
+            #     source_code = '\n'.join(matched_icl[0]['source_code'])
+            #     translation_signature = matched_icl[0]['target_signature']
+            #     correct_translation = '\n'.join(matched_icl[0]['correct_translation'])
+            #     self.adaptive_icl = f"Java code:\n```\n{source_code}\n```" + f"\n\nPartial Python translation:\n```\n{translation_signature}\n        pass\n```\n\nPython method translation:\n```\n{correct_translation}\n```"
+
 
     def load_fragment(self, fragment_details):
         self.schema_name = fragment_details['schema_name']
@@ -265,6 +286,9 @@ class PromptGenerator:
                 out_of_file_dependencies = []
                 out_of_class_dependencies = []
                 for callee_schema, callee_class, callee_method in self.schema_data['classes'][self.class_name]['methods'][self.fragment_name]['calls']:
+
+                    if callee_schema == 'library':
+                        continue
 
                     callee_schema_data = {}
                     with open(f'{self.args.translation_dir}/{callee_schema}_python_partial.json', 'r') as f:

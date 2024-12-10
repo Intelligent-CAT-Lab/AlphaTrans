@@ -1,0 +1,1330 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/digest/UnixCrypt.java",
+    "imports": {
+        "19-19:import StandardCharsets": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "20-20:import Arrays": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "21-21:import ThreadLocalRandom": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.concurrent.ThreadLocalRandom;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UnixCrypt": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "724-726:crypt3": {
+                    "start": 724,
+                    "end": 726,
+                    "body": [
+                        "    public static String crypt3(final String original, final String salt) {\n",
+                        "        return crypt1(original.getBytes(StandardCharsets.UTF_8), salt);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "crypt3(String, String)",
+                    "parameters": [
+                        "original",
+                        "salt"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "644-698:crypt1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes(java.nio.charset.Charset)"
+                        ]
+                    ]
+                },
+                "710-712:crypt2": {
+                    "start": 710,
+                    "end": 712,
+                    "body": [
+                        "    public static String crypt2(final String original) {\n",
+                        "        return crypt0(original.getBytes(StandardCharsets.UTF_8));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "crypt2(String)",
+                    "parameters": [
+                        "original"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "628-630:crypt0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes(java.nio.charset.Charset)"
+                        ]
+                    ]
+                },
+                "644-698:crypt1": {
+                    "start": 644,
+                    "end": 698,
+                    "body": [
+                        "    public static String crypt1(final byte[] original, String salt) {\n",
+                        "        if (salt == null) {\n",
+                        "            final ThreadLocalRandom randomGenerator = ThreadLocalRandom.current();\n",
+                        "            final int numSaltChars = SALT_CHARS.length;\n",
+                        "            salt =\n",
+                        "                    \"\"\n",
+                        "                            + SALT_CHARS[randomGenerator.nextInt(numSaltChars)]\n",
+                        "                            + SALT_CHARS[randomGenerator.nextInt(numSaltChars)];\n",
+                        "        } else if (!salt.matches(\"^[\" + B64.B64T_STRING + \"]{2,}$\")) {\n",
+                        "            throw new IllegalArgumentException(\"Invalid salt value: \" + salt);\n",
+                        "        }\n",
+                        "\n",
+                        "        final StringBuilder buffer = new StringBuilder(\"             \");\n",
+                        "        final char charZero = salt.charAt(0);\n",
+                        "        final char charOne = salt.charAt(1);\n",
+                        "        buffer.setCharAt(0, charZero);\n",
+                        "        buffer.setCharAt(1, charOne);\n",
+                        "        final int eSwap0 = CON_SALT[charZero];\n",
+                        "        final int eSwap1 = CON_SALT[charOne] << 4;\n",
+                        "        final byte key[] = new byte[8];\n",
+                        "        Arrays.fill(key, (byte) 0);\n",
+                        "\n",
+                        "        final int originalLength = original.length;\n",
+                        "        for (int i = 0; i < key.length && i < originalLength; i++) {\n",
+                        "            final int iChar = original[i];\n",
+                        "            key[i] = (byte) (iChar << 1);\n",
+                        "        }\n",
+                        "\n",
+                        "        final int schedule[] = desSetKey(key);\n",
+                        "        final int out[] = body(schedule, eSwap0, eSwap1);\n",
+                        "        final byte b[] = new byte[9];\n",
+                        "        intToFourBytes(out[0], b, 0);\n",
+                        "        intToFourBytes(out[1], b, 4);\n",
+                        "        b[8] = 0;\n",
+                        "        int i = 2;\n",
+                        "        int y = 0;\n",
+                        "        int u = 128;\n",
+                        "        for (; i < 13; i++) {\n",
+                        "            int j = 0;\n",
+                        "            int c = 0;\n",
+                        "            for (; j < 6; j++) {\n",
+                        "                c <<= 1;\n",
+                        "                if ((b[y] & u) != 0) {\n",
+                        "                    c |= 0x1;\n",
+                        "                }\n",
+                        "                u >>>= 1;\n",
+                        "                if (u == 0) {\n",
+                        "                    y++;\n",
+                        "                    u = 128;\n",
+                        "                }\n",
+                        "                buffer.setCharAt(i, (char) COV2CHAR[c]);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return buffer.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "crypt1(byte[], String)",
+                    "parameters": [
+                        "original",
+                        "salt"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "792-841:desSetKey"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "728-765:body"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadLocalRandom",
+                            "current()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ThreadLocalRandom",
+                            "nextInt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "matches(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setCharAt(int,char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(byte[],byte)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "857-862:intToFourBytes"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "628-630:crypt0": {
+                    "start": 628,
+                    "end": 630,
+                    "body": [
+                        "    public static String crypt0(final byte[] original) {\n",
+                        "        return crypt1(original, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "crypt0(byte[])",
+                    "parameters": [
+                        "original"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "644-698:crypt1"
+                        ]
+                    ]
+                },
+                "864-870:permOp": {
+                    "start": 864,
+                    "end": 870,
+                    "body": [
+                        "    private static void permOp(int a, int b, final int n, final int m, final int results[]) {\n",
+                        "        final int t = (a >>> n ^ b) & m;\n",
+                        "        a ^= t << n;\n",
+                        "        b ^= t;\n",
+                        "        results[0] = a;\n",
+                        "        results[1] = b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "permOp(int, int, int, int, int[])",
+                    "parameters": [
+                        "a",
+                        "b",
+                        "n",
+                        "m",
+                        "results"
+                    ],
+                    "calls": []
+                },
+                "857-862:intToFourBytes": {
+                    "start": 857,
+                    "end": 862,
+                    "body": [
+                        "    private static void intToFourBytes(final int iValue, final byte b[], int offset) {\n",
+                        "        b[offset++] = (byte) (iValue & 0xff);\n",
+                        "        b[offset++] = (byte) (iValue >>> 8 & 0xff);\n",
+                        "        b[offset++] = (byte) (iValue >>> 16 & 0xff);\n",
+                        "        b[offset++] = (byte) (iValue >>> 24 & 0xff);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "intToFourBytes(int, byte[], int)",
+                    "parameters": [
+                        "iValue",
+                        "b",
+                        "offset"
+                    ],
+                    "calls": []
+                },
+                "851-855:hPermOp": {
+                    "start": 851,
+                    "end": 855,
+                    "body": [
+                        "    private static int hPermOp(int a, final int n, final int m) {\n",
+                        "        final int t = (a << 16 - n ^ a) & m;\n",
+                        "        a = a ^ t ^ t >>> 16 - n;\n",
+                        "        return a;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hPermOp(int, int, int)",
+                    "parameters": [
+                        "a",
+                        "n",
+                        "m"
+                    ],
+                    "calls": []
+                },
+                "843-849:fourBytesToInt": {
+                    "start": 843,
+                    "end": 849,
+                    "body": [
+                        "    private static int fourBytesToInt(final byte b[], int offset) {\n",
+                        "        int value = byteToUnsigned(b[offset++]);\n",
+                        "        value |= byteToUnsigned(b[offset++]) << 8;\n",
+                        "        value |= byteToUnsigned(b[offset++]) << 16;\n",
+                        "        value |= byteToUnsigned(b[offset++]) << 24;\n",
+                        "        return value;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "fourBytesToInt(byte[], int)",
+                    "parameters": [
+                        "b",
+                        "offset"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "767-770:byteToUnsigned"
+                        ]
+                    ]
+                },
+                "792-841:desSetKey": {
+                    "start": 792,
+                    "end": 841,
+                    "body": [
+                        "    private static int[] desSetKey(final byte key[]) {\n",
+                        "        final int schedule[] = new int[32];\n",
+                        "        int c = fourBytesToInt(key, 0);\n",
+                        "        int d = fourBytesToInt(key, 4);\n",
+                        "        final int results[] = new int[2];\n",
+                        "        permOp(d, c, 4, 0xf0f0f0f, results);\n",
+                        "        d = results[0];\n",
+                        "        c = results[1];\n",
+                        "        c = hPermOp(c, -2, 0xcccc0000);\n",
+                        "        d = hPermOp(d, -2, 0xcccc0000);\n",
+                        "        permOp(d, c, 1, 0x55555555, results);\n",
+                        "        d = results[0];\n",
+                        "        c = results[1];\n",
+                        "        permOp(c, d, 8, 0xff00ff, results);\n",
+                        "        c = results[0];\n",
+                        "        d = results[1];\n",
+                        "        permOp(d, c, 1, 0x55555555, results);\n",
+                        "        d = results[0];\n",
+                        "        c = results[1];\n",
+                        "        d = (d & 0xff) << 16 | d & 0xff00 | (d & 0xff0000) >>> 16 | (c & 0xf0000000) >>> 4;\n",
+                        "        c &= 0xfffffff;\n",
+                        "        int j = 0;\n",
+                        "        for (int i = 0; i < 16; i++) {\n",
+                        "            if (SHIFT2[i]) {\n",
+                        "                c = c >>> 2 | c << 26;\n",
+                        "                d = d >>> 2 | d << 26;\n",
+                        "            } else {\n",
+                        "                c = c >>> 1 | c << 27;\n",
+                        "                d = d >>> 1 | d << 27;\n",
+                        "            }\n",
+                        "            c &= 0xfffffff;\n",
+                        "            d &= 0xfffffff;\n",
+                        "            int s =\n",
+                        "                    SKB[0][c & 0x3f]\n",
+                        "                            | SKB[1][c >>> 6 & 0x3 | c >>> 7 & 0x3c]\n",
+                        "                            | SKB[2][c >>> 13 & 0xf | c >>> 14 & 0x30]\n",
+                        "                            | SKB[3][c >>> 20 & 0x1 | c >>> 21 & 0x6 | c >>> 22 & 0x38];\n",
+                        "            final int t =\n",
+                        "                    SKB[4][d & 0x3f]\n",
+                        "                            | SKB[5][d >>> 7 & 0x3 | d >>> 8 & 0x3c]\n",
+                        "                            | SKB[6][d >>> 15 & 0x3f]\n",
+                        "                            | SKB[7][d >>> 21 & 0xf | d >>> 22 & 0x30];\n",
+                        "            schedule[j++] = (t << 16 | s & 0xffff);\n",
+                        "            s = s >>> 16 | t & 0xffff0000;\n",
+                        "            s = s << 4 | s >>> 28;\n",
+                        "            schedule[j++] = s;\n",
+                        "        }\n",
+                        "\n",
+                        "        return schedule;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "desSetKey(byte[])",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "843-849:fourBytesToInt"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "864-870:permOp"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "851-855:hPermOp"
+                        ]
+                    ]
+                },
+                "772-790:dEncrypt": {
+                    "start": 772,
+                    "end": 790,
+                    "body": [
+                        "    private static int dEncrypt(\n",
+                        "            int el, final int r, final int s, final int e0, final int e1, final int sArr[]) {\n",
+                        "        int v = r ^ r >>> 16;\n",
+                        "        int u = v & e0;\n",
+                        "        v &= e1;\n",
+                        "        u = u ^ u << 16 ^ r ^ sArr[s];\n",
+                        "        int t = v ^ v << 16 ^ r ^ sArr[s + 1];\n",
+                        "        t = t >>> 4 | t << 28;\n",
+                        "        el ^=\n",
+                        "                SPTRANS[1][t & 0x3f]\n",
+                        "                        | SPTRANS[3][t >>> 8 & 0x3f]\n",
+                        "                        | SPTRANS[5][t >>> 16 & 0x3f]\n",
+                        "                        | SPTRANS[7][t >>> 24 & 0x3f]\n",
+                        "                        | SPTRANS[0][u & 0x3f]\n",
+                        "                        | SPTRANS[2][u >>> 8 & 0x3f]\n",
+                        "                        | SPTRANS[4][u >>> 16 & 0x3f]\n",
+                        "                        | SPTRANS[6][u >>> 24 & 0x3f];\n",
+                        "        return el;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "dEncrypt(int, int, int, int, int, int[])",
+                    "parameters": [
+                        "el",
+                        "r",
+                        "s",
+                        "e0",
+                        "e1",
+                        "sArr"
+                    ],
+                    "calls": []
+                },
+                "767-770:byteToUnsigned": {
+                    "start": 767,
+                    "end": 770,
+                    "body": [
+                        "    private static int byteToUnsigned(final byte b) {\n",
+                        "        final int value = b;\n",
+                        "        return value < 0 ? value + 256 : value;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "byteToUnsigned(byte)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": []
+                },
+                "728-765:body": {
+                    "start": 728,
+                    "end": 765,
+                    "body": [
+                        "    private static int[] body(final int schedule[], final int eSwap0, final int eSwap1) {\n",
+                        "        int left = 0;\n",
+                        "        int right = 0;\n",
+                        "        int t = 0;\n",
+                        "        for (int j = 0; j < 25; j++) {\n",
+                        "            for (int i = 0; i < 32; i += 4) {\n",
+                        "                left = dEncrypt(left, right, i, eSwap0, eSwap1, schedule);\n",
+                        "                right = dEncrypt(right, left, i + 2, eSwap0, eSwap1, schedule);\n",
+                        "            }\n",
+                        "            t = left;\n",
+                        "            left = right;\n",
+                        "            right = t;\n",
+                        "        }\n",
+                        "\n",
+                        "        t = right;\n",
+                        "        right = left >>> 1 | left << 31;\n",
+                        "        left = t >>> 1 | t << 31;\n",
+                        "        final int results[] = new int[2];\n",
+                        "        permOp(right, left, 1, 0x55555555, results);\n",
+                        "        right = results[0];\n",
+                        "        left = results[1];\n",
+                        "        permOp(left, right, 8, 0xff00ff, results);\n",
+                        "        left = results[0];\n",
+                        "        right = results[1];\n",
+                        "        permOp(right, left, 2, 0x33333333, results);\n",
+                        "        right = results[0];\n",
+                        "        left = results[1];\n",
+                        "        permOp(left, right, 16, 65535, results);\n",
+                        "        left = results[0];\n",
+                        "        right = results[1];\n",
+                        "        permOp(right, left, 4, 0xf0f0f0f, results);\n",
+                        "        right = results[0];\n",
+                        "        left = results[1];\n",
+                        "        final int out[] = new int[2];\n",
+                        "        out[0] = left;\n",
+                        "        out[1] = right;\n",
+                        "        return out;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "body(int[], int, int)",
+                    "parameters": [
+                        "schedule",
+                        "eSwap0",
+                        "eSwap1"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "772-790:dEncrypt"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.UnixCrypt",
+                            "UnixCrypt",
+                            "864-870:permOp"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "315-616:SPTRANS": {
+                    "start": 315,
+                    "end": 616,
+                    "body": [
+                        "    private static final int SPTRANS[][] = {\n",
+                        "        {\n",
+                        "            0x820200,\n",
+                        "            0x20000,\n",
+                        "            0x80800000,\n",
+                        "            0x80820200,\n",
+                        "            0x800000,\n",
+                        "            0x80020200,\n",
+                        "            0x80020000,\n",
+                        "            0x80800000,\n",
+                        "            0x80020200,\n",
+                        "            0x820200,\n",
+                        "            0x820000,\n",
+                        "            0x80000200,\n",
+                        "            0x80800200,\n",
+                        "            0x800000,\n",
+                        "            0,\n",
+                        "            0x80020000,\n",
+                        "            0x20000,\n",
+                        "            0x80000000,\n",
+                        "            0x800200,\n",
+                        "            0x20200,\n",
+                        "            0x80820200,\n",
+                        "            0x820000,\n",
+                        "            0x80000200,\n",
+                        "            0x800200,\n",
+                        "            0x80000000,\n",
+                        "            512,\n",
+                        "            0x20200,\n",
+                        "            0x80820000,\n",
+                        "            512,\n",
+                        "            0x80800200,\n",
+                        "            0x80820000,\n",
+                        "            0,\n",
+                        "            0,\n",
+                        "            0x80820200,\n",
+                        "            0x800200,\n",
+                        "            0x80020000,\n",
+                        "            0x820200,\n",
+                        "            0x20000,\n",
+                        "            0x80000200,\n",
+                        "            0x800200,\n",
+                        "            0x80820000,\n",
+                        "            512,\n",
+                        "            0x20200,\n",
+                        "            0x80800000,\n",
+                        "            0x80020200,\n",
+                        "            0x80000000,\n",
+                        "            0x80800000,\n",
+                        "            0x820000,\n",
+                        "            0x80820200,\n",
+                        "            0x20200,\n",
+                        "            0x820000,\n",
+                        "            0x80800200,\n",
+                        "            0x800000,\n",
+                        "            0x80000200,\n",
+                        "            0x80020000,\n",
+                        "            0,\n",
+                        "            0x20000,\n",
+                        "            0x800000,\n",
+                        "            0x80800200,\n",
+                        "            0x820200,\n",
+                        "            0x80000000,\n",
+                        "            0x80820000,\n",
+                        "            512,\n",
+                        "            0x80020200\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x10042004,\n",
+                        "            0,\n",
+                        "            0x42000,\n",
+                        "            0x10040000,\n",
+                        "            0x10000004,\n",
+                        "            8196,\n",
+                        "            0x10002000,\n",
+                        "            0x42000,\n",
+                        "            8192,\n",
+                        "            0x10040004,\n",
+                        "            4,\n",
+                        "            0x10002000,\n",
+                        "            0x40004,\n",
+                        "            0x10042000,\n",
+                        "            0x10040000,\n",
+                        "            4,\n",
+                        "            0x40000,\n",
+                        "            0x10002004,\n",
+                        "            0x10040004,\n",
+                        "            8192,\n",
+                        "            0x42004,\n",
+                        "            0x10000000,\n",
+                        "            0,\n",
+                        "            0x40004,\n",
+                        "            0x10002004,\n",
+                        "            0x42004,\n",
+                        "            0x10042000,\n",
+                        "            0x10000004,\n",
+                        "            0x10000000,\n",
+                        "            0x40000,\n",
+                        "            8196,\n",
+                        "            0x10042004,\n",
+                        "            0x40004,\n",
+                        "            0x10042000,\n",
+                        "            0x10002000,\n",
+                        "            0x42004,\n",
+                        "            0x10042004,\n",
+                        "            0x40004,\n",
+                        "            0x10000004,\n",
+                        "            0,\n",
+                        "            0x10000000,\n",
+                        "            8196,\n",
+                        "            0x40000,\n",
+                        "            0x10040004,\n",
+                        "            8192,\n",
+                        "            0x10000000,\n",
+                        "            0x42004,\n",
+                        "            0x10002004,\n",
+                        "            0x10042000,\n",
+                        "            8192,\n",
+                        "            0,\n",
+                        "            0x10000004,\n",
+                        "            4,\n",
+                        "            0x10042004,\n",
+                        "            0x42000,\n",
+                        "            0x10040000,\n",
+                        "            0x10040004,\n",
+                        "            0x40000,\n",
+                        "            8196,\n",
+                        "            0x10002000,\n",
+                        "            0x10002004,\n",
+                        "            4,\n",
+                        "            0x10040000,\n",
+                        "            0x42000\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x41000000,\n",
+                        "            0x1010040,\n",
+                        "            64,\n",
+                        "            0x41000040,\n",
+                        "            0x40010000,\n",
+                        "            0x1000000,\n",
+                        "            0x41000040,\n",
+                        "            0x10040,\n",
+                        "            0x1000040,\n",
+                        "            0x10000,\n",
+                        "            0x1010000,\n",
+                        "            0x40000000,\n",
+                        "            0x41010040,\n",
+                        "            0x40000040,\n",
+                        "            0x40000000,\n",
+                        "            0x41010000,\n",
+                        "            0,\n",
+                        "            0x40010000,\n",
+                        "            0x1010040,\n",
+                        "            64,\n",
+                        "            0x40000040,\n",
+                        "            0x41010040,\n",
+                        "            0x10000,\n",
+                        "            0x41000000,\n",
+                        "            0x41010000,\n",
+                        "            0x1000040,\n",
+                        "            0x40010040,\n",
+                        "            0x1010000,\n",
+                        "            0x10040,\n",
+                        "            0,\n",
+                        "            0x1000000,\n",
+                        "            0x40010040,\n",
+                        "            0x1010040,\n",
+                        "            64,\n",
+                        "            0x40000000,\n",
+                        "            0x10000,\n",
+                        "            0x40000040,\n",
+                        "            0x40010000,\n",
+                        "            0x1010000,\n",
+                        "            0x41000040,\n",
+                        "            0,\n",
+                        "            0x1010040,\n",
+                        "            0x10040,\n",
+                        "            0x41010000,\n",
+                        "            0x40010000,\n",
+                        "            0x1000000,\n",
+                        "            0x41010040,\n",
+                        "            0x40000000,\n",
+                        "            0x40010040,\n",
+                        "            0x41000000,\n",
+                        "            0x1000000,\n",
+                        "            0x41010040,\n",
+                        "            0x10000,\n",
+                        "            0x1000040,\n",
+                        "            0x41000040,\n",
+                        "            0x10040,\n",
+                        "            0x1000040,\n",
+                        "            0,\n",
+                        "            0x41010000,\n",
+                        "            0x40000040,\n",
+                        "            0x41000000,\n",
+                        "            0x40010040,\n",
+                        "            64,\n",
+                        "            0x1010000\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x100402, 0x4000400, 2, 0x4100402, 0, 0x4100000, 0x4000402, 0x100002, 0x4100400,\n",
+                        "            0x4000002, 0x4000000, 1026, 0x4000002, 0x100402, 0x100000, 0x4000000, 0x4100002,\n",
+                        "            0x100400, 1024, 2, 0x100400, 0x4000402, 0x4100000, 1024, 1026, 0, 0x100002, 0x4100400,\n",
+                        "            0x4000400, 0x4100002, 0x4100402, 0x100000, 0x4100002, 1026, 0x100000, 0x4000002,\n",
+                        "            0x100400, 0x4000400, 2, 0x4100000, 0x4000402, 0, 1024, 0x100002, 0, 0x4100002,\n",
+                        "            0x4100400, 1024, 0x4000000, 0x4100402, 0x100402, 0x100000, 0x4100402, 2, 0x4000400,\n",
+                        "            0x100402, 0x100002, 0x100400, 0x4100000, 0x4000402, 1026, 0x4000000, 0x4000002,\n",
+                        "            0x4100400\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x2000000, 16384, 256, 0x2004108, 0x2004008, 0x2000100, 16648, 0x2004000, 16384, 8,\n",
+                        "            0x2000008, 16640, 0x2000108, 0x2004008, 0x2004100, 0, 16640, 0x2000000, 16392, 264,\n",
+                        "            0x2000100, 16648, 0, 0x2000008, 8, 0x2000108, 0x2004108, 16392, 0x2004000, 256, 264,\n",
+                        "            0x2004100, 0x2004100, 0x2000108, 16392, 0x2004000, 16384, 8, 0x2000008, 0x2000100,\n",
+                        "            0x2000000, 16640, 0x2004108, 0, 16648, 0x2000000, 256, 16392, 0x2000108, 256, 0,\n",
+                        "            0x2004108, 0x2004008, 0x2004100, 264, 16384, 16640, 0x2004008, 0x2000100, 264, 8, 16648,\n",
+                        "            0x2004000, 0x2000008\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x20000010,\n",
+                        "            0x80010,\n",
+                        "            0,\n",
+                        "            0x20080800,\n",
+                        "            0x80010,\n",
+                        "            2048,\n",
+                        "            0x20000810,\n",
+                        "            0x80000,\n",
+                        "            2064,\n",
+                        "            0x20080810,\n",
+                        "            0x80800,\n",
+                        "            0x20000000,\n",
+                        "            0x20000800,\n",
+                        "            0x20000010,\n",
+                        "            0x20080000,\n",
+                        "            0x80810,\n",
+                        "            0x80000,\n",
+                        "            0x20000810,\n",
+                        "            0x20080010,\n",
+                        "            0,\n",
+                        "            2048,\n",
+                        "            16,\n",
+                        "            0x20080800,\n",
+                        "            0x20080010,\n",
+                        "            0x20080810,\n",
+                        "            0x20080000,\n",
+                        "            0x20000000,\n",
+                        "            2064,\n",
+                        "            16,\n",
+                        "            0x80800,\n",
+                        "            0x80810,\n",
+                        "            0x20000800,\n",
+                        "            2064,\n",
+                        "            0x20000000,\n",
+                        "            0x20000800,\n",
+                        "            0x80810,\n",
+                        "            0x20080800,\n",
+                        "            0x80010,\n",
+                        "            0,\n",
+                        "            0x20000800,\n",
+                        "            0x20000000,\n",
+                        "            2048,\n",
+                        "            0x20080010,\n",
+                        "            0x80000,\n",
+                        "            0x80010,\n",
+                        "            0x20080810,\n",
+                        "            0x80800,\n",
+                        "            16,\n",
+                        "            0x20080810,\n",
+                        "            0x80800,\n",
+                        "            0x80000,\n",
+                        "            0x20000810,\n",
+                        "            0x20000010,\n",
+                        "            0x20080000,\n",
+                        "            0x80810,\n",
+                        "            0,\n",
+                        "            2048,\n",
+                        "            0x20000010,\n",
+                        "            0x20000810,\n",
+                        "            0x20080800,\n",
+                        "            0x20080000,\n",
+                        "            2064,\n",
+                        "            16,\n",
+                        "            0x20080010\n",
+                        "        },\n",
+                        "        {\n",
+                        "            4096, 128, 0x400080, 0x400001, 0x401081, 4097, 4224, 0, 0x400000, 0x400081, 129,\n",
+                        "            0x401000, 1, 0x401080, 0x401000, 129, 0x400081, 4096, 4097, 0x401081, 0, 0x400080,\n",
+                        "            0x400001, 4224, 0x401001, 4225, 0x401080, 1, 4225, 0x401001, 128, 0x400000, 4225,\n",
+                        "            0x401000, 0x401001, 129, 4096, 128, 0x400000, 0x401001, 0x400081, 4225, 4224, 0, 128,\n",
+                        "            0x400001, 1, 0x400080, 0, 0x400081, 0x400080, 4224, 129, 4096, 0x401081, 0x400000,\n",
+                        "            0x401080, 1, 4097, 0x401081, 0x400001, 0x401080, 0x401000, 4097\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0x8200020, 0x8208000, 32800, 0, 0x8008000, 0x200020, 0x8200000, 0x8208020, 32,\n",
+                        "            0x8000000, 0x208000, 32800, 0x208020, 0x8008020, 0x8000020, 0x8200000, 32768, 0x208020,\n",
+                        "            0x200020, 0x8008000, 0x8208020, 0x8000020, 0, 0x208000, 0x8000000, 0x200000, 0x8008020,\n",
+                        "            0x8200020, 0x200000, 32768, 0x8208000, 32, 0x200000, 32768, 0x8000020, 0x8208020, 32800,\n",
+                        "            0x8000000, 0, 0x208000, 0x8200020, 0x8008020, 0x8008000, 0x200020, 0x8208000, 32,\n",
+                        "            0x200020, 0x8008000, 0x8208020, 0x200000, 0x8200000, 0x8000020, 0x208000, 32800,\n",
+                        "            0x8008020, 0x8200000, 32, 0x8208000, 0x208020, 0, 0x8000000, 0x8200020, 32768, 0x208020\n",
+                        "        }\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ]
+                },
+                "65-313:SKB": {
+                    "start": 65,
+                    "end": 313,
+                    "body": [
+                        "    private static final int SKB[][] = {\n",
+                        "        {\n",
+                        "            0,\n",
+                        "            16,\n",
+                        "            0x20000000,\n",
+                        "            0x20000010,\n",
+                        "            0x10000,\n",
+                        "            0x10010,\n",
+                        "            0x20010000,\n",
+                        "            0x20010010,\n",
+                        "            2048,\n",
+                        "            2064,\n",
+                        "            0x20000800,\n",
+                        "            0x20000810,\n",
+                        "            0x10800,\n",
+                        "            0x10810,\n",
+                        "            0x20010800,\n",
+                        "            0x20010810,\n",
+                        "            32,\n",
+                        "            48,\n",
+                        "            0x20000020,\n",
+                        "            0x20000030,\n",
+                        "            0x10020,\n",
+                        "            0x10030,\n",
+                        "            0x20010020,\n",
+                        "            0x20010030,\n",
+                        "            2080,\n",
+                        "            2096,\n",
+                        "            0x20000820,\n",
+                        "            0x20000830,\n",
+                        "            0x10820,\n",
+                        "            0x10830,\n",
+                        "            0x20010820,\n",
+                        "            0x20010830,\n",
+                        "            0x80000,\n",
+                        "            0x80010,\n",
+                        "            0x20080000,\n",
+                        "            0x20080010,\n",
+                        "            0x90000,\n",
+                        "            0x90010,\n",
+                        "            0x20090000,\n",
+                        "            0x20090010,\n",
+                        "            0x80800,\n",
+                        "            0x80810,\n",
+                        "            0x20080800,\n",
+                        "            0x20080810,\n",
+                        "            0x90800,\n",
+                        "            0x90810,\n",
+                        "            0x20090800,\n",
+                        "            0x20090810,\n",
+                        "            0x80020,\n",
+                        "            0x80030,\n",
+                        "            0x20080020,\n",
+                        "            0x20080030,\n",
+                        "            0x90020,\n",
+                        "            0x90030,\n",
+                        "            0x20090020,\n",
+                        "            0x20090030,\n",
+                        "            0x80820,\n",
+                        "            0x80830,\n",
+                        "            0x20080820,\n",
+                        "            0x20080830,\n",
+                        "            0x90820,\n",
+                        "            0x90830,\n",
+                        "            0x20090820,\n",
+                        "            0x20090830\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0,\n",
+                        "            0x2000000,\n",
+                        "            8192,\n",
+                        "            0x2002000,\n",
+                        "            0x200000,\n",
+                        "            0x2200000,\n",
+                        "            0x202000,\n",
+                        "            0x2202000,\n",
+                        "            4,\n",
+                        "            0x2000004,\n",
+                        "            8196,\n",
+                        "            0x2002004,\n",
+                        "            0x200004,\n",
+                        "            0x2200004,\n",
+                        "            0x202004,\n",
+                        "            0x2202004,\n",
+                        "            1024,\n",
+                        "            0x2000400,\n",
+                        "            9216,\n",
+                        "            0x2002400,\n",
+                        "            0x200400,\n",
+                        "            0x2200400,\n",
+                        "            0x202400,\n",
+                        "            0x2202400,\n",
+                        "            1028,\n",
+                        "            0x2000404,\n",
+                        "            9220,\n",
+                        "            0x2002404,\n",
+                        "            0x200404,\n",
+                        "            0x2200404,\n",
+                        "            0x202404,\n",
+                        "            0x2202404,\n",
+                        "            0x10000000,\n",
+                        "            0x12000000,\n",
+                        "            0x10002000,\n",
+                        "            0x12002000,\n",
+                        "            0x10200000,\n",
+                        "            0x12200000,\n",
+                        "            0x10202000,\n",
+                        "            0x12202000,\n",
+                        "            0x10000004,\n",
+                        "            0x12000004,\n",
+                        "            0x10002004,\n",
+                        "            0x12002004,\n",
+                        "            0x10200004,\n",
+                        "            0x12200004,\n",
+                        "            0x10202004,\n",
+                        "            0x12202004,\n",
+                        "            0x10000400,\n",
+                        "            0x12000400,\n",
+                        "            0x10002400,\n",
+                        "            0x12002400,\n",
+                        "            0x10200400,\n",
+                        "            0x12200400,\n",
+                        "            0x10202400,\n",
+                        "            0x12202400,\n",
+                        "            0x10000404,\n",
+                        "            0x12000404,\n",
+                        "            0x10002404,\n",
+                        "            0x12002404,\n",
+                        "            0x10200404,\n",
+                        "            0x12200404,\n",
+                        "            0x10202404,\n",
+                        "            0x12202404\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0, 1, 0x40000, 0x40001, 0x1000000, 0x1000001, 0x1040000, 0x1040001, 2, 3, 0x40002,\n",
+                        "            0x40003, 0x1000002, 0x1000003, 0x1040002, 0x1040003, 512, 513, 0x40200, 0x40201,\n",
+                        "            0x1000200, 0x1000201, 0x1040200, 0x1040201, 514, 515, 0x40202, 0x40203, 0x1000202,\n",
+                        "            0x1000203, 0x1040202, 0x1040203, 0x8000000, 0x8000001, 0x8040000, 0x8040001, 0x9000000,\n",
+                        "            0x9000001, 0x9040000, 0x9040001, 0x8000002, 0x8000003, 0x8040002, 0x8040003, 0x9000002,\n",
+                        "            0x9000003, 0x9040002, 0x9040003, 0x8000200, 0x8000201, 0x8040200, 0x8040201, 0x9000200,\n",
+                        "            0x9000201, 0x9040200, 0x9040201, 0x8000202, 0x8000203, 0x8040202, 0x8040203, 0x9000202,\n",
+                        "            0x9000203, 0x9040202, 0x9040203\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0, 0x100000, 256, 0x100100, 8, 0x100008, 264, 0x100108, 4096, 0x101000, 4352, 0x101100,\n",
+                        "            4104, 0x101008, 4360, 0x101108, 0x4000000, 0x4100000, 0x4000100, 0x4100100, 0x4000008,\n",
+                        "            0x4100008, 0x4000108, 0x4100108, 0x4001000, 0x4101000, 0x4001100, 0x4101100, 0x4001008,\n",
+                        "            0x4101008, 0x4001108, 0x4101108, 0x20000, 0x120000, 0x20100, 0x120100, 0x20008,\n",
+                        "            0x120008, 0x20108, 0x120108, 0x21000, 0x121000, 0x21100, 0x121100, 0x21008, 0x121008,\n",
+                        "            0x21108, 0x121108, 0x4020000, 0x4120000, 0x4020100, 0x4120100, 0x4020008, 0x4120008,\n",
+                        "            0x4020108, 0x4120108, 0x4021000, 0x4121000, 0x4021100, 0x4121100, 0x4021008, 0x4121008,\n",
+                        "            0x4021108, 0x4121108\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0,\n",
+                        "            0x10000000,\n",
+                        "            0x10000,\n",
+                        "            0x10010000,\n",
+                        "            4,\n",
+                        "            0x10000004,\n",
+                        "            0x10004,\n",
+                        "            0x10010004,\n",
+                        "            0x20000000,\n",
+                        "            0x30000000,\n",
+                        "            0x20010000,\n",
+                        "            0x30010000,\n",
+                        "            0x20000004,\n",
+                        "            0x30000004,\n",
+                        "            0x20010004,\n",
+                        "            0x30010004,\n",
+                        "            0x100000,\n",
+                        "            0x10100000,\n",
+                        "            0x110000,\n",
+                        "            0x10110000,\n",
+                        "            0x100004,\n",
+                        "            0x10100004,\n",
+                        "            0x110004,\n",
+                        "            0x10110004,\n",
+                        "            0x20100000,\n",
+                        "            0x30100000,\n",
+                        "            0x20110000,\n",
+                        "            0x30110000,\n",
+                        "            0x20100004,\n",
+                        "            0x30100004,\n",
+                        "            0x20110004,\n",
+                        "            0x30110004,\n",
+                        "            4096,\n",
+                        "            0x10001000,\n",
+                        "            0x11000,\n",
+                        "            0x10011000,\n",
+                        "            4100,\n",
+                        "            0x10001004,\n",
+                        "            0x11004,\n",
+                        "            0x10011004,\n",
+                        "            0x20001000,\n",
+                        "            0x30001000,\n",
+                        "            0x20011000,\n",
+                        "            0x30011000,\n",
+                        "            0x20001004,\n",
+                        "            0x30001004,\n",
+                        "            0x20011004,\n",
+                        "            0x30011004,\n",
+                        "            0x101000,\n",
+                        "            0x10101000,\n",
+                        "            0x111000,\n",
+                        "            0x10111000,\n",
+                        "            0x101004,\n",
+                        "            0x10101004,\n",
+                        "            0x111004,\n",
+                        "            0x10111004,\n",
+                        "            0x20101000,\n",
+                        "            0x30101000,\n",
+                        "            0x20111000,\n",
+                        "            0x30111000,\n",
+                        "            0x20101004,\n",
+                        "            0x30101004,\n",
+                        "            0x20111004,\n",
+                        "            0x30111004\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0, 0x8000000, 8, 0x8000008, 1024, 0x8000400, 1032, 0x8000408, 0x20000, 0x8020000,\n",
+                        "            0x20008, 0x8020008, 0x20400, 0x8020400, 0x20408, 0x8020408, 1, 0x8000001, 9, 0x8000009,\n",
+                        "            1025, 0x8000401, 1033, 0x8000409, 0x20001, 0x8020001, 0x20009, 0x8020009, 0x20401,\n",
+                        "            0x8020401, 0x20409, 0x8020409, 0x2000000, 0xa000000, 0x2000008, 0xa000008, 0x2000400,\n",
+                        "            0xa000400, 0x2000408, 0xa000408, 0x2020000, 0xa020000, 0x2020008, 0xa020008, 0x2020400,\n",
+                        "            0xa020400, 0x2020408, 0xa020408, 0x2000001, 0xa000001, 0x2000009, 0xa000009, 0x2000401,\n",
+                        "            0xa000401, 0x2000409, 0xa000409, 0x2020001, 0xa020001, 0x2020009, 0xa020009, 0x2020401,\n",
+                        "            0xa020401, 0x2020409, 0xa020409\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0, 256, 0x80000, 0x80100, 0x1000000, 0x1000100, 0x1080000, 0x1080100, 16, 272, 0x80010,\n",
+                        "            0x80110, 0x1000010, 0x1000110, 0x1080010, 0x1080110, 0x200000, 0x200100, 0x280000,\n",
+                        "            0x280100, 0x1200000, 0x1200100, 0x1280000, 0x1280100, 0x200010, 0x200110, 0x280010,\n",
+                        "            0x280110, 0x1200010, 0x1200110, 0x1280010, 0x1280110, 512, 768, 0x80200, 0x80300,\n",
+                        "            0x1000200, 0x1000300, 0x1080200, 0x1080300, 528, 784, 0x80210, 0x80310, 0x1000210,\n",
+                        "            0x1000310, 0x1080210, 0x1080310, 0x200200, 0x200300, 0x280200, 0x280300, 0x1200200,\n",
+                        "            0x1200300, 0x1280200, 0x1280300, 0x200210, 0x200310, 0x280210, 0x280310, 0x1200210,\n",
+                        "            0x1200310, 0x1280210, 0x1280310\n",
+                        "        },\n",
+                        "        {\n",
+                        "            0, 0x4000000, 0x40000, 0x4040000, 2, 0x4000002, 0x40002, 0x4040002, 8192, 0x4002000,\n",
+                        "            0x42000, 0x4042000, 8194, 0x4002002, 0x42002, 0x4042002, 32, 0x4000020, 0x40020,\n",
+                        "            0x4040020, 34, 0x4000022, 0x40022, 0x4040022, 8224, 0x4002020, 0x42020, 0x4042020, 8226,\n",
+                        "            0x4002022, 0x42022, 0x4042022, 2048, 0x4000800, 0x40800, 0x4040800, 2050, 0x4000802,\n",
+                        "            0x40802, 0x4040802, 10240, 0x4002800, 0x42800, 0x4042800, 10242, 0x4002802, 0x42802,\n",
+                        "            0x4042802, 2080, 0x4000820, 0x40820, 0x4040820, 2082, 0x4000822, 0x40822, 0x4040822,\n",
+                        "            10272, 0x4002820, 0x42820, 0x4042820, 10274, 0x4002822, 0x42822, 0x4042822\n",
+                        "        }\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ]
+                },
+                "60-63:SHIFT2": {
+                    "start": 60,
+                    "end": 63,
+                    "body": [
+                        "    private static final boolean SHIFT2[] = {\n",
+                        "        false, false, true, true, true, true, true, true, false, true, true, true, true, true, true,\n",
+                        "        false\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean[]",
+                            "boolean[]"
+                        ]
+                    ]
+                },
+                "57-58:SALT_CHARS": {
+                    "start": 57,
+                    "end": 58,
+                    "body": [
+                        "    private static final char SALT_CHARS[] =\n",
+                        "            \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./\".toCharArray();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ]
+                },
+                "50-55:COV2CHAR": {
+                    "start": 50,
+                    "end": 55,
+                    "body": [
+                        "    private static final int COV2CHAR[] = {\n",
+                        "        46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,\n",
+                        "        76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 97, 98, 99, 100, 101, 102, 103,\n",
+                        "        104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,\n",
+                        "        122\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "42-48:CON_SALT": {
+                    "start": 42,
+                    "end": 48,
+                    "body": [
+                        "    private static final int CON_SALT[] = {\n",
+                        "        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 5, 6, 7,\n",
+                        "        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,\n",
+                        "        31, 32, 33, 34, 35, 36, 37, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,\n",
+                        "        48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 0, 0, 0, 0, 0\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

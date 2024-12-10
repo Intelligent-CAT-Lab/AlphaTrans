@@ -223,19 +223,36 @@ def extract_method_statements(node, code, main_application_methods):
     return statements
 
 
-def is_test_method(node, code):
+def is_test_method(test_file, node, code):
     """
     Checks if a given method node is annotated with @Test.
     """
     # Check for annotations preceding the method declaration
+    test_status, annotation_text = False, None
+    if node.type == 'method_declaration':
+        method_name_node = node.child_by_field_name('name')
+        method_name = extract_text_by_bytes(code, method_name_node.start_byte, method_name_node.end_byte)
+        test_class_path = test_file[test_file.find('src/test/java/')+14:].replace('/', '.').replace('.java', '')
+        project_name = test_file.split('/')[2]
+        
+        with open(f'data/source_test_execution/{project_name}/tests.json', 'r') as f:
+            executed_tests = json.load(f)
+    
+        if test_class_path in executed_tests:
+            executed_test_names = executed_tests[test_class_path]
+            executed_test_names = [x.split('(')[0] for x in executed_test_names]
+            if method_name in executed_test_names:
+                test_status = True
+
     for sibling in node.children:
         if sibling.type == 'modifiers':
             for annotation in sibling.children:
                 if annotation.type in ['marker_annotation', 'annotation']:
                     annotation_text = extract_text_by_bytes(code, annotation.start_byte, annotation.end_byte)
-                    if '@Test' in annotation_text.strip():
-                        return True, annotation_text.strip()
-    return False, None
+                    if '@Test' in annotation_text:
+                        test_status = True
+    
+    return test_status, annotation_text
 
 def is_ignore_method(node, code):
     """
@@ -278,7 +295,7 @@ def get_throws(node, code):
     return throws
 
 
-def find_test_methods(node, code, main_application_methods):
+def find_test_methods(test_file, node, code, main_application_methods):
     """
     Finds test methods in the AST and extracts their statements.
     Returns a dictionary mapping method names to their list of statement strings.
@@ -286,7 +303,7 @@ def find_test_methods(node, code, main_application_methods):
     methods = {}
     # Search for method declarations in the node's children
     for child in node.children:
-        is_test_method_status, annotation_text = is_test_method(child, code)
+        is_test_method_status, annotation_text = is_test_method(test_file, child, code)
         if child.type == 'method_declaration' and is_test_method_status and not is_disabled_method(child, code):
             method_name_node = child.child_by_field_name('name')
             method_name = extract_text_by_bytes(code, method_name_node.start_byte, method_name_node.end_byte)
@@ -294,9 +311,9 @@ def find_test_methods(node, code, main_application_methods):
             throws = get_throws(child, code)
             # Extract statements for the test method
             statements = extract_method_statements(child, code, main_application_methods)
-            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': annotation_text}
+            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '@Test' if annotation_text is None else annotation_text}
         # Recursively search within nested nodes
-        methods.update(find_test_methods(child, code, main_application_methods))
+        methods.update(find_test_methods(test_file, child, code, main_application_methods))
     return methods
 
 def generate_new_test_methods(method_name, statements_throws, ignore=False):
@@ -432,7 +449,7 @@ def get_test_method_bodies(node, code, test_methods):
     return removed_methods
 
 
-def find_ignored_test_methods(node, code):
+def find_ignored_test_methods(test_file, node, code):
     """
     Finds ignored test methods in the AST and extracts their statements.
     Returns a dictionary mapping method names to their list of statement strings.
@@ -440,7 +457,7 @@ def find_ignored_test_methods(node, code):
     methods = {}
     # Search for method declarations in the node's children
     for child in node.children:
-        is_test_method_status, annotation_text = is_test_method(child, code)
+        is_test_method_status, annotation_text = is_test_method(test_file, child, code)
         if child.type == 'method_declaration' and is_ignore_method(child, code) and is_test_method_status:
             method_name_node = child.child_by_field_name('name')
             method_name = extract_text_by_bytes(code, method_name_node.start_byte, method_name_node.end_byte)
@@ -448,9 +465,9 @@ def find_ignored_test_methods(node, code):
             throws = get_throws(child, code)
             # Extract statements for the test method
             statements = extract_method_statements(child, code, [])
-            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': annotation_text}
+            methods[method_name] = {'statements': statements, 'throws': throws, 'annotation': '@Test' if annotation_text is None else annotation_text}
         # Recursively search within nested nodes
-        methods.update(find_ignored_test_methods(child, code))
+        methods.update(find_ignored_test_methods(test_file, child, code))
     return methods
 
 
@@ -536,10 +553,10 @@ def main(args):
 
         root_node = tree.root_node
 
-        ignored_test_methods[test_file] = find_ignored_test_methods(root_node, java_code)
+        ignored_test_methods[test_file] = find_ignored_test_methods(test_file, root_node, java_code)
 
         # Extract test methods and their statements
-        test_methods = find_test_methods(root_node, java_code, main_application_methods)
+        test_methods = find_test_methods(test_file, root_node, java_code, main_application_methods)
 
         # Generate new test methods for each original method's statements
         all_new_methods = []
@@ -555,6 +572,18 @@ def main(args):
 
         # Insert the newly generated methods into the class
         new_java_code = insert_methods_into_class(root_node, all_new_methods, java_code)
+
+        # import org.junit.Test;
+        new_java_code = new_java_code.split('\n')
+        import_line_index = 0
+        for line in new_java_code:
+            if line.strip().startswith('import') or line.strip().startswith('package'):
+                break
+            else:
+                import_line_index += 1
+        
+        new_java_code.insert(import_line_index+1, 'import org.junit.Test;') if ('import org.junit.Test;' not in '\n'.join(new_java_code) and 'import org.junit.jupiter.api.Test;' not in '\n'.join(new_java_code)) and '@Test' in '\n'.join(new_java_code) else None
+        new_java_code = '\n'.join(new_java_code)
 
         # Output the newly generated Java code
         with open(test_file, 'w') as f:

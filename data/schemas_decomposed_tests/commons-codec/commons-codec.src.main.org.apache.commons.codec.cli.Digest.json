@@ -1,0 +1,275 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/cli/Digest.java",
+    "imports": {
+        "22-22:import IOException": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "23-23:import Arrays": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "19-19:import Hex": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.codec.binary.Hex;\n"
+            ]
+        },
+        "20-20:import MessageDigestAlgorithms": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.digest.MessageDigestAlgorithms;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Digest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "81-83:toString": {
+                    "start": 81,
+                    "end": 83,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return String.format(\"%s %s\", super.toString(), Arrays.toString(args));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "toString(java.lang.Object[])"
+                        ]
+                    ]
+                },
+                "75-78:println1": {
+                    "start": 75,
+                    "end": 78,
+                    "body": [
+                        "    private void println1(final String prefix, final byte[] digest, final String fileName) {\n",
+                        "        System.out.println(\n",
+                        "                prefix + Hex.encodeHexString0(digest) + (fileName != null ? \"  \" + fileName : \"\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "println1(String, byte[], String)",
+                    "parameters": [
+                        "prefix",
+                        "digest",
+                        "fileName"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.Hex",
+                            "Hex",
+                            "313-315:encodeHexString0"
+                        ]
+                    ]
+                },
+                "71-73:println0": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "    private void println0(final String prefix, final byte[] digest) {\n",
+                        "        println1(prefix, digest, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "println0(String, byte[])",
+                    "parameters": [
+                        "prefix",
+                        "digest"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.cli.Digest",
+                            "Digest",
+                            "75-78:println1"
+                        ]
+                    ]
+                },
+                "50-69:Digest": {
+                    "start": 50,
+                    "end": 69,
+                    "body": [
+                        "    private Digest(final String[] args) {\n",
+                        "        if (args == null) {\n",
+                        "            throw new IllegalArgumentException(\"args\");\n",
+                        "        }\n",
+                        "        final int argsLength = args.length;\n",
+                        "        if (argsLength == 0) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    String.format(\n",
+                        "                            \"Usage: java %s [algorithm] [FILE|DIRECTORY|string] ...\",\n",
+                        "                            Digest.class.getName()));\n",
+                        "        }\n",
+                        "        this.args = args;\n",
+                        "        algorithm = args[0];\n",
+                        "        if (argsLength <= 1) {\n",
+                        "            inputs = null;\n",
+                        "        } else {\n",
+                        "            inputs = new String[argsLength - 1];\n",
+                        "            System.arraycopy(args, 1, inputs, 0, inputs.length);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Digest(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "48-48:inputs": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private final String[] inputs;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ]
+                },
+                "47-47:args": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final String[] args;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ]
+                },
+                "45-45:algorithm": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final String algorithm;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

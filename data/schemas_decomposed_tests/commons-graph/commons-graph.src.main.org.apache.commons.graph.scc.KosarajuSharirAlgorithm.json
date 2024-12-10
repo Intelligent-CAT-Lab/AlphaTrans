@@ -1,0 +1,580 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/scc/KosarajuSharirAlgorithm.java",
+    "imports": {
+        "33-33:import List": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "29-29:import Collection": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Collection;\n"
+            ]
+        },
+        "34-34:import Set": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "28-28:import ArrayList": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "30-30:import HashSet": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "31-31:import LinkedHashSet": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.LinkedHashSet;\n"
+            ]
+        },
+        "32-32:import LinkedList": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.LinkedList;\n"
+            ]
+        },
+        "25-25:import DirectedGraph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "26-26:import RevertedGraph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.model.RevertedGraph;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        },
+        "23-23:import static Assertions.checkState": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkState;\n"
+            ]
+        }
+    },
+    "classes": {
+        "KosarajuSharirAlgorithm": {
+            "start": 43,
+            "end": 43,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "SccAlgorithm<V>"
+            ],
+            "extends": [],
+            "methods": {
+                "129-144:perform1": {
+                    "start": 129,
+                    "end": 144,
+                    "body": [
+                        "    public Set<V> perform1(final V source) {\n",
+                        "        checkNotNull(\n",
+                        "                source,\n",
+                        "                \"Kosaraju Sharir algorithm cannot be calculated without expressing the source\"\n",
+                        "                        + \" vertex\");\n",
+                        "        checkState(graph.containsVertex(source), \"Vertex %s does not exist in the Graph\", source);\n",
+                        "\n",
+                        "        final Set<V> visitedVertices = new HashSet<V>();\n",
+                        "        final List<V> expandedVertexList = getExpandedVertexList(source, visitedVertices);\n",
+                        "        final DirectedGraph<V, E> reverted = new RevertedGraph<V, E>(graph);\n",
+                        "\n",
+                        "        final V v = expandedVertexList.remove(expandedVertexList.size() - 1);\n",
+                        "        final Set<V> sccSet = new HashSet<V>();\n",
+                        "        searchRecursive(reverted, v, sccSet, visitedVertices, false);\n",
+                        "        return sccSet;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<V>",
+                            "java.util.Set<V>"
+                        ]
+                    ],
+                    "signature": "perform1(V)",
+                    "parameters": [
+                        "source"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "64-87:getExpandedVertexList"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<V,E>(org.apache.commons.graph.DirectedGraph)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "remove(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "87-92:checkState"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "containsVertex(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "161-191:searchRecursive"
+                        ]
+                    ]
+                },
+                "98-120:perform0": {
+                    "start": 98,
+                    "end": 120,
+                    "body": [
+                        "    public Set<Set<V>> perform0() {\n",
+                        "        final Set<V> visitedVertices = new HashSet<V>();\n",
+                        "        final List<V> expandedVertexList = getExpandedVertexList(null, visitedVertices);\n",
+                        "        final DirectedGraph<V, E> reverted = new RevertedGraph<V, E>(graph);\n",
+                        "\n",
+                        "        final Set<Set<V>> sccs = new HashSet<Set<V>>();\n",
+                        "\n",
+                        "        final LinkedHashSet<V> stack = new LinkedHashSet<V>();\n",
+                        "        for (int i = expandedVertexList.size() - 1; i >= 0; i--) {\n",
+                        "            stack.add(expandedVertexList.get(i));\n",
+                        "        }\n",
+                        "\n",
+                        "        while (stack.size() > 0) {\n",
+                        "            final V v = stack.iterator().next();\n",
+                        "            final Set<V> sccSet = new HashSet<V>();\n",
+                        "            searchRecursive(reverted, v, sccSet, visitedVertices, false);\n",
+                        "\n",
+                        "            stack.removeAll(sccSet);\n",
+                        "            sccs.add(sccSet);\n",
+                        "        }\n",
+                        "\n",
+                        "        return sccs;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<Set<V>>",
+                            "java.util.Set<Set<V>>"
+                        ]
+                    ],
+                    "signature": "perform0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "64-87:getExpandedVertexList"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<V,E>(org.apache.commons.graph.DirectedGraph)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<Set<V>>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedHashSet",
+                            "LinkedHashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "iterator()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "161-191:searchRecursive"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/AbstractSet",
+                            "removeAll(java.util.Collection)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.util.Set)"
+                        ]
+                    ]
+                },
+                "89-91:perform": {
+                    "start": 89,
+                    "end": 91,
+                    "body": [
+                        "    public Set<Set<V>> perform() {\n",
+                        "        return perform0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Set<Set<V>>",
+                            "java.util.Set<Set<V>>"
+                        ]
+                    ],
+                    "signature": "perform()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "98-120:perform0"
+                        ]
+                    ]
+                },
+                "53-55:KosarajuSharirAlgorithm": {
+                    "start": 53,
+                    "end": 55,
+                    "body": [
+                        "    public KosarajuSharirAlgorithm(final DirectedGraph<V, E> graph) {\n",
+                        "        this.graph = graph;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "KosarajuSharirAlgorithm(DirectedGraph<V,E>)",
+                    "parameters": [
+                        "graph"
+                    ],
+                    "calls": []
+                },
+                "161-191:searchRecursive": {
+                    "start": 161,
+                    "end": 191,
+                    "body": [
+                        "    private void searchRecursive(\n",
+                        "            final DirectedGraph<V, E> g,\n",
+                        "            final V source,\n",
+                        "            final Collection<V> coll,\n",
+                        "            final Set<V> visited,\n",
+                        "            final boolean forward) {\n",
+                        "        final LinkedList<V> stack = new LinkedList<V>();\n",
+                        "        stack.addLast(source);\n",
+                        "\n",
+                        "        while (!stack.isEmpty()) {\n",
+                        "            final V v = stack.removeLast();\n",
+                        "\n",
+                        "            if (!(forward ^ visited.contains(v))) {\n",
+                        "                coll.add(v);\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "\n",
+                        "            stack.addLast(v);\n",
+                        "            if (forward) {\n",
+                        "                visited.add(v);\n",
+                        "            } else {\n",
+                        "                visited.remove(v);\n",
+                        "            }\n",
+                        "\n",
+                        "            for (V w : g.getOutbound(v)) {\n",
+                        "                if (!(forward ^ !visited.contains(w))) {\n",
+                        "                    stack.addLast(w);\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "searchRecursive(DirectedGraph<V,E>, V, Collection<V>, Set<V>, boolean)",
+                    "parameters": [
+                        "g",
+                        "source",
+                        "coll",
+                        "visited",
+                        "forward"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "LinkedList<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "addLast(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/AbstractCollection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "removeLast()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/DirectedGraph",
+                            "getOutbound(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "64-87:getExpandedVertexList": {
+                    "start": 64,
+                    "end": 87,
+                    "body": [
+                        "    private List<V> getExpandedVertexList(final V source, final Set<V> visitedVertices) {\n",
+                        "        final int size = (source != null) ? 13 : graph.getOrder();\n",
+                        "        final Set<V> vertices = new HashSet<V>(size);\n",
+                        "\n",
+                        "        if (source != null) {\n",
+                        "            vertices.add(source);\n",
+                        "        } else {\n",
+                        "            for (V vertex : graph.getVertices0()) {\n",
+                        "                vertices.add(vertex);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        final ArrayList<V> expandedVertexList = new ArrayList<V>();\n",
+                        "\n",
+                        "        int idx = 0;\n",
+                        "        while (!vertices.isEmpty()) {\n",
+                        "            final V v = vertices.iterator().next();\n",
+                        "            searchRecursive(graph, v, expandedVertexList, visitedVertices, true);\n",
+                        "            vertices.removeAll(expandedVertexList.subList(idx, expandedVertexList.size()));\n",
+                        "            idx = expandedVertexList.size();\n",
+                        "        }\n",
+                        "\n",
+                        "        return expandedVertexList;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "List<V>",
+                            "java.util.List<V>"
+                        ]
+                    ],
+                    "signature": "getExpandedVertexList(V, Set<V>)",
+                    "parameters": [
+                        "source",
+                        "visitedVertices"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getOrder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.scc.KosarajuSharirAlgorithm",
+                            "KosarajuSharirAlgorithm",
+                            "161-191:searchRecursive"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "removeAll(java.util.Collection)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "subList(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "45-45:graph": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final DirectedGraph<V, E> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DirectedGraph<V,E>",
+                            "DirectedGraph<V,E>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

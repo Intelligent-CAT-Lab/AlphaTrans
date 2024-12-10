@@ -1,0 +1,176 @@
+~~ 
+~~ Licensed to the Apache Software Foundation (ASF) under one or more
+~~  contributor license agreements.  See the NOTICE file distributed with
+~~  this work for additional information regarding copyright ownership.
+~~  The ASF licenses this file to You under the Apache License, Version 2.0
+~~  (the "License"); you may not use this file except in compliance with
+~~  the License.  You may obtain a copy of the License at
+~~
+~~      http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~  Unless required by applicable law or agreed to in writing, software
+~~  distributed under the License is distributed on an "AS IS" BASIS,
+~~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~  See the License for the specific language governing permissions and
+~~  limitations under the License.
+~~
+~~
+
+ --------
+Apache Commons Exec Tutorial
+ --------
+
+Apache Commons Exec
+
+* The First Encounter
+
+  At this point we can safely assume that you would like to start some subprocesses from within your
+  Java application and you spent some time here to do it properly. You look at Commons Exec and think
+  "Wow - calling Runtime.exec() is easy and the Apache folks are wasting their and my time
+  with tons of code".
+  
+  Well, we learned it the hard way (in my case more than once) that using plain Runtime.exec() can be 
+  a painful experience. Therefore you are invited to delve into commons-exec and have a look at the
+  hard lessons the easy way ...
+  
+* Taming Your First Process
+
+  Let's look at a real example - we would like to print PDF documents from within your Java
+  application. After googling a while it turns out to be a minor headache and using Adobe Acrobat
+  seems to be a good option.
+
+  The command line under Windows should look like "AcroRd32.exe /p /h file" assuming that the
+  Acrobat Reader is found in the path.
+
++----------------------------------------------------------------------------
+String line = "AcroRd32.exe /p /h " + file.getAbsolutePath();
+CommandLine cmdLine = CommandLine.parse(line);
+DefaultExecutor executor = DefaultExecutor.builder().get();
+int exitValue = executor.execute(cmdLine);
++----------------------------------------------------------------------------
+
+  You successfully printed your first PDF document but at the end an exception is thrown - what
+  happend? Oops, Acrobat Reader returned an exit value of '1' on success which is usually
+  considered as an execution failure. So we have to tweak our code to fix this odd behavior -
+  we define the exit value of "1" to be considered as successful execution.
+
++----------------------------------------------------------------------------
+String line = "AcroRd32.exe /p /h " + file.getAbsolutePath();
+CommandLine cmdLine = CommandLine.parse(line);
+DefaultExecutor executor = DefaultExecutor.builder().get();
+executor.setExitValue(1);
+int exitValue = executor.execute(cmdLine);
++----------------------------------------------------------------------------
+
+* To Watchdog Or Not To Watchdog
+
+  You happily printed for a while but now your application blocks - your printing subprocess
+  hangs for some obvious or not so obvious reason. Starting is easy but what to do with a run-away
+  Acrobat Reader telling you that printing failed due to a lack of paper?! Luckily commons-exec
+  provides a watchdog which does the work for you. Here is the improved code which kills a
+  run-away process after sixty seconds.
+
++----------------------------------------------------------------------------
+String line = "AcroRd32.exe /p /h " + file.getAbsolutePath();
+CommandLine cmdLine = CommandLine.parse(line);
+DefaultExecutor executor = DefaultExecutor.builder().get();
+executor.setExitValue(1);
+ExecuteWatchdog watchdog = ExecuteWatchdog.builder().setTimeout(Duration.ofSeconds(60)).get();
+executor.setWatchdog(watchdog);
+int exitValue = executor.execute(cmdLine);
++----------------------------------------------------------------------------
+
+* Quoting Is Your Friend
+
+  Well, the code worked for quite a while until a new customer complained that
+  no documents are printed. It took half a day to find out that the following file
+  'C:\\Document And Settings\\documents\\432432.pdf' could not be printed. Due to the
+  spaces and without further quoting the command line fell literally apart into
+  the following snippet
+
++----------------------------------------------------------------------------
+> AcroRd32.exe /p /h C:\Document And Settings\documents\432432.pdf
++----------------------------------------------------------------------------
+
+  As a quick fix we added double quotes which tells commons-exec to handle
+  the file as a single command line argument instead of splitting it into
+  parts.
+  
++----------------------------------------------------------------------------
+String line = "AcroRd32.exe /p /h \"" + file.getAbsolutePath() + "\"";
+CommandLine cmdLine = CommandLine.parse(line);
+DefaultExecutor executor = DefaultExecutor.builder().get();
+executor.setExitValue(1);
+ExecuteWatchdog watchdog = ExecuteWatchdog.builder().setTimeout(Duration.ofSeconds(60)).get();
+executor.setWatchdog(watchdog);
+int exitValue = executor.execute(cmdLine);
++----------------------------------------------------------------------------
+
+* Build the Command Line Incrementally
+
+  The previous problem stems from the fact that commons-exec tried to split
+  a single command line string into a string array considering single and
+  double quotes. At the end of the day this is error-prone so we recommend
+  building the command line incrementally - according to the same reasoning
+  the Ant documentation does not recommend passing a single command line to
+  the <exec> target (see deprecated command attribute for 
+  {{{http://ant.apache.org/manual/CoreTasks/exec.html}exec}} task)
+  
++----------------------------------------------------------------------------
+Map map = new HashMap();
+map.put("file", new File("invoice.pdf"));
+CommandLine cmdLine = new CommandLine("AcroRd32.exe");
+cmdLine.addArgument("/p");
+cmdLine.addArgument("/h");
+cmdLine.addArgument("${file}");
+cmdLine.setSubstitutionMap(map);
+DefaultExecutor executor = DefaultExecutor.builder().get();
+executor.setExitValue(1);
+ExecuteWatchdog watchdog = ExecuteWatchdog.builder().setTimeout(Duration.ofSeconds(60)).get();
+executor.setWatchdog(watchdog);
+int exitValue = executor.execute(cmdLine);
++----------------------------------------------------------------------------
+
+  Please note that we are passing an 'java.io.File' instance for expanding
+  the command line arguments - this allows to convert the resulting file name
+  on the fly to match your OS.
+
+* Unblock Your Execution
+
+  Up to now we have a working example but it would not be good enough for
+  production - because it is blocking.
+
+  Your worker thread will block until the print process has finished or
+  was killed by the watchdog. Therefore  executing the print job
+  asynchronously will do the trick. In this example we create an instance
+  of 'ExecuteResultHandler' and pass it to the 'Executor' instance in order
+  to execute the process asynchronously. The 'resultHandler' picks up any
+  offending exception or the process exit code.
+
++----------------------------------------------------------------------------
+CommandLine cmdLine = new CommandLine("AcroRd32.exe");
+cmdLine.addArgument("/p");
+cmdLine.addArgument("/h");
+cmdLine.addArgument("${file}");
+HashMap map = new HashMap();
+map.put("file", new File("invoice.pdf"));
+cmdLine.setSubstitutionMap(map);
+
+DefaultExecuteResultHandler resultHandler = new DefaultExecuteResultHandler();
+
+ExecuteWatchdog watchdog = ExecuteWatchdog.builder().setTimeout(Duration.ofSeconds(60)).get();
+Executor executor = DefaultExecutor.builder().get();
+executor.setExitValue(1);
+executor.setWatchdog(watchdog);
+executor.execute(cmdLine, resultHandler);
+
+// some time later the result handler callback was invoked so we
+// can safely request the exit value
+resultHandler.waitFor();
+int exitValue = resultHandler.getExitValue();
++----------------------------------------------------------------------------
+  
+* Get Your Hands Dirty
+
+  A tutorial is nice but executing the tutorial code is even nicer. You find
+  the ready-to-run tutorial under {{{https://commons.apache.org/exec/xref-test/org/apache/commons/exec/TutorialTest.html}src/test/java/org/apache/commons/exec/TutorialTest.java}}.

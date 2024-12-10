@@ -1,0 +1,390 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/integercompression/ByteBasicTest.java",
+    "imports": {
+        "10-10:import Arrays": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "14-14:import Test": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "12-12:import IntegratedVariableByte": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedVariableByte;\n"
+            ]
+        },
+        "16-16:import static Assert.*": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ByteBasicTest": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "94-123:varyingLengthTest2_test0_decomposed": {
+                    "start": 94,
+                    "end": 123,
+                    "body": [
+                        "    public void varyingLengthTest2_test0_decomposed()  {\n",
+                        "        int N = 128;\n",
+                        "        int[] data = new int[N];\n",
+                        "        data[127] = -1;\n",
+                        "        for (ByteIntegerCODEC c : codecs) {\n",
+                        "            try {\n",
+                        "                // CODEC Simple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug at k = \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "forName(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "105-111:compress0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "113-119:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def varyingLengthTest2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "69-91:varyingLengthTest_test0_decomposed": {
+                    "start": 69,
+                    "end": 91,
+                    "body": [
+                        "    public void varyingLengthTest_test0_decomposed()  {\n",
+                        "        int N = 4096;\n",
+                        "        int[] data = new int[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k;\n",
+                        "        for (ByteIntegerCODEC c : codecs) {\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug \"+c.toString()+\" \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                byte[] comp = TestUtils.compress0(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompress1(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "105-111:compress0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "113-119:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def varyingLengthTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "45-66:saulTest_test0_decomposed": {
+                    "start": 45,
+                    "end": 66,
+                    "body": [
+                        "    public void saulTest_test0_decomposed()  {\n",
+                        "        for (ByteIntegerCODEC C : codecs) {\n",
+                        "\t\t\tfor (int x = 0; x < 50 * 4; ++x) {\n",
+                        "\t\t\t\tint[] a = { 2, 3, 4, 5 };\n",
+                        "\t\t\t\tbyte[] b = new byte[90*4];\n",
+                        "\t\t\t\tint[] c = new int[a.length];\n",
+                        "\n",
+                        "\t\t\t\tIntWrapper aOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tIntWrapper bOffset = new IntWrapper(x);\n",
+                        "\t\t\t\tC.compress1(a, aOffset, a.length, b, bOffset);\n",
+                        "\t\t\t\tint len = bOffset.get() - x;\n",
+                        "\n",
+                        "\t\t\t\tbOffset.set(x);\n",
+                        "\t\t\t\tIntWrapper cOffset = new IntWrapper(0);\n",
+                        "\t\t\t\tC.uncompress1(b, bOffset, len, c, cOffset);\n",
+                        "\t\t\t\tif(!Arrays.equals(a, c)) {\n",
+                        "\t\t\t\t\tSystem.out.println(\"Problem with \"+C);\n",
+                        "\t\t\t\t}\n",
+                        "\t\t\t\tassertArrayEquals(a, c);\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "saulTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
+                            "ByteIntegerCODEC",
+                            "36-38:compress1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
+                            "ByteIntegerCODEC",
+                            "57-59:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "equals(int[],int[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(int[],int[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def saulTest_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "26-29:codecs": {
+                    "start": 26,
+                    "end": 29,
+                    "body": [
+                        "    ByteIntegerCODEC[] codecs = {\n",
+                        "            new VariableByte(),\n",
+                        "            new IntegratedVariableByte(),\n",
+                        "         };\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "ByteIntegerCODEC[]",
+                            "ByteIntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codecs: typing.List[ByteIntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ByteBasicTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.me.lemire.integercompression.ByteIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.test.me.lemire.integercompression.TestUtils import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedVariableByte import *"
+    ]
+}

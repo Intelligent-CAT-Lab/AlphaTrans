@@ -1,0 +1,515 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/CodeValidator.java",
+    "imports": {
+        "21-21:import Serializable": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "19-19:import CheckDigit": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CodeValidator": {
+            "start": 71,
+            "end": 71,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "245-273:validate": {
+                    "start": 245,
+                    "end": 273,
+                    "body": [
+                        "    public Object validate(String input) {\n",
+                        "\n",
+                        "        if (input == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        String code = input.trim();\n",
+                        "        if (code.length() == 0) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (regexValidator != null) {\n",
+                        "            code = regexValidator.validate(code);\n",
+                        "            if (code == null) {\n",
+                        "                return null;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if ((minLength >= 0 && code.length() < minLength)\n",
+                        "                || (maxLength >= 0 && code.length() > maxLength)) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (checkdigit != null && !checkdigit.isValid(code)) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        return code;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "177-199:validate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "63-63:isValid"
+                        ]
+                    ]
+                },
+                "232-234:isValid": {
+                    "start": 232,
+                    "end": 234,
+                    "body": [
+                        "    public boolean isValid(String input) {\n",
+                        "        return (validate(input) != null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ]
+                    ]
+                },
+                "216-218:getRegexValidator": {
+                    "start": 216,
+                    "end": 218,
+                    "body": [
+                        "    public RegexValidator getRegexValidator() {\n",
+                        "        return regexValidator;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ],
+                    "signature": "getRegexValidator()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "204-206:getMaxLength": {
+                    "start": 204,
+                    "end": 206,
+                    "body": [
+                        "    public int getMaxLength() {\n",
+                        "        return maxLength;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMaxLength()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "193-195:getMinLength": {
+                    "start": 193,
+                    "end": 195,
+                    "body": [
+                        "    public int getMinLength() {\n",
+                        "        return minLength;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMinLength()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "182-184:getCheckDigit": {
+                    "start": 182,
+                    "end": 184,
+                    "body": [
+                        "    public CheckDigit getCheckDigit() {\n",
+                        "        return checkdigit;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ],
+                    "signature": "getCheckDigit()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "125-127:CodeValidator5": {
+                    "start": 125,
+                    "end": 127,
+                    "body": [
+                        "    public static CodeValidator CodeValidator5(String regex, CheckDigit checkdigit) {\n",
+                        "        return new CodeValidator(1, checkdigit, -1, null, -1, regex);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "signature": "CodeValidator5(String, CheckDigit)",
+                    "parameters": [
+                        "regex",
+                        "checkdigit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "87-109:CodeValidator"
+                        ]
+                    ]
+                },
+                "121-123:CodeValidator4": {
+                    "start": 121,
+                    "end": 123,
+                    "body": [
+                        "    public static CodeValidator CodeValidator4(String regex, int length, CheckDigit checkdigit) {\n",
+                        "        return new CodeValidator(1, checkdigit, length, null, length, regex);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "signature": "CodeValidator4(String, int, CheckDigit)",
+                    "parameters": [
+                        "regex",
+                        "length",
+                        "checkdigit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "87-109:CodeValidator"
+                        ]
+                    ]
+                },
+                "116-119:CodeValidator2": {
+                    "start": 116,
+                    "end": 119,
+                    "body": [
+                        "    public static CodeValidator CodeValidator2(\n",
+                        "            RegexValidator regexValidator, CheckDigit checkdigit) {\n",
+                        "        return new CodeValidator(0, checkdigit, -1, regexValidator, -1, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "signature": "CodeValidator2(RegexValidator, CheckDigit)",
+                    "parameters": [
+                        "regexValidator",
+                        "checkdigit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "87-109:CodeValidator"
+                        ]
+                    ]
+                },
+                "111-114:CodeValidator1": {
+                    "start": 111,
+                    "end": 114,
+                    "body": [
+                        "    public static CodeValidator CodeValidator1(\n",
+                        "            RegexValidator regexValidator, int length, CheckDigit checkdigit) {\n",
+                        "        return new CodeValidator(0, checkdigit, length, regexValidator, length, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ],
+                    "signature": "CodeValidator1(RegexValidator, int, CheckDigit)",
+                    "parameters": [
+                        "regexValidator",
+                        "length",
+                        "checkdigit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "87-109:CodeValidator"
+                        ]
+                    ]
+                },
+                "87-109:CodeValidator": {
+                    "start": 87,
+                    "end": 109,
+                    "body": [
+                        "    public CodeValidator(\n",
+                        "            int constructorId,\n",
+                        "            CheckDigit checkdigit,\n",
+                        "            int maxLength,\n",
+                        "            RegexValidator regexValidator,\n",
+                        "            int minLength,\n",
+                        "            String regex) {\n",
+                        "        if (constructorId == 0) {\n",
+                        "            this.regexValidator = regexValidator;\n",
+                        "            this.minLength = minLength;\n",
+                        "            this.maxLength = maxLength;\n",
+                        "            this.checkdigit = checkdigit;\n",
+                        "        } else {\n",
+                        "            if (regex != null && regex.length() > 0) {\n",
+                        "                this.regexValidator = RegexValidator.RegexValidator3(regex);\n",
+                        "            } else {\n",
+                        "                this.regexValidator = null;\n",
+                        "            }\n",
+                        "            this.minLength = minLength;\n",
+                        "            this.maxLength = maxLength;\n",
+                        "            this.checkdigit = checkdigit;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CodeValidator(int, CheckDigit, int, RegexValidator, int, String)",
+                    "parameters": [
+                        "constructorId",
+                        "checkdigit",
+                        "maxLength",
+                        "regexValidator",
+                        "minLength",
+                        "regex"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "98-100:RegexValidator3"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "78-78:checkdigit": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    private final CheckDigit checkdigit;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CheckDigit",
+                            "CheckDigit"
+                        ]
+                    ]
+                },
+                "77-77:maxLength": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "    private final int maxLength;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "76-76:minLength": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private final int minLength;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "75-75:regexValidator": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private final RegexValidator regexValidator;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ]
+                },
+                "73-73:serialVersionUID": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final long serialVersionUID = 446960910870938233L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

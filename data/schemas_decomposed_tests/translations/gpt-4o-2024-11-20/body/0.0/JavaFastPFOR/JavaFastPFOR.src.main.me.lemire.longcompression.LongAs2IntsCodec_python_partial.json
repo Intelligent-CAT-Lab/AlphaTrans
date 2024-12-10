@@ -1,0 +1,575 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/longcompression/LongAs2IntsCodec.java",
+    "imports": {
+        "3-3:import Arrays": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "9-9:import IntegerCODEC": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import me.lemire.integercompression.IntegerCODEC;\n"
+            ]
+        },
+        "5-5:import BinaryPacking": {
+            "start": 5,
+            "end": 5,
+            "body": [
+                "import me.lemire.integercompression.BinaryPacking;\n"
+            ]
+        },
+        "8-8:import IntWrapper": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "6-6:import Composition": {
+            "start": 6,
+            "end": 6,
+            "body": [
+                "import me.lemire.integercompression.Composition;\n"
+            ]
+        },
+        "7-7:import IntCompressor": {
+            "start": 7,
+            "end": 7,
+            "body": [
+                "import me.lemire.integercompression.IntCompressor;\n"
+            ]
+        },
+        "10-10:import VariableByte": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import me.lemire.integercompression.VariableByte;\n"
+            ]
+        }
+    },
+    "classes": {
+        "LongAs2IntsCodec": {
+            "start": 18,
+            "end": 18,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "LongCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "120-194:uncompress1": {
+                    "start": 120,
+                    "end": 194,
+                    "body": [
+                        "\tpublic void uncompress1(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {\n",
+                        "\t\tif (inlength == 0) {\n",
+                        "\t\t\treturn;\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tint longIndex = inpos.get();\n",
+                        "\n",
+                        "\t\tint nbCompressedHighParts = RoaringIntPacking.high(in[longIndex]);\n",
+                        "\t\tint[] compressedHighParts = new int[nbCompressedHighParts];\n",
+                        "\n",
+                        "\t\t// !highPart as we just read the highPart for nbCompressedHighParts\n",
+                        "\t\tboolean highPart = false;\n",
+                        "\t\tfor (int i = 0; i < nbCompressedHighParts; i++) {\n",
+                        "\t\t\tint nextInt;\n",
+                        "\t\t\tif (highPart) {\n",
+                        "\t\t\t\tnextInt = RoaringIntPacking.high(in[longIndex + (i + 1) / 2]);\n",
+                        "\t\t\t} else {\n",
+                        "\t\t\t\tnextInt = RoaringIntPacking.low(in[longIndex + (i + 1) / 2]);\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcompressedHighParts[i] = nextInt;\n",
+                        "\n",
+                        "\t\t\thighPart = !highPart;\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\t// TODO What would be a relevant buffer size?\n",
+                        "\t\tint[] buffer = new int[inlength * 16];\n",
+                        "\n",
+                        "\t\tIntWrapper highPartsOutPosition = IntWrapper.IntWrapper1();\n",
+                        "\t\thighPartsCodec.uncompress0(compressedHighParts,\n",
+                        "\t\t\t\tIntWrapper.IntWrapper1(),\n",
+                        "\t\t\t\tcompressedHighParts.length,\n",
+                        "\t\t\t\tbuffer,\n",
+                        "\t\t\t\thighPartsOutPosition);\n",
+                        "\t\tint[] highParts = Arrays.copyOf(buffer, highPartsOutPosition.get());\n",
+                        "\n",
+                        "\t\t// +1 as we initially read nbCompressedHighParts\n",
+                        "\t\tint intIndexNbCompressedLowParts = longIndex * 2 + 1 + nbCompressedHighParts;\n",
+                        "\t\tint nbCompressedLowParts;\n",
+                        "\t\tif (highPart) {\n",
+                        "\t\t\tnbCompressedLowParts = RoaringIntPacking.high(in[intIndexNbCompressedLowParts / 2]);\n",
+                        "\t\t} else {\n",
+                        "\t\t\tnbCompressedLowParts = RoaringIntPacking.low(in[intIndexNbCompressedLowParts / 2]);\n",
+                        "\t\t}\n",
+                        "\t\thighPart = !highPart;\n",
+                        "\n",
+                        "\t\tint[] compressedLowParts = new int[nbCompressedLowParts];\n",
+                        "\t\tfor (int i = 0; i < nbCompressedLowParts; i++) {\n",
+                        "\t\t\tint nextInt;\n",
+                        "\t\t\tif (highPart) {\n",
+                        "\t\t\t\tnextInt = RoaringIntPacking.high(in[(intIndexNbCompressedLowParts + 1 + i) / 2]);\n",
+                        "\t\t\t} else {\n",
+                        "\t\t\t\tnextInt = RoaringIntPacking.low(in[(intIndexNbCompressedLowParts + 1 + i) / 2]);\n",
+                        "\t\t\t}\n",
+                        "\t\t\tcompressedLowParts[i] = nextInt;\n",
+                        "\n",
+                        "\t\t\thighPart = !highPart;\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tIntWrapper lowPartsOutPosition = IntWrapper.IntWrapper1();\n",
+                        "\t\tlowPartsCodec.uncompress0(compressedLowParts,\n",
+                        "\t\t\t\tIntWrapper.IntWrapper1(),\n",
+                        "\t\t\t\tcompressedLowParts.length,\n",
+                        "\t\t\t\tbuffer,\n",
+                        "\t\t\t\tlowPartsOutPosition);\n",
+                        "\t\tint[] lowParts = Arrays.copyOf(buffer, lowPartsOutPosition.get());\n",
+                        "\t\tassert highParts.length == lowParts.length;\n",
+                        "\n",
+                        "\t\tint outposition = outpos.get();\n",
+                        "\t\tfor (int i = 0; i < highParts.length; i++) {\n",
+                        "\t\t\tout[outposition++] = RoaringIntPacking.pack(highParts[i], lowParts[i]);\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tinpos.add(inlength);\n",
+                        "\t\toutpos.set(outposition);\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress1(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "25-27:high"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "34-36:low"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "45-48:pack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-114:compress0": {
+                    "start": 43,
+                    "end": 114,
+                    "body": [
+                        "\tpublic void compress0(long[] in, IntWrapper inpos, int inlength, long[] out, IntWrapper outpos) {\n",
+                        "\t\tif (inlength == 0) {\n",
+                        "\t\t\treturn;\n",
+                        "\t\t}\n",
+                        "\t\t\n",
+                        "\t\tint[] highParts = new int[inlength];\n",
+                        "\t\tint[] lowParts = new int[inlength];\n",
+                        "\n",
+                        "\t\tfor (int i = 0; i < inlength; i++) {\n",
+                        "\t\t\tint inPosition = inpos.get() + i;\n",
+                        "\n",
+                        "\t\t\thighParts[i] = RoaringIntPacking.high(in[inPosition]);\n",
+                        "\t\t\tlowParts[i] = RoaringIntPacking.low(in[inPosition]);\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\t// TODO What would be a relevant buffer size?\n",
+                        "\t\tint[] buffer = new int[inlength * 16];\n",
+                        "\n",
+                        "\t\tint outPosition = outpos.get();\n",
+                        "\n",
+                        "\t\tboolean hasLeftover;\n",
+                        "\t\t{\n",
+                        "\t\t\t// The first integer is reserved to hold the number of compressed ints\n",
+                        "\t\t\tIntWrapper highPartsOutPosition = new IntWrapper(1);\n",
+                        "\n",
+                        "\t\t\thighPartsCodec.compress0(highParts, IntWrapper.IntWrapper1(), inlength, buffer, highPartsOutPosition);\n",
+                        "\n",
+                        "\t\t\t// Record the compressedHighparts length\n",
+                        "\t\t\tbuffer[0] = highPartsOutPosition.get() - 1;\n",
+                        "\n",
+                        "\t\t\tfor (int i = 0; i < highPartsOutPosition.get() / 2; i++) {\n",
+                        "\t\t\t\tlong pack = RoaringIntPacking.pack(buffer[i * 2], buffer[i * 2 + 1]);\n",
+                        "\t\t\t\tout[outPosition++] = pack;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (1 == highPartsOutPosition.get() % 2) {\n",
+                        "\t\t\t\t// Shift the trailing integer as first in the buffer\n",
+                        "\t\t\t\thasLeftover = true;\n",
+                        "\t\t\t\tbuffer[0] = buffer[highPartsOutPosition.get() - 1];\n",
+                        "\t\t\t} else {\n",
+                        "\t\t\t\thasLeftover = false;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\t{\n",
+                        "\t\t\t// The first integer is reserved to hold the number of compressed ints\n",
+                        "\t\t\tIntWrapper lowPartsOutPosition = new IntWrapper(1);\n",
+                        "\t\t\tif (hasLeftover) {\n",
+                        "\t\t\t\t// Keep the trailing int from highParts before the reserved int from lowParts compressed length\n",
+                        "\t\t\t\tlowPartsOutPosition.set(2);\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tlowPartsCodec.compress0(lowParts, new IntWrapper(0), inlength, buffer, lowPartsOutPosition);\n",
+                        "\n",
+                        "\t\t\t// Record the compressedHighparts length\n",
+                        "\t\t\tbuffer[hasLeftover ? 1 : 0] = lowPartsOutPosition.get() - (hasLeftover ? 2 : 1);\n",
+                        "\n",
+                        "\t\t\tfor (int i = 0; i < lowPartsOutPosition.get() / 2; i++) {\n",
+                        "\t\t\t\tlong pack = RoaringIntPacking.pack(buffer[i * 2], buffer[i * 2 + 1]);\n",
+                        "\t\t\t\tout[outPosition++] = pack;\n",
+                        "\t\t\t}\n",
+                        "\n",
+                        "\t\t\tif (1 == lowPartsOutPosition.get() % 2) {\n",
+                        "\t\t\t\t// The trailing integer is packed with a 0\n",
+                        "\t\t\t\tlong pack = RoaringIntPacking.pack(buffer[lowPartsOutPosition.get() - 1], 0);\n",
+                        "\t\t\t\tout[outPosition++] = pack;\n",
+                        "\t\t\t}\n",
+                        "\t\t}\n",
+                        "\n",
+                        "\t\tinpos.add(inlength);\n",
+                        "\t\toutpos.set(outPosition);\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "25-27:high"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "34-36:low"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.RoaringIntPacking",
+                            "RoaringIntPacking",
+                            "45-48:pack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "35-37:LongAs2IntsCodec1": {
+                    "start": 35,
+                    "end": 37,
+                    "body": [
+                        "\tpublic static LongAs2IntsCodec LongAs2IntsCodec1() {\n",
+                        "\t\treturn new LongAs2IntsCodec(new VariableByte(), new Composition(new BinaryPacking(), new VariableByte()));\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LongAs2IntsCodec",
+                            "LongAs2IntsCodec"
+                        ]
+                    ],
+                    "signature": "LongAs2IntsCodec1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongAs2IntsCodec",
+                            "LongAs2IntsCodec",
+                            "31-34:LongAs2IntsCodec"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "VariableByte"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Composition",
+                            "Composition",
+                            "31-34:Composition"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "BinaryPacking"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def LongAs2IntsCodec1() -> LongAs2IntsCodec:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "31-34:LongAs2IntsCodec": {
+                    "start": 31,
+                    "end": 34,
+                    "body": [
+                        "\tpublic LongAs2IntsCodec(IntegerCODEC highPartsCodec, IntegerCODEC lowPartsCodec) {\n",
+                        "\t\tthis.highPartsCodec = highPartsCodec;\n",
+                        "\t\tthis.lowPartsCodec = lowPartsCodec;\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "LongAs2IntsCodec(IntegerCODEC, IntegerCODEC)",
+                    "parameters": [
+                        "highPartsCodec",
+                        "lowPartsCodec"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, highPartsCodec: IntegerCODEC, lowPartsCodec: IntegerCODEC) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "20-20:lowPartsCodec": {
+                    "start": 20,
+                    "end": 20,
+                    "body": [
+                        "\tfinal IntegerCODEC lowPartsCodec;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "IntegerCODEC",
+                            "IntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    lowPartsCodec: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "19-19:highPartsCodec": {
+                    "start": 19,
+                    "end": 19,
+                    "body": [
+                        "\tfinal IntegerCODEC highPartsCodec;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "IntegerCODEC",
+                            "IntegerCODEC"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    highPartsCodec: IntegerCODEC = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class LongAs2IntsCodec(LongCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.Composition import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *",
+        "from src.main.me.lemire.longcompression.LongCODEC import *",
+        "from src.main.me.lemire.longcompression.RoaringIntPacking import *"
+    ]
+}

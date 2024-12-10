@@ -27,6 +27,9 @@ def syntactic_validation(generation, fragment, args):
                 generation_lines = generation_lines[current_index:]
                 output = '\n'.join(generation_lines)
 
+                if '=' not in output:
+                    return False, None, 'the model did not generate any code'
+
             if not output.startswith('    '):
                 output = '    ' + output.strip()
 

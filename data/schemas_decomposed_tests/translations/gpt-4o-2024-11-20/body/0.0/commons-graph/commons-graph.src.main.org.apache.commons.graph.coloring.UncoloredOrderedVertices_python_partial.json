@@ -1,0 +1,553 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/coloring/UncoloredOrderedVertices.java",
+    "imports": {
+        "24-24:import Iterator": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "22-22:import Comparator": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Comparator;\n"
+            ]
+        },
+        "25-25:import Map": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "27-27:import Set": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "23-23:import HashSet": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "26-26:import NoSuchElementException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.NoSuchElementException;\n"
+            ]
+        },
+        "28-28:import TreeMap": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.TreeMap;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UncoloredOrderedVertices": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Iterator<V>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "98-100:size": {
+                    "start": 98,
+                    "end": 100,
+                    "body": [
+                        "    public int size() {\n",
+                        "        return orderedVertices.size();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "size()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "size()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def size(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "53-91:iterator": {
+                    "start": 53,
+                    "end": 91,
+                    "body": [
+                        "    public Iterator<V> iterator() {\n",
+                        "        return new Iterator<V>() {\n",
+                        "\n",
+                        "            private Iterator<Integer> keys = orderedVertices.keySet().iterator();\n",
+                        "\n",
+                        "            private Iterator<V> pending = null;\n",
+                        "\n",
+                        "            private V next = null;\n",
+                        "\n",
+                        "            public boolean hasNext() {\n",
+                        "                if (next != null) {\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "\n",
+                        "                while ((pending == null) || !pending.hasNext()) {\n",
+                        "                    if (!keys.hasNext()) {\n",
+                        "                        return false;\n",
+                        "                    }\n",
+                        "                    pending = orderedVertices.get(keys.next()).iterator();\n",
+                        "                }\n",
+                        "\n",
+                        "                next = pending.next();\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "\n",
+                        "            public V next() {\n",
+                        "                if (!hasNext()) {\n",
+                        "                    throw new NoSuchElementException();\n",
+                        "                }\n",
+                        "                V returned = next;\n",
+                        "                next = null;\n",
+                        "                return returned;\n",
+                        "            }\n",
+                        "\n",
+                        "            public void remove() {\n",
+                        "                pending.remove();\n",
+                        "            }\n",
+                        "        };\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Iterator<V>",
+                            "java.util.Iterator<V>"
+                        ]
+                    ],
+                    "signature": "iterator()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def iterator(self) -> typing.Iterator[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-51:compare": {
+                    "start": 49,
+                    "end": 51,
+                    "body": [
+                        "    public int compare(Integer o1, Integer o2) {\n",
+                        "        return o2.compareTo(o1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compare(Integer, Integer)",
+                    "parameters": [
+                        "o1",
+                        "o2"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "compareTo(java.lang.Integer)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compare(self, o1: int, o2: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "37-46:addVertexDegree": {
+                    "start": 37,
+                    "end": 46,
+                    "body": [
+                        "    public void addVertexDegree(V v, Integer degree) {\n",
+                        "        Set<V> vertices = orderedVertices.get(degree);\n",
+                        "\n",
+                        "        if (vertices == null) {\n",
+                        "            vertices = new HashSet<V>();\n",
+                        "        }\n",
+                        "\n",
+                        "        vertices.add(v);\n",
+                        "        orderedVertices.put(degree, vertices);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addVertexDegree(V, Integer)",
+                    "parameters": [
+                        "v",
+                        "degree"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Integer,java.util.Set)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addVertexDegree(self, v: typing.Any, degree: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "35-35:orderedVertices": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final Map<Integer, Set<V>> orderedVertices = new TreeMap<Integer, Set<V>>(this);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<Integer,Set<V>>",
+                            "java.util.Map<Integer,Set<V>>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __orderedVertices: typing.Dict[int, typing.Set[typing.Any]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class UncoloredOrderedVertices():\n\n"
+        },
+        "new Iterator<V>(...) { ... }": {
+            "start": 54,
+            "end": 54,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "UncoloredOrderedVertices",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "87-89:remove": {
+                    "start": 87,
+                    "end": 89,
+                    "body": [
+                        "            public void remove() {\n",
+                        "                pending.remove();\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "remove()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "remove"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "78-85:next": {
+                    "start": 78,
+                    "end": 85,
+                    "body": [
+                        "            public V next() {\n",
+                        "                if (!hasNext()) {\n",
+                        "                    throw new NoSuchElementException();\n",
+                        "                }\n",
+                        "                V returned = next;\n",
+                        "                next = null;\n",
+                        "                return returned;\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "signature": "next()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.UncoloredOrderedVertices",
+                            "new Iterator<V>(...) { ... }",
+                            "62-76:hasNext"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "62-76:hasNext": {
+                    "start": 62,
+                    "end": 76,
+                    "body": [
+                        "            public boolean hasNext() {\n",
+                        "                if (next != null) {\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "\n",
+                        "                while ((pending == null) || !pending.hasNext()) {\n",
+                        "                    if (!keys.hasNext()) {\n",
+                        "                        return false;\n",
+                        "                    }\n",
+                        "                    pending = orderedVertices.get(keys.next()).iterator();\n",
+                        "                }\n",
+                        "\n",
+                        "                next = pending.next();\n",
+                        "                return true;\n",
+                        "            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasNext()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "54-54:": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "        return new Iterator<V>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {
+                "60-60:next": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "            private V next = null;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ]
+                },
+                "58-58:pending": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "            private Iterator<V> pending = null;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Iterator<V>",
+                            "java.util.Iterator<V>"
+                        ]
+                    ]
+                },
+                "56-56:keys": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "            private Iterator<Integer> keys = orderedVertices.keySet().iterator();\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Iterator<Integer>",
+                            "java.util.Iterator<Integer>"
+                        ]
+                    ]
+                }
+            }
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

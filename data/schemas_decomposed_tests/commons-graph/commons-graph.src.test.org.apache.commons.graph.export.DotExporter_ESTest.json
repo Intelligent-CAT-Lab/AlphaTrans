@@ -1,0 +1,1773 @@
+{
+    "path": "java_projects/cleaned_final_projects_evosuite/commons-graph/src/test/java/org/apache/commons/graph/export/DotExporter_ESTest.java",
+    "imports": {
+        "12-12:import BufferedOutputStream": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import java.io.BufferedOutputStream;\n"
+            ]
+        },
+        "13-13:import ByteArrayOutputStream": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "14-14:import DataOutputStream": {
+            "start": 14,
+            "end": 14,
+            "body": [
+                "import java.io.DataOutputStream;\n"
+            ]
+        },
+        "15-15:import PipedInputStream": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import java.io.PipedInputStream;\n"
+            ]
+        },
+        "16-16:import PipedOutputStream": {
+            "start": 16,
+            "end": 16,
+            "body": [
+                "import java.io.PipedOutputStream;\n"
+            ]
+        },
+        "17-17:import HashMap": {
+            "start": 17,
+            "end": 17,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "18-18:import Graph": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "26-26:import UndirectedMutableGraph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "21-21:import DirectedMutableGraph": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.graph.model.DirectedMutableGraph;\n"
+            ]
+        },
+        "30-30:import EvoRunnerParameters": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.evosuite.runtime.EvoRunnerParameters;\n"
+            ]
+        },
+        "34-34:import RunWith": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.junit.runner.RunWith;\n"
+            ]
+        },
+        "29-29:import EvoRunner": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.evosuite.runtime.EvoRunner;\n"
+            ]
+        },
+        "8-8:import Test": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "19-19:import Mapper": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "20-20:import DotExporter": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.graph.export.DotExporter;\n"
+            ]
+        },
+        "27-27:import Monoid": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.weight.Monoid;\n"
+            ]
+        },
+        "22-22:import InMemoryPath": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.model.InMemoryPath;\n"
+            ]
+        },
+        "23-23:import InMemoryWeightedPath": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.model.InMemoryWeightedPath;\n"
+            ]
+        },
+        "24-24:import MutableSpanningTree": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "25-25:import RevertedGraph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.model.RevertedGraph;\n"
+            ]
+        },
+        "28-28:import IntegerWeightBaseOperations": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations;\n"
+            ]
+        },
+        "31-31:import ViolatedAssumptionAnswer": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.evosuite.runtime.ViolatedAssumptionAnswer;\n"
+            ]
+        },
+        "32-32:import MockFile": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.evosuite.runtime.mock.java.io.MockFile;\n"
+            ]
+        },
+        "33-33:import MockPrintStream": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.evosuite.runtime.mock.java.io.MockPrintStream;\n"
+            ]
+        },
+        "11-11:import static EvoAssertions.*": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.evosuite.runtime.EvoAssertions.*;\n"
+            ]
+        },
+        "10-10:import static Mockito.*": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.evosuite.shaded.org.mockito.Mockito.*;\n"
+            ]
+        },
+        "9-9:import static Assert.*": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import static org.junit.Assert.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DotExporter_ESTest": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "DotExporter_ESTest_scaffolding"
+            ],
+            "methods": {
+                "329-337:test21": {
+                    "start": 329,
+                    "end": 337,
+                    "body": [
+                        "  public void test21()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(inMemoryPath0, \"36.\");\n",
+                        "      Mapper<RevertedGraph<Integer, Integer>, Integer> mapper0 = (Mapper<RevertedGraph<Integer, Integer>, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter1 = dotExporter0.withEdgeWeights(mapper0);\n",
+                        "      assertSame(dotExporter1, dotExporter0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test21()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "withEdgeWeights"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertSame"
+                        ]
+                    ]
+                },
+                "314-326:test20": {
+                    "start": 314,
+                    "end": 326,
+                    "body": [
+                        "  public void test20()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(inMemoryPath0, \"s!V\");\n",
+                        "      ByteArrayOutputStream byteArrayOutputStream0 = new ByteArrayOutputStream();\n",
+                        "      dotExporter0.to1(byteArrayOutputStream0);\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      hashMap0.put(\"s!V\", \"s!V\");\n",
+                        "      hashMap0.put(\"%s %s {%n\", \"s!V\");\n",
+                        "      dotExporter0.vertex(revertedGraph0, hashMap0);\n",
+                        "      assertFalse(hashMap0.isEmpty());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test20()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "put"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "vertex"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "isEmpty"
+                        ]
+                    ]
+                },
+                "306-311:test19": {
+                    "start": 306,
+                    "end": 311,
+                    "body": [
+                        "  public void test19()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> undirectedMutableGraph0 = new UndirectedMutableGraph<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>();\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(undirectedMutableGraph0, \"org.apache.commons.graph.model.InMemoryPath\");\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter1 = dotExporter0.withEdgeLabels((Mapper<RevertedGraph<Integer, Integer>, String>) null);\n",
+                        "      assertSame(dotExporter1, dotExporter0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test19()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "withEdgeLabels"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertSame"
+                        ]
+                    ]
+                },
+                "292-303:test18": {
+                    "start": 292,
+                    "end": 303,
+                    "body": [
+                        "  public void test18()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, String> directedMutableGraph0 = new DirectedMutableGraph<Integer, String>();\n",
+                        "      RevertedGraph<Integer, String> revertedGraph0 = new RevertedGraph<Integer, String>(directedMutableGraph0);\n",
+                        "      Monoid<RevertedGraph<Integer, Integer>> monoid0 = (Monoid<RevertedGraph<Integer, Integer>>) mock(Monoid.class, new ViolatedAssumptionAnswer());\n",
+                        "      doReturn((Object) null).when(monoid0).identity();\n",
+                        "      Mapper<Integer, RevertedGraph<Integer, Integer>> mapper0 = (Mapper<Integer, RevertedGraph<Integer, Integer>>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      InMemoryWeightedPath<RevertedGraph<Integer, String>, Integer, RevertedGraph<Integer, Integer>> inMemoryWeightedPath0 = new InMemoryWeightedPath<RevertedGraph<Integer, String>, Integer, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0, monoid0, mapper0);\n",
+                        "      DotExporter<RevertedGraph<Integer, String>, Integer> dotExporter0 = new DotExporter<RevertedGraph<Integer, String>, Integer>(inMemoryWeightedPath0, \"weight\");\n",
+                        "      Mapper<RevertedGraph<Integer, String>, String> mapper1 = (Mapper<RevertedGraph<Integer, String>, String>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      DotExporter<RevertedGraph<Integer, String>, Integer> dotExporter1 = dotExporter0.withVertexLabels(mapper1);\n",
+                        "      assertSame(dotExporter0, dotExporter1);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test18()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,String>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,String>"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "InMemoryWeightedPath<RevertedGraph<Integer,String>,Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,String>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "withVertexLabels"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/stubbing/Stubber",
+                            "when"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "doReturn"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertSame"
+                        ]
+                    ]
+                },
+                "283-289:test17": {
+                    "start": 283,
+                    "end": 289,
+                    "body": [
+                        "  public void test17()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(revertedGraph0, \"\");\n",
+                        "      Class<Integer> class0 = Integer.class;\n",
+                        "      dotExporter0.enlistVerticesProperty(\"\", class0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test17()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "enlistVerticesProperty"
+                        ]
+                    ]
+                },
+                "264-280:test16": {
+                    "start": 264,
+                    "end": 280,
+                    "body": [
+                        "  public void test16()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(inMemoryPath0, \"36.\");\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      try { \n",
+                        "        dotExporter0.vertex(revertedGraph0, hashMap0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test16()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "vertex"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "254-261:test15": {
+                    "start": 254,
+                    "end": 261,
+                    "body": [
+                        "  public void test15()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      MutableSpanningTree<RevertedGraph<Integer, Integer>, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<RevertedGraph<Integer, Integer>, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, Integer> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, Integer>(mutableSpanningTree0, \"\");\n",
+                        "      Class<Integer> class0 = Integer.class;\n",
+                        "      dotExporter0.enlistEdgesProperty(\"\", class0);\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test15()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<RevertedGraph<Integer,Integer>,Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "enlistEdgesProperty"
+                        ]
+                    ]
+                },
+                "246-251:test14": {
+                    "start": 246,
+                    "end": 251,
+                    "body": [
+                        "  public void test14()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>> undirectedMutableGraph0 = new UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>>();\n",
+                        "      Integer integer0 = new Integer((-2));\n",
+                        "      undirectedMutableGraph0.addVertex(integer0);\n",
+                        "      DotExporter<Integer, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<Integer, RevertedGraph<Integer, Integer>>(undirectedMutableGraph0, \"L\");\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test14()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "Integer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex"
+                        ]
+                    ]
+                },
+                "231-243:test13": {
+                    "start": 231,
+                    "end": 243,
+                    "body": [
+                        "  public void test13()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(inMemoryPath0, \"36.\");\n",
+                        "      ByteArrayOutputStream byteArrayOutputStream0 = new ByteArrayOutputStream();\n",
+                        "      BufferedOutputStream bufferedOutputStream0 = new BufferedOutputStream(byteArrayOutputStream0);\n",
+                        "      dotExporter0.to1(bufferedOutputStream0);\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      hashMap0.put(\"36.\", revertedGraph0);\n",
+                        "      dotExporter0.vertex(revertedGraph0, hashMap0);\n",
+                        "      assertFalse(hashMap0.isEmpty());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test13()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedOutputStream",
+                            "BufferedOutputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "put"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "vertex"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "isEmpty"
+                        ]
+                    ]
+                },
+                "215-228:test12": {
+                    "start": 215,
+                    "end": 228,
+                    "body": [
+                        "  public void test12()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> undirectedMutableGraph0 = new UndirectedMutableGraph<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>();\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(undirectedMutableGraph0, \"org.apache.commons.graph.model.InMemoryPath\");\n",
+                        "      PipedInputStream pipedInputStream0 = new PipedInputStream(988);\n",
+                        "      PipedOutputStream pipedOutputStream0 = new PipedOutputStream(pipedInputStream0);\n",
+                        "      MockPrintStream mockPrintStream0 = new MockPrintStream(pipedOutputStream0, true);\n",
+                        "      DataOutputStream dataOutputStream0 = new DataOutputStream(mockPrintStream0);\n",
+                        "      dotExporter0.to1(dataOutputStream0);\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      dotExporter0.edge(revertedGraph0, revertedGraph0, revertedGraph0, hashMap0);\n",
+                        "      assertTrue(hashMap0.isEmpty());\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test12()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedInputStream",
+                            "PipedInputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PipedOutputStream",
+                            "PipedOutputStream"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/mock/java/io/MockPrintStream",
+                            "MockPrintStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/DataOutputStream",
+                            "DataOutputStream"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "edge"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "isEmpty"
+                        ]
+                    ]
+                },
+                "200-212:test11": {
+                    "start": 200,
+                    "end": 212,
+                    "body": [
+                        "  public void test11()  throws Throwable  {\n",
+                        "      DotExporter<Integer, String> dotExporter0 = null;\n",
+                        "      try {\n",
+                        "        dotExporter0 = new DotExporter<Integer, String>((Graph<Integer, String>) null, \"\");\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test11()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,String>"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "184-197:test10": {
+                    "start": 184,
+                    "end": 197,
+                    "body": [
+                        "  public void test10()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<Integer, Integer> undirectedMutableGraph0 = new UndirectedMutableGraph<Integer, Integer>();\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(undirectedMutableGraph0, \"\");\n",
+                        "      try { \n",
+                        "        dotExporter0.comment(\"\");\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test10()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "comment"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "168-181:test09": {
+                    "start": 168,
+                    "end": 181,
+                    "body": [
+                        "  public void test09()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<RevertedGraph<Integer, Integer>, Integer> undirectedMutableGraph0 = new UndirectedMutableGraph<RevertedGraph<Integer, Integer>, Integer>();\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, Integer> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, Integer>(undirectedMutableGraph0, \"org.apache.commons.graph.model.InMemoryPath\");\n",
+                        "      try { \n",
+                        "        dotExporter0.endGraph();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test09()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "endGraph"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "152-165:test08": {
+                    "start": 152,
+                    "end": 165,
+                    "body": [
+                        "  public void test08()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>> undirectedMutableGraph0 = new UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>>();\n",
+                        "      DotExporter<Integer, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<Integer, RevertedGraph<Integer, Integer>>(undirectedMutableGraph0, \"s{DqL VW\");\n",
+                        "      try { \n",
+                        "        dotExporter0.startGraph(\"org.apache.commons.graph.model.BaseGraph\");\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test08()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "startGraph"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "136-149:test07": {
+                    "start": 136,
+                    "end": 149,
+                    "body": [
+                        "  public void test07()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<Integer, Integer> undirectedMutableGraph0 = new UndirectedMutableGraph<Integer, Integer>();\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(undirectedMutableGraph0, \"org.apache.commons.graph.model.RevertedGraph\");\n",
+                        "      try { \n",
+                        "        dotExporter0.startSerialization();\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"java.io.Writer\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test07()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "startSerialization"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "127-133:test06": {
+                    "start": 127,
+                    "end": 133,
+                    "body": [
+                        "  public void test06()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, Integer> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, Integer>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, Integer> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, Integer>(inMemoryPath0, \"I9N:)e?b~jm5tP\");\n",
+                        "      dotExporter0.endSerialization();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test06()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "endSerialization"
+                        ]
+                    ]
+                },
+                "115-124:test05": {
+                    "start": 115,
+                    "end": 124,
+                    "body": [
+                        "  public void test05()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> inMemoryPath0 = new InMemoryPath<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(revertedGraph0, revertedGraph0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, RevertedGraph<Integer, Integer>>(inMemoryPath0, \"36.\");\n",
+                        "      ByteArrayOutputStream byteArrayOutputStream0 = new ByteArrayOutputStream();\n",
+                        "      BufferedOutputStream bufferedOutputStream0 = new BufferedOutputStream(byteArrayOutputStream0);\n",
+                        "      dotExporter0.to1(bufferedOutputStream0);\n",
+                        "      dotExporter0.comment(\"^yVN]sQ$/\");\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test05()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryPath",
+                            "InMemoryPath<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedOutputStream",
+                            "BufferedOutputStream"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "comment"
+                        ]
+                    ]
+                },
+                "103-112:test04": {
+                    "start": 103,
+                    "end": 112,
+                    "body": [
+                        "  public void test04()  throws Throwable  {\n",
+                        "      Integer integer0 = new Integer(2);\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      InMemoryWeightedPath<Integer, Integer, Integer> inMemoryWeightedPath0 = new InMemoryWeightedPath<Integer, Integer, Integer>(integer0, integer0, integerWeightBaseOperations0, mapper0);\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(inMemoryWeightedPath0, \"\");\n",
+                        "      MockFile mockFile0 = new MockFile(\"ZQ[M;^odH\", \"y@t\u007fztKj[._7kz\");\n",
+                        "      dotExporter0.to0(mockFile0);\n",
+                        "      dotExporter0.endGraph();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test04()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "Integer"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "InMemoryWeightedPath<Integer,Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/mock/java/io/MockFile",
+                            "MockFile"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to0"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "endGraph"
+                        ]
+                    ]
+                },
+                "94-100:test03": {
+                    "start": 94,
+                    "end": 100,
+                    "body": [
+                        "  public void test03()  throws Throwable  {\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(directedMutableGraph0, \"I9N:)e?b~jm5tP\");\n",
+                        "      ByteArrayOutputStream byteArrayOutputStream0 = new ByteArrayOutputStream(0);\n",
+                        "      dotExporter0.to1(byteArrayOutputStream0);\n",
+                        "      dotExporter0.startGraph(\"\");\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test03()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "startGraph"
+                        ]
+                    ]
+                },
+                "81-91:test02": {
+                    "start": 81,
+                    "end": 91,
+                    "body": [
+                        "  public void test02()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      MutableSpanningTree<RevertedGraph<Integer, Integer>, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<RevertedGraph<Integer, Integer>, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      DotExporter<RevertedGraph<Integer, Integer>, Integer> dotExporter0 = new DotExporter<RevertedGraph<Integer, Integer>, Integer>(mutableSpanningTree0, \";-\");\n",
+                        "      MockFile mockFile0 = new MockFile(\"  %s\", \"\");\n",
+                        "      MockPrintStream mockPrintStream0 = new MockPrintStream(mockFile0);\n",
+                        "      BufferedOutputStream bufferedOutputStream0 = new BufferedOutputStream(mockPrintStream0, 2);\n",
+                        "      dotExporter0.to1(bufferedOutputStream0);\n",
+                        "      dotExporter0.startSerialization();\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test02()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<RevertedGraph<Integer,Integer>,Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<RevertedGraph<Integer,Integer>,Integer>"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/mock/java/io/MockFile",
+                            "MockFile"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/mock/java/io/MockPrintStream",
+                            "MockPrintStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedOutputStream",
+                            "BufferedOutputStream"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/AbstractExporter",
+                            "to1"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "startSerialization"
+                        ]
+                    ]
+                },
+                "61-78:test01": {
+                    "start": 61,
+                    "end": 78,
+                    "body": [
+                        "  public void test01()  throws Throwable  {\n",
+                        "      UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>> undirectedMutableGraph0 = new UndirectedMutableGraph<Integer, RevertedGraph<Integer, Integer>>();\n",
+                        "      DotExporter<Integer, RevertedGraph<Integer, Integer>> dotExporter0 = new DotExporter<Integer, RevertedGraph<Integer, Integer>>(undirectedMutableGraph0, \"36.\");\n",
+                        "      Integer integer0 = new Integer(1104);\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      DirectedMutableGraph<Integer, Integer> directedMutableGraph0 = new DirectedMutableGraph<Integer, Integer>();\n",
+                        "      RevertedGraph<Integer, Integer> revertedGraph0 = new RevertedGraph<Integer, Integer>(directedMutableGraph0);\n",
+                        "      try { \n",
+                        "        dotExporter0.edge(revertedGraph0, integer0, integer0, hashMap0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test01()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,RevertedGraph<Integer,Integer>>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "Integer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/RevertedGraph",
+                            "RevertedGraph<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "edge"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                },
+                "40-58:test00": {
+                    "start": 40,
+                    "end": 58,
+                    "body": [
+                        "  public void test00()  throws Throwable  {\n",
+                        "      IntegerWeightBaseOperations integerWeightBaseOperations0 = new IntegerWeightBaseOperations();\n",
+                        "      Mapper<Integer, Integer> mapper0 = (Mapper<Integer, Integer>) mock(Mapper.class, new ViolatedAssumptionAnswer());\n",
+                        "      MutableSpanningTree<Integer, Integer, Integer> mutableSpanningTree0 = new MutableSpanningTree<Integer, Integer, Integer>(integerWeightBaseOperations0, mapper0);\n",
+                        "      DotExporter<Integer, Integer> dotExporter0 = new DotExporter<Integer, Integer>(mutableSpanningTree0, \"jAwAG4%I*Sh@6E;y1>\\\"\");\n",
+                        "      Integer integer0 = new Integer(31);\n",
+                        "      Integer integer1 = new Integer(0);\n",
+                        "      HashMap<String, Object> hashMap0 = new HashMap<String, Object>();\n",
+                        "      try { \n",
+                        "        dotExporter0.edge(integer0, integer1, integer0, hashMap0);\n",
+                        "        fail(\"Expecting exception: NullPointerException\");\n",
+                        "      \n",
+                        "      } catch(NullPointerException e) {\n",
+                        "         //\n",
+                        "         // no message in exception (getMessage() returned null)\n",
+                        "         //\n",
+                        "         verifyException(\"org.apache.commons.graph.export.DotExporter\", e);\n",
+                        "      }\n",
+                        "  }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(timeout = 4000)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "test00()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations",
+                            "IntegerWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/shaded/org/mockito/Mockito",
+                            "mock"
+                        ],
+                        [
+                            "library",
+                            "/org/evosuite/runtime/ViolatedAssumptionAnswer",
+                            "ViolatedAssumptionAnswer"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<Integer,Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "DotExporter<Integer,Integer>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "Integer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/export/DotExporter",
+                            "edge"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail"
+                        ],
+                        [
+                            "library",
+                            "EvoAssertions",
+                            "verifyException"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

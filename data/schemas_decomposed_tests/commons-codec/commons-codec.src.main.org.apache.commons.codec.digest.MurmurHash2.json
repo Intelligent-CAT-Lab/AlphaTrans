@@ -1,0 +1,541 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/digest/MurmurHash2.java",
+    "imports": {
+        "20-20:import StringUtils": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.binary.StringUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MurmurHash2": {
+            "start": 50,
+            "end": 50,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "271-273:hash643": {
+                    "start": 271,
+                    "end": 273,
+                    "body": [
+                        "    public static long hash643(final String text, final int from, final int length) {\n",
+                        "        return hash642(text.substring(from, from + length));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash643(String, int, int)",
+                    "parameters": [
+                        "text",
+                        "from",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "249-252:hash642"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ]
+                },
+                "249-252:hash642": {
+                    "start": 249,
+                    "end": 252,
+                    "body": [
+                        "    public static long hash642(final String text) {\n",
+                        "        final byte[] bytes = StringUtils.getBytesUtf8(text);\n",
+                        "        return hash641(bytes, bytes.length);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash642(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "228-230:hash641"
+                        ]
+                    ]
+                },
+                "228-230:hash641": {
+                    "start": 228,
+                    "end": 230,
+                    "body": [
+                        "    public static long hash641(final byte[] data, final int length) {\n",
+                        "        return hash640(data, length, 0xe17a1465);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash641(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "171-212:hash640"
+                        ]
+                    ]
+                },
+                "171-212:hash640": {
+                    "start": 171,
+                    "end": 212,
+                    "body": [
+                        "    public static long hash640(final byte[] data, final int length, final int seed) {\n",
+                        "        long h = (seed & 0xffffffffL) ^ (length * M64);\n",
+                        "\n",
+                        "        final int nblocks = length >> 3;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = (i << 3);\n",
+                        "            long k = getLittleEndianLong(data, index);\n",
+                        "\n",
+                        "            k *= M64;\n",
+                        "            k ^= k >>> R64;\n",
+                        "            k *= M64;\n",
+                        "\n",
+                        "            h ^= k;\n",
+                        "            h *= M64;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int index = (nblocks << 3);\n",
+                        "        switch (length - index) {\n",
+                        "            case 7:\n",
+                        "                h ^= ((long) data[index + 6] & 0xff) << 48;\n",
+                        "            case 6:\n",
+                        "                h ^= ((long) data[index + 5] & 0xff) << 40;\n",
+                        "            case 5:\n",
+                        "                h ^= ((long) data[index + 4] & 0xff) << 32;\n",
+                        "            case 4:\n",
+                        "                h ^= ((long) data[index + 3] & 0xff) << 24;\n",
+                        "            case 3:\n",
+                        "                h ^= ((long) data[index + 2] & 0xff) << 16;\n",
+                        "            case 2:\n",
+                        "                h ^= ((long) data[index + 1] & 0xff) << 8;\n",
+                        "            case 1:\n",
+                        "                h ^= ((long) data[index] & 0xff);\n",
+                        "                h *= M64;\n",
+                        "        }\n",
+                        "\n",
+                        "        h ^= h >>> R64;\n",
+                        "        h *= M64;\n",
+                        "        h ^= h >>> R64;\n",
+                        "\n",
+                        "        return h;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash640(byte[], int, int)",
+                    "parameters": [
+                        "data",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "296-305:getLittleEndianLong"
+                        ]
+                    ]
+                },
+                "159-161:hash323": {
+                    "start": 159,
+                    "end": 161,
+                    "body": [
+                        "    public static int hash323(final String text, final int from, final int length) {\n",
+                        "        return hash322(text.substring(from, from + length));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash323(String, int, int)",
+                    "parameters": [
+                        "text",
+                        "from",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "137-140:hash322"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ]
+                },
+                "137-140:hash322": {
+                    "start": 137,
+                    "end": 140,
+                    "body": [
+                        "    public static int hash322(final String text) {\n",
+                        "        final byte[] bytes = StringUtils.getBytesUtf8(text);\n",
+                        "        return hash321(bytes, bytes.length);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash322(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "116-118:hash321"
+                        ]
+                    ]
+                },
+                "116-118:hash321": {
+                    "start": 116,
+                    "end": 118,
+                    "body": [
+                        "    public static int hash321(final byte[] data, final int length) {\n",
+                        "        return hash320(data, length, 0x9747b28c);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash321(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "69-100:hash320"
+                        ]
+                    ]
+                },
+                "69-100:hash320": {
+                    "start": 69,
+                    "end": 100,
+                    "body": [
+                        "    public static int hash320(final byte[] data, final int length, final int seed) {\n",
+                        "        int h = seed ^ length;\n",
+                        "\n",
+                        "        final int nblocks = length >> 2;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = (i << 2);\n",
+                        "            int k = getLittleEndianInt(data, index);\n",
+                        "            k *= M32;\n",
+                        "            k ^= k >>> R32;\n",
+                        "            k *= M32;\n",
+                        "            h *= M32;\n",
+                        "            h ^= k;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int index = (nblocks << 2);\n",
+                        "        switch (length - index) {\n",
+                        "            case 3:\n",
+                        "                h ^= (data[index + 2] & 0xff) << 16;\n",
+                        "            case 2:\n",
+                        "                h ^= (data[index + 1] & 0xff) << 8;\n",
+                        "            case 1:\n",
+                        "                h ^= (data[index] & 0xff);\n",
+                        "                h *= M32;\n",
+                        "        }\n",
+                        "\n",
+                        "        h ^= h >>> 13;\n",
+                        "        h *= M32;\n",
+                        "        h ^= h >>> 15;\n",
+                        "\n",
+                        "        return h;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash320(byte[], int, int)",
+                    "parameters": [
+                        "data",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash2",
+                            "MurmurHash2",
+                            "282-287:getLittleEndianInt"
+                        ]
+                    ]
+                },
+                "296-305:getLittleEndianLong": {
+                    "start": 296,
+                    "end": 305,
+                    "body": [
+                        "    private static long getLittleEndianLong(final byte[] data, final int index) {\n",
+                        "        return (((long) data[index] & 0xff))\n",
+                        "                | (((long) data[index + 1] & 0xff) << 8)\n",
+                        "                | (((long) data[index + 2] & 0xff) << 16)\n",
+                        "                | (((long) data[index + 3] & 0xff) << 24)\n",
+                        "                | (((long) data[index + 4] & 0xff) << 32)\n",
+                        "                | (((long) data[index + 5] & 0xff) << 40)\n",
+                        "                | (((long) data[index + 6] & 0xff) << 48)\n",
+                        "                | (((long) data[index + 7] & 0xff) << 56);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLittleEndianLong(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "index"
+                    ],
+                    "calls": []
+                },
+                "282-287:getLittleEndianInt": {
+                    "start": 282,
+                    "end": 287,
+                    "body": [
+                        "    private static int getLittleEndianInt(final byte[] data, final int index) {\n",
+                        "        return ((data[index] & 0xff))\n",
+                        "                | ((data[index + 1] & 0xff) << 8)\n",
+                        "                | ((data[index + 2] & 0xff) << 16)\n",
+                        "                | ((data[index + 3] & 0xff) << 24);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getLittleEndianInt(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "index"
+                    ],
+                    "calls": []
+                },
+                "59-59:MurmurHash2": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    private MurmurHash2() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MurmurHash2()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "56-56:R64": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    private static final int R64 = 47;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "55-55:M64": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private static final long M64 = 0xc6a4a7935bd1e995L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "53-53:R32": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final int R32 = 24;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "52-52:M32": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private static final int M32 = 0x5bd1e995;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

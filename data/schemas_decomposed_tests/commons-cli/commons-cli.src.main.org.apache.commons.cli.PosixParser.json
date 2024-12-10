@@ -1,0 +1,579 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-cli/src/main/java/org/apache/commons/cli/PosixParser.java",
+    "imports": {
+        "23-23:import List": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "22-22:import Iterator": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "20-20:import ArrayList": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "21-21:import Arrays": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PosixParser": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "Parser"
+            ],
+            "methods": {
+                "123-175:flatten": {
+                    "start": 123,
+                    "end": 175,
+                    "body": [
+                        "    protected String[] flatten(\n",
+                        "            final Options options, final String[] arguments, final boolean stopAtNonOption)\n",
+                        "            throws ParseException {\n",
+                        "        init();\n",
+                        "        this.options = options;\n",
+                        "\n",
+                        "        final Iterator<String> it = Arrays.asList(arguments).iterator();\n",
+                        "\n",
+                        "        while (it.hasNext()) {\n",
+                        "            final String token = it.next();\n",
+                        "\n",
+                        "            if (\"-\".equals(token) || \"--\".equals(token)) {\n",
+                        "                tokens.add(token);\n",
+                        "            } else if (token.startsWith(\"--\")) {\n",
+                        "                final int pos = token.indexOf('=');\n",
+                        "                final String opt = pos == -1 ? token : token.substring(0, pos); // --foo\n",
+                        "\n",
+                        "                final List<String> matchingOpts = options.getMatchingOptions(opt);\n",
+                        "\n",
+                        "                if (matchingOpts.isEmpty()) {\n",
+                        "                    processNonOptionToken(token, stopAtNonOption);\n",
+                        "                } else if (matchingOpts.size() > 1) {\n",
+                        "                    throw new AmbiguousOptionException(opt, matchingOpts);\n",
+                        "                } else {\n",
+                        "                    currentOption = options.getOption(matchingOpts.get(0));\n",
+                        "\n",
+                        "                    tokens.add(\"--\" + currentOption.getLongOpt());\n",
+                        "                    if (pos != -1) {\n",
+                        "                        tokens.add(token.substring(pos + 1));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else if (token.startsWith(\"-\")) {\n",
+                        "                if (token.length() == 2 || options.hasOption(token)) {\n",
+                        "                    processOptionToken(token, stopAtNonOption);\n",
+                        "                } else if (!options.getMatchingOptions(token).isEmpty()) {\n",
+                        "                    final List<String> matchingOpts = options.getMatchingOptions(token);\n",
+                        "                    if (matchingOpts.size() > 1) {\n",
+                        "                        throw new AmbiguousOptionException(token, matchingOpts);\n",
+                        "                    }\n",
+                        "                    final Option opt = options.getOption(matchingOpts.get(0));\n",
+                        "                    processOptionToken(\"-\" + opt.getLongOpt(), stopAtNonOption);\n",
+                        "                } else {\n",
+                        "                    burstToken(token, stopAtNonOption);\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                processNonOptionToken(token, stopAtNonOption);\n",
+                        "            }\n",
+                        "\n",
+                        "            gobble(it);\n",
+                        "        }\n",
+                        "\n",
+                        "        return tokens.toArray(Util.EMPTY_STRING_ARRAY);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "flatten(Options, String[], boolean)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "194-197:init"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "191-207:getMatchingOptions"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "205-212:processNonOptionToken"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.AmbiguousOptionException",
+                            "AmbiguousOptionException",
+                            "68-71:AmbiguousOptionException"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "571-573:getLongOpt"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "223-233:processOptionToken"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "66-87:burstToken"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "182-188:gobble"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "toArray(java.lang.Object[])"
+                        ]
+                    ]
+                },
+                "66-87:burstToken": {
+                    "start": 66,
+                    "end": 87,
+                    "body": [
+                        "    protected void burstToken(final String token, final boolean stopAtNonOption) {\n",
+                        "        for (int i = 1; i < token.length(); i++) {\n",
+                        "            final String ch = String.valueOf(token.charAt(i));\n",
+                        "\n",
+                        "            if (!options.hasOption(ch)) {\n",
+                        "                if (stopAtNonOption) {\n",
+                        "                    processNonOptionToken(token.substring(i), true);\n",
+                        "                } else {\n",
+                        "                    tokens.add(token);\n",
+                        "                }\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            tokens.add(\"-\" + ch);\n",
+                        "            currentOption = options.getOption(ch);\n",
+                        "\n",
+                        "            if (currentOption.hasArg() && token.length() != i + 1) {\n",
+                        "                tokens.add(token.substring(i + 1));\n",
+                        "\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "burstToken(String, boolean)",
+                    "parameters": [
+                        "token",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.PosixParser",
+                            "PosixParser",
+                            "205-212:processNonOptionToken"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ]
+                    ]
+                },
+                "223-233:processOptionToken": {
+                    "start": 223,
+                    "end": 233,
+                    "body": [
+                        "    private void processOptionToken(final String token, final boolean stopAtNonOption) {\n",
+                        "        if (stopAtNonOption && !options.hasOption(token)) {\n",
+                        "            eatTheRest = true;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (options.hasOption(token)) {\n",
+                        "            currentOption = options.getOption(token);\n",
+                        "        }\n",
+                        "\n",
+                        "        tokens.add(token);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processOptionToken(String, boolean)",
+                    "parameters": [
+                        "token",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ]
+                    ]
+                },
+                "205-212:processNonOptionToken": {
+                    "start": 205,
+                    "end": 212,
+                    "body": [
+                        "    private void processNonOptionToken(final String value, final boolean stopAtNonOption) {\n",
+                        "        if (stopAtNonOption && (currentOption == null || !currentOption.hasArg())) {\n",
+                        "            eatTheRest = true;\n",
+                        "            tokens.add(\"--\");\n",
+                        "        }\n",
+                        "\n",
+                        "        tokens.add(value);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processNonOptionToken(String, boolean)",
+                    "parameters": [
+                        "value",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ]
+                    ]
+                },
+                "194-197:init": {
+                    "start": 194,
+                    "end": 197,
+                    "body": [
+                        "    private void init() {\n",
+                        "        eatTheRest = false;\n",
+                        "        tokens.clear();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "clear()"
+                        ]
+                    ]
+                },
+                "182-188:gobble": {
+                    "start": 182,
+                    "end": 188,
+                    "body": [
+                        "    private void gobble(final Iterator<String> iter) {\n",
+                        "        if (eatTheRest) {\n",
+                        "            while (iter.hasNext()) {\n",
+                        "                tokens.add(iter.next());\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "gobble(Iterator<String>)",
+                    "parameters": [
+                        "iter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "43-43:options": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private Options options;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ]
+                },
+                "40-40:currentOption": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private Option currentOption;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Option",
+                            "Option"
+                        ]
+                    ]
+                },
+                "37-37:eatTheRest": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private boolean eatTheRest;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "34-34:tokens": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private final List<String> tokens = new ArrayList<>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<String>",
+                            "java.util.List<String>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,959 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/FastPFOR.java",
+    "imports": {
+        "9-9:import ByteBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "10-10:import ByteOrder": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.nio.ByteOrder;\n"
+            ]
+        },
+        "11-11:import Arrays": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "FastPFOR": {
+            "start": 41,
+            "end": 41,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC",
+                "SkippableIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "341-343:toString": {
+                    "start": 341,
+                    "end": 343,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ]
+                },
+                "332-339:uncompress0": {
+                    "start": 332,
+                    "end": 339,
+                    "body": [
+                        "        public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                                IntWrapper outpos) {\n",
+                        "            if (inlength == 0)\n",
+                        "                return;\n",
+                        "            final int outlength = in[inpos.get()];\n",
+                        "            inpos.increment();\n",
+                        "            headlessUncompress(in, inpos, inlength, out, outpos, outlength);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "234-243:headlessUncompress"
+                        ]
+                    ]
+                },
+                "321-329:compress0": {
+                    "start": 321,
+                    "end": 329,
+                    "body": [
+                        "        public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                              IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength,  BLOCK_SIZE);\n",
+                        "            if (inlength == 0)\n",
+                        "                    return;\n",
+                        "            out[outpos.get()] = inlength;\n",
+                        "            outpos.increment();\n",
+                        "            headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "104-117:headlessCompress"
+                        ]
+                    ]
+                },
+                "234-243:headlessUncompress": {
+                    "start": 234,
+                    "end": 243,
+                    "body": [
+                        "        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos, int mynvalue) {\n",
+                        "                mynvalue = Util.greatestMultiple(mynvalue, BLOCK_SIZE);\n",
+                        "                int finalout = outpos.get() + mynvalue;\n",
+                        "                while (outpos.get() != finalout) {\n",
+                        "                        int thissize = Math.min(pageSize,\n",
+                        "                                finalout - outpos.get());\n",
+                        "                        decodePage(in, inpos, out, outpos, thissize);\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "mynvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "245-319:decodePage"
+                        ]
+                    ]
+                },
+                "104-117:headlessCompress": {
+                    "start": 104,
+                    "end": 117,
+                    "body": [
+                        "        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "                inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "                // Allocate memory for working area.\n",
+                        "\n",
+                        "                final int finalinpos = inpos.get() + inlength;\n",
+                        "                while (inpos.get() != finalinpos) {\n",
+                        "                        int thissize = Math.min(pageSize,\n",
+                        "                                finalinpos - inpos.get());\n",
+                        "                        encodePage(in, inpos, thissize, out, outpos);\n",
+                        "                }\n",
+                        "\n",
+                        "\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "148-224:encodePage"
+                        ]
+                    ]
+                },
+                "352-354:makeBuffer": {
+                    "start": 352,
+                    "end": 354,
+                    "body": [
+                        "        protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "            return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ]
+                },
+                "90-92:FastPFOR1": {
+                    "start": 90,
+                    "end": 92,
+                    "body": [
+                        "        public static FastPFOR FastPFOR1() {\n",
+                        "                return new FastPFOR( DEFAULT_PAGE_SIZE);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "FastPFOR",
+                            "FastPFOR"
+                        ]
+                    ],
+                    "signature": "FastPFOR1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "81-89:FastPFOR"
+                        ]
+                    ]
+                },
+                "81-89:FastPFOR": {
+                    "start": 81,
+                    "end": 89,
+                    "body": [
+                        "        public FastPFOR(int pagesize) {\n",
+                        "            pageSize = pagesize;\n",
+                        "            // Initiate arrrays.\n",
+                        "            byteContainer = makeBuffer(3 * pageSize\n",
+                        "                    / BLOCK_SIZE + pageSize);\n",
+                        "            byteContainer.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "            for (int k = 1; k < dataTobePacked.length; ++k)\n",
+                        "                dataTobePacked[k] = new int[pageSize / 32 * 4]; // heuristic\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "FastPFOR(int)",
+                    "parameters": [
+                        "pagesize"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "352-354:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ]
+                    ]
+                },
+                "245-319:decodePage": {
+                    "start": 245,
+                    "end": 319,
+                    "body": [
+                        "        private void decodePage(int[] in, IntWrapper inpos, int[] out,\n",
+                        "                IntWrapper outpos, int thissize) {\n",
+                        "                final int initpos = inpos.get();\n",
+                        "                final int wheremeta = in[inpos.get()];\n",
+                        "                inpos.increment();\n",
+                        "                int inexcept = initpos + wheremeta;\n",
+                        "                final int bytesize = in[inexcept++];\n",
+                        "                byteContainer.clear();\n",
+                        "                byteContainer.asIntBuffer().put(in, inexcept, (bytesize + 3) / 4);\n",
+                        "                inexcept += (bytesize + 3)/ 4;\n",
+                        "\n",
+                        "                final int bitmap = in[inexcept++];\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if ((bitmap & (1 << (k - 1))) != 0) {\n",
+                        "                                int size = in[inexcept++];\n",
+                        "                                int roundedup = Util\n",
+                        "                                .greatestMultiple(size + 31, 32);\n",
+                        "                                if (dataTobePacked[k].length < roundedup)\n",
+                        "                                        dataTobePacked[k] = new int[roundedup];\n",
+                        "                                if(inexcept + roundedup/32*k <= in.length) {\n",
+                        "                                    int j = 0;\n",
+                        "                                    for (; j < size; j += 32) {\n",
+                        "                                        BitPacking.fastunpack(in, inexcept,\n",
+                        "                                                dataTobePacked[k], j, k);\n",
+                        "                                        inexcept += k;\n",
+                        "                                    }\n",
+                        "                                    int overflow = j - size;\n",
+                        "                                    inexcept -= overflow * k / 32;\n",
+                        "                                } else {\n",
+                        "                                    int j = 0;\n",
+                        "                                    int[] buf = new int[roundedup/32*k];\n",
+                        "                                    int initinexcept = inexcept;\n",
+                        "                                    System.arraycopy(in, inexcept, buf, 0, in.length - inexcept);\n",
+                        "                                    for (; j < size; j += 32) {\n",
+                        "                                        BitPacking.fastunpack(buf, inexcept-initinexcept,\n",
+                        "                                                dataTobePacked[k], j, k);\n",
+                        "                                        inexcept += k;\n",
+                        "                                    }\n",
+                        "                                    int overflow = j - size;\n",
+                        "                                    inexcept -= overflow * k / 32;\n",
+                        "                                }\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                Arrays.fill(dataPointers, 0);\n",
+                        "                int tmpoutpos = outpos.get();\n",
+                        "                int tmpinpos = inpos.get();\n",
+                        "\n",
+                        "                for (int run = 0, run_end = thissize / BLOCK_SIZE; run < run_end; ++run, tmpoutpos += BLOCK_SIZE) {\n",
+                        "                        final int b = byteContainer.get();\n",
+                        "                        final int cexcept = byteContainer.get() & 0xFF;\n",
+                        "                        for (int k = 0; k < BLOCK_SIZE; k += 32) {\n",
+                        "                                BitPacking.fastunpack(in, tmpinpos, out,\n",
+                        "                                        tmpoutpos + k, b);\n",
+                        "                                tmpinpos += b;\n",
+                        "                        }\n",
+                        "                        if (cexcept > 0) {\n",
+                        "                            final int maxbits = byteContainer.get();\n",
+                        "                            final int index = maxbits - b;\n",
+                        "                            if(index == 1) {\n",
+                        "                                for (int k = 0; k < cexcept; ++k) {\n",
+                        "                                    final int pos = byteContainer.get() &0xFF;\n",
+                        "                                    out[pos + tmpoutpos] |= 1 << b;\n",
+                        "                                }\n",
+                        "                            } else {\n",
+                        "                                for (int k = 0; k < cexcept; ++k) {\n",
+                        "                                    final int pos = byteContainer.get() &0xFF;\n",
+                        "                                    final int exceptvalue = dataTobePacked[index][dataPointers[index]++];\n",
+                        "                                    out[pos + tmpoutpos] |= exceptvalue << b;\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                outpos.set(tmpoutpos);\n",
+                        "                inpos.set(inexcept);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "decodePage(int[], IntWrapper, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "out",
+                        "outpos",
+                        "thissize"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "clear()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "put(int[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "get()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ]
+                },
+                "148-224:encodePage": {
+                    "start": 148,
+                    "end": 224,
+                    "body": [
+                        "        private void encodePage(int[] in, IntWrapper inpos, int thissize,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "                final int headerpos = outpos.get();\n",
+                        "                outpos.increment();\n",
+                        "                int tmpoutpos = outpos.get();\n",
+                        "\n",
+                        "                // Clear working area.\n",
+                        "                Arrays.fill(dataPointers, 0);\n",
+                        "                byteContainer.clear();\n",
+                        "\n",
+                        "                int tmpinpos = inpos.get();\n",
+                        "                for (final int finalinpos = tmpinpos + thissize - BLOCK_SIZE; tmpinpos <= finalinpos; tmpinpos += BLOCK_SIZE) {\n",
+                        "                    getBestBFromData(in, tmpinpos);\n",
+                        "                        final int tmpbestb = bestbbestcexceptmaxb[0];\n",
+                        "                        byteContainer.put((byte)bestbbestcexceptmaxb[0]);\n",
+                        "                        byteContainer.put((byte)bestbbestcexceptmaxb[1]);\n",
+                        "                        if (bestbbestcexceptmaxb[1] > 0) {\n",
+                        "                                byteContainer.put((byte)bestbbestcexceptmaxb[2]);\n",
+                        "                                final int index = bestbbestcexceptmaxb[2]\n",
+                        "                                        - bestbbestcexceptmaxb[0];\n",
+                        "                                if (dataPointers[index]\n",
+                        "                                        + bestbbestcexceptmaxb[1] >= dataTobePacked[index].length) {\n",
+                        "                                        int newsize = 2 * (dataPointers[index] + bestbbestcexceptmaxb[1]);\n",
+                        "                                        // make sure it is a multiple of 32\n",
+                        "                                        newsize = Util\n",
+                        "                                                .greatestMultiple(newsize + 31, 32);\n",
+                        "                                        dataTobePacked[index] = Arrays.copyOf(\n",
+                        "                                                dataTobePacked[index], newsize);\n",
+                        "                                }\n",
+                        "                                for (int k = 0; k < BLOCK_SIZE; ++k) {\n",
+                        "                                        if ((in[k + tmpinpos] >>> bestbbestcexceptmaxb[0]) != 0) {\n",
+                        "                                                // we have an exception\n",
+                        "                                                byteContainer.put((byte) k);\n",
+                        "                                                dataTobePacked[index][dataPointers[index]++] = in[k\n",
+                        "                                                        + tmpinpos] >>> tmpbestb;\n",
+                        "                                        }\n",
+                        "                                }\n",
+                        "\n",
+                        "                        }\n",
+                        "                        for (int k = 0; k < BLOCK_SIZE; k += 32) {\n",
+                        "                                BitPacking.fastpack(in, tmpinpos + k, out,\n",
+                        "                                        tmpoutpos, tmpbestb);\n",
+                        "                                tmpoutpos += tmpbestb;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                inpos.set(tmpinpos);\n",
+                        "                out[headerpos] = tmpoutpos - headerpos;\n",
+                        "                final int bytesize = byteContainer.position();\n",
+                        "                while ((byteContainer.position() & 3) != 0)\n",
+                        "                        byteContainer.put((byte) 0);\n",
+                        "                out[tmpoutpos++] = bytesize;\n",
+                        "                final int howmanyints = byteContainer.position() / 4;\n",
+                        "                byteContainer.flip();\n",
+                        "                byteContainer.asIntBuffer().get(out, tmpoutpos, howmanyints);\n",
+                        "                tmpoutpos += howmanyints;\n",
+                        "                int bitmap = 0;\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if (dataPointers[k] != 0)\n",
+                        "                                bitmap |= (1 << (k - 1));\n",
+                        "                }\n",
+                        "                out[tmpoutpos++] = bitmap;\n",
+                        "\n",
+                        "                for (int k = 2; k <= 32; ++k) {\n",
+                        "                        if (dataPointers[k] != 0) {\n",
+                        "                                out[tmpoutpos++] = dataPointers[k];// size\n",
+                        "                                int j = 0;\n",
+                        "                                for (; j < dataPointers[k]; j += 32) {\n",
+                        "                                        BitPacking.fastpack(dataTobePacked[k],\n",
+                        "                                                j, out, tmpoutpos, k);\n",
+                        "                                        tmpoutpos += k;\n",
+                        "                                }\n",
+                        "                                int overflow = j - dataPointers[k];\n",
+                        "                                tmpoutpos -= overflow * k / 32;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                outpos.set(tmpoutpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "encodePage(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "thissize",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "clear()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.FastPFOR",
+                            "FastPFOR",
+                            "119-146:getBestBFromData"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "42-148:fastpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ]
+                    ]
+                },
+                "119-146:getBestBFromData": {
+                    "start": 119,
+                    "end": 146,
+                    "body": [
+                        "        private void getBestBFromData(int[] in, int pos) {\n",
+                        "                Arrays.fill(freqs, 0);\n",
+                        "                for (int k = pos, k_end = pos + BLOCK_SIZE; k < k_end; ++k) {\n",
+                        "                        freqs[Util.bits(in[k])]++;\n",
+                        "                }\n",
+                        "                bestbbestcexceptmaxb[0] = 32;\n",
+                        "                while (freqs[bestbbestcexceptmaxb[0]] == 0)\n",
+                        "                        bestbbestcexceptmaxb[0]--;\n",
+                        "                bestbbestcexceptmaxb[2] = bestbbestcexceptmaxb[0];\n",
+                        "                int bestcost = bestbbestcexceptmaxb[0] * BLOCK_SIZE;\n",
+                        "                int cexcept = 0;\n",
+                        "                bestbbestcexceptmaxb[1] = cexcept;\n",
+                        "                for (int b = bestbbestcexceptmaxb[0] - 1; b >= 0; --b) {\n",
+                        "                        cexcept += freqs[b + 1];\n",
+                        "                        if (cexcept == BLOCK_SIZE)\n",
+                        "                                break;\n",
+                        "                        // the extra 8 is the cost of storing maxbits\n",
+                        "                        int thiscost = cexcept * OVERHEAD_OF_EACH_EXCEPT\n",
+                        "                                + cexcept * (bestbbestcexceptmaxb[2] - b) + b\n",
+                        "                                * BLOCK_SIZE + 8;\n",
+                        "                        if(bestbbestcexceptmaxb[2] - b == 1) thiscost -= cexcept;\n",
+                        "                        if (thiscost < bestcost) {\n",
+                        "                                bestcost = thiscost;\n",
+                        "                                bestbbestcexceptmaxb[0] = b;\n",
+                        "                                bestbbestcexceptmaxb[1] = cexcept;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "getBestBFromData(int[], int)",
+                    "parameters": [
+                        "in",
+                        "pos"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "fill(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "109-111:bits"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "59-59:bestbbestcexceptmaxb": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "        final int[] bestbbestcexceptmaxb = new int[3];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "58-58:freqs": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "        final int[] freqs = new int[33];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "57-57:dataPointers": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "        final int[] dataPointers = new int[33];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ]
+                },
+                "54-54:byteContainer": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "        final ByteBuffer byteContainer;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ]
+                },
+                "53-53:dataTobePacked": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "        final int[][] dataTobePacked = new int[33][];\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ]
+                },
+                "52-52:pageSize": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "        final int pageSize;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "50-50:BLOCK_SIZE": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "        public final static int BLOCK_SIZE = 256;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "46-46:DEFAULT_PAGE_SIZE": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "        public final static int DEFAULT_PAGE_SIZE = 65536;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "42-42:OVERHEAD_OF_EACH_EXCEPT": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "        final static int OVERHEAD_OF_EACH_EXCEPT = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,240 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/synth/ClusteredDataGenerator.java",
+    "imports": {},
+    "classes": {
+        "ClusteredDataGenerator": {
+            "start": 18,
+            "end": 18,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "81-86:main": {
+                    "start": 81,
+                    "end": 86,
+                    "body": [
+                        "        public static void main(final String[] args) {\n",
+                        "                int[] example = (new ClusteredDataGenerator())\n",
+                        "                        .generateClustered(20, 1000);\n",
+                        "                for (int k = 0; k < example.length; ++k)\n",
+                        "                        System.out.println(example[k]);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "main(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "69-73:generateClustered"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "25-26:ClusteredDataGenerator"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(int)"
+                        ]
+                    ]
+                },
+                "69-73:generateClustered": {
+                    "start": 69,
+                    "end": 73,
+                    "body": [
+                        "        public int[] generateClustered(int N, int Max) {\n",
+                        "                int[] array = new int[N];\n",
+                        "                fillClustered(array, 0, N, 0, Max);\n",
+                        "                return array;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "generateClustered(int, int)",
+                    "parameters": [
+                        "N",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "34-58:fillClustered"
+                        ]
+                    ]
+                },
+                "25-26:ClusteredDataGenerator": {
+                    "start": 25,
+                    "end": 26,
+                    "body": [
+                        "        public ClusteredDataGenerator() {\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ClusteredDataGenerator()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "34-58:fillClustered": {
+                    "start": 34,
+                    "end": 58,
+                    "body": [
+                        "        void fillClustered(int[] array, int offset, int length, int Min, int Max) {\n",
+                        "                final int range = Max - Min;\n",
+                        "                if ((range == length) || (length <= 10)) {\n",
+                        "                        fillUniform(array, offset, length, Min, Max);\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "                final int cut = length\n",
+                        "                        / 2\n",
+                        "                        + ((range - length - 1 > 0) ? this.unidg.rand\n",
+                        "                                .nextInt(range - length - 1) : 0);\n",
+                        "                final double p = this.unidg.rand.nextDouble();\n",
+                        "                if (p < 0.25) {\n",
+                        "                        fillUniform(array, offset, length / 2, Min, Min + cut);\n",
+                        "                        fillClustered(array, offset + length / 2, length\n",
+                        "                                - length / 2, Min + cut, Max);\n",
+                        "                } else if (p < 0.5) {\n",
+                        "                        fillClustered(array, offset, length / 2, Min, Min + cut);\n",
+                        "                        fillUniform(array, offset + length / 2, length - length\n",
+                        "                                / 2, Min + cut, Max);\n",
+                        "                } else {\n",
+                        "                        fillClustered(array, offset, length / 2, Min, Min + cut);\n",
+                        "                        fillClustered(array, offset + length / 2, length\n",
+                        "                                - length / 2, Min + cut, Max);\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fillClustered(int[], int, int, int, int)",
+                    "parameters": [
+                        "array",
+                        "offset",
+                        "length",
+                        "Min",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextInt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextDouble()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "28-32:fillUniform"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.ClusteredDataGenerator",
+                            "ClusteredDataGenerator",
+                            "34-58:fillClustered"
+                        ]
+                    ]
+                },
+                "28-32:fillUniform": {
+                    "start": 28,
+                    "end": 32,
+                    "body": [
+                        "        void fillUniform(int[] array, int offset, int length, int Min, int Max) {\n",
+                        "                int[] v = this.unidg.generateUniform(length, Max - Min);\n",
+                        "                for (int k = 0; k < v.length; ++k)\n",
+                        "                        array[k + offset] = Min + v[k];\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fillUniform(int[], int, int, int, int)",
+                    "parameters": [
+                        "array",
+                        "offset",
+                        "length",
+                        "Min",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                            "UniformDataGenerator",
+                            "90-97:generateUniform"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "20-20:unidg": {
+                    "start": 20,
+                    "end": 20,
+                    "body": [
+                        "        UniformDataGenerator unidg = new UniformDataGenerator(1, 0);\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "UniformDataGenerator",
+                            "UniformDataGenerator"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

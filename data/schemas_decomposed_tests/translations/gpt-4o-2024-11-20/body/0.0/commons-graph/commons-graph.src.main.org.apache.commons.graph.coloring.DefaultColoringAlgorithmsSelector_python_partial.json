@@ -1,0 +1,639 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/coloring/DefaultColoringAlgorithmsSelector.java",
+    "imports": {
+        "27-27:import Iterator": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "28-28:import List": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "29-29:import Set": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "26-26:import ArrayList": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "24-24:import UndirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.UndirectedGraph;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultColoringAlgorithmsSelector": {
+            "start": 38,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "77-119:applyingGreedyAlgorithm": {
+                    "start": 77,
+                    "end": 119,
+                    "body": [
+                        "    public ColoredVertices<V, C> applyingGreedyAlgorithm() {\n",
+                        "        final ColoredVertices<V, C> coloredVertices = new ColoredVertices<V, C>();\n",
+                        "\n",
+                        "        final UncoloredOrderedVertices<V> uncoloredOrderedVertices =\n",
+                        "                new UncoloredOrderedVertices<V>();\n",
+                        "\n",
+                        "        for (V v : g.getVertices0()) {\n",
+                        "            uncoloredOrderedVertices.addVertexDegree(v, g.getDegree(v));\n",
+                        "        }\n",
+                        "\n",
+                        "        Iterator<V> it = uncoloredOrderedVertices.iterator();\n",
+                        "        Iterator<C> colorsIt = colors.iterator();\n",
+                        "        while (it.hasNext()) {\n",
+                        "            if (!colorsIt.hasNext()) {\n",
+                        "                throw new NotEnoughColorsException(colors);\n",
+                        "            }\n",
+                        "            C color = colorsIt.next();\n",
+                        "\n",
+                        "            List<V> currentColorVertices = new ArrayList<V>();\n",
+                        "            Iterator<V> uncoloredVtxIterator = uncoloredOrderedVertices.iterator();\n",
+                        "            while (uncoloredVtxIterator.hasNext()) {\n",
+                        "                V uncoloredVtx = uncoloredVtxIterator.next();\n",
+                        "\n",
+                        "                boolean foundAnAdjacentVertex = false;\n",
+                        "                for (V currentColoredVtx : currentColorVertices) {\n",
+                        "                    if (g.getEdge(currentColoredVtx, uncoloredVtx) != null) {\n",
+                        "                        foundAnAdjacentVertex = true;\n",
+                        "                        break;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "\n",
+                        "                if (!foundAnAdjacentVertex) {\n",
+                        "                    uncoloredVtxIterator.remove();\n",
+                        "                    coloredVertices.addColor(uncoloredVtx, color);\n",
+                        "                    currentColorVertices.add(uncoloredVtx);\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            it = uncoloredOrderedVertices.iterator();\n",
+                        "        }\n",
+                        "\n",
+                        "        return coloredVertices;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ColoredVertices<V,C>",
+                            "ColoredVertices<V,C>"
+                        ]
+                    ],
+                    "signature": "applyingGreedyAlgorithm()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "ColoredVertices<V,C>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/UncoloredOrderedVertices",
+                            "UncoloredOrderedVertices<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/UncoloredOrderedVertices",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/UncoloredOrderedVertices",
+                            "addVertexDegree(java.lang.Object,java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getDegree(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.NotEnoughColorsException",
+                            "NotEnoughColorsException",
+                            "40-45:NotEnoughColorsException"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "addColor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingGreedyAlgorithm(self) -> ColoredVertices[typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "56-74:applyingBackTrackingAlgorithm1": {
+                    "start": 56,
+                    "end": 74,
+                    "body": [
+                        "    public ColoredVertices<V, C> applyingBackTrackingAlgorithm1(\n",
+                        "            ColoredVertices<V, C> partialColoredVertex) {\n",
+                        "        partialColoredVertex =\n",
+                        "                checkNotNull(partialColoredVertex, \"PartialColoredVertex must be not null\");\n",
+                        "\n",
+                        "        final List<V> verticesList = new ArrayList<V>();\n",
+                        "\n",
+                        "        for (V v : g.getVertices0()) {\n",
+                        "            if (!partialColoredVertex.containsColoredVertex(v)) {\n",
+                        "                verticesList.add(v);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (backtraking(-1, verticesList, partialColoredVertex)) {\n",
+                        "            return partialColoredVertex;\n",
+                        "        }\n",
+                        "\n",
+                        "        throw new NotEnoughColorsException(colors);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ColoredVertices<V,C>",
+                            "ColoredVertices<V,C>"
+                        ]
+                    ],
+                    "signature": "applyingBackTrackingAlgorithm1(ColoredVertices<V,C>)",
+                    "parameters": [
+                        "partialColoredVertex"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "containsColoredVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.DefaultColoringAlgorithmsSelector",
+                            "DefaultColoringAlgorithmsSelector",
+                            "128-150:backtraking"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.NotEnoughColorsException",
+                            "NotEnoughColorsException",
+                            "40-45:NotEnoughColorsException"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingBackTrackingAlgorithm1(self, partialColoredVertex: ColoredVertices[typing.Any, typing.Any]) -> ColoredVertices[typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "51-53:applyingBackTrackingAlgorithm0": {
+                    "start": 51,
+                    "end": 53,
+                    "body": [
+                        "    public ColoredVertices<V, C> applyingBackTrackingAlgorithm0() {\n",
+                        "        return applyingBackTrackingAlgorithm1(new ColoredVertices<V, C>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ColoredVertices<V,C>",
+                            "ColoredVertices<V,C>"
+                        ]
+                    ],
+                    "signature": "applyingBackTrackingAlgorithm0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.DefaultColoringAlgorithmsSelector",
+                            "DefaultColoringAlgorithmsSelector",
+                            "56-74:applyingBackTrackingAlgorithm1"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "ColoredVertices<V,C>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingBackTrackingAlgorithm0(self) -> ColoredVertices[typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-48:DefaultColoringAlgorithmsSelector": {
+                    "start": 45,
+                    "end": 48,
+                    "body": [
+                        "    public DefaultColoringAlgorithmsSelector(UndirectedGraph<V, E> g, Set<C> colors) {\n",
+                        "        this.g = g;\n",
+                        "        this.colors = colors;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultColoringAlgorithmsSelector(UndirectedGraph<V,E>, Set<C>)",
+                    "parameters": [
+                        "g",
+                        "colors"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, g: UndirectedGraph[typing.Any, typing.Any], colors: typing.Set[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "158-174:isThereColorConflict": {
+                    "start": 158,
+                    "end": 174,
+                    "body": [
+                        "    private boolean isThereColorConflict(V currentVertex, ColoredVertices<V, C> coloredVertices) {\n",
+                        "        if (currentVertex == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        C nextVertecColor = coloredVertices.getColor(currentVertex);\n",
+                        "        if (nextVertecColor == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        for (V abj : g.getConnectedVertices(currentVertex)) {\n",
+                        "            C adjColor = coloredVertices.getColor(abj);\n",
+                        "            if (adjColor != null && nextVertecColor.equals(adjColor)) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isThereColorConflict(V, ColoredVertices<V,C>)",
+                    "parameters": [
+                        "currentVertex",
+                        "coloredVertices"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "getColor(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __isThereColorConflict(self, currentVertex: typing.Any, coloredVertices: ColoredVertices[typing.Any, typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "128-150:backtraking": {
+                    "start": 128,
+                    "end": 150,
+                    "body": [
+                        "    private boolean backtraking(\n",
+                        "            int currentVertexIndex, List<V> verticesList, ColoredVertices<V, C> coloredVertices) {\n",
+                        "        if (currentVertexIndex != -1\n",
+                        "                && isThereColorConflict(verticesList.get(currentVertexIndex), coloredVertices)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (currentVertexIndex == verticesList.size() - 1) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        int next = currentVertexIndex + 1;\n",
+                        "        V nextVertex = verticesList.get(next);\n",
+                        "        for (C color : colors) {\n",
+                        "            coloredVertices.addColor(nextVertex, color);\n",
+                        "            boolean isDone = backtraking(next, verticesList, coloredVertices);\n",
+                        "            if (isDone) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        coloredVertices.removeColor(nextVertex);\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "backtraking(int, List<V>, ColoredVertices<V,C>)",
+                    "parameters": [
+                        "currentVertexIndex",
+                        "verticesList",
+                        "coloredVertices"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.DefaultColoringAlgorithmsSelector",
+                            "DefaultColoringAlgorithmsSelector",
+                            "158-174:isThereColorConflict"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.coloring.DefaultColoringAlgorithmsSelector",
+                            "DefaultColoringAlgorithmsSelector",
+                            "128-150:backtraking"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "addColor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/coloring/ColoredVertices",
+                            "removeColor(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __backtraking(self, currentVertexIndex: int, verticesList: typing.List[typing.Any], coloredVertices: ColoredVertices[typing.Any, typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "43-43:colors": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final Set<C> colors;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<C>",
+                            "java.util.Set<C>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __colors: typing.Set[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "41-41:g": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final UndirectedGraph<V, E> g;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "UndirectedGraph<V,E>",
+                            "UndirectedGraph<V,E>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __g: UndirectedGraph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultColoringAlgorithmsSelector:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.UndirectedGraph import *",
+        "from src.main.org.apache.commons.graph.coloring.ColoredVertices import *",
+        "from src.main.org.apache.commons.graph.coloring.ColoringAlgorithmsSelector import *",
+        "from src.main.org.apache.commons.graph.coloring.NotEnoughColorsException import *",
+        "from src.main.org.apache.commons.graph.coloring.UncoloredOrderedVertices import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *"
+    ]
+}

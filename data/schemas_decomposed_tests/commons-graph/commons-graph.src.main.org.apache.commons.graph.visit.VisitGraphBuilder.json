@@ -1,0 +1,191 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/visit/VisitGraphBuilder.java",
+    "imports": {
+        "23-23:import Graph": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "22-22:import DirectedGraph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "26-26:import UndirectedMutableGraph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "24-24:import BaseMutableGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.model.BaseMutableGraph;\n"
+            ]
+        },
+        "25-25:import DirectedMutableGraph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.model.DirectedMutableGraph;\n"
+            ]
+        }
+    },
+    "classes": {
+        "VisitGraphBuilder": {
+            "start": 34,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BaseGraphVisitHandler<V,E,G,Graph<V,E>>"
+            ],
+            "methods": {
+                "62-64:onCompleted": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "    public Graph<V, E> onCompleted() {\n",
+                        "        return visitGraph;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Graph<V,E>",
+                            "Graph<V,E>"
+                        ]
+                    ],
+                    "signature": "onCompleted()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "48-58:discoverGraph": {
+                    "start": 48,
+                    "end": 58,
+                    "body": [
+                        "    public void discoverGraph(G graph) {\n",
+                        "        if (graph instanceof DirectedGraph) {\n",
+                        "            visitGraph = new DirectedMutableGraph<V, E>();\n",
+                        "        } else {\n",
+                        "            visitGraph = new UndirectedMutableGraph<V, E>();\n",
+                        "        }\n",
+                        "\n",
+                        "        for (V vertex : graph.getVertices0()) {\n",
+                        "            visitGraph.addVertex(vertex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "discoverGraph(G)",
+                    "parameters": [
+                        "graph"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/DirectedMutableGraph",
+                            "DirectedMutableGraph<V,E>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<V,E>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "41-44:discoverEdge": {
+                    "start": 41,
+                    "end": 44,
+                    "body": [
+                        "    public VisitState discoverEdge(V head, E edge, V tail) {\n",
+                        "        visitGraph.addEdge(head, edge, tail);\n",
+                        "        return VisitState.CONTINUE;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "VisitState",
+                            "VisitState"
+                        ]
+                    ],
+                    "signature": "discoverEdge(V, E, V)",
+                    "parameters": [
+                        "head",
+                        "edge",
+                        "tail"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "37-37:visitGraph": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private BaseMutableGraph<V, E> visitGraph;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "BaseMutableGraph<V,E>",
+                            "BaseMutableGraph<V,E>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

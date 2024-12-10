@@ -1,0 +1,651 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/test/java/org/apache/commons/validator/routines/checkdigit/IBANCheckDigitTest.java",
+    "imports": {
+        "22-22:import BufferedReader": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "23-23:import InputStreamReader": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.InputStreamReader;\n"
+            ]
+        },
+        "25-25:import List": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "24-24:import ArrayList": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "18-18:import Test": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "20-20:import Assert": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.junit.Assert;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IBANCheckDigitTest": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractCheckDigitTest"
+            ],
+            "methods": {
+                "210-233:testOther_test0_decomposed": {
+                    "start": 210,
+                    "end": 233,
+                    "body": [
+                        "    public void testOther_test0_decomposed() throws Exception {\n",
+                        "        BufferedReader rdr = null;\n",
+                        "        try {\n",
+                        "            rdr =\n",
+                        "                    new BufferedReader(\n",
+                        "                            new InputStreamReader(\n",
+                        "                                    this.getClass().getResourceAsStream(\"IBANtests.txt\"), \"ASCII\"));\n",
+                        "            String line;\n",
+                        "            while ((line = rdr.readLine()) != null) {\n",
+                        "                if (!line.startsWith(\"#\") && line.length() > 0) {\n",
+                        "                    if (line.startsWith(\"-\")) {\n",
+                        "                        line = line.substring(1);\n",
+                        "                        Assert.assertFalse(line, routine.isValid(line.replaceAll(\" \", \"\")));\n",
+                        "                    } else {\n",
+                        "                        Assert.assertTrue(line, routine.isValid(line.replaceAll(\" \", \"\")));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            if (rdr != null) {\n",
+                        "                rdr.close();\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testOther_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStreamReader",
+                            "InputStreamReader(java.io.InputStream,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getResourceAsStream(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "63-63:isValid"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replaceAll(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "close()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testOther_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "202-207:checkDigit": {
+                    "start": 202,
+                    "end": 207,
+                    "body": [
+                        "    protected String checkDigit(String code) {\n",
+                        "        if (code == null || code.length() <= checkDigitLth) {\n",
+                        "            return \"\";\n",
+                        "        }\n",
+                        "        return code.substring(2, 4);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "checkDigit(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _checkDigit(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "191-193:removeCheckDigit": {
+                    "start": 191,
+                    "end": 193,
+                    "body": [
+                        "    protected String removeCheckDigit(String code) {\n",
+                        "        return code.substring(0, 2) + \"00\" + code.substring(4);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "removeCheckDigit(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _removeCheckDigit(self, code: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "165-182:createInvalidCodes": {
+                    "start": 165,
+                    "end": 182,
+                    "body": [
+                        "    protected String[] createInvalidCodes(String[] codes) {\n",
+                        "        List<String> list = new ArrayList<String>();\n",
+                        "\n",
+                        "        for (int i = 0; i < codes.length; i++) {\n",
+                        "            String code = removeCheckDigit(codes[i]);\n",
+                        "            String check = checkDigit(codes[i]);\n",
+                        "            for (int j = 2;\n",
+                        "                    j <= 98;\n",
+                        "                    j++) { // check digits can be from 02-98 (00 and 01 are not possible)\n",
+                        "                String curr = j > 9 ? \"\" + j : \"0\" + j;\n",
+                        "                if (!curr.equals(check)) {\n",
+                        "                    list.add(code.substring(0, 2) + curr + code.substring(4));\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return list.toArray(new String[list.size()]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "createInvalidCodes(String[])",
+                    "parameters": [
+                        "codes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<String>()"
+                        ],
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.checkdigit.IBANCheckDigitTest",
+                            "IBANCheckDigitTest",
+                            "191-193:removeCheckDigit"
+                        ],
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.checkdigit.IBANCheckDigitTest",
+                            "IBANCheckDigitTest",
+                            "202-207:checkDigit"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "toArray(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _createInvalidCodes(self, codes: typing.List[typing.List[str]]) -> typing.List[typing.List[str]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "156-156:testZeroSum": {
+                    "start": 156,
+                    "end": 156,
+                    "body": [
+                        "    public void testZeroSum() {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testZeroSum()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testZeroSum(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "47-152:setUp": {
+                    "start": 47,
+                    "end": 152,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "        routine = IBANCheckDigit.IBAN_CHECK_DIGIT;\n",
+                        "        valid =\n",
+                        "                new String[] {\n",
+                        "                    \"AD1200012030200359100100\", // Andorra\n",
+                        "                    \"AE070331234567890123456\", // United Arab Emirates\n",
+                        "                    \"AL47212110090000000235698741\", // Albania\n",
+                        "                    \"AT611904300234573201\", // Austria\n",
+                        "                    \"AZ21NABZ00000000137010001944\", // Azerbaijan\n",
+                        "                    \"BA391290079401028494\", // Bosnia and Herzegovina\n",
+                        "                    \"BE62510007547061\", // Belgium\n",
+                        "                    \"BE68539007547034\", // Belgium\n",
+                        "                    \"BG80BNBG96611020345678\", // Bulgaria\n",
+                        "                    \"BH67BMAG00001299123456\", // Bahrain\n",
+                        "                    \"BR1800000000141455123924100C2\", // Brazil\n",
+                        "                    \"BY13NBRB3600900000002Z00AB00\", // Belarus\n",
+                        "                    \"CH3900700115201849173\", // Switzerland\n",
+                        "                    \"CH9300762011623852957\", // Switzerland\n",
+                        "                    \"CR05015202001026284066\", // Costa Rica\n",
+                        "                    \"CY17002001280000001200527600\", // Cyprus\n",
+                        "                    \"CZ6508000000192000145399\", // Czechoslovakia\n",
+                        "                    \"DE89370400440532013000\", // Germany\n",
+                        "                    \"DK5000400440116243\", // Denmark\n",
+                        "                    \"DO28BAGR00000001212453611324\", // Dominican Republic\n",
+                        "                    \"EE382200221020145685\", // Estonia\n",
+                        "                    \"ES8023100001180000012345\", // Spain\n",
+                        "                    \"FI2112345600000785\", // Finland\n",
+                        "                    \"FO6264600001631634\", // Denmark (Faroes)\n",
+                        "                    \"FR1420041010050500013M02606\", // France\n",
+                        "                    \"GB29NWBK60161331926819\", // UK\n",
+                        "                    \"GI75NWBK000000007099453\", // Gibraltar\n",
+                        "                    \"GL8964710001000206\", // Denmark (Greenland)\n",
+                        "                    \"GR1601101250000000012300695\", // Greece\n",
+                        "                    \"GT82TRAJ01020000001210029690\", // Guatemala\n",
+                        "                    \"HR1210010051863000160\", // Croatia\n",
+                        "                    \"HU42117730161111101800000000\", // Hungary\n",
+                        "                    \"IE29AIBK93115212345678\", // Ireland\n",
+                        "                    \"IL620108000000099999999\", // Israel\n",
+                        "                    \"IQ98NBIQ850123456789012\", // Iraq\n",
+                        "                    \"IS140159260076545510730339\", // Iceland\n",
+                        "                    \"IT60X0542811101000000123456\", // Italy\n",
+                        "                    \"JO94CBJO0010000000000131000302\", // Jordan\n",
+                        "                    \"KW81CBKU0000000000001234560101\", // Kuwait\n",
+                        "                    \"KZ86125KZT5004100100\", // Kazakhstan\n",
+                        "                    \"LB62099900000001001901229114\", // Lebanon\n",
+                        "                    \"LC55HEMM000100010012001200023015\", // Saint Lucia\n",
+                        "                    \"LI21088100002324013AA\", // Liechtenstein (Principality of)\n",
+                        "                    \"LT121000011101001000\", // Lithuania\n",
+                        "                    \"LU280019400644750000\", // Luxembourg\n",
+                        "                    \"LV80BANK0000435195001\", // Latvia\n",
+                        "                    \"MC5811222000010123456789030\", // Monaco\n",
+                        "                    \"MD24AG000225100013104168\", // Moldova\n",
+                        "                    \"ME25505000012345678951\", // Montenegro\n",
+                        "                    \"MK07250120000058984\", // Macedonia, Former Yugoslav Republic of\n",
+                        "                    \"MR1300020001010000123456753\", // Mauritania\n",
+                        "                    \"MT84MALT011000012345MTLCAST001S\", // Malta\n",
+                        "                    \"MU17BOMM0101101030300200000MUR\", // Mauritius\n",
+                        "                    \"NL39RABO0300065264\", // Netherlands\n",
+                        "                    \"NL91ABNA0417164300\", // Netherlands\n",
+                        "                    \"NO9386011117947\", // Norway\n",
+                        "                    \"PK36SCBL0000001123456702\", // Pakistan\n",
+                        "                    \"PL27114020040000300201355387\", // Poland\n",
+                        "                    \"PL60102010260000042270201111\", // Poland\n",
+                        "                    \"PS92PALS000000000400123456702\", // Palestine, State of\n",
+                        "                    \"PT50000201231234567890154\", // Portugal\n",
+                        "                    \"QA58DOHB00001234567890ABCDEFG\", // Qatar\n",
+                        "                    \"RO49AAAA1B31007593840000\", // Romania\n",
+                        "                    \"RS35260005601001611379\", // Serbia\n",
+                        "                    \"SA0380000000608010167519\", // Saudi Arabia\n",
+                        "                    \"SC18SSCB11010000000000001497USD\", // Seychelles\n",
+                        "                    \"SE3550000000054910000003\", // Sweden\n",
+                        "                    \"SI56191000000123438\", // Slovenia\n",
+                        "                    \"SK3112000000198742637541\", // Slovak Republic\n",
+                        "                    \"SM86U0322509800000000270100\", // San Marino\n",
+                        "                    \"ST68000100010051845310112\", // Sao Tome and Principe\n",
+                        "                    \"SV62CENR00000000000000700025\", // El Salvador\n",
+                        "                    \"TL380080012345678910157\", // Timor-Leste\n",
+                        "                    \"TN5910006035183598478831\", // Tunisia\n",
+                        "                    \"TR330006100519786457841326\", // Turkey\n",
+                        "                    \"UA213223130000026007233566001\", // Ukraine\n",
+                        "                    \"VA59001123000012345678\", // Vatican City State\n",
+                        "                    \"VG96VPVG0000012345678901\", // Virgin Islands, British\n",
+                        "                    \"XK051212012345678906\", // Republic of Kosovo\n",
+                        "                    \"AA0200000000053\",\n",
+                        "                    \"AA9700000000089\",\n",
+                        "                    \"AA9800000000071\",\n",
+                        "                    \"ZZ02ZZZZZZZZZZZZZZZZZZZZZZZZZ04\",\n",
+                        "                    \"ZZ97ZZZZZZZZZZZZZZZZZZZZZZZZZ40\",\n",
+                        "                    \"ZZ98ZZZZZZZZZZZZZZZZZZZZZZZZZ22\",\n",
+                        "                };\n",
+                        "        /*\n",
+                        "         *  sources\n",
+                        "         *  https://intranet.birmingham.ac.uk/finance/documents/public/IBAN.pdf\n",
+                        "         *  http://www.paymentscouncil.org.uk/resources_and_publications/ibans_in_europe/\n",
+                        "         */\n",
+                        "        invalid =\n",
+                        "                new String[] {\n",
+                        "                    \"510007+47061BE63\",\n",
+                        "                    \"IE01AIBK93118702569045\",\n",
+                        "                    \"AA0000000000089\",\n",
+                        "                    \"AA9900000000053\",\n",
+                        "                };\n",
+                        "        zeroSum = null;\n",
+                        "        missingMessage = \"Invalid Code length=0\";\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "setUp()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-43:IBANCheckDigitTest": {
+                    "start": 40,
+                    "end": 43,
+                    "body": [
+                        "    public IBANCheckDigitTest(String name) {\n",
+                        "        super(name);\n",
+                        "        checkDigitLth = 2;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "IBANCheckDigitTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest",
+                            "AbstractCheckDigitTest",
+                            "82-84:AbstractCheckDigitTest"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class IBANCheckDigitTest(AbstractCheckDigitTest, unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.test.org.apache.commons.validator.routines.checkdigit.AbstractCheckDigitTest import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit import *",
+        "from src.main.org.apache.commons.validator.routines.checkdigit.IBANCheckDigit import *"
+    ]
+}

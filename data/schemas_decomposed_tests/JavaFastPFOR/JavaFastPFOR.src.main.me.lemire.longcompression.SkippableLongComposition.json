@@ -1,0 +1,229 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/longcompression/SkippableLongComposition.java",
+    "imports": {
+        "9-9:import IntWrapper": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SkippableLongComposition": {
+            "start": 16,
+            "end": 16,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "SkippableLongCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "66-68:toString": {
+                    "start": 66,
+                    "end": 68,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return F1.toString() + \"+\" + F2.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "53-63:headlessUncompress": {
+                    "start": 53,
+                    "end": 63,
+                    "body": [
+                        "    public void headlessUncompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos, int num) {\n",
+                        "        int init = inpos.get();\n",
+                        "        F1.headlessUncompress(in, inpos, inlength, out, outpos, num);\n",
+                        "        if (inpos.get() == init) {\n",
+                        "        \t  inpos.increment();\n",
+                        "        }\n",
+                        "        inlength -= inpos.get() - init;\n",
+                        "        num -= outpos.get();\n",
+                        "        F2.headlessUncompress(in, inpos, inlength, out, outpos, num);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(long[], IntWrapper, int, long[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "67-69:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ]
+                    ]
+                },
+                "39-50:headlessCompress": {
+                    "start": 39,
+                    "end": 50,
+                    "body": [
+                        "    public void headlessCompress(long[] in, IntWrapper inpos, int inlength, long[] out,\n",
+                        "            IntWrapper outpos) {\n",
+                        "        int init = inpos.get();\n",
+                        "        int outposInit = outpos.get();\n",
+                        "        F1.headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        if (outpos.get() == outposInit) {\n",
+                        "            out[outposInit] = 0;\n",
+                        "            outpos.increment();\n",
+                        "        }\n",
+                        "        inlength -= inpos.get() - init;\n",
+                        "        F2.headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(long[], IntWrapper, int, long[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "45-47:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ]
+                    ]
+                },
+                "32-36:SkippableLongComposition": {
+                    "start": 32,
+                    "end": 36,
+                    "body": [
+                        "    public SkippableLongComposition(SkippableLongCODEC f1,\n",
+                        "            SkippableLongCODEC f2) {\n",
+                        "        F1 = f1;\n",
+                        "        F2 = f2;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "SkippableLongComposition(SkippableLongCODEC, SkippableLongCODEC)",
+                    "parameters": [
+                        "f1",
+                        "f2"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "17-17:F2": {
+                    "start": 17,
+                    "end": 17,
+                    "body": [
+                        "    SkippableLongCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableLongCODEC",
+                            "SkippableLongCODEC"
+                        ]
+                    ]
+                },
+                "17-17:F1": {
+                    "start": 17,
+                    "end": 17,
+                    "body": [
+                        "    SkippableLongCODEC F1, F2;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "SkippableLongCODEC",
+                            "SkippableLongCODEC"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

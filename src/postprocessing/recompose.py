@@ -3,11 +3,78 @@ import json
 import os
 
 
-def has_test_method(methods):
-    for method in methods:
-        if 'Test' in [x.split('(')[0] for x in methods[method]['annotations']]:
-            return True
-    return False
+def get_class_order(schema_data):
+        """
+        Get the order of classes in the schema based on inheritance.
+        """
+        dependency_graph = set() # set of (dependent, dependency) pairs
+        
+        for class_ in schema_data['classes']:
+            if schema_data['classes'][class_]['extends']:
+                if schema_data['classes'][class_]['extends'][0] in schema_data['classes']:
+                    dependency_graph.add((class_, schema_data['classes'][class_]['extends'][0]))
+                
+            if schema_data['classes'][class_]['implements']:
+                for interface in schema_data['classes'][class_]['implements']:
+                    if interface in schema_data['classes']:
+                        dependency_graph.add((class_, interface))
+            
+            if schema_data['classes'][class_]['nested_inside']:
+                dependency_graph.add((class_, schema_data['classes'][class_]['nested_inside']))
+                
+        class_list = topological_sort(dependency_graph)[::-1]
+        
+        # check for any classes that were not included in the dependency graph
+        class_list += [clz for clz in schema_data['classes'] if clz not in class_list]
+
+        return class_list
+
+
+def topological_sort(graph: list[tuple[str, str]]) -> list[str]:
+    """
+    Provides a topological sort of the graph.
+
+    Args:
+        graph: A list of tuples where each tuple contains two strings representing the source and target nodes.
+
+    Returns:
+        A list of strings representing the nodes in topological order.
+    """
+    # create a dictionary with the nodes as keys and their dependencies as values
+    graph_dict = {}
+    for edge in graph:
+        if edge[0] not in graph_dict:
+            graph_dict[edge[0]] = []
+        graph_dict[edge[0]].append(edge[1])
+
+    # create a dictionary with the nodes as keys and their indegree as values
+    indegree_dict = {}
+    for edge in graph:
+        if edge[1] not in indegree_dict:
+            indegree_dict[edge[1]] = 0
+        if edge[0] not in indegree_dict:
+            indegree_dict[edge[0]] = 0
+        indegree_dict[edge[1]] += 1
+
+    # create a list of nodes with indegree 0
+    zero_indegree = [node for node in indegree_dict if indegree_dict[node] == 0]
+
+    # create a list to store the sorted nodes
+    sorted_nodes = []
+
+    # loop over the nodes with indegree 0
+    while zero_indegree:
+        node = zero_indegree.pop()
+        sorted_nodes.append(node)
+
+        # loop over the nodes that depend on the current node
+        if node in graph_dict:
+            for dependent_node in graph_dict[node]:
+                indegree_dict[dependent_node] -= 1
+                if indegree_dict[dependent_node] == 0:
+                    zero_indegree.append(dependent_node)
+
+    return sorted_nodes
 
 
 def main(args):
@@ -15,7 +82,7 @@ def main(args):
     total_fragments = 0
     total_unsuccessful = 0
 
-    translation_dir = f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.project_name}'
+    translation_dir = f'data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}'
 
     for schema in os.listdir(translation_dir):
 
@@ -35,24 +102,7 @@ def main(args):
         recomposed_file = '\n'.join(data['python_imports'])
         recomposed_file += '\n\n\n'
 
-        class_order = []
-        while len(class_order) != len(data['classes']):
-            for class_ in data['classes']:
-                if class_ in class_order:
-                    continue
-
-                if not set(data['classes'][class_]['extends']).issubset(set(class_order)) and all([x in data['classes'].keys() for x in data['classes'][class_]['extends']]):
-                    continue
-                
-                if not set(data['classes'][class_]['implements']).issubset(set(class_order)) and all([x in data['classes'].keys() for x in data['classes'][class_]['implements']]):
-                    continue                                                                                                                       
-                
-                if data['classes'][class_]['nests'] == []:
-                    class_order.append(class_)
-                    continue
-
-                if all([x in class_order for x in data['classes'][class_]['nests']]):
-                    class_order.append(class_)
+        class_order = get_class_order(data)
         
         class_initialize_methods = []
         for class_ in class_order:
@@ -235,6 +285,10 @@ def main(args):
                 if not args.recompose_evosuite and data['classes'][class_]['methods'][method]['is_overload']:
                     continue
 
+                # ignore constructors in test files
+                if data['classes'][class_]['methods'][method]['is_constructor'] and 'src.test' in schema and 'unittest.TestCase' in data['classes'][class_]['python_class_declaration']:
+                    continue
+
                 if args.fragment_name:
                     if args.fragment_name != method:
                         recomposed_file += '\n'.join(data['classes'][class_]['methods'][method]['partial_translation']).replace('    pass', '    pass # LLM could not translate this method')
@@ -300,13 +354,13 @@ def main(args):
         
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
+        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{sub_dir}', exist_ok=True)
 
         if args.recompose_evosuite:
-            os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}', exist_ok=True)
-            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/evosuite-test/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+            os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/evosuite-test/{sub_dir}', exist_ok=True)
+            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/evosuite-test/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
         else:
-            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
+            file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1].replace('_python_partial', '')}.py"
 
         recomposed_file = recomposed_file.replace('\u0000', '\\u0000')
 
@@ -319,25 +373,25 @@ def main(args):
     for schema in os.listdir(translation_dir):
         formatted_schema_fname = '.'.join(schema.split('.')[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}', exist_ok=True)
+        os.makedirs(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{sub_dir}', exist_ok=True)
 
         sub_dirs = sub_dir.split('/')
         for i in range(len(sub_dirs)):
             current_sub_dir = '/'.join(sub_dirs[:i+1])
-            with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
+            with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{current_sub_dir}/__init__.py', 'w') as f:
                 f.write('')
 
-        file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/{sub_dir}/__init__.py"
+        file_path = f"{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{sub_dir}/__init__.py"
         with open(file_path, 'w') as f:
             f.write('')
     
-    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/pytest.ini', 'w') as f:
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/pytest.ini', 'w') as f:
         f.write('# pytest.ini\n\n[pytest]\n# Require at least this version of pytest\nminversion = 8.2.1\n\n# Add options to control the pytest output\naddopts = -ra -q --continue-on-collection-errors --tb=native --junitxml=pytest-report.xml\n\n# Define directories to look for tests\n;testpaths = evosuite-test\ntestpaths = src/test\n\npython_files = *.py\n\npython_classes = *Test\n\npython_functions = test*\n')
     
-    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/run.sh', 'w') as f:
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/run.sh', 'w') as f:
         f.write('CURRENT_DIR=$(pwd)\nexport PYTHONPATH=$CURRENT_DIR\npython3 -m pytest\nxmllint --format pytest-report.xml -o pytest-report.xml')
 
-    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.project_name}/conftest.py', 'w') as f:
+    with open(f'{args.output_dir}/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/conftest.py', 'w') as f:
         f.write("""
 # conftest.py
 import pytest
@@ -363,6 +417,7 @@ if __name__ == '__main__':
     parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to translate')
     parser_.add_argument('--output_dir', type=str, dest='output_dir', help='directory to store recomposed projects')
     parser_.add_argument('--type', type=str, dest='type', help='prompting type signature/body')
+    parser_.add_argument('--temperature', type=float, dest='temperature', help='temperature for sampling')
     parser_.add_argument('--fragment_name', type=str, dest='fragment_name', help='fragment name to recompose')
     parser_.add_argument('--recompose_evosuite', action='store_true', dest='recompose_evosuite', help='recompose evosuite tests')
     parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix to add to the recomposed files')

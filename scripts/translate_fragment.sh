@@ -1,15 +1,20 @@
+#!/bin/bash
 
-project=$1
+PROJECT=$1
+TEMPERATURE=$2
+MODEL=$3
 
 export PYTHONPATH=$PYTHONPATH:`pwd`
 python3 src/translation/compositional_translation_validation.py \
-    --model_name=deepseek-coder-33b-instruct \
-    --project_name=$project \
+    --model_name=$MODEL \
+    --project_name=$PROJECT \
     --from_lang=Java \
     --to_lang=Python \
     --include_call_graph \
     --debug \
     --suffix=_decomposed_tests \
+    --temperature=$temperature \
     --validate_by_graal \
     --recursion_depth=2 \
-    --include_implementation | tee ${project}_${model}_body.log
+    --use_vllm \
+    --include_implementation | tee ${PROJECT}_${MODEL}_body.log

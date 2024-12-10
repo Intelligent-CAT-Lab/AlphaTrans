@@ -1,0 +1,927 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/EmailValidator.java",
+    "imports": {
+        "21-21:import Matcher": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "22-22:import Pattern": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "19-19:import InetAddressValidator": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.InetAddressValidator;\n"
+            ]
+        }
+    },
+    "classes": {
+        "EmailValidator": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "205-215:stripComments": {
+                    "start": 205,
+                    "end": 215,
+                    "body": [
+                        "    protected String stripComments(String emailStr) {\n",
+                        "        String result = emailStr;\n",
+                        "        String commentPat =\n",
+                        "                \"^((?:[^\\\"\\\\\\\\]|\\\\\\\\.)*(?:\\\"(?:[^\\\"\\\\\\\\]|\\\\\\\\.)*\\\"(?:[^\\\"\\\\\\\\]|\\111111\\\\\\\\.)*)*)\\\\((?:[^()\\\\\\\\]|\\\\\\\\.)*\\\\)/\";\n",
+                        "        Pattern commentMatcher = Pattern.compile(commentPat);\n",
+                        "\n",
+                        "        while (commentMatcher.matcher(result).matches()) {\n",
+                        "            result = result.replaceFirst(commentPat, \"\\1 \");\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "stripComments(String)",
+                    "parameters": [
+                        "emailStr"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "compile(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replaceFirst(java.lang.String,java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _stripComments(self, emailStr: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "163-195:isValidSymbolicDomain": {
+                    "start": 163,
+                    "end": 195,
+                    "body": [
+                        "    protected boolean isValidSymbolicDomain(String domain) {\n",
+                        "        String[] domainSegment = new String[10]; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        boolean match = true;\n",
+                        "        int i = 0;\n",
+                        "        Matcher atomMatcher = ATOM_PATTERN.matcher(domain);\n",
+                        "        while (match) {\n",
+                        "            match = atomMatcher.matches();\n",
+                        "            if (match) {\n",
+                        "                domainSegment[i] = atomMatcher.group(1);\n",
+                        "                int l = domainSegment[i].length() + 1;\n",
+                        "                domain = (l >= domain.length()) ? \"\" : domain.substring(l);\n",
+                        "\n",
+                        "                i++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        int len = i;\n",
+                        "\n",
+                        "        if (len < 2) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String tld = domainSegment[len - 1];\n",
+                        "        if (tld.length() > 1) {\n",
+                        "            if (!TLD_PATTERN.matcher(tld).matches()) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidSymbolicDomain(String)",
+                    "parameters": [
+                        "domain"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidSymbolicDomain(self, domain: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "134-155:isValidIpAddress": {
+                    "start": 134,
+                    "end": 155,
+                    "body": [
+                        "    protected boolean isValidIpAddress(String ipAddress) {\n",
+                        "        Matcher ipAddressMatcher = IP_DOMAIN_PATTERN.matcher(ipAddress);\n",
+                        "        for (int i = 1; i <= 4; i++) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            String ipSegment = ipAddressMatcher.group(i);\n",
+                        "            if (ipSegment == null || ipSegment.length() <= 0) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            int iIpSegment = 0;\n",
+                        "\n",
+                        "            try {\n",
+                        "                iIpSegment = Integer.parseInt(ipSegment);\n",
+                        "            } catch (NumberFormatException e) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (iIpSegment > 255) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidIpAddress(String)",
+                    "parameters": [
+                        "ipAddress"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidIpAddress(self, ipAddress: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "124-126:isValidUser": {
+                    "start": 124,
+                    "end": 126,
+                    "body": [
+                        "    protected boolean isValidUser(String user) {\n",
+                        "        return USER_PATTERN.matcher(user).matches();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidUser(String)",
+                    "parameters": [
+                        "user"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidUser(self, user: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "93-116:isValidDomain": {
+                    "start": 93,
+                    "end": 116,
+                    "body": [
+                        "    protected boolean isValidDomain(String domain) {\n",
+                        "        boolean symbolic = false;\n",
+                        "\n",
+                        "        Matcher ipDomainMatcher = IP_DOMAIN_PATTERN.matcher(domain);\n",
+                        "\n",
+                        "        if (ipDomainMatcher.matches()) {\n",
+                        "            InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();\n",
+                        "            if (inetAddressValidator.isValid(ipDomainMatcher.group(1))) {\n",
+                        "                return true;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            symbolic = DOMAIN_PATTERN.matcher(domain).matches();\n",
+                        "        }\n",
+                        "\n",
+                        "        if (symbolic) {\n",
+                        "            if (!isValidSymbolicDomain(domain)) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidDomain(String)",
+                    "parameters": [
+                        "domain"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "63-65:getInstance"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "73-75:isValid"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.EmailValidator",
+                            "EmailValidator",
+                            "163-195:isValidSymbolicDomain"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _isValidDomain(self, domain: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "83-85:isValid": {
+                    "start": 83,
+                    "end": 85,
+                    "body": [
+                        "    public boolean isValid(String email) {\n",
+                        "        return org.apache.commons.validator.routines.EmailValidator.getInstance0().isValid(email);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "email"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "169-192:isValid"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.EmailValidator",
+                            "EmailValidator",
+                            "77-79:getInstance0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isValid(self, email: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "72-74:EmailValidator": {
+                    "start": 72,
+                    "end": 74,
+                    "body": [
+                        "    protected EmailValidator() {\n",
+                        "        super();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "EmailValidator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "67-69:getInstance": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    public static EmailValidator getInstance() {\n",
+                        "        return EMAIL_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> EmailValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "60-60:EMAIL_VALIDATOR": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    private static final EmailValidator EMAIL_VALIDATOR = new EmailValidator();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "EmailValidator",
+                            "EmailValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMAIL_VALIDATOR: EmailValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "57-57:ATOM_PATTERN": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private static final Pattern ATOM_PATTERN = Pattern.compile(\"(\" + ATOM + \")\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ATOM_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "55-56:DOMAIN_PATTERN": {
+                    "start": 55,
+                    "end": 56,
+                    "body": [
+                        "    private static final Pattern DOMAIN_PATTERN =\n",
+                        "            Pattern.compile(\"^\" + ATOM + \"(\\\\.\" + ATOM + \")*\\\\s*$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DOMAIN_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "53-54:USER_PATTERN": {
+                    "start": 53,
+                    "end": 54,
+                    "body": [
+                        "    private static final Pattern USER_PATTERN =\n",
+                        "            Pattern.compile(\"^\\\\s*\" + WORD + \"(\\\\.\" + WORD + \")*$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __USER_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "51-51:TLD_PATTERN": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private static final Pattern TLD_PATTERN = Pattern.compile(\"^([a-zA-Z]+)$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __TLD_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "50-50:IP_DOMAIN_PATTERN": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final Pattern IP_DOMAIN_PATTERN = Pattern.compile(\"^\\\\[(.*)\\\\]$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __IP_DOMAIN_PATTERN: re.Pattern = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:WORD": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final String WORD = \"((\" + VALID_CHARS + \"|')+|\" + QUOTED_USER + \")\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __WORD: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:ATOM": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private static final String ATOM = VALID_CHARS + '+';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ATOM: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:QUOTED_USER": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final String QUOTED_USER = \"(\\\"[^\\\"]*\\\")\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __QUOTED_USER: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:VALID_CHARS": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private static final String VALID_CHARS = \"[^\\\\s\" + SPECIAL_CHARS + \"]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALID_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-44:SPECIAL_CHARS": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private static final String SPECIAL_CHARS = \"\\\\p{Cntrl}\\\\(\\\\)<>@,;:'\\\\\\\\\\\\\\\"\\\\.\\\\[\\\\]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SPECIAL_CHARS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class EmailValidator:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "from src.main.org.apache.commons.validator.routines.InetAddressValidator import *",
+        "from src.main.org.apache.commons.validator.routines.DomainValidator import *"
+    ]
+}

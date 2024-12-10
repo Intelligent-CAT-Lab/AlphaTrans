@@ -1,0 +1,890 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/language/MatchRatingApproachEncoder.java",
+    "imports": {
+        "22-22:import Locale": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "19-19:import EncoderException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "20-20:import StringEncoder": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.StringEncoder;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MatchRatingApproachEncoder": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "StringEncoder"
+            ],
+            "extends": [],
+            "methods": {
+                "133-135:encode": {
+                    "start": 133,
+                    "end": 135,
+                    "body": [
+                        "    public final String encode(final String name) {\n",
+                        "        return encode1(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "137-154:encode1"
+                        ]
+                    ]
+                },
+                "112-114:encode": {
+                    "start": 112,
+                    "end": 114,
+                    "body": [
+                        "    public final Object encode(final Object pObject) throws EncoderException {\n",
+                        "        return encode0(pObject);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "encode(Object)",
+                    "parameters": [
+                        "pObject"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "116-124:encode0"
+                        ]
+                    ]
+                },
+                "215-251:isEncodeEquals": {
+                    "start": 215,
+                    "end": 251,
+                    "body": [
+                        "    public boolean isEncodeEquals(String name1, String name2) {\n",
+                        "        if (name1 == null || EMPTY.equalsIgnoreCase(name1) || SPACE.equalsIgnoreCase(name1)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (name2 == null || EMPTY.equalsIgnoreCase(name2) || SPACE.equalsIgnoreCase(name2)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (name1.length() == 1 || name2.length() == 1) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (name1.equalsIgnoreCase(name2)) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        name1 = cleanName(name1);\n",
+                        "        name2 = cleanName(name2);\n",
+                        "\n",
+                        "        name1 = removeVowels(name1);\n",
+                        "        name2 = removeVowels(name2);\n",
+                        "\n",
+                        "        name1 = removeDoubleConsonants(name1);\n",
+                        "        name2 = removeDoubleConsonants(name2);\n",
+                        "\n",
+                        "        name1 = getFirst3Last3(name1);\n",
+                        "        name2 = getFirst3Last3(name2);\n",
+                        "\n",
+                        "        if (Math.abs(name1.length() - name2.length()) >= 3) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int sumLength = Math.abs(name1.length() + name2.length());\n",
+                        "        final int minRating = getMinRating(sumLength);\n",
+                        "\n",
+                        "        final int count = leftToRightThenRightToLeftProcessing(name1, name2);\n",
+                        "\n",
+                        "        return count >= minRating;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEncodeEquals(String, String)",
+                    "parameters": [
+                        "name1",
+                        "name2"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "abs(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "189-205:getMinRating"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "282-324:leftToRightThenRightToLeftProcessing"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "87-99:cleanName"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "385-400:removeVowels"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "364-373:removeDoubleConsonants"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "167-176:getFirst3Last3"
+                        ]
+                    ]
+                },
+                "137-154:encode1": {
+                    "start": 137,
+                    "end": 154,
+                    "body": [
+                        "    public final String encode1(String name) {\n",
+                        "        if (name == null\n",
+                        "                || EMPTY.equalsIgnoreCase(name)\n",
+                        "                || SPACE.equalsIgnoreCase(name)\n",
+                        "                || name.length() == 1) {\n",
+                        "            return EMPTY;\n",
+                        "        }\n",
+                        "\n",
+                        "        name = cleanName(name);\n",
+                        "\n",
+                        "        name = removeVowels(name);\n",
+                        "\n",
+                        "        name = removeDoubleConsonants(name);\n",
+                        "\n",
+                        "        name = getFirst3Last3(name);\n",
+                        "\n",
+                        "        return name;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encode1(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "87-99:cleanName"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "385-400:removeVowels"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "364-373:removeDoubleConsonants"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "167-176:getFirst3Last3"
+                        ]
+                    ]
+                },
+                "116-124:encode0": {
+                    "start": 116,
+                    "end": 124,
+                    "body": [
+                        "    public final Object encode0(final Object pObject) throws EncoderException {\n",
+                        "        if (!(pObject instanceof String)) {\n",
+                        "            throw new EncoderException(\n",
+                        "                    \"Parameter supplied to Match Rating Approach encoder is not of type\"\n",
+                        "                            + \" java.lang.String\",\n",
+                        "                    null);\n",
+                        "        }\n",
+                        "        return encode1((String) pObject);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "encode0(Object)",
+                    "parameters": [
+                        "pObject"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.EncoderException",
+                            "EncoderException",
+                            "62-64:EncoderException"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "137-154:encode1"
+                        ]
+                    ]
+                },
+                "385-400:removeVowels": {
+                    "start": 385,
+                    "end": 400,
+                    "body": [
+                        "    String removeVowels(String name) {\n",
+                        "        final String firstLetter = name.substring(0, 1);\n",
+                        "\n",
+                        "        name = name.replace(\"A\", EMPTY);\n",
+                        "        name = name.replace(\"E\", EMPTY);\n",
+                        "        name = name.replace(\"I\", EMPTY);\n",
+                        "        name = name.replace(\"O\", EMPTY);\n",
+                        "        name = name.replace(\"U\", EMPTY);\n",
+                        "\n",
+                        "        name = name.replaceAll(\"\\\\s{2,}\\\\b\", SPACE);\n",
+                        "\n",
+                        "        if (isVowel(firstLetter)) {\n",
+                        "            return firstLetter + name;\n",
+                        "        }\n",
+                        "        return name;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "removeVowels(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replaceAll(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "263-269:isVowel"
+                        ]
+                    ]
+                },
+                "364-373:removeDoubleConsonants": {
+                    "start": 364,
+                    "end": 373,
+                    "body": [
+                        "    String removeDoubleConsonants(final String name) {\n",
+                        "        String replacedName = name.toUpperCase(Locale.ENGLISH);\n",
+                        "        for (final String dc : DOUBLE_CONSONANT) {\n",
+                        "            if (replacedName.contains(dc)) {\n",
+                        "                final String singleLetter = dc.substring(0, 1);\n",
+                        "                replacedName = replacedName.replace(dc, singleLetter);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return replacedName;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "removeDoubleConsonants(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toUpperCase(java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "contains(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ]
+                    ]
+                },
+                "333-352:removeAccents": {
+                    "start": 333,
+                    "end": 352,
+                    "body": [
+                        "    String removeAccents(final String accentedWord) {\n",
+                        "        if (accentedWord == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        final StringBuilder sb = new StringBuilder();\n",
+                        "        final int n = accentedWord.length();\n",
+                        "\n",
+                        "        for (int i = 0; i < n; i++) {\n",
+                        "            final char c = accentedWord.charAt(i);\n",
+                        "            final int pos = UNICODE.indexOf(c);\n",
+                        "            if (pos > -1) {\n",
+                        "                sb.append(PLAIN_ASCII.charAt(pos));\n",
+                        "            } else {\n",
+                        "                sb.append(c);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return sb.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "removeAccents(String)",
+                    "parameters": [
+                        "accentedWord"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "282-324:leftToRightThenRightToLeftProcessing": {
+                    "start": 282,
+                    "end": 324,
+                    "body": [
+                        "    int leftToRightThenRightToLeftProcessing(final String name1, final String name2) {\n",
+                        "        final char[] name1Char = name1.toCharArray();\n",
+                        "        final char[] name2Char = name2.toCharArray();\n",
+                        "\n",
+                        "        final int name1Size = name1.length() - 1;\n",
+                        "        final int name2Size = name2.length() - 1;\n",
+                        "\n",
+                        "        String name1LtRStart = EMPTY;\n",
+                        "        String name1LtREnd = EMPTY;\n",
+                        "\n",
+                        "        String name2RtLStart = EMPTY;\n",
+                        "        String name2RtLEnd = EMPTY;\n",
+                        "\n",
+                        "        for (int i = 0; i < name1Char.length; i++) {\n",
+                        "            if (i > name2Size) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "\n",
+                        "            name1LtRStart = name1.substring(i, i + 1);\n",
+                        "            name1LtREnd = name1.substring(name1Size - i, name1Size - i + 1);\n",
+                        "\n",
+                        "            name2RtLStart = name2.substring(i, i + 1);\n",
+                        "            name2RtLEnd = name2.substring(name2Size - i, name2Size - i + 1);\n",
+                        "\n",
+                        "            if (name1LtRStart.equals(name2RtLStart)) {\n",
+                        "                name1Char[i] = ' ';\n",
+                        "                name2Char[i] = ' ';\n",
+                        "            }\n",
+                        "\n",
+                        "            if (name1LtREnd.equals(name2RtLEnd)) {\n",
+                        "                name1Char[name1Size - i] = ' ';\n",
+                        "                name2Char[name2Size - i] = ' ';\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        final String strA = new String(name1Char).replaceAll(\"\\\\s+\", EMPTY);\n",
+                        "        final String strB = new String(name2Char).replaceAll(\"\\\\s+\", EMPTY);\n",
+                        "\n",
+                        "        if (strA.length() > strB.length()) {\n",
+                        "            return Math.abs(6 - strA.length());\n",
+                        "        }\n",
+                        "        return Math.abs(6 - strB.length());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "leftToRightThenRightToLeftProcessing(String, String)",
+                    "parameters": [
+                        "name1",
+                        "name2"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toCharArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replaceAll(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(char[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "abs(int)"
+                        ]
+                    ]
+                },
+                "263-269:isVowel": {
+                    "start": 263,
+                    "end": 269,
+                    "body": [
+                        "    boolean isVowel(final String letter) {\n",
+                        "        return letter.equalsIgnoreCase(\"E\")\n",
+                        "                || letter.equalsIgnoreCase(\"A\")\n",
+                        "                || letter.equalsIgnoreCase(\"O\")\n",
+                        "                || letter.equalsIgnoreCase(\"I\")\n",
+                        "                || letter.equalsIgnoreCase(\"U\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isVowel(String)",
+                    "parameters": [
+                        "letter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ]
+                    ]
+                },
+                "189-205:getMinRating": {
+                    "start": 189,
+                    "end": 205,
+                    "body": [
+                        "    int getMinRating(final int sumLength) {\n",
+                        "        int minRating = 0;\n",
+                        "\n",
+                        "        if (sumLength <= 4) {\n",
+                        "            minRating = 5;\n",
+                        "        } else if (sumLength <= 7) { // aready know it is at least 5\n",
+                        "            minRating = 4;\n",
+                        "        } else if (sumLength <= 11) { // aready know it is at least 8\n",
+                        "            minRating = 3;\n",
+                        "        } else if (sumLength == 12) {\n",
+                        "            minRating = 2;\n",
+                        "        } else {\n",
+                        "            minRating = 1; // docs said little here.\n",
+                        "        }\n",
+                        "\n",
+                        "        return minRating;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getMinRating(int)",
+                    "parameters": [
+                        "sumLength"
+                    ],
+                    "calls": []
+                },
+                "167-176:getFirst3Last3": {
+                    "start": 167,
+                    "end": 176,
+                    "body": [
+                        "    String getFirst3Last3(final String name) {\n",
+                        "        final int nameLength = name.length();\n",
+                        "\n",
+                        "        if (nameLength > 6) {\n",
+                        "            final String firstThree = name.substring(0, 3);\n",
+                        "            final String lastThree = name.substring(nameLength - 3, nameLength);\n",
+                        "            return firstThree + lastThree;\n",
+                        "        }\n",
+                        "        return name;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getFirst3Last3(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ]
+                    ]
+                },
+                "87-99:cleanName": {
+                    "start": 87,
+                    "end": 99,
+                    "body": [
+                        "    String cleanName(final String name) {\n",
+                        "        String upperName = name.toUpperCase(Locale.ENGLISH);\n",
+                        "\n",
+                        "        final String[] charsToTrim = {\"\\\\-\", \"[&]\", \"\\\\'\", \"\\\\.\", \"[\\\\,]\"};\n",
+                        "        for (final String str : charsToTrim) {\n",
+                        "            upperName = upperName.replaceAll(str, EMPTY);\n",
+                        "        }\n",
+                        "\n",
+                        "        upperName = removeAccents(upperName);\n",
+                        "        upperName = upperName.replaceAll(\"\\\\s+\", EMPTY);\n",
+                        "\n",
+                        "        return upperName;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "cleanName(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toUpperCase(java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replaceAll(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.language.MatchRatingApproachEncoder",
+                            "MatchRatingApproachEncoder",
+                            "333-352:removeAccents"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "71-74:DOUBLE_CONSONANT": {
+                    "start": 71,
+                    "end": 74,
+                    "body": [
+                        "    private static final String[] DOUBLE_CONSONANT = {\n",
+                        "        \"BB\", \"CC\", \"DD\", \"FF\", \"GG\", \"HH\", \"JJ\", \"KK\", \"LL\", \"MM\", \"NN\", \"PP\", \"QQ\", \"RR\", \"SS\",\n",
+                        "        \"TT\", \"VV\", \"WW\", \"XX\", \"YY\", \"ZZ\"\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ]
+                },
+                "61-69:UNICODE": {
+                    "start": 61,
+                    "end": 69,
+                    "body": [
+                        "    private static final String UNICODE =\n",
+                        "            \"\\u00C0\\u00E0\\u00C8\\u00E8\\u00CC\\u00EC\\u00D2\\u00F2\\u00D9\\u00F9\"\n",
+                        "                    + \"\\u00C1\\u00E1\\u00C9\\u00E9\\u00CD\\u00ED\\u00D3\\u00F3\\u00DA\\u00FA\\u00DD\\u00FD\"\n",
+                        "                    + \"\\u00C2\\u00E2\\u00CA\\u00EA\\u00CE\\u00EE\\u00D4\\u00F4\\u00DB\\u00FB\\u0176\\u0177\"\n",
+                        "                    + \"\\u00C3\\u00E3\\u00D5\\u00F5\\u00D1\\u00F1\"\n",
+                        "                    + \"\\u00C4\\u00E4\\u00CB\\u00EB\\u00CF\\u00EF\\u00D6\\u00F6\\u00DC\\u00FC\\u0178\\u00FF\"\n",
+                        "                    + \"\\u00C5\\u00E5\"\n",
+                        "                    + \"\\u00C7\\u00E7\"\n",
+                        "                    + \"\\u0150\\u0151\\u0170\\u0171\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "40-55:PLAIN_ASCII": {
+                    "start": 40,
+                    "end": 55,
+                    "body": [
+                        "    private static final String PLAIN_ASCII =\n",
+                        "            \"AaEeIiOoUu\"\n",
+                        "                    + // grave\n",
+                        "                    \"AaEeIiOoUuYy\"\n",
+                        "                    + // acute\n",
+                        "                    \"AaEeIiOoUuYy\"\n",
+                        "                    + // circumflex\n",
+                        "                    \"AaOoNn\"\n",
+                        "                    + // tilde\n",
+                        "                    \"AaEeIiOoUuYy\"\n",
+                        "                    + // umlaut\n",
+                        "                    \"Aa\"\n",
+                        "                    + // ring\n",
+                        "                    \"Cc\"\n",
+                        "                    + // cedilla\n",
+                        "                    \"OoUu\"; // double acute\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "37-37:EMPTY": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final String EMPTY = \"\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "35-35:SPACE": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private static final String SPACE = \" \";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

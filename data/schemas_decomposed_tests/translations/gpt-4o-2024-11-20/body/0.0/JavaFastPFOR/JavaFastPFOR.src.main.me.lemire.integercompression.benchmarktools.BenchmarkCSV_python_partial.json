@@ -1,0 +1,1115 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/benchmarktools/BenchmarkCSV.java",
+    "imports": {
+        "11-11:import ArrayList": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "12-12:import Arrays": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "5-5:import IntegratedByteIntegerCODEC": {
+            "start": 5,
+            "end": 5,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedByteIntegerCODEC;\n"
+            ]
+        },
+        "7-7:import IntegratedIntegerCODEC": {
+            "start": 7,
+            "end": 7,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedIntegerCODEC;\n"
+            ]
+        },
+        "4-4:import IntegratedBinaryPacking": {
+            "start": 4,
+            "end": 4,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedBinaryPacking;\n"
+            ]
+        },
+        "6-6:import IntegratedComposition": {
+            "start": 6,
+            "end": 6,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedComposition;\n"
+            ]
+        },
+        "8-8:import IntegratedVariableByte": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import me.lemire.integercompression.differential.IntegratedVariableByte;\n"
+            ]
+        },
+        "10-10:import java.io.*": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.io.*;\n"
+            ]
+        },
+        "3-3:import me.lemire.integercompression.*": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import me.lemire.integercompression.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CompressionMode": {
+            "start": 122,
+            "end": 122,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BenchmarkCSV",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {
+                "123-123:DELTA": {
+                    "start": 123,
+                    "end": 123,
+                    "body": [
+                        "                AS_IS, DELTA\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CompressionMode",
+                            "CompressionMode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DELTA: CompressionMode = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "123-123:AS_IS": {
+                    "start": 123,
+                    "end": 123,
+                    "body": [
+                        "                AS_IS, DELTA\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "CompressionMode",
+                            "CompressionMode"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    AS_IS: CompressionMode = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": true,
+            "python_class_declaration": "class CompressionMode:\n\n"
+        },
+        "BenchmarkCSV": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Format",
+                "CompressionMode"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "130-180:main": {
+                    "start": 130,
+                    "end": 180,
+                    "body": [
+                        "        public static void main(final String[] args) throws IOException {\n",
+                        "                Format myformat = Format.ONEARRAYPERLINE;\n",
+                        "                CompressionMode cm = CompressionMode.DELTA;\n",
+                        "                ArrayList<String> files = new ArrayList<String>();\n",
+                        "                for (String s : args) {\n",
+                        "                        if (s.startsWith(\"-\")) {// it is a flag\n",
+                        "                                if (s.equals(\"--onearrayperfile\"))\n",
+                        "                                        myformat = Format.ONEARRAYPERFILE;\n",
+                        "                                else if (s.equals(\"--nodelta\"))\n",
+                        "                                        cm = CompressionMode.AS_IS;\n",
+                        "                                else if (s.equals(\"--oneintperline\"))\n",
+                        "                                        myformat = Format.ONEINTPERLINE;\n",
+                        "                                else\n",
+                        "                                        throw new RuntimeException(\n",
+                        "                                                \"I don't understand: \" + s);\n",
+                        "                        } else {// it is a filename\n",
+                        "                                files.add(s);\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                if (myformat == Format.ONEARRAYPERFILE)\n",
+                        "                        System.out.println(\"Treating each file as one array.\");\n",
+                        "                else if (myformat == Format.ONEARRAYPERLINE)\n",
+                        "                        System.out\n",
+                        "                                .println(\"Each line of each file is an array: use --onearrayperfile or --oneintperline to change.\");\n",
+                        "                else if (myformat == Format.ONEINTPERLINE)\n",
+                        "                        System.out\n",
+                        "                                .println(\"Treating each file as one array, with one integer per line.\");\n",
+                        "                if (cm == CompressionMode.AS_IS)\n",
+                        "                        System.out\n",
+                        "                                .println(\"Compressing the integers 'as is' (no differential coding)\");\n",
+                        "                else\n",
+                        "                        System.out\n",
+                        "                                .println(\"Using differential coding (arrays will be sorted): use --nodelta to prevent sorting\");\n",
+                        "                ArrayList<int[]> data = new ArrayList<int[]>();\n",
+                        "                for (String fn : files)\n",
+                        "                        for (int[] x : loadIntegers(fn, myformat))\n",
+                        "                                data.add(x);\n",
+                        "                System.out.println(\"Loaded \" + data.size() + \" array(s)\");\n",
+                        "                if (cm == CompressionMode.DELTA) {\n",
+                        "                        System.out\n",
+                        "                                .println(\"Sorting the arrray(s) because you are using differential coding\");\n",
+                        "                        for (int[] x : data)\n",
+                        "                                Arrays.sort(x);\n",
+                        "                }\n",
+                        "                bench(data, cm, false);\n",
+                        "                bench(data, cm, false);\n",
+                        "                bench(data, cm, true);\n",
+                        "                bytebench(data, cm, false);\n",
+                        "                bytebench(data, cm, false);\n",
+                        "                bytebench(data, cm, true);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "main(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<String>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<int[]>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.benchmarktools.BenchmarkCSV",
+                            "BenchmarkCSV",
+                            "31-116:loadIntegers"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(int[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "sort(int[])"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.benchmarktools.BenchmarkCSV",
+                            "BenchmarkCSV",
+                            "182-246:bench"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.benchmarktools.BenchmarkCSV",
+                            "BenchmarkCSV",
+                            "248-312:bytebench"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def main(args: typing.List[typing.List[str]]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "248-312:bytebench": {
+                    "start": 248,
+                    "end": 312,
+                    "body": [
+                        "        private static void bytebench(ArrayList<int[]> postings,\n",
+                        "                CompressionMode cm, boolean verbose) {\n",
+                        "                int maxlength = 0;\n",
+                        "                for (int[] x : postings)\n",
+                        "                        if (maxlength < x.length)\n",
+                        "                                maxlength = x.length;\n",
+                        "                if (verbose)\n",
+                        "                        System.out.println(\"Max array length: \" + maxlength);\n",
+                        "                byte[] compbuffer = new byte[6 * (maxlength + 1024)];\n",
+                        "                int[] decompbuffer = new int[maxlength];\n",
+                        "                if (verbose)\n",
+                        "                        System.out.println(\"Scheme -- bits/int -- speed (mis)\");\n",
+                        "                for (ByteIntegerCODEC c : (cm == CompressionMode.DELTA ? bcodecs\n",
+                        "                        : regbcodecs)) {\n",
+                        "                        long bef = 0;\n",
+                        "                        long aft = 0;\n",
+                        "                        long decomptime = 0;\n",
+                        "                        long volumein = 0;\n",
+                        "                        long volumeout = 0;\n",
+                        "                        byte[][] compdata = new byte[postings.size()][];\n",
+                        "                        for (int k = 0; k < postings.size(); ++k) {\n",
+                        "                                int[] in = postings.get(k);\n",
+                        "                                IntWrapper inpos = new IntWrapper(0);\n",
+                        "                                IntWrapper outpos = new IntWrapper(0);\n",
+                        "                                c.compress1(in, inpos, in.length, compbuffer,\n",
+                        "                                        outpos);\n",
+                        "                                int clength = outpos.get();\n",
+                        "                                inpos = new IntWrapper(0);\n",
+                        "                                outpos = new IntWrapper(0);\n",
+                        "                                c.uncompress1(compbuffer, inpos, clength,\n",
+                        "                                        decompbuffer, outpos);\n",
+                        "                                volumein += in.length;\n",
+                        "                                volumeout += clength;\n",
+                        "\n",
+                        "                                if (outpos.get() != in.length)\n",
+                        "                                        throw new RuntimeException(\"bug\");\n",
+                        "                                for (int z = 0; z < in.length; ++z)\n",
+                        "                                        if (in[z] != decompbuffer[z])\n",
+                        "                                                throw new RuntimeException(\n",
+                        "                                                        \"bug\");\n",
+                        "                                compdata[k] = Arrays\n",
+                        "                                        .copyOf(compbuffer, clength);\n",
+                        "                        }\n",
+                        "                        bef = System.nanoTime();\n",
+                        "                        for (byte[] cin : compdata) {\n",
+                        "                                IntWrapper inpos = new IntWrapper(0);\n",
+                        "                                IntWrapper outpos = new IntWrapper(0);\n",
+                        "                                c.uncompress1(cin, inpos, cin.length,\n",
+                        "                                        decompbuffer, outpos);\n",
+                        "                                if (inpos.get() != cin.length)\n",
+                        "                                        throw new RuntimeException(\"bug\");\n",
+                        "                        }\n",
+                        "                        aft = System.nanoTime();\n",
+                        "                        decomptime += (aft - bef);\n",
+                        "                        double bitsPerInt = volumeout * 8.0 / volumein;\n",
+                        "                        double decompressSpeed = volumein * 1000.0\n",
+                        "                                / (decomptime);\n",
+                        "                        if (verbose)\n",
+                        "                                System.out.println(c.toString()\n",
+                        "                                        + \"\\t\"\n",
+                        "                                        + String.format(\"\\t%1$.2f\\t%2$.2f\",\n",
+                        "                                                bitsPerInt, decompressSpeed));\n",
+                        "\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "bytebench(ArrayList<int[]>, CompressionMode, boolean)",
+                    "parameters": [
+                        "postings",
+                        "cm",
+                        "verbose"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
+                            "ByteIntegerCODEC",
+                            "36-38:compress1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.ByteIntegerCODEC",
+                            "ByteIntegerCODEC",
+                            "57-59:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(byte[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "nanoTime()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __bytebench(postings: typing.List[typing.List[int]], cm: CompressionMode, verbose: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "182-246:bench": {
+                    "start": 182,
+                    "end": 246,
+                    "body": [
+                        "        private static void bench(ArrayList<int[]> postings, CompressionMode cm,\n",
+                        "                boolean verbose) {\n",
+                        "                int maxlength = 0;\n",
+                        "                for (int[] x : postings)\n",
+                        "                        if (maxlength < x.length)\n",
+                        "                                maxlength = x.length;\n",
+                        "                if (verbose)\n",
+                        "                        System.out.println(\"Max array length: \" + maxlength);\n",
+                        "                int[] compbuffer = new int[2 * maxlength + 1024];\n",
+                        "                int[] decompbuffer = new int[maxlength];\n",
+                        "                if (verbose)\n",
+                        "                        System.out.println(\"Scheme -- bits/int -- speed (mis)\");\n",
+                        "                for (IntegerCODEC c : (cm == CompressionMode.DELTA ? codecs\n",
+                        "                        : regcodecs)) {\n",
+                        "                        long bef = 0;\n",
+                        "                        long aft = 0;\n",
+                        "                        long decomptime = 0;\n",
+                        "                        long volumein = 0;\n",
+                        "                        long volumeout = 0;\n",
+                        "                        int[][] compdata = new int[postings.size()][];\n",
+                        "                        for (int k = 0; k < postings.size(); ++k) {\n",
+                        "                                int[] in = postings.get(k);\n",
+                        "                                IntWrapper inpos = new IntWrapper(0);\n",
+                        "                                IntWrapper outpos = new IntWrapper(0);\n",
+                        "                                c.compress0(in, inpos, in.length, compbuffer,\n",
+                        "                                        outpos);\n",
+                        "                                int clength = outpos.get();\n",
+                        "                                inpos = new IntWrapper(0);\n",
+                        "                                outpos = new IntWrapper(0);\n",
+                        "                                c.uncompress0(compbuffer, inpos, clength,\n",
+                        "                                        decompbuffer, outpos);\n",
+                        "                                volumein += in.length;\n",
+                        "                                volumeout += clength;\n",
+                        "\n",
+                        "                                if (outpos.get() != in.length)\n",
+                        "                                        throw new RuntimeException(\"bug\");\n",
+                        "                                for (int z = 0; z < in.length; ++z)\n",
+                        "                                        if (in[z] != decompbuffer[z])\n",
+                        "                                                throw new RuntimeException(\n",
+                        "                                                        \"bug\");\n",
+                        "                                compdata[k] = Arrays\n",
+                        "                                        .copyOf(compbuffer, clength);\n",
+                        "                        }\n",
+                        "                        bef = System.nanoTime();\n",
+                        "                        for (int[] cin : compdata) {\n",
+                        "                                IntWrapper inpos = new IntWrapper(0);\n",
+                        "                                IntWrapper outpos = new IntWrapper(0);\n",
+                        "                                c.uncompress0(cin, inpos, cin.length,\n",
+                        "                                        decompbuffer, outpos);\n",
+                        "                                if (inpos.get() != cin.length)\n",
+                        "                                        throw new RuntimeException(\"bug\");\n",
+                        "                        }\n",
+                        "                        aft = System.nanoTime();\n",
+                        "                        decomptime += (aft - bef);\n",
+                        "                        double bitsPerInt = volumeout * 32.0 / volumein;\n",
+                        "                        double decompressSpeed = volumein * 1000.0\n",
+                        "                                / (decomptime);\n",
+                        "                        if (verbose)\n",
+                        "                                System.out.println(c.toString()\n",
+                        "                                        + \"\\t\"\n",
+                        "                                        + String.format(\"\\t%1$.2f\\t%2$.2f\",\n",
+                        "                                                bitsPerInt, decompressSpeed));\n",
+                        "\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "bench(ArrayList<int[]>, CompressionMode, boolean)",
+                    "parameters": [
+                        "postings",
+                        "cm",
+                        "verbose"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "36-38:compress0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntegerCODEC",
+                            "IntegerCODEC",
+                            "57-59:uncompress0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "nanoTime()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __bench(postings: typing.List[typing.List[int]], cm: CompressionMode, verbose: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "31-116:loadIntegers": {
+                    "start": 31,
+                    "end": 116,
+                    "body": [
+                        "        private static ArrayList<int[]> loadIntegers(final String filename, final Format f)\n",
+                        "                throws IOException {\n",
+                        "                int misparsed = 0;\n",
+                        "                if (f == Format.ONEARRAYPERLINE) {\n",
+                        "                        ArrayList<int[]> answer = new ArrayList<int[]>();\n",
+                        "                        BufferedReader br = new BufferedReader(new FileReader(\n",
+                        "                                filename));\n",
+                        "                        String s;\n",
+                        "                        while ((s = br.readLine()) != null) {\n",
+                        "                                String[] numbers = s.split(\"[,;;]\"); // that's\n",
+                        "                                                                     // slow\n",
+                        "                                int[] a = new int[numbers.length];\n",
+                        "                                for (int k = 0; k < numbers.length; ++k) {\n",
+                        "                                        try {\n",
+                        "                                                a[k] = Integer\n",
+                        "                                                        .parseInt(numbers[k]\n",
+                        "                                                                .trim());\n",
+                        "                                        } catch (java.lang.NumberFormatException nfe) {\n",
+                        "                                                if (misparsed == 0)\n",
+                        "                                                        System.err.println(nfe);\n",
+                        "                                                ++misparsed;\n",
+                        "                                        }\n",
+                        "                                }\n",
+                        "                                answer.add(a);\n",
+                        "                        }\n",
+                        "                        if (misparsed > 0)\n",
+                        "                                System.out.println(\"Failed to parse \"\n",
+                        "                                        + misparsed + \" entries\");\n",
+                        "                        br.close();\n",
+                        "                        return answer;\n",
+                        "                } else if (f == Format.ONEARRAYPERFILE) {\n",
+                        "                        ArrayList<Integer> answer = new ArrayList<Integer>();\n",
+                        "                        BufferedReader br = new BufferedReader(new FileReader(\n",
+                        "                                filename));\n",
+                        "                        String s;\n",
+                        "                        while ((s = br.readLine()) != null) {\n",
+                        "                                String[] numbers = s.split(\"[,;;]\");// that's\n",
+                        "                                                                    // slow\n",
+                        "                                for (int k = 0; k < numbers.length; ++k) {\n",
+                        "                                        try {\n",
+                        "                                                answer.add(Integer\n",
+                        "                                                        .parseInt(numbers[k]\n",
+                        "                                                                .trim()));\n",
+                        "                                        } catch (java.lang.NumberFormatException nfe) {\n",
+                        "                                                if (misparsed == 0)\n",
+                        "                                                        System.err.println(nfe);\n",
+                        "                                                ++misparsed;\n",
+                        "                                        }\n",
+                        "                                }\n",
+                        "                        }\n",
+                        "                        int[] actualanswer = new int[answer.size()];\n",
+                        "                        for (int i = 0; i < answer.size(); ++i)\n",
+                        "                                actualanswer[i] = answer.get(i);\n",
+                        "                        ArrayList<int[]> wrap = new ArrayList<int[]>();\n",
+                        "                        wrap.add(actualanswer);\n",
+                        "                        if (misparsed > 0)\n",
+                        "                                System.out.println(\"Failed to parse \"\n",
+                        "                                        + misparsed + \" entries\");\n",
+                        "                        br.close();\n",
+                        "                        return wrap;\n",
+                        "                } else {\n",
+                        "                        ArrayList<Integer> answer = new ArrayList<Integer>();\n",
+                        "                        BufferedReader br = new BufferedReader(new FileReader(\n",
+                        "                                filename));\n",
+                        "                        String s;\n",
+                        "                        while ((s = br.readLine()) != null) {\n",
+                        "                                try {\n",
+                        "                                        answer.add(Integer.parseInt(s.trim()));\n",
+                        "                                } catch (java.lang.NumberFormatException nfe) {\n",
+                        "                                        if (misparsed == 0)\n",
+                        "                                                System.err.println(nfe);\n",
+                        "                                        ++misparsed;\n",
+                        "                                }\n",
+                        "                        }\n",
+                        "                        int[] actualanswer = new int[answer.size()];\n",
+                        "                        for (int i = 0; i < answer.size(); ++i)\n",
+                        "                                actualanswer[i] = answer.get(i);\n",
+                        "                        ArrayList<int[]> wrap = new ArrayList<int[]>();\n",
+                        "                        wrap.add(actualanswer);\n",
+                        "                        if (misparsed > 0)\n",
+                        "                                System.out.println(\"Failed to parse \"\n",
+                        "                                        + misparsed + \" entries\");\n",
+                        "                        br.close();\n",
+                        "                        return wrap;\n",
+                        "                }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "ArrayList<int[]>",
+                            "java.util.ArrayList<int[]>"
+                        ]
+                    ],
+                    "signature": "loadIntegers(String, Format)",
+                    "parameters": [
+                        "filename",
+                        "f"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<int[]>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(int[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "get(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __loadIntegers(filename: str, f: Format) -> typing.List[typing.List[int]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "29-29:regbcodecs": {
+                    "start": 29,
+                    "end": 29,
+                    "body": [
+                        "        static ByteIntegerCODEC regbcodecs[] = { new VariableByte() };\n"
+                    ],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "ByteIntegerCODEC[]",
+                            "ByteIntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    regbcodecs: typing.List[ByteIntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "25-28:regcodecs": {
+                    "start": 25,
+                    "end": 28,
+                    "body": [
+                        "        static IntegerCODEC regcodecs[] = {\n",
+                        "                new Composition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "                new Composition(FastPFOR.FastPFOR1(), new VariableByte()),\n",
+                        "                new Composition(new BinaryPacking(), new VariableByte()) };\n"
+                    ],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "IntegerCODEC[]",
+                            "IntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    regcodecs: typing.List[IntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "24-24:bcodecs": {
+                    "start": 24,
+                    "end": 24,
+                    "body": [
+                        "        static IntegratedByteIntegerCODEC bcodecs[] = { new IntegratedVariableByte() };\n"
+                    ],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "IntegratedByteIntegerCODEC[]",
+                            "IntegratedByteIntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    bcodecs: typing.List[IntegratedByteIntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "21-23:codecs": {
+                    "start": 21,
+                    "end": 23,
+                    "body": [
+                        "        static IntegratedIntegerCODEC codecs[] = {\n",
+                        "                new IntegratedComposition(new IntegratedBinaryPacking(),\n",
+                        "                        new IntegratedVariableByte()) };\n"
+                    ],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "IntegratedIntegerCODEC[]",
+                            "IntegratedIntegerCODEC[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    codecs: typing.List[IntegratedIntegerCODEC] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BenchmarkCSV:\n\n"
+        },
+        "Format": {
+            "start": 118,
+            "end": 118,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "BenchmarkCSV",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {
+                "119-119:ONEINTPERLINE": {
+                    "start": 119,
+                    "end": 119,
+                    "body": [
+                        "                ONEARRAYPERLINE, ONEARRAYPERFILE, ONEINTPERLINE\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Format",
+                            "Format"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ONEINTPERLINE: Format = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "119-119:ONEARRAYPERFILE": {
+                    "start": 119,
+                    "end": 119,
+                    "body": [
+                        "                ONEARRAYPERLINE, ONEARRAYPERFILE, ONEINTPERLINE\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Format",
+                            "Format"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ONEARRAYPERFILE: Format = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "119-119:ONEARRAYPERLINE": {
+                    "start": 119,
+                    "end": 119,
+                    "body": [
+                        "                ONEARRAYPERLINE, ONEARRAYPERFILE, ONEINTPERLINE\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "Format",
+                            "Format"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    ONEARRAYPERLINE: Format = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": true,
+            "python_class_declaration": "class Format:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BinaryPacking import *",
+        "from src.main.me.lemire.integercompression.ByteIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Composition import *",
+        "from src.main.me.lemire.integercompression.FastPFOR import *",
+        "from src.main.me.lemire.integercompression.FastPFOR128 import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.VariableByte import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedByteIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedComposition import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedVariableByte import *"
+    ]
+}

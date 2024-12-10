@@ -1,0 +1,1594 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec36Test.java",
+    "imports": {
+        "23-23:import ByteArrayOutputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "24-24:import File": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "26-26:import Map": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "25-25:import HashMap": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "28-28:import CommandLine": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "37-37:import Test": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "29-29:import DefaultExecutor": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "30-30:import Executor": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "31-31:import OS": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.exec.OS;\n"
+            ]
+        },
+        "32-32:import PumpStreamHandler": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.exec.PumpStreamHandler;\n"
+            ]
+        },
+        "33-33:import TestUtil": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.exec.TestUtil;\n"
+            ]
+        },
+        "34-34:import AfterEach": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.junit.jupiter.api.AfterEach;\n"
+            ]
+        },
+        "35-35:import BeforeEach": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.junit.jupiter.api.BeforeEach;\n"
+            ]
+        },
+        "36-36:import Disabled": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import org.junit.jupiter.api.Disabled;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertFalse": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec36Test": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "313-339:testExec36_2_test7_decomposed": {
+                    "start": 313,
+                    "end": 339,
+                    "body": [
+                        "    public void testExec36_2_test7_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "        assertFalse(exec.isFailure(exitValue));\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "            // the parameters fall literally apart under Windows - need to disable the check for Win32\n",
+                        "            assertEquals(expected, result);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertFalse(boolean)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "288-310:testExec36_2_test6_decomposed": {
+                    "start": 288,
+                    "end": 310,
+                    "body": [
+                        "    public void testExec36_2_test6_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "        assertFalse(exec.isFailure(exitValue));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertFalse(boolean)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "264-285:testExec36_2_test5_decomposed": {
+                    "start": 264,
+                    "end": 285,
+                    "body": [
+                        "    public void testExec36_2_test5_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "        final String result = baos.toString().trim();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "241-261:testExec36_2_test4_decomposed": {
+                    "start": 241,
+                    "end": 261,
+                    "body": [
+                        "    public void testExec36_2_test4_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "        final int exitValue = exec.execute0(cmdl);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "219-238:testExec36_2_test3_decomposed": {
+                    "start": 219,
+                    "end": 238,
+                    "body": [
+                        "    public void testExec36_2_test3_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "        cmdl.addArgument1(\"dotnetfx.exe\", false);\n",
+                        "        cmdl.addArgument1(\"/q:a\", false);\n",
+                        "        cmdl.addArgument1(\"/c:\\\"install.exe /l \\\"\\\"${FILE}\\\"\\\" /q\\\"\", false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "200-216:testExec36_2_test2_decomposed": {
+                    "start": 200,
+                    "end": 216,
+                    "body": [
+                        "    public void testExec36_2_test2_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "        cmdl.setSubstitutionMap(map);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "386-388:setSubstitutionMap"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "182-197:testExec36_2_test1_decomposed": {
+                    "start": 182,
+                    "end": 197,
+                    "body": [
+                        "    public void testExec36_2_test1_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        CommandLine cmdl;\n",
+                        "        final File file = new File(\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\");\n",
+                        "        final Map<String, File> map = new HashMap<>();\n",
+                        "        map.put(\"FILE\", file);\n",
+                        "        cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,File>()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.io.File)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "169-179:testExec36_2_test0_decomposed": {
+                    "start": 169,
+                    "end": 179,
+                    "body": [
+                        "    public void testExec36_2_test0_decomposed() throws Exception {\n",
+                        "        String expected;\n",
+                        "        if (OS.isFamilyWindows()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else if (OS.isFamilyUnix()) {\n",
+                        "            expected = \"dotnetfx.exe\\n\" + \"/q:a\\n\" + \"/c:\\\"install.exe /l \\\"\\\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\\\"\\\" /q\\\"\";\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_3' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "            return;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "191-193:isFamilyWindows"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "138-166:testExec36_1_test0_decomposed": {
+                    "start": 138,
+                    "end": 166,
+                    "body": [
+                        "    public void testExec36_1_test0_decomposed() throws Exception {\n",
+                        "        if (OS.isFamilyUnix()) {\n",
+                        "\n",
+                        "            CommandLine cmdl;\n",
+                        "\n",
+                        "            /**\n",
+                        "             * ./script/jrake cruise:publish_installers INSTALLER_VERSION=unstable_2_1 \\ INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\"\n",
+                        "             * INSTALLER_DOWNLOAD_SERVER='something' WITHOUT_HELP_DOC=true\n",
+                        "             */\n",
+                        "\n",
+                        "            final String expected = \"./script/jrake\\n\" + \"cruise:publish_installers\\n\" + \"INSTALLER_VERSION=unstable_2_1\\n\"\n",
+                        "                    + \"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\\n\" + \"INSTALLER_DOWNLOAD_SERVER='something'\\n\" + \"WITHOUT_HELP_DOC=true\";\n",
+                        "\n",
+                        "            cmdl = new CommandLine(1, null, printArgsScript, null);\n",
+                        "            cmdl.addArgument1(\"./script/jrake\", false);\n",
+                        "            cmdl.addArgument1(\"cruise:publish_installers\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_VERSION=unstable_2_1\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_PATH=\\\"/var/lib/ cruise-agent/installers\\\"\", false);\n",
+                        "            cmdl.addArgument1(\"INSTALLER_DOWNLOAD_SERVER='something'\", false);\n",
+                        "            cmdl.addArgument1(\"WITHOUT_HELP_DOC=true\", false);\n",
+                        "\n",
+                        "            final int exitValue = exec.execute0(cmdl);\n",
+                        "            final String result = baos.toString().trim();\n",
+                        "            assertFalse(exec.isFailure(exitValue));\n",
+                        "            assertEquals(expected, result);\n",
+                        "        } else {\n",
+                        "            System.err.println(\"The test 'testExec36_1' does not support the following OS : \" + System.getProperty(\"os.name\"));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec36_1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "173-175:isFamilyUnix"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "250-264:addArgument1"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertFalse(boolean)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "129-129:isFailure"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec36_1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "117-119:tearDown": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public void tearDown() throws Exception {\n",
+                        "        this.baos.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "AfterEach"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "tearDown()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "close()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def tearDown(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "110-114:setUp": {
+                    "start": 110,
+                    "end": 114,
+                    "body": [
+                        "    public void setUp() throws Exception {\n",
+                        "        // prepare a ready to Executor\n",
+                        "        this.baos = new ByteArrayOutputStream();\n",
+                        "        this.exec.setStreamHandler(PumpStreamHandler.PumpStreamHandler2(baos, baos));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "BeforeEach"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "167-167:setStreamHandler"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.PumpStreamHandler",
+                            "PumpStreamHandler",
+                            "86-88:PumpStreamHandler2"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "98-107:_testExec36_6": {
+                    "start": 98,
+                    "end": 107,
+                    "body": [
+                        "    public void _testExec36_6() {\n",
+                        "\n",
+                        "        final String commandline = \"C:\\\\CVS_DB\\\\WeightsEngine /f WeightsEngine.mak CFG=\\\"WeightsEngine - Win32Release\\\"\";\n",
+                        "\n",
+                        "        final CommandLine cmdl = CommandLine.parse0(commandline);\n",
+                        "        final String[] args = cmdl.getArguments();\n",
+                        "        assertEquals(\"/f\", args[0]);\n",
+                        "        assertEquals(\"WeightsEngine.mak\", args[1]);\n",
+                        "        assertEquals(\"CFG=\\\"WeightsEngine - Win32Release\\\"\", args[2]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_6()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "336-349:getArguments"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_6(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "77-89:_testExec36_5": {
+                    "start": 77,
+                    "end": 89,
+                    "body": [
+                        "    public void _testExec36_5() {\n",
+                        "\n",
+                        "        CommandLine cmdl;\n",
+                        "\n",
+                        "        final String line = \"dotnetfx.exe\" + \" /q:a \"\n",
+                        "                + \"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\";\n",
+                        "\n",
+                        "        cmdl = CommandLine.parse0(line);\n",
+                        "        final String[] args = cmdl.toStrings();\n",
+                        "        assertEquals(\"dotnetfx.exe\", args[0]);\n",
+                        "        assertEquals(\"/q:a\", args[1]);\n",
+                        "        assertEquals(\"/c:\\\"install.exe /l \\\"\\\"c:\\\\Documents and Settings\\\\myusername\\\\Local Settings\\\\Temp\\\\netfx.log\\\"\\\" /q\\\"\", args[2]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_5()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "422-427:toStrings"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_5(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "55-70:_testExec36_4": {
+                    "start": 55,
+                    "end": 70,
+                    "body": [
+                        "    public void _testExec36_4() throws Exception {\n",
+                        "\n",
+                        "        CommandLine cmdl;\n",
+                        "\n",
+                        "        final String line = \"./script/jrake \" + \"cruise:publish_installers \" + \"INSTALLER_VERSION=unstable_2_1 \"\n",
+                        "                + \"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\" \" + \"INSTALLER_DOWNLOAD_SERVER='something'\" + \"WITHOUT_HELP_DOC=true\";\n",
+                        "\n",
+                        "        cmdl = CommandLine.parse0(line);\n",
+                        "        final String[] args = cmdl.toStrings();\n",
+                        "        assertEquals(\"./script/jrake\", args[0]);\n",
+                        "        assertEquals(\"cruise:publish_installers\", args[1]);\n",
+                        "        assertEquals(\"INSTALLER_VERSION=unstable_2_1\", args[2]);\n",
+                        "        assertEquals(\"INSTALLER_PATH=\\\"/var/lib/cruise-agent/installers\\\"\", args[3]);\n",
+                        "        assertEquals(\"INSTALLER_DOWNLOAD_SERVER='something'\", args[4]);\n",
+                        "        assertEquals(\"WITHOUT_HELP_DOC=true\", args[5]);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "_testExec36_4()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "422-427:toStrings"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "64-66:parse0"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _testExec36_4(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "48-48:baos": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private ByteArrayOutputStream baos;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ByteArrayOutputStream",
+                            "java.io.ByteArrayOutputStream"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __baos: typing.Union[io.BytesIO, bytearray] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:printArgsScript": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private final File printArgsScript = TestUtil.resolveScriptForOS(testDir + \"/printargs\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __printArgsScript: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:testDir": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final File testDir = new File(\"src/test/scripts\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __testDir: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-44:exec": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __exec: Executor = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec36Test(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteStreamHandler import *",
+        "from src.main.org.apache.commons.exec.Executor import *",
+        "from src.main.org.apache.commons.exec.OS import *",
+        "from src.main.org.apache.commons.exec.PumpStreamHandler import *",
+        "from src.test.org.apache.commons.exec.TestUtil import *"
+    ]
+}

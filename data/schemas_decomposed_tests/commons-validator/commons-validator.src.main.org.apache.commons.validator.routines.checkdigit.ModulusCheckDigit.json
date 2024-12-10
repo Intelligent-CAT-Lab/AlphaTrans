@@ -1,0 +1,422 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/checkdigit/ModulusCheckDigit.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ModulusCheckDigit": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable",
+                "CheckDigit"
+            ],
+            "extends": [],
+            "methods": {
+                "87-94:calculate": {
+                    "start": 87,
+                    "end": 94,
+                    "body": [
+                        "    public String calculate(String code) throws CheckDigitException {\n",
+                        "        if (code == null || code.length() == 0) {\n",
+                        "            throw CheckDigitException.CheckDigitException1(\"Code is missing\");\n",
+                        "        }\n",
+                        "        int modulusResult = calculateModulus(code, false);\n",
+                        "        int charValue = (modulus - modulusResult) % modulus;\n",
+                        "        return toCheckDigit(charValue);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "calculate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "104-118:calculateModulus"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "168-173:toCheckDigit"
+                        ]
+                    ]
+                },
+                "66-76:isValid": {
+                    "start": 66,
+                    "end": 76,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        if (code == null || code.length() == 0) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        try {\n",
+                        "            int modulusResult = calculateModulus(code, true);\n",
+                        "            return (modulusResult == 0);\n",
+                        "        } catch (CheckDigitException ex) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "104-118:calculateModulus"
+                        ]
+                    ]
+                },
+                "181-189:sumDigits": {
+                    "start": 181,
+                    "end": 189,
+                    "body": [
+                        "    public static int sumDigits(int number) {\n",
+                        "        int total = 0;\n",
+                        "        int todo = number;\n",
+                        "        while (todo > 0) {\n",
+                        "            total += todo % 10; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            todo = todo / 10; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        }\n",
+                        "        return total;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "sumDigits(int)",
+                    "parameters": [
+                        "number"
+                    ],
+                    "calls": []
+                },
+                "168-173:toCheckDigit": {
+                    "start": 168,
+                    "end": 173,
+                    "body": [
+                        "    protected String toCheckDigit(int charValue) throws CheckDigitException {\n",
+                        "        if (charValue >= 0 && charValue <= 9) { // CHECKSTYLE IGNORE MagicNumber\n",
+                        "            return Integer.toString(charValue);\n",
+                        "        }\n",
+                        "        throw CheckDigitException.CheckDigitException1(\"Invalid Check Digit Value =\" + +charValue);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toCheckDigit(int)",
+                    "parameters": [
+                        "charValue"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "toString(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ]
+                    ]
+                },
+                "150-156:toInt": {
+                    "start": 150,
+                    "end": 156,
+                    "body": [
+                        "    protected int toInt(char character, int leftPos, int rightPos) throws CheckDigitException {\n",
+                        "        if (Character.isDigit(character)) {\n",
+                        "            return Character.getNumericValue(character);\n",
+                        "        }\n",
+                        "        throw CheckDigitException.CheckDigitException1(\n",
+                        "                \"Invalid Character[\" + leftPos + \"] = '\" + character + \"'\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "toInt(char, int, int)",
+                    "parameters": [
+                        "character",
+                        "leftPos",
+                        "rightPos"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isDigit(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "getNumericValue(char)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ]
+                    ]
+                },
+                "104-118:calculateModulus": {
+                    "start": 104,
+                    "end": 118,
+                    "body": [
+                        "    protected int calculateModulus(String code, boolean includesCheckDigit)\n",
+                        "            throws CheckDigitException {\n",
+                        "        int total = 0;\n",
+                        "        for (int i = 0; i < code.length(); i++) {\n",
+                        "            int lth = code.length() + (includesCheckDigit ? 0 : 1);\n",
+                        "            int leftPos = i + 1;\n",
+                        "            int rightPos = lth - i;\n",
+                        "            int charValue = toInt(code.charAt(i), leftPos, rightPos);\n",
+                        "            total += weightedValue(charValue, leftPos, rightPos);\n",
+                        "        }\n",
+                        "        if (total == 0) {\n",
+                        "            throw CheckDigitException.CheckDigitException1(\"Invalid code, sum is zero\");\n",
+                        "        }\n",
+                        "        return total % modulus;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateModulus(String, boolean)",
+                    "parameters": [
+                        "code",
+                        "includesCheckDigit"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "150-156:toInt"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.ModulusCheckDigit",
+                            "ModulusCheckDigit",
+                            "133-135:weightedValue"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigitException",
+                            "CheckDigitException",
+                            "34-36:CheckDigitException1"
+                        ]
+                    ]
+                },
+                "55-57:getModulus": {
+                    "start": 55,
+                    "end": 57,
+                    "body": [
+                        "    public int getModulus() {\n",
+                        "        return modulus;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getModulus()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "46-48:ModulusCheckDigit": {
+                    "start": 46,
+                    "end": 48,
+                    "body": [
+                        "    public ModulusCheckDigit(int modulus) {\n",
+                        "        this.modulus = modulus;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ModulusCheckDigit(int)",
+                    "parameters": [
+                        "modulus"
+                    ],
+                    "calls": []
+                },
+                "133-135:weightedValue": {
+                    "start": 133,
+                    "end": 135,
+                    "body": [
+                        "    protected abstract int weightedValue(int charValue, int leftPos, int rightPos)\n",
+                        "            throws CheckDigitException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "weightedValue(int, int, int)",
+                    "parameters": [
+                        "charValue",
+                        "leftPos",
+                        "rightPos"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "39-39:modulus": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final int modulus;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "37-37:serialVersionUID": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final long serialVersionUID = 2948962251251528941L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

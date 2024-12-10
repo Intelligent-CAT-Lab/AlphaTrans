@@ -1,0 +1,3016 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/digest/MurmurHash3.java",
+    "imports": {
+        "20-20:import StringUtils": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.binary.StringUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MurmurHash3": {
+            "start": 59,
+            "end": 59,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "IncrementalHash32",
+                "IncrementalHash32x86"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "782-785:hash1282": {
+                    "start": 782,
+                    "end": 785,
+                    "body": [
+                        "    public static long[] hash1282(\n",
+                        "            final byte[] data, final int offset, final int length, final int seed) {\n",
+                        "        return hash128x64Internal(data, offset, length, seed);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash1282(byte[], int, int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "817-903:hash128x64Internal"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash1282(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "757-760:hash1281": {
+                    "start": 757,
+                    "end": 760,
+                    "body": [
+                        "    public static long[] hash1281(final String data) {\n",
+                        "        final byte[] bytes = StringUtils.getBytesUtf8(data);\n",
+                        "        return hash1282(bytes, 0, bytes.length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash1281(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "782-785:hash1282"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash1281(data: str) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "648-691:hash645": {
+                    "start": 648,
+                    "end": 691,
+                    "body": [
+                        "    public static long hash645(\n",
+                        "            final byte[] data, final int offset, final int length, final int seed) {\n",
+                        "        long hash = seed;\n",
+                        "        final int nblocks = length >> 3;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = offset + (i << 3);\n",
+                        "            long k = getLittleEndianLong(data, index);\n",
+                        "\n",
+                        "            k *= C1;\n",
+                        "            k = Long.rotateLeft(k, R1);\n",
+                        "            k *= C2;\n",
+                        "            hash ^= k;\n",
+                        "            hash = Long.rotateLeft(hash, R2) * M + N1;\n",
+                        "        }\n",
+                        "\n",
+                        "        long k1 = 0;\n",
+                        "        final int index = offset + (nblocks << 3);\n",
+                        "        switch (offset + length - index) {\n",
+                        "            case 7:\n",
+                        "                k1 ^= ((long) data[index + 6] & 0xff) << 48;\n",
+                        "            case 6:\n",
+                        "                k1 ^= ((long) data[index + 5] & 0xff) << 40;\n",
+                        "            case 5:\n",
+                        "                k1 ^= ((long) data[index + 4] & 0xff) << 32;\n",
+                        "            case 4:\n",
+                        "                k1 ^= ((long) data[index + 3] & 0xff) << 24;\n",
+                        "            case 3:\n",
+                        "                k1 ^= ((long) data[index + 2] & 0xff) << 16;\n",
+                        "            case 2:\n",
+                        "                k1 ^= ((long) data[index + 1] & 0xff) << 8;\n",
+                        "            case 1:\n",
+                        "                k1 ^= ((long) data[index] & 0xff);\n",
+                        "                k1 *= C1;\n",
+                        "                k1 = Long.rotateLeft(k1, R1);\n",
+                        "                k1 *= C2;\n",
+                        "                hash ^= k1;\n",
+                        "        }\n",
+                        "\n",
+                        "        hash ^= length;\n",
+                        "        hash = fmix64(hash);\n",
+                        "\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash645(byte[], int, int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "912-921:getLittleEndianLong"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "rotateLeft(long,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "974-981:fmix64"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash645(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "614-616:hash644": {
+                    "start": 614,
+                    "end": 616,
+                    "body": [
+                        "    public static long hash644(final byte[] data, final int offset, final int length) {\n",
+                        "        return hash645(data, offset, length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash644(byte[], int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "648-691:hash645"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash644(data: typing.List[int], offset: int, length: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "582-584:hash643": {
+                    "start": 582,
+                    "end": 584,
+                    "body": [
+                        "    public static long hash643(final byte[] data) {\n",
+                        "        return hash645(data, 0, data.length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash643(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "648-691:hash645"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash643(data: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "540-553:hash642": {
+                    "start": 540,
+                    "end": 553,
+                    "body": [
+                        "    public static long hash642(final short data) {\n",
+                        "        long hash = DEFAULT_SEED;\n",
+                        "        long k1 = 0;\n",
+                        "        k1 ^= ((long) data & 0xff) << 8;\n",
+                        "        k1 ^= ((long) ((data & 0xFF00) >> 8) & 0xff);\n",
+                        "        k1 *= C1;\n",
+                        "        k1 = Long.rotateLeft(k1, R1);\n",
+                        "        k1 *= C2;\n",
+                        "        hash ^= k1;\n",
+                        "\n",
+                        "        hash ^= SHORT_BYTES;\n",
+                        "        hash = fmix64(hash);\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash642(short)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "rotateLeft(long,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "974-981:fmix64"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash642(data: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "498-509:hash641": {
+                    "start": 498,
+                    "end": 509,
+                    "body": [
+                        "    public static long hash641(final int data) {\n",
+                        "        long k1 = Integer.reverseBytes(data) & (-1L >>> 32);\n",
+                        "        final int length = INTEGER_BYTES;\n",
+                        "        long hash = DEFAULT_SEED;\n",
+                        "        k1 *= C1;\n",
+                        "        k1 = Long.rotateLeft(k1, R1);\n",
+                        "        k1 *= C2;\n",
+                        "        hash ^= k1;\n",
+                        "        hash ^= length;\n",
+                        "        hash = fmix64(hash);\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash641(int)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "reverseBytes(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "rotateLeft(long,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "974-981:fmix64"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash641(data: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "455-467:hash640": {
+                    "start": 455,
+                    "end": 467,
+                    "body": [
+                        "    public static long hash640(final long data) {\n",
+                        "        long hash = DEFAULT_SEED;\n",
+                        "        long k = Long.reverseBytes(data);\n",
+                        "        final int length = LONG_BYTES;\n",
+                        "        k *= C1;\n",
+                        "        k = Long.rotateLeft(k, R1);\n",
+                        "        k *= C2;\n",
+                        "        hash ^= k;\n",
+                        "        hash = Long.rotateLeft(hash, R2) * M + N1;\n",
+                        "        hash ^= length;\n",
+                        "        hash = fmix64(hash);\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "hash640(long)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "reverseBytes(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "rotateLeft(long,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "974-981:fmix64"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash640(data: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "332-361:hash328": {
+                    "start": 332,
+                    "end": 361,
+                    "body": [
+                        "    public static int hash328(\n",
+                        "            final byte[] data, final int offset, final int length, final int seed) {\n",
+                        "        int hash = seed;\n",
+                        "        final int nblocks = length >> 2;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = offset + (i << 2);\n",
+                        "            final int k = getLittleEndianInt(data, index);\n",
+                        "            hash = mix32(k, hash);\n",
+                        "        }\n",
+                        "\n",
+                        "        final int index = offset + (nblocks << 2);\n",
+                        "        int k1 = 0;\n",
+                        "        switch (offset + length - index) {\n",
+                        "            case 3:\n",
+                        "                k1 ^= data[index + 2] << 16;\n",
+                        "            case 2:\n",
+                        "                k1 ^= data[index + 1] << 8;\n",
+                        "            case 1:\n",
+                        "                k1 ^= data[index];\n",
+                        "\n",
+                        "                k1 *= C1_32;\n",
+                        "                k1 = Integer.rotateLeft(k1, R1_32);\n",
+                        "                k1 *= C2_32;\n",
+                        "                hash ^= k1;\n",
+                        "        }\n",
+                        "\n",
+                        "        hash ^= length;\n",
+                        "        return fmix32(hash);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash328(byte[], int, int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "930-935:getLittleEndianInt"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "944-950:mix32"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash328(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "308-310:hash327": {
+                    "start": 308,
+                    "end": 310,
+                    "body": [
+                        "    public static int hash327(final byte[] data, final int length, final int seed) {\n",
+                        "        return hash328(data, 0, length, seed);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash327(byte[], int, int)",
+                    "parameters": [
+                        "data",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "332-361:hash328"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash327(data: typing.List[int], length: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "281-283:hash326": {
+                    "start": 281,
+                    "end": 283,
+                    "body": [
+                        "    public static int hash326(final byte[] data, final int length) {\n",
+                        "        return hash327(data, length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash326(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "308-310:hash327"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash326(data: typing.List[int], length: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "253-256:hash325": {
+                    "start": 253,
+                    "end": 256,
+                    "body": [
+                        "    public static int hash325(final String data) {\n",
+                        "        final byte[] bytes = StringUtils.getBytesUtf8(data);\n",
+                        "        return hash328(bytes, 0, bytes.length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash325(String)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "258-260:getBytesUtf8"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "332-361:hash328"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash325(data: str) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "222-224:hash324": {
+                    "start": 222,
+                    "end": 224,
+                    "body": [
+                        "    public static int hash324(final byte[] data) {\n",
+                        "        return hash328(data, 0, data.length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash324(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "332-361:hash328"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash324(data: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "800-803:hash128x641": {
+                    "start": 800,
+                    "end": 803,
+                    "body": [
+                        "    public static long[] hash128x641(\n",
+                        "            final byte[] data, final int offset, final int length, final int seed) {\n",
+                        "        return hash128x64Internal(data, offset, length, seed & 0xffffffffL);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash128x641(byte[], int, int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "817-903:hash128x64Internal"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash128x641(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "729-731:hash128x640": {
+                    "start": 729,
+                    "end": 731,
+                    "body": [
+                        "    public static long[] hash128x640(final byte[] data) {\n",
+                        "        return hash128x641(data, 0, data.length, 0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash128x640(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "800-803:hash128x641"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash128x640(data: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "710-712:hash1280": {
+                    "start": 710,
+                    "end": 712,
+                    "body": [
+                        "    public static long[] hash1280(final byte[] data) {\n",
+                        "        return hash1282(data, 0, data.length, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash1280(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "782-785:hash1282"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash1280(data: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "395-424:hash32x861": {
+                    "start": 395,
+                    "end": 424,
+                    "body": [
+                        "    public static int hash32x861(\n",
+                        "            final byte[] data, final int offset, final int length, final int seed) {\n",
+                        "        int hash = seed;\n",
+                        "        final int nblocks = length >> 2;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = offset + (i << 2);\n",
+                        "            final int k = getLittleEndianInt(data, index);\n",
+                        "            hash = mix32(k, hash);\n",
+                        "        }\n",
+                        "\n",
+                        "        final int index = offset + (nblocks << 2);\n",
+                        "        int k1 = 0;\n",
+                        "        switch (offset + length - index) {\n",
+                        "            case 3:\n",
+                        "                k1 ^= (data[index + 2] & 0xff) << 16;\n",
+                        "            case 2:\n",
+                        "                k1 ^= (data[index + 1] & 0xff) << 8;\n",
+                        "            case 1:\n",
+                        "                k1 ^= (data[index] & 0xff);\n",
+                        "\n",
+                        "                k1 *= C1_32;\n",
+                        "                k1 = Integer.rotateLeft(k1, R1_32);\n",
+                        "                k1 *= C2_32;\n",
+                        "                hash ^= k1;\n",
+                        "        }\n",
+                        "\n",
+                        "        hash ^= length;\n",
+                        "        return fmix32(hash);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash32x861(byte[], int, int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "930-935:getLittleEndianInt"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "944-950:mix32"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash32x861(data: typing.List[int], offset: int, length: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "378-380:hash32x860": {
+                    "start": 378,
+                    "end": 380,
+                    "body": [
+                        "    public static int hash32x860(final byte[] data) {\n",
+                        "        return hash32x861(data, 0, data.length, 0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash32x860(byte[])",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "395-424:hash32x861"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash32x860(data: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "189-198:hash323": {
+                    "start": 189,
+                    "end": 198,
+                    "body": [
+                        "    public static int hash323(final long data, final int seed) {\n",
+                        "        int hash = seed;\n",
+                        "        final long r0 = Long.reverseBytes(data);\n",
+                        "\n",
+                        "        hash = mix32((int) r0, hash);\n",
+                        "        hash = mix32((int) (r0 >>> 32), hash);\n",
+                        "\n",
+                        "        hash ^= LONG_BYTES;\n",
+                        "        return fmix32(hash);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash323(long, int)",
+                    "parameters": [
+                        "data",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "reverseBytes(long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "944-950:mix32"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash323(data: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "169-171:hash322": {
+                    "start": 169,
+                    "end": 171,
+                    "body": [
+                        "    public static int hash322(final long data) {\n",
+                        "        return hash323(data, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash322(long)",
+                    "parameters": [
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "189-198:hash323"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash322(data: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "139-151:hash321": {
+                    "start": 139,
+                    "end": 151,
+                    "body": [
+                        "    public static int hash321(final long data1, final long data2, final int seed) {\n",
+                        "        int hash = seed;\n",
+                        "        final long r0 = Long.reverseBytes(data1);\n",
+                        "        final long r1 = Long.reverseBytes(data2);\n",
+                        "\n",
+                        "        hash = mix32((int) r0, hash);\n",
+                        "        hash = mix32((int) (r0 >>> 32), hash);\n",
+                        "        hash = mix32((int) (r1), hash);\n",
+                        "        hash = mix32((int) (r1 >>> 32), hash);\n",
+                        "\n",
+                        "        hash ^= LONG_BYTES * 2;\n",
+                        "        return fmix32(hash);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash321(long, long, int)",
+                    "parameters": [
+                        "data1",
+                        "data2",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "reverseBytes(long)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "944-950:mix32"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash321(data1: int, data2: int, seed: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "117-119:hash320": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public static int hash320(final long data1, final long data2) {\n",
+                        "        return hash321(data1, data2, DEFAULT_SEED);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hash320(long, long)",
+                    "parameters": [
+                        "data1",
+                        "data2"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "139-151:hash321"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def hash320(data1: int, data2: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "974-981:fmix64": {
+                    "start": 974,
+                    "end": 981,
+                    "body": [
+                        "    private static long fmix64(long hash) {\n",
+                        "        hash ^= (hash >>> 33);\n",
+                        "        hash *= 0xff51afd7ed558ccdL;\n",
+                        "        hash ^= (hash >>> 33);\n",
+                        "        hash *= 0xc4ceb9fe1a85ec53L;\n",
+                        "        hash ^= (hash >>> 33);\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "fmix64(long)",
+                    "parameters": [
+                        "hash"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __fmix64(hash_: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "958-965:fmix32": {
+                    "start": 958,
+                    "end": 965,
+                    "body": [
+                        "    private static int fmix32(int hash) {\n",
+                        "        hash ^= (hash >>> 16);\n",
+                        "        hash *= 0x85ebca6b;\n",
+                        "        hash ^= (hash >>> 13);\n",
+                        "        hash *= 0xc2b2ae35;\n",
+                        "        hash ^= (hash >>> 16);\n",
+                        "        return hash;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "fmix32(int)",
+                    "parameters": [
+                        "hash"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __fmix32(hash_: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "944-950:mix32": {
+                    "start": 944,
+                    "end": 950,
+                    "body": [
+                        "    private static int mix32(int k, int hash) {\n",
+                        "        k *= C1_32;\n",
+                        "        k = Integer.rotateLeft(k, R1_32);\n",
+                        "        k *= C2_32;\n",
+                        "        hash ^= k;\n",
+                        "        return Integer.rotateLeft(hash, R2_32) * M_32 + N_32;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "mix32(int, int)",
+                    "parameters": [
+                        "k",
+                        "hash"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __mix32(k: int, hash_: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "930-935:getLittleEndianInt": {
+                    "start": 930,
+                    "end": 935,
+                    "body": [
+                        "    private static int getLittleEndianInt(final byte[] data, final int index) {\n",
+                        "        return ((data[index] & 0xff))\n",
+                        "                | ((data[index + 1] & 0xff) << 8)\n",
+                        "                | ((data[index + 2] & 0xff) << 16)\n",
+                        "                | ((data[index + 3] & 0xff) << 24);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getLittleEndianInt(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "index"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getLittleEndianInt(data: typing.List[int], index: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "912-921:getLittleEndianLong": {
+                    "start": 912,
+                    "end": 921,
+                    "body": [
+                        "    private static long getLittleEndianLong(final byte[] data, final int index) {\n",
+                        "        return (((long) data[index] & 0xff))\n",
+                        "                | (((long) data[index + 1] & 0xff) << 8)\n",
+                        "                | (((long) data[index + 2] & 0xff) << 16)\n",
+                        "                | (((long) data[index + 3] & 0xff) << 24)\n",
+                        "                | (((long) data[index + 4] & 0xff) << 32)\n",
+                        "                | (((long) data[index + 5] & 0xff) << 40)\n",
+                        "                | (((long) data[index + 6] & 0xff) << 48)\n",
+                        "                | (((long) data[index + 7] & 0xff) << 56);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLittleEndianLong(byte[], int)",
+                    "parameters": [
+                        "data",
+                        "index"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getLittleEndianLong(data: typing.List[int], index: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "817-903:hash128x64Internal": {
+                    "start": 817,
+                    "end": 903,
+                    "body": [
+                        "    private static long[] hash128x64Internal(\n",
+                        "            final byte[] data, final int offset, final int length, final long seed) {\n",
+                        "        long h1 = seed;\n",
+                        "        long h2 = seed;\n",
+                        "        final int nblocks = length >> 4;\n",
+                        "\n",
+                        "        for (int i = 0; i < nblocks; i++) {\n",
+                        "            final int index = offset + (i << 4);\n",
+                        "            long k1 = getLittleEndianLong(data, index);\n",
+                        "            long k2 = getLittleEndianLong(data, index + 8);\n",
+                        "\n",
+                        "            k1 *= C1;\n",
+                        "            k1 = Long.rotateLeft(k1, R1);\n",
+                        "            k1 *= C2;\n",
+                        "            h1 ^= k1;\n",
+                        "            h1 = Long.rotateLeft(h1, R2);\n",
+                        "            h1 += h2;\n",
+                        "            h1 = h1 * M + N1;\n",
+                        "\n",
+                        "            k2 *= C2;\n",
+                        "            k2 = Long.rotateLeft(k2, R3);\n",
+                        "            k2 *= C1;\n",
+                        "            h2 ^= k2;\n",
+                        "            h2 = Long.rotateLeft(h2, R1);\n",
+                        "            h2 += h1;\n",
+                        "            h2 = h2 * M + N2;\n",
+                        "        }\n",
+                        "\n",
+                        "        long k1 = 0;\n",
+                        "        long k2 = 0;\n",
+                        "        final int index = offset + (nblocks << 4);\n",
+                        "        switch (offset + length - index) {\n",
+                        "            case 15:\n",
+                        "                k2 ^= ((long) data[index + 14] & 0xff) << 48;\n",
+                        "            case 14:\n",
+                        "                k2 ^= ((long) data[index + 13] & 0xff) << 40;\n",
+                        "            case 13:\n",
+                        "                k2 ^= ((long) data[index + 12] & 0xff) << 32;\n",
+                        "            case 12:\n",
+                        "                k2 ^= ((long) data[index + 11] & 0xff) << 24;\n",
+                        "            case 11:\n",
+                        "                k2 ^= ((long) data[index + 10] & 0xff) << 16;\n",
+                        "            case 10:\n",
+                        "                k2 ^= ((long) data[index + 9] & 0xff) << 8;\n",
+                        "            case 9:\n",
+                        "                k2 ^= data[index + 8] & 0xff;\n",
+                        "                k2 *= C2;\n",
+                        "                k2 = Long.rotateLeft(k2, R3);\n",
+                        "                k2 *= C1;\n",
+                        "                h2 ^= k2;\n",
+                        "\n",
+                        "            case 8:\n",
+                        "                k1 ^= ((long) data[index + 7] & 0xff) << 56;\n",
+                        "            case 7:\n",
+                        "                k1 ^= ((long) data[index + 6] & 0xff) << 48;\n",
+                        "            case 6:\n",
+                        "                k1 ^= ((long) data[index + 5] & 0xff) << 40;\n",
+                        "            case 5:\n",
+                        "                k1 ^= ((long) data[index + 4] & 0xff) << 32;\n",
+                        "            case 4:\n",
+                        "                k1 ^= ((long) data[index + 3] & 0xff) << 24;\n",
+                        "            case 3:\n",
+                        "                k1 ^= ((long) data[index + 2] & 0xff) << 16;\n",
+                        "            case 2:\n",
+                        "                k1 ^= ((long) data[index + 1] & 0xff) << 8;\n",
+                        "            case 1:\n",
+                        "                k1 ^= data[index] & 0xff;\n",
+                        "                k1 *= C1;\n",
+                        "                k1 = Long.rotateLeft(k1, R1);\n",
+                        "                k1 *= C2;\n",
+                        "                h1 ^= k1;\n",
+                        "        }\n",
+                        "\n",
+                        "        h1 ^= length;\n",
+                        "        h2 ^= length;\n",
+                        "\n",
+                        "        h1 += h2;\n",
+                        "        h2 += h1;\n",
+                        "\n",
+                        "        h1 = fmix64(h1);\n",
+                        "        h2 = fmix64(h2);\n",
+                        "\n",
+                        "        h1 += h2;\n",
+                        "        h2 += h1;\n",
+                        "\n",
+                        "        return new long[] {h1, h2};\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "hash128x64Internal(byte[], int, int, long)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "912-921:getLittleEndianLong"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "rotateLeft(long,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "974-981:fmix64"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __hash128x64Internal(data: typing.List[int], offset: int, length: int, seed: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "97-97:MurmurHash3": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    private MurmurHash3() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MurmurHash3()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "78-78:SHORT_BYTES": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    static final int SHORT_BYTES = Short.SIZE / Byte.SIZE;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    SHORT_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "75-75:INTEGER_BYTES": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    static final int INTEGER_BYTES = Integer.SIZE / Byte.SIZE;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    INTEGER_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "72-72:LONG_BYTES": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "    static final int LONG_BYTES = Long.SIZE / Byte.SIZE;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    LONG_BYTES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "69-69:DEFAULT_SEED": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "    public static final int DEFAULT_SEED = 104729;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    DEFAULT_SEED: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "66-66:NULL_HASHCODE": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    @Deprecated public static final long NULL_HASHCODE = 2862933555777941757L;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    NULL_HASHCODE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "94-94:N2": {
+                    "start": 94,
+                    "end": 94,
+                    "body": [
+                        "    private static final int N2 = 0x38495ab5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __N2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "93-93:N1": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    private static final int N1 = 0x52dce729;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __N1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "92-92:M": {
+                    "start": 92,
+                    "end": 92,
+                    "body": [
+                        "    private static final int M = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __M: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "91-91:R3": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    private static final int R3 = 33;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __R3: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "90-90:R2": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    private static final int R2 = 27;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __R2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "89-89:R1": {
+                    "start": 89,
+                    "end": 89,
+                    "body": [
+                        "    private static final int R1 = 31;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __R1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "88-88:C2": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    private static final long C2 = 0x4cf5ad432745937fL;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __C2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "87-87:C1": {
+                    "start": 87,
+                    "end": 87,
+                    "body": [
+                        "    private static final long C1 = 0x87c37b91114253d5L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __C1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "85-85:N_32": {
+                    "start": 85,
+                    "end": 85,
+                    "body": [
+                        "    private static final int N_32 = 0xe6546b64;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __N_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "84-84:M_32": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "    private static final int M_32 = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __M_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "83-83:R2_32": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    private static final int R2_32 = 13;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __R2_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "82-82:R1_32": {
+                    "start": 82,
+                    "end": 82,
+                    "body": [
+                        "    private static final int R1_32 = 15;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __R1_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "81-81:C2_32": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    private static final int C2_32 = 0x1b873593;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __C2_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "80-80:C1_32": {
+                    "start": 80,
+                    "end": 80,
+                    "body": [
+                        "    private static final int C1_32 = 0xcc9e2d51;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __C1_32: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class MurmurHash3:\n\n"
+        },
+        "IncrementalHash32": {
+            "start": 1160,
+            "end": 1160,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MurmurHash3",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "IncrementalHash32x86"
+            ],
+            "methods": {
+                "1175-1198:finalise": {
+                    "start": 1175,
+                    "end": 1198,
+                    "body": [
+                        "        int finalise(\n",
+                        "                final int hash,\n",
+                        "                final int unprocessedLength,\n",
+                        "                final byte[] unprocessed,\n",
+                        "                final int totalLen) {\n",
+                        "            int result = hash;\n",
+                        "            int k1 = 0;\n",
+                        "            switch (unprocessedLength) {\n",
+                        "                case 3:\n",
+                        "                    k1 ^= unprocessed[2] << 16;\n",
+                        "                case 2:\n",
+                        "                    k1 ^= unprocessed[1] << 8;\n",
+                        "                case 1:\n",
+                        "                    k1 ^= unprocessed[0];\n",
+                        "\n",
+                        "                    k1 *= C1_32;\n",
+                        "                    k1 = Integer.rotateLeft(k1, R1_32);\n",
+                        "                    k1 *= C2_32;\n",
+                        "                    result ^= k1;\n",
+                        "            }\n",
+                        "\n",
+                        "            result ^= totalLen;\n",
+                        "            return fmix32(result);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "finalise(int, int, byte[], int)",
+                    "parameters": [
+                        "hash",
+                        "unprocessedLength",
+                        "unprocessed",
+                        "totalLen"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def finalise(self, hash_: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class IncrementalHash32(IncrementalHash32x86):\n\n"
+        },
+        "IncrementalHash32x86": {
+            "start": 992,
+            "end": 992,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "MurmurHash3",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "1091-1093:end": {
+                    "start": 1091,
+                    "end": 1093,
+                    "body": [
+                        "        public final int end() {\n",
+                        "            return finalise(hash, unprocessedLength, unprocessed, totalLen);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "end()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "IncrementalHash32x86",
+                            "1105-1128:finalise"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def end(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1026-1083:add": {
+                    "start": 1026,
+                    "end": 1083,
+                    "body": [
+                        "        public final void add(final byte[] data, final int offset, final int length) {\n",
+                        "            if (length <= 0) {\n",
+                        "                return;\n",
+                        "            }\n",
+                        "            totalLen += length;\n",
+                        "\n",
+                        "            if (unprocessedLength + length - BLOCK_SIZE < 0) {\n",
+                        "                System.arraycopy(data, offset, unprocessed, unprocessedLength, length);\n",
+                        "                unprocessedLength += length;\n",
+                        "                return;\n",
+                        "            }\n",
+                        "\n",
+                        "            final int newOffset;\n",
+                        "            final int newLength;\n",
+                        "            if (unprocessedLength > 0) {\n",
+                        "                int k = -1;\n",
+                        "                switch (unprocessedLength) {\n",
+                        "                    case 1:\n",
+                        "                        k =\n",
+                        "                                orBytes(\n",
+                        "                                        unprocessed[0],\n",
+                        "                                        data[offset],\n",
+                        "                                        data[offset + 1],\n",
+                        "                                        data[offset + 2]);\n",
+                        "                        break;\n",
+                        "                    case 2:\n",
+                        "                        k = orBytes(unprocessed[0], unprocessed[1], data[offset], data[offset + 1]);\n",
+                        "                        break;\n",
+                        "                    case 3:\n",
+                        "                        k = orBytes(unprocessed[0], unprocessed[1], unprocessed[2], data[offset]);\n",
+                        "                        break;\n",
+                        "                    default:\n",
+                        "                        throw new IllegalStateException(\n",
+                        "                                \"Unprocessed length should be 1, 2, or 3: \" + unprocessedLength);\n",
+                        "                }\n",
+                        "                hash = mix32(k, hash);\n",
+                        "                final int consumed = BLOCK_SIZE - unprocessedLength;\n",
+                        "                newOffset = offset + consumed;\n",
+                        "                newLength = length - consumed;\n",
+                        "            } else {\n",
+                        "                newOffset = offset;\n",
+                        "                newLength = length;\n",
+                        "            }\n",
+                        "\n",
+                        "            final int nblocks = newLength >> 2;\n",
+                        "\n",
+                        "            for (int i = 0; i < nblocks; i++) {\n",
+                        "                final int index = newOffset + (i << 2);\n",
+                        "                final int k = getLittleEndianInt(data, index);\n",
+                        "                hash = mix32(k, hash);\n",
+                        "            }\n",
+                        "\n",
+                        "            final int consumed = (nblocks << 2);\n",
+                        "            unprocessedLength = newLength - consumed;\n",
+                        "            if (unprocessedLength != 0) {\n",
+                        "                System.arraycopy(data, newOffset + consumed, unprocessed, 0, unprocessedLength);\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "add(byte[], int, int)",
+                    "parameters": [
+                        "data",
+                        "offset",
+                        "length"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "IncrementalHash32x86",
+                            "1140-1142:orBytes"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "944-950:mix32"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "930-935:getLittleEndianInt"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def add(self, data: typing.List[int], offset: int, length: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1014-1017:start": {
+                    "start": 1014,
+                    "end": 1017,
+                    "body": [
+                        "        public final void start(final int seed) {\n",
+                        "            unprocessedLength = totalLen = 0;\n",
+                        "            this.hash = seed;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start(int)",
+                    "parameters": [
+                        "seed"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def start(self, seed: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1140-1142:orBytes": {
+                    "start": 1140,
+                    "end": 1142,
+                    "body": [
+                        "        private static int orBytes(final byte b1, final byte b2, final byte b3, final byte b4) {\n",
+                        "            return (b1 & 0xff) | ((b2 & 0xff) << 8) | ((b3 & 0xff) << 16) | ((b4 & 0xff) << 24);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "orBytes(byte, byte, byte, byte)",
+                    "parameters": [
+                        "b1",
+                        "b2",
+                        "b3",
+                        "b4"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __orBytes(b1: int, b2: int, b3: int, b4: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1105-1128:finalise": {
+                    "start": 1105,
+                    "end": 1128,
+                    "body": [
+                        "        int finalise(\n",
+                        "                final int hash,\n",
+                        "                final int unprocessedLength,\n",
+                        "                final byte[] unprocessed,\n",
+                        "                final int totalLen) {\n",
+                        "            int result = hash;\n",
+                        "            int k1 = 0;\n",
+                        "            switch (unprocessedLength) {\n",
+                        "                case 3:\n",
+                        "                    k1 ^= (unprocessed[2] & 0xff) << 16;\n",
+                        "                case 2:\n",
+                        "                    k1 ^= (unprocessed[1] & 0xff) << 8;\n",
+                        "                case 1:\n",
+                        "                    k1 ^= (unprocessed[0] & 0xff);\n",
+                        "\n",
+                        "                    k1 *= C1_32;\n",
+                        "                    k1 = Integer.rotateLeft(k1, R1_32);\n",
+                        "                    k1 *= C2_32;\n",
+                        "                    result ^= k1;\n",
+                        "            }\n",
+                        "\n",
+                        "            result ^= totalLen;\n",
+                        "            return fmix32(result);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "finalise(int, int, byte[], int)",
+                    "parameters": [
+                        "hash",
+                        "unprocessedLength",
+                        "unprocessed",
+                        "totalLen"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.MurmurHash3",
+                            "MurmurHash3",
+                            "958-965:fmix32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def finalise(self, hash_: int, unprocessedLength: int, unprocessed: typing.List[int], totalLen: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "1007-1007:hash": {
+                    "start": 1007,
+                    "end": 1007,
+                    "body": [
+                        "        private int hash;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __hash: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1004-1004:totalLen": {
+                    "start": 1004,
+                    "end": 1004,
+                    "body": [
+                        "        private int totalLen;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __totalLen: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "1001-1001:unprocessedLength": {
+                    "start": 1001,
+                    "end": 1001,
+                    "body": [
+                        "        private int unprocessedLength;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __unprocessedLength: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "998-998:unprocessed": {
+                    "start": 998,
+                    "end": 998,
+                    "body": [
+                        "        private final byte[] unprocessed = new byte[3];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __unprocessed: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "995-995:BLOCK_SIZE": {
+                    "start": 995,
+                    "end": 995,
+                    "body": [
+                        "        private static final int BLOCK_SIZE = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IncrementalHash32x86:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.binary.StringUtils import *"
+    ]
+}

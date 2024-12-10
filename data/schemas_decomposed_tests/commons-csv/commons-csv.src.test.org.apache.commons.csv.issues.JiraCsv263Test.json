@@ -1,0 +1,1670 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-csv/src/test/java/org/apache/commons/csv/issues/JiraCsv263Test.java",
+    "imports": {
+        "26-26:import IOException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "27-27:import Reader": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.Reader;\n"
+            ]
+        },
+        "28-28:import StringReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.StringReader;\n"
+            ]
+        },
+        "22-22:import CSVFormat": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.csv.CSVFormat;\n"
+            ]
+        },
+        "23-23:import QuoteMode": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.csv.QuoteMode;\n"
+            ]
+        },
+        "24-24:import Test": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "JiraCsv263Test": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "411-449:testPrintFromReaderWithQuotes_test17_decomposed": {
+                    "start": 411,
+                    "end": 449,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test17_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "        final Reader embeddedMiddleEnd = new StringReader(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedMiddleEnd, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b\\\"\\\",c\\r\\nx,y,\\\"\\\"z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader nested = new StringReader(\"a,\\\"b \\\"and\\\" c\\\",d\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(nested, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b \\\"\\\"and\\\"\\\" c\\\"\\\",d\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test17_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "371-408:testPrintFromReaderWithQuotes_test16_decomposed": {
+                    "start": 371,
+                    "end": 408,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test16_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "        final Reader embeddedMiddleEnd = new StringReader(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedMiddleEnd, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b\\\"\\\",c\\r\\nx,y,\\\"\\\"z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader nested = new StringReader(\"a,\\\"b \\\"and\\\" c\\\",d\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(nested, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test16_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "334-368:testPrintFromReaderWithQuotes_test15_decomposed": {
+                    "start": 334,
+                    "end": 368,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test15_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "        final Reader embeddedMiddleEnd = new StringReader(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedMiddleEnd, out, true);\n",
+                        "        assertEquals(\"\\\"a,\\\"\\\"b\\\"\\\",c\\r\\nx,y,\\\"\\\"z\\\"\\\"\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test15_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "298-331:testPrintFromReaderWithQuotes_test14_decomposed": {
+                    "start": 298,
+                    "end": 331,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test14_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "        final Reader embeddedMiddleEnd = new StringReader(\"a,\\\"b\\\",c\\r\\nx,y,\\\"z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedMiddleEnd, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test14_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "265-295:testPrintFromReaderWithQuotes_test13_decomposed": {
+                    "start": 265,
+                    "end": 295,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test13_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a\\\"\\\",b,c\\r\\nx,\\\"\\\"y\\\"\\\",z\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test13_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "233-262:testPrintFromReaderWithQuotes_test12_decomposed": {
+                    "start": 233,
+                    "end": 262,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test12_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader embeddedBeginMiddle = new StringReader(\"\\\"a\\\",b,c\\r\\nx,\\\"y\\\",z\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(embeddedBeginMiddle, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test12_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "204-230:testPrintFromReaderWithQuotes_test11_decomposed": {
+                    "start": 204,
+                    "end": 230,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test11_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test11_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "176-201:testPrintFromReaderWithQuotes_test10_decomposed": {
+                    "start": 176,
+                    "end": 201,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test10_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "        final Reader atBeginEnd = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atBeginEnd, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "151-173:testPrintFromReaderWithQuotes_test9_decomposed": {
+                    "start": 151,
+                    "end": 173,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test9_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "        assertEquals(\"\\\"a,b,c\\r\\nx,y,z\\\"\\\"\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "127-148:testPrintFromReaderWithQuotes_test8_decomposed": {
+                    "start": 127,
+                    "end": 148,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test8_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "        final Reader atEndOnly = new StringReader(\"a,b,c\\r\\nx,y,z\\\"\");\n",
+                        "        out.setLength(0);\n",
+                        "        format.print2(atEndOnly, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "106-124:testPrintFromReaderWithQuotes_test7_decomposed": {
+                    "start": 106,
+                    "end": 124,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test7_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "        assertEquals(\"\\\"\\\"\\\"a,b,c\\r\\nx,y,z\\\"\", out.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "86-103:testPrintFromReaderWithQuotes_test6_decomposed": {
+                    "start": 86,
+                    "end": 103,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test6_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "        final StringBuilder out = new StringBuilder();\n",
+                        "        final Reader atStartOnly = new StringReader(\"\\\"a,b,c\\r\\nx,y,z\");\n",
+                        "        format.print2(atStartOnly, out, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1842-1863:print2"
+                        ]
+                    ]
+                },
+                "69-83:testPrintFromReaderWithQuotes_test5_decomposed": {
+                    "start": 69,
+                    "end": 83,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test5_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "        final CSVFormat format =\n",
+                        "                CSVFormat.RFC4180\n",
+                        "                        .builder()\n",
+                        "                        .setDelimiter0(',')\n",
+                        "                        .setQuote0('\"')\n",
+                        "                        .setEscape0('?')\n",
+                        "                        .setQuoteMode(QuoteMode.NON_NUMERIC)\n",
+                        "                        .build();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "250-254:build"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ]
+                    ]
+                },
+                "60-66:testPrintFromReaderWithQuotes_test4_decomposed": {
+                    "start": 60,
+                    "end": 66,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test4_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?').setQuoteMode(QuoteMode.NON_NUMERIC);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "611-614:setQuoteMode"
+                        ]
+                    ]
+                },
+                "52-57:testPrintFromReaderWithQuotes_test3_decomposed": {
+                    "start": 52,
+                    "end": 57,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test3_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"').setEscape0('?');\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "378-381:setEscape0"
+                        ]
+                    ]
+                },
+                "45-49:testPrintFromReaderWithQuotes_test2_decomposed": {
+                    "start": 45,
+                    "end": 49,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test2_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',').setQuote0('\"');\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "586-589:setQuote0"
+                        ]
+                    ]
+                },
+                "39-42:testPrintFromReaderWithQuotes_test1_decomposed": {
+                    "start": 39,
+                    "end": 42,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test1_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "        CSVFormat.RFC4180.builder().setDelimiter0(',');\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "Builder",
+                            "337-339:setDelimiter0"
+                        ]
+                    ]
+                },
+                "34-36:testPrintFromReaderWithQuotes_test0_decomposed": {
+                    "start": 34,
+                    "end": 36,
+                    "body": [
+                        "    public void testPrintFromReaderWithQuotes_test0_decomposed() throws IOException {\n",
+                        "        CSVFormat.RFC4180.builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPrintFromReaderWithQuotes_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1425-1427:builder"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

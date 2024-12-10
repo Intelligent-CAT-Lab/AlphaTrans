@@ -1,0 +1,1221 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-cli/src/main/java/org/apache/commons/cli/Parser.java",
+    "imports": {
+        "23-23:import List": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "22-22:import Enumeration": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Enumeration;\n"
+            ]
+        },
+        "25-25:import Properties": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Properties;\n"
+            ]
+        },
+        "24-24:import ListIterator": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.ListIterator;\n"
+            ]
+        },
+        "20-20:import ArrayList": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "21-21:import Arrays": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Parser": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "CommandLineParser"
+            ],
+            "extends": [],
+            "methods": {
+                "314-317:setOptions": {
+                    "start": 314,
+                    "end": 317,
+                    "body": [
+                        "    protected void setOptions(final Options options) {\n",
+                        "        this.options = options;\n",
+                        "        this.requiredOptions = new ArrayList<>(options.getRequiredOptions());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setOptions(Options)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<>(java.util.Collection)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "260-262:getRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _setOptions(self, options: Options) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "276-312:processProperties": {
+                    "start": 276,
+                    "end": 312,
+                    "body": [
+                        "    protected void processProperties(final Properties properties) throws ParseException {\n",
+                        "        if (properties == null) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        for (final Enumeration<?> e = properties.propertyNames(); e.hasMoreElements(); ) {\n",
+                        "            final String option = e.nextElement().toString();\n",
+                        "\n",
+                        "            final Option opt = options.getOption(option);\n",
+                        "            if (opt == null) {\n",
+                        "                throw new UnrecognizedOptionException(\"Default option wasn't defined\", option);\n",
+                        "            }\n",
+                        "\n",
+                        "            final OptionGroup group = options.getOptionGroup(opt);\n",
+                        "            final boolean selected = group != null && group.getSelected() != null;\n",
+                        "\n",
+                        "            if (!cmd.hasOption2(option) && !selected) {\n",
+                        "                final String value = properties.getProperty(option);\n",
+                        "\n",
+                        "                if (opt.hasArg()) {\n",
+                        "                    if (opt.getValues() == null || opt.getValues().length == 0) {\n",
+                        "                        try {\n",
+                        "                            opt.addValueForProcessing(value);\n",
+                        "                        } catch (final RuntimeException exp) { // NOPMD\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                } else if (!(\"yes\".equalsIgnoreCase(value)\n",
+                        "                        || \"true\".equalsIgnoreCase(value)\n",
+                        "                        || \"1\".equalsIgnoreCase(value))) {\n",
+                        "                    continue;\n",
+                        "                }\n",
+                        "\n",
+                        "                cmd.addOption(opt);\n",
+                        "                updateRequiredOptions(opt);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processProperties(Properties)",
+                    "parameters": [
+                        "properties"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "propertyNames()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Enumeration",
+                            "hasMoreElements()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Enumeration",
+                            "nextElement()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "233-235:getOptionGroup"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "69-71:getSelected"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.UnrecognizedOptionException",
+                            "UnrecognizedOptionException",
+                            "34-37:UnrecognizedOptionException"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "428-430:hasOption2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Properties",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "635-637:getValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "462-467:addValueForProcessing"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "99-101:addOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "324-338:updateRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _processProperties(self, properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "251-268:processOption": {
+                    "start": 251,
+                    "end": 268,
+                    "body": [
+                        "    protected void processOption(final String arg, final ListIterator<String> iter)\n",
+                        "            throws ParseException {\n",
+                        "        final boolean hasOption = getOptions().hasOption(arg);\n",
+                        "\n",
+                        "        if (!hasOption) {\n",
+                        "            throw new UnrecognizedOptionException(\"Unrecognized option: \" + arg, arg);\n",
+                        "        }\n",
+                        "\n",
+                        "        final Option opt = (Option) getOptions().getOption(arg).clone();\n",
+                        "\n",
+                        "        updateRequiredOptions(opt);\n",
+                        "\n",
+                        "        if (opt.hasArg()) {\n",
+                        "            processArgs(opt, iter);\n",
+                        "        }\n",
+                        "\n",
+                        "        cmd.addOption(opt);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processOption(String, ListIterator<String>)",
+                    "parameters": [
+                        "arg",
+                        "iter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "491-500:clone"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "217-225:getOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.UnrecognizedOptionException",
+                            "UnrecognizedOptionException",
+                            "34-37:UnrecognizedOptionException"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "324-338:updateRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "662-664:hasArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "220-241:processArgs"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "99-101:addOption"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _processOption(self, arg: str, iter_: typing.Iterator[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "220-241:processArgs": {
+                    "start": 220,
+                    "end": 241,
+                    "body": [
+                        "    public void processArgs(final Option opt, final ListIterator<String> iter)\n",
+                        "            throws ParseException {\n",
+                        "        while (iter.hasNext()) {\n",
+                        "            final String str = iter.next();\n",
+                        "\n",
+                        "            if (getOptions().hasOption(str) && str.startsWith(\"-\")) {\n",
+                        "                iter.previous();\n",
+                        "                break;\n",
+                        "            }\n",
+                        "\n",
+                        "            try {\n",
+                        "                opt.addValueForProcessing(Util.stripLeadingAndTrailingQuotes(str));\n",
+                        "            } catch (final RuntimeException exp) {\n",
+                        "                iter.previous();\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (opt.getValues() == null && !opt.hasOptionalArg()) {\n",
+                        "            throw MissingArgumentException.MissingArgumentException1(1, null, opt);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "processArgs(Option, ListIterator<String>)",
+                    "parameters": [
+                        "opt",
+                        "iter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "next()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "previous()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "462-467:addValueForProcessing"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Util",
+                            "Util",
+                            "33-43:stripLeadingAndTrailingQuotes"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "635-637:getValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "710-712:hasOptionalArg"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.MissingArgumentException",
+                            "MissingArgumentException",
+                            "42-49:MissingArgumentException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def processArgs(self, opt: Option, iter_: typing.Iterator[str]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "140-210:parse3": {
+                    "start": 140,
+                    "end": 210,
+                    "body": [
+                        "    public CommandLine parse3(\n",
+                        "            final Options options,\n",
+                        "            String[] arguments,\n",
+                        "            final Properties properties,\n",
+                        "            final boolean stopAtNonOption)\n",
+                        "            throws ParseException {\n",
+                        "        for (final Option opt : options.helpOptions()) {\n",
+                        "            opt.clearValues();\n",
+                        "        }\n",
+                        "\n",
+                        "        for (final OptionGroup group : options.getOptionGroups()) {\n",
+                        "            group.setSelected(null);\n",
+                        "        }\n",
+                        "\n",
+                        "        setOptions(options);\n",
+                        "\n",
+                        "        cmd = new CommandLine();\n",
+                        "\n",
+                        "        boolean eatTheRest = false;\n",
+                        "\n",
+                        "        if (arguments == null) {\n",
+                        "            arguments = new String[0];\n",
+                        "        }\n",
+                        "\n",
+                        "        final List<String> tokenList =\n",
+                        "                Arrays.asList(flatten(getOptions(), arguments, stopAtNonOption));\n",
+                        "\n",
+                        "        final ListIterator<String> iterator = tokenList.listIterator();\n",
+                        "\n",
+                        "        while (iterator.hasNext()) {\n",
+                        "            final String t = iterator.next();\n",
+                        "\n",
+                        "            if (\"--\".equals(t)) {\n",
+                        "                eatTheRest = true;\n",
+                        "            } else if (\"-\".equals(t)) {\n",
+                        "                if (stopAtNonOption) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                } else {\n",
+                        "                    cmd.addArg(t);\n",
+                        "                }\n",
+                        "            } else if (t.startsWith(\"-\")) {\n",
+                        "                if (stopAtNonOption && !getOptions().hasOption(t)) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                    cmd.addArg(t);\n",
+                        "                } else {\n",
+                        "                    processOption(t, iterator);\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                cmd.addArg(t);\n",
+                        "\n",
+                        "                if (stopAtNonOption) {\n",
+                        "                    eatTheRest = true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            if (eatTheRest) {\n",
+                        "                while (iterator.hasNext()) {\n",
+                        "                    final String str = iterator.next();\n",
+                        "\n",
+                        "                    if (!\"--\".equals(str)) {\n",
+                        "                        cmd.addArg(str);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        processProperties(properties);\n",
+                        "        checkRequiredOptions();\n",
+                        "\n",
+                        "        return cmd;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse3(Options, String[], Properties, boolean)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "properties",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "67-69:flatten"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "listIterator()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "307-309:helpOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "475-477:clearValues"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "242-244:getOptionGroups"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "95-105:setSelected"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "314-317:setOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "83-83:CommandLine"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ListIterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.CommandLine",
+                            "CommandLine",
+                            "90-92:addArg"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "283-287:hasOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "251-268:processOption"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "276-312:processProperties"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "49-53:checkRequiredOptions"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse3(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict], stopAtNonOption: bool) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "120-124:parse2": {
+                    "start": 120,
+                    "end": 124,
+                    "body": [
+                        "    public CommandLine parse2(\n",
+                        "            final Options options, final String[] arguments, final Properties properties)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, properties, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse2(Options, String[], Properties)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "properties"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse2(self, options: Options, arguments: typing.List[typing.List[str]], properties: typing.Union[configparser.ConfigParser, typing.Dict]) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "103-107:parse1": {
+                    "start": 103,
+                    "end": 107,
+                    "body": [
+                        "    public CommandLine parse1(\n",
+                        "            final Options options, final String[] arguments, final boolean stopAtNonOption)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, null, stopAtNonOption);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse1(Options, String[], boolean)",
+                    "parameters": [
+                        "options",
+                        "arguments",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse1(self, options: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "87-90:parse0": {
+                    "start": 87,
+                    "end": 90,
+                    "body": [
+                        "    public CommandLine parse0(final Options options, final String[] arguments)\n",
+                        "            throws ParseException {\n",
+                        "        return parse3(options, arguments, null, false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "signature": "parse0(Options, String[])",
+                    "parameters": [
+                        "options",
+                        "arguments"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "140-210:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse0(self, options: Options, arguments: typing.List[typing.List[str]]) -> CommandLine:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "74-76:getRequiredOptions": {
+                    "start": 74,
+                    "end": 76,
+                    "body": [
+                        "    protected List getRequiredOptions() {\n",
+                        "        return requiredOptions;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "List<>",
+                            "java.util.List<>"
+                        ]
+                    ],
+                    "signature": "getRequiredOptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getRequiredOptions(self) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "70-72:getOptions": {
+                    "start": 70,
+                    "end": 72,
+                    "body": [
+                        "    protected Options getOptions() {\n",
+                        "        return options;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "signature": "getOptions()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getOptions(self) -> Options:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-53:checkRequiredOptions": {
+                    "start": 49,
+                    "end": 53,
+                    "body": [
+                        "    protected void checkRequiredOptions() throws MissingOptionException {\n",
+                        "        if (!getRequiredOptions().isEmpty()) {\n",
+                        "            throw MissingOptionException.MissingOptionException1(1, getRequiredOptions(), null);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "checkRequiredOptions()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "74-76:getRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.MissingOptionException",
+                            "MissingOptionException",
+                            "68-75:MissingOptionException1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _checkRequiredOptions(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "324-338:updateRequiredOptions": {
+                    "start": 324,
+                    "end": 338,
+                    "body": [
+                        "    private void updateRequiredOptions(final Option opt) throws ParseException {\n",
+                        "        if (opt.isRequired()) {\n",
+                        "            getRequiredOptions().remove(opt.getKey());\n",
+                        "        }\n",
+                        "\n",
+                        "        if (getOptions().getOptionGroup(opt) != null) {\n",
+                        "            final OptionGroup group = getOptions().getOptionGroup(opt);\n",
+                        "\n",
+                        "            if (group.isRequired()) {\n",
+                        "                getRequiredOptions().remove(group);\n",
+                        "            }\n",
+                        "\n",
+                        "            group.setSelected(opt);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "updateRequiredOptions(Option)",
+                    "parameters": [
+                        "opt"
+                    ],
+                    "calls": [
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "729-731:isRequired"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "74-76:getRequiredOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Option",
+                            "Option",
+                            "562-564:getKey"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Options",
+                            "Options",
+                            "233-235:getOptionGroup"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.Parser",
+                            "Parser",
+                            "70-72:getOptions"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "78-80:isRequired"
+                        ],
+                        [
+                            "commons-cli.src.main.org.apache.commons.cli.OptionGroup",
+                            "OptionGroup",
+                            "95-105:setSelected"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __updateRequiredOptions(self, opt: Option) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "67-69:flatten": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    protected abstract String[] flatten(Options opts, String[] arguments, boolean stopAtNonOption)\n",
+                        "            throws ParseException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "flatten(Options, String[], boolean)",
+                    "parameters": [
+                        "opts",
+                        "arguments",
+                        "stopAtNonOption"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _flatten(self, opts: Options, arguments: typing.List[typing.List[str]], stopAtNonOption: bool) -> typing.List[typing.List[str]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "36-36:cmd": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    protected CommandLine cmd;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "CommandLine",
+                            "CommandLine"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _cmd: CommandLine = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "42-42:requiredOptions": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private List requiredOptions;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<>",
+                            "java.util.List<>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __requiredOptions: typing.List[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "39-39:options": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private Options options;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Options",
+                            "Options"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __options: Options = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Parser(CommandLineParser, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import configparser",
+        "from src.main.org.apache.commons.cli.CommandLine import *",
+        "from src.main.org.apache.commons.cli.CommandLineParser import *",
+        "from src.main.org.apache.commons.cli.MissingArgumentException import *",
+        "from src.main.org.apache.commons.cli.MissingOptionException import *",
+        "from src.main.org.apache.commons.cli.Option import *",
+        "from src.main.org.apache.commons.cli.OptionGroup import *",
+        "from src.main.org.apache.commons.cli.Options import *",
+        "from src.main.org.apache.commons.cli.ParseException import *",
+        "from src.main.org.apache.commons.cli.UnrecognizedOptionException import *",
+        "from src.main.org.apache.commons.cli.Util import *"
+    ]
+}

@@ -49,15 +49,30 @@ def graal_validation(generation: typing.List[str], fragment: typing.Dict[str, st
     try:
         test = project.derive_compositional_tests(components, debug=True)
         output = test.run()
+        assert isinstance(output, dict)
     except NotImplementedError as e:
         output = {
             "status": ERROR,
             "feedback": dict(),
             "message": "Unsupported fragment: " + str(e)
         }
+    except AssertionError:
+        output = {
+            "status": ERROR,
+            "feedback": dict(),
+            "message": ""
+        }
 
     status = output['status']
     feedback = output['feedback']
+    is_dct = False
+    graal_feedback = ''
+    if isinstance(feedback, dict):
+        is_dct = True
+        for test_id in feedback:
+            graal_feedback += f'{test_id}: {feedback[test_id]}\n'
+    if is_dct:
+        feedback = graal_feedback        
     message = output['message']
 
     return status, feedback, message

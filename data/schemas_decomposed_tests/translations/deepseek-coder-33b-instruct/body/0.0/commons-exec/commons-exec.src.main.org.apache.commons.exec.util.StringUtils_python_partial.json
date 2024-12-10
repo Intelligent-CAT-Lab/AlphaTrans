@@ -1,0 +1,791 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/util/StringUtils.java",
+    "imports": {
+        "20-20:import File": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "23-23:import Map": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "22-22:import List": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "21-21:import ArrayList": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "24-24:import Objects": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "25-25:import StringTokenizer": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.StringTokenizer;\n"
+            ]
+        }
+    },
+    "classes": {
+        "StringUtils": {
+            "start": 32,
+            "end": 32,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "231-233:toString": {
+                    "start": 231,
+                    "end": 233,
+                    "body": [
+                        "    public static String toString(final String[] strings, final String separator) {\n",
+                        "        return String.join(separator, strings);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString(String[], String)",
+                    "parameters": [
+                        "strings",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "join(java.lang.CharSequence,java.lang.CharSequence[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def toString(strings: typing.List[typing.List[str]], separator: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "140-220:stringSubstitution": {
+                    "start": 140,
+                    "end": 220,
+                    "body": [
+                        "    public static StringBuffer stringSubstitution(final String argStr, final Map<? super String, ?> vars, final boolean isLenient) {\n",
+                        "\n",
+                        "        final StringBuffer argBuf = new StringBuffer();\n",
+                        "\n",
+                        "        if (argStr == null || argStr.isEmpty()) {\n",
+                        "            return argBuf;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (vars == null || vars.isEmpty()) {\n",
+                        "            return argBuf.append(argStr);\n",
+                        "        }\n",
+                        "\n",
+                        "        final int argStrLength = argStr.length();\n",
+                        "\n",
+                        "        for (int cIdx = 0; cIdx < argStrLength;) {\n",
+                        "\n",
+                        "            char ch = argStr.charAt(cIdx);\n",
+                        "            char del = ' ';\n",
+                        "\n",
+                        "            switch (ch) {\n",
+                        "\n",
+                        "            case '$':\n",
+                        "                final StringBuilder nameBuf = new StringBuilder();\n",
+                        "                del = argStr.charAt(cIdx + 1);\n",
+                        "                if (del == '{') {\n",
+                        "                    cIdx++;\n",
+                        "\n",
+                        "                    for (++cIdx; cIdx < argStr.length(); ++cIdx) {\n",
+                        "                        ch = argStr.charAt(cIdx);\n",
+                        "                        if (ch != '_' && ch != '.' && ch != '-' && ch != '+' && !Character.isLetterOrDigit(ch)) {\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        nameBuf.append(ch);\n",
+                        "                    }\n",
+                        "\n",
+                        "                    if (nameBuf.length() >= 0) {\n",
+                        "\n",
+                        "                        String value;\n",
+                        "                        final Object temp = vars.get(nameBuf.toString());\n",
+                        "\n",
+                        "                        if (temp instanceof File) {\n",
+                        "                            // for a file we have to fix the separator chars to allow\n",
+                        "                            // cross-platform compatibility\n",
+                        "                            value = fixFileSeparatorChar(((File) temp).getAbsolutePath());\n",
+                        "                        } else {\n",
+                        "                            value = Objects.toString(temp, null);\n",
+                        "                        }\n",
+                        "\n",
+                        "                        if (value != null) {\n",
+                        "                            argBuf.append(value);\n",
+                        "                        } else {\n",
+                        "                            if (!isLenient) {\n",
+                        "                                // complain that no variable was found\n",
+                        "                                throw new IllegalArgumentException(\"No value found for : \" + nameBuf);\n",
+                        "                            }\n",
+                        "                            // just append the unresolved variable declaration\n",
+                        "                            argBuf.append(\"${\").append(nameBuf.toString()).append(\"}\");\n",
+                        "                        }\n",
+                        "\n",
+                        "                        del = argStr.charAt(cIdx);\n",
+                        "\n",
+                        "                        if (del != '}') {\n",
+                        "                            throw new IllegalArgumentException(\"Delimiter not found for : \" + nameBuf);\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                } else {\n",
+                        "                    argBuf.append(ch);\n",
+                        "                }\n",
+                        "                cIdx++;\n",
+                        "\n",
+                        "                break;\n",
+                        "\n",
+                        "            default:\n",
+                        "                argBuf.append(ch);\n",
+                        "                ++cIdx;\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return argBuf;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "StringBuffer",
+                            "java.lang.StringBuffer"
+                        ]
+                    ],
+                    "signature": "stringSubstitution(String, Map<? super String,?>, boolean)",
+                    "parameters": [
+                        "argStr",
+                        "vars",
+                        "isLenient"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuffer",
+                            "StringBuffer()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuffer",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isLetterOrDigit(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.util.StringUtils",
+                            "StringUtils",
+                            "50-52:fixFileSeparatorChar"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "toString(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuffer",
+                            "append(char)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def stringSubstitution(argStr: str, vars_: typing.Dict[str, typing.Any], isLenient: bool) -> io.StringIO:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "108-115:split": {
+                    "start": 108,
+                    "end": 115,
+                    "body": [
+                        "    public static String[] split(final String input, final String splitChar) {\n",
+                        "        final StringTokenizer tokens = new StringTokenizer(input, splitChar);\n",
+                        "        final List<String> strList = new ArrayList<>();\n",
+                        "        while (tokens.hasMoreTokens()) {\n",
+                        "            strList.add(tokens.nextToken());\n",
+                        "        }\n",
+                        "        return strList.toArray(EMPTY_STRING_ARRAY);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "signature": "split(String, String)",
+                    "parameters": [
+                        "input",
+                        "splitChar"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/StringTokenizer",
+                            "StringTokenizer(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<String>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/StringTokenizer",
+                            "hasMoreTokens()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/StringTokenizer",
+                            "nextToken()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "toArray(java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def split(input_: str, splitChar: str) -> typing.List[typing.List[str]]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "75-99:quoteArgument": {
+                    "start": 75,
+                    "end": 99,
+                    "body": [
+                        "    public static String quoteArgument(final String argument) {\n",
+                        "\n",
+                        "        String cleanedArgument = argument.trim();\n",
+                        "\n",
+                        "        // strip the quotes from both ends\n",
+                        "        while (cleanedArgument.startsWith(SINGLE_QUOTE) || cleanedArgument.startsWith(DOUBLE_QUOTE)) {\n",
+                        "            cleanedArgument = cleanedArgument.substring(1);\n",
+                        "        }\n",
+                        "\n",
+                        "        while (cleanedArgument.endsWith(SINGLE_QUOTE) || cleanedArgument.endsWith(DOUBLE_QUOTE)) {\n",
+                        "            cleanedArgument = cleanedArgument.substring(0, cleanedArgument.length() - 1);\n",
+                        "        }\n",
+                        "\n",
+                        "        final StringBuilder buf = new StringBuilder();\n",
+                        "        if (cleanedArgument.indexOf(DOUBLE_QUOTE) > -1) {\n",
+                        "            if (cleanedArgument.indexOf(SINGLE_QUOTE) > -1) {\n",
+                        "                throw new IllegalArgumentException(\"Can't handle single and double quotes in same argument\");\n",
+                        "            }\n",
+                        "            return buf.append(SINGLE_QUOTE).append(cleanedArgument).append(SINGLE_QUOTE).toString();\n",
+                        "        }\n",
+                        "        if (cleanedArgument.indexOf(SINGLE_QUOTE) > -1 || cleanedArgument.indexOf(\" \") > -1) {\n",
+                        "            return buf.append(DOUBLE_QUOTE).append(cleanedArgument).append(DOUBLE_QUOTE).toString();\n",
+                        "        }\n",
+                        "        return cleanedArgument;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "quoteArgument(String)",
+                    "parameters": [
+                        "argument"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def quoteArgument(argument: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "60-62:isQuoted": {
+                    "start": 60,
+                    "end": 62,
+                    "body": [
+                        "    public static boolean isQuoted(final String argument) {\n",
+                        "        return argument.startsWith(SINGLE_QUOTE) && argument.endsWith(SINGLE_QUOTE) || argument.startsWith(DOUBLE_QUOTE) && argument.endsWith(DOUBLE_QUOTE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isQuoted(String)",
+                    "parameters": [
+                        "argument"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isQuoted(argument: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "50-52:fixFileSeparatorChar": {
+                    "start": 50,
+                    "end": 52,
+                    "body": [
+                        "    public static String fixFileSeparatorChar(final String arg) {\n",
+                        "        return arg.replace(SLASH_CHAR, File.separatorChar).replace(BACKSLASH_CHAR, File.separatorChar);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "fixFileSeparatorChar(String)",
+                    "parameters": [
+                        "arg"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(char,char)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def fixFileSeparatorChar(arg: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "38-38:BACKSLASH_CHAR": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final char BACKSLASH_CHAR = '\\\\';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BACKSLASH_CHAR: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "37-37:SLASH_CHAR": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final char SLASH_CHAR = '/';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SLASH_CHAR: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "36-36:DOUBLE_QUOTE": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private static final String DOUBLE_QUOTE = \"\\\"\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DOUBLE_QUOTE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "35-35:SINGLE_QUOTE": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private static final String SINGLE_QUOTE = \"\\'\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __SINGLE_QUOTE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "34-34:EMPTY_STRING_ARRAY": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private static final String[] EMPTY_STRING_ARRAY = {};\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EMPTY_STRING_ARRAY: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class StringUtils:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

@@ -1,0 +1,284 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/util/ValidatorUtils.java",
+    "imports": {
+        "27-27:import Map": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "28-28:import Entry": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Map.Entry;\n"
+            ]
+        },
+        "26-26:import Iterator": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "25-25:import HashMap": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "19-19:import Log": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.logging.Log;\n"
+            ]
+        },
+        "20-20:import LogFactory": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.logging.LogFactory;\n"
+            ]
+        },
+        "21-21:import Arg": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.Arg;\n"
+            ]
+        },
+        "22-22:import Msg": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.validator.Msg;\n"
+            ]
+        },
+        "23-23:import Var": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.validator.Var;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ValidatorUtils": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "109-129:copyMap": {
+                    "start": 109,
+                    "end": 129,
+                    "body": [
+                        "    public static Map<String, Object> copyMap(Map<String, Object> map) {\n",
+                        "        Map<String, Object> results = new HashMap<String, Object>();\n",
+                        "\n",
+                        "        Iterator<Entry<String, Object>> i = map.entrySet().iterator();\n",
+                        "        while (i.hasNext()) {\n",
+                        "            Entry<String, Object> entry = i.next();\n",
+                        "            String key = entry.getKey();\n",
+                        "            Object value = entry.getValue();\n",
+                        "\n",
+                        "            if (value instanceof Msg) {\n",
+                        "                results.put(key, ((Msg) value).clone());\n",
+                        "            } else if (value instanceof Arg) {\n",
+                        "                results.put(key, ((Arg) value).clone());\n",
+                        "            } else if (value instanceof Var) {\n",
+                        "                results.put(key, ((Var) value).clone());\n",
+                        "            } else {\n",
+                        "                results.put(key, value);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return results;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,Object>",
+                            "java.util.Map<String,Object>"
+                        ]
+                    ],
+                    "signature": "copyMap(Map<String,Object>)",
+                    "parameters": [
+                        "map"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,Object>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "entrySet()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "hasNext()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getKey()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map$Entry",
+                            "getValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Msg",
+                            "Msg",
+                            "135-142:clone"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Arg",
+                            "Arg",
+                            "70-77:clone"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.Var",
+                            "Var",
+                            "176-183:clone"
+                        ]
+                    ]
+                },
+                "49-79:replace": {
+                    "start": 49,
+                    "end": 79,
+                    "body": [
+                        "    public static String replace(String value, String key, String replaceValue) {\n",
+                        "\n",
+                        "        if (value == null || key == null || replaceValue == null) {\n",
+                        "            return value;\n",
+                        "        }\n",
+                        "\n",
+                        "        int pos = value.indexOf(key);\n",
+                        "\n",
+                        "        if (pos < 0) {\n",
+                        "            return value;\n",
+                        "        }\n",
+                        "\n",
+                        "        int length = value.length();\n",
+                        "        int start = pos;\n",
+                        "        int end = pos + key.length();\n",
+                        "\n",
+                        "        if (length == key.length()) {\n",
+                        "            value = replaceValue;\n",
+                        "\n",
+                        "        } else if (end == length) {\n",
+                        "            value = value.substring(0, start) + replaceValue;\n",
+                        "\n",
+                        "        } else {\n",
+                        "            value =\n",
+                        "                    value.substring(0, start)\n",
+                        "                            + replaceValue\n",
+                        "                            + replace(value.substring(end), key, replaceValue);\n",
+                        "        }\n",
+                        "\n",
+                        "        return value;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "replace(String, String, String)",
+                    "parameters": [
+                        "value",
+                        "key",
+                        "replaceValue"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.ValidatorUtils",
+                            "ValidatorUtils",
+                            "49-79:replace"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "39-39:LOG": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final Log LOG = LogFactory.getLog(ValidatorUtils.class);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Log",
+                            "Log"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

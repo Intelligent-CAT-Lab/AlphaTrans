@@ -1,0 +1,526 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/differential/IntegratedBinaryPacking.java",
+    "imports": {
+        "11-11:import IntWrapper": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "10-10:import BitPacking": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import me.lemire.integercompression.BitPacking;\n"
+            ]
+        },
+        "12-12:import Util": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import me.lemire.integercompression.Util;\n"
+            ]
+        }
+    },
+    "classes": {
+        "IntegratedBinaryPacking": {
+            "start": 49,
+            "end": 50,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegratedIntegerCODEC",
+                "SkippableIntegratedIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "130-172:headlessUncompress": {
+                    "start": 130,
+                    "end": 172,
+                    "body": [
+                        "    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "            int[] out, IntWrapper outpos, int num, IntWrapper initvalue) {\n",
+                        "        final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);\n",
+                        "        int tmpinpos = inpos.get();\n",
+                        "        int initoffset = initvalue.get();\n",
+                        "        int s = outpos.get();\n",
+                        "        for (; s + BLOCK_SIZE * 4 - 1 < outpos.get() + outlength; s += BLOCK_SIZE * 4) {\n",
+                        "            final int mbits1 = (in[tmpinpos] >>> 24);\n",
+                        "            final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;\n",
+                        "            final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;\n",
+                        "            final int mbits4 = (in[tmpinpos]) & 0xFF;\n",
+                        "\n",
+                        "            ++tmpinpos;\n",
+                        "            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,\n",
+                        "                    out, s, mbits1);\n",
+                        "            tmpinpos += mbits1;\n",
+                        "            initoffset = out[s + 31];\n",
+                        "            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,\n",
+                        "                    out, s + BLOCK_SIZE, mbits2);\n",
+                        "            tmpinpos += mbits2;\n",
+                        "            initoffset = out[s + BLOCK_SIZE + 31];\n",
+                        "            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,\n",
+                        "                    out, s + 2 * BLOCK_SIZE, mbits3);\n",
+                        "            tmpinpos += mbits3;\n",
+                        "            initoffset = out[s + 2 * BLOCK_SIZE + 31];\n",
+                        "            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,\n",
+                        "                    out, s + 3 * BLOCK_SIZE, mbits4);\n",
+                        "            tmpinpos += mbits4;\n",
+                        "            initoffset = out[s + 3 * BLOCK_SIZE + 31];\n",
+                        "        }\n",
+                        "        for (; s < outpos.get() + outlength; s += BLOCK_SIZE) {\n",
+                        "            final int mbits = in[tmpinpos];\n",
+                        "            ++tmpinpos;\n",
+                        "            IntegratedBitPacking.integratedunpack(initoffset, in, tmpinpos,\n",
+                        "                    out, s, mbits);\n",
+                        "            initoffset = out[s + 31];\n",
+                        "\n",
+                        "            tmpinpos += mbits;\n",
+                        "        }\n",
+                        "        outpos.add(outlength);\n",
+                        "        initvalue.set(initoffset);\n",
+                        "        inpos.set(tmpinpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int, IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num",
+                        "initvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBitPacking",
+                            "IntegratedBitPacking",
+                            "1701-1808:integratedunpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int, initvalue: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "81-127:headlessCompress": {
+                    "start": 81,
+                    "end": 127,
+                    "body": [
+                        "    public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "            int[] out, IntWrapper outpos, IntWrapper initvalue) {\n",
+                        "        inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "\n",
+                        "        int initoffset = initvalue.get();\n",
+                        "        initvalue.set(in[inpos.get()+inlength -1]);\n",
+                        "        int s = inpos.get();\n",
+                        "        for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {\n",
+                        "            final int mbits1 = Util.maxdiffbits(initoffset, in, s, BLOCK_SIZE);\n",
+                        "            int initoffset2 = in[s + 31];\n",
+                        "            final int mbits2 = Util.maxdiffbits(initoffset2, in, s + BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "            int initoffset3 = in[s + BLOCK_SIZE + 31];\n",
+                        "            final int mbits3 = Util\n",
+                        "                    .maxdiffbits(initoffset3, in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "            int initoffset4 = in[s + 2 * BLOCK_SIZE + 31];\n",
+                        "            final int mbits4 = Util\n",
+                        "                    .maxdiffbits(initoffset4, in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "            out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16) | (mbits3 << 8)\n",
+                        "                    | (mbits4);\n",
+                        "            IntegratedBitPacking.integratedpack(initoffset, in, s, out,\n",
+                        "                    tmpoutpos, mbits1);\n",
+                        "            tmpoutpos += mbits1;\n",
+                        "            IntegratedBitPacking.integratedpack(initoffset2, in, s + BLOCK_SIZE, out,\n",
+                        "                    tmpoutpos, mbits2);\n",
+                        "            tmpoutpos += mbits2;\n",
+                        "            IntegratedBitPacking.integratedpack(initoffset3, in, s + 2 * BLOCK_SIZE,\n",
+                        "                    out, tmpoutpos, mbits3);\n",
+                        "            tmpoutpos += mbits3;\n",
+                        "            IntegratedBitPacking.integratedpack(initoffset4, in, s + 3 * BLOCK_SIZE,\n",
+                        "                    out, tmpoutpos, mbits4);\n",
+                        "            tmpoutpos += mbits4;\n",
+                        "            initoffset = in[s + 3 * BLOCK_SIZE + 31];\n",
+                        "        }\n",
+                        "        for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {\n",
+                        "            final int mbits = Util.maxdiffbits(initoffset, in, s, BLOCK_SIZE);\n",
+                        "            out[tmpoutpos++] = mbits;\n",
+                        "            IntegratedBitPacking.integratedpack(initoffset, in, s, out,\n",
+                        "                    tmpoutpos, mbits);\n",
+                        "            tmpoutpos += mbits;\n",
+                        "            initoffset = in[s + 31];\n",
+                        "        }\n",
+                        "        inpos.add(inlength);\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper, IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "initvalue"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "93-100:maxdiffbits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBitPacking",
+                            "IntegratedBitPacking",
+                            "39-145:integratedpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, initvalue: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "76-78:toString": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return this.getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "66-73:uncompress0": {
+                    "start": 66,
+                    "end": 73,
+                    "body": [
+                        "    public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                            IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        final int outlength = in[inpos.get()];\n",
+                        "        inpos.increment();\n",
+                        "        headlessUncompress(in,inpos,inlength,out,outpos,outlength, new IntWrapper(0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "130-172:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "55-63:compress0": {
+                    "start": 55,
+                    "end": 63,
+                    "body": [
+                        "    public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                          IntWrapper outpos) {\n",
+                        "        inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        out[outpos.get()] = inlength;\n",
+                        "        outpos.increment();\n",
+                        "        headlessCompress(in, inpos, inlength, out, outpos, new IntWrapper(0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.IntegratedBinaryPacking",
+                            "IntegratedBinaryPacking",
+                            "81-127:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "52-52:BLOCK_SIZE": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    static final int BLOCK_SIZE = 32;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class IntegratedBinaryPacking(IntegratedIntegerCODEC, SkippableIntegratedIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.Util import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedBitPacking import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.differential.SkippableIntegratedIntegerCODEC import *"
+    ]
+}

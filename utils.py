@@ -2,7 +2,6 @@ import os
 import argparse
 import re
 import json
-import graphviz
 from collections import defaultdict, deque
 
 
@@ -116,12 +115,6 @@ def parse_dependencies(project_name, suffix):
 
     with open(os.path.join(dependencies_dir, 'dependencies.json'), 'w') as f:
         json.dump(class_dependencies, f, indent=4)
-
-    # g = graphviz.Digraph('G', filename=os.path.join(dependencies_dir, 'dependencies.gv'))
-    # for class_name, dependencies in class_dependencies.items():
-    #     for dependency in dependencies:
-    #         g.edge(class_name, dependency)
-    # g.render(os.path.join(dependencies_dir, 'dependency_graph'), format='png', cleanup=True)
 
     adjacency_list = defaultdict(list)
     for key, value in class_dependencies.items():

@@ -1,0 +1,340 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.commons.exec.issues;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.Executor;
+import org.apache.commons.exec.OS;
+import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.exec.TestUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Test EXEC-36 see https://issues.apache.org/jira/browse/EXEC-36
+ */
+public class Exec36Test {
+
+    private final Executor exec = DefaultExecutor.builder().get();
+    private final File testDir = new File("src/test/scripts");
+    private final File printArgsScript = TestUtil.resolveScriptForOS(testDir + "/printargs");
+
+    private ByteArrayOutputStream baos;
+
+    /**
+     * Some complex real-life command line from http://blogs.msdn.com/b/astebner/archive/2005/12/13/503471.aspx
+     */
+    @Test
+    @Disabled
+    public void _testExec36_4() throws Exception {
+
+        CommandLine cmdl;
+
+        final String line = "./script/jrake " + "cruise:publish_installers " + "INSTALLER_VERSION=unstable_2_1 "
+                + "INSTALLER_PATH=\"/var/lib/cruise-agent/installers\" " + "INSTALLER_DOWNLOAD_SERVER='something'" + "WITHOUT_HELP_DOC=true";
+
+        cmdl = CommandLine.parse0(line);
+        final String[] args = cmdl.toStrings();
+        assertEquals("./script/jrake", args[0]);
+        assertEquals("cruise:publish_installers", args[1]);
+        assertEquals("INSTALLER_VERSION=unstable_2_1", args[2]);
+        assertEquals("INSTALLER_PATH=\"/var/lib/cruise-agent/installers\"", args[3]);
+        assertEquals("INSTALLER_DOWNLOAD_SERVER='something'", args[4]);
+        assertEquals("WITHOUT_HELP_DOC=true", args[5]);
+    }
+
+    /**
+     * Some complex real-life command line from http://blogs.msdn.com/b/astebner/archive/2005/12/13/503471.aspx
+     */
+    @Test
+    @Disabled
+    public void _testExec36_5() {
+
+        CommandLine cmdl;
+
+        final String line = "dotnetfx.exe" + " /q:a "
+                + "/c:\"install.exe /l \"\"c:\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+
+        cmdl = CommandLine.parse0(line);
+        final String[] args = cmdl.toStrings();
+        assertEquals("dotnetfx.exe", args[0]);
+        assertEquals("/q:a", args[1]);
+        assertEquals("/c:\"install.exe /l \"\"c:\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"", args[2]);
+    }
+
+    /**
+     * Test the following command line
+     *
+     * C:\CVS_DB\WeightsEngine /f WeightsEngine.mak CFG="WeightsEngine - Win32Release"
+     */
+    @Test
+    @Disabled
+    public void _testExec36_6() {
+
+        final String commandline = "C:\\CVS_DB\\WeightsEngine /f WeightsEngine.mak CFG=\"WeightsEngine - Win32Release\"";
+
+        final CommandLine cmdl = CommandLine.parse0(commandline);
+        final String[] args = cmdl.getArguments();
+        assertEquals("/f", args[0]);
+        assertEquals("WeightsEngine.mak", args[1]);
+        assertEquals("CFG=\"WeightsEngine - Win32Release\"", args[2]);
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        // prepare a ready to Executor
+        this.baos = new ByteArrayOutputStream();
+        this.exec.setStreamHandler(PumpStreamHandler.PumpStreamHandler2(baos, baos));
+    }
+
+    @AfterEach
+    public void tearDown() throws Exception {
+        this.baos.close();
+    }
+
+    /**
+     *
+     * Original example from Kai Hu which only can be tested on Unix
+     *
+     * @throws Exception the test failed
+     */
+    
+
+    /**
+     * Test a complex real example found at http://blogs.msdn.com/b/astebner/archive/2005/12/13/503471.aspx
+     *
+     * The command line is so weird that it even falls apart under Windows
+     *
+     * @throws Exception the test failed
+     */
+
+    @Test
+    public void testExec36_1_test0_decomposed() throws Exception {
+        if (OS.isFamilyUnix()) {
+
+            CommandLine cmdl;
+
+            /**
+             * ./script/jrake cruise:publish_installers INSTALLER_VERSION=unstable_2_1 \ INSTALLER_PATH="/var/lib/ cruise-agent/installers"
+             * INSTALLER_DOWNLOAD_SERVER='something' WITHOUT_HELP_DOC=true
+             */
+
+            final String expected = "./script/jrake\n" + "cruise:publish_installers\n" + "INSTALLER_VERSION=unstable_2_1\n"
+                    + "INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\"\n" + "INSTALLER_DOWNLOAD_SERVER='something'\n" + "WITHOUT_HELP_DOC=true";
+
+            cmdl = new CommandLine(1, null, printArgsScript, null);
+            cmdl.addArgument1("./script/jrake", false);
+            cmdl.addArgument1("cruise:publish_installers", false);
+            cmdl.addArgument1("INSTALLER_VERSION=unstable_2_1", false);
+            cmdl.addArgument1("INSTALLER_PATH=\"/var/lib/ cruise-agent/installers\"", false);
+            cmdl.addArgument1("INSTALLER_DOWNLOAD_SERVER='something'", false);
+            cmdl.addArgument1("WITHOUT_HELP_DOC=true", false);
+
+            final int exitValue = exec.execute0(cmdl);
+            final String result = baos.toString().trim();
+            assertFalse(exec.isFailure(exitValue));
+            assertEquals(expected, result);
+        } else {
+            System.err.println("The test 'testExec36_1' does not support the following OS : " + System.getProperty("os.name"));
+        }
+    }
+
+    @Test
+    public void testExec36_2_test0_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+    }
+
+    @Test
+    public void testExec36_2_test1_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+    }
+
+    @Test
+    public void testExec36_2_test2_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+    }
+
+    @Test
+    public void testExec36_2_test3_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+        cmdl.addArgument1("dotnetfx.exe", false);
+        cmdl.addArgument1("/q:a", false);
+        cmdl.addArgument1("/c:\"install.exe /l \"\"${FILE}\"\" /q\"", false);
+    }
+
+    @Test
+    public void testExec36_2_test4_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+        cmdl.addArgument1("dotnetfx.exe", false);
+        cmdl.addArgument1("/q:a", false);
+        cmdl.addArgument1("/c:\"install.exe /l \"\"${FILE}\"\" /q\"", false);
+        final int exitValue = exec.execute0(cmdl);
+    }
+
+    @Test
+    public void testExec36_2_test5_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+        cmdl.addArgument1("dotnetfx.exe", false);
+        cmdl.addArgument1("/q:a", false);
+        cmdl.addArgument1("/c:\"install.exe /l \"\"${FILE}\"\" /q\"", false);
+        final int exitValue = exec.execute0(cmdl);
+        final String result = baos.toString().trim();
+    }
+
+    @Test
+    public void testExec36_2_test6_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+        cmdl.addArgument1("dotnetfx.exe", false);
+        cmdl.addArgument1("/q:a", false);
+        cmdl.addArgument1("/c:\"install.exe /l \"\"${FILE}\"\" /q\"", false);
+        final int exitValue = exec.execute0(cmdl);
+        final String result = baos.toString().trim();
+        assertFalse(exec.isFailure(exitValue));
+    }
+
+    @Test
+    public void testExec36_2_test7_decomposed() throws Exception {
+        String expected;
+        if (OS.isFamilyWindows()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"\\Documents and Settings\\myusername\\Local Settings\\Temp\\netfx.log\"\" /q\"";
+        } else if (OS.isFamilyUnix()) {
+            expected = "dotnetfx.exe\n" + "/q:a\n" + "/c:\"install.exe /l \"\"/Documents and Settings/myusername/Local Settings/Temp/netfx.log\"\" /q\"";
+        } else {
+            System.err.println("The test 'testExec36_3' does not support the following OS : " + System.getProperty("os.name"));
+            return;
+        }
+        CommandLine cmdl;
+        final File file = new File("/Documents and Settings/myusername/Local Settings/Temp/netfx.log");
+        final Map<String, File> map = new HashMap<>();
+        map.put("FILE", file);
+        cmdl = new CommandLine(1, null, printArgsScript, null);
+        cmdl.setSubstitutionMap(map);
+        cmdl.addArgument1("dotnetfx.exe", false);
+        cmdl.addArgument1("/q:a", false);
+        cmdl.addArgument1("/c:\"install.exe /l \"\"${FILE}\"\" /q\"", false);
+        final int exitValue = exec.execute0(cmdl);
+        final String result = baos.toString().trim();
+        assertFalse(exec.isFailure(exitValue));
+        if (OS.isFamilyUnix()) {
+            // the parameters fall literally apart under Windows - need to disable the check for Win32
+            assertEquals(expected, result);
+        }
+    }
+}

@@ -1,0 +1,3210 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/internal/Kernel32.java",
+    "imports": {
+        "18-18:import IOException": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "19-19:import UnsupportedEncodingException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CHAR_INFO": {
+            "start": 246,
+            "end": 246,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "253-253:init": {
+                    "start": 253,
+                    "end": 253,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "258-258:unicodeChar": {
+                    "start": 258,
+                    "end": 258,
+                    "body": [
+                        "        public char unicodeChar;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "257-257:attributes": {
+                    "start": 257,
+                    "end": 257,
+                    "body": [
+                        "        public short attributes;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "255-255:SIZEOF": {
+                    "start": 255,
+                    "end": 255,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "248-251:run_static_init": {
+                    "start": 248,
+                    "end": 251,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "Kernel32": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "CHAR_INFO",
+                "CONSOLE_SCREEN_BUFFER_INFO",
+                "COORD",
+                "FOCUS_EVENT_RECORD",
+                "INPUT_RECORD",
+                "KEY_EVENT_RECORD",
+                "MENU_EVENT_RECORD",
+                "MOUSE_EVENT_RECORD",
+                "SMALL_RECT",
+                "WINDOW_BUFFER_SIZE_RECORD"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "526-535:getErrorMessage": {
+                    "start": 526,
+                    "end": 535,
+                    "body": [
+                        "    public static String getErrorMessage(int errorCode) {\n",
+                        "        int bufferSize = 160;\n",
+                        "        byte data[] = new byte[bufferSize];\n",
+                        "        FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, errorCode, 0, data, bufferSize, null);\n",
+                        "        try {\n",
+                        "            return new String(data, \"UTF-16LE\").trim();\n",
+                        "        } catch (UnsupportedEncodingException e) {\n",
+                        "            throw new IllegalStateException(e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getErrorMessage(int)",
+                    "parameters": [
+                        "errorCode"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "170-172:FormatMessageW"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(byte[],java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.Throwable)"
+                        ]
+                    ]
+                },
+                "521-524:getLastErrorMessage": {
+                    "start": 521,
+                    "end": 524,
+                    "body": [
+                        "    public static String getLastErrorMessage() {\n",
+                        "        int errorCode = GetLastError();\n",
+                        "        return getErrorMessage(errorCode);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getLastErrorMessage()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "168-168:GetLastError"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "526-535:getErrorMessage"
+                        ]
+                    ]
+                },
+                "499-519:readConsoleKeyInput": {
+                    "start": 499,
+                    "end": 519,
+                    "body": [
+                        "    public static INPUT_RECORD[] readConsoleKeyInput(long handle, int count, boolean peek) throws IOException {\n",
+                        "        while (true) {\n",
+                        "            // read events until we have keyboard events, the queue could be full\n",
+                        "            // of mouse events.\n",
+                        "            INPUT_RECORD[] evts = readConsoleInputHelper(handle, count, peek);\n",
+                        "            int keyEvtCount = 0;\n",
+                        "            for (INPUT_RECORD evt : evts) {\n",
+                        "                if (evt.eventType == INPUT_RECORD.KEY_EVENT) keyEvtCount++;\n",
+                        "            }\n",
+                        "            if (keyEvtCount > 0) {\n",
+                        "                INPUT_RECORD[] res = new INPUT_RECORD[keyEvtCount];\n",
+                        "                int i = 0;\n",
+                        "                for (INPUT_RECORD evt : evts) {\n",
+                        "                    if (evt.eventType == INPUT_RECORD.KEY_EVENT) {\n",
+                        "                        res[i++] = evt;\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                return res;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "INPUT_RECORD[]",
+                            "INPUT_RECORD[]"
+                        ]
+                    ],
+                    "signature": "readConsoleKeyInput(long, int, boolean)",
+                    "parameters": [
+                        "handle",
+                        "count",
+                        "peek"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "462-491:readConsoleInputHelper"
+                        ]
+                    ]
+                },
+                "462-491:readConsoleInputHelper": {
+                    "start": 462,
+                    "end": 491,
+                    "body": [
+                        "    public static INPUT_RECORD[] readConsoleInputHelper(long handle, int count, boolean peek) throws IOException {\n",
+                        "        int[] length = new int[1];\n",
+                        "        int res;\n",
+                        "        long inputRecordPtr = 0;\n",
+                        "        try {\n",
+                        "            inputRecordPtr = malloc(INPUT_RECORD.SIZEOF * count);\n",
+                        "            if (inputRecordPtr == 0) {\n",
+                        "                throw new IOException(\"cannot allocate memory with JNI\");\n",
+                        "            }\n",
+                        "            res = peek\n",
+                        "                    ? PeekConsoleInputW(handle, inputRecordPtr, count, length)\n",
+                        "                    : ReadConsoleInputW(handle, inputRecordPtr, count, length);\n",
+                        "            if (res == 0) {\n",
+                        "                throw new IOException(\"ReadConsoleInputW failed: \" + getLastErrorMessage());\n",
+                        "            }\n",
+                        "            if (length[0] <= 0) {\n",
+                        "                return new INPUT_RECORD[0];\n",
+                        "            }\n",
+                        "            INPUT_RECORD[] records = new INPUT_RECORD[length[0]];\n",
+                        "            for (int i = 0; i < records.length; i++) {\n",
+                        "                records[i] = new INPUT_RECORD();\n",
+                        "                INPUT_RECORD.memmove(records[i], inputRecordPtr + i * INPUT_RECORD.SIZEOF, INPUT_RECORD.SIZEOF);\n",
+                        "            }\n",
+                        "            return records;\n",
+                        "        } finally {\n",
+                        "            if (inputRecordPtr != 0) {\n",
+                        "                free(inputRecordPtr);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "INPUT_RECORD[]",
+                            "INPUT_RECORD[]"
+                        ]
+                    ],
+                    "signature": "readConsoleInputHelper(long, int, boolean)",
+                    "parameters": [
+                        "handle",
+                        "count",
+                        "peek"
+                    ],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "58-58:malloc"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "447-447:PeekConsoleInputW"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "442-442:ReadConsoleInputW"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "521-524:getLastErrorMessage"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "INPUT_RECORD",
+                            "INPUT_RECORD"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "INPUT_RECORD",
+                            "436-436:memmove"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "Kernel32",
+                            "60-60:free"
+                        ]
+                    ]
+                },
+                "457-457:FlushConsoleInputBuffer": {
+                    "start": 457,
+                    "end": 457,
+                    "body": [
+                        "    public static native int FlushConsoleInputBuffer(long handle);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "FlushConsoleInputBuffer(long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "452-452:GetNumberOfConsoleInputEvents": {
+                    "start": 452,
+                    "end": 452,
+                    "body": [
+                        "    public static native int GetNumberOfConsoleInputEvents(long handle, int[] numberOfEvents);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "GetNumberOfConsoleInputEvents(long, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "264-270:ScrollConsoleScreenBuffer": {
+                    "start": 264,
+                    "end": 270,
+                    "body": [
+                        "    public static native int ScrollConsoleScreenBuffer(\n",
+                        "            long consoleOutput,\n",
+                        "            SMALL_RECT scrollRectangle,\n",
+                        "            SMALL_RECT clipRectangle,\n",
+                        "            COORD destinationOrigin,\n",
+                        "            CHAR_INFO fill);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "ScrollConsoleScreenBuffer(long, SMALL_RECT, SMALL_RECT, COORD, CHAR_INFO)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "241-241:SetConsoleOutputCP": {
+                    "start": 241,
+                    "end": 241,
+                    "body": [
+                        "    public static native int SetConsoleOutputCP(int codePageID);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "SetConsoleOutputCP(int)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "234-234:GetConsoleOutputCP": {
+                    "start": 234,
+                    "end": 234,
+                    "body": [
+                        "    public static native int GetConsoleOutputCP();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "GetConsoleOutputCP()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "227-227:SetConsoleTitle": {
+                    "start": 227,
+                    "end": 227,
+                    "body": [
+                        "    public static native int SetConsoleTitle(String title);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "SetConsoleTitle(String)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "220-220:_getch": {
+                    "start": 220,
+                    "end": 220,
+                    "body": [
+                        "    public static native int _getch();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "_getch()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "215-215:SetConsoleMode": {
+                    "start": 215,
+                    "end": 215,
+                    "body": [
+                        "    public static native int SetConsoleMode(long handle, int mode);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "SetConsoleMode(long, int)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "210-210:GetConsoleMode": {
+                    "start": 210,
+                    "end": 210,
+                    "body": [
+                        "    public static native int GetConsoleMode(long handle, int[] mode);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "GetConsoleMode(long, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "204-206:WriteConsoleW": {
+                    "start": 204,
+                    "end": 206,
+                    "body": [
+                        "    public static native int WriteConsoleW(\n",
+                        "            long consoleOutput, char[] buffer, int numberOfCharsToWrite, int[] numberOfCharsWritten, long reserved);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "WriteConsoleW(long, char[], int, int[], long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "198-200:FillConsoleOutputAttribute": {
+                    "start": 198,
+                    "end": 200,
+                    "body": [
+                        "    public static native int FillConsoleOutputAttribute(\n",
+                        "            long consoleOutput, short attribute, int length, COORD writeCoord, int[] numberOfAttrsWritten);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "FillConsoleOutputAttribute(long, short, int, COORD, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "192-194:FillConsoleOutputCharacterW": {
+                    "start": 192,
+                    "end": 194,
+                    "body": [
+                        "    public static native int FillConsoleOutputCharacterW(\n",
+                        "            long consoleOutput, char character, int length, COORD writeCoord, int[] numberOfCharsWritten);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "FillConsoleOutputCharacterW(long, char, int, COORD, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "187-187:SetConsoleCursorPosition": {
+                    "start": 187,
+                    "end": 187,
+                    "body": [
+                        "    public static native int SetConsoleCursorPosition(long consoleOutput, COORD cursorPosition);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "SetConsoleCursorPosition(long, COORD)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "182-182:GetStdHandle": {
+                    "start": 182,
+                    "end": 182,
+                    "body": [
+                        "    public static native long GetStdHandle(int stdHandle);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "GetStdHandle(int)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "176-178:GetConsoleScreenBufferInfo": {
+                    "start": 176,
+                    "end": 178,
+                    "body": [
+                        "    public static native int GetConsoleScreenBufferInfo(\n",
+                        "            long consoleOutput, CONSOLE_SCREEN_BUFFER_INFO consoleScreenBufferInfo);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "GetConsoleScreenBufferInfo(long, CONSOLE_SCREEN_BUFFER_INFO)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "170-172:FormatMessageW": {
+                    "start": 170,
+                    "end": 172,
+                    "body": [
+                        "    public static native int FormatMessageW(\n",
+                        "            int flags, long source, int messageId, int languageId, byte[] buffer, int size, long[] args);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "FormatMessageW(int, long, int, int, byte[], int, long[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "168-168:GetLastError": {
+                    "start": 168,
+                    "end": 168,
+                    "body": [
+                        "    public static native int GetLastError();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "GetLastError()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "163-163:CloseHandle": {
+                    "start": 163,
+                    "end": 163,
+                    "body": [
+                        "    public static native int CloseHandle(long handle);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "CloseHandle(long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "158-158:WaitForSingleObject": {
+                    "start": 158,
+                    "end": 158,
+                    "body": [
+                        "    public static native int WaitForSingleObject(long hHandle, int dwMilliseconds);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "WaitForSingleObject(long, int)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "101-101:SetConsoleTextAttribute": {
+                    "start": 101,
+                    "end": 101,
+                    "body": [
+                        "    public static native int SetConsoleTextAttribute(long consoleOutput, short attributes);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "SetConsoleTextAttribute(long, short)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "60-60:free": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    public static native void free(long ptr);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "free(long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "58-58:malloc": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "    public static native long malloc(long size);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "malloc(long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "447-447:PeekConsoleInputW": {
+                    "start": 447,
+                    "end": 447,
+                    "body": [
+                        "    private static native int PeekConsoleInputW(long handle, long inputRecord, int length, int[] eventsCount);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "PeekConsoleInputW(long, long, int, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "442-442:ReadConsoleInputW": {
+                    "start": 442,
+                    "end": 442,
+                    "body": [
+                        "    private static native int ReadConsoleInputW(long handle, long inputRecord, int length, int[] eventsCount);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "ReadConsoleInputW(long, long, int, int[])",
+                    "parameters": [],
+                    "calls": []
+                },
+                "35-35:init": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "56-56:INVALID_HANDLE_VALUE": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    public static int INVALID_HANDLE_VALUE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "55-55:STD_ERROR_HANDLE": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    public static int STD_ERROR_HANDLE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "54-54:STD_OUTPUT_HANDLE": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    public static int STD_OUTPUT_HANDLE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "53-53:STD_INPUT_HANDLE": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    public static int STD_INPUT_HANDLE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "52-52:FORMAT_MESSAGE_FROM_SYSTEM": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    public static int FORMAT_MESSAGE_FROM_SYSTEM;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "51-51:COMMON_LVB_UNDERSCORE": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    public static short COMMON_LVB_UNDERSCORE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "50-50:COMMON_LVB_REVERSE_VIDEO": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    public static short COMMON_LVB_REVERSE_VIDEO;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "49-49:COMMON_LVB_GRID_RVERTICAL": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    public static short COMMON_LVB_GRID_RVERTICAL;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "48-48:COMMON_LVB_GRID_LVERTICAL": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    public static short COMMON_LVB_GRID_LVERTICAL;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "47-47:COMMON_LVB_GRID_HORIZONTAL": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    public static short COMMON_LVB_GRID_HORIZONTAL;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "46-46:COMMON_LVB_TRAILING_BYTE": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    public static short COMMON_LVB_TRAILING_BYTE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "45-45:COMMON_LVB_LEADING_BYTE": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    public static short COMMON_LVB_LEADING_BYTE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "44-44:BACKGROUND_INTENSITY": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    public static short BACKGROUND_INTENSITY;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "43-43:BACKGROUND_RED": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    public static short BACKGROUND_RED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "42-42:BACKGROUND_GREEN": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    public static short BACKGROUND_GREEN;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "41-41:BACKGROUND_BLUE": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    public static short BACKGROUND_BLUE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "40-40:FOREGROUND_INTENSITY": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    public static short FOREGROUND_INTENSITY;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "39-39:FOREGROUND_RED": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    public static short FOREGROUND_RED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "38-38:FOREGROUND_GREEN": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    public static short FOREGROUND_GREEN;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "37-37:FOREGROUND_BLUE": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    public static short FOREGROUND_BLUE;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "29-33:run_static_init": {
+                    "start": 29,
+                    "end": 33,
+                    "body": [
+                        "    static {\n",
+                        "        if (JansiLoader.initialize()) {\n",
+                        "            init();\n",
+                        "        }\n",
+                        "    }\n"
+                    ]
+                }
+            }
+        },
+        "CONSOLE_SCREEN_BUFFER_INFO": {
+            "start": 128,
+            "end": 128,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "149-151:windowHeight": {
+                    "start": 149,
+                    "end": 151,
+                    "body": [
+                        "        public int windowHeight() {\n",
+                        "            return window.height() + 1;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "windowHeight()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "SMALL_RECT",
+                            "84-86:height"
+                        ]
+                    ]
+                },
+                "145-147:windowWidth": {
+                    "start": 145,
+                    "end": 147,
+                    "body": [
+                        "        public int windowWidth() {\n",
+                        "            return window.width() + 1;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "windowWidth()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "SMALL_RECT",
+                            "80-82:width"
+                        ]
+                    ]
+                },
+                "135-135:init": {
+                    "start": 135,
+                    "end": 135,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "143-143:maximumWindowSize": {
+                    "start": 143,
+                    "end": 143,
+                    "body": [
+                        "        public COORD maximumWindowSize = new COORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "142-142:window": {
+                    "start": 142,
+                    "end": 142,
+                    "body": [
+                        "        public SMALL_RECT window = new SMALL_RECT();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "SMALL_RECT",
+                            "SMALL_RECT"
+                        ]
+                    ]
+                },
+                "141-141:attributes": {
+                    "start": 141,
+                    "end": 141,
+                    "body": [
+                        "        public short attributes;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "140-140:cursorPosition": {
+                    "start": 140,
+                    "end": 140,
+                    "body": [
+                        "        public COORD cursorPosition = new COORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "139-139:size": {
+                    "start": 139,
+                    "end": 139,
+                    "body": [
+                        "        public COORD size = new COORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "137-137:SIZEOF": {
+                    "start": 137,
+                    "end": 137,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "130-133:run_static_init": {
+                    "start": 130,
+                    "end": 133,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "COORD": {
+            "start": 103,
+            "end": 103,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "117-122:copy": {
+                    "start": 117,
+                    "end": 122,
+                    "body": [
+                        "        public COORD copy() {\n",
+                        "            COORD rc = new COORD();\n",
+                        "            rc.x = x;\n",
+                        "            rc.y = y;\n",
+                        "            return rc;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ],
+                    "signature": "copy()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "110-110:init": {
+                    "start": 110,
+                    "end": 110,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "115-115:y": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "        public short y;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "114-114:x": {
+                    "start": 114,
+                    "end": 114,
+                    "body": [
+                        "        public short x;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "112-112:SIZEOF": {
+                    "start": 112,
+                    "end": 112,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "105-108:run_static_init": {
+                    "start": 105,
+                    "end": 108,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "SMALL_RECT": {
+            "start": 65,
+            "end": 65,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "88-95:copy": {
+                    "start": 88,
+                    "end": 95,
+                    "body": [
+                        "        public SMALL_RECT copy() {\n",
+                        "            SMALL_RECT rc = new SMALL_RECT();\n",
+                        "            rc.left = left;\n",
+                        "            rc.top = top;\n",
+                        "            rc.right = right;\n",
+                        "            rc.bottom = bottom;\n",
+                        "            return rc;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "SMALL_RECT",
+                            "SMALL_RECT"
+                        ]
+                    ],
+                    "signature": "copy()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.Kernel32",
+                            "SMALL_RECT",
+                            "SMALL_RECT"
+                        ]
+                    ]
+                },
+                "84-86:height": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "        public short height() {\n",
+                        "            return (short) (bottom - top);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ],
+                    "signature": "height()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "80-82:width": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "        public short width() {\n",
+                        "            return (short) (right - left);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ],
+                    "signature": "width()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "71-71:init": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "78-78:bottom": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "        public short bottom;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "77-77:right": {
+                    "start": 77,
+                    "end": 77,
+                    "body": [
+                        "        public short right;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "76-76:top": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "        public short top;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "75-75:left": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "        public short left;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "73-73:SIZEOF": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "66-69:run_static_init": {
+                    "start": 66,
+                    "end": 69,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "FOCUS_EVENT_RECORD": {
+            "start": 384,
+            "end": 384,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "390-390:init": {
+                    "start": 390,
+                    "end": 390,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "393-393:setFocus": {
+                    "start": 393,
+                    "end": 393,
+                    "body": [
+                        "        public boolean setFocus;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "392-392:SIZEOF": {
+                    "start": 392,
+                    "end": 392,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "385-388:run_static_init": {
+                    "start": 385,
+                    "end": 388,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "INPUT_RECORD": {
+            "start": 414,
+            "end": 414,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "436-436:memmove": {
+                    "start": 436,
+                    "end": 436,
+                    "body": [
+                        "        public static native void memmove(INPUT_RECORD dest, long src, long size);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static",
+                        "native"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "memmove(INPUT_RECORD, long, long)",
+                    "parameters": [],
+                    "calls": []
+                },
+                "421-421:init": {
+                    "start": 421,
+                    "end": 421,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "434-434:focusEvent": {
+                    "start": 434,
+                    "end": 434,
+                    "body": [
+                        "        public FOCUS_EVENT_RECORD focusEvent = new FOCUS_EVENT_RECORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "FOCUS_EVENT_RECORD",
+                            "FOCUS_EVENT_RECORD"
+                        ]
+                    ]
+                },
+                "433-433:menuEvent": {
+                    "start": 433,
+                    "end": 433,
+                    "body": [
+                        "        public MENU_EVENT_RECORD menuEvent = new MENU_EVENT_RECORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "MENU_EVENT_RECORD",
+                            "MENU_EVENT_RECORD"
+                        ]
+                    ]
+                },
+                "432-432:windowBufferSizeEvent": {
+                    "start": 432,
+                    "end": 432,
+                    "body": [
+                        "        public WINDOW_BUFFER_SIZE_RECORD windowBufferSizeEvent = new WINDOW_BUFFER_SIZE_RECORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "WINDOW_BUFFER_SIZE_RECORD",
+                            "WINDOW_BUFFER_SIZE_RECORD"
+                        ]
+                    ]
+                },
+                "431-431:mouseEvent": {
+                    "start": 431,
+                    "end": 431,
+                    "body": [
+                        "        public MOUSE_EVENT_RECORD mouseEvent = new MOUSE_EVENT_RECORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "MOUSE_EVENT_RECORD",
+                            "MOUSE_EVENT_RECORD"
+                        ]
+                    ]
+                },
+                "430-430:keyEvent": {
+                    "start": 430,
+                    "end": 430,
+                    "body": [
+                        "        public KEY_EVENT_RECORD keyEvent = new KEY_EVENT_RECORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "KEY_EVENT_RECORD",
+                            "KEY_EVENT_RECORD"
+                        ]
+                    ]
+                },
+                "429-429:eventType": {
+                    "start": 429,
+                    "end": 429,
+                    "body": [
+                        "        public short eventType;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "428-428:MENU_EVENT": {
+                    "start": 428,
+                    "end": 428,
+                    "body": [
+                        "        public static short MENU_EVENT;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "427-427:FOCUS_EVENT": {
+                    "start": 427,
+                    "end": 427,
+                    "body": [
+                        "        public static short FOCUS_EVENT;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "426-426:WINDOW_BUFFER_SIZE_EVENT": {
+                    "start": 426,
+                    "end": 426,
+                    "body": [
+                        "        public static short WINDOW_BUFFER_SIZE_EVENT;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "425-425:MOUSE_EVENT": {
+                    "start": 425,
+                    "end": 425,
+                    "body": [
+                        "        public static short MOUSE_EVENT;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "424-424:KEY_EVENT": {
+                    "start": 424,
+                    "end": 424,
+                    "body": [
+                        "        public static short KEY_EVENT;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "423-423:SIZEOF": {
+                    "start": 423,
+                    "end": 423,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "416-419:run_static_init": {
+                    "start": 416,
+                    "end": 419,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "MENU_EVENT_RECORD": {
+            "start": 399,
+            "end": 399,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "405-405:init": {
+                    "start": 405,
+                    "end": 405,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "408-408:commandId": {
+                    "start": 408,
+                    "end": 408,
+                    "body": [
+                        "        public int commandId;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "407-407:SIZEOF": {
+                    "start": 407,
+                    "end": 407,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "400-403:run_static_init": {
+                    "start": 400,
+                    "end": 403,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "WINDOW_BUFFER_SIZE_RECORD": {
+            "start": 363,
+            "end": 363,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "376-378:toString": {
+                    "start": 376,
+                    "end": 378,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"WINDOW_BUFFER_SIZE_RECORD{size=\" + size + '}';\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "370-370:init": {
+                    "start": 370,
+                    "end": 370,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "374-374:size": {
+                    "start": 374,
+                    "end": 374,
+                    "body": [
+                        "        public COORD size = new COORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "372-372:SIZEOF": {
+                    "start": 372,
+                    "end": 372,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "365-368:run_static_init": {
+                    "start": 365,
+                    "end": 368,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "MOUSE_EVENT_RECORD": {
+            "start": 315,
+            "end": 315,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "351-357:toString": {
+                    "start": 351,
+                    "end": 357,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"MOUSE_EVENT_RECORD{\" + \"mousePosition=\"\n",
+                        "                    + mousePosition + \", buttonState=\"\n",
+                        "                    + buttonState + \", controlKeyState=\"\n",
+                        "                    + controlKeyState + \", eventFlags=\"\n",
+                        "                    + eventFlags + '}';\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "322-322:init": {
+                    "start": 322,
+                    "end": 322,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "349-349:eventFlags": {
+                    "start": 349,
+                    "end": 349,
+                    "body": [
+                        "        public int eventFlags;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "348-348:controlKeyState": {
+                    "start": 348,
+                    "end": 348,
+                    "body": [
+                        "        public int controlKeyState;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "347-347:buttonState": {
+                    "start": 347,
+                    "end": 347,
+                    "body": [
+                        "        public int buttonState;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "346-346:mousePosition": {
+                    "start": 346,
+                    "end": 346,
+                    "body": [
+                        "        public COORD mousePosition = new COORD();\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "COORD",
+                            "COORD"
+                        ]
+                    ]
+                },
+                "344-344:MOUSE_WHEELED": {
+                    "start": 344,
+                    "end": 344,
+                    "body": [
+                        "        public static int MOUSE_WHEELED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "343-343:MOUSE_MOVED": {
+                    "start": 343,
+                    "end": 343,
+                    "body": [
+                        "        public static int MOUSE_MOVED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "342-342:MOUSE_HWHEELED": {
+                    "start": 342,
+                    "end": 342,
+                    "body": [
+                        "        public static int MOUSE_HWHEELED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "341-341:DOUBLE_CLICK": {
+                    "start": 341,
+                    "end": 341,
+                    "body": [
+                        "        public static int DOUBLE_CLICK;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "339-339:SHIFT_PRESSED": {
+                    "start": 339,
+                    "end": 339,
+                    "body": [
+                        "        public static int SHIFT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "338-338:RIGHT_CTRL_PRESSED": {
+                    "start": 338,
+                    "end": 338,
+                    "body": [
+                        "        public static int RIGHT_CTRL_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "337-337:RIGHT_ALT_PRESSED": {
+                    "start": 337,
+                    "end": 337,
+                    "body": [
+                        "        public static int RIGHT_ALT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "336-336:LEFT_CTRL_PRESSED": {
+                    "start": 336,
+                    "end": 336,
+                    "body": [
+                        "        public static int LEFT_CTRL_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "335-335:LEFT_ALT_PRESSED": {
+                    "start": 335,
+                    "end": 335,
+                    "body": [
+                        "        public static int LEFT_ALT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "334-334:ENHANCED_KEY": {
+                    "start": 334,
+                    "end": 334,
+                    "body": [
+                        "        public static int ENHANCED_KEY;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "333-333:SCROLLLOCK_ON": {
+                    "start": 333,
+                    "end": 333,
+                    "body": [
+                        "        public static int SCROLLLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "332-332:NUMLOCK_ON": {
+                    "start": 332,
+                    "end": 332,
+                    "body": [
+                        "        public static int NUMLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "331-331:CAPSLOCK_ON": {
+                    "start": 331,
+                    "end": 331,
+                    "body": [
+                        "        public static int CAPSLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "329-329:RIGHTMOST_BUTTON_PRESSED": {
+                    "start": 329,
+                    "end": 329,
+                    "body": [
+                        "        public static int RIGHTMOST_BUTTON_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "328-328:FROM_LEFT_4TH_BUTTON_PRESSED": {
+                    "start": 328,
+                    "end": 328,
+                    "body": [
+                        "        public static int FROM_LEFT_4TH_BUTTON_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "327-327:FROM_LEFT_3RD_BUTTON_PRESSED": {
+                    "start": 327,
+                    "end": 327,
+                    "body": [
+                        "        public static int FROM_LEFT_3RD_BUTTON_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "326-326:FROM_LEFT_2ND_BUTTON_PRESSED": {
+                    "start": 326,
+                    "end": 326,
+                    "body": [
+                        "        public static int FROM_LEFT_2ND_BUTTON_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "325-325:FROM_LEFT_1ST_BUTTON_PRESSED": {
+                    "start": 325,
+                    "end": 325,
+                    "body": [
+                        "        public static int FROM_LEFT_1ST_BUTTON_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "324-324:SIZEOF": {
+                    "start": 324,
+                    "end": 324,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "317-320:run_static_init": {
+                    "start": 317,
+                    "end": 320,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        },
+        "KEY_EVENT_RECORD": {
+            "start": 274,
+            "end": 274,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Kernel32",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "301-309:toString": {
+                    "start": 301,
+                    "end": 309,
+                    "body": [
+                        "        public String toString() {\n",
+                        "            return \"KEY_EVENT_RECORD{\" + \"keyDown=\"\n",
+                        "                    + keyDown + \", repeatCount=\"\n",
+                        "                    + repeatCount + \", keyCode=\"\n",
+                        "                    + keyCode + \", scanCode=\"\n",
+                        "                    + scanCode + \", uchar=\"\n",
+                        "                    + uchar + \", controlKeyState=\"\n",
+                        "                    + controlKeyState + '}';\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "281-281:init": {
+                    "start": 281,
+                    "end": 281,
+                    "body": [
+                        "        private static native void init();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "native",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "init()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "299-299:controlKeyState": {
+                    "start": 299,
+                    "end": 299,
+                    "body": [
+                        "        public int controlKeyState;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "298-298:uchar": {
+                    "start": 298,
+                    "end": 298,
+                    "body": [
+                        "        public char uchar;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "297-297:scanCode": {
+                    "start": 297,
+                    "end": 297,
+                    "body": [
+                        "        public short scanCode;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "296-296:keyCode": {
+                    "start": 296,
+                    "end": 296,
+                    "body": [
+                        "        public short keyCode;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "295-295:repeatCount": {
+                    "start": 295,
+                    "end": 295,
+                    "body": [
+                        "        public short repeatCount;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "short",
+                            "short"
+                        ]
+                    ]
+                },
+                "294-294:keyDown": {
+                    "start": 294,
+                    "end": 294,
+                    "body": [
+                        "        public boolean keyDown;\n"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "292-292:SHIFT_PRESSED": {
+                    "start": 292,
+                    "end": 292,
+                    "body": [
+                        "        public static int SHIFT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "291-291:RIGHT_CTRL_PRESSED": {
+                    "start": 291,
+                    "end": 291,
+                    "body": [
+                        "        public static int RIGHT_CTRL_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "290-290:RIGHT_ALT_PRESSED": {
+                    "start": 290,
+                    "end": 290,
+                    "body": [
+                        "        public static int RIGHT_ALT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "289-289:LEFT_CTRL_PRESSED": {
+                    "start": 289,
+                    "end": 289,
+                    "body": [
+                        "        public static int LEFT_CTRL_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "288-288:LEFT_ALT_PRESSED": {
+                    "start": 288,
+                    "end": 288,
+                    "body": [
+                        "        public static int LEFT_ALT_PRESSED;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "287-287:ENHANCED_KEY": {
+                    "start": 287,
+                    "end": 287,
+                    "body": [
+                        "        public static int ENHANCED_KEY;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "286-286:SCROLLLOCK_ON": {
+                    "start": 286,
+                    "end": 286,
+                    "body": [
+                        "        public static int SCROLLLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "285-285:NUMLOCK_ON": {
+                    "start": 285,
+                    "end": 285,
+                    "body": [
+                        "        public static int NUMLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "284-284:CAPSLOCK_ON": {
+                    "start": 284,
+                    "end": 284,
+                    "body": [
+                        "        public static int CAPSLOCK_ON;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "283-283:SIZEOF": {
+                    "start": 283,
+                    "end": 283,
+                    "body": [
+                        "        public static int SIZEOF;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            },
+            "static_initializers": {
+                "276-279:run_static_init": {
+                    "start": 276,
+                    "end": 279,
+                    "body": [
+                        "        static {\n",
+                        "            JansiLoader.initialize();\n",
+                        "            init();\n",
+                        "        }\n"
+                    ]
+                }
+            }
+        }
+    }
+}

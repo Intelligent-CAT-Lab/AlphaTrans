@@ -1,0 +1,406 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/DeltaZigzagVariableByte.java",
+    "imports": {
+        "9-9:import IntBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.IntBuffer;\n"
+            ]
+        },
+        "8-8:import ByteBuffer": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DeltaZigzagVariableByte": {
+            "start": 16,
+            "end": 16,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "102-129:uncompress0": {
+                    "start": 102,
+                    "end": 129,
+                    "body": [
+                        "        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                                int[] outBuf, IntWrapper outPos) {\n",
+                        "                DeltaZigzagEncoding.Decoder ctx = new DeltaZigzagEncoding.Decoder(0);\n",
+                        "\n",
+                        "                int ip = inPos.get();\n",
+                        "                int op = outPos.get();\n",
+                        "                int vbcNum = 0, vbcShift = 24; // Variable Byte Context.\n",
+                        "                final int inPosLast = ip + inLen;\n",
+                        "                while (ip < inPosLast) {\n",
+                        "                        // Fetch a byte value.\n",
+                        "                        int n = (inBuf[ip] >>> vbcShift) & 0xFF;\n",
+                        "                        if (vbcShift > 0) {\n",
+                        "                                vbcShift -= 8;\n",
+                        "                        } else {\n",
+                        "                                vbcShift = 24;\n",
+                        "                                ip++;\n",
+                        "                        }\n",
+                        "                        // Decode variable byte and delta+zigzag.\n",
+                        "                        vbcNum = (vbcNum << 7) + (n & 0x7F);\n",
+                        "                        if ((n & 0x80) == 0) {\n",
+                        "                                outBuf[op++] = ctx.decodeInt(vbcNum);\n",
+                        "                                vbcNum = 0;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "\n",
+                        "                outPos.set(op);\n",
+                        "                inPos.set(inPosLast);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "66-68:Decoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "70-75:decodeInt"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "24-99:compress0": {
+                    "start": 24,
+                    "end": 99,
+                    "body": [
+                        "        public void compress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                              int[] outBuf, IntWrapper outPos) {\n",
+                        "                if (inLen == 0) {\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "\n",
+                        "                ByteBuffer byteBuf = makeBuffer(inLen * 5 + 3);\n",
+                        "                DeltaZigzagEncoding.Encoder ctx = new DeltaZigzagEncoding.Encoder(0);\n",
+                        "\n",
+                        "                // Delta+Zigzag+VariableByte encoding.\n",
+                        "                int ip = inPos.get();\n",
+                        "                final int inPosLast = ip + inLen;\n",
+                        "                for (; ip < inPosLast; ++ip) {\n",
+                        "                        // Filter with delta+zigzag encoding.\n",
+                        "                        int n = ctx.encodeInt(inBuf[ip]);\n",
+                        "                        // Variable byte encoding.\n",
+                        "                        switch (Integer.numberOfLeadingZeros(n)) {\n",
+                        "                        case 0:\n",
+                        "                        case 1:\n",
+                        "                        case 2:\n",
+                        "                        case 3:\n",
+                        "                                byteBuf.put((byte) (((n >>> 28) & 0x7F) | 0x80));\n",
+                        "                                // through.\n",
+                        "                                //$FALL-THROUGH$\n",
+                        "                        case 4:\n",
+                        "                        case 5:\n",
+                        "                        case 6:\n",
+                        "                        case 7:\n",
+                        "                        case 8:\n",
+                        "                        case 9:\n",
+                        "                        case 10:\n",
+                        "                                byteBuf.put((byte) (((n >>> 21) & 0x7F) | 0x80));\n",
+                        "                                // through.\n",
+                        "                                //$FALL-THROUGH$\n",
+                        "                        case 11:\n",
+                        "                        case 12:\n",
+                        "                        case 13:\n",
+                        "                        case 14:\n",
+                        "                        case 15:\n",
+                        "                        case 16:\n",
+                        "                        case 17:\n",
+                        "                                byteBuf.put((byte) (((n >>> 14) & 0x7F) | 0x80));\n",
+                        "                                // through.\n",
+                        "                                //$FALL-THROUGH$\n",
+                        "                        case 18:\n",
+                        "                        case 19:\n",
+                        "                        case 20:\n",
+                        "                        case 21:\n",
+                        "                        case 22:\n",
+                        "                        case 23:\n",
+                        "                        case 24:\n",
+                        "                                byteBuf.put((byte) (((n >>> 7) & 0x7F) | 0x80));\n",
+                        "                                // through.\n",
+                        "                                //$FALL-THROUGH$\n",
+                        "                        default:\n",
+                        "                                byteBuf.put((byte) (n & 0x7F));\n",
+                        "                        }\n",
+                        "                }\n",
+                        "\n",
+                        "                // Padding buffer to considerable as IntBuffer.\n",
+                        "                for (int i = (4 - (byteBuf.position() % 4)) % 4; i > 0; --i) {\n",
+                        "                        byteBuf.put((byte) (0x80));\n",
+                        "                }\n",
+                        "\n",
+                        "                int outLen = byteBuf.position() / 4;\n",
+                        "                byteBuf.flip();\n",
+                        "                IntBuffer intBuf = byteBuf.asIntBuffer();\n",
+                        "                /*\n",
+                        "                 * System.out.println(String.format(\n",
+                        "                 * \"inLen=%d pos=%d limit=%d outLen=%d outBuf.len=%d\", inLen,\n",
+                        "                 * intBuf.position(), intBuf.limit(), outLen, outBuf.length));\n",
+                        "                 */\n",
+                        "                intBuf.get(outBuf, outPos.get(), outLen);\n",
+                        "                inPos.add(inLen);\n",
+                        "                outPos.add(outLen);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagVariableByte",
+                            "DeltaZigzagVariableByte",
+                            "138-140:makeBuffer"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "31-33:Encoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "35-39:encodeInt"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "numberOfLeadingZeros(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "19-21:toString": {
+                    "start": 19,
+                    "end": 21,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return DeltaZigzagVariableByte.class.getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "138-140:makeBuffer": {
+                    "start": 138,
+                    "end": 140,
+                    "body": [
+                        "        protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "                return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _makeBuffer(self, sizeInBytes: int) -> typing.Union[bytearray, memoryview]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class DeltaZigzagVariableByte(IntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.DeltaZigzagEncoding import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *"
+    ]
+}

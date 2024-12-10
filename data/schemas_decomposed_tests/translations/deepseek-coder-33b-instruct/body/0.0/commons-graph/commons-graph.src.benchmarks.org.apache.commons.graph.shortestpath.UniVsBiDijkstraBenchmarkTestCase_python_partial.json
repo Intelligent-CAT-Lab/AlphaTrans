@@ -1,0 +1,1157 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/benchmarks/java/org/apache/commons/graph/shortestpath/UniVsBiDijkstraBenchmarkTestCase.java",
+    "imports": {
+        "45-45:import Random": {
+            "start": 45,
+            "end": 45,
+            "body": [
+                "import java.util.Random;\n"
+            ]
+        },
+        "44-44:import List": {
+            "start": 44,
+            "end": 44,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "42-42:import ArrayList": {
+            "start": 42,
+            "end": 42,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "43-43:import LinkedList": {
+            "start": 43,
+            "end": 43,
+            "body": [
+                "import java.util.LinkedList;\n"
+            ]
+        },
+        "36-36:import DirectedMutableGraph": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import org.apache.commons.graph.model.DirectedMutableGraph;\n"
+            ]
+        },
+        "29-29:import GraphException": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.GraphException;\n"
+            ]
+        },
+        "30-30:import Mapper": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "31-31:import WeightedPath": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "32-32:import AbstractGraphConnection": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.builder.AbstractGraphConnection;\n"
+            ]
+        },
+        "40-40:import Test": {
+            "start": 40,
+            "end": 40,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "34-34:import BaseLabeledWeightedEdge": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "33-33:import BaseLabeledVertex": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "37-37:import OrderedMonoid": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "35-35:import BaseWeightedEdge": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import org.apache.commons.graph.model.BaseWeightedEdge;\n"
+            ]
+        },
+        "39-39:import BeforeClass": {
+            "start": 39,
+            "end": 39,
+            "body": [
+                "import org.junit.BeforeClass;\n"
+            ]
+        },
+        "38-38:import DoubleWeightBaseOperations": {
+            "start": 38,
+            "end": 38,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations;\n"
+            ]
+        },
+        "26-26:import static String.format": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static java.lang.String.format;\n"
+            ]
+        },
+        "27-27:import static String.valueOf": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import static java.lang.String.valueOf;\n"
+            ]
+        },
+        "23-23:import static CommonsGraph.newDirectedMutableGraph": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.newDirectedMutableGraph;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.findShortestPath": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.findShortestPath;\n"
+            ]
+        },
+        "24-24:import static Assert.assertTrue": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UniVsBiDijkstraBenchmarkTestCase": {
+            "start": 47,
+            "end": 47,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Mapper<BaseLabeledWeightedEdge<Double>,Double>(...) { ... }",
+                "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "162-179:testPerformUnidirectionalDijkstra": {
+                    "start": 162,
+                    "end": 179,
+                    "body": [
+                        "    public void testPerformUnidirectionalDijkstra() {\n",
+                        "        BaseLabeledVertex source = sourceListUni.removeFirst();\n",
+                        "        BaseLabeledVertex target = targetListUni.removeFirst();\n",
+                        "\n",
+                        "        try {\n",
+                        "            WeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> path =\n",
+                        "                    findShortestPath(graph)\n",
+                        "                            .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                            .from(source)\n",
+                        "                            .to(target)\n",
+                        "                            .applyingDijkstra(weightOperations);\n",
+                        "\n",
+                        "            assertTrue(path.getSize() > 0);\n",
+                        "            assertTrue(path.getWeight() > 0D);\n",
+                        "        } catch (Exception e) {\n",
+                        "            e.printStackTrace();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPerformUnidirectionalDijkstra()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "removeFirst()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestPathAlgorithmSelector",
+                            "applyingDijkstra(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/TargetSourceSelector",
+                            "to(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PathSourceSelector",
+                            "from(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PathWeightedEdgesBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "139-143:findShortestPath"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(boolean)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getSize()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Weighted",
+                            "getWeight()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPerformUnidirectionalDijkstra(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "142-159:testPerformBidirectionalDijkstra": {
+                    "start": 142,
+                    "end": 159,
+                    "body": [
+                        "    public void testPerformBidirectionalDijkstra() {\n",
+                        "        BaseLabeledVertex source = sourceListBi.removeFirst();\n",
+                        "        BaseLabeledVertex target = targetListBi.removeFirst();\n",
+                        "\n",
+                        "        try {\n",
+                        "            WeightedPath<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> path =\n",
+                        "                    findShortestPath(graph)\n",
+                        "                            .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                            .from(source)\n",
+                        "                            .to(target)\n",
+                        "                            .applyingBidirectionalDijkstra(weightOperations);\n",
+                        "\n",
+                        "            assertTrue(path.getSize() > 0);\n",
+                        "            assertTrue(path.getWeight() > 0D);\n",
+                        "        } catch (Exception e) {\n",
+                        "            e.printStackTrace();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testPerformBidirectionalDijkstra()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "removeFirst()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestPathAlgorithmSelector",
+                            "applyingBidirectionalDijkstra(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/TargetSourceSelector",
+                            "to(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PathSourceSelector",
+                            "from(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PathWeightedEdgesBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "139-143:findShortestPath"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(boolean)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getSize()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Weighted",
+                            "getWeight()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testPerformBidirectionalDijkstra(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "68-139:setUp": {
+                    "start": 68,
+                    "end": 139,
+                    "body": [
+                        "    public static void setUp() {\n",
+                        "        weightOperations = new DoubleWeightBaseOperations();\n",
+                        "\n",
+                        "        weightedEdges =\n",
+                        "                new Mapper<BaseLabeledWeightedEdge<Double>, Double>() {\n",
+                        "\n",
+                        "                    public Double map(BaseLabeledWeightedEdge<Double> input) {\n",
+                        "                        return input.getWeight();\n",
+                        "                    }\n",
+                        "                };\n",
+                        "\n",
+                        "        graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>() {\n",
+                        "                            Random r = new Random();\n",
+                        "\n",
+                        "                            private boolean addEdge(BaseLabeledVertex src, BaseLabeledVertex dst) {\n",
+                        "                                try {\n",
+                        "                                    addEdge(\n",
+                        "                                                    new BaseLabeledWeightedEdge<Double>(\n",
+                        "                                                            format(\"%s -> %s\", src, dst),\n",
+                        "                                                            10.0 * r.nextDouble() + 1.0))\n",
+                        "                                            .from(src)\n",
+                        "                                            .to(dst);\n",
+                        "                                    return true;\n",
+                        "                                } catch (GraphException e) {\n",
+                        "                                    return false;\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "\n",
+                        "                            public void connect0() {\n",
+                        "                                vertices = new ArrayList<BaseLabeledVertex>();\n",
+                        "                                for (int i = 0; i < NODES; i++) {\n",
+                        "                                    BaseLabeledVertex v = new BaseLabeledVertex(valueOf(i));\n",
+                        "                                    addVertex(v);\n",
+                        "                                    vertices.add(v);\n",
+                        "                                }\n",
+                        "\n",
+                        "                                for (int i = 0; i < NODES - 1; i++) {\n",
+                        "                                    addEdge(vertices.get(i), vertices.get(i + 1));\n",
+                        "                                }\n",
+                        "\n",
+                        "                                addEdge(vertices.get(NODES - 1), vertices.get(0));\n",
+                        "\n",
+                        "                                int maxEdges = Math.max(0, EDGES - NODES);\n",
+                        "                                for (int i = 0; i < maxEdges; i++) {\n",
+                        "                                    while (!addEdge(\n",
+                        "                                            vertices.get(r.nextInt(NODES)),\n",
+                        "                                            vertices.get(r.nextInt(NODES)))) {}\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        });\n",
+                        "\n",
+                        "        sourceListUni = new LinkedList<BaseLabeledVertex>();\n",
+                        "        targetListUni = new LinkedList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        sourceListBi = new LinkedList<BaseLabeledVertex>();\n",
+                        "        targetListBi = new LinkedList<BaseLabeledVertex>();\n",
+                        "\n",
+                        "        Random r = new Random();\n",
+                        "\n",
+                        "        for (int i = 0; i < 15; i++) {\n",
+                        "            BaseLabeledVertex s = vertices.get(r.nextInt(vertices.size()));\n",
+                        "            sourceListUni.add(s);\n",
+                        "            sourceListBi.add(s);\n",
+                        "\n",
+                        "            BaseLabeledVertex t = vertices.get(r.nextInt(vertices.size()));\n",
+                        "            targetListUni.add(t);\n",
+                        "            targetListBi.add(t);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "BeforeClass",
+                        "BeforeClass"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "Random()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "187-190:newDirectedMutableGraph"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "LinkedList<BaseLabeledVertex>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextInt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "add(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def setUp() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "65-65:weightOperations": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private static OrderedMonoid<Double> weightOperations;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OrderedMonoid<Double>",
+                            "OrderedMonoid<Double>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightOperations: OrderedMonoid[float] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "63-63:vertices": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    private static List<BaseLabeledVertex> vertices;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "List<BaseLabeledVertex>",
+                            "java.util.List<BaseLabeledVertex>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __vertices: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "61-61:targetListBi": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "    private static LinkedList<BaseLabeledVertex> targetListBi;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "LinkedList<BaseLabeledVertex>",
+                            "java.util.LinkedList<BaseLabeledVertex>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __targetListBi: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "59-59:targetListUni": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    private static LinkedList<BaseLabeledVertex> targetListUni;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "LinkedList<BaseLabeledVertex>",
+                            "java.util.LinkedList<BaseLabeledVertex>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __targetListUni: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "57-57:sourceListBi": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private static LinkedList<BaseLabeledVertex> sourceListBi;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "LinkedList<BaseLabeledVertex>",
+                            "java.util.LinkedList<BaseLabeledVertex>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __sourceListBi: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "55-55:sourceListUni": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private static LinkedList<BaseLabeledVertex> sourceListUni;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "LinkedList<BaseLabeledVertex>",
+                            "java.util.LinkedList<BaseLabeledVertex>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __sourceListUni: typing.List[BaseLabeledVertex] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "53-53:weightedEdges": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static Mapper<BaseLabeledWeightedEdge<Double>, Double> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<BaseLabeledWeightedEdge<Double>,Double>",
+                            "Mapper<BaseLabeledWeightedEdge<Double>,Double>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[BaseLabeledWeightedEdge[float], float] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "51-51:graph": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private static DirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> graph;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>",
+                            "DirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: DirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "49-49:EDGES": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private static final int EDGES = 100000;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __EDGES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "48-48:NODES": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final int NODES = 5000;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __NODES: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class UniVsBiDijkstraBenchmarkTestCase:\n\n"
+        },
+        "new Mapper<BaseLabeledWeightedEdge<Double>,Double>(...) { ... }": {
+            "start": 72,
+            "end": 72,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "UniVsBiDijkstraBenchmarkTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "74-76:map": {
+                    "start": 74,
+                    "end": 76,
+                    "body": [
+                        "                    public Double map(BaseLabeledWeightedEdge<Double> input) {\n",
+                        "                        return input.getWeight();\n",
+                        "                    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Double",
+                            "java.lang.Double"
+                        ]
+                    ],
+                    "signature": "map(BaseLabeledWeightedEdge<Double>)",
+                    "parameters": [
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "getWeight"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "71-72:": {
+                    "start": 71,
+                    "end": 72,
+                    "body": [
+                        "        weightedEdges =\n",
+                        "                new Mapper<BaseLabeledWeightedEdge<Double>, Double>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        },
+        "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>(...) { ... }": {
+            "start": 81,
+            "end": 82,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "UniVsBiDijkstraBenchmarkTestCase",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "99-119:connect0": {
+                    "start": 99,
+                    "end": 119,
+                    "body": [
+                        "                            public void connect0() {\n",
+                        "                                vertices = new ArrayList<BaseLabeledVertex>();\n",
+                        "                                for (int i = 0; i < NODES; i++) {\n",
+                        "                                    BaseLabeledVertex v = new BaseLabeledVertex(valueOf(i));\n",
+                        "                                    addVertex(v);\n",
+                        "                                    vertices.add(v);\n",
+                        "                                }\n",
+                        "\n",
+                        "                                for (int i = 0; i < NODES - 1; i++) {\n",
+                        "                                    addEdge(vertices.get(i), vertices.get(i + 1));\n",
+                        "                                }\n",
+                        "\n",
+                        "                                addEdge(vertices.get(NODES - 1), vertices.get(0));\n",
+                        "\n",
+                        "                                int maxEdges = Math.max(0, EDGES - NODES);\n",
+                        "                                for (int i = 0; i < maxEdges; i++) {\n",
+                        "                                    while (!addEdge(\n",
+                        "                                            vertices.get(r.nextInt(NODES)),\n",
+                        "                                            vertices.get(r.nextInt(NODES)))) {}\n",
+                        "                                }\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "connect0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "max"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<BaseLabeledVertex>"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "valueOf"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addVertex"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add"
+                        ],
+                        [
+                            "commons-graph.src.benchmarks.org.apache.commons.graph.shortestpath.UniVsBiDijkstraBenchmarkTestCase",
+                            "new AbstractGraphConnection<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>(...) { ... }",
+                            "85-97:addEdge"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextInt"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "85-97:addEdge": {
+                    "start": 85,
+                    "end": 97,
+                    "body": [
+                        "                            private boolean addEdge(BaseLabeledVertex src, BaseLabeledVertex dst) {\n",
+                        "                                try {\n",
+                        "                                    addEdge(\n",
+                        "                                                    new BaseLabeledWeightedEdge<Double>(\n",
+                        "                                                            format(\"%s -> %s\", src, dst),\n",
+                        "                                                            10.0 * r.nextDouble() + 1.0))\n",
+                        "                                            .from(src)\n",
+                        "                                            .to(dst);\n",
+                        "                                    return true;\n",
+                        "                                } catch (GraphException e) {\n",
+                        "                                    return false;\n",
+                        "                                }\n",
+                        "                            }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "addEdge(BaseLabeledVertex, BaseLabeledVertex)",
+                    "parameters": [
+                        "src",
+                        "dst"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/TailVertexConnector",
+                            "to"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/HeadVertexConnector",
+                            "from"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/builder/AbstractGraphConnection",
+                            "addEdge"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextDouble"
+                        ]
+                    ],
+                    "is_overload": false
+                },
+                "79-82:": {
+                    "start": 79,
+                    "end": 82,
+                    "body": [
+                        "        graph =\n",
+                        "                newDirectedMutableGraph(\n",
+                        "                        new AbstractGraphConnection<\n",
+                        "                                BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>() {\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false
+                }
+            },
+            "fields": {
+                "83-83:r": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "                            Random r = new Random();\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Random",
+                            "java.util.Random"
+                        ]
+                    ]
+                }
+            }
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.WeightedPath import *",
+        "from src.main.org.apache.commons.graph.builder.GraphConnection import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *",
+        "from src.test.org.apache.commons.graph.model.BaseWeightedEdge import *",
+        "from src.main.org.apache.commons.graph.model.DirectedMutableGraph import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PathSourceSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PathWeightedEdgesBuilder import *",
+        "from src.main.org.apache.commons.graph.shortestpath.ShortestPathAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.TargetSourceSelector import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *",
+        "from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *",
+        "from src.main.org.apache.commons.graph.GraphException import *",
+        "from src.main.org.apache.commons.graph.builder.AbstractGraphConnection import *",
+        "from src.main.org.apache.commons.graph.builder.HeadVertexConnector import *",
+        "from src.main.org.apache.commons.graph.builder.TailVertexConnector import *"
+    ]
+}

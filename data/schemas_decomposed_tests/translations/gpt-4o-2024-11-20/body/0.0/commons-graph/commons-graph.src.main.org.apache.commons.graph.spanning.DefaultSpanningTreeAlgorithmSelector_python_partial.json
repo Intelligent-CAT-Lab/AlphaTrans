@@ -1,0 +1,891 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/spanning/DefaultSpanningTreeAlgorithmSelector.java",
+    "imports": {
+        "38-38:import Map": {
+            "start": 38,
+            "end": 38,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "37-37:import List": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "40-40:import Set": {
+            "start": 40,
+            "end": 40,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "39-39:import Queue": {
+            "start": 39,
+            "end": 39,
+            "body": [
+                "import java.util.Queue;\n"
+            ]
+        },
+        "34-34:import HashMap": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "35-35:import HashSet": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "36-36:import LinkedList": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.LinkedList;\n"
+            ]
+        },
+        "25-25:import Graph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "28-28:import VertexPair": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        },
+        "26-26:import Mapper": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "27-27:import SpanningTree": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.SpanningTree;\n"
+            ]
+        },
+        "29-29:import DisjointSet": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.collections.DisjointSet;\n"
+            ]
+        },
+        "30-30:import FibonacciHeap": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.collections.FibonacciHeap;\n"
+            ]
+        },
+        "32-32:import OrderedMonoid": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "31-31:import MutableSpanningTree": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        },
+        "23-23:import static Assertions.checkState": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkState;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultSpanningTreeAlgorithmSelector": {
+            "start": 49,
+            "end": 50,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "200-235:applyingPrimAlgorithm": {
+                    "start": 200,
+                    "end": 235,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> SpanningTree<V, WE, W> applyingPrimAlgorithm(\n",
+                        "            WO weightOperations) {\n",
+                        "        checkNotNull(\n",
+                        "                weightOperations,\n",
+                        "                \"The Prim algorithm cannot be calculated with null weight operations\");\n",
+                        "\n",
+                        "        final ShortestEdges<V, WE, W> shortestEdges =\n",
+                        "                new ShortestEdges<V, WE, W>(graph, source, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        final Queue<V> unsettledNodes = new FibonacciHeap<V>(shortestEdges);\n",
+                        "        unsettledNodes.add(source);\n",
+                        "\n",
+                        "        final Set<WE> settledEdges = new HashSet<WE>();\n",
+                        "\n",
+                        "        while (!unsettledNodes.isEmpty()) {\n",
+                        "            V vertex = unsettledNodes.remove();\n",
+                        "\n",
+                        "            for (V v : graph.getConnectedVertices(vertex)) {\n",
+                        "                WE edge = graph.getEdge(vertex, v);\n",
+                        "                boolean weightLessThanCurrent =\n",
+                        "                        !shortestEdges.hasWeight(v)\n",
+                        "                                || weightOperations.compare(\n",
+                        "                                                weightedEdges.map(edge), shortestEdges.getWeight(v))\n",
+                        "                                        < 0;\n",
+                        "                if (settledEdges.add(edge) && weightLessThanCurrent) {\n",
+                        "                    if (!unsettledNodes.contains(v)) {\n",
+                        "                        unsettledNodes.add(v);\n",
+                        "                    }\n",
+                        "\n",
+                        "                    shortestEdges.addPredecessor(v, edge);\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return shortestEdges.createSpanningTree();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "SpanningTree<V,WE,W>",
+                            "SpanningTree<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingPrimAlgorithm(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/ShortestEdges",
+                            "ShortestEdges<V,WE,W>(org.apache.commons.graph.Graph,java.lang.Object,org.apache.commons.graph.weight.OrderedMonoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<V>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<WE>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/ShortestEdges",
+                            "hasWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/ShortestEdges",
+                            "getWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/ShortestEdges",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/ShortestEdges",
+                            "createSpanningTree()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingPrimAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "157-197:applyingKruskalAlgorithm": {
+                    "start": 157,
+                    "end": 197,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> SpanningTree<V, WE, W> applyingKruskalAlgorithm(\n",
+                        "            WO weightOperations) {\n",
+                        "        checkNotNull(\n",
+                        "                weightOperations,\n",
+                        "                \"The Kruskal algorithm cannot be calculated with null weight operations\");\n",
+                        "        final Set<V> settledNodes = new HashSet<V>();\n",
+                        "\n",
+                        "        final Queue<WE> orderedEdges =\n",
+                        "                new FibonacciHeap<WE>(\n",
+                        "                        new WeightedEdgesComparator<W, WE>(weightOperations, weightedEdges));\n",
+                        "\n",
+                        "        for (WE edge : graph.getEdges()) {\n",
+                        "            orderedEdges.add(edge);\n",
+                        "        }\n",
+                        "\n",
+                        "        final DisjointSet<V> disjointSet = new DisjointSet<V>();\n",
+                        "\n",
+                        "        final MutableSpanningTree<V, WE, W> spanningTree =\n",
+                        "                new MutableSpanningTree<V, WE, W>(weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        for (V v : graph.getVertices0()) {\n",
+                        "            spanningTree.addVertex(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        while (!orderedEdges.isEmpty() && settledNodes.size() < graph.getOrder()) {\n",
+                        "            WE edge = orderedEdges.remove();\n",
+                        "\n",
+                        "            VertexPair<V> vertices = graph.getVertices1(edge);\n",
+                        "            V head = vertices.getHead();\n",
+                        "            V tail = vertices.getTail();\n",
+                        "            settledNodes.add(head);\n",
+                        "            settledNodes.add(tail);\n",
+                        "\n",
+                        "            if (!disjointSet.find1(head).equals(disjointSet.find1(tail))) {\n",
+                        "                disjointSet.union(head, tail);\n",
+                        "                spanningTree.addEdge(head, edge, tail);\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return spanningTree;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "SpanningTree<V,WE,W>",
+                            "SpanningTree<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingKruskalAlgorithm(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<WE>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/WeightedEdgesComparator",
+                            "WeightedEdgesComparator<W,WE>(java.util.Comparator,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/DisjointSet",
+                            "DisjointSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<V,WE,W>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdges()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getOrder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/DisjointSet",
+                            "find1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/DisjointSet",
+                            "union(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingKruskalAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "74-154:applyingBoruvkaAlgorithm": {
+                    "start": 74,
+                    "end": 154,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> SpanningTree<V, WE, W> applyingBoruvkaAlgorithm(\n",
+                        "            WO weightOperations) {\n",
+                        "        /*\n",
+                        "         * <pre>\n",
+                        "         * procedure Boruvka MST(G(V; E)):\n",
+                        "         *     T <= V\n",
+                        "         *     while |T| < n do\n",
+                        "         *         for all connected component C in T do\n",
+                        "         *             e <= the smallest-weight edge from C to another component in T\n",
+                        "         *             if e not exists in T then\n",
+                        "         *                 T <= T u {e}\n",
+                        "         *             end if\n",
+                        "         *         end for\n",
+                        "         *     end while\n",
+                        "         * <pre>\n",
+                        "         */\n",
+                        "\n",
+                        "        checkNotNull(\n",
+                        "                weightOperations,\n",
+                        "                \"The Boruvka algorithm cannot be calculated with null weight operations\");\n",
+                        "\n",
+                        "        final MutableSpanningTree<V, WE, W> spanningTree =\n",
+                        "                new MutableSpanningTree<V, WE, W>(weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        final Set<SuperVertex<V, W, WE>> components =\n",
+                        "                new HashSet<SuperVertex<V, W, WE>>(graph.getOrder());\n",
+                        "\n",
+                        "        final Map<V, SuperVertex<V, W, WE>> mapping =\n",
+                        "                new HashMap<V, SuperVertex<V, W, WE>>(graph.getOrder());\n",
+                        "\n",
+                        "        for (V v : graph.getVertices0()) {\n",
+                        "            final SuperVertex<V, W, WE> sv =\n",
+                        "                    new SuperVertex<V, W, WE>(\n",
+                        "                            v,\n",
+                        "                            graph,\n",
+                        "                            new WeightedEdgesComparator<W, WE>(weightOperations, weightedEdges));\n",
+                        "\n",
+                        "            components.add(sv);\n",
+                        "\n",
+                        "            mapping.put(v, sv);\n",
+                        "\n",
+                        "            spanningTree.addVertex(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        while (components.size() > 1) {\n",
+                        "            final List<WE> edges = new LinkedList<WE>();\n",
+                        "            for (SuperVertex<V, W, WE> sv : components) {\n",
+                        "                final WE edge = sv.getMinimumWeightEdge();\n",
+                        "                if (edge != null) {\n",
+                        "                    edges.add(edge);\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            checkState(!edges.isEmpty() || components.size() == 1, \"unconnected graph\");\n",
+                        "\n",
+                        "            for (final WE edge : edges) {\n",
+                        "                final VertexPair<V> pair = graph.getVertices1(edge);\n",
+                        "                final V head = pair.getHead();\n",
+                        "                final V tail = pair.getTail();\n",
+                        "\n",
+                        "                final SuperVertex<V, W, WE> headSv = mapping.get(head);\n",
+                        "                final SuperVertex<V, W, WE> tailSv = mapping.get(tail);\n",
+                        "\n",
+                        "                if (headSv != tailSv) {\n",
+                        "                    headSv.merge(tailSv);\n",
+                        "\n",
+                        "                    for (final V v : tailSv) {\n",
+                        "                        mapping.put(v, headSv);\n",
+                        "                    }\n",
+                        "\n",
+                        "                    components.remove(tailSv);\n",
+                        "\n",
+                        "                    if (spanningTree.getVertices1(edge) == null) {\n",
+                        "                        spanningTree.addEdge(head, edge, tail);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return spanningTree;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "SpanningTree<V,WE,W>",
+                            "SpanningTree<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingBoruvkaAlgorithm(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<V,WE,W>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<SuperVertex<V,W,WE>>(int)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getOrder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<V,SuperVertex<V,W,WE>>(int)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SuperVertex",
+                            "SuperVertex<V,W,WE>(java.lang.Object,org.apache.commons.graph.Graph,org.apache.commons.graph.spanning.WeightedEdgesComparator)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/WeightedEdgesComparator",
+                            "WeightedEdgesComparator<W,WE>(java.util.Comparator,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(org.apache.commons.graph.spanning.SuperVertex)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,org.apache.commons.graph.spanning.SuperVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "LinkedList<WE>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SuperVertex",
+                            "getMinimumWeightEdge()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "87-92:checkState"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SuperVertex",
+                            "merge(org.apache.commons.graph.spanning.SuperVertex)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "remove(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingBoruvkaAlgorithm(self, weightOperations: typing.Any) -> SpanningTree[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "66-71:DefaultSpanningTreeAlgorithmSelector": {
+                    "start": 66,
+                    "end": 71,
+                    "body": [
+                        "    public DefaultSpanningTreeAlgorithmSelector(\n",
+                        "            final Graph<V, WE> graph, Mapper<WE, W> weightedEdges, final V source) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "        this.source = source;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultSpanningTreeAlgorithmSelector(Graph<V,WE>, Mapper<WE,W>, V)",
+                    "parameters": [
+                        "graph",
+                        "weightedEdges",
+                        "source"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "57-57:source": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private final V source;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "54-54:weightedEdges": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "52-52:graph": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultSpanningTreeAlgorithmSelector:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.SpanningTree import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.collections.DisjointSet import *",
+        "from src.main.org.apache.commons.graph.collections.FibonacciHeap import *",
+        "from src.main.org.apache.commons.graph.model.MutableSpanningTree import *",
+        "from src.main.org.apache.commons.graph.spanning.ShortestEdges import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SuperVertex import *",
+        "from src.main.org.apache.commons.graph.spanning.WeightedEdgesComparator import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *"
+    ]
+}

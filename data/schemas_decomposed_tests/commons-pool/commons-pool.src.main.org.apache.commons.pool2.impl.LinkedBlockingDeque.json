@@ -1,0 +1,3963 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/LinkedBlockingDeque.java",
+    "imports": {
+        "19-19:import Serializable": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "22-22:import Collection": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Collection;\n"
+            ]
+        },
+        "24-24:import Iterator": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "27-27:import TimeUnit": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.concurrent.TimeUnit;\n"
+            ]
+        },
+        "20-20:import Duration": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "21-21:import AbstractQueue": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.AbstractQueue;\n"
+            ]
+        },
+        "23-23:import Deque": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Deque;\n"
+            ]
+        },
+        "25-25:import NoSuchElementException": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.NoSuchElementException;\n"
+            ]
+        },
+        "26-26:import Objects": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Objects;\n"
+            ]
+        },
+        "28-28:import Condition": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.concurrent.locks.Condition;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AbstractItr": {
+            "start": 82,
+            "end": 82,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": "LinkedBlockingDeque",
+            "nests": [],
+            "implements": [
+                "Iterator<E>"
+            ],
+            "extends": [],
+            "methods": {
+                "153-167:remove": {
+                    "start": 153,
+                    "end": 167,
+                    "body": [
+                        "        public void remove() {\n",
+                        "            final Node<E> n = lastRet;\n",
+                        "            if (n == null) {\n",
+                        "                throw new IllegalStateException();\n",
+                        "            }\n",
+                        "            lastRet = null;\n",
+                        "            lock.lock();\n",
+                        "            try {\n",
+                        "                if (n.item != null) {\n",
+                        "                    unlink(n);\n",
+                        "                }\n",
+                        "            } finally {\n",
+                        "                lock.unlock();\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "remove()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1291-1305:unlink"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "134-142:next": {
+                    "start": 134,
+                    "end": 142,
+                    "body": [
+                        "        public E next() {\n",
+                        "            if (next == null) {\n",
+                        "                throw new NoSuchElementException();\n",
+                        "            }\n",
+                        "            lastRet = next;\n",
+                        "            final E x = nextItem;\n",
+                        "            advance();\n",
+                        "            return x;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "next()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "AbstractItr",
+                            "111-119:advance"
+                        ]
+                    ]
+                },
+                "129-131:hasNext": {
+                    "start": 129,
+                    "end": 131,
+                    "body": [
+                        "        public boolean hasNext() {\n",
+                        "            return next != null;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasNext()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "175-189:succ": {
+                    "start": 175,
+                    "end": 189,
+                    "body": [
+                        "        private Node<E> succ(Node<E> n) {\n",
+                        "            for (; ; ) {\n",
+                        "                final Node<E> s = nextNode(n);\n",
+                        "                if (s == null) {\n",
+                        "                    return null;\n",
+                        "                }\n",
+                        "                if (s.item != null) {\n",
+                        "                    return s;\n",
+                        "                }\n",
+                        "                if (s == n) {\n",
+                        "                    return firstNode();\n",
+                        "                }\n",
+                        "                n = s;\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "succ(Node<E>)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "AbstractItr",
+                            "150-150:nextNode"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "AbstractItr",
+                            "126-126:firstNode"
+                        ]
+                    ]
+                },
+                "111-119:advance": {
+                    "start": 111,
+                    "end": 119,
+                    "body": [
+                        "        void advance() {\n",
+                        "            lock.lock();\n",
+                        "            try {\n",
+                        "                next = succ(next);\n",
+                        "                nextItem = next == null ? null : next.item;\n",
+                        "            } finally {\n",
+                        "                lock.unlock();\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "advance()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "AbstractItr",
+                            "175-189:succ"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "100-108:AbstractItr": {
+                    "start": 100,
+                    "end": 108,
+                    "body": [
+                        "        AbstractItr() {\n",
+                        "            lock.lock();\n",
+                        "            try {\n",
+                        "                next = firstNode();\n",
+                        "                nextItem = next == null ? null : next.item;\n",
+                        "            } finally {\n",
+                        "                lock.unlock();\n",
+                        "            }\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AbstractItr()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "AbstractItr",
+                            "126-126:firstNode"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "150-150:nextNode": {
+                    "start": 150,
+                    "end": 150,
+                    "body": [
+                        "        abstract Node<E> nextNode(Node<E> n);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "nextNode(Node<E>)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": []
+                },
+                "126-126:firstNode": {
+                    "start": 126,
+                    "end": 126,
+                    "body": [
+                        "        abstract Node<E> firstNode();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "firstNode()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "97-97:lastRet": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "        private Node<E> lastRet;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ]
+                },
+                "91-91:nextItem": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "        E nextItem;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ]
+                },
+                "84-84:next": {
+                    "start": 84,
+                    "end": 84,
+                    "body": [
+                        "        Node<E> next;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ]
+                }
+            }
+        },
+        "LinkedBlockingDeque": {
+            "start": 53,
+            "end": 53,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Node",
+                "AbstractItr",
+                "DescendingItr",
+                "Itr"
+            ],
+            "implements": [],
+            "extends": [
+                "Serializable",
+                "AbstractQueue<E>",
+                "Deque<E>",
+                "LinkedBlockingDeque<>"
+            ],
+            "methods": {
+                "1277-1284:toString": {
+                    "start": 1277,
+                    "end": 1284,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return super.toString();\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/AbstractCollection",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1254-1274:toArray1": {
+                    "start": 1254,
+                    "end": 1274,
+                    "body": [
+                        "    public <T> T[] toArray1(T[] a) {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            if (a.length < count) {\n",
+                        "                a =\n",
+                        "                        (T[])\n",
+                        "                                java.lang.reflect.Array.newInstance(\n",
+                        "                                        a.getClass().getComponentType(), count);\n",
+                        "            }\n",
+                        "            int k = 0;\n",
+                        "            for (Node<E> p = first; p != null; p = p.next) {\n",
+                        "                a[k++] = (T) p.item;\n",
+                        "            }\n",
+                        "            if (a.length > k) {\n",
+                        "                a[k] = null;\n",
+                        "            }\n",
+                        "            return a;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "SuppressWarnings(\"unchecked\")"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T[]",
+                            "T[]"
+                        ]
+                    ],
+                    "signature": "toArray1(T[])",
+                    "parameters": [
+                        "a"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/Array",
+                            "newInstance(java.lang.Class,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getComponentType()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1164-1171:size": {
+                    "start": 1164,
+                    "end": 1171,
+                    "body": [
+                        "    public int size() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return count;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "size()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1140-1156:removeLastOccurrence": {
+                    "start": 1140,
+                    "end": 1156,
+                    "body": [
+                        "    public boolean removeLastOccurrence(final Object o) {\n",
+                        "        if (o == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            for (Node<E> p = last; p != null; p = p.prev) {\n",
+                        "                if (o.equals(p.item)) {\n",
+                        "                    unlink(p);\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return false;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "removeLastOccurrence(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1291-1305:unlink"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1131-1137:removeLast": {
+                    "start": 1131,
+                    "end": 1137,
+                    "body": [
+                        "    public E removeLast() {\n",
+                        "        final E x = pollLast0();\n",
+                        "        if (x == null) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "        return x;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "removeLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "909-916:pollLast0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ]
+                    ]
+                },
+                "1111-1127:removeFirstOccurrence": {
+                    "start": 1111,
+                    "end": 1127,
+                    "body": [
+                        "    public boolean removeFirstOccurrence(final Object o) {\n",
+                        "        if (o == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            for (Node<E> p = first; p != null; p = p.next) {\n",
+                        "                if (o.equals(p.item)) {\n",
+                        "                    unlink(p);\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return false;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "removeFirstOccurrence(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1291-1305:unlink"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1094-1100:removeFirst": {
+                    "start": 1094,
+                    "end": 1100,
+                    "body": [
+                        "    public E removeFirst() {\n",
+                        "        final E x = pollFirst0();\n",
+                        "        if (x == null) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "        return x;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "removeFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "857-864:pollFirst0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ]
+                    ]
+                },
+                "964-966:push": {
+                    "start": 964,
+                    "end": 966,
+                    "body": [
+                        "    public void push(final E e) {\n",
+                        "        addFirst(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "push(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "372-376:addFirst"
+                        ]
+                    ]
+                },
+                "958-960:pop": {
+                    "start": 958,
+                    "end": 960,
+                    "body": [
+                        "    public E pop() {\n",
+                        "        return removeFirst();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pop()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1094-1100:removeFirst"
+                        ]
+                    ]
+                },
+                "905-907:pollLast": {
+                    "start": 905,
+                    "end": 907,
+                    "body": [
+                        "    public E pollLast() {\n",
+                        "        return pollLast0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "909-916:pollLast0"
+                        ]
+                    ]
+                },
+                "853-855:pollFirst": {
+                    "start": 853,
+                    "end": 855,
+                    "body": [
+                        "    public E pollFirst() {\n",
+                        "        return pollFirst0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "857-864:pollFirst0"
+                        ]
+                    ]
+                },
+                "815-817:poll": {
+                    "start": 815,
+                    "end": 817,
+                    "body": [
+                        "    public E poll() {\n",
+                        "        return poll0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "poll()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "819-821:poll0"
+                        ]
+                    ]
+                },
+                "805-812:peekLast": {
+                    "start": 805,
+                    "end": 812,
+                    "body": [
+                        "    public E peekLast() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return last == null ? null : last.item;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "peekLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "795-802:peekFirst": {
+                    "start": 795,
+                    "end": 802,
+                    "body": [
+                        "    public E peekFirst() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return first == null ? null : first.item;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "peekFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "790-792:peek": {
+                    "start": 790,
+                    "end": 792,
+                    "body": [
+                        "    public E peek() {\n",
+                        "        return peekFirst();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "peek()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "795-802:peekFirst"
+                        ]
+                    ]
+                },
+                "673-675:offerFirst": {
+                    "start": 673,
+                    "end": 675,
+                    "body": [
+                        "    public boolean offerFirst(final E e) {\n",
+                        "        return offerFirst0(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerFirst(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "678-686:offerFirst0"
+                        ]
+                    ]
+                },
+                "629-631:offer": {
+                    "start": 629,
+                    "end": 631,
+                    "body": [
+                        "    public boolean offer(final E e) {\n",
+                        "        return offer0(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offer(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "634-636:offer0"
+                        ]
+                    ]
+                },
+                "578-580:iterator": {
+                    "start": 578,
+                    "end": 580,
+                    "body": [
+                        "    public Iterator<E> iterator() {\n",
+                        "        return new Itr();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Iterator<E>",
+                            "java.util.Iterator<E>"
+                        ]
+                    ],
+                    "signature": "iterator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "Itr",
+                            "Itr"
+                        ]
+                    ]
+                },
+                "515-521:getLast": {
+                    "start": 515,
+                    "end": 521,
+                    "body": [
+                        "    public E getLast() {\n",
+                        "        final E x = peekLast();\n",
+                        "        if (x == null) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "        return x;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "getLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "805-812:peekLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ]
+                    ]
+                },
+                "505-511:getFirst": {
+                    "start": 505,
+                    "end": 511,
+                    "body": [
+                        "    public E getFirst() {\n",
+                        "        final E x = peekFirst();\n",
+                        "        if (x == null) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "        return x;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "getFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "795-802:peekFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ]
+                    ]
+                },
+                "499-501:element": {
+                    "start": 499,
+                    "end": 501,
+                    "body": [
+                        "    public E element() {\n",
+                        "        return getFirst();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "element()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "505-511:getFirst"
+                        ]
+                    ]
+                },
+                "437-439:descendingIterator": {
+                    "start": 437,
+                    "end": 439,
+                    "body": [
+                        "    public Iterator<E> descendingIterator() {\n",
+                        "        return new DescendingItr();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Iterator<E>",
+                            "java.util.Iterator<E>"
+                        ]
+                    ],
+                    "signature": "descendingIterator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "DescendingItr",
+                            "DescendingItr"
+                        ]
+                    ]
+                },
+                "418-433:contains": {
+                    "start": 418,
+                    "end": 433,
+                    "body": [
+                        "    public boolean contains(final Object o) {\n",
+                        "        if (o == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            for (Node<E> p = first; p != null; p = p.next) {\n",
+                        "                if (o.equals(p.item)) {\n",
+                        "                    return true;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            return false;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "391-407:clear": {
+                    "start": 391,
+                    "end": 407,
+                    "body": [
+                        "    public void clear() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            for (Node<E> f = first; f != null; ) {\n",
+                        "                f.item = null;\n",
+                        "                final Node<E> n = f.next;\n",
+                        "                f.prev = null;\n",
+                        "                f.next = null;\n",
+                        "                f = n;\n",
+                        "            }\n",
+                        "            first = last = null;\n",
+                        "            count = 0;\n",
+                        "            notFull.signalAll();\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signalAll()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "380-384:addLast": {
+                    "start": 380,
+                    "end": 384,
+                    "body": [
+                        "    public void addLast(final E e) {\n",
+                        "        if (!offerLast0(e)) {\n",
+                        "            throw new IllegalStateException(\"Deque full\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addLast(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "736-744:offerLast0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "372-376:addFirst": {
+                    "start": 372,
+                    "end": 376,
+                    "body": [
+                        "    public void addFirst(final E e) {\n",
+                        "        if (!offerFirst0(e)) {\n",
+                        "            throw new IllegalStateException(\"Deque full\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addFirst(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "678-686:offerFirst0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "365-368:add": {
+                    "start": 365,
+                    "end": 368,
+                    "body": [
+                        "    public boolean add(final E e) {\n",
+                        "        addLast(e);\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "add(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "380-384:addLast"
+                        ]
+                    ]
+                },
+                "1238-1250:toArray0": {
+                    "start": 1238,
+                    "end": 1250,
+                    "body": [
+                        "    public Object[] toArray0() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            final Object[] a = new Object[count];\n",
+                        "            int k = 0;\n",
+                        "            for (Node<E> p = first; p != null; p = p.next) {\n",
+                        "                a[k++] = p.item;\n",
+                        "            }\n",
+                        "            return a;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object[]",
+                            "java.lang.Object[]"
+                        ]
+                    ],
+                    "signature": "toArray0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1213-1224:takeLast": {
+                    "start": 1213,
+                    "end": 1224,
+                    "body": [
+                        "    public E takeLast() throws InterruptedException {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            E x;\n",
+                        "            while ((x = unlinkLast()) == null) {\n",
+                        "                notEmpty.await();\n",
+                        "            }\n",
+                        "            return x;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "takeLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1337-1355:unlinkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "await()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1193-1204:takeFirst": {
+                    "start": 1193,
+                    "end": 1204,
+                    "body": [
+                        "    public E takeFirst() throws InterruptedException {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            E x;\n",
+                        "            while ((x = unlinkFirst()) == null) {\n",
+                        "                notEmpty.await();\n",
+                        "            }\n",
+                        "            return x;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "takeFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1312-1330:unlinkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "await()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1182-1184:take": {
+                    "start": 1182,
+                    "end": 1184,
+                    "body": [
+                        "    public E take() throws InterruptedException {\n",
+                        "        return takeFirst();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "take()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1193-1204:takeFirst"
+                        ]
+                    ]
+                },
+                "1088-1090:remove1": {
+                    "start": 1088,
+                    "end": 1090,
+                    "body": [
+                        "    public boolean remove1(final Object o) {\n",
+                        "        return removeFirstOccurrence(o);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "remove1(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1111-1127:removeFirstOccurrence"
+                        ]
+                    ]
+                },
+                "1072-1074:remove0": {
+                    "start": 1072,
+                    "end": 1074,
+                    "body": [
+                        "    public E remove0() {\n",
+                        "        return removeFirst();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "remove0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1094-1100:removeFirst"
+                        ]
+                    ]
+                },
+                "1054-1061:remainingCapacity": {
+                    "start": 1054,
+                    "end": 1061,
+                    "body": [
+                        "    public int remainingCapacity() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return capacity - count;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "remainingCapacity()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1010-1020:putLast": {
+                    "start": 1010,
+                    "end": 1020,
+                    "body": [
+                        "    public void putLast(final E e) throws InterruptedException {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            while (!linkLast(e)) {\n",
+                        "                notFull.await();\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "putLast(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "611-626:linkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "await()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "990-1000:putFirst": {
+                    "start": 990,
+                    "end": 1000,
+                    "body": [
+                        "    public void putFirst(final E e) throws InterruptedException {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            while (!linkFirst(e)) {\n",
+                        "                notFull.await();\n",
+                        "            }\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "putFirst(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "588-603:linkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "await()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "978-980:put": {
+                    "start": 978,
+                    "end": 980,
+                    "body": [
+                        "    public void put(final E e) throws InterruptedException {\n",
+                        "        putLast(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "put(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1010-1020:putLast"
+                        ]
+                    ]
+                },
+                "952-954:pollLast2": {
+                    "start": 952,
+                    "end": 954,
+                    "body": [
+                        "    public E pollLast2(final long timeout, final TimeUnit unit) throws InterruptedException {\n",
+                        "        return pollLast1(PoolImplUtils.toDuration(timeout, unit));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollLast2(long, TimeUnit)",
+                    "parameters": [
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "926-941:pollLast1"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "222-224:toDuration"
+                        ]
+                    ]
+                },
+                "926-941:pollLast1": {
+                    "start": 926,
+                    "end": 941,
+                    "body": [
+                        "    public E pollLast1(final Duration timeout) throws InterruptedException {\n",
+                        "        long nanos = timeout.toNanos();\n",
+                        "        lock.lockInterruptibly();\n",
+                        "        try {\n",
+                        "            E x;\n",
+                        "            while ((x = unlinkLast()) == null) {\n",
+                        "                if (nanos <= 0) {\n",
+                        "                    return null;\n",
+                        "                }\n",
+                        "                nanos = notEmpty.awaitNanos(nanos);\n",
+                        "            }\n",
+                        "            return x;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollLast1(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toNanos()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lockInterruptibly()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1337-1355:unlinkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "awaitNanos(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "909-916:pollLast0": {
+                    "start": 909,
+                    "end": 916,
+                    "body": [
+                        "    public E pollLast0() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return unlinkLast();\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollLast0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1337-1355:unlinkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "900-902:pollFirst2": {
+                    "start": 900,
+                    "end": 902,
+                    "body": [
+                        "    public E pollFirst2(final long timeout, final TimeUnit unit) throws InterruptedException {\n",
+                        "        return pollFirst1(PoolImplUtils.toDuration(timeout, unit));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollFirst2(long, TimeUnit)",
+                    "parameters": [
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "874-889:pollFirst1"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "222-224:toDuration"
+                        ]
+                    ]
+                },
+                "857-864:pollFirst0": {
+                    "start": 857,
+                    "end": 864,
+                    "body": [
+                        "    public E pollFirst0() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return unlinkFirst();\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollFirst0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1312-1330:unlinkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "848-850:poll2": {
+                    "start": 848,
+                    "end": 850,
+                    "body": [
+                        "    public E poll2(final long timeout, final TimeUnit unit) throws InterruptedException {\n",
+                        "        return pollFirst2(timeout, unit);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "poll2(long, TimeUnit)",
+                    "parameters": [
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "900-902:pollFirst2"
+                        ]
+                    ]
+                },
+                "819-821:poll0": {
+                    "start": 819,
+                    "end": 821,
+                    "body": [
+                        "    public E poll0() {\n",
+                        "        return pollFirst0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "poll0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "857-864:pollFirst0"
+                        ]
+                    ]
+                },
+                "784-787:offerLast2": {
+                    "start": 784,
+                    "end": 787,
+                    "body": [
+                        "    public boolean offerLast2(final E e, final long timeout, final TimeUnit unit)\n",
+                        "            throws InterruptedException {\n",
+                        "        return offerLast1(e, PoolImplUtils.toDuration(timeout, unit));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerLast2(E, long, TimeUnit)",
+                    "parameters": [
+                        "e",
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "756-771:offerLast1"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "222-224:toDuration"
+                        ]
+                    ]
+                },
+                "736-744:offerLast0": {
+                    "start": 736,
+                    "end": 744,
+                    "body": [
+                        "    public boolean offerLast0(final E e) {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return linkLast(e);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerLast0(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "611-626:linkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "731-733:offerLast": {
+                    "start": 731,
+                    "end": 733,
+                    "body": [
+                        "    public boolean offerLast(final E e) {\n",
+                        "        return offerLast0(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerLast(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "736-744:offerLast0"
+                        ]
+                    ]
+                },
+                "726-729:offerFirst2": {
+                    "start": 726,
+                    "end": 729,
+                    "body": [
+                        "    public boolean offerFirst2(final E e, final long timeout, final TimeUnit unit)\n",
+                        "            throws InterruptedException {\n",
+                        "        return offerFirst1(e, PoolImplUtils.toDuration(timeout, unit));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerFirst2(E, long, TimeUnit)",
+                    "parameters": [
+                        "e",
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "698-713:offerFirst1"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "222-224:toDuration"
+                        ]
+                    ]
+                },
+                "698-713:offerFirst1": {
+                    "start": 698,
+                    "end": 713,
+                    "body": [
+                        "    public boolean offerFirst1(final E e, final Duration timeout) throws InterruptedException {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        long nanos = timeout.toNanos();\n",
+                        "        lock.lockInterruptibly();\n",
+                        "        try {\n",
+                        "            while (!linkFirst(e)) {\n",
+                        "                if (nanos <= 0) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "                nanos = notFull.awaitNanos(nanos);\n",
+                        "            }\n",
+                        "            return true;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerFirst1(E, Duration)",
+                    "parameters": [
+                        "e",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toNanos()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lockInterruptibly()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "588-603:linkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "awaitNanos(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "678-686:offerFirst0": {
+                    "start": 678,
+                    "end": 686,
+                    "body": [
+                        "    public boolean offerFirst0(final E e) {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return linkFirst(e);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerFirst0(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "588-603:linkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "667-670:offer2": {
+                    "start": 667,
+                    "end": 670,
+                    "body": [
+                        "    public boolean offer2(final E e, final long timeout, final TimeUnit unit)\n",
+                        "            throws InterruptedException {\n",
+                        "        return offerLast2(e, timeout, unit);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offer2(E, long, TimeUnit)",
+                    "parameters": [
+                        "e",
+                        "timeout",
+                        "unit"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "784-787:offerLast2"
+                        ]
+                    ]
+                },
+                "634-636:offer0": {
+                    "start": 634,
+                    "end": 636,
+                    "body": [
+                        "    public boolean offer0(final E e) {\n",
+                        "        return offerLast0(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offer0(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "736-744:offerLast0"
+                        ]
+                    ]
+                },
+                "558-565:interuptTakeWaiters": {
+                    "start": 558,
+                    "end": 565,
+                    "body": [
+                        "    public void interuptTakeWaiters() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            lock.interruptWaiters(notEmpty);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "interuptTakeWaiters()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.InterruptibleReentrantLock",
+                            "InterruptibleReentrantLock",
+                            "49-51:interruptWaiters"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "545-552:hasTakeWaiters": {
+                    "start": 545,
+                    "end": 552,
+                    "body": [
+                        "    public boolean hasTakeWaiters() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return lock.hasWaiters(notEmpty);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasTakeWaiters()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "hasWaiters(java.util.concurrent.locks.Condition)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "530-537:getTakeQueueLength": {
+                    "start": 530,
+                    "end": 537,
+                    "body": [
+                        "    public int getTakeQueueLength() {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            return lock.getWaitQueueLength(notEmpty);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getTakeQueueLength()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "getWaitQueueLength(java.util.concurrent.locks.Condition)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "471-487:drainTo1": {
+                    "start": 471,
+                    "end": 487,
+                    "body": [
+                        "    public int drainTo1(final Collection<? super E> c, final int maxElements) {\n",
+                        "        Objects.requireNonNull(c, \"c\");\n",
+                        "        if (c == this) {\n",
+                        "            throw new IllegalArgumentException();\n",
+                        "        }\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            final int n = Math.min(maxElements, count);\n",
+                        "            for (int i = 0; i < n; i++) {\n",
+                        "                c.add(first.item); // In this order, in case add() throws.\n",
+                        "                unlinkFirst();\n",
+                        "            }\n",
+                        "            return n;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "drainTo1(Collection<? super E>, int)",
+                    "parameters": [
+                        "c",
+                        "maxElements"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "min(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1312-1330:unlinkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "453-455:drainTo0": {
+                    "start": 453,
+                    "end": 455,
+                    "body": [
+                        "    public int drainTo0(final Collection<? super E> c) {\n",
+                        "        return drainTo1(c, Integer.MAX_VALUE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "drainTo0(Collection<? super E>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "471-487:drainTo1"
+                        ]
+                    ]
+                },
+                "328-361:LinkedBlockingDeque": {
+                    "start": 328,
+                    "end": 361,
+                    "body": [
+                        "    public LinkedBlockingDeque(\n",
+                        "            int constructorId,\n",
+                        "            final int capacity,\n",
+                        "            final boolean fairness,\n",
+                        "            final Collection<? extends E> c) {\n",
+                        "        if (constructorId == 0) {\n",
+                        "            if (capacity <= 0) {\n",
+                        "                throw new IllegalArgumentException();\n",
+                        "            }\n",
+                        "            this.capacity = capacity;\n",
+                        "            lock = new InterruptibleReentrantLock(fairness);\n",
+                        "            notEmpty = lock.newCondition();\n",
+                        "            notFull = lock.newCondition();\n",
+                        "\n",
+                        "            if (c != null) {\n",
+                        "                lock.lock(); // Never contended, but necessary for visibility\n",
+                        "                try {\n",
+                        "                    for (final E e : c) {\n",
+                        "                        Objects.requireNonNull(e);\n",
+                        "                        if (!linkLast(e)) {\n",
+                        "                            throw new IllegalStateException(\"Deque full\");\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                } finally {\n",
+                        "                    lock.unlock();\n",
+                        "                }\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            this.capacity = capacity;\n",
+                        "            lock = new InterruptibleReentrantLock(fairness);\n",
+                        "            notEmpty = lock.newCondition();\n",
+                        "            notFull = lock.newCondition();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "LinkedBlockingDeque(int, int, boolean, Collection<? extends E>)",
+                    "parameters": [
+                        "constructorId",
+                        "capacity",
+                        "fairness",
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.InterruptibleReentrantLock",
+                            "InterruptibleReentrantLock",
+                            "40-42:InterruptibleReentrantLock"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "newCondition()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "611-626:linkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "316-318:LinkedBlockingDeque3": {
+                    "start": 316,
+                    "end": 318,
+                    "body": [
+                        "    public static LinkedBlockingDeque LinkedBlockingDeque3(final int capacity) {\n",
+                        "        return new LinkedBlockingDeque<>(0, capacity, false, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LinkedBlockingDeque<>",
+                            "LinkedBlockingDeque<>"
+                        ]
+                    ],
+                    "signature": "LinkedBlockingDeque3(int)",
+                    "parameters": [
+                        "capacity"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque",
+                            "LinkedBlockingDeque<Object>(int,int,boolean,java.util.Collection)"
+                        ]
+                    ]
+                },
+                "306-308:LinkedBlockingDeque2": {
+                    "start": 306,
+                    "end": 308,
+                    "body": [
+                        "    public static LinkedBlockingDeque LinkedBlockingDeque2(final Collection c) {\n",
+                        "        return new LinkedBlockingDeque<>(0, Integer.MAX_VALUE, false, c);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LinkedBlockingDeque<>",
+                            "LinkedBlockingDeque<>"
+                        ]
+                    ],
+                    "signature": "LinkedBlockingDeque2(Collection<>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque",
+                            "LinkedBlockingDeque<>(int,int,boolean,java.util.Collection)"
+                        ]
+                    ]
+                },
+                "294-296:LinkedBlockingDeque1": {
+                    "start": 294,
+                    "end": 296,
+                    "body": [
+                        "    public static LinkedBlockingDeque LinkedBlockingDeque1(final boolean fairness) {\n",
+                        "        return new LinkedBlockingDeque<>(0, Integer.MAX_VALUE, fairness, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LinkedBlockingDeque<>",
+                            "LinkedBlockingDeque<>"
+                        ]
+                    ],
+                    "signature": "LinkedBlockingDeque1(boolean)",
+                    "parameters": [
+                        "fairness"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque",
+                            "LinkedBlockingDeque<Object>(int,int,boolean,java.util.Collection)"
+                        ]
+                    ]
+                },
+                "283-285:LinkedBlockingDeque0": {
+                    "start": 283,
+                    "end": 285,
+                    "body": [
+                        "    public static LinkedBlockingDeque LinkedBlockingDeque0() {\n",
+                        "        return new LinkedBlockingDeque<>(0, Integer.MAX_VALUE, false, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "LinkedBlockingDeque<>",
+                            "LinkedBlockingDeque<>"
+                        ]
+                    ],
+                    "signature": "LinkedBlockingDeque0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque",
+                            "LinkedBlockingDeque<Object>(int,int,boolean,java.util.Collection)"
+                        ]
+                    ]
+                },
+                "1364-1375:writeObject": {
+                    "start": 1364,
+                    "end": 1375,
+                    "body": [
+                        "    private void writeObject(final java.io.ObjectOutputStream s) throws java.io.IOException {\n",
+                        "        lock.lock();\n",
+                        "        try {\n",
+                        "            s.defaultWriteObject();\n",
+                        "            for (Node<E> p = first; p != null; p = p.next) {\n",
+                        "                s.writeObject(p.item);\n",
+                        "            }\n",
+                        "            s.writeObject(null);\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "writeObject(ObjectOutputStream)",
+                    "parameters": [
+                        "s"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lock()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "defaultWriteObject()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "writeObject(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "1337-1355:unlinkLast": {
+                    "start": 1337,
+                    "end": 1355,
+                    "body": [
+                        "    private E unlinkLast() {\n",
+                        "        final Node<E> l = last;\n",
+                        "        if (l == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        final Node<E> p = l.prev;\n",
+                        "        final E item = l.item;\n",
+                        "        l.item = null;\n",
+                        "        l.prev = l; // help GC\n",
+                        "        last = p;\n",
+                        "        if (p == null) {\n",
+                        "            first = null;\n",
+                        "        } else {\n",
+                        "            p.next = null;\n",
+                        "        }\n",
+                        "        --count;\n",
+                        "        notFull.signal();\n",
+                        "        return item;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "unlinkLast()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signal()"
+                        ]
+                    ]
+                },
+                "1312-1330:unlinkFirst": {
+                    "start": 1312,
+                    "end": 1330,
+                    "body": [
+                        "    private E unlinkFirst() {\n",
+                        "        final Node<E> f = first;\n",
+                        "        if (f == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        final Node<E> n = f.next;\n",
+                        "        final E item = f.item;\n",
+                        "        f.item = null;\n",
+                        "        f.next = f; // help GC\n",
+                        "        first = n;\n",
+                        "        if (n == null) {\n",
+                        "            last = null;\n",
+                        "        } else {\n",
+                        "            n.prev = null;\n",
+                        "        }\n",
+                        "        --count;\n",
+                        "        notFull.signal();\n",
+                        "        return item;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "unlinkFirst()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signal()"
+                        ]
+                    ]
+                },
+                "1291-1305:unlink": {
+                    "start": 1291,
+                    "end": 1305,
+                    "body": [
+                        "    private void unlink(final Node<E> x) {\n",
+                        "        final Node<E> p = x.prev;\n",
+                        "        final Node<E> n = x.next;\n",
+                        "        if (p == null) {\n",
+                        "            unlinkFirst();\n",
+                        "        } else if (n == null) {\n",
+                        "            unlinkLast();\n",
+                        "        } else {\n",
+                        "            p.next = n;\n",
+                        "            n.prev = p;\n",
+                        "            x.item = null;\n",
+                        "            --count;\n",
+                        "            notFull.signal();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "unlink(Node<E>)",
+                    "parameters": [
+                        "x"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1312-1330:unlinkFirst"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1337-1355:unlinkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signal()"
+                        ]
+                    ]
+                },
+                "1027-1041:readObject": {
+                    "start": 1027,
+                    "end": 1041,
+                    "body": [
+                        "    private void readObject(final java.io.ObjectInputStream s)\n",
+                        "            throws java.io.IOException, ClassNotFoundException {\n",
+                        "        s.defaultReadObject();\n",
+                        "        count = 0;\n",
+                        "        first = null;\n",
+                        "        last = null;\n",
+                        "        for (; ; ) {\n",
+                        "            @SuppressWarnings(\"unchecked\")\n",
+                        "            final E item = (E) s.readObject();\n",
+                        "            if (item == null) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            add(item);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "readObject(ObjectInputStream)",
+                    "parameters": [
+                        "s"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "defaultReadObject()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "readObject()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "365-368:add"
+                        ]
+                    ]
+                },
+                "611-626:linkLast": {
+                    "start": 611,
+                    "end": 626,
+                    "body": [
+                        "    private boolean linkLast(final E e) {\n",
+                        "        if (count >= capacity) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        final Node<E> l = last;\n",
+                        "        final Node<E> x = new Node<>(e, l, null);\n",
+                        "        last = x;\n",
+                        "        if (first == null) {\n",
+                        "            first = x;\n",
+                        "        } else {\n",
+                        "            l.next = x;\n",
+                        "        }\n",
+                        "        ++count;\n",
+                        "        notEmpty.signal();\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "linkLast(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque$Node",
+                            "Node<E>(java.lang.Object,org.apache.commons.pool2.impl.LinkedBlockingDeque.Node,org.apache.commons.pool2.impl.LinkedBlockingDeque.Node)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signal()"
+                        ]
+                    ]
+                },
+                "588-603:linkFirst": {
+                    "start": 588,
+                    "end": 603,
+                    "body": [
+                        "    private boolean linkFirst(final E e) {\n",
+                        "        if (count >= capacity) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        final Node<E> f = first;\n",
+                        "        final Node<E> x = new Node<>(e, null, f);\n",
+                        "        first = x;\n",
+                        "        if (last == null) {\n",
+                        "            last = x;\n",
+                        "        } else {\n",
+                        "            f.prev = x;\n",
+                        "        }\n",
+                        "        ++count;\n",
+                        "        notEmpty.signal();\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "linkFirst(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/LinkedBlockingDeque$Node",
+                            "Node<E>(java.lang.Object,org.apache.commons.pool2.impl.LinkedBlockingDeque.Node,org.apache.commons.pool2.impl.LinkedBlockingDeque.Node)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "signal()"
+                        ]
+                    ]
+                },
+                "874-889:pollFirst1": {
+                    "start": 874,
+                    "end": 889,
+                    "body": [
+                        "    E pollFirst1(final Duration timeout) throws InterruptedException {\n",
+                        "        long nanos = timeout.toNanos();\n",
+                        "        lock.lockInterruptibly();\n",
+                        "        try {\n",
+                        "            E x;\n",
+                        "            while ((x = unlinkFirst()) == null) {\n",
+                        "                if (nanos <= 0) {\n",
+                        "                    return null;\n",
+                        "                }\n",
+                        "                nanos = notEmpty.awaitNanos(nanos);\n",
+                        "            }\n",
+                        "            return x;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "pollFirst1(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toNanos()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lockInterruptibly()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "1312-1330:unlinkFirst"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "awaitNanos(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "833-835:poll1": {
+                    "start": 833,
+                    "end": 835,
+                    "body": [
+                        "    E poll1(final Duration timeout) throws InterruptedException {\n",
+                        "        return pollFirst1(timeout);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "poll1(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "874-889:pollFirst1"
+                        ]
+                    ]
+                },
+                "756-771:offerLast1": {
+                    "start": 756,
+                    "end": 771,
+                    "body": [
+                        "    boolean offerLast1(final E e, final Duration timeout) throws InterruptedException {\n",
+                        "        Objects.requireNonNull(e, \"e\");\n",
+                        "        long nanos = timeout.toNanos();\n",
+                        "        lock.lockInterruptibly();\n",
+                        "        try {\n",
+                        "            while (!linkLast(e)) {\n",
+                        "                if (nanos <= 0) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "                nanos = notFull.awaitNanos(nanos);\n",
+                        "            }\n",
+                        "            return true;\n",
+                        "        } finally {\n",
+                        "            lock.unlock();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offerLast1(E, Duration)",
+                    "parameters": [
+                        "e",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toNanos()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Objects",
+                            "requireNonNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "lockInterruptibly()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "611-626:linkLast"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/Condition",
+                            "awaitNanos(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/locks/ReentrantLock",
+                            "unlock()"
+                        ]
+                    ]
+                },
+                "650-652:offer1": {
+                    "start": 650,
+                    "end": 652,
+                    "body": [
+                        "    boolean offer1(final E e, final Duration timeout) throws InterruptedException {\n",
+                        "        return offerLast1(e, timeout);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offer1(E, Duration)",
+                    "parameters": [
+                        "e",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.LinkedBlockingDeque",
+                            "LinkedBlockingDeque",
+                            "756-771:offerLast1"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "280-280:notFull": {
+                    "start": 280,
+                    "end": 280,
+                    "body": [
+                        "    private final Condition notFull;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Condition",
+                            "java.util.concurrent.locks.Condition"
+                        ]
+                    ]
+                },
+                "277-277:notEmpty": {
+                    "start": 277,
+                    "end": 277,
+                    "body": [
+                        "    private final Condition notEmpty;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Condition",
+                            "java.util.concurrent.locks.Condition"
+                        ]
+                    ]
+                },
+                "274-274:lock": {
+                    "start": 274,
+                    "end": 274,
+                    "body": [
+                        "    private final InterruptibleReentrantLock lock;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InterruptibleReentrantLock",
+                            "InterruptibleReentrantLock"
+                        ]
+                    ]
+                },
+                "271-271:capacity": {
+                    "start": 271,
+                    "end": 271,
+                    "body": [
+                        "    private final int capacity;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "268-268:count": {
+                    "start": 268,
+                    "end": 268,
+                    "body": [
+                        "    private transient int count; // @GuardedBy(\"lock\")\n"
+                    ],
+                    "modifiers": [
+                        "transient",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "265-265:last": {
+                    "start": 265,
+                    "end": 265,
+                    "body": [
+                        "    private transient Node<E> last; // @GuardedBy(\"lock\")\n"
+                    ],
+                    "modifiers": [
+                        "transient",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ]
+                },
+                "259-259:first": {
+                    "start": 259,
+                    "end": 259,
+                    "body": [
+                        "    private transient Node<E> first; // @GuardedBy(\"lock\")\n"
+                    ],
+                    "modifiers": [
+                        "transient",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ]
+                },
+                "253-253:serialVersionUID": {
+                    "start": 253,
+                    "end": 253,
+                    "body": [
+                        "    private static final long serialVersionUID = -387911632671998426L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        },
+        "DescendingItr": {
+            "start": 193,
+            "end": 193,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "LinkedBlockingDeque",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractItr"
+            ],
+            "methods": {
+                "200-202:nextNode": {
+                    "start": 200,
+                    "end": 202,
+                    "body": [
+                        "        Node<E> nextNode(final Node<E> n) {\n",
+                        "            return n.prev;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "nextNode(Node<E>)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": []
+                },
+                "195-197:firstNode": {
+                    "start": 195,
+                    "end": 197,
+                    "body": [
+                        "        Node<E> firstNode() {\n",
+                        "            return last;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "firstNode()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "Itr": {
+            "start": 206,
+            "end": 206,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "LinkedBlockingDeque",
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractItr"
+            ],
+            "methods": {
+                "213-215:nextNode": {
+                    "start": 213,
+                    "end": 215,
+                    "body": [
+                        "        Node<E> nextNode(final Node<E> n) {\n",
+                        "            return n.next;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "nextNode(Node<E>)",
+                    "parameters": [
+                        "n"
+                    ],
+                    "calls": []
+                },
+                "208-210:firstNode": {
+                    "start": 208,
+                    "end": 210,
+                    "body": [
+                        "        Node<E> firstNode() {\n",
+                        "            return first;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Node<E>",
+                            "Node<E>"
+                        ]
+                    ],
+                    "signature": "firstNode()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {}
+        },
+        "Node": {
+            "start": 223,
+            "end": 223,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "LinkedBlockingDeque",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "246-250:Node": {
+                    "start": 246,
+                    "end": 250,
+                    "body": [
+                        "        Node(final E x, final Node<E> p, final Node<E> n) {\n",
+                        "            item = x;\n",
+                        "            prev = p;\n",
+                        "            next = n;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Node(E, Node, Node)",
+                    "parameters": [
+                        "x",
+                        "p",
+                        "n"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "237-237:next": {
+                    "start": 237,
+                    "end": 237,
+                    "body": [
+                        "        Node<E> next;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Node",
+                            "Node"
+                        ]
+                    ]
+                },
+                "231-231:prev": {
+                    "start": 231,
+                    "end": 231,
+                    "body": [
+                        "        Node<E> prev;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Node",
+                            "Node"
+                        ]
+                    ]
+                },
+                "225-225:item": {
+                    "start": 225,
+                    "end": 225,
+                    "body": [
+                        "        E item;\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

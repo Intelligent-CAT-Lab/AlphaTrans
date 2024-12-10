@@ -1,0 +1,454 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/spanning/SuperVertex.java",
+    "imports": {
+        "26-26:import Iterator": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "27-27:import Set": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "25-25:import HashSet": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "28-28:import TreeSet": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.TreeSet;\n"
+            ]
+        },
+        "22-22:import Graph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "23-23:import VertexPair": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SuperVertex": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "105-116:merge": {
+                    "start": 105,
+                    "end": 116,
+                    "body": [
+                        "    public void merge(final SuperVertex<V, W, WE> other) {\n",
+                        "        for (final V v : other.vertices) {\n",
+                        "            vertices.add(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        for (final WE edge : other.orderedEdges) {\n",
+                        "            final VertexPair<V> pair = graph.getVertices1(edge);\n",
+                        "            if (!vertices.contains(pair.getHead()) || !vertices.contains(pair.getTail())) {\n",
+                        "                orderedEdges.add(edge);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "merge(SuperVertex)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/TreeSet",
+                            "add(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def merge(self, other: SuperVertex) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "94-96:iterator": {
+                    "start": 94,
+                    "end": 96,
+                    "body": [
+                        "    public Iterator<V> iterator() {\n",
+                        "        return vertices.iterator();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Iterator<V>",
+                            "java.util.Iterator<V>"
+                        ]
+                    ],
+                    "signature": "iterator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "iterator()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def iterator(self) -> typing.Iterator[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "80-91:getMinimumWeightEdge": {
+                    "start": 80,
+                    "end": 91,
+                    "body": [
+                        "    public WE getMinimumWeightEdge() {\n",
+                        "        boolean found = false;\n",
+                        "        WE edge = null;\n",
+                        "        while (!found && !orderedEdges.isEmpty()) {\n",
+                        "            edge = orderedEdges.pollFirst();\n",
+                        "            VertexPair<V> pair = graph.getVertices1(edge);\n",
+                        "            if (!vertices.contains(pair.getHead()) || !vertices.contains(pair.getTail())) {\n",
+                        "                found = true;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return edge;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WE",
+                            "WE"
+                        ]
+                    ],
+                    "signature": "getMinimumWeightEdge()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/TreeSet",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/TreeSet",
+                            "pollFirst()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getMinimumWeightEdge(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "58-73:SuperVertex": {
+                    "start": 58,
+                    "end": 73,
+                    "body": [
+                        "    public SuperVertex(\n",
+                        "            final V source,\n",
+                        "            final Graph<V, WE> graph,\n",
+                        "            final WeightedEdgesComparator<W, WE> weightComparator) {\n",
+                        "        this.graph = graph;\n",
+                        "\n",
+                        "        vertices = new HashSet<V>();\n",
+                        "        vertices.add(source);\n",
+                        "\n",
+                        "        orderedEdges = new TreeSet<WE>(weightComparator);\n",
+                        "\n",
+                        "        for (final V w : graph.getConnectedVertices(source)) {\n",
+                        "            WE edge = graph.getEdge(source, w);\n",
+                        "            orderedEdges.add(edge);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "SuperVertex(V, Graph<V,WE>, WeightedEdgesComparator<W,WE>)",
+                    "parameters": [
+                        "source",
+                        "graph",
+                        "weightComparator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/TreeSet",
+                            "TreeSet<WE>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/TreeSet",
+                            "add(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, source: typing.Any, graph: Graph[typing.Any, typing.Any], weightComparator: WeightedEdgesComparator[typing.Any, typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "49-49:orderedEdges": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private final TreeSet<WE> orderedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "TreeSet<WE>",
+                            "java.util.TreeSet<WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __orderedEdges: typing.Set[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "46-46:vertices": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private final Set<V> vertices;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<V>",
+                            "java.util.Set<V>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __vertices: typing.Set[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "43-43:graph": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class SuperVertex():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.spanning.WeightedEdgesComparator import *"
+    ]
+}

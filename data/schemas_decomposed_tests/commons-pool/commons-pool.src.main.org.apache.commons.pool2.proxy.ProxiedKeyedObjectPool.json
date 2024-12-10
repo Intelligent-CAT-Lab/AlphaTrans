@@ -1,0 +1,525 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/proxy/ProxiedKeyedObjectPool.java",
+    "imports": {
+        "22-22:import NoSuchElementException": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.NoSuchElementException;\n"
+            ]
+        },
+        "19-19:import KeyedObjectPool": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.pool2.KeyedObjectPool;\n"
+            ]
+        },
+        "20-20:import UsageTracking": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.pool2.UsageTracking;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ProxiedKeyedObjectPool": {
+            "start": 33,
+            "end": 33,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "KeyedObjectPool<K,V>"
+            ],
+            "extends": [],
+            "methods": {
+                "110-118:toString": {
+                    "start": 110,
+                    "end": 118,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder builder = new StringBuilder();\n",
+                        "        builder.append(\"ProxiedKeyedObjectPool [pool=\");\n",
+                        "        builder.append(pool);\n",
+                        "        builder.append(\", proxySource=\");\n",
+                        "        builder.append(proxySource);\n",
+                        "        builder.append(\"]\");\n",
+                        "        return builder.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "102-104:returnObject": {
+                    "start": 102,
+                    "end": 104,
+                    "body": [
+                        "    public void returnObject(final K key, final V proxy) throws Exception {\n",
+                        "        pool.returnObject(key, proxySource.resolveProxy(proxy));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "returnObject(K, V)",
+                    "parameters": [
+                        "key",
+                        "proxy"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "returnObject(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/proxy/ProxySource",
+                            "resolveProxy(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "97-99:invalidateObject0": {
+                    "start": 97,
+                    "end": 99,
+                    "body": [
+                        "    public void invalidateObject0(final K key, final V proxy) throws Exception {\n",
+                        "        pool.invalidateObject0(key, proxySource.resolveProxy(proxy));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "invalidateObject0(K, V)",
+                    "parameters": [
+                        "key",
+                        "proxy"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "invalidateObject0(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/proxy/ProxySource",
+                            "resolveProxy(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "76-78:close": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "    public void close() {\n",
+                        "        pool.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "close()"
+                        ]
+                    ]
+                },
+                "58-65:borrowObject": {
+                    "start": 58,
+                    "end": 65,
+                    "body": [
+                        "    public V borrowObject(final K key)\n",
+                        "            throws Exception, NoSuchElementException, IllegalStateException {\n",
+                        "        UsageTracking<V> usageTracking = null;\n",
+                        "        if (pool instanceof UsageTracking) {\n",
+                        "            usageTracking = (UsageTracking<V>) pool;\n",
+                        "        }\n",
+                        "        return proxySource.createProxy(pool.borrowObject(key), usageTracking);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override",
+                        "SuppressWarnings(\"unchecked\")"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "signature": "borrowObject(K)",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/proxy/ProxySource",
+                            "createProxy(java.lang.Object,org.apache.commons.pool2.UsageTracking)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "borrowObject(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "51-54:addObject": {
+                    "start": 51,
+                    "end": 54,
+                    "body": [
+                        "    public void addObject(final K key)\n",
+                        "            throws Exception, IllegalStateException, UnsupportedOperationException {\n",
+                        "        pool.addObject(key);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addObject(K)",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "addObject(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "92-94:getNumIdle1": {
+                    "start": 92,
+                    "end": 94,
+                    "body": [
+                        "    public int getNumIdle1(final K key) {\n",
+                        "        return pool.getNumIdle1(key);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getNumIdle1(K)",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "getNumIdle1(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "88-90:getNumIdle0": {
+                    "start": 88,
+                    "end": 90,
+                    "body": [
+                        "    public int getNumIdle0() {\n",
+                        "        return pool.getNumIdle0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getNumIdle0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "getNumIdle0()"
+                        ]
+                    ]
+                },
+                "84-86:getNumActive1": {
+                    "start": 84,
+                    "end": 86,
+                    "body": [
+                        "    public int getNumActive1(final K key) {\n",
+                        "        return pool.getNumActive1(key);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getNumActive1(K)",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "getNumActive1(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "80-82:getNumActive0": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "    public int getNumActive0() {\n",
+                        "        return pool.getNumActive0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getNumActive0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "getNumActive0()"
+                        ]
+                    ]
+                },
+                "71-73:clear1": {
+                    "start": 71,
+                    "end": 73,
+                    "body": [
+                        "    public void clear1(final K key) throws Exception, UnsupportedOperationException {\n",
+                        "        pool.clear1(key);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear1(K)",
+                    "parameters": [
+                        "key"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "clear1(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "67-69:clear0": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    public void clear0() throws Exception, UnsupportedOperationException {\n",
+                        "        pool.clear0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/KeyedObjectPool",
+                            "clear0()"
+                        ]
+                    ]
+                },
+                "44-48:ProxiedKeyedObjectPool": {
+                    "start": 44,
+                    "end": 48,
+                    "body": [
+                        "    public ProxiedKeyedObjectPool(\n",
+                        "            final KeyedObjectPool<K, V> pool, final ProxySource<V> proxySource) {\n",
+                        "        this.pool = pool;\n",
+                        "        this.proxySource = proxySource;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ProxiedKeyedObjectPool(KeyedObjectPool<K,V>, ProxySource<V>)",
+                    "parameters": [
+                        "pool",
+                        "proxySource"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "36-36:proxySource": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final ProxySource<V> proxySource;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ProxySource<V>",
+                            "ProxySource<V>"
+                        ]
+                    ]
+                },
+                "35-35:pool": {
+                    "start": 35,
+                    "end": 35,
+                    "body": [
+                        "    private final KeyedObjectPool<K, V> pool;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "KeyedObjectPool<K,V>",
+                            "KeyedObjectPool<K,V>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

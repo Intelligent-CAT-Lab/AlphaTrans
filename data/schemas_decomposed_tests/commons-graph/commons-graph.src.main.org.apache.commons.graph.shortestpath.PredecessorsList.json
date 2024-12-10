@@ -1,0 +1,400 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/shortestpath/PredecessorsList.java",
+    "imports": {
+        "29-29:import Map": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "28-28:import HashMap": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "22-22:import Graph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "23-23:import Mapper": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "24-24:import WeightedPath": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "26-26:import Monoid": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.weight.Monoid;\n"
+            ]
+        },
+        "25-25:import InMemoryWeightedPath": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.model.InMemoryWeightedPath;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PredecessorsList": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "145-147:isEmpty": {
+                    "start": 145,
+                    "end": 147,
+                    "body": [
+                        "    public boolean isEmpty() {\n",
+                        "        return predecessors.isEmpty();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "isEmpty()"
+                        ]
+                    ]
+                },
+                "103-138:buildPath1": {
+                    "start": 103,
+                    "end": 138,
+                    "body": [
+                        "    public WeightedPath<V, WE, W> buildPath1(\n",
+                        "            V source, V touch, V target, PredecessorsList<V, WE, W> backwardsList) {\n",
+                        "        InMemoryWeightedPath<V, WE, W> path =\n",
+                        "                new InMemoryWeightedPath<V, WE, W>(source, target, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        V vertex = touch;\n",
+                        "        while (!source.equals(vertex)) {\n",
+                        "            V predecessor = predecessors.get(vertex);\n",
+                        "            if (predecessor == null) {\n",
+                        "                throw new PathNotFoundException(\n",
+                        "                        \"Path from '%s' to '%s' doesn't exist\", source, target);\n",
+                        "            }\n",
+                        "            WE edge = graph.getEdge(predecessor, vertex);\n",
+                        "\n",
+                        "            path.addConnectionInHead(predecessor, edge, vertex);\n",
+                        "\n",
+                        "            vertex = predecessor;\n",
+                        "        }\n",
+                        "\n",
+                        "        vertex = touch;\n",
+                        "\n",
+                        "        while (!target.equals(vertex)) {\n",
+                        "            V predecessor = backwardsList.predecessors.get(vertex);\n",
+                        "            if (predecessor == null) {\n",
+                        "                throw new PathNotFoundException(\n",
+                        "                        \"Path from '%s' to '%s' doesn't exist\", source, target);\n",
+                        "            }\n",
+                        "            WE edge = graph.getEdge(vertex, predecessor);\n",
+                        "\n",
+                        "            path.addConnectionInTail(vertex, edge, predecessor);\n",
+                        "\n",
+                        "            vertex = predecessor;\n",
+                        "        }\n",
+                        "\n",
+                        "        return path;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WeightedPath<V,WE,W>",
+                            "WeightedPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "buildPath1(V, V, V, PredecessorsList)",
+                    "parameters": [
+                        "source",
+                        "touch",
+                        "target",
+                        "backwardsList"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "InMemoryWeightedPath<V,WE,W>(java.lang.Object,java.lang.Object,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.PathNotFoundException",
+                            "PathNotFoundException",
+                            "28-30:PathNotFoundException"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "addConnectionInHead(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "addConnectionInTail(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "73-92:buildPath0": {
+                    "start": 73,
+                    "end": 92,
+                    "body": [
+                        "    public WeightedPath<V, WE, W> buildPath0(V source, V target) {\n",
+                        "        InMemoryWeightedPath<V, WE, W> path =\n",
+                        "                new InMemoryWeightedPath<V, WE, W>(source, target, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        V vertex = target;\n",
+                        "        while (!source.equals(vertex)) {\n",
+                        "            V predecessor = predecessors.get(vertex);\n",
+                        "            if (predecessor == null) {\n",
+                        "                throw new PathNotFoundException(\n",
+                        "                        \"Path from '%s' to '%s' doesn't exist\", source, target);\n",
+                        "            }\n",
+                        "            WE edge = graph.getEdge(predecessor, vertex);\n",
+                        "\n",
+                        "            path.addConnectionInHead(predecessor, edge, vertex);\n",
+                        "\n",
+                        "            vertex = predecessor;\n",
+                        "        }\n",
+                        "\n",
+                        "        return path;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WeightedPath<V,WE,W>",
+                            "WeightedPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "buildPath0(V, V)",
+                    "parameters": [
+                        "source",
+                        "target"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "InMemoryWeightedPath<V,WE,W>(java.lang.Object,java.lang.Object,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.PathNotFoundException",
+                            "PathNotFoundException",
+                            "28-30:PathNotFoundException"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/InMemoryWeightedPath",
+                            "addConnectionInHead(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "62-64:addPredecessor": {
+                    "start": 62,
+                    "end": 64,
+                    "body": [
+                        "    public void addPredecessor(V tail, V head) {\n",
+                        "        predecessors.put(tail, head);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addPredecessor(V, V)",
+                    "parameters": [
+                        "tail",
+                        "head"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "49-54:PredecessorsList": {
+                    "start": 49,
+                    "end": 54,
+                    "body": [
+                        "    public PredecessorsList(\n",
+                        "            Graph<V, WE> graph, Monoid<W> weightOperations, Mapper<WE, W> weightedEdges) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightOperations = weightOperations;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "PredecessorsList(Graph<V,WE>, Monoid<W>, Mapper<WE,W>)",
+                    "parameters": [
+                        "graph",
+                        "weightOperations",
+                        "weightedEdges"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "47-47:predecessors": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final Map<V, V> predecessors = new HashMap<V, V>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<V,V>",
+                            "java.util.Map<V,V>"
+                        ]
+                    ]
+                },
+                "45-45:weightedEdges": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ]
+                },
+                "43-43:weightOperations": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final Monoid<W> weightOperations;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Monoid<W>",
+                            "Monoid<W>"
+                        ]
+                    ]
+                },
+                "41-41:graph": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

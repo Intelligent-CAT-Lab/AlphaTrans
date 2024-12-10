@@ -1,0 +1,557 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/spanning/ShortestEdges.java",
+    "imports": {
+        "30-30:import Comparator": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.Comparator;\n"
+            ]
+        },
+        "32-32:import Map": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "31-31:import HashMap": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "22-22:import Graph": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "26-26:import VertexPair": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        },
+        "23-23:import GraphException": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import org.apache.commons.graph.GraphException;\n"
+            ]
+        },
+        "24-24:import Mapper": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "25-25:import SpanningTree": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.SpanningTree;\n"
+            ]
+        },
+        "28-28:import OrderedMonoid": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "27-27:import MutableSpanningTree": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ShortestEdges": {
+            "start": 42,
+            "end": 42,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Comparator<V>"
+            ],
+            "extends": [],
+            "methods": {
+                "163-165:toString": {
+                    "start": 163,
+                    "end": 165,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return predecessors.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "157-159:isEmpty": {
+                    "start": 157,
+                    "end": 159,
+                    "body": [
+                        "    public boolean isEmpty() {\n",
+                        "        return predecessors.isEmpty();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "isEmpty()"
+                        ]
+                    ]
+                },
+                "148-150:hasWeight": {
+                    "start": 148,
+                    "end": 150,
+                    "body": [
+                        "    public boolean hasWeight(V vertex) {\n",
+                        "        return predecessors.containsKey(vertex);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasWeight(V)",
+                    "parameters": [
+                        "vertex"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "containsKey(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "128-140:getWeight": {
+                    "start": 128,
+                    "end": 140,
+                    "body": [
+                        "    public W getWeight(V vertex) {\n",
+                        "        if (source.equals(vertex)) {\n",
+                        "            return weightOperations.identity();\n",
+                        "        }\n",
+                        "\n",
+                        "        WE edge = predecessors.get(vertex);\n",
+                        "\n",
+                        "        if (edge == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        return weightedEdges.map(edge);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "W",
+                            "W"
+                        ]
+                    ],
+                    "signature": "getWeight(V)",
+                    "parameters": [
+                        "vertex"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "100-117:createSpanningTree": {
+                    "start": 100,
+                    "end": 117,
+                    "body": [
+                        "    public SpanningTree<V, WE, W> createSpanningTree() {\n",
+                        "        MutableSpanningTree<V, WE, W> spanningTree =\n",
+                        "                new MutableSpanningTree<V, WE, W>(weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        for (WE edge : this.predecessors.values()) {\n",
+                        "            VertexPair<V> vertices = graph.getVertices1(edge);\n",
+                        "\n",
+                        "            V head = vertices.getHead();\n",
+                        "            V tail = vertices.getTail();\n",
+                        "\n",
+                        "            addEdgeIgnoringExceptions(head, spanningTree);\n",
+                        "            addEdgeIgnoringExceptions(tail, spanningTree);\n",
+                        "\n",
+                        "            spanningTree.addEdge(head, graph.getEdge(head, tail), tail);\n",
+                        "        }\n",
+                        "\n",
+                        "        return spanningTree;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "SpanningTree<V,WE,W>",
+                            "SpanningTree<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "createSpanningTree()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<V,WE,W>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "values()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.spanning.ShortestEdges",
+                            "ShortestEdges",
+                            "44-50:addEdgeIgnoringExceptions"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "84-93:compare": {
+                    "start": 84,
+                    "end": 93,
+                    "body": [
+                        "    public int compare(V left, V right) {\n",
+                        "        if (!hasWeight(left) && !hasWeight(right)) {\n",
+                        "            return 0;\n",
+                        "        } else if (!hasWeight(left)) {\n",
+                        "            return 1;\n",
+                        "        } else if (!hasWeight(right)) {\n",
+                        "            return -1;\n",
+                        "        }\n",
+                        "        return weightOperations.compare(getWeight(left), getWeight(right));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compare(V, V)",
+                    "parameters": [
+                        "left",
+                        "right"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.spanning.ShortestEdges",
+                            "ShortestEdges",
+                            "148-150:hasWeight"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.spanning.ShortestEdges",
+                            "ShortestEdges",
+                            "128-140:getWeight"
+                        ]
+                    ]
+                },
+                "79-81:addPredecessor": {
+                    "start": 79,
+                    "end": 81,
+                    "body": [
+                        "    public void addPredecessor(V tail, WE head) {\n",
+                        "        predecessors.put(tail, head);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addPredecessor(V, WE)",
+                    "parameters": [
+                        "tail",
+                        "head"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(java.lang.Object,java.lang.Object)"
+                        ]
+                    ]
+                },
+                "62-71:ShortestEdges": {
+                    "start": 62,
+                    "end": 71,
+                    "body": [
+                        "    public ShortestEdges(\n",
+                        "            Graph<V, WE> graph,\n",
+                        "            V source,\n",
+                        "            OrderedMonoid<W> weightOperations,\n",
+                        "            Mapper<WE, W> weightedEdges) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.source = source;\n",
+                        "        this.weightOperations = weightOperations;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ShortestEdges(Graph<V,WE>, V, OrderedMonoid<W>, Mapper<WE,W>)",
+                    "parameters": [
+                        "graph",
+                        "source",
+                        "weightOperations",
+                        "weightedEdges"
+                    ],
+                    "calls": []
+                },
+                "44-50:addEdgeIgnoringExceptions": {
+                    "start": 44,
+                    "end": 50,
+                    "body": [
+                        "    private static <V, WE, W> void addEdgeIgnoringExceptions(\n",
+                        "            V vertex, MutableSpanningTree<V, WE, W> spanningTree) {\n",
+                        "        try {\n",
+                        "            spanningTree.addVertex(vertex);\n",
+                        "        } catch (GraphException e) {\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addEdgeIgnoringExceptions(V, MutableSpanningTree<V,WE,W>)",
+                    "parameters": [
+                        "vertex",
+                        "spanningTree"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(java.lang.Object)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "60-60:source": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    private final V source;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ]
+                },
+                "58-58:graph": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ]
+                },
+                "56-56:weightedEdges": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ]
+                },
+                "54-54:weightOperations": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private final OrderedMonoid<W> weightOperations;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OrderedMonoid<W>",
+                            "OrderedMonoid<W>"
+                        ]
+                    ]
+                },
+                "52-52:predecessors": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private final Map<V, WE> predecessors = new HashMap<V, WE>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Map<V,WE>",
+                            "java.util.Map<V,WE>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

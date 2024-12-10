@@ -1,0 +1,665 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/jansi/src/main/java/org/fusesource/jansi/internal/MingwSupport.java",
+    "imports": {
+        "21-21:import IOException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "18-18:import ByteArrayOutputStream": {
+            "start": 18,
+            "end": 18,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "19-19:import File": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "20-20:import FileDescriptor": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.FileDescriptor;\n"
+            ]
+        },
+        "22-22:import InputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "23-23:import Constructor": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.lang.reflect.Constructor;\n"
+            ]
+        },
+        "24-24:import Field": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.lang.reflect.Field;\n"
+            ]
+        },
+        "25-25:import Matcher": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "26-26:import Pattern": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        }
+    },
+    "classes": {
+        "MingwSupport": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "88-103:getTerminalWidth": {
+                    "start": 88,
+                    "end": 103,
+                    "body": [
+                        "    public int getTerminalWidth(String name) {\n",
+                        "        try {\n",
+                        "            Process p = new ProcessBuilder(sttyCommand, \"-F\", name, \"-a\").start();\n",
+                        "            String result = waitAndCapture(p);\n",
+                        "            if (p.exitValue() != 0) {\n",
+                        "                throw new IOException(\"Error executing '\" + sttyCommand + \"': \" + result);\n",
+                        "            }\n",
+                        "            Matcher matcher = columnsPatterns.matcher(result);\n",
+                        "            if (matcher.find()) {\n",
+                        "                return Integer.parseInt(matcher.group(1));\n",
+                        "            }\n",
+                        "            throw new IOException(\"Unable to parse columns\");\n",
+                        "        } catch (Exception e) {\n",
+                        "            throw new RuntimeException(e);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getTerminalWidth(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/ProcessBuilder",
+                            "start()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ProcessBuilder",
+                            "ProcessBuilder(java.lang.String[])"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "105-119:waitAndCapture"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "exitValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "find()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.Throwable)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getTerminalWidth(self, name: str) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "69-86:getConsoleName": {
+                    "start": 69,
+                    "end": 86,
+                    "body": [
+                        "    public String getConsoleName(boolean stdout) {\n",
+                        "        try {\n",
+                        "            Process p = new ProcessBuilder(ttyCommand)\n",
+                        "                    .redirectInput(getRedirect(stdout ? FileDescriptor.out : FileDescriptor.err))\n",
+                        "                    .start();\n",
+                        "            String result = waitAndCapture(p);\n",
+                        "            if (p.exitValue() == 0) {\n",
+                        "                return result.trim();\n",
+                        "            }\n",
+                        "        } catch (Throwable t) {\n",
+                        "            if (\"java.lang.reflect.InaccessibleObjectException\"\n",
+                        "                    .equals(t.getClass().getName())) {\n",
+                        "                System.err.println(\"MINGW support requires --add-opens java.base/java.lang=ALL-UNNAMED\");\n",
+                        "            }\n",
+                        "            // ignore\n",
+                        "        }\n",
+                        "        return null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getConsoleName(boolean)",
+                    "parameters": [
+                        "stdout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/ProcessBuilder",
+                            "start()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ProcessBuilder",
+                            "redirectInput(java.lang.ProcessBuilder.Redirect)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ProcessBuilder",
+                            "ProcessBuilder(java.lang.String[])"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "124-136:getRedirect"
+                        ],
+                        [
+                            "jansi.src.main.org.fusesource.jansi.internal.MingwSupport",
+                            "MingwSupport",
+                            "105-119:waitAndCapture"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "exitValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getConsoleName(self, stdout: bool) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "40-67:MingwSupport": {
+                    "start": 40,
+                    "end": 67,
+                    "body": [
+                        "    public MingwSupport() {\n",
+                        "        String tty = null;\n",
+                        "        String stty = null;\n",
+                        "        String path = System.getenv(\"PATH\");\n",
+                        "        if (path != null) {\n",
+                        "            String[] paths = path.split(File.pathSeparator);\n",
+                        "            for (String p : paths) {\n",
+                        "                File ttyFile = new File(p, \"tty.exe\");\n",
+                        "                if (tty == null && ttyFile.canExecute()) {\n",
+                        "                    tty = ttyFile.getAbsolutePath();\n",
+                        "                }\n",
+                        "                File sttyFile = new File(p, \"stty.exe\");\n",
+                        "                if (stty == null && sttyFile.canExecute()) {\n",
+                        "                    stty = sttyFile.getAbsolutePath();\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (tty == null) {\n",
+                        "            tty = \"tty.exe\";\n",
+                        "        }\n",
+                        "        if (stty == null) {\n",
+                        "            stty = \"stty.exe\";\n",
+                        "        }\n",
+                        "        ttyCommand = tty;\n",
+                        "        sttyCommand = stty;\n",
+                        "        // Compute patterns\n",
+                        "        columnsPatterns = Pattern.compile(\"\\\\b\" + \"columns\" + \"\\\\s+(\\\\d+)\\\\b\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "MingwSupport()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getenv(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "canExecute()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getAbsolutePath()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "compile(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "124-136:getRedirect": {
+                    "start": 124,
+                    "end": 136,
+                    "body": [
+                        "    private ProcessBuilder.Redirect getRedirect(FileDescriptor fd) throws ReflectiveOperationException {\n",
+                        "        // This is not really allowed, but this is the only way to redirect the output or error stream\n",
+                        "        // to the input.  This is definitely not something you'd usually want to do, but in the case of\n",
+                        "        // the `tty` utility, it provides a way to get\n",
+                        "        Class<?> rpi = Class.forName(\"java.lang.ProcessBuilder$RedirectPipeImpl\");\n",
+                        "        Constructor<?> cns = rpi.getDeclaredConstructor();\n",
+                        "        cns.setAccessible(true);\n",
+                        "        ProcessBuilder.Redirect input = (ProcessBuilder.Redirect) cns.newInstance();\n",
+                        "        Field f = rpi.getDeclaredField(\"fd\");\n",
+                        "        f.setAccessible(true);\n",
+                        "        f.set(input, fd);\n",
+                        "        return input;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Redirect",
+                            "java.lang.Redirect"
+                        ]
+                    ],
+                    "signature": "getRedirect(FileDescriptor)",
+                    "parameters": [
+                        "fd"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "forName(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getDeclaredConstructor(java.lang.Class[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/Constructor",
+                            "newInstance(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getDeclaredField(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/AccessibleObject",
+                            "setAccessible(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/Field",
+                            "set(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __getRedirect(self, fd: io.RawIOBase) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "105-119:waitAndCapture": {
+                    "start": 105,
+                    "end": 119,
+                    "body": [
+                        "    private static String waitAndCapture(Process p) throws IOException, InterruptedException {\n",
+                        "        ByteArrayOutputStream bout = new ByteArrayOutputStream();\n",
+                        "        try (InputStream in = p.getInputStream();\n",
+                        "                InputStream err = p.getErrorStream()) {\n",
+                        "            int c;\n",
+                        "            while ((c = in.read()) != -1) {\n",
+                        "                bout.write(c);\n",
+                        "            }\n",
+                        "            while ((c = err.read()) != -1) {\n",
+                        "                bout.write(c);\n",
+                        "            }\n",
+                        "            p.waitFor();\n",
+                        "        }\n",
+                        "        return bout.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "waitAndCapture(Process)",
+                    "parameters": [
+                        "p"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "getInputStream()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "getErrorStream()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/InputStream",
+                            "read()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "write(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Process",
+                            "waitFor()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __waitAndCapture(p: subprocess.Popen) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "38-38:columnsPatterns": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Pattern columnsPatterns;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __columnsPatterns: re.Pattern = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "37-37:ttyCommand": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private final String ttyCommand;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ttyCommand: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "36-36:sttyCommand": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final String sttyCommand;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __sttyCommand: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class MingwSupport:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import IOBase",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

@@ -1,0 +1,564 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/net/RFC1522Codec.java",
+    "imports": {
+        "25-25:import Charset": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "24-24:import UnsupportedEncodingException": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "20-20:import DecoderException": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.codec.DecoderException;\n"
+            ]
+        },
+        "21-21:import EncoderException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.codec.EncoderException;\n"
+            ]
+        },
+        "22-22:import StringUtils": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import org.apache.commons.codec.binary.StringUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "RFC1522Codec": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "120-153:decodeText": {
+                    "start": 120,
+                    "end": 153,
+                    "body": [
+                        "    protected String decodeText(final String text)\n",
+                        "            throws DecoderException, UnsupportedEncodingException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        if (!text.startsWith(PREFIX) || !text.endsWith(POSTFIX)) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: malformed encoded content\", null);\n",
+                        "        }\n",
+                        "        final int terminator = text.length() - 2;\n",
+                        "        int from = 2;\n",
+                        "        int to = text.indexOf(SEP, from);\n",
+                        "        if (to == terminator) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: charset token not found\", null);\n",
+                        "        }\n",
+                        "        final String charset = text.substring(from, to);\n",
+                        "        if (charset.equals(\"\")) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: charset not specified\", null);\n",
+                        "        }\n",
+                        "        from = to + 1;\n",
+                        "        to = text.indexOf(SEP, from);\n",
+                        "        if (to == terminator) {\n",
+                        "            throw new DecoderException(\"RFC 1522 violation: encoding token not found\", null);\n",
+                        "        }\n",
+                        "        final String encoding = text.substring(from, to);\n",
+                        "        if (!getEncoding().equalsIgnoreCase(encoding)) {\n",
+                        "            throw new DecoderException(\n",
+                        "                    \"This codec cannot decode \" + encoding + \" encoded content\", null);\n",
+                        "        }\n",
+                        "        from = to + 1;\n",
+                        "        to = text.indexOf(SEP, from);\n",
+                        "        byte[] data = StringUtils.getBytesUsAscii(text.substring(from, to));\n",
+                        "        data = doDecoding(data);\n",
+                        "        return new String(data, charset);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "decodeText(String)",
+                    "parameters": [
+                        "text"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "186-188:getBytesUsAscii"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.DecoderException",
+                            "DecoderException",
+                            "63-65:DecoderException"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "160-160:getEncoding"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "180-180:doDecoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(byte[],java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _decodeText(self, text: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "99-105:encodeText1": {
+                    "start": 99,
+                    "end": 105,
+                    "body": [
+                        "    protected String encodeText1(final String text, final String charsetName)\n",
+                        "            throws EncoderException, UnsupportedEncodingException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        return this.encodeText0(text, Charset.forName(charsetName));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeText1(String, String)",
+                    "parameters": [
+                        "text",
+                        "charsetName"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "67-80:encodeText0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/charset/Charset",
+                            "forName(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _encodeText1(self, text: str, charsetName: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "67-80:encodeText0": {
+                    "start": 67,
+                    "end": 80,
+                    "body": [
+                        "    protected String encodeText0(final String text, final Charset charset) throws EncoderException {\n",
+                        "        if (text == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        final StringBuilder buffer = new StringBuilder();\n",
+                        "        buffer.append(PREFIX);\n",
+                        "        buffer.append(charset);\n",
+                        "        buffer.append(SEP);\n",
+                        "        buffer.append(this.getEncoding());\n",
+                        "        buffer.append(SEP);\n",
+                        "        buffer.append(StringUtils.newStringUsAscii(this.doEncoding(text.getBytes(charset))));\n",
+                        "        buffer.append(POSTFIX);\n",
+                        "        return buffer.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "encodeText0(String, Charset)",
+                    "parameters": [
+                        "text",
+                        "charset"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "160-160:getEncoding"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.binary.StringUtils",
+                            "StringUtils",
+                            "336-338:newStringUsAscii"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.net.RFC1522Codec",
+                            "RFC1522Codec",
+                            "170-170:doEncoding"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "getBytes(java.nio.charset.Charset)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _encodeText0(self, text: str, charset: str) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "180-180:doDecoding": {
+                    "start": 180,
+                    "end": 180,
+                    "body": [
+                        "    protected abstract byte[] doDecoding(byte[] bytes) throws DecoderException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doDecoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _doDecoding(self, bytes_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "170-170:doEncoding": {
+                    "start": 170,
+                    "end": 170,
+                    "body": [
+                        "    protected abstract byte[] doEncoding(byte[] bytes) throws EncoderException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "doEncoding(byte[])",
+                    "parameters": [
+                        "bytes"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _doEncoding(self, bytes_: typing.List[int]) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "160-160:getEncoding": {
+                    "start": 160,
+                    "end": 160,
+                    "body": [
+                        "    protected abstract String getEncoding();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getEncoding()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _getEncoding(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "49-49:PREFIX": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    protected static final String PREFIX = \"=?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _PREFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:POSTFIX": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    protected static final String POSTFIX = \"?=\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _POSTFIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-43:SEP": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    protected static final char SEP = '?';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _SEP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class RFC1522Codec(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from abc import ABC",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.codec.DecoderException import *",
+        "from src.main.org.apache.commons.codec.EncoderException import *",
+        "from src.main.org.apache.commons.codec.binary.StringUtils import *"
+    ]
+}

@@ -1,0 +1,1294 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/UrlValidator.java",
+    "imports": {
+        "22-22:import Serializable": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "25-25:import Set": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "23-23:import Arrays": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "24-24:import HashSet": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "26-26:import Matcher": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.regex.Matcher;\n"
+            ]
+        },
+        "27-27:import Pattern": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.regex.Pattern;\n"
+            ]
+        },
+        "19-19:import InetAddressValidator": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.InetAddressValidator;\n"
+            ]
+        },
+        "20-20:import Flags": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.util.Flags;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UrlValidator": {
+            "start": 77,
+            "end": 77,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "429-440:countToken": {
+                    "start": 429,
+                    "end": 440,
+                    "body": [
+                        "    protected int countToken(String token, String target) {\n",
+                        "        int tokenIndex = 0;\n",
+                        "        int count = 0;\n",
+                        "        while (tokenIndex != -1) {\n",
+                        "            tokenIndex = target.indexOf(token, tokenIndex);\n",
+                        "            if (tokenIndex > -1) {\n",
+                        "                tokenIndex++;\n",
+                        "                count++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return count;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "countToken(String, String)",
+                    "parameters": [
+                        "token",
+                        "target"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String,int)"
+                        ]
+                    ]
+                },
+                "414-420:isValidFragment": {
+                    "start": 414,
+                    "end": 420,
+                    "body": [
+                        "    protected boolean isValidFragment(String fragment) {\n",
+                        "        if (fragment == null) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        return options.isOff(NO_FRAGMENTS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidFragment(String)",
+                    "parameters": [
+                        "fragment"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ]
+                    ]
+                },
+                "400-406:isValidQuery": {
+                    "start": 400,
+                    "end": 406,
+                    "body": [
+                        "    protected boolean isValidQuery(String query) {\n",
+                        "        if (query == null) {\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        return QUERY_PATTERN.matcher(query).matches();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidQuery(String)",
+                    "parameters": [
+                        "query"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ]
+                    ]
+                },
+                "371-392:isValidPath": {
+                    "start": 371,
+                    "end": 392,
+                    "body": [
+                        "    protected boolean isValidPath(String path) {\n",
+                        "        if (path == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!PATH_PATTERN.matcher(path).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        int slash2Count = countToken(\"//\", path);\n",
+                        "        if (options.isOff(ALLOW_2_SLASHES) && (slash2Count > 0)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        int slashCount = countToken(\"/\", path);\n",
+                        "        int dot2Count = countToken(\"..\", path);\n",
+                        "        if (dot2Count > 0 && (slashCount - slash2Count - 1) <= dot2Count) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidPath(String)",
+                    "parameters": [
+                        "path"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "429-440:countToken"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ]
+                    ]
+                },
+                "286-363:isValidAuthority": {
+                    "start": 286,
+                    "end": 363,
+                    "body": [
+                        "    protected boolean isValidAuthority(String authority) {\n",
+                        "        if (authority == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        InetAddressValidator inetAddressValidator = InetAddressValidator.getInstance();\n",
+                        "\n",
+                        "        Matcher authorityMatcher = AUTHORITY_PATTERN.matcher(authority);\n",
+                        "        if (!authorityMatcher.matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        boolean hostname = false;\n",
+                        "        String hostIP = authorityMatcher.group(PARSE_AUTHORITY_HOST_IP);\n",
+                        "        boolean ipV4Address = inetAddressValidator.isValid(hostIP);\n",
+                        "\n",
+                        "        if (!ipV4Address) {\n",
+                        "            hostname = DOMAIN_PATTERN.matcher(hostIP).matches();\n",
+                        "        }\n",
+                        "\n",
+                        "        if (hostname) {\n",
+                        "            char[] chars = hostIP.toCharArray();\n",
+                        "            int size = 1;\n",
+                        "            for (int i = 0; i < chars.length; i++) {\n",
+                        "                if (chars[i] == '.') {\n",
+                        "                    size++;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            String[] domainSegment = new String[size];\n",
+                        "            boolean match = true;\n",
+                        "            int segmentCount = 0;\n",
+                        "            int segmentLength = 0;\n",
+                        "\n",
+                        "            while (match) {\n",
+                        "                Matcher atomMatcher = ATOM_PATTERN.matcher(hostIP);\n",
+                        "                match = atomMatcher.matches();\n",
+                        "                if (match) {\n",
+                        "                    domainSegment[segmentCount] = atomMatcher.group(1);\n",
+                        "                    segmentLength = domainSegment[segmentCount].length() + 1;\n",
+                        "                    hostIP =\n",
+                        "                            (segmentLength >= hostIP.length())\n",
+                        "                                    ? \"\"\n",
+                        "                                    : hostIP.substring(segmentLength);\n",
+                        "\n",
+                        "                    segmentCount++;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            String topLevel = domainSegment[segmentCount - 1];\n",
+                        "            if (topLevel.length() < 2\n",
+                        "                    || topLevel.length() > 4) { // CHECKSTYLE IGNORE MagicNumber (deprecated code)\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (!ALPHA_PATTERN.matcher(topLevel.substring(0, 1)).matches()) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (segmentCount < 2) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!hostname && !ipV4Address) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String port = authorityMatcher.group(PARSE_AUTHORITY_PORT);\n",
+                        "        if (port != null && !PORT_PATTERN.matcher(port).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        String extra = authorityMatcher.group(PARSE_AUTHORITY_EXTRA);\n",
+                        "        if (!GenericValidator.isBlankOrNull(extra)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidAuthority(String)",
+                    "parameters": [
+                        "authority"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "63-65:getInstance"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "73-75:isValid"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toCharArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.GenericValidator",
+                            "GenericValidator",
+                            "51-53:isBlankOrNull"
+                        ]
+                    ]
+                },
+                "263-277:isValidScheme": {
+                    "start": 263,
+                    "end": 277,
+                    "body": [
+                        "    protected boolean isValidScheme(String scheme) {\n",
+                        "        if (scheme == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!SCHEME_PATTERN.matcher(scheme).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (options.isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidScheme(String)",
+                    "parameters": [
+                        "scheme"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "88-90:isOff"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "220-254:isValid": {
+                    "start": 220,
+                    "end": 254,
+                    "body": [
+                        "    public boolean isValid(String value) {\n",
+                        "        if (value == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (!LEGAL_ASCII_PATTERN.matcher(value).matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        Matcher urlMatcher = URL_PATTERN.matcher(value);\n",
+                        "        if (!urlMatcher.matches()) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidScheme(urlMatcher.group(PARSE_URL_SCHEME))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidAuthority(urlMatcher.group(PARSE_URL_AUTHORITY))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidPath(urlMatcher.group(PARSE_URL_PATH))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidQuery(urlMatcher.group(PARSE_URL_QUERY))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (!isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "value"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/regex/Pattern",
+                            "matcher(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "matches()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "263-277:isValidScheme"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/regex/Matcher",
+                            "group(int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "286-363:isValidAuthority"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "371-392:isValidPath"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "400-406:isValidQuery"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "414-420:isValidFragment"
+                        ]
+                    ]
+                },
+                "183-185:UrlValidator3": {
+                    "start": 183,
+                    "end": 185,
+                    "body": [
+                        "    public static UrlValidator UrlValidator3() {\n",
+                        "        return UrlValidator2(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator3()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "179-181:UrlValidator2"
+                        ]
+                    ]
+                },
+                "179-181:UrlValidator2": {
+                    "start": 179,
+                    "end": 181,
+                    "body": [
+                        "    public static UrlValidator UrlValidator2(String[] schemes) {\n",
+                        "        return new UrlValidator(schemes, 0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator2(String[])",
+                    "parameters": [
+                        "schemes"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "161-173:UrlValidator"
+                        ]
+                    ]
+                },
+                "175-177:UrlValidator1": {
+                    "start": 175,
+                    "end": 177,
+                    "body": [
+                        "    public static UrlValidator UrlValidator1(int options) {\n",
+                        "        return new UrlValidator(null, options);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "UrlValidator",
+                            "UrlValidator"
+                        ]
+                    ],
+                    "signature": "UrlValidator1(int)",
+                    "parameters": [
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.UrlValidator",
+                            "UrlValidator",
+                            "161-173:UrlValidator"
+                        ]
+                    ]
+                },
+                "161-173:UrlValidator": {
+                    "start": 161,
+                    "end": 173,
+                    "body": [
+                        "    public UrlValidator(String[] schemes, int options) {\n",
+                        "        this.options = new Flags(1, options);\n",
+                        "\n",
+                        "        if (this.options.isOn(ALLOW_ALL_SCHEMES)) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (schemes == null) {\n",
+                        "            schemes = this.defaultSchemes;\n",
+                        "        }\n",
+                        "\n",
+                        "        this.allowedSchemes.addAll(Arrays.asList(schemes));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "UrlValidator(String[], int)",
+                    "parameters": [
+                        "schemes",
+                        "options"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "54-59:Flags"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.util.Flags",
+                            "Flags",
+                            "77-79:isOn"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "addAll(java.util.Collection)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "158-158:defaultSchemes": {
+                    "start": 158,
+                    "end": 158,
+                    "body": [
+                        "    protected String[] defaultSchemes = {\"http\", \"https\", \"ftp\"};\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ]
+                },
+                "91-91:NO_FRAGMENTS": {
+                    "start": 91,
+                    "end": 91,
+                    "body": [
+                        "    public static final int NO_FRAGMENTS = 1 << 2;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "88-88:ALLOW_2_SLASHES": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    public static final int ALLOW_2_SLASHES = 1 << 1;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "85-85:ALLOW_ALL_SCHEMES": {
+                    "start": 85,
+                    "end": 85,
+                    "body": [
+                        "    public static final int ALLOW_ALL_SCHEMES = 1 << 0;\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "155-155:allowedSchemes": {
+                    "start": 155,
+                    "end": 155,
+                    "body": [
+                        "    private final Set<String> allowedSchemes = new HashSet<String>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<String>",
+                            "java.util.Set<String>"
+                        ]
+                    ]
+                },
+                "152-152:options": {
+                    "start": 152,
+                    "end": 152,
+                    "body": [
+                        "    private final Flags options;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Flags",
+                            "Flags"
+                        ]
+                    ]
+                },
+                "149-149:ALPHA_PATTERN": {
+                    "start": 149,
+                    "end": 149,
+                    "body": [
+                        "    private static final Pattern ALPHA_PATTERN = Pattern.compile(\"^[\" + ALPHA_CHARS + \"]\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "147-147:ATOM_PATTERN": {
+                    "start": 147,
+                    "end": 147,
+                    "body": [
+                        "    private static final Pattern ATOM_PATTERN = Pattern.compile(\"^(\" + ATOM + \").*?$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "145-145:PORT_PATTERN": {
+                    "start": 145,
+                    "end": 145,
+                    "body": [
+                        "    private static final Pattern PORT_PATTERN = Pattern.compile(\"^:(\\\\d{1,5})$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "142-143:DOMAIN_PATTERN": {
+                    "start": 142,
+                    "end": 143,
+                    "body": [
+                        "    private static final Pattern DOMAIN_PATTERN =\n",
+                        "            Pattern.compile(\"^\" + ATOM + \"(\\\\.\" + ATOM + \")*$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "140-140:LEGAL_ASCII_PATTERN": {
+                    "start": 140,
+                    "end": 140,
+                    "body": [
+                        "    private static final Pattern LEGAL_ASCII_PATTERN = Pattern.compile(\"^\\\\p{ASCII}+$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "138-138:QUERY_PATTERN": {
+                    "start": 138,
+                    "end": 138,
+                    "body": [
+                        "    private static final Pattern QUERY_PATTERN = Pattern.compile(\"^(.*)$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "136-136:PATH_PATTERN": {
+                    "start": 136,
+                    "end": 136,
+                    "body": [
+                        "    private static final Pattern PATH_PATTERN = Pattern.compile(\"^(/[-\\\\w:@&?=+,.!/~*'%$_;]*)?$\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "134-134:PARSE_AUTHORITY_EXTRA": {
+                    "start": 134,
+                    "end": 134,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_EXTRA = 3;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "131-131:PARSE_AUTHORITY_PORT": {
+                    "start": 131,
+                    "end": 131,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_PORT = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "129-129:PARSE_AUTHORITY_HOST_IP": {
+                    "start": 129,
+                    "end": 129,
+                    "body": [
+                        "    private static final int PARSE_AUTHORITY_HOST_IP = 1;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "127-127:AUTHORITY_PATTERN": {
+                    "start": 127,
+                    "end": 127,
+                    "body": [
+                        "    private static final Pattern AUTHORITY_PATTERN = Pattern.compile(AUTHORITY_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "125-126:AUTHORITY_REGEX": {
+                    "start": 125,
+                    "end": 126,
+                    "body": [
+                        "    private static final String AUTHORITY_REGEX =\n",
+                        "            \"^([\" + AUTHORITY_CHARS_REGEX + \"]*)(:\\\\d*)?(.*)?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "122-123:SCHEME_PATTERN": {
+                    "start": 122,
+                    "end": 123,
+                    "body": [
+                        "    private static final Pattern SCHEME_PATTERN =\n",
+                        "            Pattern.compile(\"^\\\\p{Alpha}[\\\\p{Alnum}\\\\+\\\\-\\\\.]*\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "119-119:PARSE_URL_FRAGMENT": {
+                    "start": 119,
+                    "end": 119,
+                    "body": [
+                        "    private static final int PARSE_URL_FRAGMENT = 9;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "117-117:PARSE_URL_QUERY": {
+                    "start": 117,
+                    "end": 117,
+                    "body": [
+                        "    private static final int PARSE_URL_QUERY = 7;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "115-115:PARSE_URL_PATH": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private static final int PARSE_URL_PATH = 5;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "113-113:PARSE_URL_AUTHORITY": {
+                    "start": 113,
+                    "end": 113,
+                    "body": [
+                        "    private static final int PARSE_URL_AUTHORITY = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "110-110:PARSE_URL_SCHEME": {
+                    "start": 110,
+                    "end": 110,
+                    "body": [
+                        "    private static final int PARSE_URL_SCHEME = 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "107-107:URL_PATTERN": {
+                    "start": 107,
+                    "end": 107,
+                    "body": [
+                        "    private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Pattern",
+                            "java.util.regex.Pattern"
+                        ]
+                    ]
+                },
+                "104-105:URL_REGEX": {
+                    "start": 104,
+                    "end": 105,
+                    "body": [
+                        "    private static final String URL_REGEX =\n",
+                        "            \"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\\\\?([^#]*))?(#(.*))?\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "101-101:ATOM": {
+                    "start": 101,
+                    "end": 101,
+                    "body": [
+                        "    private static final String ATOM = VALID_CHARS + '+';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "99-99:AUTHORITY_CHARS_REGEX": {
+                    "start": 99,
+                    "end": 99,
+                    "body": [
+                        "    private static final String AUTHORITY_CHARS_REGEX = \"\\\\p{Alnum}\\\\-\\\\.\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "97-97:VALID_CHARS": {
+                    "start": 97,
+                    "end": 97,
+                    "body": [
+                        "    private static final String VALID_CHARS = \"[^\\\\s\" + SPECIAL_CHARS + \"]\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "95-95:SPECIAL_CHARS": {
+                    "start": 95,
+                    "end": 95,
+                    "body": [
+                        "    private static final String SPECIAL_CHARS = \";/@&=,.?:+$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "93-93:ALPHA_CHARS": {
+                    "start": 93,
+                    "end": 93,
+                    "body": [
+                        "    private static final String ALPHA_CHARS = \"a-zA-Z\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "79-79:serialVersionUID": {
+                    "start": 79,
+                    "end": 79,
+                    "body": [
+                        "    private static final long serialVersionUID = 24137157400029593L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

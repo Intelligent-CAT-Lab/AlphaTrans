@@ -1,0 +1,233 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/connectivity/DefaultConnectivityAlgorithmsSelector.java",
+    "imports": {
+        "30-30:import List": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "28-28:import Collection": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.Collection;\n"
+            ]
+        },
+        "27-27:import ArrayList": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "29-29:import LinkedList": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.LinkedList;\n"
+            ]
+        },
+        "25-25:import Graph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.visit": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.visit;\n"
+            ]
+        },
+        "23-23:import static Assertions.checkState": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkState;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultConnectivityAlgorithmsSelector": {
+            "start": 38,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "58-78:applyingMinimumSpanningTreeAlgorithm": {
+                    "start": 58,
+                    "end": 78,
+                    "body": [
+                        "    public Collection<List<V>> applyingMinimumSpanningTreeAlgorithm() {\n",
+                        "        final List<V> untouchedVertices = new ArrayList<V>();\n",
+                        "\n",
+                        "        for (V v : includedVertices) {\n",
+                        "            checkState(graph.containsVertex(v), \"Vertex %s does not exist in the Graph\", v);\n",
+                        "            untouchedVertices.add(v);\n",
+                        "        }\n",
+                        "\n",
+                        "        final Collection<List<V>> connectedVertices = new LinkedList<List<V>>();\n",
+                        "\n",
+                        "        while (untouchedVertices.size() > 0) {\n",
+                        "            V source = untouchedVertices.remove(0);\n",
+                        "\n",
+                        "            connectedVertices.add(\n",
+                        "                    visit(graph)\n",
+                        "                            .from(source)\n",
+                        "                            .applyingDepthFirstSearch1(\n",
+                        "                                    new ConnectedComponentHandler<V, E>(untouchedVertices)));\n",
+                        "        }\n",
+                        "        return connectedVertices;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Collection<List<V>>",
+                            "java.util.Collection<List<V>>"
+                        ]
+                    ],
+                    "signature": "applyingMinimumSpanningTreeAlgorithm()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<V>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/LinkedList",
+                            "LinkedList<List<V>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "87-92:checkState"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "containsVertex(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "remove(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "add(java.util.List)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/visit/VisitAlgorithmsSelector",
+                            "applyingDepthFirstSearch1(org.apache.commons.graph.visit.GraphVisitHandler)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/visit/VisitSourceSelector",
+                            "from(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/connectivity/ConnectedComponentHandler",
+                            "ConnectedComponentHandler<V,E>(java.util.List)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "354-357:visit"
+                        ]
+                    ]
+                },
+                "52-55:DefaultConnectivityAlgorithmsSelector": {
+                    "start": 52,
+                    "end": 55,
+                    "body": [
+                        "    public DefaultConnectivityAlgorithmsSelector(Graph<V, E> graph, Iterable<V> includedVertices) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.includedVertices = includedVertices;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultConnectivityAlgorithmsSelector(Graph<V,E>, Iterable<V>)",
+                    "parameters": [
+                        "graph",
+                        "includedVertices"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "43-43:includedVertices": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final Iterable<V> includedVertices;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Iterable<V>",
+                            "java.lang.Iterable<V>"
+                        ]
+                    ]
+                },
+                "41-41:graph": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final Graph<V, E> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,E>",
+                            "Graph<V,E>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

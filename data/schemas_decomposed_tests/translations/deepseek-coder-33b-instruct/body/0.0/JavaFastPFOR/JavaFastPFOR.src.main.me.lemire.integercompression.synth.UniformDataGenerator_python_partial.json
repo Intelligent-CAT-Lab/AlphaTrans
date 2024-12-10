@@ -1,0 +1,456 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/synth/UniformDataGenerator.java",
+    "imports": {
+        "12-12:import Iterator": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "13-13:import Random": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import java.util.Random;\n"
+            ]
+        },
+        "9-9:import Arrays": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "10-10:import BitSet": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.BitSet;\n"
+            ]
+        },
+        "11-11:import HashSet": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        }
+    },
+    "classes": {
+        "UniformDataGenerator": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "90-97:generateUniform": {
+                    "start": 90,
+                    "end": 97,
+                    "body": [
+                        "        public int[] generateUniform(int N, int Max) {\n",
+                        "                if (N * 2 > Max) {\n",
+                        "                        return negate(generateUniform(Max - N, Max), Max);\n",
+                        "                }\n",
+                        "                if (2048 * N > Max)\n",
+                        "                        return generateUniformBitmap(N, Max);\n",
+                        "                return generateUniformHash(N, Max);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "generateUniform(int, int)",
+                    "parameters": [
+                        "N",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                            "UniformDataGenerator",
+                            "66-79:negate"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                            "UniformDataGenerator",
+                            "90-97:generateUniform"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                            "UniformDataGenerator",
+                            "102-120:generateUniformBitmap"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.synth.UniformDataGenerator",
+                            "UniformDataGenerator",
+                            "49-61:generateUniformHash"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def generateUniform(self, N: int, Max: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "66-79:negate": {
+                    "start": 66,
+                    "end": 79,
+                    "body": [
+                        "        static int[] negate(int[] x, int Max) {\n",
+                        "                int[] ans = new int[Max - x.length];\n",
+                        "                int i = 0;\n",
+                        "                int c = 0;\n",
+                        "                for (int j = 0; j < x.length; ++j) {\n",
+                        "                        int v = x[j];\n",
+                        "                        for (; i < v; ++i)\n",
+                        "                                ans[c++] = i;\n",
+                        "                        ++i;\n",
+                        "                }\n",
+                        "                while (c < ans.length)\n",
+                        "                        ans[c++] = i++;\n",
+                        "                return ans;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "negate(int[], int)",
+                    "parameters": [
+                        "x",
+                        "Max"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def negate(x: typing.List[int], Max: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "24-33:UniformDataGenerator": {
+                    "start": 24,
+                    "end": 33,
+                    "body": [
+                        "public UniformDataGenerator(int constructorId, final int seed) {\n",
+                        "    if (constructorId == 0) {\n",
+                        "\n",
+                        "                this.rand = new Random(seed);\n",
+                        "            }\n",
+                        "    else {\n",
+                        "\n",
+                        "                this.rand = new Random();\n",
+                        "            }\n",
+                        "}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "UniformDataGenerator(int, int)",
+                    "parameters": [
+                        "constructorId",
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "Random(long)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "Random()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, constructorId: int, seed: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "102-120:generateUniformBitmap": {
+                    "start": 102,
+                    "end": 120,
+                    "body": [
+                        "        int[] generateUniformBitmap(int N, int Max) {\n",
+                        "                if (N > Max)\n",
+                        "                        throw new RuntimeException(\"not possible\");\n",
+                        "                int[] ans = new int[N];\n",
+                        "                BitSet bs = new BitSet(Max);\n",
+                        "                int cardinality = 0;\n",
+                        "                while (cardinality < N) {\n",
+                        "                        int v = rand.nextInt(Max);\n",
+                        "                        if (!bs.get(v)) {\n",
+                        "                                bs.set(v);\n",
+                        "                                cardinality++;\n",
+                        "                        }\n",
+                        "                }\n",
+                        "                int pos = 0;\n",
+                        "                for (int i = bs.nextSetBit(0); i >= 0; i = bs.nextSetBit(i + 1)) {\n",
+                        "                        ans[pos++] = i;\n",
+                        "                }\n",
+                        "                return ans;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "generateUniformBitmap(int, int)",
+                    "parameters": [
+                        "N",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/BitSet",
+                            "BitSet(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextInt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/BitSet",
+                            "get(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/BitSet",
+                            "set(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/BitSet",
+                            "nextSetBit(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def generateUniformBitmap(self, N: int, Max: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "49-61:generateUniformHash": {
+                    "start": 49,
+                    "end": 61,
+                    "body": [
+                        "        int[] generateUniformHash(int N, int Max) {\n",
+                        "                if (N > Max)\n",
+                        "                        throw new RuntimeException(\"not possible\");\n",
+                        "                int[] ans = new int[N];\n",
+                        "                HashSet<Integer> s = new HashSet<Integer>();\n",
+                        "                while (s.size() < N)\n",
+                        "                        s.add(new Integer(this.rand.nextInt(Max)));\n",
+                        "                Iterator<Integer> i = s.iterator();\n",
+                        "                for (int k = 0; k < N; ++k)\n",
+                        "                        ans[k] = i.next().intValue();\n",
+                        "                Arrays.sort(ans);\n",
+                        "                return ans;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "signature": "generateUniformHash(int, int)",
+                    "parameters": [
+                        "N",
+                        "Max"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<Integer>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "iterator()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "add(java.lang.Integer)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "Integer(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Random",
+                            "nextInt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "intValue()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Iterator",
+                            "next()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "sort(int[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def generateUniformHash(self, N: int, Max: int) -> typing.List[int]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "122-122:rand": {
+                    "start": 122,
+                    "end": 122,
+                    "body": [
+                        "        Random rand = new Random();\n"
+                    ],
+                    "modifiers": [],
+                    "types": [
+                        [
+                            "Random",
+                            "java.util.Random"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    rand: random.Random = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class UniformDataGenerator:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *"
+    ]
+}

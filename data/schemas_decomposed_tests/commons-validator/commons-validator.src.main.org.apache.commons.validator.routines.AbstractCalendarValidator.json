@@ -1,0 +1,952 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/AbstractCalendarValidator.java",
+    "imports": {
+        "24-24:import Locale": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "19-19:import DateFormat": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.text.DateFormat;\n"
+            ]
+        },
+        "21-21:import Format": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "25-25:import TimeZone": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.TimeZone;\n"
+            ]
+        },
+        "23-23:import Calendar": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Calendar;\n"
+            ]
+        },
+        "20-20:import DateFormatSymbols": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.DateFormatSymbols;\n"
+            ]
+        },
+        "22-22:import SimpleDateFormat": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.text.SimpleDateFormat;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AbstractCalendarValidator": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractFormatValidator"
+            ],
+            "methods": {
+                "201-203:getFormat": {
+                    "start": 201,
+                    "end": 203,
+                    "body": [
+                        "    protected Format getFormat(String pattern, Locale locale) {\n",
+                        "        return getFormat0(pattern, locale);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Format",
+                            "java.text.Format"
+                        ]
+                    ],
+                    "signature": "getFormat(String, Locale)",
+                    "parameters": [
+                        "pattern",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "205-218:getFormat0"
+                        ]
+                    ]
+                },
+                "66-69:isValid3": {
+                    "start": 66,
+                    "end": 69,
+                    "body": [
+                        "    public boolean isValid3(String value, String pattern, Locale locale) {\n",
+                        "        Object parsedValue = parse(value, pattern, locale, (TimeZone) null);\n",
+                        "        return (parsedValue == null ? false : true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid3(String, String, Locale)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "167-178:parse"
+                        ]
+                    ]
+                },
+                "348-358:compareQuarters": {
+                    "start": 348,
+                    "end": 358,
+                    "body": [
+                        "    protected int compareQuarters(Calendar value, Calendar compare, int monthOfFirstQuarter) {\n",
+                        "        int valueQuarter = calculateQuarter(value, monthOfFirstQuarter);\n",
+                        "        int compareQuarter = calculateQuarter(compare, monthOfFirstQuarter);\n",
+                        "        if (valueQuarter < compareQuarter) {\n",
+                        "            return -1;\n",
+                        "        } else if (valueQuarter > compareQuarter) {\n",
+                        "            return 1;\n",
+                        "        } else {\n",
+                        "            return 0;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareQuarters(Calendar, Calendar, int)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "monthOfFirstQuarter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "367-380:calculateQuarter"
+                        ]
+                    ]
+                },
+                "312-336:compareTime": {
+                    "start": 312,
+                    "end": 336,
+                    "body": [
+                        "    protected int compareTime(Calendar value, Calendar compare, int field) {\n",
+                        "\n",
+                        "        int result = 0;\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.HOUR_OF_DAY);\n",
+                        "        if (result != 0 || (field == Calendar.HOUR || field == Calendar.HOUR_OF_DAY)) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.MINUTE);\n",
+                        "        if (result != 0 || field == Calendar.MINUTE) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.SECOND);\n",
+                        "        if (result != 0 || field == Calendar.SECOND) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (field == Calendar.MILLISECOND) {\n",
+                        "            return calculateCompareResult(value, compare, Calendar.MILLISECOND);\n",
+                        "        }\n",
+                        "\n",
+                        "        throw new IllegalArgumentException(\"Invalid field: \" + field);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareTime(Calendar, Calendar, int)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "field"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "392-401:calculateCompareResult"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "264-299:compare": {
+                    "start": 264,
+                    "end": 299,
+                    "body": [
+                        "    protected int compare(Calendar value, Calendar compare, int field) {\n",
+                        "\n",
+                        "        int result = 0;\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.YEAR);\n",
+                        "        if (result != 0 || field == Calendar.YEAR) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (field == Calendar.WEEK_OF_YEAR) {\n",
+                        "            return calculateCompareResult(value, compare, Calendar.WEEK_OF_YEAR);\n",
+                        "        }\n",
+                        "\n",
+                        "        if (field == Calendar.DAY_OF_YEAR) {\n",
+                        "            return calculateCompareResult(value, compare, Calendar.DAY_OF_YEAR);\n",
+                        "        }\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.MONTH);\n",
+                        "        if (result != 0 || field == Calendar.MONTH) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (field == Calendar.WEEK_OF_MONTH) {\n",
+                        "            return calculateCompareResult(value, compare, Calendar.WEEK_OF_MONTH);\n",
+                        "        }\n",
+                        "\n",
+                        "        result = calculateCompareResult(value, compare, Calendar.DATE);\n",
+                        "        if (result != 0\n",
+                        "                || (field == Calendar.DATE\n",
+                        "                        || field == Calendar.DAY_OF_WEEK\n",
+                        "                        || field == Calendar.DAY_OF_WEEK_IN_MONTH)) {\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "\n",
+                        "        return compareTime(value, compare, field);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compare(Calendar, Calendar, int)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "field"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "392-401:calculateCompareResult"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "312-336:compareTime"
+                        ]
+                    ]
+                },
+                "226-251:getFormat1": {
+                    "start": 226,
+                    "end": 251,
+                    "body": [
+                        "    protected Format getFormat1(Locale locale) {\n",
+                        "\n",
+                        "        DateFormat formatter = null;\n",
+                        "        if (dateStyle >= 0 && timeStyle >= 0) {\n",
+                        "            if (locale == null) {\n",
+                        "                formatter = DateFormat.getDateTimeInstance(dateStyle, timeStyle);\n",
+                        "            } else {\n",
+                        "                formatter = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);\n",
+                        "            }\n",
+                        "        } else if (timeStyle >= 0) {\n",
+                        "            if (locale == null) {\n",
+                        "                formatter = DateFormat.getTimeInstance(timeStyle);\n",
+                        "            } else {\n",
+                        "                formatter = DateFormat.getTimeInstance(timeStyle, locale);\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            int useDateStyle = dateStyle >= 0 ? dateStyle : DateFormat.SHORT;\n",
+                        "            if (locale == null) {\n",
+                        "                formatter = DateFormat.getDateInstance(useDateStyle);\n",
+                        "            } else {\n",
+                        "                formatter = DateFormat.getDateInstance(useDateStyle, locale);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        formatter.setLenient(false);\n",
+                        "        return formatter;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Format",
+                            "java.text.Format"
+                        ]
+                    ],
+                    "signature": "getFormat1(Locale)",
+                    "parameters": [
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getDateTimeInstance(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getDateTimeInstance(int,int,java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getTimeInstance(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getTimeInstance(int,java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getDateInstance(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "getDateInstance(int,java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "setLenient(boolean)"
+                        ]
+                    ]
+                },
+                "205-218:getFormat0": {
+                    "start": 205,
+                    "end": 218,
+                    "body": [
+                        "    protected Format getFormat0(String pattern, Locale locale) {\n",
+                        "        DateFormat formatter = null;\n",
+                        "        boolean usePattern = (pattern != null && pattern.length() > 0);\n",
+                        "        if (!usePattern) {\n",
+                        "            formatter = (DateFormat) getFormat1(locale);\n",
+                        "        } else if (locale == null) {\n",
+                        "            formatter = new SimpleDateFormat(pattern);\n",
+                        "        } else {\n",
+                        "            DateFormatSymbols symbols = new DateFormatSymbols(locale);\n",
+                        "            formatter = new SimpleDateFormat(pattern, symbols);\n",
+                        "        }\n",
+                        "        formatter.setLenient(false);\n",
+                        "        return formatter;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Format",
+                            "java.text.Format"
+                        ]
+                    ],
+                    "signature": "getFormat0(String, Locale)",
+                    "parameters": [
+                        "pattern",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "226-251:getFormat1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/SimpleDateFormat",
+                            "SimpleDateFormat(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormatSymbols",
+                            "DateFormatSymbols(java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/SimpleDateFormat",
+                            "SimpleDateFormat(java.lang.String,java.text.DateFormatSymbols)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "setLenient(boolean)"
+                        ]
+                    ]
+                },
+                "167-178:parse": {
+                    "start": 167,
+                    "end": 178,
+                    "body": [
+                        "    protected Object parse(String value, String pattern, Locale locale, TimeZone timeZone) {\n",
+                        "\n",
+                        "        value = (value == null ? null : value.trim());\n",
+                        "        if (value == null || value.length() == 0) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "        DateFormat formatter = (DateFormat) getFormat0(pattern, locale);\n",
+                        "        if (timeZone != null) {\n",
+                        "            formatter.setTimeZone(timeZone);\n",
+                        "        }\n",
+                        "        return parse(value, formatter);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "parse(String, String, Locale, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "205-218:getFormat0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "setTimeZone(java.util.TimeZone)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "167-184:parse"
+                        ]
+                    ]
+                },
+                "148-155:format5": {
+                    "start": 148,
+                    "end": 155,
+                    "body": [
+                        "    protected String format5(Object value, Format formatter) {\n",
+                        "        if (value == null) {\n",
+                        "            return null;\n",
+                        "        } else if (value instanceof Calendar) {\n",
+                        "            value = ((Calendar) value).getTime();\n",
+                        "        }\n",
+                        "        return formatter.format(value);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format5(Object, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getTime()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/Format",
+                            "format(java.lang.Object)"
+                        ]
+                    ]
+                },
+                "131-139:format4": {
+                    "start": 131,
+                    "end": 139,
+                    "body": [
+                        "    public String format4(Object value, String pattern, Locale locale, TimeZone timeZone) {\n",
+                        "        DateFormat formatter = (DateFormat) getFormat0(pattern, locale);\n",
+                        "        if (timeZone != null) {\n",
+                        "            formatter.setTimeZone(timeZone);\n",
+                        "        } else if (value instanceof Calendar) {\n",
+                        "            formatter.setTimeZone(((Calendar) value).getTimeZone());\n",
+                        "        }\n",
+                        "        return format5(value, formatter);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format4(Object, String, Locale, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "205-218:getFormat0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DateFormat",
+                            "setTimeZone(java.util.TimeZone)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "getTimeZone()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "148-155:format5"
+                        ]
+                    ]
+                },
+                "117-119:format3": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public String format3(Object value, String pattern, Locale locale) {\n",
+                        "        return format4(value, pattern, locale, (TimeZone) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format3(Object, String, Locale)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "locale"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "131-139:format4"
+                        ]
+                    ]
+                },
+                "105-107:format2": {
+                    "start": 105,
+                    "end": 107,
+                    "body": [
+                        "    public String format2(Object value, Locale locale, TimeZone timeZone) {\n",
+                        "        return format4(value, (String) null, locale, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format2(Object, Locale, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "locale",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "131-139:format4"
+                        ]
+                    ]
+                },
+                "92-94:format1": {
+                    "start": 92,
+                    "end": 94,
+                    "body": [
+                        "    public String format1(Object value, String pattern, TimeZone timeZone) {\n",
+                        "        return format4(value, pattern, (Locale) null, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format1(Object, String, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "pattern",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "131-139:format4"
+                        ]
+                    ]
+                },
+                "79-81:format0": {
+                    "start": 79,
+                    "end": 81,
+                    "body": [
+                        "    public String format0(Object value, TimeZone timeZone) {\n",
+                        "        return format4(value, (String) null, (Locale) null, timeZone);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "format0(Object, TimeZone)",
+                    "parameters": [
+                        "value",
+                        "timeZone"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractCalendarValidator",
+                            "AbstractCalendarValidator",
+                            "131-139:format4"
+                        ]
+                    ]
+                },
+                "51-55:AbstractCalendarValidator": {
+                    "start": 51,
+                    "end": 55,
+                    "body": [
+                        "    public AbstractCalendarValidator(boolean strict, int dateStyle, int timeStyle) {\n",
+                        "        super(strict);\n",
+                        "        this.dateStyle = dateStyle;\n",
+                        "        this.timeStyle = timeStyle;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AbstractCalendarValidator(boolean, int, int)",
+                    "parameters": [
+                        "strict",
+                        "dateStyle",
+                        "timeStyle"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "43-45:AbstractFormatValidator"
+                        ]
+                    ]
+                },
+                "392-401:calculateCompareResult": {
+                    "start": 392,
+                    "end": 401,
+                    "body": [
+                        "    private int calculateCompareResult(Calendar value, Calendar compare, int field) {\n",
+                        "        int difference = value.get(field) - compare.get(field);\n",
+                        "        if (difference < 0) {\n",
+                        "            return -1;\n",
+                        "        } else if (difference > 0) {\n",
+                        "            return 1;\n",
+                        "        } else {\n",
+                        "            return 0;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateCompareResult(Calendar, Calendar, int)",
+                    "parameters": [
+                        "value",
+                        "compare",
+                        "field"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "get(int)"
+                        ]
+                    ]
+                },
+                "367-380:calculateQuarter": {
+                    "start": 367,
+                    "end": 380,
+                    "body": [
+                        "    private int calculateQuarter(Calendar calendar, int monthOfFirstQuarter) {\n",
+                        "        int year = calendar.get(Calendar.YEAR);\n",
+                        "\n",
+                        "        int month = (calendar.get(Calendar.MONTH) + 1);\n",
+                        "        int relativeMonth =\n",
+                        "                (month >= monthOfFirstQuarter)\n",
+                        "                        ? (month - monthOfFirstQuarter)\n",
+                        "                        : (month + (12 - monthOfFirstQuarter)); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        int quarter = ((relativeMonth / 3) + 1); // CHECKSTYLE IGNORE MagicNumber\n",
+                        "        if (month < monthOfFirstQuarter) {\n",
+                        "            --year;\n",
+                        "        }\n",
+                        "        return (year * 10) + quarter; // CHECKSTYLE IGNORE MagicNumber\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "calculateQuarter(Calendar, int)",
+                    "parameters": [
+                        "calendar",
+                        "monthOfFirstQuarter"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Calendar",
+                            "get(int)"
+                        ]
+                    ]
+                },
+                "189-189:processParsedValue": {
+                    "start": 189,
+                    "end": 189,
+                    "body": [
+                        "    protected abstract Object processParsedValue(Object value, Format formatter);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "abstract",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "processParsedValue(Object, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "41-41:timeStyle": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final int timeStyle;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "39-39:dateStyle": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final int dateStyle;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "37-37:serialVersionUID": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final long serialVersionUID = -1410008585975827379L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

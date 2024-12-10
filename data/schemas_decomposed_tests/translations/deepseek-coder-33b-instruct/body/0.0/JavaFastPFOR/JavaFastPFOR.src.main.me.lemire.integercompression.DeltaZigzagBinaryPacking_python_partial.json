@@ -1,0 +1,450 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/DeltaZigzagBinaryPacking.java",
+    "imports": {},
+    "classes": {
+        "DeltaZigzagBinaryPacking": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "102-104:toString": {
+                    "start": 102,
+                    "end": 104,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "60-86:uncompress0": {
+                    "start": 60,
+                    "end": 86,
+                    "body": [
+                        "        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                                int[] outBuf, IntWrapper outPos) {\n",
+                        "                if (inLen == 0) {\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "\n",
+                        "                final int outLen = inBuf[inPos.get()];\n",
+                        "                inPos.increment();\n",
+                        "\n",
+                        "                DeltaZigzagEncoding.Decoder ctx = new DeltaZigzagEncoding.Decoder(0);\n",
+                        "                int[] work = new int[BLOCK_LENGTH];\n",
+                        "\n",
+                        "                int ip = inPos.get();\n",
+                        "                int op = outPos.get();\n",
+                        "                final int outPosLast = op + outLen;\n",
+                        "                for (; op < outPosLast; op += BLOCK_LENGTH) {\n",
+                        "                        int n = inBuf[ip++];\n",
+                        "                        ip += unpack(inBuf, ip, work, 0, (n >> 24) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 32, (n >> 16) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 64, (n >> 8) & 0x3F);\n",
+                        "                        ip += unpack(inBuf, ip, work, 96, (n >> 0) & 0x3F);\n",
+                        "                        ctx.decodeArray0(work, 0, BLOCK_LENGTH, outBuf, op);\n",
+                        "                }\n",
+                        "\n",
+                        "                outPos.add(outLen);\n",
+                        "                inPos.set(ip);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "66-68:Decoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking",
+                            "95-99:unpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Decoder",
+                            "77-83:decodeArray0"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "25-57:compress0": {
+                    "start": 25,
+                    "end": 57,
+                    "body": [
+                        "        public void compress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                              int[] outBuf, IntWrapper outPos) {\n",
+                        "                inLen = inLen - inLen % BLOCK_LENGTH;\n",
+                        "                if (inLen == 0) {\n",
+                        "                        return;\n",
+                        "                }\n",
+                        "\n",
+                        "                outBuf[outPos.get()] = inLen;\n",
+                        "                outPos.increment();\n",
+                        "\n",
+                        "                DeltaZigzagEncoding.Encoder ctx = new DeltaZigzagEncoding.Encoder(0);\n",
+                        "                int[] work = new int[BLOCK_LENGTH];\n",
+                        "\n",
+                        "                int op = outPos.get();\n",
+                        "                int ip = inPos.get();\n",
+                        "                final int inPosLast = ip + inLen;\n",
+                        "                for (; ip < inPosLast; ip += BLOCK_LENGTH) {\n",
+                        "                        ctx.encodeArray1(inBuf, ip, BLOCK_LENGTH, work);\n",
+                        "                        final int bits1 = Util.maxbits32(work, 0);\n",
+                        "                        final int bits2 = Util.maxbits32(work, 32);\n",
+                        "                        final int bits3 = Util.maxbits32(work, 64);\n",
+                        "                        final int bits4 = Util.maxbits32(work, 96);\n",
+                        "                        outBuf[op++] = (bits1 << 24) | (bits2 << 16)\n",
+                        "                                | (bits3 << 8) | (bits4 << 0);\n",
+                        "                        op += pack(work, 0, outBuf, op, bits1);\n",
+                        "                        op += pack(work, 32, outBuf, op, bits2);\n",
+                        "                        op += pack(work, 64, outBuf, op, bits3);\n",
+                        "                        op += pack(work, 96, outBuf, op, bits4);\n",
+                        "                }\n",
+                        "\n",
+                        "                inPos.add(inLen);\n",
+                        "                outPos.set(op);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "31-33:Encoder"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "43-77:maxbits32"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagEncoding",
+                            "Encoder",
+                            "49-52:encodeArray1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.DeltaZigzagBinaryPacking",
+                            "DeltaZigzagBinaryPacking",
+                            "88-93:pack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "95-99:unpack": {
+                    "start": 95,
+                    "end": 99,
+                    "body": [
+                        "        private static int unpack(int[] inBuf, int inOff, int[] outBuf,\n",
+                        "                int outOff, int validBits) {\n",
+                        "                BitPacking.fastunpack(inBuf, inOff, outBuf, outOff, validBits);\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "unpack(int[], int, int[], int, int)",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __unpack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "88-93:pack": {
+                    "start": 88,
+                    "end": 93,
+                    "body": [
+                        "        private static int pack(int[] inBuf, int inOff, int[] outBuf,\n",
+                        "                int outOff, int validBits) {\n",
+                        "                BitPacking.fastpackwithoutmask(inBuf, inOff, outBuf, outOff,\n",
+                        "                        validBits);\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "pack(int[], int, int[], int, int)",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __pack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "22-22:BLOCK_LENGTH": {
+                    "start": 22,
+                    "end": 22,
+                    "body": [
+                        "        private static final int BLOCK_LENGTH = 128;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BLOCK_LENGTH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DeltaZigzagBinaryPacking(IntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.DeltaZigzagEncoding import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

@@ -1,0 +1,1067 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-codec/src/main/java/org/apache/commons/codec/digest/XXHash32.java",
+    "imports": {
+        "22-22:import Checksum": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.zip.Checksum;\n"
+            ]
+        },
+        "20-20:import static Integer.rotateLeft": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static java.lang.Integer.rotateLeft;\n"
+            ]
+        }
+    },
+    "classes": {
+        "XXHash32": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "127-155:getValue": {
+                    "start": 127,
+                    "end": 155,
+                    "body": [
+                        "    public long getValue() {\n",
+                        "        int hash;\n",
+                        "        if (stateUpdated) {\n",
+                        "            hash =\n",
+                        "                    rotateLeft(state[0], 1)\n",
+                        "                            + rotateLeft(state[1], 7)\n",
+                        "                            + rotateLeft(state[2], 12)\n",
+                        "                            + rotateLeft(state[3], 18);\n",
+                        "        } else {\n",
+                        "            hash = state[2] + PRIME5;\n",
+                        "        }\n",
+                        "        hash += totalLen;\n",
+                        "\n",
+                        "        int idx = 0;\n",
+                        "        final int limit = pos - 4;\n",
+                        "        for (; idx <= limit; idx += 4) {\n",
+                        "            hash = rotateLeft(hash + getInt(buffer, idx) * PRIME3, 17) * PRIME4;\n",
+                        "        }\n",
+                        "        while (idx < pos) {\n",
+                        "            hash = rotateLeft(hash + (buffer[idx++] & 0xff) * PRIME5, 11) * PRIME1;\n",
+                        "        }\n",
+                        "\n",
+                        "        hash ^= hash >>> 15;\n",
+                        "        hash *= PRIME2;\n",
+                        "        hash ^= hash >>> 13;\n",
+                        "        hash *= PRIME3;\n",
+                        "        hash ^= hash >>> 16;\n",
+                        "        return hash & 0xffffffffL;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getValue()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "164-169:getInt"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getValue(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "89-89:update": {
+                    "start": 89,
+                    "end": 89,
+                    "body": [
+                        "    public void update(final byte[] b, final int off, final int len) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "update(byte[], int, int)",
+                    "parameters": [
+                        "b",
+                        "off",
+                        "len"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def update(self, b: typing.List[int], off: int, len_: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "81-81:update": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    public void update(final int b) {}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "update(int)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def update(self, b: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "73-78:reset": {
+                    "start": 73,
+                    "end": 78,
+                    "body": [
+                        "    public void reset() {\n",
+                        "        initializeState();\n",
+                        "        totalLen = 0;\n",
+                        "        pos = 0;\n",
+                        "        stateUpdated = false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "reset()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "171-176:initializeState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def reset(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "91-124:update1": {
+                    "start": 91,
+                    "end": 124,
+                    "body": [
+                        "    public void update1(final byte[] b, int off, final int len) {\n",
+                        "        if (len <= 0) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "        totalLen += len;\n",
+                        "\n",
+                        "        final int end = off + len;\n",
+                        "\n",
+                        "        if (pos + len - BUF_SIZE < 0) {\n",
+                        "            System.arraycopy(b, off, buffer, pos, len);\n",
+                        "            pos += len;\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (pos > 0) {\n",
+                        "            final int size = BUF_SIZE - pos;\n",
+                        "            System.arraycopy(b, off, buffer, pos, size);\n",
+                        "            process(buffer, 0);\n",
+                        "            off += size;\n",
+                        "        }\n",
+                        "\n",
+                        "        final int limit = end - BUF_SIZE;\n",
+                        "        while (off <= limit) {\n",
+                        "            process(b, off);\n",
+                        "            off += BUF_SIZE;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (off < end) {\n",
+                        "            pos = end - off;\n",
+                        "            System.arraycopy(b, off, buffer, 0, pos);\n",
+                        "        } else {\n",
+                        "            pos = 0;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "update1(byte[], int, int)",
+                    "parameters": [
+                        "b",
+                        "off",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "178-195:process"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def update1(self, b: typing.List[int], off: int, len_: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "83-86:update0": {
+                    "start": 83,
+                    "end": 86,
+                    "body": [
+                        "    public void update0(final int b) {\n",
+                        "        oneByte[0] = (byte) (b & 0xff);\n",
+                        "        update1(oneByte, 0, 1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "update0(int)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "91-124:update1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def update0(self, b: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "63-65:XXHash321": {
+                    "start": 63,
+                    "end": 65,
+                    "body": [
+                        "    public static XXHash32 XXHash321() {\n",
+                        "        return new XXHash32(0);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "XXHash32",
+                            "XXHash32"
+                        ]
+                    ],
+                    "signature": "XXHash321()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "58-61:XXHash32"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def XXHash321() -> XXHash32:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "58-61:XXHash32": {
+                    "start": 58,
+                    "end": 61,
+                    "body": [
+                        "    public XXHash32(final int seed) {\n",
+                        "        this.seed = seed;\n",
+                        "        initializeState();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "XXHash32(int)",
+                    "parameters": [
+                        "seed"
+                    ],
+                    "calls": [
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "171-176:initializeState"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, seed: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "178-195:process": {
+                    "start": 178,
+                    "end": 195,
+                    "body": [
+                        "    private void process(final byte[] b, final int offset) {\n",
+                        "        int s0 = state[0];\n",
+                        "        int s1 = state[1];\n",
+                        "        int s2 = state[2];\n",
+                        "        int s3 = state[3];\n",
+                        "\n",
+                        "        s0 = rotateLeft(s0 + getInt(b, offset) * PRIME2, ROTATE_BITS) * PRIME1;\n",
+                        "        s1 = rotateLeft(s1 + getInt(b, offset + 4) * PRIME2, ROTATE_BITS) * PRIME1;\n",
+                        "        s2 = rotateLeft(s2 + getInt(b, offset + 8) * PRIME2, ROTATE_BITS) * PRIME1;\n",
+                        "        s3 = rotateLeft(s3 + getInt(b, offset + 12) * PRIME2, ROTATE_BITS) * PRIME1;\n",
+                        "\n",
+                        "        state[0] = s0;\n",
+                        "        state[1] = s1;\n",
+                        "        state[2] = s2;\n",
+                        "        state[3] = s3;\n",
+                        "\n",
+                        "        stateUpdated = true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "process(byte[], int)",
+                    "parameters": [
+                        "b",
+                        "offset"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "rotateLeft(int,int)"
+                        ],
+                        [
+                            "commons-codec.src.main.org.apache.commons.codec.digest.XXHash32",
+                            "XXHash32",
+                            "164-169:getInt"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __process(self, b: typing.List[int], offset: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "171-176:initializeState": {
+                    "start": 171,
+                    "end": 176,
+                    "body": [
+                        "    private void initializeState() {\n",
+                        "        state[0] = seed + PRIME1 + PRIME2;\n",
+                        "        state[1] = seed + PRIME2;\n",
+                        "        state[2] = seed;\n",
+                        "        state[3] = seed - PRIME1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "initializeState()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __initializeState(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "164-169:getInt": {
+                    "start": 164,
+                    "end": 169,
+                    "body": [
+                        "    private static int getInt(final byte[] buffer, final int idx) {\n",
+                        "        return ((buffer[idx] & 0xff))\n",
+                        "                | ((buffer[idx + 1] & 0xff) << 8)\n",
+                        "                | ((buffer[idx + 2] & 0xff) << 16)\n",
+                        "                | ((buffer[idx + 3] & 0xff) << 24);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "getInt(byte[], int)",
+                    "parameters": [
+                        "buffer",
+                        "idx"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getInt(buffer: typing.List[int], idx: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "55-55:stateUpdated": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private boolean stateUpdated;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __stateUpdated: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "52-52:pos": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private int pos;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pos: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "51-51:totalLen": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private int totalLen;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __totalLen: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-49:seed": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private final int seed;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __seed: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:buffer": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private final byte[] buffer = new byte[BUF_SIZE];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __buffer: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:state": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private final int[] state = new int[4];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __state: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:oneByte": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private final byte[] oneByte = new byte[1];\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __oneByte: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-44:PRIME5": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private static final int PRIME5 = 374761393;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PRIME5: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-43:PRIME4": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private static final int PRIME4 = 668265263;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PRIME4: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "42-42:PRIME3": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private static final int PRIME3 = (int) 3266489917L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PRIME3: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "41-41:PRIME2": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private static final int PRIME2 = (int) 2246822519L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PRIME2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "40-40:PRIME1": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final int PRIME1 = (int) 2654435761L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PRIME1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-38:ROTATE_BITS": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final int ROTATE_BITS = 13;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ROTATE_BITS: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "37-37:BUF_SIZE": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private static final int BUF_SIZE = 16;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BUF_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class XXHash32():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os"
+    ]
+}

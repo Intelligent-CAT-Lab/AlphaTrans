@@ -1,0 +1,1142 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-csv/src/test/java/org/apache/commons/csv/ExtendedBufferedReaderTest.java",
+    "imports": {
+        "28-28:import StringReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.StringReader;\n"
+            ]
+        },
+        "26-26:import Test": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "20-20:import static Constants.END_OF_STREAM": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.apache.commons.csv.Constants.END_OF_STREAM;\n"
+            ]
+        },
+        "21-21:import static Constants.UNDEFINED": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.apache.commons.csv.Constants.UNDEFINED;\n"
+            ]
+        },
+        "23-23:import static Assertions.assertEquals": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "24-24:import static Assertions.assertNull": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertNull;\n"
+            ]
+        },
+        "22-22:import static Assertions.assertArrayEquals": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertArrayEquals;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ExtendedBufferedReaderTest": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "299-316:testReadLookahead2_test0_decomposed": {
+                    "start": 299,
+                    "end": 316,
+                    "body": [
+                        "    public void testReadLookahead2_test0_decomposed() throws Exception {\n",
+                        "        final char[] ref = new char[5];\n",
+                        "        final char[] res = new char[5];\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"abcdefg\")) {\n",
+                        "            ref[0] = 'a';\n",
+                        "            ref[1] = 'b';\n",
+                        "            ref[2] = 'c';\n",
+                        "            assertEquals(3, br.read1(res, 0, 3));\n",
+                        "            assertArrayEquals(ref, res);\n",
+                        "            assertEquals('c', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals('d', br.lookAhead0());\n",
+                        "            ref[4] = 'd';\n",
+                        "            assertEquals(1, br.read1(res, 4, 1));\n",
+                        "            assertArrayEquals(ref, res);\n",
+                        "            assertEquals('d', br.getLastChar());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLookahead2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertArrayEquals(char[],char[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLookahead2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "241-296:testReadLookahead1_test0_decomposed": {
+                    "start": 241,
+                    "end": 296,
+                    "body": [
+                        "    public void testReadLookahead1_test0_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"1\\n2\\r3\\n\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.lookAhead0());\n",
+                        "            assertEquals(UNDEFINED, br.getLastChar());\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.read0()); // Start line 1\n",
+                        "            assertEquals('1', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('1', br.getLastChar());\n",
+                        "            assertEquals('\\n', br.read0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('2', br.lookAhead0());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.read0()); // Start line 2\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.getLastChar());\n",
+                        "\n",
+                        "            assertEquals('\\r', br.lookAhead0());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('2', br.getLastChar());\n",
+                        "            assertEquals('\\r', br.read0());\n",
+                        "            assertEquals('\\r', br.getLastChar());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('3', br.lookAhead0());\n",
+                        "            assertEquals('\\r', br.getLastChar());\n",
+                        "            assertEquals('3', br.read0()); // Start line 3\n",
+                        "            assertEquals('3', br.getLastChar());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertEquals('3', br.getLastChar());\n",
+                        "            assertEquals('\\n', br.read0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals('\\n', br.getLastChar());\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.getLastChar());\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLookahead1_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLookahead1_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "198-238:testReadLine_test3_decomposed": {
+                    "start": 198,
+                    "end": 238,
+                    "body": [
+                        "    public void testReadLine_test3_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\\n\")) {\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals('f', br.read0());\n",
+                        "            assertEquals('o', br.lookAhead0());\n",
+                        "            assertEquals(\"oo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('h', br.lookAhead0());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\rbaar\\r\\nfoo\")) {\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals('b', br.lookAhead0());\n",
+                        "            assertEquals(\"baar\", br.readLine());\n",
+                        "            assertEquals('f', br.lookAhead0());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLine_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLine_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "163-195:testReadLine_test2_decomposed": {
+                    "start": 163,
+                    "end": 195,
+                    "body": [
+                        "    public void testReadLine_test2_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\\n\")) {\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals('f', br.read0());\n",
+                        "            assertEquals('o', br.lookAhead0());\n",
+                        "            assertEquals(\"oo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals('\\n', br.lookAhead0());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals('h', br.lookAhead0());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLine_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLine_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "141-160:testReadLine_test1_decomposed": {
+                    "start": 141,
+                    "end": 160,
+                    "body": [
+                        "    public void testReadLine_test1_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\\n\")) {\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"foo\\n\\nhello\")) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"foo\", br.readLine());\n",
+                        "            assertEquals(1, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertEquals(2, br.getCurrentLineNumber());\n",
+                        "            assertEquals(\"hello\", br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(3, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLine_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLine_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "130-138:testReadLine_test0_decomposed": {
+                    "start": 130,
+                    "end": 138,
+                    "body": [
+                        "    public void testReadLine_test0_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\\n\")) {\n",
+                        "            assertEquals(\"\", br.readLine());\n",
+                        "            assertNull(br.readLine());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadLine_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadLine_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "120-127:testReadingInDifferentBuffer_test0_decomposed": {
+                    "start": 120,
+                    "end": 127,
+                    "body": [
+                        "    public void testReadingInDifferentBuffer_test0_decomposed() throws Exception {\n",
+                        "        final char[] tmp1 = new char[2], tmp2 = new char[4];\n",
+                        "        try (ExtendedBufferedReader reader = createBufferedReader(\"1\\r\\n2\\r\\n\")) {\n",
+                        "            reader.read1(tmp1, 0, 2);\n",
+                        "            reader.read1(tmp2, 2, 2);\n",
+                        "            assertEquals(2, reader.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadingInDifferentBuffer_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadingInDifferentBuffer_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "93-117:testReadChar_test2_decomposed": {
+                    "start": 93,
+                    "end": 117,
+                    "body": [
+                        "    public void testReadChar_test2_decomposed() throws Exception {\n",
+                        "        final String LF = \"\\n\";\n",
+                        "        final String CR = \"\\r\";\n",
+                        "        final String CRLF = CR + LF;\n",
+                        "        final String LFCR = LF + CR;\n",
+                        "        final String test =\n",
+                        "                \"a\" + LF + \"b\" + CR + \"c\" + LF + LF + \"d\" + CR + CR + \"e\" + LFCR + \"f \" + CRLF;\n",
+                        "        final int EOLeolct = 9;\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.readLine() != null) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.read0() != -1) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            final char[] buff = new char[10];\n",
+                        "            while (br.read1(buff, 0, 3) != -1) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadChar_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadChar_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "72-90:testReadChar_test1_decomposed": {
+                    "start": 72,
+                    "end": 90,
+                    "body": [
+                        "    public void testReadChar_test1_decomposed() throws Exception {\n",
+                        "        final String LF = \"\\n\";\n",
+                        "        final String CR = \"\\r\";\n",
+                        "        final String CRLF = CR + LF;\n",
+                        "        final String LFCR = LF + CR;\n",
+                        "        final String test =\n",
+                        "                \"a\" + LF + \"b\" + CR + \"c\" + LF + LF + \"d\" + CR + CR + \"e\" + LFCR + \"f \" + CRLF;\n",
+                        "        final int EOLeolct = 9;\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.readLine() != null) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.read0() != -1) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadChar_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadChar_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "56-69:testReadChar_test0_decomposed": {
+                    "start": 56,
+                    "end": 69,
+                    "body": [
+                        "    public void testReadChar_test0_decomposed() throws Exception {\n",
+                        "        final String LF = \"\\n\";\n",
+                        "        final String CR = \"\\r\";\n",
+                        "        final String CRLF = CR + LF;\n",
+                        "        final String LFCR = LF + CR;\n",
+                        "        final String test =\n",
+                        "                \"a\" + LF + \"b\" + CR + \"c\" + LF + LF + \"d\" + CR + CR + \"e\" + LFCR + \"f \" + CRLF;\n",
+                        "        final int EOLeolct = 9;\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(test)) {\n",
+                        "            assertEquals(0, br.getCurrentLineNumber());\n",
+                        "            while (br.readLine() != null) {}\n",
+                        "            assertEquals(EOLeolct, br.getCurrentLineNumber());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadChar_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(long,long)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testReadChar_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-53:testEmptyInput_test0_decomposed": {
+                    "start": 45,
+                    "end": 53,
+                    "body": [
+                        "    public void testEmptyInput_test0_decomposed() throws Exception {\n",
+                        "        try (final ExtendedBufferedReader br = createBufferedReader(\"\")) {\n",
+                        "            assertEquals(END_OF_STREAM, br.read0());\n",
+                        "            assertEquals(END_OF_STREAM, br.lookAhead0());\n",
+                        "            assertEquals(END_OF_STREAM, br.getLastChar());\n",
+                        "            assertNull(br.readLine());\n",
+                        "            assertEquals(0, br.read1(new char[10], 0, 0));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyInput_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.ExtendedBufferedReaderTest",
+                            "ExtendedBufferedReaderTest",
+                            "33-35:createBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNull(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEmptyInput_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "33-35:createBufferedReader": {
+                    "start": 33,
+                    "end": 35,
+                    "body": [
+                        "    private ExtendedBufferedReader createBufferedReader(final String s) {\n",
+                        "        return new ExtendedBufferedReader(new StringReader(s));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "ExtendedBufferedReader",
+                            "ExtendedBufferedReader"
+                        ]
+                    ],
+                    "signature": "createBufferedReader(String)",
+                    "parameters": [
+                        "s"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/StringReader",
+                            "StringReader(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __createBufferedReader(self, s: str) -> ExtendedBufferedReader:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class ExtendedBufferedReaderTest(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.csv.Constants import *",
+        "from src.main.org.apache.commons.csv.ExtendedBufferedReader import *"
+    ]
+}

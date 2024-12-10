@@ -1,0 +1,282 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/proxy/BaseProxyHandler.java",
+    "imports": {
+        "21-21:import Method": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.lang.reflect.Method;\n"
+            ]
+        },
+        "19-19:import UsageTracking": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.pool2.UsageTracking;\n"
+            ]
+        }
+    },
+    "classes": {
+        "BaseProxyHandler": {
+            "start": 29,
+            "end": 29,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "88-97:toString": {
+                    "start": 88,
+                    "end": 97,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder builder = new StringBuilder();\n",
+                        "        builder.append(getClass().getName());\n",
+                        "        builder.append(\" [pooledObject=\");\n",
+                        "        builder.append(pooledObject);\n",
+                        "        builder.append(\", usageTracking=\");\n",
+                        "        builder.append(usageTracking);\n",
+                        "        builder.append(\"]\");\n",
+                        "        return builder.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "104-110:validateProxiedObject": {
+                    "start": 104,
+                    "end": 110,
+                    "body": [
+                        "    void validateProxiedObject() {\n",
+                        "        if (pooledObject == null) {\n",
+                        "            throw new IllegalStateException(\n",
+                        "                    \"This object may no longer be \"\n",
+                        "                            + \"used as it has been returned to the Object Pool.\");\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "validateProxiedObject()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "80-82:getPooledObject": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "    T getPooledObject() {\n",
+                        "        return pooledObject;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "getPooledObject()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "66-73:doInvoke": {
+                    "start": 66,
+                    "end": 73,
+                    "body": [
+                        "    Object doInvoke(final Method method, final Object[] args) throws Throwable {\n",
+                        "        validateProxiedObject();\n",
+                        "        final T object = getPooledObject();\n",
+                        "        if (usageTracking != null) {\n",
+                        "            usageTracking.use(object);\n",
+                        "        }\n",
+                        "        return method.invoke(object, args);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "doInvoke(Method, Object[])",
+                    "parameters": [
+                        "method",
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.proxy.BaseProxyHandler",
+                            "BaseProxyHandler",
+                            "80-82:getPooledObject"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.proxy.BaseProxyHandler",
+                            "BaseProxyHandler",
+                            "104-110:validateProxiedObject"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/UsageTracking",
+                            "use(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/Method",
+                            "invoke(java.lang.Object,java.lang.Object[])"
+                        ]
+                    ]
+                },
+                "52-56:disableProxy": {
+                    "start": 52,
+                    "end": 56,
+                    "body": [
+                        "    T disableProxy() {\n",
+                        "        final T result = pooledObject;\n",
+                        "        pooledObject = null;\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "disableProxy()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "41-44:BaseProxyHandler": {
+                    "start": 41,
+                    "end": 44,
+                    "body": [
+                        "    BaseProxyHandler(final T pooledObject, final UsageTracking<T> usageTracking) {\n",
+                        "        this.pooledObject = pooledObject;\n",
+                        "        this.usageTracking = usageTracking;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "BaseProxyHandler(T, UsageTracking<T>)",
+                    "parameters": [
+                        "pooledObject",
+                        "usageTracking"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "32-32:usageTracking": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private final UsageTracking<T> usageTracking;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "UsageTracking<T>",
+                            "UsageTracking<T>"
+                        ]
+                    ]
+                },
+                "31-31:pooledObject": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private volatile T pooledObject;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

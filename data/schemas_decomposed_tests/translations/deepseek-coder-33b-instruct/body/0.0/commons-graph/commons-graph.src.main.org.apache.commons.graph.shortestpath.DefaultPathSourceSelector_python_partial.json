@@ -1,0 +1,560 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/shortestpath/DefaultPathSourceSelector.java",
+    "imports": {
+        "32-32:import Map": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "31-31:import HashMap": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "24-24:import Graph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "26-26:import UndirectedGraph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.UndirectedGraph;\n"
+            ]
+        },
+        "27-27:import VertexPair": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        },
+        "25-25:import Mapper": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "28-28:import WeightedPath": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "29-29:import OrderedMonoid": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultPathSourceSelector": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "PathSourceSelector"
+            ],
+            "extends": [],
+            "methods": {
+                "113-116:from": {
+                    "start": 113,
+                    "end": 116,
+                    "body": [
+                        "    public <H extends V> TargetSourceSelector<V, WE, W> from(H source) {\n",
+                        "        source = checkNotNull(source, \"Shortest path can not be calculated from a null source\");\n",
+                        "        return new DefaultTargetSourceSelector<V, WE, W>(graph, weightedEdges, source);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "TargetSourceSelector<V,WE,W>",
+                            "TargetSourceSelector<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "from(H)",
+                    "parameters": [
+                        "source"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/DefaultTargetSourceSelector",
+                            "DefaultTargetSourceSelector<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.Mapper,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def from_(self, source: typing.Any) -> TargetSourceSelector[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "46-110:applyingFloydWarshall": {
+                    "start": 46,
+                    "end": 110,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> AllVertexPairsShortestPath<V, WE, W> applyingFloydWarshall(\n",
+                        "            WO weightOperations) {\n",
+                        "        weightOperations =\n",
+                        "                checkNotNull(\n",
+                        "                        weightOperations,\n",
+                        "                        \"Floyd-Warshall algorithm can not be applied using null weight operations\");\n",
+                        "\n",
+                        "        AllVertexPairsShortestPath<V, WE, W> shortestPaths =\n",
+                        "                new AllVertexPairsShortestPath<V, WE, W>(weightOperations);\n",
+                        "        Map<VertexPair<V>, V> next = new HashMap<VertexPair<V>, V>();\n",
+                        "\n",
+                        "        for (WE we : graph.getEdges()) {\n",
+                        "            VertexPair<V> vertexPair = graph.getVertices1(we);\n",
+                        "            shortestPaths.addShortestDistance(\n",
+                        "                    vertexPair.getHead(), vertexPair.getTail(), weightedEdges.map(we));\n",
+                        "\n",
+                        "            if (graph instanceof UndirectedGraph) {\n",
+                        "                shortestPaths.addShortestDistance(\n",
+                        "                        vertexPair.getTail(), vertexPair.getHead(), weightedEdges.map(we));\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        for (V k : graph.getVertices0()) {\n",
+                        "            for (V i : graph.getVertices0()) {\n",
+                        "                for (V j : graph.getVertices0()) {\n",
+                        "                    if (shortestPaths.hasShortestDistance(i, k)\n",
+                        "                            && shortestPaths.hasShortestDistance(k, j)) {\n",
+                        "                        W newDistance =\n",
+                        "                                weightOperations.append(\n",
+                        "                                        shortestPaths.getShortestDistance(i, k),\n",
+                        "                                        shortestPaths.getShortestDistance(k, j));\n",
+                        "                        if (!shortestPaths.hasShortestDistance(i, j)\n",
+                        "                                || weightOperations.compare(\n",
+                        "                                                newDistance,\n",
+                        "                                                shortestPaths.getShortestDistance(i, j))\n",
+                        "                                        < 0) {\n",
+                        "                            shortestPaths.addShortestDistance(i, j, newDistance);\n",
+                        "\n",
+                        "                            next.put(new VertexPair<V>(i, j), k);\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        for (V source : graph.getVertices0()) {\n",
+                        "            for (V target : graph.getVertices0()) {\n",
+                        "                if (!source.equals(target)) {\n",
+                        "                    PredecessorsList<V, WE, W> predecessorsList =\n",
+                        "                            new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "                    pathReconstruction(predecessorsList, source, target, next);\n",
+                        "                    if (!predecessorsList.isEmpty()) {\n",
+                        "                        WeightedPath<V, WE, W> weightedPath =\n",
+                        "                                predecessorsList.buildPath0(source, target);\n",
+                        "                        if (weightedPath.getOrder() > 0) {\n",
+                        "                            shortestPaths.addShortestPath(source, target, weightedPath);\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return shortestPaths;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "AllVertexPairsShortestPath<V,WE,W>",
+                            "AllVertexPairsShortestPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingFloydWarshall(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "AllVertexPairsShortestPath<V,WE,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<VertexPair<V>,V>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdges()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "addShortestDistance(java.lang.Object,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "hasShortestDistance(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "append(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "getShortestDistance(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "put(org.apache.commons.graph.VertexPair,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "VertexPair<V>(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "PredecessorsList<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.DefaultPathSourceSelector",
+                            "DefaultPathSourceSelector",
+                            "118-130:pathReconstruction"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "buildPath0(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getOrder()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "addShortestPath(java.lang.Object,java.lang.Object,org.apache.commons.graph.WeightedPath)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingFloydWarshall(self, weightOperations: typing.Any) -> AllVertexPairsShortestPath[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-43:DefaultPathSourceSelector": {
+                    "start": 40,
+                    "end": 43,
+                    "body": [
+                        "    public DefaultPathSourceSelector(Graph<V, WE> graph, Mapper<WE, W> weightedEdges) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultPathSourceSelector(Graph<V,WE>, Mapper<WE,W>)",
+                    "parameters": [
+                        "graph",
+                        "weightedEdges"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "118-130:pathReconstruction": {
+                    "start": 118,
+                    "end": 130,
+                    "body": [
+                        "    private void pathReconstruction(\n",
+                        "            PredecessorsList<V, WE, W> path, V source, V target, Map<VertexPair<V>, V> next) {\n",
+                        "        V k = next.get(new VertexPair<V>(source, target));\n",
+                        "        if (k == null) {\n",
+                        "            WE edge = graph.getEdge(source, target);\n",
+                        "            if (edge != null) {\n",
+                        "                path.addPredecessor(target, source);\n",
+                        "            }\n",
+                        "        } else {\n",
+                        "            pathReconstruction(path, source, k, next);\n",
+                        "            pathReconstruction(path, k, target, next);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "pathReconstruction(PredecessorsList<V,WE,W>, V, V, Map<VertexPair<V>,V>)",
+                    "parameters": [
+                        "path",
+                        "source",
+                        "target",
+                        "next"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Map",
+                            "get(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "VertexPair<V>(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.DefaultPathSourceSelector",
+                            "DefaultPathSourceSelector",
+                            "118-130:pathReconstruction"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __pathReconstruction(self, path: PredecessorsList[typing.Any, typing.Any, typing.Any], source: typing.Any, target: typing.Any, next_: typing.Dict[VertexPair[typing.Any], typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "38-38:weightedEdges": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "36-36:graph": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultPathSourceSelector(PathSourceSelector):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.UndirectedGraph import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.WeightedPath import *",
+        "from src.main.org.apache.commons.graph.shortestpath.AllVertexPairsShortestPath import *",
+        "from src.main.org.apache.commons.graph.shortestpath.DefaultTargetSourceSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PathSourceSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PredecessorsList import *",
+        "from src.main.org.apache.commons.graph.shortestpath.TargetSourceSelector import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *"
+    ]
+}

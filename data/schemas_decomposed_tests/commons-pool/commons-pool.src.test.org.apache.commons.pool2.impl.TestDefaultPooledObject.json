@@ -1,0 +1,2010 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/test/java/org/apache/commons/pool2/impl/TestDefaultPooledObject.java",
+    "imports": {
+        "24-24:import List": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "27-27:import Future": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.concurrent.Future;\n"
+            ]
+        },
+        "25-25:import ExecutorService": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.util.concurrent.ExecutorService;\n"
+            ]
+        },
+        "23-23:import ArrayList": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "26-26:import Executors": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.util.concurrent.Executors;\n"
+            ]
+        },
+        "28-28:import AtomicBoolean": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.concurrent.atomic.AtomicBoolean;\n"
+            ]
+        },
+        "21-21:import Test": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "19-19:import static Assertions.assertFalse": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertFalse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "TestDefaultPooledObject": {
+            "start": 31,
+            "end": 31,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }",
+                "new Runnable(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "338-396:testGetIdleTimeMillis_test11_decomposed": {
+                    "start": 338,
+                    "end": 396,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test11_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n",
+                        "        final double probabilityOfAllocationTask = 0.7;\n",
+                        "        final List<Future<?>> futures = new ArrayList<>();\n",
+                        "        for (int i = 1; i <= 10000; i++) {\n",
+                        "            final Runnable randomTask =\n",
+                        "                    Math.random() < probabilityOfAllocationTask\n",
+                        "                            ? allocateAndDeallocateTask\n",
+                        "                            : getIdleTimeTask;\n",
+                        "            futures.add(executor.submit(randomTask));\n",
+                        "        }\n",
+                        "        for (final Future<?> future : futures) {\n",
+                        "            future.get();\n",
+                        "        }\n",
+                        "        assertFalse(\n",
+                        "                negativeIdleTimeReturned.get(),\n",
+                        "                \"DefaultPooledObject.getIdleTimeMillis() returned a negative value\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test11_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Future<?>>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "random()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.util.concurrent.Future)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ExecutorService",
+                            "submit(java.lang.Runnable)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Future",
+                            "get()"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertFalse(boolean,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "get()"
+                        ]
+                    ]
+                },
+                "283-335:testGetIdleTimeMillis_test10_decomposed": {
+                    "start": 283,
+                    "end": 335,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test10_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n",
+                        "        final double probabilityOfAllocationTask = 0.7;\n",
+                        "        final List<Future<?>> futures = new ArrayList<>();\n",
+                        "        for (int i = 1; i <= 10000; i++) {\n",
+                        "            final Runnable randomTask =\n",
+                        "                    Math.random() < probabilityOfAllocationTask\n",
+                        "                            ? allocateAndDeallocateTask\n",
+                        "                            : getIdleTimeTask;\n",
+                        "            futures.add(executor.submit(randomTask));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<Future<?>>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "random()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.util.concurrent.Future)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/ExecutorService",
+                            "submit(java.lang.Runnable)"
+                        ]
+                    ]
+                },
+                "237-280:testGetIdleTimeMillis_test9_decomposed": {
+                    "start": 237,
+                    "end": 280,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test9_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "200-234:testGetIdleTimeMillis_test8_decomposed": {
+                    "start": 200,
+                    "end": 234,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test8_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "164-197:testGetIdleTimeMillis_test7_decomposed": {
+                    "start": 164,
+                    "end": 197,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test7_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "129-161:testGetIdleTimeMillis_test6_decomposed": {
+                    "start": 129,
+                    "end": 161,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test6_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "        dpo.getIdleTime();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "95-126:testGetIdleTimeMillis_test5_decomposed": {
+                    "start": 95,
+                    "end": 126,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test5_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "82-92:testGetIdleTimeMillis_test4_decomposed": {
+                    "start": 82,
+                    "end": 92,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test4_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "        dpo.getIdleTime().isNegative();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ]
+                },
+                "70-79:testGetIdleTimeMillis_test3_decomposed": {
+                    "start": 70,
+                    "end": 79,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test3_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "        dpo.getIdleDuration();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration()"
+                        ]
+                    ]
+                },
+                "59-67:testGetIdleTimeMillis_test2_decomposed": {
+                    "start": 59,
+                    "end": 67,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test2_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "        dpo.getIdleTime();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime()"
+                        ]
+                    ]
+                },
+                "49-56:testGetIdleTimeMillis_test1_decomposed": {
+                    "start": 49,
+                    "end": 56,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test1_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "        dpo.deallocate();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate()"
+                        ]
+                    ]
+                },
+                "40-46:testGetIdleTimeMillis_test0_decomposed": {
+                    "start": 40,
+                    "end": 46,
+                    "body": [
+                        "    public void testGetIdleTimeMillis_test0_decomposed() throws Exception {\n",
+                        "        final DefaultPooledObject<Object> dpo = new DefaultPooledObject<>(new Object());\n",
+                        "        final AtomicBoolean negativeIdleTimeReturned = new AtomicBoolean(false);\n",
+                        "        final ExecutorService executor =\n",
+                        "                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 3);\n",
+                        "        dpo.allocate();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetIdleTimeMillis_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "DefaultPooledObject<Object>(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "AtomicBoolean(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/Executors",
+                            "newFixedThreadPool(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "availableProcessors()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Runtime",
+                            "getRuntime()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate()"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        },
+        "new Runnable(...) { ... }": {
+            "start": 106,
+            "end": 125,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "TestDefaultPooledObject",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "105-125:run": {
+                    "start": 105,
+                    "end": 125,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "139-159:run": {
+                    "start": 139,
+                    "end": 159,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "174-194:run": {
+                    "start": 174,
+                    "end": 194,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "210-230:run": {
+                    "start": 210,
+                    "end": 230,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "247-267:run": {
+                    "start": 247,
+                    "end": 267,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "271-279:run": {
+                    "start": 271,
+                    "end": 279,
+                    "body": [
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ]
+                    ]
+                },
+                "293-313:run": {
+                    "start": 293,
+                    "end": 313,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "317-325:run": {
+                    "start": 317,
+                    "end": 325,
+                    "body": [
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ]
+                    ]
+                },
+                "348-368:run": {
+                    "start": 348,
+                    "end": 368,
+                    "body": [
+                        "        final Runnable allocateAndDeallocateTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i1 = 0; i1 < 10000; i1++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.allocate();\n",
+                        "                    for (int i2 = 0; i2 < 10000; i2++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                    dpo.deallocate();\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "allocate"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "deallocate"
+                        ]
+                    ]
+                },
+                "372-380:run": {
+                    "start": 372,
+                    "end": 380,
+                    "body": [
+                        "        final Runnable getIdleTimeTask =\n",
+                        "                () -> {\n",
+                        "                    for (int i = 0; i < 10000; i++) {\n",
+                        "                        if (dpo.getIdleDuration().isNegative() || dpo.getIdleTime().isNegative()) {\n",
+                        "                            negativeIdleTimeReturned.set(true);\n",
+                        "                            break;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                };\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleDuration"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/impl/DefaultPooledObject",
+                            "getIdleTime"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/concurrent/atomic/AtomicBoolean",
+                            "set"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

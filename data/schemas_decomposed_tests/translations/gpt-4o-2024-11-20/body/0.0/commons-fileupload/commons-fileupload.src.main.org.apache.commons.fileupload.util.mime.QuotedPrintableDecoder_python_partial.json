@@ -1,0 +1,264 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/util/mime/QuotedPrintableDecoder.java",
+    "imports": {
+        "19-19:import IOException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "20-20:import OutputStream": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        }
+    },
+    "classes": {
+        "QuotedPrintableDecoder": {
+            "start": 25,
+            "end": 25,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "44-82:decode": {
+                    "start": 44,
+                    "end": 82,
+                    "body": [
+                        "    public static int decode(byte[] data, OutputStream out) throws IOException {\n",
+                        "        int off = 0;\n",
+                        "        int length = data.length;\n",
+                        "        int endOffset = off + length;\n",
+                        "        int bytesWritten = 0;\n",
+                        "\n",
+                        "        while (off < endOffset) {\n",
+                        "            byte ch = data[off++];\n",
+                        "\n",
+                        "            if (ch == '_') {\n",
+                        "                out.write(' ');\n",
+                        "            } else if (ch == '=') {\n",
+                        "                if (off + 1 >= endOffset) {\n",
+                        "                    throw new IOException(\n",
+                        "                            \"Invalid quoted printable encoding; truncated escape sequence\");\n",
+                        "                }\n",
+                        "\n",
+                        "                byte b1 = data[off++];\n",
+                        "                byte b2 = data[off++];\n",
+                        "\n",
+                        "                if (b1 == '\\r') {\n",
+                        "                    if (b2 != '\\n') {\n",
+                        "                        throw new IOException(\n",
+                        "                                \"Invalid quoted printable encoding; CR must be followed by LF\");\n",
+                        "                    }\n",
+                        "                } else {\n",
+                        "                    int c1 = hexToBinary(b1);\n",
+                        "                    int c2 = hexToBinary(b2);\n",
+                        "                    out.write((c1 << UPPER_NIBBLE_SHIFT) | c2);\n",
+                        "                    bytesWritten++;\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                out.write(ch);\n",
+                        "                bytesWritten++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return bytesWritten;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "decode(byte[], OutputStream)",
+                    "parameters": [
+                        "data",
+                        "out"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/OutputStream",
+                            "write(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.QuotedPrintableDecoder",
+                            "QuotedPrintableDecoder",
+                            "91-97:hexToBinary"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def decode(data: typing.List[int], out: typing.Union[io.BytesIO, io.StringIO, io.BufferedWriter]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "91-97:hexToBinary": {
+                    "start": 91,
+                    "end": 97,
+                    "body": [
+                        "    private static int hexToBinary(final byte b) throws IOException {\n",
+                        "        final int i = Character.digit((char) b, 16);\n",
+                        "        if (i == -1) {\n",
+                        "            throw new IOException(\"Invalid quoted printable encoding: not a valid hex digit: \" + b);\n",
+                        "        }\n",
+                        "        return i;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "hexToBinary(byte)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "digit(char,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __hexToBinary(b: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "34-34:QuotedPrintableDecoder": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private QuotedPrintableDecoder() {}\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "QuotedPrintableDecoder()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "31-31:UPPER_NIBBLE_SHIFT": {
+                    "start": 31,
+                    "end": 31,
+                    "body": [
+                        "    private static final int UPPER_NIBBLE_SHIFT = Byte.SIZE / 2;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __UPPER_NIBBLE_SHIFT: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class QuotedPrintableDecoder:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "from io import BytesIO",
+        "import typing\nfrom typing import *"
+    ]
+}

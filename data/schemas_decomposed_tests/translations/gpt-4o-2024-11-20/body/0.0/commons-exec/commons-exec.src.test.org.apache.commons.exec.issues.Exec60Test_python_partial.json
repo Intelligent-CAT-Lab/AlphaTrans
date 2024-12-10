@@ -1,0 +1,299 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/test/java/org/apache/commons/exec/issues/Exec60Test.java",
+    "imports": {
+        "22-22:import File": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "24-24:import AbstractExecTest": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.exec.AbstractExecTest;\n"
+            ]
+        },
+        "25-25:import CommandLine": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.exec.CommandLine;\n"
+            ]
+        },
+        "31-31:import Test": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "26-26:import DefaultExecutor": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.exec.DefaultExecutor;\n"
+            ]
+        },
+        "27-27:import ExecuteException": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.exec.ExecuteException;\n"
+            ]
+        },
+        "29-29:import Executor": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.exec.Executor;\n"
+            ]
+        },
+        "28-28:import ExecuteWatchdog": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.exec.ExecuteWatchdog;\n"
+            ]
+        },
+        "30-30:import Disabled": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.junit.jupiter.api.Disabled;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertTrue": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Exec60Test": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "AbstractExecTest"
+            ],
+            "methods": {
+                "47-85:testExec_60": {
+                    "start": 47,
+                    "end": 85,
+                    "body": [
+                        "    public void testExec_60() throws Exception {\n",
+                        "\n",
+                        "        final int start = 0;\n",
+                        "        final int seconds = 1;\n",
+                        "        final int offsetMultiplier = 1;\n",
+                        "        final int maxRetries = 180;\n",
+                        "        int processTerminatedCounter = 0;\n",
+                        "        int watchdogKilledProcessCounter = 0;\n",
+                        "        final CommandLine cmdLine = new CommandLine(1, null, pingScript, null);\n",
+                        "        cmdLine.addArgument0(Integer.toString(seconds + 1)); // need to add \"1\" to wait the requested number of seconds\n",
+                        "\n",
+                        "        final long startTime = System.currentTimeMillis();\n",
+                        "        for (int offset = start; offset <= maxRetries; offset++) {\n",
+                        "            // wait progressively longer for process to complete\n",
+                        "            // tricky to get this test right. We want to try and catch the process while it is terminating,\n",
+                        "            // so we increase the timeout gradually until the test terminates normally.\n",
+                        "            // However if the increase is too gradual, we never wait long enough for any test to exit normally\n",
+                        "            final ExecuteWatchdog watchdog = ExecuteWatchdog.ExecuteWatchdog0(seconds * 1000 + offset * offsetMultiplier);\n",
+                        "            exec.setWatchdog(watchdog);\n",
+                        "            try {\n",
+                        "                exec.execute0(cmdLine);\n",
+                        "                processTerminatedCounter++;\n",
+                        "                // System.out.println(offset + \": process has terminated: \" + watchdog.killedProcess());\n",
+                        "                if (processTerminatedCounter > 5) {\n",
+                        "                    break;\n",
+                        "                }\n",
+                        "            } catch (final ExecuteException ex) {\n",
+                        "                // System.out.println(offset + \": process was killed: \" + watchdog.killedProcess());\n",
+                        "                assertTrue(watchdog.killedProcess(), \"Watchdog killed the process\");\n",
+                        "                watchdogKilledProcessCounter++;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        final long avg = (System.currentTimeMillis() - startTime) / (watchdogKilledProcessCounter + processTerminatedCounter);\n",
+                        "        System.out.println(\"Processes terminated: \" + processTerminatedCounter + \" killed: \" + watchdogKilledProcessCounter + \" Multiplier: \" + offsetMultiplier\n",
+                        "                + \" MaxRetries: \" + maxRetries + \" Elapsed (avg ms): \" + avg);\n",
+                        "        assertTrue(processTerminatedCounter > 0, \"Not a single process terminated on its own\");\n",
+                        "        assertTrue(watchdogKilledProcessCounter > 0, \"Not a single process was killed by the watch dog\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Disabled(\"The test is fragile and might fail out of the blue\")",
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExec_60()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "192-208:CommandLine"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.CommandLine",
+                            "CommandLine",
+                            "239-241:addArgument0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "toString(int)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "147-149:ExecuteWatchdog0"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "174-174:setWatchdog"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Executor",
+                            "Executor",
+                            "60-60:execute0"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ExecuteWatchdog",
+                            "ExecuteWatchdog",
+                            "241-243:killedProcess"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testExec_60(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "39-39:pingScript": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final File pingScript = resolveTestScript0(\"ping\");\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pingScript: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-38:exec": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Executor exec = DefaultExecutor.builder().get();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Executor",
+                            "Executor"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __exec: Executor = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Exec60Test(AbstractExecTest, unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "import unittest",
+        "from src.test.org.apache.commons.exec.AbstractExecTest import *",
+        "from src.main.org.apache.commons.exec.CommandLine import *",
+        "from src.main.org.apache.commons.exec.DefaultExecutor import *",
+        "from src.main.org.apache.commons.exec.ExecuteException import *",
+        "from src.main.org.apache.commons.exec.ExecuteWatchdog import *",
+        "from src.main.org.apache.commons.exec.Executor import *"
+    ]
+}

@@ -1,0 +1,497 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/shortestpath/DefaultTargetSourceSelector.java",
+    "imports": {
+        "24-24:import Graph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "26-26:import VertexPair": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.VertexPair;\n"
+            ]
+        },
+        "25-25:import Mapper": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "27-27:import WeightedPath": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "28-28:import OrderedMonoid": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultTargetSourceSelector": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "TargetSourceSelector"
+            ],
+            "extends": [],
+            "methods": {
+                "118-122:to": {
+                    "start": 118,
+                    "end": 122,
+                    "body": [
+                        "    public <T extends V> ShortestPathAlgorithmSelector<V, WE, W> to(T target) {\n",
+                        "        target = checkNotNull(target, \"Shortest path can not be calculated to a null target\");\n",
+                        "        return new DefaultShortestPathAlgorithmSelector<V, WE, W>(\n",
+                        "                graph, weightedEdges, source, target);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "ShortestPathAlgorithmSelector<V,WE,W>",
+                            "ShortestPathAlgorithmSelector<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "to(T)",
+                    "parameters": [
+                        "target"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/DefaultShortestPathAlgorithmSelector",
+                            "DefaultShortestPathAlgorithmSelector<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.Mapper,java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def to(self, target: typing.Any) -> ShortestPathAlgorithmSelector[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-115:applyingBelmannFord": {
+                    "start": 45,
+                    "end": 115,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> AllVertexPairsShortestPath<V, WE, W> applyingBelmannFord(\n",
+                        "            WO weightOperations) {\n",
+                        "        weightOperations =\n",
+                        "                checkNotNull(\n",
+                        "                        weightOperations,\n",
+                        "                        \"Belmann-Ford algorithm can not be applied using null weight operations\");\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> shortestDistances =\n",
+                        "                new ShortestDistances<V, W>(weightOperations);\n",
+                        "        shortestDistances.setWeight(source, weightOperations.identity());\n",
+                        "\n",
+                        "        final PredecessorsList<V, WE, W> predecessors =\n",
+                        "                new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        for (int i = 0; i < graph.getOrder(); i++) {\n",
+                        "            for (WE edge : graph.getEdges()) {\n",
+                        "                VertexPair<V> vertexPair = graph.getVertices1(edge);\n",
+                        "                V u = vertexPair.getHead();\n",
+                        "                V v = vertexPair.getTail();\n",
+                        "\n",
+                        "                if (shortestDistances.alreadyVisited(u)) {\n",
+                        "                    W shortDist =\n",
+                        "                            weightOperations.append(\n",
+                        "                                    shortestDistances.getWeight(u), weightedEdges.map(edge));\n",
+                        "\n",
+                        "                    if (!shortestDistances.alreadyVisited(v)\n",
+                        "                            || weightOperations.compare(shortDist, shortestDistances.getWeight(v))\n",
+                        "                                    < 0) {\n",
+                        "                        shortestDistances.setWeight(v, shortDist);\n",
+                        "\n",
+                        "                        predecessors.addPredecessor(v, u);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        for (WE edge : graph.getEdges()) {\n",
+                        "            VertexPair<V> vertexPair = graph.getVertices1(edge);\n",
+                        "            V u = vertexPair.getHead();\n",
+                        "            V v = vertexPair.getTail();\n",
+                        "\n",
+                        "            if (shortestDistances.alreadyVisited(u)) {\n",
+                        "                W shortDist =\n",
+                        "                        weightOperations.append(\n",
+                        "                                shortestDistances.getWeight(u), weightedEdges.map(edge));\n",
+                        "\n",
+                        "                if (!shortestDistances.alreadyVisited(v)\n",
+                        "                        || weightOperations.compare(shortDist, shortestDistances.getWeight(v))\n",
+                        "                                < 0) {\n",
+                        "                    throw new NegativeWeightedCycleException(\n",
+                        "                            \"Graph contains a negative-weight cycle in vertex %s\", null, v, graph);\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        AllVertexPairsShortestPath<V, WE, W> allVertexPairsShortestPath =\n",
+                        "                new AllVertexPairsShortestPath<V, WE, W>(weightOperations);\n",
+                        "\n",
+                        "        for (V target : graph.getVertices0()) {\n",
+                        "            if (!source.equals(target)) {\n",
+                        "                try {\n",
+                        "                    WeightedPath<V, WE, W> weightedPath = predecessors.buildPath0(source, target);\n",
+                        "                    allVertexPairsShortestPath.addShortestPath(source, target, weightedPath);\n",
+                        "                } catch (PathNotFoundException e) {\n",
+                        "                    continue;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return allVertexPairsShortestPath;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "AllVertexPairsShortestPath<V,WE,W>",
+                            "AllVertexPairsShortestPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingBelmannFord(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "ShortestDistances<V,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "PredecessorsList<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "AllVertexPairsShortestPath<V,WE,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "setWeight(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getOrder()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdges()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices1(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getHead()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/VertexPair",
+                            "getTail()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "alreadyVisited(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "append(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "getWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.NegativeWeightedCycleException",
+                            "NegativeWeightedCycleException",
+                            "30-33:NegativeWeightedCycleException"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "buildPath0(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/AllVertexPairsShortestPath",
+                            "addShortestPath(java.lang.Object,java.lang.Object,org.apache.commons.graph.WeightedPath)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingBelmannFord(self, weightOperations: typing.Any) -> AllVertexPairsShortestPath[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-42:DefaultTargetSourceSelector": {
+                    "start": 38,
+                    "end": 42,
+                    "body": [
+                        "    public DefaultTargetSourceSelector(Graph<V, WE> graph, Mapper<WE, W> weightedEdges, V source) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "        this.source = source;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultTargetSourceSelector(Graph<V,WE>, Mapper<WE,W>, V)",
+                    "parameters": [
+                        "graph",
+                        "weightedEdges",
+                        "source"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "36-36:source": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    private final V source;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "34-34:weightedEdges": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "32-32:graph": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultTargetSourceSelector(TargetSourceSelector):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.VertexPair import *",
+        "from src.main.org.apache.commons.graph.WeightedPath import *",
+        "from src.main.org.apache.commons.graph.shortestpath.AllVertexPairsShortestPath import *",
+        "from src.main.org.apache.commons.graph.shortestpath.DefaultShortestPathAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.NegativeWeightedCycleException import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PathNotFoundException import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PredecessorsList import *",
+        "from src.main.org.apache.commons.graph.shortestpath.ShortestDistances import *",
+        "from src.main.org.apache.commons.graph.shortestpath.ShortestPathAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.shortestpath.TargetSourceSelector import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *"
+    ]
+}

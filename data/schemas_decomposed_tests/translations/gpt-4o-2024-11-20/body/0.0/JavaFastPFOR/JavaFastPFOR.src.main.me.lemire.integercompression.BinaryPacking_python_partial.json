@@ -1,0 +1,470 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/BinaryPacking.java",
+    "imports": {},
+    "classes": {
+        "BinaryPacking": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegerCODEC",
+                "SkippableIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "136-138:toString": {
+                    "start": 136,
+                    "end": 138,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "102-133:headlessUncompress": {
+                    "start": 102,
+                    "end": 133,
+                    "body": [
+                        "        public void headlessUncompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos, int num) {\n",
+                        "            final int outlength = Util.greatestMultiple(num, BLOCK_SIZE);\n",
+                        "            int tmpinpos = inpos.get();\n",
+                        "            int s = outpos.get();\n",
+                        "            for (; s + BLOCK_SIZE * 4 - 1 < outpos.get() + outlength; s += BLOCK_SIZE * 4) {\n",
+                        "                final int mbits1 = (in[tmpinpos] >>> 24);\n",
+                        "                final int mbits2 = (in[tmpinpos] >>> 16) & 0xFF;\n",
+                        "                final int mbits3 = (in[tmpinpos] >>> 8) & 0xFF;\n",
+                        "                final int mbits4 = (in[tmpinpos]) & 0xFF;\n",
+                        "                ++tmpinpos;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s, mbits1);\n",
+                        "                tmpinpos += mbits1;\n",
+                        "                BitPacking\n",
+                        "                .fastunpack(in, tmpinpos, out, s + BLOCK_SIZE, mbits2);\n",
+                        "                tmpinpos += mbits2;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s + 2 * BLOCK_SIZE,\n",
+                        "                        mbits3);\n",
+                        "                tmpinpos += mbits3;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s + 3 * BLOCK_SIZE,\n",
+                        "                        mbits4);\n",
+                        "                tmpinpos += mbits4;\n",
+                        "            }\n",
+                        "            for (; s < outpos.get() + outlength; s += BLOCK_SIZE ) {\n",
+                        "                final int mbits = in[tmpinpos];\n",
+                        "                ++tmpinpos;\n",
+                        "                BitPacking.fastunpack(in, tmpinpos, out, s, mbits);\n",
+                        "                tmpinpos += mbits;\n",
+                        "            }\n",
+                        "            outpos.add(outlength);\n",
+                        "            inpos.set(tmpinpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "92-99:uncompress0": {
+                    "start": 92,
+                    "end": 99,
+                    "body": [
+                        "        public void uncompress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                                int[] out, IntWrapper outpos) {\n",
+                        "                if (inlength == 0)\n",
+                        "                        return;\n",
+                        "                final int outlength = in[inpos.get()];\n",
+                        "                inpos.increment();\n",
+                        "                headlessUncompress(in,inpos, inlength,out,outpos,outlength);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "102-133:headlessUncompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "54-89:headlessCompress": {
+                    "start": 54,
+                    "end": 89,
+                    "body": [
+                        "        public void headlessCompress(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                int[] out, IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "            int tmpoutpos = outpos.get();\n",
+                        "            int s = inpos.get();\n",
+                        "            for (; s + BLOCK_SIZE * 4 - 1 < inpos.get() + inlength; s += BLOCK_SIZE * 4) {\n",
+                        "                final int mbits1 = Util.maxbits(in, s, BLOCK_SIZE);\n",
+                        "                final int mbits2 = Util.maxbits(in, s + BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                final int mbits3 = Util.maxbits(in, s + 2 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                final int mbits4 = Util.maxbits(in, s + 3 * BLOCK_SIZE, BLOCK_SIZE);\n",
+                        "                out[tmpoutpos++] = (mbits1 << 24) | (mbits2 << 16)\n",
+                        "                        | (mbits3 << 8) | (mbits4);\n",
+                        "                BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,\n",
+                        "                        mbits1);\n",
+                        "                tmpoutpos += mbits1;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits2);\n",
+                        "                tmpoutpos += mbits2;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + 2 * BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits3);\n",
+                        "                tmpoutpos += mbits3;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s + 3 * BLOCK_SIZE, out,\n",
+                        "                        tmpoutpos, mbits4);\n",
+                        "                tmpoutpos += mbits4;\n",
+                        "            }\n",
+                        "            for (; s < inpos.get() + inlength; s += BLOCK_SIZE ) {\n",
+                        "                final int mbits = Util.maxbits(in, s, BLOCK_SIZE);\n",
+                        "                out[tmpoutpos++] = mbits;\n",
+                        "                BitPacking.fastpackwithoutmask(in, s, out, tmpoutpos,\n",
+                        "                        mbits);\n",
+                        "                tmpoutpos += mbits;\n",
+                        "\n",
+                        "            }\n",
+                        "            inpos.add(inlength);\n",
+                        "            outpos.set(tmpoutpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "36-41:maxbits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-51:compress0": {
+                    "start": 43,
+                    "end": 51,
+                    "body": [
+                        "        public void compress0(int[] in, IntWrapper inpos, int inlength,\n",
+                        "                              int[] out, IntWrapper outpos) {\n",
+                        "            inlength = Util.greatestMultiple(inlength, BLOCK_SIZE);\n",
+                        "            if (inlength == 0)\n",
+                        "                    return;\n",
+                        "            out[outpos.get()] = inlength;\n",
+                        "            outpos.increment();\n",
+                        "            headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.Util",
+                            "Util",
+                            "207-209:greatestMultiple"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BinaryPacking",
+                            "BinaryPacking",
+                            "54-89:headlessCompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "40-40:BLOCK_SIZE": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "        final static int BLOCK_SIZE = 32;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    BLOCK_SIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class BinaryPacking(IntegerCODEC, SkippableIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.Util import *"
+    ]
+}

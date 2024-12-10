@@ -1,0 +1,1416 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-csv/src/main/java/org/apache/commons/csv/Lexer.java",
+    "imports": {
+        "34-34:import IOException": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "33-33:import Closeable": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.io.Closeable;\n"
+            ]
+        },
+        "21-21:import static Constants.CR": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.apache.commons.csv.Constants.CR;\n"
+            ]
+        },
+        "24-24:import static Constants.LF": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.apache.commons.csv.Constants.LF;\n"
+            ]
+        },
+        "25-25:import static Constants.TAB": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static org.apache.commons.csv.Constants.TAB;\n"
+            ]
+        },
+        "22-22:import static Constants.END_OF_STREAM": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.csv.Constants.END_OF_STREAM;\n"
+            ]
+        },
+        "26-26:import static Constants.UNDEFINED": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static org.apache.commons.csv.Constants.UNDEFINED;\n"
+            ]
+        },
+        "20-20:import static Constants.BACKSPACE": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.apache.commons.csv.Constants.BACKSPACE;\n"
+            ]
+        },
+        "23-23:import static Constants.FF": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.apache.commons.csv.Constants.FF;\n"
+            ]
+        },
+        "31-31:import static Type.TOKEN": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import static org.apache.commons.csv.Token.Type.TOKEN;\n"
+            ]
+        },
+        "27-27:import static Type.COMMENT": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import static org.apache.commons.csv.Token.Type.COMMENT;\n"
+            ]
+        },
+        "28-28:import static Type.EOF": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import static org.apache.commons.csv.Token.Type.EOF;\n"
+            ]
+        },
+        "29-29:import static Type.EORECORD": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import static org.apache.commons.csv.Token.Type.EORECORD;\n"
+            ]
+        },
+        "30-30:import static Type.INVALID": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import static org.apache.commons.csv.Token.Type.INVALID;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Lexer": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Closeable"
+            ],
+            "extends": [],
+            "methods": {
+                "85-87:close": {
+                    "start": 85,
+                    "end": 87,
+                    "body": [
+                        "    public void close() throws IOException {\n",
+                        "        reader.close();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "close()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "60-64:close"
+                        ]
+                    ]
+                },
+                "386-423:parseSimpleToken": {
+                    "start": 386,
+                    "end": 423,
+                    "body": [
+                        "    private Token parseSimpleToken(final Token token, int ch) throws IOException {\n",
+                        "        while (true) {\n",
+                        "            if (readEndOfLine(ch)) {\n",
+                        "                token.type = EORECORD;\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            if (isEndOfFile(ch)) {\n",
+                        "                token.type = EOF;\n",
+                        "                token.isReady = true; // There is data at EOF\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            if (isDelimiter(ch)) {\n",
+                        "                token.type = TOKEN;\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            if (isEscape(ch)) {\n",
+                        "                if (isEscapeDelimiter()) {\n",
+                        "                    token.content.append(delimiter);\n",
+                        "                } else {\n",
+                        "                    final int unescaped = readEscape();\n",
+                        "                    if (unescaped == END_OF_STREAM) { // unexpected char after escape\n",
+                        "                        token.content.append((char) ch).append((char) reader.getLastChar());\n",
+                        "                    } else {\n",
+                        "                        token.content.append((char) unescaped);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                token.content.append((char) ch);\n",
+                        "            }\n",
+                        "            ch = reader.read0(); // continue\n",
+                        "        }\n",
+                        "\n",
+                        "        if (ignoreSurroundingSpaces) {\n",
+                        "            trimTrailingSpaces(token.content);\n",
+                        "        }\n",
+                        "\n",
+                        "        return token;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Token",
+                            "Token"
+                        ]
+                    ],
+                    "signature": "parseSimpleToken(Token, int)",
+                    "parameters": [
+                        "token",
+                        "ch"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "431-447:readEndOfLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "152-154:isEndOfFile"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "127-145:isDelimiter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "161-163:isEscape"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "175-188:isEscapeDelimiter"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "459-486:readEscape"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "488-496:trimTrailingSpaces"
+                        ]
+                    ]
+                },
+                "310-366:parseEncapsulatedToken": {
+                    "start": 310,
+                    "end": 366,
+                    "body": [
+                        "    private Token parseEncapsulatedToken(final Token token) throws IOException {\n",
+                        "        token.isQuoted = true;\n",
+                        "        final long startLineNumber = getCurrentLineNumber();\n",
+                        "        int c;\n",
+                        "        while (true) {\n",
+                        "            c = reader.read0();\n",
+                        "\n",
+                        "            if (isEscape(c)) {\n",
+                        "                if (isEscapeDelimiter()) {\n",
+                        "                    token.content.append(delimiter);\n",
+                        "                } else {\n",
+                        "                    final int unescaped = readEscape();\n",
+                        "                    if (unescaped == END_OF_STREAM) { // unexpected char after escape\n",
+                        "                        token.content.append((char) c).append((char) reader.getLastChar());\n",
+                        "                    } else {\n",
+                        "                        token.content.append((char) unescaped);\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else if (isQuoteChar(c)) {\n",
+                        "                if (isQuoteChar(reader.lookAhead0())) {\n",
+                        "                    c = reader.read0();\n",
+                        "                    token.content.append((char) c);\n",
+                        "                } else {\n",
+                        "                    while (true) {\n",
+                        "                        c = reader.read0();\n",
+                        "                        if (isDelimiter(c)) {\n",
+                        "                            token.type = TOKEN;\n",
+                        "                            return token;\n",
+                        "                        }\n",
+                        "                        if (isEndOfFile(c)) {\n",
+                        "                            token.type = EOF;\n",
+                        "                            token.isReady = true; // There is data at EOF\n",
+                        "                            return token;\n",
+                        "                        }\n",
+                        "                        if (readEndOfLine(c)) {\n",
+                        "                            token.type = EORECORD;\n",
+                        "                            return token;\n",
+                        "                        }\n",
+                        "                        if (!Character.isWhitespace((char) c)) {\n",
+                        "                            throw new IOException(\n",
+                        "                                    \"(line \"\n",
+                        "                                            + getCurrentLineNumber()\n",
+                        "                                            + \") invalid char between encapsulated token and\"\n",
+                        "                                            + \" delimiter\");\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            } else if (isEndOfFile(c)) {\n",
+                        "                throw new IOException(\n",
+                        "                        \"(startline \"\n",
+                        "                                + startLineNumber\n",
+                        "                                + \") EOF reached before encapsulated token finished\");\n",
+                        "            } else {\n",
+                        "                token.content.append((char) c);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Token",
+                            "Token"
+                        ]
+                    ],
+                    "signature": "parseEncapsulatedToken(Token)",
+                    "parameters": [
+                        "token"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "103-105:getCurrentLineNumber"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "161-163:isEscape"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "175-188:isEscapeDelimiter"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "459-486:readEscape"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "194-196:isQuoteChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "127-145:isDelimiter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "152-154:isEndOfFile"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "431-447:readEndOfLine"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isWhitespace(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ]
+                    ]
+                },
+                "209-211:mapNullToDisabled": {
+                    "start": 209,
+                    "end": 211,
+                    "body": [
+                        "    private char mapNullToDisabled(final Character c) {\n",
+                        "        return c == null ? DISABLED : c.charValue();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "signature": "mapNullToDisabled(Character)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "charValue()"
+                        ]
+                    ]
+                },
+                "190-192:isMetaChar": {
+                    "start": 190,
+                    "end": 192,
+                    "body": [
+                        "    private boolean isMetaChar(final int ch) {\n",
+                        "        return ch == escape || ch == quoteChar || ch == commentStart;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isMetaChar(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "488-496:trimTrailingSpaces": {
+                    "start": 488,
+                    "end": 496,
+                    "body": [
+                        "    void trimTrailingSpaces(final StringBuilder buffer) {\n",
+                        "        int length = buffer.length();\n",
+                        "        while (length > 0 && Character.isWhitespace(buffer.charAt(length - 1))) {\n",
+                        "            length = length - 1;\n",
+                        "        }\n",
+                        "        if (length != buffer.length()) {\n",
+                        "            buffer.setLength(length);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "trimTrailingSpaces(StringBuilder)",
+                    "parameters": [
+                        "buffer"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isWhitespace(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/AbstractStringBuilder",
+                            "setLength(int)"
+                        ]
+                    ]
+                },
+                "459-486:readEscape": {
+                    "start": 459,
+                    "end": 486,
+                    "body": [
+                        "    int readEscape() throws IOException {\n",
+                        "        final int ch = reader.read0();\n",
+                        "        switch (ch) {\n",
+                        "            case 'r':\n",
+                        "                return CR;\n",
+                        "            case 'n':\n",
+                        "                return LF;\n",
+                        "            case 't':\n",
+                        "                return TAB;\n",
+                        "            case 'b':\n",
+                        "                return BACKSPACE;\n",
+                        "            case 'f':\n",
+                        "                return FF;\n",
+                        "            case CR:\n",
+                        "            case LF:\n",
+                        "            case FF: // TODO is this correct?\n",
+                        "            case TAB: // TODO is this correct? Do tabs need to be escaped?\n",
+                        "            case BACKSPACE: // TODO is this correct?\n",
+                        "                return ch;\n",
+                        "            case END_OF_STREAM:\n",
+                        "                throw new IOException(\"EOF whilst processing escape sequence\");\n",
+                        "            default:\n",
+                        "                if (isMetaChar(ch)) {\n",
+                        "                    return ch;\n",
+                        "                }\n",
+                        "                return END_OF_STREAM;\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "readEscape()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "190-192:isMetaChar"
+                        ]
+                    ]
+                },
+                "431-447:readEndOfLine": {
+                    "start": 431,
+                    "end": 447,
+                    "body": [
+                        "    boolean readEndOfLine(int ch) throws IOException {\n",
+                        "        if (ch == CR && reader.lookAhead0() == LF) {\n",
+                        "            ch = reader.read0();\n",
+                        "            if (firstEol == null) {\n",
+                        "                this.firstEol = Constants.CRLF;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        if (firstEol == null) {\n",
+                        "            if (ch == LF) {\n",
+                        "                this.firstEol = LF_STRING;\n",
+                        "            } else if (ch == CR) {\n",
+                        "                this.firstEol = CR_STRING;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return ch == LF || ch == CR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "readEndOfLine(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "115-121:lookAhead0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ]
+                    ]
+                },
+                "223-285:nextToken": {
+                    "start": 223,
+                    "end": 285,
+                    "body": [
+                        "    Token nextToken(final Token token) throws IOException {\n",
+                        "\n",
+                        "        int lastChar = reader.getLastChar();\n",
+                        "\n",
+                        "        int c = reader.read0();\n",
+                        "        /*\n",
+                        "         * Note: The following call will swallow LF if c == CR. But we don't need to know if the last char was CR or LF\n",
+                        "         * - they are equivalent here.\n",
+                        "         */\n",
+                        "        boolean eol = readEndOfLine(c);\n",
+                        "\n",
+                        "        if (ignoreEmptyLines) {\n",
+                        "            while (eol && isStartOfLine(lastChar)) {\n",
+                        "                lastChar = c;\n",
+                        "                c = reader.read0();\n",
+                        "                eol = readEndOfLine(c);\n",
+                        "                if (isEndOfFile(c)) {\n",
+                        "                    token.type = EOF;\n",
+                        "                    return token;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (isEndOfFile(lastChar) || !isLastTokenDelimiter && isEndOfFile(c)) {\n",
+                        "            token.type = EOF;\n",
+                        "            return token;\n",
+                        "        }\n",
+                        "\n",
+                        "        if (isStartOfLine(lastChar) && isCommentStart(c)) {\n",
+                        "            final String line = reader.readLine();\n",
+                        "            if (line == null) {\n",
+                        "                token.type = EOF;\n",
+                        "                return token;\n",
+                        "            }\n",
+                        "            final String comment = line.trim();\n",
+                        "            token.content.append(comment);\n",
+                        "            token.type = COMMENT;\n",
+                        "            return token;\n",
+                        "        }\n",
+                        "\n",
+                        "        while (token.type == INVALID) {\n",
+                        "            if (ignoreSurroundingSpaces) {\n",
+                        "                while (Character.isWhitespace((char) c) && !isDelimiter(c) && !eol) {\n",
+                        "                    c = reader.read0();\n",
+                        "                    eol = readEndOfLine(c);\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            if (isDelimiter(c)) {\n",
+                        "                token.type = TOKEN;\n",
+                        "            } else if (eol) {\n",
+                        "                token.type = EORECORD;\n",
+                        "            } else if (isQuoteChar(c)) {\n",
+                        "                parseEncapsulatedToken(token);\n",
+                        "            } else if (isEndOfFile(c)) {\n",
+                        "                token.type = EOF;\n",
+                        "                token.isReady = true; // there is data at EOF\n",
+                        "            } else {\n",
+                        "                parseSimpleToken(token, c);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return token;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "Token",
+                            "Token"
+                        ]
+                    ],
+                    "signature": "nextToken(Token)",
+                    "parameters": [
+                        "token"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "90-92:getLastChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "431-447:readEndOfLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "205-207:isStartOfLine"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "152-154:isEndOfFile"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "115-117:isCommentStart"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "212-231:readLine"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isWhitespace(char)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "127-145:isDelimiter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "194-196:isQuoteChar"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "310-366:parseEncapsulatedToken"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "386-423:parseSimpleToken"
+                        ]
+                    ]
+                },
+                "205-207:isStartOfLine": {
+                    "start": 205,
+                    "end": 207,
+                    "body": [
+                        "    boolean isStartOfLine(final int ch) {\n",
+                        "        return ch == LF || ch == CR || ch == UNDEFINED;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isStartOfLine(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "194-196:isQuoteChar": {
+                    "start": 194,
+                    "end": 196,
+                    "body": [
+                        "    boolean isQuoteChar(final int ch) {\n",
+                        "        return ch == quoteChar;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isQuoteChar(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "175-188:isEscapeDelimiter": {
+                    "start": 175,
+                    "end": 188,
+                    "body": [
+                        "    boolean isEscapeDelimiter() throws IOException {\n",
+                        "        reader.lookAhead1(escapeDelimiterBuf);\n",
+                        "        if (escapeDelimiterBuf[0] != delimiter[0]) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        for (int i = 1; i < delimiter.length; i++) {\n",
+                        "            if (escapeDelimiterBuf[2 * i] != delimiter[i]\n",
+                        "                    || escapeDelimiterBuf[2 * i - 1] != escape) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        final int count = reader.read1(escapeDelimiterBuf, 0, escapeDelimiterBuf.length);\n",
+                        "        return count != END_OF_STREAM;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEscapeDelimiter()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ]
+                },
+                "161-163:isEscape": {
+                    "start": 161,
+                    "end": 163,
+                    "body": [
+                        "    boolean isEscape(final int ch) {\n",
+                        "        return ch == escape;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEscape(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "152-154:isEndOfFile": {
+                    "start": 152,
+                    "end": 154,
+                    "body": [
+                        "    boolean isEndOfFile(final int ch) {\n",
+                        "        return ch == END_OF_STREAM;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEndOfFile(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "127-145:isDelimiter": {
+                    "start": 127,
+                    "end": 145,
+                    "body": [
+                        "    boolean isDelimiter(final int ch) throws IOException {\n",
+                        "        isLastTokenDelimiter = false;\n",
+                        "        if (ch != delimiter[0]) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if (delimiter.length == 1) {\n",
+                        "            isLastTokenDelimiter = true;\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "        reader.lookAhead1(delimiterBuf);\n",
+                        "        for (int i = 0; i < delimiterBuf.length; i++) {\n",
+                        "            if (delimiterBuf[i] != delimiter[i + 1]) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        final int count = reader.read1(delimiterBuf, 0, delimiterBuf.length);\n",
+                        "        isLastTokenDelimiter = count != END_OF_STREAM;\n",
+                        "        return isLastTokenDelimiter;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isDelimiter(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "170-198:read1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "132-139:lookAhead1"
+                        ]
+                    ]
+                },
+                "115-117:isCommentStart": {
+                    "start": 115,
+                    "end": 117,
+                    "body": [
+                        "    boolean isCommentStart(final int ch) {\n",
+                        "        return ch == commentStart;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isCommentStart(int)",
+                    "parameters": [
+                        "ch"
+                    ],
+                    "calls": []
+                },
+                "111-113:isClosed": {
+                    "start": 111,
+                    "end": 113,
+                    "body": [
+                        "    boolean isClosed() {\n",
+                        "        return reader.isClosed();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isClosed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "104-106:isClosed"
+                        ]
+                    ]
+                },
+                "107-109:getFirstEol": {
+                    "start": 107,
+                    "end": 109,
+                    "body": [
+                        "    String getFirstEol() {\n",
+                        "        return firstEol;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getFirstEol()",
+                    "parameters": [],
+                    "calls": []
+                },
+                "103-105:getCurrentLineNumber": {
+                    "start": 103,
+                    "end": 105,
+                    "body": [
+                        "    long getCurrentLineNumber() {\n",
+                        "        return reader.getCurrentLineNumber();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getCurrentLineNumber()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "71-79:getCurrentLineNumber"
+                        ]
+                    ]
+                },
+                "94-96:getCharacterPosition": {
+                    "start": 94,
+                    "end": 96,
+                    "body": [
+                        "    long getCharacterPosition() {\n",
+                        "        return reader.getPosition();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getCharacterPosition()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "100-102:getPosition"
+                        ]
+                    ]
+                },
+                "67-77:Lexer": {
+                    "start": 67,
+                    "end": 77,
+                    "body": [
+                        "    Lexer(final CSVFormat format, final ExtendedBufferedReader reader) {\n",
+                        "        this.reader = reader;\n",
+                        "        this.delimiter = format.getDelimiterString().toCharArray();\n",
+                        "        this.escape = mapNullToDisabled(format.getEscapeCharacter());\n",
+                        "        this.quoteChar = mapNullToDisabled(format.getQuoteCharacter());\n",
+                        "        this.commentStart = mapNullToDisabled(format.getCommentMarker());\n",
+                        "        this.ignoreSurroundingSpaces = format.getIgnoreSurroundingSpaces();\n",
+                        "        this.ignoreEmptyLines = format.getIgnoreEmptyLines();\n",
+                        "        this.delimiterBuf = new char[delimiter.length - 1];\n",
+                        "        this.escapeDelimiterBuf = new char[2 * delimiter.length - 1];\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Lexer(CSVFormat, ExtendedBufferedReader)",
+                    "parameters": [
+                        "format",
+                        "reader"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toCharArray()"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1547-1549:getDelimiterString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "209-211:mapNullToDisabled"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1566-1568:getEscapeCharacter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1642-1644:getQuoteCharacter"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1526-1528:getCommentMarker"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1616-1618:getIgnoreSurroundingSpaces"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1595-1597:getIgnoreEmptyLines"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "65-65:isLastTokenDelimiter": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private boolean isLastTokenDelimiter;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "63-63:firstEol": {
+                    "start": 63,
+                    "end": 63,
+                    "body": [
+                        "    private String firstEol;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "61-61:reader": {
+                    "start": 61,
+                    "end": 61,
+                    "body": [
+                        "    private final ExtendedBufferedReader reader;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ExtendedBufferedReader",
+                            "ExtendedBufferedReader"
+                        ]
+                    ]
+                },
+                "58-58:ignoreEmptyLines": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "    private final boolean ignoreEmptyLines;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "57-57:ignoreSurroundingSpaces": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    private final boolean ignoreSurroundingSpaces;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "55-55:commentStart": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    private final char commentStart;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "54-54:quoteChar": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    private final char quoteChar;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "53-53:escape": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private final char escape;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "52-52:escapeDelimiterBuf": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private final char[] escapeDelimiterBuf;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ]
+                },
+                "51-51:delimiterBuf": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    private final char[] delimiterBuf;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ]
+                },
+                "50-50:delimiter": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private final char[] delimiter;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ]
+                },
+                "48-48:DISABLED": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final char DISABLED = '\\ufffe';\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ]
+                },
+                "40-40:LF_STRING": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final String LF_STRING = Character.toString(LF);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "39-39:CR_STRING": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private static final String CR_STRING = Character.toString(CR);\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

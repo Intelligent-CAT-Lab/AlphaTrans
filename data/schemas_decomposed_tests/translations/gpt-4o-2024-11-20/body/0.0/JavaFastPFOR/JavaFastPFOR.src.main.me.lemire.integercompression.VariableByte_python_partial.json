@@ -1,0 +1,793 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/VariableByte.java",
+    "imports": {
+        "11-11:import IntBuffer": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import java.nio.IntBuffer;\n"
+            ]
+        },
+        "9-9:import ByteBuffer": {
+            "start": 9,
+            "end": 9,
+            "body": [
+                "import java.nio.ByteBuffer;\n"
+            ]
+        },
+        "10-10:import ByteOrder": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.nio.ByteOrder;\n"
+            ]
+        }
+    },
+    "classes": {
+        "VariableByte": {
+            "start": 22,
+            "end": 22,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "ByteIntegerCODEC",
+                "IntegerCODEC",
+                "SkippableIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "183-209:headlessUncompress": {
+                    "start": 183,
+                    "end": 209,
+                    "body": [
+                        "    public void headlessUncompress(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "            IntWrapper outpos, int num) {\n",
+                        "        int s = 0;\n",
+                        "        int val = 0;\n",
+                        "        int p = inpos.get();\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        int finaloutpos = num + tmpoutpos;\n",
+                        "        for (int v = 0, shift = 0; tmpoutpos < finaloutpos;) {\n",
+                        "            val = in[p];\n",
+                        "            int c = val >>> s;\n",
+                        "            // Shift to next byte\n",
+                        "            s += 8;\n",
+                        "            // Shift to next integer if s==32\n",
+                        "            p += s>>5;\n",
+                        "            // cycle from 31 to 0\n",
+                        "            s = s & 31;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "                out[tmpoutpos++] = v;\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else\n",
+                        "                shift += 7;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.set(p + (s!=0 ? 1 : 0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessUncompress(int[], IntWrapper, int, int[], IntWrapper, int)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos",
+                        "num"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessUncompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper, num: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "178-180:toString": {
+                    "start": 178,
+                    "end": 180,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        return this.getClass().getSimpleName();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "144-175:uncompress1": {
+                    "start": 144,
+                    "end": 175,
+                    "body": [
+                        "    public void uncompress1(byte[] in, IntWrapper inpos, int inlength,\n",
+                        "                            int[] out, IntWrapper outpos) {\n",
+                        "        int p = inpos.get();\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        for (int v = 0; p < finalp; out[tmpoutpos++] = v) {\n",
+                        "            v = in[p] & 0x7F;\n",
+                        "            if (in[p] < 0) {\n",
+                        "                p += 1;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 1] & 0x7F) << 7) | v;\n",
+                        "            if (in[p + 1] < 0) {\n",
+                        "                p += 2;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 2] & 0x7F) << 14) | v;\n",
+                        "            if (in[p + 2] < 0 ) {\n",
+                        "                p += 3;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 3] & 0x7F) << 21) | v;\n",
+                        "            if (in[p + 3] < 0) {\n",
+                        "                p += 4;\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            v = ((in[p + 4] & 0x7F) << 28) | v;\n",
+                        "            p += 5;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(p);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress1(byte[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "115-141:uncompress0": {
+                    "start": 115,
+                    "end": 141,
+                    "body": [
+                        "    public void uncompress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                            IntWrapper outpos) {\n",
+                        "        int s = 0;\n",
+                        "        int val = 0;\n",
+                        "        int p = inpos.get();\n",
+                        "        int finalp = inpos.get() + inlength;\n",
+                        "        int tmpoutpos = outpos.get();\n",
+                        "        for (int v = 0, shift = 0; p < finalp;) {\n",
+                        "            val = in[p];\n",
+                        "            int c = (byte) (val >>> s);\n",
+                        "            // Shift to next byte\n",
+                        "            s += 8;\n",
+                        "            // Shift to next integer if s==32\n",
+                        "            p += s>>5;\n",
+                        "            // cycle from 31 to 0\n",
+                        "            s = s & 31;\n",
+                        "            v += ((c & 127) << shift);\n",
+                        "            if ((c & 128) == 128) {\n",
+                        "                out[tmpoutpos++] = v;\n",
+                        "                v = 0;\n",
+                        "                shift = 0;\n",
+                        "            } else\n",
+                        "                shift += 7;\n",
+                        "        }\n",
+                        "        outpos.set(tmpoutpos);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "80-112:compress1": {
+                    "start": 80,
+                    "end": 112,
+                    "body": [
+                        "    public void compress1(int[] in, IntWrapper inpos, int inlength, byte[] out,\n",
+                        "                          IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        int outpostmp = outpos.get();\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = in[k] & 0xFFFFFFFFL; // To be consistent with\n",
+                        "                                                  // unsigned integers in C/C++\n",
+                        "            if (val < (1 << 7)) {\n",
+                        "                out[outpostmp++] = (byte) (val | (1 << 7));\n",
+                        "            } else if (val < (1 << 14)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(1, (val)) | (1 << 7));\n",
+                        "            } else if (val < (1 << 21)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(2, (val)) | (1 << 7));\n",
+                        "            } else if (val < (1 << 28)) {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(3, (val)) | (1 << 7));\n",
+                        "            } else {\n",
+                        "                out[outpostmp++] = (byte) extract7bits(0, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(1, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(2, val);\n",
+                        "                out[outpostmp++] = (byte) extract7bits(3, val);\n",
+                        "                out[outpostmp++] = (byte) (extract7bitsmaskless(4, (val)) | (1 << 7));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        outpos.set(outpostmp);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress1(int[], IntWrapper, int, byte[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "24-26:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "28-30:extract7bitsmaskless"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress1(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-77:headlessCompress": {
+                    "start": 38,
+                    "end": 77,
+                    "body": [
+                        "    public void headlessCompress(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "            IntWrapper outpos) {\n",
+                        "        if (inlength == 0)\n",
+                        "            return;\n",
+                        "        ByteBuffer buf = makeBuffer(inlength * 8);\n",
+                        "        buf.order(ByteOrder.LITTLE_ENDIAN);\n",
+                        "        for (int k = inpos.get(); k < inpos.get() + inlength; ++k) {\n",
+                        "            final long val = in[k] & 0xFFFFFFFFL; // To be consistent with\n",
+                        "                                                  // unsigned integers in C/C++\n",
+                        "            if (val < (1 << 7)) {\n",
+                        "                buf.put((byte) (val | (1 << 7)));\n",
+                        "            } else if (val < (1 << 14)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(1, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 21)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(2, (val)) | (1 << 7)));\n",
+                        "            } else if (val < (1 << 28)) {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(3, (val)) | (1 << 7)));\n",
+                        "            } else {\n",
+                        "                buf.put((byte) extract7bits(0, val));\n",
+                        "                buf.put((byte) extract7bits(1, val));\n",
+                        "                buf.put((byte) extract7bits(2, val));\n",
+                        "                buf.put((byte) extract7bits(3, val));\n",
+                        "                buf.put((byte) (extract7bitsmaskless(4, (val)) | (1 << 7)));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        while (buf.position() % 4 != 0)\n",
+                        "            buf.put((byte) 0);\n",
+                        "        final int length = buf.position();\n",
+                        "        buf.flip();\n",
+                        "        IntBuffer ibuf = buf.asIntBuffer();\n",
+                        "        ibuf.get(out, outpos.get(), length / 4);\n",
+                        "        outpos.add(length / 4);\n",
+                        "        inpos.add(inlength);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "headlessCompress(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "218-220:makeBuffer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/Buffer",
+                            "position()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "asIntBuffer()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "order(java.nio.ByteOrder)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "put(byte)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "24-26:extract7bits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "28-30:extract7bitsmaskless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "flip()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/IntBuffer",
+                            "get(int[],int,int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def headlessCompress(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "32-35:compress0": {
+                    "start": 32,
+                    "end": 35,
+                    "body": [
+                        "    public void compress0(int[] in, IntWrapper inpos, int inlength, int[] out,\n",
+                        "                          IntWrapper outpos) {\n",
+                        "        headlessCompress(in, inpos, inlength, out, outpos);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "in",
+                        "inpos",
+                        "inlength",
+                        "out",
+                        "outpos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.VariableByte",
+                            "VariableByte",
+                            "38-77:headlessCompress"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, in_: typing.List[int], inpos: IntWrapper, inlength: int, out: typing.List[int], outpos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "218-220:makeBuffer": {
+                    "start": 218,
+                    "end": 220,
+                    "body": [
+                        "    protected ByteBuffer makeBuffer(int sizeInBytes) {\n",
+                        "        return ByteBuffer.allocateDirect(sizeInBytes);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "ByteBuffer",
+                            "java.nio.ByteBuffer"
+                        ]
+                    ],
+                    "signature": "makeBuffer(int)",
+                    "parameters": [
+                        "sizeInBytes"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/nio/ByteBuffer",
+                            "allocateDirect(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _makeBuffer(self, sizeInBytes: int) -> typing.Union[bytearray, memoryview]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "28-30:extract7bitsmaskless": {
+                    "start": 28,
+                    "end": 30,
+                    "body": [
+                        "    private static byte extract7bitsmaskless(int i, long val) {\n",
+                        "        return (byte) ((val >> (7 * i)));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bitsmaskless(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __extract7bitsmaskless(i: int, val: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "24-26:extract7bits": {
+                    "start": 24,
+                    "end": 26,
+                    "body": [
+                        "    private static byte extract7bits(int i, long val) {\n",
+                        "        return (byte) ((val >> (7 * i)) & ((1 << 7) - 1));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "byte",
+                            "byte"
+                        ]
+                    ],
+                    "signature": "extract7bits(int, long)",
+                    "parameters": [
+                        "i",
+                        "val"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __extract7bits(i: int, val: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class VariableByte(ByteIntegerCODEC, IntegerCODEC, SkippableIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.ByteIntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *"
+    ]
+}

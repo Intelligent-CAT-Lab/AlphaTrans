@@ -1,0 +1,772 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-csv/src/test/java/org/apache/commons/csv/CSVFileParserTest.java",
+    "imports": {
+        "31-31:import IOException": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "28-28:import BufferedReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "36-36:import Stream": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.stream.Stream;\n"
+            ]
+        },
+        "33-33:import Charset": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.nio.charset.Charset;\n"
+            ]
+        },
+        "29-29:import File": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "32-32:import URL": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.net.URL;\n"
+            ]
+        },
+        "30-30:import FileReader": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.FileReader;\n"
+            ]
+        },
+        "34-34:import StandardCharsets": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "35-35:import Arrays": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "25-25:import ParameterizedTest": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.junit.jupiter.params.ParameterizedTest;\n"
+            ]
+        },
+        "26-26:import MethodSource": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.junit.jupiter.params.provider.MethodSource;\n"
+            ]
+        },
+        "20-20:import static Assertions.assertEquals": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertEquals;\n"
+            ]
+        },
+        "21-21:import static Assertions.assertNotNull": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertNotNull;\n"
+            ]
+        },
+        "22-22:import static Assertions.assertTrue": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.assertTrue;\n"
+            ]
+        },
+        "23-23:import static Assertions.fail": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CSVFileParserTest": {
+            "start": 39,
+            "end": 39,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "new FilenameFilter(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "107-152:testCSVUrl": {
+                    "start": 107,
+                    "end": 152,
+                    "body": [
+                        "    public void testCSVUrl(final File testFile) throws Exception {\n",
+                        "        try (FileReader fr = new FileReader(testFile);\n",
+                        "                BufferedReader testData = new BufferedReader(fr)) {\n",
+                        "            String line = readTestData(testData);\n",
+                        "            assertNotNull(\"file must contain config line\", line);\n",
+                        "            final String[] split = line.split(\" \");\n",
+                        "            assertTrue(split.length >= 1, testFile.getName() + \" require 1 param\");\n",
+                        "            CSVFormat format = CSVFormat.newFormat(',').withQuote0('\"');\n",
+                        "            boolean checkComments = false;\n",
+                        "            for (int i = 1; i < split.length; i++) {\n",
+                        "                final String option = split[i];\n",
+                        "                final String[] option_parts = option.split(\"=\", 2);\n",
+                        "                if (\"IgnoreEmpty\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format = format.withIgnoreEmptyLines1(Boolean.parseBoolean(option_parts[1]));\n",
+                        "                } else if (\"IgnoreSpaces\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format =\n",
+                        "                            format.withIgnoreSurroundingSpaces1(\n",
+                        "                                    Boolean.parseBoolean(option_parts[1]));\n",
+                        "                } else if (\"CommentStart\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format = format.withCommentMarker0(option_parts[1].charAt(0));\n",
+                        "                } else if (\"CheckComments\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    checkComments = true;\n",
+                        "                } else {\n",
+                        "                    fail(testFile.getName() + \" unexpected option: \" + option);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            line = readTestData(testData); // get string version of format\n",
+                        "            assertEquals(line, format.toString(), testFile.getName() + \" Expected format \");\n",
+                        "\n",
+                        "            final URL resource =\n",
+                        "                    ClassLoader.getSystemResource(\n",
+                        "                            \"org/apache/commons/csv/CSVFileParser/\" + split[0]);\n",
+                        "            try (final CSVParser parser =\n",
+                        "                    CSVParser.parse5(resource, StandardCharsets.UTF_8, format)) {\n",
+                        "                for (final CSVRecord record : parser) {\n",
+                        "                    String parsed = Arrays.toString(record.values());\n",
+                        "                    final String comment = record.getComment();\n",
+                        "                    if (checkComments && comment != null) {\n",
+                        "                        parsed += \"#\" + comment.replace(\"\\n\", \"\\\\n\");\n",
+                        "                    }\n",
+                        "                    final int count = record.size();\n",
+                        "                    assertEquals(readTestData(testData), count + \":\" + parsed, testFile.getName());\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "ParameterizedTest",
+                        "MethodSource(\"generateData\")"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCSVUrl(File)",
+                    "parameters": [
+                        "testFile"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.CSVFileParserTest",
+                            "CSVFileParserTest",
+                            "50-56:readTestData"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2753-2755:withQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1217-1239:newFormat"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ClassLoader",
+                            "getSystemResource(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNotNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2660-2662:withIgnoreEmptyLines1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Boolean",
+                            "parseBoolean(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2718-2720:withIgnoreSurroundingSpaces1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2433-2435:withCommentMarker0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2218-2264:toString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "313-320:parse5"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "toString(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "337-339:values"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "149-151:getComment"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "276-278:size"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCSVUrl(self, testFile: pathlib.Path) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "60-103:testCSVFile": {
+                    "start": 60,
+                    "end": 103,
+                    "body": [
+                        "    public void testCSVFile(final File testFile) throws Exception {\n",
+                        "        try (FileReader fr = new FileReader(testFile);\n",
+                        "                BufferedReader testData = new BufferedReader(fr)) {\n",
+                        "            String line = readTestData(testData);\n",
+                        "            assertNotNull(\"file must contain config line\", line);\n",
+                        "            final String[] split = line.split(\" \");\n",
+                        "            assertTrue(split.length >= 1, testFile.getName() + \" require 1 param\");\n",
+                        "            CSVFormat format = CSVFormat.newFormat(',').withQuote0('\"');\n",
+                        "            boolean checkComments = false;\n",
+                        "            for (int i = 1; i < split.length; i++) {\n",
+                        "                final String option = split[i];\n",
+                        "                final String[] option_parts = option.split(\"=\", 2);\n",
+                        "                if (\"IgnoreEmpty\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format = format.withIgnoreEmptyLines1(Boolean.parseBoolean(option_parts[1]));\n",
+                        "                } else if (\"IgnoreSpaces\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format =\n",
+                        "                            format.withIgnoreSurroundingSpaces1(\n",
+                        "                                    Boolean.parseBoolean(option_parts[1]));\n",
+                        "                } else if (\"CommentStart\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    format = format.withCommentMarker0(option_parts[1].charAt(0));\n",
+                        "                } else if (\"CheckComments\".equalsIgnoreCase(option_parts[0])) {\n",
+                        "                    checkComments = true;\n",
+                        "                } else {\n",
+                        "                    fail(testFile.getName() + \" unexpected option: \" + option);\n",
+                        "                }\n",
+                        "            }\n",
+                        "            line = readTestData(testData); // get string version of format\n",
+                        "            assertEquals(line, format.toString(), testFile.getName() + \" Expected format \");\n",
+                        "\n",
+                        "            try (final CSVParser parser =\n",
+                        "                    CSVParser.parse0(\n",
+                        "                            new File(BASE_DIR, split[0]), Charset.defaultCharset(), format)) {\n",
+                        "                for (final CSVRecord record : parser) {\n",
+                        "                    String parsed = Arrays.toString(record.values());\n",
+                        "                    final String comment = record.getComment();\n",
+                        "                    if (checkComments && comment != null) {\n",
+                        "                        parsed += \"#\" + comment.replace(\"\\n\", \"\\\\n\");\n",
+                        "                    }\n",
+                        "                    final int count = record.size();\n",
+                        "                    assertEquals(readTestData(testData), count + \":\" + parsed, testFile.getName());\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "ParameterizedTest",
+                        "MethodSource(\"generateData\")"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCSVFile(File)",
+                    "parameters": [
+                        "testFile"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/FileReader",
+                            "FileReader(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.CSVFileParserTest",
+                            "CSVFileParserTest",
+                            "50-56:readTestData"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2753-2755:withQuote0"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "1217-1239:newFormat"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertNotNull(java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equalsIgnoreCase(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2660-2662:withIgnoreEmptyLines1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Boolean",
+                            "parseBoolean(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2718-2720:withIgnoreSurroundingSpaces1"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2433-2435:withCommentMarker0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object,java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVFormat",
+                            "CSVFormat",
+                            "2218-2264:toString"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "213-217:parse0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "File(java.io.File,java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/charset/Charset",
+                            "defaultCharset()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "toString(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "337-339:values"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "149-151:getComment"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "276-278:size"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(java.lang.CharSequence,java.lang.CharSequence)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testCSVFile(self, testFile: pathlib.Path) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-48:generateData": {
+                    "start": 44,
+                    "end": 48,
+                    "body": [
+                        "    public static Stream<File> generateData() {\n",
+                        "        final File[] files =\n",
+                        "                BASE_DIR.listFiles((dir, name) -> name.startsWith(\"test\") && name.endsWith(\".txt\"));\n",
+                        "        return files != null ? Stream.of(files) : Stream.empty();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Stream<File>",
+                            "java.util.stream.Stream<File>"
+                        ]
+                    ],
+                    "signature": "generateData()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "listFiles(java.io.FilenameFilter)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/Stream",
+                            "of(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/stream/Stream",
+                            "empty()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def generateData() -> typing.Iterable[pathlib.Path]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "50-56:readTestData": {
+                    "start": 50,
+                    "end": 56,
+                    "body": [
+                        "    private String readTestData(final BufferedReader reader) throws IOException {\n",
+                        "        String line;\n",
+                        "        do {\n",
+                        "            line = reader.readLine();\n",
+                        "        } while (line != null && line.startsWith(\"#\"));\n",
+                        "        return line;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "readTestData(BufferedReader)",
+                    "parameters": [
+                        "reader"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __readTestData(self, reader: io.BufferedReader) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "41-42:BASE_DIR": {
+                    "start": 41,
+                    "end": 42,
+                    "body": [
+                        "    private static final File BASE_DIR =\n",
+                        "            new File(\"src/test/resources/org/apache/commons/csv/CSVFileParser\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BASE_DIR: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class CSVFileParserTest:\n\n"
+        },
+        "new FilenameFilter(...) { ... }": {
+            "start": 46,
+            "end": 46,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "CSVFileParserTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "45-46:accept": {
+                    "start": 45,
+                    "end": 46,
+                    "body": [
+                        "        final File[] files =\n",
+                        "                BASE_DIR.listFiles((dir, name) -> name.startsWith(\"test\") && name.endsWith(\".txt\"));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "accept(File, String)",
+                    "parameters": [
+                        "dir",
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith"
+                        ]
+                    ],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import pathlib",
+        "import io",
+        "import typing",
+        "from src.main.org.apache.commons.csv.CSVFormat import *",
+        "from src.main.org.apache.commons.csv.CSVParser import *",
+        "from src.main.org.apache.commons.csv.CSVRecord import *"
+    ]
+}

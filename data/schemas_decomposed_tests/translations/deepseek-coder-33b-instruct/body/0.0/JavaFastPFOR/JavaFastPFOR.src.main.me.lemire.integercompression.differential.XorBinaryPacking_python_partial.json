@@ -1,0 +1,530 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/me/lemire/integercompression/differential/XorBinaryPacking.java",
+    "imports": {
+        "8-8:import IntWrapper": {
+            "start": 8,
+            "end": 8,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "7-7:import BitPacking": {
+            "start": 7,
+            "end": 7,
+            "body": [
+                "import me.lemire.integercompression.BitPacking;\n"
+            ]
+        }
+    },
+    "classes": {
+        "XorBinaryPacking": {
+            "start": 18,
+            "end": 18,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "IntegratedIntegerCODEC"
+            ],
+            "extends": [],
+            "methods": {
+                "100-102:toString": {
+                    "start": 100,
+                    "end": 102,
+                    "body": [
+                        "        public String toString() {\n",
+                        "                return this.getClass().getSimpleName();\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "64-97:uncompress0": {
+                    "start": 64,
+                    "end": 97,
+                    "body": [
+                        "        public void uncompress0(int[] inBuf, IntWrapper inPos, int inLen,\n",
+                        "                                int[] outBuf, IntWrapper outPos) {\n",
+                        "                if (inLen == 0)\n",
+                        "                        return;\n",
+                        "\n",
+                        "                final int outLen = inBuf[inPos.get()];\n",
+                        "                inPos.increment();\n",
+                        "\n",
+                        "                int context = 0;\n",
+                        "                final int[] work = new int[32];\n",
+                        "\n",
+                        "                int ip = inPos.get();\n",
+                        "                int op = outPos.get();\n",
+                        "                final int outPosLast = op + outLen;\n",
+                        "                for (; op < outPosLast; op += BLOCK_LENGTH) {\n",
+                        "                        final int bits1 = (inBuf[ip] >>> 24);\n",
+                        "                        final int bits2 = (inBuf[ip] >>> 16) & 0xFF;\n",
+                        "                        final int bits3 = (inBuf[ip] >>> 8) & 0xFF;\n",
+                        "                        final int bits4 = (inBuf[ip] >>> 0) & 0xFF;\n",
+                        "                        ++ip;\n",
+                        "                        ip += xorUnpack(inBuf, ip, outBuf, op + 0, bits1,\n",
+                        "                                context, work);\n",
+                        "                        ip += xorUnpack(inBuf, ip, outBuf, op + 32, bits2,\n",
+                        "                                outBuf[op + 31], work);\n",
+                        "                        ip += xorUnpack(inBuf, ip, outBuf, op + 64, bits3,\n",
+                        "                                outBuf[op + 63], work);\n",
+                        "                        ip += xorUnpack(inBuf, ip, outBuf, op + 96, bits4,\n",
+                        "                                outBuf[op + 95], work);\n",
+                        "                        context = outBuf[op + 127];\n",
+                        "                }\n",
+                        "\n",
+                        "                outPos.add(outLen);\n",
+                        "                inPos.set(ip);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "uncompress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "128-138:xorUnpack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def uncompress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "23-61:compress0": {
+                    "start": 23,
+                    "end": 61,
+                    "body": [
+                        "        public void compress0(final int[] inBuf, final IntWrapper inPos,\n",
+                        "                              int inLen, final int[] outBuf, final IntWrapper outPos) {\n",
+                        "                inLen = inLen - inLen % BLOCK_LENGTH;\n",
+                        "                if (inLen == 0)\n",
+                        "                        return;\n",
+                        "\n",
+                        "                outBuf[outPos.get()] = inLen;\n",
+                        "                outPos.increment();\n",
+                        "\n",
+                        "                int context = 0;\n",
+                        "                final int[] work = new int[32];\n",
+                        "\n",
+                        "                int op = outPos.get();\n",
+                        "                int ip = inPos.get();\n",
+                        "                final int inPosLast = ip + inLen;\n",
+                        "                for (; ip < inPosLast; ip += BLOCK_LENGTH) {\n",
+                        "                        final int bits1 = xorMaxBits(inBuf, ip + 0, 32, context);\n",
+                        "                        final int bits2 = xorMaxBits(inBuf, ip + 32, 32,\n",
+                        "                                inBuf[ip + 31]);\n",
+                        "                        final int bits3 = xorMaxBits(inBuf, ip + 64, 32,\n",
+                        "                                inBuf[ip + 63]);\n",
+                        "                        final int bits4 = xorMaxBits(inBuf, ip + 96, 32,\n",
+                        "                                inBuf[ip + 95]);\n",
+                        "                        outBuf[op++] = (bits1 << 24) | (bits2 << 16)\n",
+                        "                                | (bits3 << 8) | (bits4 << 0);\n",
+                        "                        op += xorPack(inBuf, ip + 0, outBuf, op, bits1,\n",
+                        "                                context, work);\n",
+                        "                        op += xorPack(inBuf, ip + 32, outBuf, op, bits2,\n",
+                        "                                inBuf[ip + 31], work);\n",
+                        "                        op += xorPack(inBuf, ip + 64, outBuf, op, bits3,\n",
+                        "                                inBuf[ip + 63], work);\n",
+                        "                        op += xorPack(inBuf, ip + 96, outBuf, op, bits4,\n",
+                        "                                inBuf[ip + 95], work);\n",
+                        "                        context = inBuf[ip + 127];\n",
+                        "                }\n",
+                        "\n",
+                        "                inPos.add(inLen);\n",
+                        "                outPos.set(op);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "compress0(int[], IntWrapper, int, int[], IntWrapper)",
+                    "parameters": [
+                        "inBuf",
+                        "inPos",
+                        "inLen",
+                        "outBuf",
+                        "outPos"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "69-71:increment"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "104-113:xorMaxBits"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.differential.XorBinaryPacking",
+                            "XorBinaryPacking",
+                            "115-126:xorPack"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "45-47:add"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "89-91:set"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compress0(self, inBuf: typing.List[int], inPos: IntWrapper, inLen: int, outBuf: typing.List[int], outPos: IntWrapper) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "128-138:xorUnpack": {
+                    "start": 128,
+                    "end": 138,
+                    "body": [
+                        "        private static int xorUnpack(final int[] inBuf, final int inOff,\n",
+                        "                final int[] outBuf, final int outOff, final int validBits,\n",
+                        "                int context, final int[] work) {\n",
+                        "\n",
+                        "                BitPacking.fastunpack(inBuf, inOff, work, 0, validBits);\n",
+                        "                outBuf[outOff] = context = work[0] ^ context;\n",
+                        "                for (int i = 1, p = outOff + 1; i < 32; ++i, ++p) {\n",
+                        "                        outBuf[p] = context = work[i] ^ context;\n",
+                        "                }\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "xorUnpack(int[], int, int[], int, int, int, int[])",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits",
+                        "context",
+                        "work"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "3021-3127:fastunpack"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __xorUnpack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int, context: int, work: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "115-126:xorPack": {
+                    "start": 115,
+                    "end": 126,
+                    "body": [
+                        "        private static int xorPack(final int[] inBuf, final int inOff,\n",
+                        "                final int[] outBuf, final int outOff, final int validBits,\n",
+                        "                final int context, final int[] work) {\n",
+                        "                work[0] = inBuf[inOff] ^ context;\n",
+                        "                for (int i = 1, p = inOff + 1; i < 32; ++i, ++p) {\n",
+                        "                        work[i] = inBuf[p] ^ inBuf[p - 1];\n",
+                        "                }\n",
+                        "                BitPacking.fastpackwithoutmask(work, 0, outBuf, outOff,\n",
+                        "                        validBits);\n",
+                        "\n",
+                        "                return validBits;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "xorPack(int[], int, int[], int, int, int, int[])",
+                    "parameters": [
+                        "inBuf",
+                        "inOff",
+                        "outBuf",
+                        "outOff",
+                        "validBits",
+                        "context",
+                        "work"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.BitPacking",
+                            "BitPacking",
+                            "1706-1812:fastpackwithoutmask"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __xorPack(inBuf: typing.List[int], inOff: int, outBuf: typing.List[int], outOff: int, validBits: int, context: int, work: typing.List[int]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "104-113:xorMaxBits": {
+                    "start": 104,
+                    "end": 113,
+                    "body": [
+                        "        private static int xorMaxBits(final int[] buf, final int offset,\n",
+                        "                final int length, final int context) {\n",
+                        "                int mask = buf[offset] ^ context;\n",
+                        "                final int M = offset + length;\n",
+                        "                for (int i = offset + 1, prev = offset; i < M; ++i, ++prev) {\n",
+                        "                        mask |= buf[i] ^ buf[prev];\n",
+                        "                }\n",
+                        "\n",
+                        "                return 32 - Integer.numberOfLeadingZeros(mask);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "xorMaxBits(int[], int, int, int)",
+                    "parameters": [
+                        "buf",
+                        "offset",
+                        "length",
+                        "context"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "numberOfLeadingZeros(int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __xorMaxBits(buf: typing.List[int], offset: int, length: int, context: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "20-20:BLOCK_LENGTH": {
+                    "start": 20,
+                    "end": 20,
+                    "body": [
+                        "        private static final int BLOCK_LENGTH = 128;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BLOCK_LENGTH: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class XorBinaryPacking(IntegratedIntegerCODEC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.me.lemire.integercompression.BitPacking import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.differential.IntegratedIntegerCODEC import *"
+    ]
+}

@@ -1,0 +1,839 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/shortestpath/DefaultShortestPathAlgorithmSelector.java",
+    "imports": {
+        "33-33:import Set": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "32-32:import Queue": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Queue;\n"
+            ]
+        },
+        "31-31:import HashSet": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "25-25:import Graph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "24-24:import DirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "26-26:import Mapper": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "27-27:import WeightedPath": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "28-28:import FibonacciHeap": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.collections.FibonacciHeap;\n"
+            ]
+        },
+        "29-29:import OrderedMonoid": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultShortestPathAlgorithmSelector": {
+            "start": 35,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "201-254:applyingDijkstra": {
+                    "start": 201,
+                    "end": 254,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> WeightedPath<V, WE, W> applyingDijkstra(\n",
+                        "            WO weightOperations) {\n",
+                        "        weightOperations =\n",
+                        "                checkNotNull(\n",
+                        "                        weightOperations,\n",
+                        "                        \"Dijkstra algorithm can not be applied using null weight operations\");\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> shortestDistances =\n",
+                        "                new ShortestDistances<V, W>(weightOperations);\n",
+                        "        shortestDistances.setWeight(source, weightOperations.identity());\n",
+                        "\n",
+                        "        final Queue<V> unsettledNodes = new FibonacciHeap<V>(shortestDistances);\n",
+                        "        unsettledNodes.add(source);\n",
+                        "\n",
+                        "        final Set<V> settledNodes = new HashSet<V>();\n",
+                        "\n",
+                        "        final PredecessorsList<V, WE, W> predecessors =\n",
+                        "                new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        while (!unsettledNodes.isEmpty()) {\n",
+                        "            V vertex = unsettledNodes.remove();\n",
+                        "\n",
+                        "            if (target.equals(vertex)) {\n",
+                        "                return predecessors.buildPath0(source, target);\n",
+                        "            }\n",
+                        "\n",
+                        "            settledNodes.add(vertex);\n",
+                        "\n",
+                        "            for (V v : graph.getConnectedVertices(vertex)) {\n",
+                        "                if (!settledNodes.contains(v)) {\n",
+                        "                    WE edge = graph.getEdge(vertex, v);\n",
+                        "                    if (shortestDistances.alreadyVisited(vertex)) {\n",
+                        "                        W shortDist =\n",
+                        "                                weightOperations.append(\n",
+                        "                                        shortestDistances.getWeight(vertex),\n",
+                        "                                        weightedEdges.map(edge));\n",
+                        "\n",
+                        "                        if (!shortestDistances.alreadyVisited(v)\n",
+                        "                                || weightOperations.compare(\n",
+                        "                                                shortDist, shortestDistances.getWeight(v))\n",
+                        "                                        < 0) {\n",
+                        "                            shortestDistances.setWeight(v, shortDist);\n",
+                        "                            unsettledNodes.add(v);\n",
+                        "\n",
+                        "                            predecessors.addPredecessor(v, vertex);\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        throw new PathNotFoundException(\n",
+                        "                \"Path from '%s' to '%s' doesn't exist in Graph '%s'\", source, target, graph);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WeightedPath<V,WE,W>",
+                            "WeightedPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingDijkstra(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "ShortestDistances<V,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<V>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "PredecessorsList<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "setWeight(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "buildPath0(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "alreadyVisited(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "append(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "getWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.PathNotFoundException",
+                            "PathNotFoundException",
+                            "28-30:PathNotFoundException"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingDijkstra(self, weightOperations: typing.Any) -> WeightedPath[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "66-198:applyingBidirectionalDijkstra": {
+                    "start": 66,
+                    "end": 198,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> WeightedPath<V, WE, W> applyingBidirectionalDijkstra(\n",
+                        "            WO weightOperations) {\n",
+                        "        weightOperations =\n",
+                        "                checkNotNull(\n",
+                        "                        weightOperations,\n",
+                        "                        \"Bidirectional Dijkstra algorithm can not be applied using null weight\"\n",
+                        "                                + \" operations\");\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> shortestDistancesForward =\n",
+                        "                new ShortestDistances<V, W>(weightOperations);\n",
+                        "        shortestDistancesForward.setWeight(source, weightOperations.identity());\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> shortestDistancesBackwards =\n",
+                        "                new ShortestDistances<V, W>(weightOperations);\n",
+                        "        shortestDistancesBackwards.setWeight(target, weightOperations.identity());\n",
+                        "\n",
+                        "        final Queue<V> openForward = new FibonacciHeap<V>(shortestDistancesForward);\n",
+                        "        openForward.add(source);\n",
+                        "\n",
+                        "        final Queue<V> openBackwards = new FibonacciHeap<V>(shortestDistancesBackwards);\n",
+                        "        openBackwards.add(target);\n",
+                        "\n",
+                        "        final Set<V> closedForward = new HashSet<V>();\n",
+                        "\n",
+                        "        final Set<V> closedBackwards = new HashSet<V>();\n",
+                        "\n",
+                        "        final PredecessorsList<V, WE, W> predecessorsForward =\n",
+                        "                new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        final PredecessorsList<V, WE, W> predecessorsBackwards =\n",
+                        "                new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        W best = null;\n",
+                        "        V touch = null;\n",
+                        "\n",
+                        "        while (!openForward.isEmpty() && !openBackwards.isEmpty()) {\n",
+                        "            if (best != null) {\n",
+                        "                final W tmp =\n",
+                        "                        weightOperations.append(\n",
+                        "                                shortestDistancesForward.getWeight(openForward.peek()),\n",
+                        "                                shortestDistancesBackwards.getWeight(openBackwards.peek()));\n",
+                        "\n",
+                        "                if (weightOperations.compare(tmp, best) >= 0) {\n",
+                        "                    return predecessorsForward.buildPath1(\n",
+                        "                            source, touch, target, predecessorsBackwards);\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            V vertex = openForward.remove();\n",
+                        "\n",
+                        "            closedForward.add(vertex);\n",
+                        "\n",
+                        "            for (V v : graph.getConnectedVertices(vertex)) {\n",
+                        "                if (!closedForward.contains(v)) {\n",
+                        "                    WE edge = graph.getEdge(vertex, v);\n",
+                        "                    if (shortestDistancesForward.alreadyVisited(vertex)) {\n",
+                        "                        W shortDist =\n",
+                        "                                weightOperations.append(\n",
+                        "                                        shortestDistancesForward.getWeight(vertex),\n",
+                        "                                        weightedEdges.map(edge));\n",
+                        "\n",
+                        "                        if (!shortestDistancesForward.alreadyVisited(v)\n",
+                        "                                || weightOperations.compare(\n",
+                        "                                                shortDist, shortestDistancesForward.getWeight(v))\n",
+                        "                                        < 0) {\n",
+                        "                            shortestDistancesForward.setWeight(v, shortDist);\n",
+                        "                            openForward.add(v);\n",
+                        "                            predecessorsForward.addPredecessor(v, vertex);\n",
+                        "\n",
+                        "                            if (closedBackwards.contains(v)) {\n",
+                        "                                W tmpBest =\n",
+                        "                                        weightOperations.append(\n",
+                        "                                                shortDist, shortestDistancesBackwards.getWeight(v));\n",
+                        "\n",
+                        "                                if (best == null || weightOperations.compare(tmpBest, best) < 0) {\n",
+                        "                                    best = tmpBest;\n",
+                        "                                    touch = v;\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "\n",
+                        "            vertex = openBackwards.remove();\n",
+                        "\n",
+                        "            closedBackwards.add(vertex);\n",
+                        "\n",
+                        "            Iterable<V> parentsIterable =\n",
+                        "                    (graph instanceof DirectedGraph\n",
+                        "                            ? ((DirectedGraph<V, WE>) graph).getInbound(vertex)\n",
+                        "                            : graph.getConnectedVertices(vertex));\n",
+                        "\n",
+                        "            for (V v : parentsIterable) {\n",
+                        "                if (!closedBackwards.contains(v)) {\n",
+                        "                    WE edge = graph.getEdge(v, vertex);\n",
+                        "                    if (shortestDistancesBackwards.alreadyVisited(vertex)) {\n",
+                        "                        W shortDist =\n",
+                        "                                weightOperations.append(\n",
+                        "                                        shortestDistancesBackwards.getWeight(vertex),\n",
+                        "                                        weightedEdges.map(edge));\n",
+                        "\n",
+                        "                        if (!shortestDistancesBackwards.alreadyVisited(v)\n",
+                        "                                || weightOperations.compare(\n",
+                        "                                                shortDist, shortestDistancesBackwards.getWeight(v))\n",
+                        "                                        < 0) {\n",
+                        "                            shortestDistancesBackwards.setWeight(v, shortDist);\n",
+                        "                            openBackwards.add(v);\n",
+                        "                            predecessorsBackwards.addPredecessor(v, vertex);\n",
+                        "\n",
+                        "                            if (closedForward.contains(v)) {\n",
+                        "                                W tmpBest =\n",
+                        "                                        weightOperations.append(\n",
+                        "                                                shortDist, shortestDistancesForward.getWeight(v));\n",
+                        "\n",
+                        "                                if (best == null || weightOperations.compare(tmpBest, best) < 0) {\n",
+                        "                                    best = tmpBest;\n",
+                        "                                    touch = v;\n",
+                        "                                }\n",
+                        "                            }\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        if (touch == null) {\n",
+                        "            throw new PathNotFoundException(\n",
+                        "                    \"Path from '%s' to '%s' doesn't exist in Graph '%s'\", source, target, graph);\n",
+                        "        }\n",
+                        "\n",
+                        "        return predecessorsForward.buildPath1(source, touch, target, predecessorsBackwards);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WeightedPath<V,WE,W>",
+                            "WeightedPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingBidirectionalDijkstra(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "ShortestDistances<V,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<V>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "PredecessorsList<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "setWeight(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/DirectedGraph",
+                            "getInbound(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "append(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "getWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "peek()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "buildPath1(java.lang.Object,java.lang.Object,java.lang.Object,org.apache.commons.graph.shortestpath.PredecessorsList)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "alreadyVisited(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.PathNotFoundException",
+                            "PathNotFoundException",
+                            "28-30:PathNotFoundException"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingBidirectionalDijkstra(self, weightOperations: typing.Any) -> WeightedPath[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "55-63:applyingAStar": {
+                    "start": 55,
+                    "end": 63,
+                    "body": [
+                        "    public <WO extends OrderedMonoid<W>> HeuristicBuilder<V, WE, W> applyingAStar(\n",
+                        "            WO weightOperations) {\n",
+                        "        weightOperations =\n",
+                        "                checkNotNull(\n",
+                        "                        weightOperations,\n",
+                        "                        \"A* algorithm can not be applied using null weight operations\");\n",
+                        "        return new DefaultHeuristicBuilder<V, WE, W>(\n",
+                        "                graph, weightedEdges, source, target, weightOperations);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "HeuristicBuilder<V,WE,W>",
+                            "HeuristicBuilder<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "applyingAStar(WO)",
+                    "parameters": [
+                        "weightOperations"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/DefaultHeuristicBuilder",
+                            "DefaultHeuristicBuilder<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.Mapper,java.lang.Object,java.lang.Object,org.apache.commons.graph.weight.OrderedMonoid)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def applyingAStar(self, weightOperations: typing.Any) -> HeuristicBuilder[typing.Any, typing.Any, typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "46-52:DefaultShortestPathAlgorithmSelector": {
+                    "start": 46,
+                    "end": 52,
+                    "body": [
+                        "    public DefaultShortestPathAlgorithmSelector(\n",
+                        "            Graph<V, WE> graph, Mapper<WE, W> weightedEdges, V source, V target) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "        this.source = source;\n",
+                        "        this.target = target;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultShortestPathAlgorithmSelector(Graph<V,WE>, Mapper<WE,W>, V, V)",
+                    "parameters": [
+                        "graph",
+                        "weightedEdges",
+                        "source",
+                        "target"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, graph: Graph[typing.Any, typing.Any], weightedEdges: Mapper[typing.Any, typing.Any], source: typing.Any, target: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "44-44:target": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private final V target;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __target: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "42-42:source": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private final V source;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __source: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-40:weightedEdges": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __weightedEdges: Mapper[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "38-38:graph": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __graph: Graph[typing.Any, typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultShortestPathAlgorithmSelector:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import pathlib",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.DirectedGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.WeightedPath import *",
+        "from src.main.org.apache.commons.graph.collections.FibonacciHeap import *",
+        "from src.main.org.apache.commons.graph.shortestpath.DefaultHeuristicBuilder import *",
+        "from src.main.org.apache.commons.graph.shortestpath.HeuristicBuilder import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PathNotFoundException import *",
+        "from src.main.org.apache.commons.graph.shortestpath.PredecessorsList import *",
+        "from src.main.org.apache.commons.graph.shortestpath.ShortestDistances import *",
+        "from src.main.org.apache.commons.graph.shortestpath.ShortestPathAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *"
+    ]
+}

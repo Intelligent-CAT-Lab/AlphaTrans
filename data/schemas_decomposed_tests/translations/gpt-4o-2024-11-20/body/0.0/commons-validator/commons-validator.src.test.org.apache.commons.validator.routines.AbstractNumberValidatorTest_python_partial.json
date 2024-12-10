@@ -1,0 +1,1612 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/test/java/org/apache/commons/validator/routines/AbstractNumberValidatorTest.java",
+    "imports": {
+        "21-21:import ByteArrayInputStream": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.ByteArrayInputStream;\n"
+            ]
+        },
+        "22-22:import ByteArrayOutputStream": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.ByteArrayOutputStream;\n"
+            ]
+        },
+        "23-23:import ObjectInputStream": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.ObjectInputStream;\n"
+            ]
+        },
+        "24-24:import ObjectOutputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.ObjectOutputStream;\n"
+            ]
+        },
+        "27-27:import Locale": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "25-25:import BigDecimal": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.math.BigDecimal;\n"
+            ]
+        },
+        "26-26:import DecimalFormat": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.text.DecimalFormat;\n"
+            ]
+        },
+        "19-19:import TestCase": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import junit.framework.TestCase;\n"
+            ]
+        }
+    },
+    "classes": {
+        "AbstractNumberValidatorTest": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": true,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "unittest.TestCase"
+            ],
+            "methods": {
+                "84-88:tearDown": {
+                    "start": 84,
+                    "end": 88,
+                    "body": [
+                        "    protected void tearDown() throws Exception {\n",
+                        "        super.tearDown();\n",
+                        "        validator = null;\n",
+                        "        strictValidator = null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "tearDown()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "tearDown()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def tearDown(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "72-76:setUp": {
+                    "start": 72,
+                    "end": 76,
+                    "body": [
+                        "    protected void setUp() throws Exception {\n",
+                        "        super.setUp();\n",
+                        "\n",
+                        "        Locale.setDefault(Locale.US);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "setUp()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Locale",
+                            "setDefault(java.util.Locale)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setUp(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "220-241:testSerialization": {
+                    "start": 220,
+                    "end": 241,
+                    "body": [
+                        "    public void testSerialization() {\n",
+                        "        ByteArrayOutputStream baos = new ByteArrayOutputStream();\n",
+                        "        try {\n",
+                        "            ObjectOutputStream oos = new ObjectOutputStream(baos);\n",
+                        "            oos.writeObject(validator);\n",
+                        "            oos.flush();\n",
+                        "            oos.close();\n",
+                        "        } catch (Exception e) {\n",
+                        "            fail(validator.getClass().getName() + \" error during serialization: \" + e);\n",
+                        "        }\n",
+                        "\n",
+                        "        Object result = null;\n",
+                        "        try {\n",
+                        "            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());\n",
+                        "            ObjectInputStream ois = new ObjectInputStream(bais);\n",
+                        "            result = ois.readObject();\n",
+                        "            bais.close();\n",
+                        "        } catch (Exception e) {\n",
+                        "            fail(validator.getClass().getName() + \" error during deserialization: \" + e);\n",
+                        "        }\n",
+                        "        assertNotNull(result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testSerialization()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "ByteArrayOutputStream()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "ObjectOutputStream(java.io.OutputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "writeObject(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "flush()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectOutputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "ByteArrayInputStream(byte[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayOutputStream",
+                            "toByteArray()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "ObjectInputStream(java.io.InputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ObjectInputStream",
+                            "readObject()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/ByteArrayInputStream",
+                            "close()"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNotNull(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testSerialization(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "196-217:testRangeMinMax": {
+                    "start": 196,
+                    "end": 217,
+                    "body": [
+                        "    public void testRangeMinMax() {\n",
+                        "        Number number9 = Integer.valueOf(9);\n",
+                        "        Number number10 = Integer.valueOf(10);\n",
+                        "        Number number11 = Integer.valueOf(11);\n",
+                        "        Number number19 = Integer.valueOf(19);\n",
+                        "        Number number20 = Integer.valueOf(20);\n",
+                        "        Number number21 = Integer.valueOf(21);\n",
+                        "\n",
+                        "        assertFalse(\"isInRange() < min\", strictValidator.isInRange(number9, number10, number20));\n",
+                        "        assertTrue(\"isInRange() = min\", strictValidator.isInRange(number10, number10, number20));\n",
+                        "        assertTrue(\"isInRange() in range\", strictValidator.isInRange(number11, number10, number20));\n",
+                        "        assertTrue(\"isInRange() = max\", strictValidator.isInRange(number20, number10, number20));\n",
+                        "        assertFalse(\"isInRange() > max\", strictValidator.isInRange(number21, number10, number20));\n",
+                        "\n",
+                        "        assertFalse(\"minValue() < min\", strictValidator.minValue(number9, number10));\n",
+                        "        assertTrue(\"minValue() = min\", strictValidator.minValue(number10, number10));\n",
+                        "        assertTrue(\"minValue() > min\", strictValidator.minValue(number11, number10));\n",
+                        "\n",
+                        "        assertTrue(\"maxValue() < max\", strictValidator.maxValue(number19, number20));\n",
+                        "        assertTrue(\"maxValue() = max\", strictValidator.maxValue(number20, number20));\n",
+                        "        assertFalse(\"maxValue() > max\", strictValidator.maxValue(number21, number20));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testRangeMinMax()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "valueOf(int)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "106-108:isInRange"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "117-122:minValue"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "131-136:maxValue"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testRangeMinMax(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "187-193:testFormat": {
+                    "start": 187,
+                    "end": 193,
+                    "body": [
+                        "    public void testFormat() {\n",
+                        "        Number number = new BigDecimal(\"1234.5\");\n",
+                        "        assertEquals(\"US Locale, US Format\", \"1,234.5\", strictValidator.format2(number, Locale.US));\n",
+                        "        assertEquals(\n",
+                        "                \"DE Locale, DE Format\", \"1.234,5\", strictValidator.format2(number, Locale.GERMAN));\n",
+                        "        assertEquals(\"Pattern #,#0.00\", \"12,34.50\", strictValidator.format1(number, \"#,#0.00\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFormat()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/math/BigDecimal",
+                            "BigDecimal(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.String,java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "132-134:format2"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "121-123:format1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFormat(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "164-184:testValidateLocale": {
+                    "start": 164,
+                    "end": 184,
+                    "body": [
+                        "    public void testValidateLocale() {\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"US Locale, US Format\",\n",
+                        "                testNumber,\n",
+                        "                strictValidator.parse(testStringUS, null, Locale.US));\n",
+                        "        assertNull(\"US Locale, DE Format\", strictValidator.parse(testStringDE, null, Locale.US));\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"DE Locale, DE Format\",\n",
+                        "                testNumber,\n",
+                        "                strictValidator.parse(testStringDE, null, Locale.GERMAN));\n",
+                        "        assertNull(\n",
+                        "                \"DE Locale, US Format\", strictValidator.parse(testStringUS, null, Locale.GERMAN));\n",
+                        "\n",
+                        "        assertEquals(\n",
+                        "                \"Default Locale, US Format\",\n",
+                        "                testNumber,\n",
+                        "                strictValidator.parse(testStringUS, null, null));\n",
+                        "        assertNull(\"Default Locale, DE Format\", strictValidator.parse(testStringDE, null, null));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidateLocale()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidateLocale(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "151-161:testValidNotStrict": {
+                    "start": 151,
+                    "end": 161,
+                    "body": [
+                        "    public void testValidNotStrict() {\n",
+                        "        for (int i = 0; i < valid.length; i++) {\n",
+                        "            String text = \"idx=[\" + i + \"] value=[\" + validCompare[i] + \"]\";\n",
+                        "            assertEquals(\n",
+                        "                    \"(A) \" + text, validCompare[i], validator.parse(valid[i], null, Locale.US));\n",
+                        "            assertTrue(\"(B) \" + text, validator.isValid3(valid[i], null, Locale.US));\n",
+                        "            assertEquals(\n",
+                        "                    \"(C) \" + text, validCompare[i], validator.parse(valid[i], testPattern, null));\n",
+                        "            assertTrue(\"(D) \" + text, validator.isValid3(valid[i], testPattern, null));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidNotStrict()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidNotStrict(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "134-148:testValidStrict": {
+                    "start": 134,
+                    "end": 148,
+                    "body": [
+                        "    public void testValidStrict() {\n",
+                        "        for (int i = 0; i < validStrict.length; i++) {\n",
+                        "            String text = \"idx=[\" + i + \"] value=[\" + validStrictCompare[i] + \"]\";\n",
+                        "            assertEquals(\n",
+                        "                    \"(A) \" + text,\n",
+                        "                    validStrictCompare[i],\n",
+                        "                    strictValidator.parse(validStrict[i], null, Locale.US));\n",
+                        "            assertTrue(\"(B) \" + text, strictValidator.isValid3(validStrict[i], null, Locale.US));\n",
+                        "            assertEquals(\n",
+                        "                    \"(C) \" + text,\n",
+                        "                    validStrictCompare[i],\n",
+                        "                    strictValidator.parse(validStrict[i], testPattern, null));\n",
+                        "            assertTrue(\"(D) \" + text, strictValidator.isValid3(validStrict[i], testPattern, null));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidStrict()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertTrue(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidStrict(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "123-131:testInvalidNotStrict": {
+                    "start": 123,
+                    "end": 131,
+                    "body": [
+                        "    public void testInvalidNotStrict() {\n",
+                        "        for (int i = 0; i < invalid.length; i++) {\n",
+                        "            String text = \"idx=[\" + i + \"] value=[\" + invalid[i] + \"]\";\n",
+                        "            assertNull(\"(A) \" + text, validator.parse(invalid[i], null, Locale.US));\n",
+                        "            assertFalse(\"(B) \" + text, validator.isValid3(invalid[i], null, Locale.US));\n",
+                        "            assertNull(\"(C) \" + text, validator.parse(invalid[i], testPattern, null));\n",
+                        "            assertFalse(\"(D) \" + text, validator.isValid3(invalid[i], testPattern, null));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidNotStrict()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidNotStrict(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "111-120:testInvalidStrict": {
+                    "start": 111,
+                    "end": 120,
+                    "body": [
+                        "    public void testInvalidStrict() {\n",
+                        "        for (int i = 0; i < invalidStrict.length; i++) {\n",
+                        "            String text = \"idx=[\" + i + \"] value=[\" + invalidStrict[i] + \"]\";\n",
+                        "            assertNull(\"(A) \" + text, strictValidator.parse(invalidStrict[i], null, Locale.US));\n",
+                        "            assertFalse(\"(B) \" + text, strictValidator.isValid3(invalidStrict[i], null, Locale.US));\n",
+                        "            assertNull(\"(C) \" + text, strictValidator.parse(invalidStrict[i], testPattern, null));\n",
+                        "            assertFalse(\n",
+                        "                    \"(D) \" + text, strictValidator.isValid3(invalidStrict[i], testPattern, null));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testInvalidStrict()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertFalse(java.lang.String,boolean)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "93-96:isValid3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testInvalidStrict(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "100-108:testValidateMinMax": {
+                    "start": 100,
+                    "end": 108,
+                    "body": [
+                        "    public void testValidateMinMax() {\n",
+                        "        DecimalFormat fmt = new DecimalFormat(\"#\");\n",
+                        "        if (max != null) {\n",
+                        "            assertEquals(\"Test Max\", max, validator.parse(fmt.format(max), \"#\", null));\n",
+                        "            assertNull(\"Test Max + 1\", validator.parse(fmt.format(maxPlusOne), \"#\", null));\n",
+                        "            assertEquals(\"Test Min\", min, validator.parse(fmt.format(min), \"#\", null));\n",
+                        "            assertNull(\"Test min - 1\", validator.parse(fmt.format(minMinusOne), \"#\", null));\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testValidateMinMax()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "DecimalFormat(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "147-155:parse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/Format",
+                            "format(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "TestCase",
+                            "assertNull(java.lang.String,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testValidateMinMax(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "91-97:testFormatType": {
+                    "start": 91,
+                    "end": 97,
+                    "body": [
+                        "    public void testFormatType() {\n",
+                        "        assertEquals(\"Format Type A\", 0, validator.getFormatType());\n",
+                        "        assertEquals(\n",
+                        "                \"Format Type B\",\n",
+                        "                AbstractNumberValidator.STANDARD_FORMAT,\n",
+                        "                validator.getFormatType());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testFormatType()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "assertEquals(java.lang.String,int,int)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractNumberValidator",
+                            "AbstractNumberValidator",
+                            "79-81:getFormatType"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testFormatType(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "67-69:AbstractNumberValidatorTest": {
+                    "start": 67,
+                    "end": 69,
+                    "body": [
+                        "    public AbstractNumberValidatorTest(String name) {\n",
+                        "        super(name);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "AbstractNumberValidatorTest(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "TestCase",
+                            "TestCase(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, name: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "60-60:localeExpected": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    protected Number localeExpected;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _localeExpected: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "59-59:testLocale": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    protected Locale testLocale;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Locale",
+                            "java.util.Locale"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testLocale: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "58-58:localePattern": {
+                    "start": 58,
+                    "end": 58,
+                    "body": [
+                        "    protected String localePattern;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _localePattern: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "57-57:localeValue": {
+                    "start": 57,
+                    "end": 57,
+                    "body": [
+                        "    protected String localeValue;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _localeValue: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "55-55:testStringDE": {
+                    "start": 55,
+                    "end": 55,
+                    "body": [
+                        "    protected String testStringDE;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testStringDE: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "54-54:testStringUS": {
+                    "start": 54,
+                    "end": 54,
+                    "body": [
+                        "    protected String testStringUS;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testStringUS: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "53-53:testZero": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    protected Number testZero;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testZero: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "52-52:testNumber": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    protected Number testNumber;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testNumber: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "51-51:testPattern": {
+                    "start": 51,
+                    "end": 51,
+                    "body": [
+                        "    protected String testPattern;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _testPattern: str = ''",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-49:validStrictCompare": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    protected Number[] validStrictCompare;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number[]",
+                            "java.lang.Number[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _validStrictCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:validStrict": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    protected String[] validStrict;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _validStrict: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:invalidStrict": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    protected String[] invalidStrict;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _invalidStrict: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:validCompare": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    protected Number[] validCompare;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number[]",
+                            "java.lang.Number[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _validCompare: typing.List[typing.Union[int, float, numbers.Number]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-44:valid": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    protected String[] valid;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _valid: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "43-43:invalid": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    protected String[] invalid;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _invalid: typing.List[typing.List[str]] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "42-42:minMinusOne": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    protected Number minMinusOne;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _minMinusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "41-41:min": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    protected Number min;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _min: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "40-40:maxPlusOne": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    protected Number maxPlusOne;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _maxPlusOne: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "39-39:max": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    protected Number max;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "Number",
+                            "java.lang.Number"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _max: typing.Union[int, float, numbers.Number] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "37-37:strictValidator": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    protected AbstractNumberValidator strictValidator;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "AbstractNumberValidator",
+                            "AbstractNumberValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _strictValidator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "36-36:validator": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    protected AbstractNumberValidator validator;\n"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "types": [
+                        [
+                            "AbstractNumberValidator",
+                            "AbstractNumberValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    _validator: AbstractNumberValidator = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class AbstractNumberValidatorTest(unittest.TestCase, ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "from abc import ABC",
+        "import io",
+        "import numbers",
+        "import typing\nfrom typing import *",
+        "import unittest",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *"
+    ]
+}

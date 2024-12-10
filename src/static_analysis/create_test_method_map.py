@@ -10,7 +10,7 @@ def main(args):
     os.makedirs(f'data/call_graphs/{args.project_name}', exist_ok=True)
 
     global_call_graph = {}
-    for schema_file in os.listdir(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/{args.project_name}'):
+    for schema_file in os.listdir(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/0.0/{args.project_name}'):
 
         if 'ESTest' in schema_file and not args.evosuite:
             continue
@@ -19,7 +19,7 @@ def main(args):
             continue
 
         data = {}
-        with open(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/{args.project_name}/{schema_file}', 'r') as f:
+        with open(f'{schema_dir}/translations/deepseek-coder-33b-instruct/body/0.0/{args.project_name}/{schema_file}', 'r') as f:
             data = json.load(f)
         
         for class_ in data['classes']:
@@ -43,7 +43,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create call graph for test methods')
-    parser.add_argument('project_name', type=str, help='Name of the project')
+    parser.add_argument('--project_name', type=str, help='Name of the project')
     parser.add_argument('--evosuite', action='store_true', help='Use evosuite schemas')
     parser.add_argument('--suffix', type=str, default='', help='Suffix for schema directory')
     args = parser.parse_args()

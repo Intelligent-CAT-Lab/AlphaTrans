@@ -1,0 +1,599 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/longcompression/LongTestUtils.java",
+    "imports": {
+        "13-13:import Arrays": {
+            "start": 13,
+            "end": 13,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "15-15:import IntWrapper": {
+            "start": 15,
+            "end": 15,
+            "body": [
+                "import me.lemire.integercompression.IntWrapper;\n"
+            ]
+        },
+        "10-10:import static Assert.assertArrayEquals": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import static org.junit.Assert.assertArrayEquals;\n"
+            ]
+        },
+        "11-11:import static Assert.assertTrue": {
+            "start": 11,
+            "end": 11,
+            "body": [
+                "import static org.junit.Assert.assertTrue;\n"
+            ]
+        }
+    },
+    "classes": {
+        "LongTestUtils": {
+            "start": 20,
+            "end": 20,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "130-132:longToBinaryWithLeading": {
+                    "start": 130,
+                    "end": 132,
+                    "body": [
+                        "\tpublic static String longToBinaryWithLeading(long l) {\n",
+                        "\t\treturn String.format(\"%64s\", Long.toBinaryString(l)).replace(' ', '0');\n",
+                        "\t}\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "longToBinaryWithLeading(long)",
+                    "parameters": [
+                        "l"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "replace(char,char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Long",
+                            "toBinaryString(long)"
+                        ]
+                    ]
+                },
+                "121-128:uncompressHeadless": {
+                    "start": 121,
+                    "end": 128,
+                    "body": [
+                        "    protected static long[] uncompressHeadless(SkippableLongCODEC codec, long[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.headlessUncompress(data, inPos, data.length, outBuf, outPos,len);\n",
+                        "        if(outPos.get() < len) throw new RuntimeException(\"Insufficient output.\");\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompressHeadless(SkippableLongCODEC, long[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "67-69:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ]
+                    ]
+                },
+                "113-119:compressHeadless": {
+                    "start": 113,
+                    "end": 119,
+                    "body": [
+                        "    protected static long[] compressHeadless(SkippableLongCODEC codec, long[] data) {\n",
+                        "        long[] outBuf = new long[data.length * 4];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.headlessCompress(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compressHeadless(SkippableLongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.SkippableLongCODEC",
+                            "SkippableLongCODEC",
+                            "45-47:headlessCompress"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ]
+                },
+                "105-111:uncompress1": {
+                    "start": 105,
+                    "end": 111,
+                    "body": [
+                        "    protected static long[] uncompress1(ByteLongCODEC codec, byte[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.uncompress1(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress1(ByteLongCODEC, byte[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.ByteLongCODEC",
+                            "ByteLongCODEC",
+                            "59-61:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ]
+                },
+                "97-103:compress0": {
+                    "start": 97,
+                    "end": 103,
+                    "body": [
+                        "    protected static byte[] compress0(ByteLongCODEC codec, long[] data) {\n",
+                        "        byte[] outBuf = new byte[data.length * 4 * 4];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.compress1(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "byte[]",
+                            "byte[]"
+                        ]
+                    ],
+                    "signature": "compress0(ByteLongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.ByteLongCODEC",
+                            "ByteLongCODEC",
+                            "38-40:compress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(byte[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ]
+                },
+                "87-93:uncompress0": {
+                    "start": 87,
+                    "end": 93,
+                    "body": [
+                        "    protected static long[] uncompress0(LongCODEC codec, long[] data, int len) {\n",
+                        "        long[] outBuf = new long[len + 1024];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.uncompress1(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "uncompress0(LongCODEC, long[], int)",
+                    "parameters": [
+                        "codec",
+                        "data",
+                        "len"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ]
+                },
+                "79-85:compress1": {
+                    "start": 79,
+                    "end": 85,
+                    "body": [
+                        "    protected static long[] compress1(LongCODEC codec, long[] data) {\n",
+                        "        long[] outBuf = new long[data.length * 8];\n",
+                        "        IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "        IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "        codec.compress0(data, inPos, data.length, outBuf, outPos);\n",
+                        "        return Arrays.copyOf(outBuf, outPos.get());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "signature": "compress1(LongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "data"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ]
+                    ]
+                },
+                "50-77:assertSymmetry": {
+                    "start": 50,
+                    "end": 77,
+                    "body": [
+                        "    public static void assertSymmetry(LongCODEC codec, long... orig) {\n",
+                        "        // There are some cases that compressed array is bigger than original\n",
+                        "        // array.  So output array for compress must be larger.\n",
+                        "        //\n",
+                        "        // Example:\n",
+                        "        //  - VariableByte compresses an array like [ -1 ].\n",
+                        "        //  - Composition compresses a short array.\n",
+                        "        final int EXTEND = 1;\n",
+                        "\n",
+                        "        long[] compressed = new long[orig.length + EXTEND];\n",
+                        "        IntWrapper c_inpos = new IntWrapper(0);\n",
+                        "        IntWrapper c_outpos = new IntWrapper(0);\n",
+                        "        codec.compress0(orig, c_inpos, orig.length, compressed,\n",
+                        "                c_outpos);\n",
+                        "\n",
+                        "        assertTrue(c_outpos.get() <= orig.length + EXTEND);\n",
+                        "\n",
+                        "        // Uncompress an array.\n",
+                        "        long[] uncompressed = new long[orig.length];\n",
+                        "        IntWrapper u_inpos = new IntWrapper(0);\n",
+                        "        IntWrapper u_outpos = new IntWrapper(0);\n",
+                        "        codec.uncompress1(compressed, u_inpos, c_outpos.get(),\n",
+                        "                uncompressed, u_outpos);\n",
+                        "\n",
+                        "        // Compare between uncompressed and orig arrays.\n",
+                        "        long[] target = Arrays.copyOf(uncompressed, u_outpos.get());\n",
+                        "        assertArrayEquals(orig, target);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "assertSymmetry(LongCODEC, long[])",
+                    "parameters": [
+                        "codec",
+                        "orig"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "21-23:IntWrapper"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(long[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "38-40:compress0"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertTrue(boolean)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.longcompression.LongCODEC",
+                            "LongCODEC",
+                            "59-61:uncompress1"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertArrayEquals(long[],long[])"
+                        ]
+                    ]
+                },
+                "33-42:dumpIntArrayAsHex": {
+                    "start": 33,
+                    "end": 42,
+                    "body": [
+                        "    protected static void dumpIntArrayAsHex(long[] data, String label) {\n",
+                        "        System.out.print(label);\n",
+                        "        for (int i = 0; i < data.length; ++i) {\n",
+                        "            if (i % 8 == 0) {\n",
+                        "                System.out.println();\n",
+                        "            }\n",
+                        "            System.out.format(\" %1$08X\", data[i]);\n",
+                        "        }\n",
+                        "        System.out.println();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArrayAsHex(long[], String)",
+                    "parameters": [
+                        "data",
+                        "label"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "print(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ]
+                    ]
+                },
+                "22-31:dumpIntArray": {
+                    "start": 22,
+                    "end": 31,
+                    "body": [
+                        "    protected static void dumpIntArray(long[] data, String label) {\n",
+                        "        System.out.print(label);\n",
+                        "        for (int i = 0; i < data.length; ++i) {\n",
+                        "            if (i % 6 == 0) {\n",
+                        "                System.out.println();\n",
+                        "            }\n",
+                        "            System.out.format(\" %1$11d\", data[i]);\n",
+                        "        }\n",
+                        "        System.out.println();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "protected",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "dumpIntArray(long[], String)",
+                    "parameters": [
+                        "data",
+                        "label"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "print(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

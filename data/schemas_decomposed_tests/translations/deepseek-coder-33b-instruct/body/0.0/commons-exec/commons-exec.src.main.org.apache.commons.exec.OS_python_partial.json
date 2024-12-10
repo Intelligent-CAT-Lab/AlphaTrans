@@ -1,0 +1,1508 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/OS.java",
+    "imports": {
+        "19-19:import File": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "20-20:import Locale": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        }
+    },
+    "classes": {
+        "OS": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "313-315:isVersion": {
+                    "start": 313,
+                    "end": 315,
+                    "body": [
+                        "    public static boolean isVersion(final String version) {\n",
+                        "        return isOs(null, null, null, version);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isVersion(String)",
+                    "parameters": [
+                        "version"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "232-305:isOs"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isVersion(version: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "232-305:isOs": {
+                    "start": 232,
+                    "end": 305,
+                    "body": [
+                        "    public static boolean isOs(final String family, final String name, final String arch, final String version) {\n",
+                        "        boolean retValue = false;\n",
+                        "        if (family != null || name != null || arch != null || version != null) {\n",
+                        "            boolean isFamily = true;\n",
+                        "            boolean isName = true;\n",
+                        "            boolean isArch = true;\n",
+                        "            boolean isVersion = true;\n",
+                        "            if (family != null) {\n",
+                        "                // Windows probing logic relies on the word 'windows' in the OS\n",
+                        "                final boolean isWindows = OS_NAME.contains(FAMILY_WINDOWS);\n",
+                        "                boolean is9x = false;\n",
+                        "                boolean isNT = false;\n",
+                        "                if (isWindows) {\n",
+                        "                    // there are only four 9x platforms that we look for\n",
+                        "                    is9x = OS_NAME.contains(\"95\") || OS_NAME.contains(\"98\") || OS_NAME.contains(\"me\")\n",
+                        "                    // Windows CE isn't really 9x, but crippled enough to\n",
+                        "                    // be a muchness. Ant doesn't run on CE, anyway.\n",
+                        "                            || OS_NAME.contains(\"ce\");\n",
+                        "                    isNT = !is9x;\n",
+                        "                }\n",
+                        "                switch (family) {\n",
+                        "                case FAMILY_WINDOWS:\n",
+                        "                    isFamily = isWindows;\n",
+                        "                    break;\n",
+                        "                case FAMILY_9X:\n",
+                        "                    isFamily = isWindows && is9x;\n",
+                        "                    break;\n",
+                        "                case FAMILY_NT:\n",
+                        "                    isFamily = isWindows && isNT;\n",
+                        "                    break;\n",
+                        "                case FAMILY_OS2:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_OS2);\n",
+                        "                    break;\n",
+                        "                case FAMILY_NETWARE:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_NETWARE);\n",
+                        "                    break;\n",
+                        "                case FAMILY_DOS:\n",
+                        "                    isFamily = PATH_SEP.equals(\";\") && !isFamily(FAMILY_NETWARE);\n",
+                        "                    break;\n",
+                        "                case FAMILY_MAC:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_MAC) || OS_NAME.contains(DARWIN);\n",
+                        "                    break;\n",
+                        "                case FAMILY_TANDEM:\n",
+                        "                    isFamily = OS_NAME.contains(\"nonstop_kernel\");\n",
+                        "                    break;\n",
+                        "                case FAMILY_UNIX:\n",
+                        "                    isFamily = PATH_SEP.equals(\":\") && !isFamily(FAMILY_VMS) && (!isFamily(FAMILY_MAC) || OS_NAME.endsWith(\"x\") || OS_NAME.contains(DARWIN));\n",
+                        "                    break;\n",
+                        "                case FAMILY_ZOS:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_ZOS) || OS_NAME.contains(\"os/390\");\n",
+                        "                    break;\n",
+                        "                case FAMILY_OS400:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_OS400);\n",
+                        "                    break;\n",
+                        "                case FAMILY_VMS:\n",
+                        "                    isFamily = OS_NAME.contains(FAMILY_VMS);\n",
+                        "                    break;\n",
+                        "                default:\n",
+                        "                    throw new IllegalArgumentException(\"Don\\'t know how to detect OS family \\\"\" + family + \"\\\"\");\n",
+                        "                }\n",
+                        "            }\n",
+                        "            if (name != null) {\n",
+                        "                isName = name.equals(OS_NAME);\n",
+                        "            }\n",
+                        "            if (arch != null) {\n",
+                        "                isArch = arch.equals(OS_ARCH);\n",
+                        "            }\n",
+                        "            if (version != null) {\n",
+                        "                isVersion = version.equals(OS_VERSION);\n",
+                        "            }\n",
+                        "            retValue = isFamily && isName && isArch && isVersion;\n",
+                        "        }\n",
+                        "        return retValue;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isOs(String, String, String, String)",
+                    "parameters": [
+                        "family",
+                        "name",
+                        "arch",
+                        "version"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "contains(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isOs(family: str, name: str, arch: str, version: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "219-221:isName": {
+                    "start": 219,
+                    "end": 221,
+                    "body": [
+                        "    public static boolean isName(final String name) {\n",
+                        "        return isOs(null, name, null, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isName(String)",
+                    "parameters": [
+                        "name"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "232-305:isOs"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isName(name: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "209-211:isFamilyZOS": {
+                    "start": 209,
+                    "end": 211,
+                    "body": [
+                        "    public static boolean isFamilyZOS() {\n",
+                        "        return isFamily(FAMILY_ZOS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyZOS()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyZOS() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "200-202:isFamilyWinNT": {
+                    "start": 200,
+                    "end": 202,
+                    "body": [
+                        "    public static boolean isFamilyWinNT() {\n",
+                        "        return isFamily(FAMILY_NT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyWinNT()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyWinNT() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "191-193:isFamilyWindows": {
+                    "start": 191,
+                    "end": 193,
+                    "body": [
+                        "    public static boolean isFamilyWindows() {\n",
+                        "        return isFamily(FAMILY_WINDOWS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyWindows()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyWindows() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "182-184:isFamilyWin9x": {
+                    "start": 182,
+                    "end": 184,
+                    "body": [
+                        "    public static boolean isFamilyWin9x() {\n",
+                        "        return isFamily(FAMILY_9X);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyWin9x()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyWin9x() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "173-175:isFamilyUnix": {
+                    "start": 173,
+                    "end": 175,
+                    "body": [
+                        "    public static boolean isFamilyUnix() {\n",
+                        "        return isFamily(FAMILY_UNIX);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyUnix()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyUnix() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "164-166:isFamilyTandem": {
+                    "start": 164,
+                    "end": 166,
+                    "body": [
+                        "    public static boolean isFamilyTandem() {\n",
+                        "        return isFamily(FAMILY_TANDEM);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyTandem()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyTandem() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "155-157:isFamilyOS400": {
+                    "start": 155,
+                    "end": 157,
+                    "body": [
+                        "    public static boolean isFamilyOS400() {\n",
+                        "        return isFamily(FAMILY_OS400);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyOS400()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyOS400() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "146-148:isFamilyOS2": {
+                    "start": 146,
+                    "end": 148,
+                    "body": [
+                        "    public static boolean isFamilyOS2() {\n",
+                        "        return isFamily(FAMILY_OS2);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyOS2()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyOS2() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "137-139:isFamilyOpenVms": {
+                    "start": 137,
+                    "end": 139,
+                    "body": [
+                        "    public static boolean isFamilyOpenVms() {\n",
+                        "        return isFamily(FAMILY_VMS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyOpenVms()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyOpenVms() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "128-130:isFamilyNetware": {
+                    "start": 128,
+                    "end": 130,
+                    "body": [
+                        "    public static boolean isFamilyNetware() {\n",
+                        "        return isFamily(FAMILY_NETWARE);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyNetware()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyNetware() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "119-121:isFamilyMac": {
+                    "start": 119,
+                    "end": 121,
+                    "body": [
+                        "    public static boolean isFamilyMac() {\n",
+                        "        return isFamily(FAMILY_MAC);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyMac()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyMac() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "110-112:isFamilyDOS": {
+                    "start": 110,
+                    "end": 112,
+                    "body": [
+                        "    public static boolean isFamilyDOS() {\n",
+                        "        return isFamily(FAMILY_DOS);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamilyDOS()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "101-103:isFamily"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isFamilyDOS() -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "91-93:isArch": {
+                    "start": 91,
+                    "end": 93,
+                    "body": [
+                        "    public static boolean isArch(final String arch) {\n",
+                        "        return isOs(null, null, arch, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isArch(String)",
+                    "parameters": [
+                        "arch"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "232-305:isOs"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def isArch(arch: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "320-321:OS": {
+                    "start": 320,
+                    "end": 321,
+                    "body": [
+                        "    private OS() {\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "OS()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "101-103:isFamily": {
+                    "start": 101,
+                    "end": 103,
+                    "body": [
+                        "    private static boolean isFamily(final String family) {\n",
+                        "        return isOs(family, null, null, null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isFamily(String)",
+                    "parameters": [
+                        "family"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.OS",
+                            "OS",
+                            "232-305:isOs"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __isFamily(family: str) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "76-76:FAMILY_ZOS": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    public static final String FAMILY_ZOS = \"z/os\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_ZOS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "72-72:FAMILY_WINDOWS": {
+                    "start": 72,
+                    "end": 72,
+                    "body": [
+                        "    public static final String FAMILY_WINDOWS = \"windows\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_WINDOWS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "68-68:FAMILY_VMS": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    public static final String FAMILY_VMS = \"openvms\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_VMS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "64-64:FAMILY_UNIX": {
+                    "start": 64,
+                    "end": 64,
+                    "body": [
+                        "    public static final String FAMILY_UNIX = \"unix\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_UNIX: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "60-60:FAMILY_TANDEM": {
+                    "start": 60,
+                    "end": 60,
+                    "body": [
+                        "    public static final String FAMILY_TANDEM = \"tandem\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_TANDEM: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "56-56:FAMILY_OS400": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    public static final String FAMILY_OS400 = \"os/400\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_OS400: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "52-52:FAMILY_OS2": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    public static final String FAMILY_OS2 = \"os/2\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_OS2: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "48-48:FAMILY_NT": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    public static final String FAMILY_NT = \"winnt\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_NT: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "44-44:FAMILY_NETWARE": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    public static final String FAMILY_NETWARE = \"netware\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_NETWARE: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-40:FAMILY_MAC": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    public static final String FAMILY_MAC = \"mac\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_MAC: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "36-36:FAMILY_DOS": {
+                    "start": 36,
+                    "end": 36,
+                    "body": [
+                        "    public static final String FAMILY_DOS = \"dos\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_DOS: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "32-32:FAMILY_9X": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    public static final String FAMILY_9X = \"win9x\";\n"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    FAMILY_9X: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "83-83:PATH_SEP": {
+                    "start": 83,
+                    "end": 83,
+                    "body": [
+                        "    private static final String PATH_SEP = File.pathSeparator;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PATH_SEP: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "82-82:OS_VERSION": {
+                    "start": 82,
+                    "end": 82,
+                    "body": [
+                        "    private static final String OS_VERSION = System.getProperty(\"os.version\").toLowerCase(Locale.ENGLISH);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __OS_VERSION: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "81-81:OS_ARCH": {
+                    "start": 81,
+                    "end": 81,
+                    "body": [
+                        "    private static final String OS_ARCH = System.getProperty(\"os.arch\").toLowerCase(Locale.ENGLISH);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __OS_ARCH: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "80-80:OS_NAME": {
+                    "start": 80,
+                    "end": 80,
+                    "body": [
+                        "    private static final String OS_NAME = System.getProperty(\"os.name\").toLowerCase(Locale.ENGLISH);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __OS_NAME: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "78-78:DARWIN": {
+                    "start": 78,
+                    "end": 78,
+                    "body": [
+                        "    private static final String DARWIN = \"darwin\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __DARWIN: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class OS:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io"
+    ]
+}

@@ -1,21 +1,4 @@
 
-function setup_env() {
-    conda create -n alphatrans python=3.11;       # miniconda 23.5.2 download from https://docs.conda.io/en/latest/miniconda_hashes.html
-    conda activate alphatrans;
-}
-
-function install_requirements() {
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118;
-    pip3 install git+https://github.com/IBM/codellm-devkit.git
-    pip3 install tqdm==4.66.1;
-    pip3 install graphviz==0.20.1;
-    pip3 install python-dotenv==1.0.0;
-    pip3 install accelerate==0.24.1;
-    pip3 install black==24.4.2;
-    pip3 install transformers==4.34.1;
-    pip3 install ibm-generative-ai==3.0.0;
-}
-
 function download_java_projects() {
 
     repos=(
@@ -111,11 +94,7 @@ function install_graal() {
     fi
 }
 
-if [ "$1" == "setup_env" ]; then
-    setup_env;
-elif [ "$1" == "install_requirements" ]; then
-    install_requirements;
-elif [ "$1" == "download_java_projects" ]; then
+if [ "$1" == "download_java_projects" ]; then
     download_java_projects;
 elif [ "$1" == "build_java_projects" ]; then
     build_java_projects;

@@ -1,0 +1,697 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/ISBNValidator.java",
+    "imports": {
+        "23-23:import Serializable": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "19-19:import CheckDigitException": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.CheckDigitException;\n"
+            ]
+        },
+        "20-20:import EAN13CheckDigit": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.EAN13CheckDigit;\n"
+            ]
+        },
+        "21-21:import ISBN10CheckDigit": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.validator.routines.checkdigit.ISBN10CheckDigit;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ISBNValidator": {
+            "start": 67,
+            "end": 67,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "242-263:convertToISBN13": {
+                    "start": 242,
+                    "end": 263,
+                    "body": [
+                        "    public String convertToISBN13(String isbn10) {\n",
+                        "\n",
+                        "        if (isbn10 == null) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        String input = isbn10.trim();\n",
+                        "        if (input.length() != ISBN_10_LEN) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Invalid length \" + input.length() + \" for '\" + input + \"'\");\n",
+                        "        }\n",
+                        "\n",
+                        "        String isbn13 = \"978\" + input.substring(0, ISBN_10_LEN - 1);\n",
+                        "        try {\n",
+                        "            String checkDigit = isbn13Validator.getCheckDigit().calculate(isbn13);\n",
+                        "            isbn13 += checkDigit;\n",
+                        "            return isbn13;\n",
+                        "        } catch (CheckDigitException e) {\n",
+                        "            throw new IllegalArgumentException(\n",
+                        "                    \"Check digit error for '\" + input + \"' - \" + e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "convertToISBN13(String)",
+                    "parameters": [
+                        "isbn10"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "trim()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "substring(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.checkdigit.CheckDigit",
+                            "CheckDigit",
+                            "55-55:calculate"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "182-184:getCheckDigit"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ]
+                },
+                "229-232:validateISBN13": {
+                    "start": 229,
+                    "end": 232,
+                    "body": [
+                        "    public String validateISBN13(String code) {\n",
+                        "        Object result = isbn13Validator.validate(code);\n",
+                        "        return (result == null ? null : result.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validateISBN13(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "215-218:validateISBN10": {
+                    "start": 215,
+                    "end": 218,
+                    "body": [
+                        "    public String validateISBN10(String code) {\n",
+                        "        Object result = isbn10Validator.validate(code);\n",
+                        "        return (result == null ? null : result.toString());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validateISBN10(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "245-273:validate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "195-204:validate": {
+                    "start": 195,
+                    "end": 204,
+                    "body": [
+                        "    public String validate(String code) {\n",
+                        "        String result = validateISBN13(code);\n",
+                        "        if (result == null) {\n",
+                        "            result = validateISBN10(code);\n",
+                        "            if (result != null && convert) {\n",
+                        "                result = convertToISBN13(result);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "validate(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "229-232:validateISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "215-218:validateISBN10"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "242-263:convertToISBN13"
+                        ]
+                    ]
+                },
+                "180-182:isValidISBN13": {
+                    "start": 180,
+                    "end": 182,
+                    "body": [
+                        "    public boolean isValidISBN13(String code) {\n",
+                        "        return isbn13Validator.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidISBN13(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ]
+                },
+                "170-172:isValidISBN10": {
+                    "start": 170,
+                    "end": 172,
+                    "body": [
+                        "    public boolean isValidISBN10(String code) {\n",
+                        "        return isbn10Validator.isValid(code);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidISBN10(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CodeValidator",
+                            "CodeValidator",
+                            "232-234:isValid"
+                        ]
+                    ]
+                },
+                "160-162:isValid": {
+                    "start": 160,
+                    "end": 162,
+                    "body": [
+                        "    public boolean isValid(String code) {\n",
+                        "        return (isValidISBN13(code) || isValidISBN10(code));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "code"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "180-182:isValidISBN13"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "170-172:isValidISBN10"
+                        ]
+                    ]
+                },
+                "143-145:ISBNValidator1": {
+                    "start": 143,
+                    "end": 145,
+                    "body": [
+                        "    public static ISBNValidator ISBNValidator1() {\n",
+                        "        return new ISBNValidator(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "ISBNValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.ISBNValidator",
+                            "ISBNValidator",
+                            "139-141:ISBNValidator"
+                        ]
+                    ]
+                },
+                "139-141:ISBNValidator": {
+                    "start": 139,
+                    "end": 141,
+                    "body": [
+                        "    public ISBNValidator(boolean convert) {\n",
+                        "        this.convert = convert;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ISBNValidator(boolean)",
+                    "parameters": [
+                        "convert"
+                    ],
+                    "calls": []
+                },
+                "134-136:getInstance1": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "    public static ISBNValidator getInstance1(boolean convert) {\n",
+                        "        return (convert ? ISBN_VALIDATOR : ISBN_VALIDATOR_NO_CONVERT);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance1(boolean)",
+                    "parameters": [
+                        "convert"
+                    ],
+                    "calls": []
+                },
+                "122-124:getInstance0": {
+                    "start": 122,
+                    "end": 124,
+                    "body": [
+                        "    public static ISBNValidator getInstance0() {\n",
+                        "        return ISBN_VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ],
+                    "signature": "getInstance0()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "90-99:ISBN13_REGEX": {
+                    "start": 90,
+                    "end": 99,
+                    "body": [
+                        "    static final String ISBN13_REGEX =\n",
+                        "            \"^(978|979)(?:(\\\\d{10})|(?:\"\n",
+                        "                    + SEP\n",
+                        "                    + GROUP\n",
+                        "                    + SEP\n",
+                        "                    + PUBLISHER\n",
+                        "                    + SEP\n",
+                        "                    + TITLE\n",
+                        "                    + SEP\n",
+                        "                    + \"([0-9])))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "82-83:ISBN10_REGEX": {
+                    "start": 82,
+                    "end": 83,
+                    "body": [
+                        "    static final String ISBN10_REGEX =\n",
+                        "            \"^(?:(\\\\d{9}[0-9X])|(?:\" + GROUP + SEP + PUBLISHER + SEP + TITLE + SEP + \"([0-9X])))$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "115-115:convert": {
+                    "start": 115,
+                    "end": 115,
+                    "body": [
+                        "    private final boolean convert;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ]
+                },
+                "112-113:isbn13Validator": {
+                    "start": 112,
+                    "end": 113,
+                    "body": [
+                        "    private final CodeValidator isbn13Validator =\n",
+                        "            CodeValidator.CodeValidator4(ISBN13_REGEX, 13, EAN13CheckDigit.EAN13_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "108-109:isbn10Validator": {
+                    "start": 108,
+                    "end": 109,
+                    "body": [
+                        "    private final CodeValidator isbn10Validator =\n",
+                        "            CodeValidator.CodeValidator4(ISBN10_REGEX, 10, ISBN10CheckDigit.ISBN10_CHECK_DIGIT);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CodeValidator",
+                            "CodeValidator"
+                        ]
+                    ]
+                },
+                "105-105:ISBN_VALIDATOR_NO_CONVERT": {
+                    "start": 105,
+                    "end": 105,
+                    "body": [
+                        "    private static final ISBNValidator ISBN_VALIDATOR_NO_CONVERT = new ISBNValidator(false);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ]
+                },
+                "102-102:ISBN_VALIDATOR": {
+                    "start": 102,
+                    "end": 102,
+                    "body": [
+                        "    private static final ISBNValidator ISBN_VALIDATOR = ISBNValidator.ISBNValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ISBNValidator",
+                            "ISBNValidator"
+                        ]
+                    ]
+                },
+                "76-76:TITLE": {
+                    "start": 76,
+                    "end": 76,
+                    "body": [
+                        "    private static final String TITLE = \"(\\\\d{1,6})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "75-75:PUBLISHER": {
+                    "start": 75,
+                    "end": 75,
+                    "body": [
+                        "    private static final String PUBLISHER = \"(\\\\d{1,7})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "74-74:GROUP": {
+                    "start": 74,
+                    "end": 74,
+                    "body": [
+                        "    private static final String GROUP = \"(\\\\d{1,5})\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "73-73:SEP": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final String SEP = \"(?:\\\\-|\\\\s)\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "71-71:serialVersionUID": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final long serialVersionUID = 4319515687976420405L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "69-69:ISBN_10_LEN": {
+                    "start": 69,
+                    "end": 69,
+                    "body": [
+                        "    private static final int ISBN_10_LEN = 10;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

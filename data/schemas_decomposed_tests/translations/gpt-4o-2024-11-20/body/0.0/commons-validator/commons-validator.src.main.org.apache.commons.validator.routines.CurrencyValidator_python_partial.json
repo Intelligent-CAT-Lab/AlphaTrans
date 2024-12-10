@@ -1,0 +1,382 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/CurrencyValidator.java",
+    "imports": {
+        "20-20:import Format": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.text.Format;\n"
+            ]
+        },
+        "19-19:import DecimalFormat": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import java.text.DecimalFormat;\n"
+            ]
+        }
+    },
+    "classes": {
+        "CurrencyValidator": {
+            "start": 46,
+            "end": 46,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [
+                "BigDecimalValidator"
+            ],
+            "methods": {
+                "94-114:parse": {
+                    "start": 94,
+                    "end": 114,
+                    "body": [
+                        "    protected Object parse(String value, Format formatter) {\n",
+                        "\n",
+                        "        Object parsedValue = super.parse(value, formatter);\n",
+                        "        if (parsedValue != null || !(formatter instanceof DecimalFormat)) {\n",
+                        "            return parsedValue;\n",
+                        "        }\n",
+                        "\n",
+                        "        DecimalFormat decimalFormat = (DecimalFormat) formatter;\n",
+                        "        String pattern = decimalFormat.toPattern();\n",
+                        "        if (pattern.indexOf(CURRENCY_SYMBOL) >= 0) {\n",
+                        "            StringBuilder buffer = new StringBuilder(pattern.length());\n",
+                        "            for (int i = 0; i < pattern.length(); i++) {\n",
+                        "                if (pattern.charAt(i) != CURRENCY_SYMBOL) {\n",
+                        "                    buffer.append(pattern.charAt(i));\n",
+                        "                }\n",
+                        "            }\n",
+                        "            decimalFormat.applyPattern(buffer.toString());\n",
+                        "            parsedValue = super.parse(value, decimalFormat);\n",
+                        "        }\n",
+                        "        return parsedValue;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "Object",
+                            "java.lang.Object"
+                        ]
+                    ],
+                    "signature": "parse(String, Format)",
+                    "parameters": [
+                        "value",
+                        "formatter"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.AbstractFormatValidator",
+                            "AbstractFormatValidator",
+                            "167-184:parse"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "toPattern()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "charAt(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/text/DecimalFormat",
+                            "applyPattern(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _parse(self, value: str, formatter: Format) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "69-71:CurrencyValidator1": {
+                    "start": 69,
+                    "end": 71,
+                    "body": [
+                        "    public static CurrencyValidator CurrencyValidator1() {\n",
+                        "        return new CurrencyValidator(true, true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "CurrencyValidator",
+                            "CurrencyValidator"
+                        ]
+                    ],
+                    "signature": "CurrencyValidator1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.CurrencyValidator",
+                            "CurrencyValidator",
+                            "65-67:CurrencyValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def CurrencyValidator1() -> CurrencyValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "65-67:CurrencyValidator": {
+                    "start": 65,
+                    "end": 67,
+                    "body": [
+                        "    public CurrencyValidator(boolean strict, boolean allowFractions) {\n",
+                        "        super(strict, CURRENCY_FORMAT, allowFractions);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "CurrencyValidator(boolean, boolean)",
+                    "parameters": [
+                        "strict",
+                        "allowFractions"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.BigDecimalValidator",
+                            "BigDecimalValidator",
+                            "83-85:BigDecimalValidator"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, strict: bool, allowFractions: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "60-62:getInstance": {
+                    "start": 60,
+                    "end": 62,
+                    "body": [
+                        "    public static BigDecimalValidator getInstance() {\n",
+                        "        return VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "BigDecimalValidator",
+                            "BigDecimalValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def getInstance() -> BigDecimalValidator:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "53-53:CURRENCY_SYMBOL": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final char CURRENCY_SYMBOL = '\\u00A4';\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char",
+                            "char"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __CURRENCY_SYMBOL: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "50-50:VALIDATOR": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final CurrencyValidator VALIDATOR = CurrencyValidator.CurrencyValidator1();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CurrencyValidator",
+                            "CurrencyValidator"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __VALIDATOR: CurrencyValidator = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:serialVersionUID": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final long serialVersionUID = -4201640771171486514L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __serialVersionUID: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class CurrencyValidator(BigDecimalValidator):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.validator.routines.AbstractNumberValidator import *",
+        "from src.main.org.apache.commons.validator.routines.BigDecimalValidator import *"
+    ]
+}

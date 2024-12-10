@@ -1,0 +1,413 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/shortestpath/DefaultHeuristicBuilder.java",
+    "imports": {
+        "33-33:import Set": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "32-32:import Queue": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Queue;\n"
+            ]
+        },
+        "31-31:import HashSet": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "25-25:import Graph": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "24-24:import DirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "26-26:import Mapper": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Mapper;\n"
+            ]
+        },
+        "27-27:import WeightedPath": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.WeightedPath;\n"
+            ]
+        },
+        "28-28:import FibonacciHeap": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.collections.FibonacciHeap;\n"
+            ]
+        },
+        "29-29:import OrderedMonoid": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.weight.OrderedMonoid;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultHeuristicBuilder": {
+            "start": 35,
+            "end": 35,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "HeuristicBuilder<V,WE,W>"
+            ],
+            "extends": [],
+            "methods": {
+                "61-114:withHeuristic": {
+                    "start": 61,
+                    "end": 114,
+                    "body": [
+                        "    public <H extends Heuristic<V, W>> WeightedPath<V, WE, W> withHeuristic(H heuristic) {\n",
+                        "        heuristic =\n",
+                        "                checkNotNull(heuristic, \"A* algorithm can not be applied using a null heuristic\");\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> gScores = new ShortestDistances<V, W>(weightOperations);\n",
+                        "        gScores.setWeight(start, weightOperations.identity());\n",
+                        "\n",
+                        "        final ShortestDistances<V, W> fScores = new ShortestDistances<V, W>(weightOperations);\n",
+                        "        W hScore = heuristic.applyHeuristic(start, goal);\n",
+                        "        fScores.setWeight(start, hScore);\n",
+                        "\n",
+                        "        final Set<V> closedSet = new HashSet<V>();\n",
+                        "\n",
+                        "        final Queue<V> openSet = new FibonacciHeap<V>(fScores);\n",
+                        "        openSet.add(start);\n",
+                        "\n",
+                        "        final PredecessorsList<V, WE, W> predecessors =\n",
+                        "                new PredecessorsList<V, WE, W>(graph, weightOperations, weightedEdges);\n",
+                        "\n",
+                        "        while (!openSet.isEmpty()) {\n",
+                        "            V current = openSet.remove();\n",
+                        "\n",
+                        "            if (goal.equals(current)) {\n",
+                        "                return predecessors.buildPath0(start, goal);\n",
+                        "            }\n",
+                        "\n",
+                        "            closedSet.add(current);\n",
+                        "\n",
+                        "            Iterable<V> connected =\n",
+                        "                    (graph instanceof DirectedGraph)\n",
+                        "                            ? ((DirectedGraph<V, WE>) graph).getOutbound(current)\n",
+                        "                            : graph.getConnectedVertices(current);\n",
+                        "            for (V v : connected) {\n",
+                        "                if (!closedSet.contains(v)) {\n",
+                        "                    WE edge = graph.getEdge(current, v);\n",
+                        "                    W tentativeGScore =\n",
+                        "                            weightOperations.append(\n",
+                        "                                    gScores.getWeight(current), weightedEdges.map(edge));\n",
+                        "\n",
+                        "                    if (openSet.add(v)\n",
+                        "                            || weightOperations.compare(tentativeGScore, gScores.getWeight(v))\n",
+                        "                                    < 0) {\n",
+                        "                        predecessors.addPredecessor(v, current);\n",
+                        "                        gScores.setWeight(v, tentativeGScore);\n",
+                        "                        hScore = heuristic.applyHeuristic(v, goal);\n",
+                        "                        fScores.setWeight(v, weightOperations.append(gScores.getWeight(v), hScore));\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        throw new PathNotFoundException(\n",
+                        "                \"Path from '%s' to '%s' doesn't exist in Graph '%s'\", start, goal, graph);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "WeightedPath<V,WE,W>",
+                            "WeightedPath<V,WE,W>"
+                        ]
+                    ],
+                    "signature": "withHeuristic(H)",
+                    "parameters": [
+                        "heuristic"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "ShortestDistances<V,W>(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/Heuristic",
+                            "applyHeuristic(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashSet",
+                            "HashSet<V>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<V>(java.util.Comparator)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "PredecessorsList<V,WE,W>(org.apache.commons.graph.Graph,org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "setWeight(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "identity()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Collection",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Queue",
+                            "remove()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/DirectedGraph",
+                            "getOutbound(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getConnectedVertices(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "buildPath0(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/weight/Monoid",
+                            "append(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/ShortestDistances",
+                            "getWeight(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Mapper",
+                            "map(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/shortestpath/PredecessorsList",
+                            "addPredecessor(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.shortestpath.PathNotFoundException",
+                            "PathNotFoundException",
+                            "28-30:PathNotFoundException"
+                        ]
+                    ]
+                },
+                "47-58:DefaultHeuristicBuilder": {
+                    "start": 47,
+                    "end": 58,
+                    "body": [
+                        "    public DefaultHeuristicBuilder(\n",
+                        "            Graph<V, WE> graph,\n",
+                        "            Mapper<WE, W> weightedEdges,\n",
+                        "            V source,\n",
+                        "            V target,\n",
+                        "            OrderedMonoid<W> weightOperations) {\n",
+                        "        this.graph = graph;\n",
+                        "        this.weightedEdges = weightedEdges;\n",
+                        "        this.start = source;\n",
+                        "        this.goal = target;\n",
+                        "        this.weightOperations = weightOperations;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultHeuristicBuilder(Graph<V,WE>, Mapper<WE,W>, V, V, OrderedMonoid<W>)",
+                    "parameters": [
+                        "graph",
+                        "weightedEdges",
+                        "source",
+                        "target",
+                        "weightOperations"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "45-45:weightOperations": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private final OrderedMonoid<W> weightOperations;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "OrderedMonoid<W>",
+                            "OrderedMonoid<W>"
+                        ]
+                    ]
+                },
+                "43-43:goal": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private final V goal;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ]
+                },
+                "41-41:start": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final V start;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "V",
+                            "V"
+                        ]
+                    ]
+                },
+                "39-39:weightedEdges": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "    private final Mapper<WE, W> weightedEdges;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Mapper<WE,W>",
+                            "Mapper<WE,W>"
+                        ]
+                    ]
+                },
+                "37-37:graph": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private final Graph<V, WE> graph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Graph<V,WE>",
+                            "Graph<V,WE>"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

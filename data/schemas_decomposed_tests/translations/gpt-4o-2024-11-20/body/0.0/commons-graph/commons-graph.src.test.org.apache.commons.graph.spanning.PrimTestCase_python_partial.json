@@ -1,0 +1,3503 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/test/java/org/apache/commons/graph/spanning/PrimTestCase.java",
+    "imports": {
+        "26-26:import Graph": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import org.apache.commons.graph.Graph;\n"
+            ]
+        },
+        "32-32:import UndirectedMutableGraph": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import org.apache.commons.graph.model.UndirectedMutableGraph;\n"
+            ]
+        },
+        "27-27:import SpanningTree": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import org.apache.commons.graph.SpanningTree;\n"
+            ]
+        },
+        "34-34:import Test": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        },
+        "29-29:import BaseLabeledWeightedEdge": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledWeightedEdge;\n"
+            ]
+        },
+        "28-28:import BaseLabeledVertex": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import org.apache.commons.graph.model.BaseLabeledVertex;\n"
+            ]
+        },
+        "30-30:import BaseWeightedEdge": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import org.apache.commons.graph.model.BaseWeightedEdge;\n"
+            ]
+        },
+        "31-31:import MutableSpanningTree": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import org.apache.commons.graph.model.MutableSpanningTree;\n"
+            ]
+        },
+        "33-33:import DoubleWeightBaseOperations": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations;\n"
+            ]
+        },
+        "23-23:import static Assert.assertEquals": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import static org.junit.Assert.assertEquals;\n"
+            ]
+        },
+        "22-22:import static CommonsGraph.minimumSpanningTree": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.CommonsGraph.minimumSpanningTree;\n"
+            ]
+        },
+        "24-24:import static Assert.fail": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static org.junit.Assert.fail;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PrimTestCase": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "729-770:testVerifyWikipediaMinimumSpanningTree_test11_decomposed": {
+                    "start": 729,
+                    "end": 770,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test11_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 8D), c);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> d\", 9D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 15D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 8D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 11D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        expected.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        expected.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        internalPrimAssertion(input, d, expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test11_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.spanning.PrimTestCase",
+                            "PrimTestCase",
+                            "37-50:internalPrimAssertion"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test11_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "686-726:testVerifyWikipediaMinimumSpanningTree_test10_decomposed": {
+                    "start": 686,
+                    "end": 726,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test10_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 8D), c);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> d\", 9D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 15D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 8D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 11D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        expected.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        expected.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test10_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "649-683:testVerifyWikipediaMinimumSpanningTree_test9_decomposed": {
+                    "start": 649,
+                    "end": 683,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test9_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 8D), c);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> d\", 9D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 15D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 8D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 11D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test9_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "618-646:testVerifyWikipediaMinimumSpanningTree_test8_decomposed": {
+                    "start": 618,
+                    "end": 646,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test8_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 5D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 8D), c);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> d\", 9D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> e\", 7D), e);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 5D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> e\", 15D), e);\n",
+                        "        input.addEdge(d, new BaseLabeledWeightedEdge<Double>(\"d <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 8D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 11D), g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test8_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "598-615:testVerifyWikipediaMinimumSpanningTree_test7_decomposed": {
+                    "start": 598,
+                    "end": 615,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test7_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "585-595:testVerifyWikipediaMinimumSpanningTree_test6_decomposed": {
+                    "start": 585,
+                    "end": 595,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test6_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"G\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "573-582:testVerifyWikipediaMinimumSpanningTree_test5_decomposed": {
+                    "start": 573,
+                    "end": 582,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test5_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"F\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "562-570:testVerifyWikipediaMinimumSpanningTree_test4_decomposed": {
+                    "start": 562,
+                    "end": 570,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test4_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"E\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "552-559:testVerifyWikipediaMinimumSpanningTree_test3_decomposed": {
+                    "start": 552,
+                    "end": 559,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test3_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"D\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "543-549:testVerifyWikipediaMinimumSpanningTree_test2_decomposed": {
+                    "start": 543,
+                    "end": 549,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"C\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "535-540:testVerifyWikipediaMinimumSpanningTree_test1_decomposed": {
+                    "start": 535,
+                    "end": 540,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"B\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "528-532:testVerifyWikipediaMinimumSpanningTree_test0_decomposed": {
+                    "start": 528,
+                    "end": 532,
+                    "body": [
+                        "    public void testVerifyWikipediaMinimumSpanningTree_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"A\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyWikipediaMinimumSpanningTree_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyWikipediaMinimumSpanningTree_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "486-525:testVerifyMinimumSpanningTree2_test11_decomposed": {
+                    "start": 486,
+                    "end": 525,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test11_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 30D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        expected.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "        internalPrimAssertion(input, a, expected);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test11_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.spanning.PrimTestCase",
+                            "PrimTestCase",
+                            "37-50:internalPrimAssertion"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test11_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "445-483:testVerifyMinimumSpanningTree2_test10_decomposed": {
+                    "start": 445,
+                    "end": 483,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test10_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 30D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        expected.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        expected.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        expected.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        expected.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test10_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test10_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "410-442:testVerifyMinimumSpanningTree2_test9_decomposed": {
+                    "start": 410,
+                    "end": 442,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test9_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 30D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "        MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> expected =\n",
+                        "                new MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>(\n",
+                        "                        new DoubleWeightBaseOperations(), new BaseWeightedEdge<Double>());\n",
+                        "        for (BaseLabeledVertex vertex : input.getVertices0()) {\n",
+                        "            expected.addVertex(vertex);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test9_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/MutableSpanningTree",
+                            "MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>(org.apache.commons.graph.weight.Monoid,org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseGraph",
+                            "getVertices0()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test9_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "381-407:testVerifyMinimumSpanningTree2_test8_decomposed": {
+                    "start": 381,
+                    "end": 407,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test8_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> b\", 7D), b);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> c\", 14D), c);\n",
+                        "        input.addEdge(a, new BaseLabeledWeightedEdge<Double>(\"a <-> d\", 30D), d);\n",
+                        "        input.addEdge(b, new BaseLabeledWeightedEdge<Double>(\"b <-> c\", 21D), c);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> d\", 10D), d);\n",
+                        "        input.addEdge(c, new BaseLabeledWeightedEdge<Double>(\"c <-> e\", 1D), e);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> f\", 6D), f);\n",
+                        "        input.addEdge(e, new BaseLabeledWeightedEdge<Double>(\"e <-> g\", 9D), g);\n",
+                        "        input.addEdge(f, new BaseLabeledWeightedEdge<Double>(\"f <-> g\", 4D), g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test8_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addEdge(org.apache.commons.graph.model.BaseLabeledVertex,org.apache.commons.graph.model.BaseLabeledWeightedEdge,org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseLabeledWeightedEdge",
+                            "BaseLabeledWeightedEdge<Double>(java.lang.String,java.lang.Double)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test8_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "361-378:testVerifyMinimumSpanningTree2_test7_decomposed": {
+                    "start": 361,
+                    "end": 378,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test7_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "        input.addVertex(a);\n",
+                        "        input.addVertex(b);\n",
+                        "        input.addVertex(c);\n",
+                        "        input.addVertex(d);\n",
+                        "        input.addVertex(e);\n",
+                        "        input.addVertex(f);\n",
+                        "        input.addVertex(g);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test7_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test7_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "348-358:testVerifyMinimumSpanningTree2_test6_decomposed": {
+                    "start": 348,
+                    "end": 358,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test6_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "        BaseLabeledVertex g = new BaseLabeledVertex(\"g\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test6_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test6_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "336-345:testVerifyMinimumSpanningTree2_test5_decomposed": {
+                    "start": 336,
+                    "end": 345,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test5_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "        BaseLabeledVertex f = new BaseLabeledVertex(\"f\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test5_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test5_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "325-333:testVerifyMinimumSpanningTree2_test4_decomposed": {
+                    "start": 325,
+                    "end": 333,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test4_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "        BaseLabeledVertex e = new BaseLabeledVertex(\"e\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "315-322:testVerifyMinimumSpanningTree2_test3_decomposed": {
+                    "start": 315,
+                    "end": 322,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test3_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "        BaseLabeledVertex d = new BaseLabeledVertex(\"d\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "306-312:testVerifyMinimumSpanningTree2_test2_decomposed": {
+                    "start": 306,
+                    "end": 312,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "        BaseLabeledVertex c = new BaseLabeledVertex(\"c\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "298-303:testVerifyMinimumSpanningTree2_test1_decomposed": {
+                    "start": 298,
+                    "end": 303,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "        BaseLabeledVertex b = new BaseLabeledVertex(\"b\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "291-295:testVerifyMinimumSpanningTree2_test0_decomposed": {
+                    "start": 291,
+                    "end": 295,
+                    "body": [
+                        "    public void testVerifyMinimumSpanningTree2_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        BaseLabeledVertex a = new BaseLabeledVertex(\"a\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testVerifyMinimumSpanningTree2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testVerifyMinimumSpanningTree2_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "278-288:testNullVertex_test3_decomposed": {
+                    "start": 278,
+                    "end": 288,
+                    "body": [
+                        "    public void testNullVertex_test3_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromSource(null);\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(null)\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullVertex_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeAlgorithmSelector",
+                            "applyingPrimAlgorithm(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullVertex_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "269-275:testNullVertex_test2_decomposed": {
+                    "start": 269,
+                    "end": 275,
+                    "body": [
+                        "    public void testNullVertex_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromSource(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullVertex_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullVertex_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "261-266:testNullVertex_test1_decomposed": {
+                    "start": 261,
+                    "end": 266,
+                    "body": [
+                        "    public void testNullVertex_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullVertex_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullVertex_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "254-258:testNullVertex_test0_decomposed": {
+                    "start": 254,
+                    "end": 258,
+                    "body": [
+                        "    public void testNullVertex_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullVertex_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullVertex_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "232-251:testNullMonoid_test4_decomposed": {
+                    "start": 232,
+                    "end": 251,
+                    "body": [
+                        "    public void testNullMonoid_test4_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromSource(a);\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(a)\n",
+                        "                .applyingBoruvkaAlgorithm(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid_test4_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeAlgorithmSelector",
+                            "applyingBoruvkaAlgorithm(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullMonoid_test4_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "214-229:testNullMonoid_test3_decomposed": {
+                    "start": 214,
+                    "end": 229,
+                    "body": [
+                        "    public void testNullMonoid_test3_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromSource(a);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullMonoid_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "197-211:testNullMonoid_test2_decomposed": {
+                    "start": 197,
+                    "end": 211,
+                    "body": [
+                        "    public void testNullMonoid_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullMonoid_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "181-194:testNullMonoid_test1_decomposed": {
+                    "start": 181,
+                    "end": 194,
+                    "body": [
+                        "    public void testNullMonoid_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "        minimumSpanningTree(input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullMonoid_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "166-178:testNullMonoid_test0_decomposed": {
+                    "start": 166,
+                    "end": 178,
+                    "body": [
+                        "    public void testNullMonoid_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input = null;\n",
+                        "        BaseLabeledVertex a = null;\n",
+                        "        try {\n",
+                        "            input =\n",
+                        "                    new UndirectedMutableGraph<\n",
+                        "                            BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "            a = new BaseLabeledVertex(\"A\");\n",
+                        "            input.addVertex(a);\n",
+                        "        } catch (NullPointerException e) {\n",
+                        "            fail(e.getMessage());\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullMonoid_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseMutableGraph",
+                            "addVertex(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "fail(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullMonoid_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "155-163:testNullGraph_test3_decomposed": {
+                    "start": 155,
+                    "end": 163,
+                    "body": [
+                        "    public void testNullGraph_test3_decomposed()  {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromArbitrarySource();\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromArbitrarySource()\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromArbitrarySource()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeAlgorithmSelector",
+                            "applyingPrimAlgorithm(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullGraph_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "148-152:testNullGraph_test2_decomposed": {
+                    "start": 148,
+                    "end": 152,
+                    "body": [
+                        "    public void testNullGraph_test2_decomposed()  {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromArbitrarySource();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromArbitrarySource()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullGraph_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "142-145:testNullGraph_test1_decomposed": {
+                    "start": 142,
+                    "end": 145,
+                    "body": [
+                        "    public void testNullGraph_test1_decomposed()  {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullGraph_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "137-139:testNullGraph_test0_decomposed": {
+                    "start": 137,
+                    "end": 139,
+                    "body": [
+                        "    public void testNullGraph_test0_decomposed()  {\n",
+                        "        minimumSpanningTree((Graph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>) null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = NullPointerException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNullGraph_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNullGraph_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "126-134:testNotExistVertex_test2_decomposed": {
+                    "start": 126,
+                    "end": 134,
+                    "body": [
+                        "    public void testNotExistVertex_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromSource(new BaseLabeledVertex(\"NOT EXIST\"));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalStateException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.test.org.apache.commons.graph.model.BaseLabeledVertex",
+                            "BaseLabeledVertex",
+                            "35-37:BaseLabeledVertex"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNotExistVertex_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "118-123:testNotExistVertex_test1_decomposed": {
+                    "start": 118,
+                    "end": 123,
+                    "body": [
+                        "    public void testNotExistVertex_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNotExistVertex_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "111-115:testNotExistVertex_test0_decomposed": {
+                    "start": 111,
+                    "end": 115,
+                    "body": [
+                        "    public void testNotExistVertex_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testNotExistVertex_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testNotExistVertex_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "98-108:testEmptyGraph_test3_decomposed": {
+                    "start": 98,
+                    "end": 108,
+                    "body": [
+                        "    public void testEmptyGraph_test3_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromArbitrarySource();\n",
+                        "        minimumSpanningTree(input)\n",
+                        "                .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                .fromArbitrarySource()\n",
+                        "                .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalStateException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test3_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromArbitrarySource()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeAlgorithmSelector",
+                            "applyingPrimAlgorithm(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEmptyGraph_test3_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "89-95:testEmptyGraph_test2_decomposed": {
+                    "start": 89,
+                    "end": 95,
+                    "body": [
+                        "    public void testEmptyGraph_test2_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>()).fromArbitrarySource();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test(expected = IllegalStateException.class)"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test2_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromArbitrarySource()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEmptyGraph_test2_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "81-86:testEmptyGraph_test1_decomposed": {
+                    "start": 81,
+                    "end": 86,
+                    "body": [
+                        "    public void testEmptyGraph_test1_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "        minimumSpanningTree(input).whereEdgesHaveWeights(new BaseWeightedEdge<Double>());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test1_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEmptyGraph_test1_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "74-78:testEmptyGraph_test0_decomposed": {
+                    "start": 74,
+                    "end": 78,
+                    "body": [
+                        "    public void testEmptyGraph_test0_decomposed()  {\n",
+                        "        UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input =\n",
+                        "                new UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>>();\n",
+                        "        minimumSpanningTree(input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testEmptyGraph_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/UndirectedMutableGraph",
+                            "UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def testEmptyGraph_test0_decomposed(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "37-50:internalPrimAssertion": {
+                    "start": 37,
+                    "end": 50,
+                    "body": [
+                        "    private static void internalPrimAssertion(\n",
+                        "            UndirectedMutableGraph<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>> input,\n",
+                        "            BaseLabeledVertex source,\n",
+                        "            MutableSpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double>\n",
+                        "                    expected) {\n",
+                        "\n",
+                        "        SpanningTree<BaseLabeledVertex, BaseLabeledWeightedEdge<Double>, Double> actual =\n",
+                        "                minimumSpanningTree(input)\n",
+                        "                        .whereEdgesHaveWeights(new BaseWeightedEdge<Double>())\n",
+                        "                        .fromSource(source)\n",
+                        "                        .applyingPrimAlgorithm(new DoubleWeightBaseOperations());\n",
+                        "\n",
+                        "        assertEquals(expected, actual);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "internalPrimAssertion(UndirectedMutableGraph<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>>, BaseLabeledVertex, MutableSpanningTree<BaseLabeledVertex,BaseLabeledWeightedEdge<Double>,Double>)",
+                    "parameters": [
+                        "input",
+                        "source",
+                        "expected"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeAlgorithmSelector",
+                            "applyingPrimAlgorithm(org.apache.commons.graph.weight.OrderedMonoid)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningTreeSourceSelector",
+                            "fromSource(org.apache.commons.graph.model.BaseLabeledVertex)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations",
+                            "DoubleWeightBaseOperations"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/spanning/SpanningWeightedEdgeMapperBuilder",
+                            "whereEdgesHaveWeights(org.apache.commons.graph.Mapper)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.CommonsGraph",
+                            "CommonsGraph",
+                            "172-176:minimumSpanningTree"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/model/BaseWeightedEdge",
+                            "BaseWeightedEdge<Double>()"
+                        ],
+                        [
+                            "library",
+                            "Assert",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __internalPrimAssertion(input_: UndirectedMutableGraph[BaseLabeledVertex, BaseLabeledWeightedEdge[float]], source: BaseLabeledVertex, expected: MutableSpanningTree[BaseLabeledVertex, BaseLabeledWeightedEdge[float], float]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class PrimTestCase(unittest.TestCase):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "import io",
+        "import os",
+        "import unittest",
+        "from src.main.org.apache.commons.graph.CommonsGraph import *",
+        "from src.main.org.apache.commons.graph.Graph import *",
+        "from src.main.org.apache.commons.graph.Mapper import *",
+        "from src.main.org.apache.commons.graph.SpanningTree import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledVertex import *",
+        "from src.test.org.apache.commons.graph.model.BaseLabeledWeightedEdge import *",
+        "from src.test.org.apache.commons.graph.model.BaseWeightedEdge import *",
+        "from src.main.org.apache.commons.graph.model.MutableSpanningTree import *",
+        "from src.main.org.apache.commons.graph.model.UndirectedMutableGraph import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeAlgorithmSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningTreeSourceSelector import *",
+        "from src.main.org.apache.commons.graph.spanning.SpanningWeightedEdgeMapperBuilder import *",
+        "from src.main.org.apache.commons.graph.weight.Monoid import *",
+        "from src.main.org.apache.commons.graph.weight.OrderedMonoid import *",
+        "from src.main.org.apache.commons.graph.weight.primitive.DoubleWeightBaseOperations import *"
+    ]
+}

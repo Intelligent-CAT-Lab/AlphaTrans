@@ -1,0 +1,550 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-validator/src/main/java/org/apache/commons/validator/routines/InetAddressValidator.java",
+    "imports": {
+        "20-20:import Serializable": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.io.Serializable;\n"
+            ]
+        },
+        "23-23:import List": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "21-21:import ArrayList": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "22-22:import Arrays": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        }
+    },
+    "classes": {
+        "InetAddressValidator": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "Serializable"
+            ],
+            "extends": [],
+            "methods": {
+                "122-207:isValidInet6Address": {
+                    "start": 122,
+                    "end": 207,
+                    "body": [
+                        "    public boolean isValidInet6Address(String inet6Address) {\n",
+                        "        String[] parts;\n",
+                        "        parts = inet6Address.split(\"/\", -1);\n",
+                        "        if (parts.length > 2) {\n",
+                        "            return false; // can only have one prefix specifier\n",
+                        "        }\n",
+                        "        if (parts.length == 2) {\n",
+                        "            if (parts[1].matches(\"\\\\d{1,3}\")) { // Need to eliminate signs\n",
+                        "                int bits = Integer.parseInt(parts[1]); // cannot fail because of RE check\n",
+                        "                if (bits < 0 || bits > 128) {\n",
+                        "                    return false; // out of range\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                return false; // not a valid number\n",
+                        "            }\n",
+                        "        }\n",
+                        "        parts = parts[0].split(\"%\", -1);\n",
+                        "        if (parts.length > 2) {\n",
+                        "            return false;\n",
+                        "        } else if (parts.length == 2) {\n",
+                        "            if (!parts[1].matches(\"[^\\\\s/%]+\")) {\n",
+                        "                return false; // invalid id\n",
+                        "            }\n",
+                        "        }\n",
+                        "        inet6Address = parts[0];\n",
+                        "        boolean containsCompressedZeroes = inet6Address.contains(\"::\");\n",
+                        "        if (containsCompressedZeroes\n",
+                        "                && (inet6Address.indexOf(\"::\") != inet6Address.lastIndexOf(\"::\"))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        if ((inet6Address.startsWith(\":\") && !inet6Address.startsWith(\"::\"))\n",
+                        "                || (inet6Address.endsWith(\":\") && !inet6Address.endsWith(\"::\"))) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        String[] octets = inet6Address.split(\":\");\n",
+                        "        if (containsCompressedZeroes) {\n",
+                        "            List<String> octetList = new ArrayList<String>(Arrays.asList(octets));\n",
+                        "            if (inet6Address.endsWith(\"::\")) {\n",
+                        "                octetList.add(\"\");\n",
+                        "            } else if (inet6Address.startsWith(\"::\") && !octetList.isEmpty()) {\n",
+                        "                octetList.remove(0);\n",
+                        "            }\n",
+                        "            octets = octetList.toArray(new String[octetList.size()]);\n",
+                        "        }\n",
+                        "        if (octets.length > IPV6_MAX_HEX_GROUPS) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        int validOctets = 0;\n",
+                        "        int emptyOctets = 0; // consecutive empty chunks\n",
+                        "        for (int index = 0; index < octets.length; index++) {\n",
+                        "            String octet = octets[index];\n",
+                        "            if (octet.length() == 0) {\n",
+                        "                emptyOctets++;\n",
+                        "                if (emptyOctets > 1) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "            } else {\n",
+                        "                emptyOctets = 0;\n",
+                        "                if (index == octets.length - 1 && octet.contains(\".\")) {\n",
+                        "                    if (!isValidInet4Address(octet)) {\n",
+                        "                        return false;\n",
+                        "                    }\n",
+                        "                    validOctets += 2;\n",
+                        "                    continue;\n",
+                        "                }\n",
+                        "                if (octet.length() > IPV6_MAX_HEX_DIGITS_PER_GROUP) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "                int octetInt = 0;\n",
+                        "                try {\n",
+                        "                    octetInt = Integer.parseInt(octet, BASE_16);\n",
+                        "                } catch (NumberFormatException e) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "                if (octetInt < 0 || octetInt > MAX_UNSIGNED_SHORT) {\n",
+                        "                    return false;\n",
+                        "                }\n",
+                        "            }\n",
+                        "            validOctets++;\n",
+                        "        }\n",
+                        "        if (validOctets > IPV6_MAX_HEX_GROUPS\n",
+                        "                || (validOctets < IPV6_MAX_HEX_GROUPS && !containsCompressedZeroes)) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidInet6Address(String)",
+                    "parameters": [
+                        "inet6Address"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "contains(java.lang.CharSequence)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "matches(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "lastIndexOf(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "endsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<String>(java.util.Collection)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "asList(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "remove(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "toArray(java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "83-113:isValidInet4Address"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String,int)"
+                        ]
+                    ]
+                },
+                "83-113:isValidInet4Address": {
+                    "start": 83,
+                    "end": 113,
+                    "body": [
+                        "    public boolean isValidInet4Address(String inet4Address) {\n",
+                        "        String[] groups = ipv4Validator.match(inet4Address);\n",
+                        "\n",
+                        "        if (groups == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        for (String ipSegment : groups) {\n",
+                        "            if (ipSegment == null || ipSegment.length() == 0) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            int iIpSegment = 0;\n",
+                        "\n",
+                        "            try {\n",
+                        "                iIpSegment = Integer.parseInt(ipSegment);\n",
+                        "            } catch (NumberFormatException e) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (iIpSegment > IPV4_MAX_OCTET_VALUE) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (ipSegment.length() > 1 && ipSegment.startsWith(\"0\")) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValidInet4Address(String)",
+                    "parameters": [
+                        "inet4Address"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.RegexValidator",
+                            "RegexValidator",
+                            "151-167:match"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ]
+                    ]
+                },
+                "73-75:isValid": {
+                    "start": 73,
+                    "end": 75,
+                    "body": [
+                        "    public boolean isValid(String inetAddress) {\n",
+                        "        return isValidInet4Address(inetAddress) || isValidInet6Address(inetAddress);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isValid(String)",
+                    "parameters": [
+                        "inetAddress"
+                    ],
+                    "calls": [
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "83-113:isValidInet4Address"
+                        ],
+                        [
+                            "commons-validator.src.main.org.apache.commons.validator.routines.InetAddressValidator",
+                            "InetAddressValidator",
+                            "122-207:isValidInet6Address"
+                        ]
+                    ]
+                },
+                "63-65:getInstance": {
+                    "start": 63,
+                    "end": 65,
+                    "body": [
+                        "    public static InetAddressValidator getInstance() {\n",
+                        "        return VALIDATOR;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "InetAddressValidator",
+                            "InetAddressValidator"
+                        ]
+                    ],
+                    "signature": "getInstance()",
+                    "parameters": [],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "56-56:ipv4Validator": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    private final RegexValidator ipv4Validator = RegexValidator.RegexValidator3(IPV4_REGEX);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "RegexValidator",
+                            "RegexValidator"
+                        ]
+                    ]
+                },
+                "53-53:VALIDATOR": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final InetAddressValidator VALIDATOR = new InetAddressValidator();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "InetAddressValidator",
+                            "InetAddressValidator"
+                        ]
+                    ]
+                },
+                "50-50:IPV6_MAX_HEX_DIGITS_PER_GROUP": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private static final int IPV6_MAX_HEX_DIGITS_PER_GROUP = 4;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "48-48:IPV6_MAX_HEX_GROUPS": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private static final int IPV6_MAX_HEX_GROUPS = 8;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "46-46:IPV4_REGEX": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private static final String IPV4_REGEX = \"^(\\\\d{1,3})\\\\.(\\\\d{1,3})\\\\.(\\\\d{1,3})\\\\.(\\\\d{1,3})$\";\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ]
+                },
+                "44-44:serialVersionUID": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private static final long serialVersionUID = -919201640201914789L;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ]
+                },
+                "42-42:BASE_16": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private static final int BASE_16 = 16;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "40-40:MAX_UNSIGNED_SHORT": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private static final int MAX_UNSIGNED_SHORT = 0xffff;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "38-38:IPV4_MAX_OCTET_VALUE": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private static final int IPV4_MAX_OCTET_VALUE = 255;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

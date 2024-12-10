@@ -1,0 +1,2037 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-csv/src/test/java/org/apache/commons/csv/PerformanceTest.java",
+    "imports": {
+        "29-29:import OutputStream": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.io.OutputStream;\n"
+            ]
+        },
+        "26-26:import IOException": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.io.IOException;\n"
+            ]
+        },
+        "27-27:import InputStream": {
+            "start": 27,
+            "end": 27,
+            "body": [
+                "import java.io.InputStream;\n"
+            ]
+        },
+        "22-22:import BufferedReader": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.io.BufferedReader;\n"
+            ]
+        },
+        "30-30:import Reader": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.io.Reader;\n"
+            ]
+        },
+        "23-23:import File": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.File;\n"
+            ]
+        },
+        "24-24:import FileInputStream": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.io.FileInputStream;\n"
+            ]
+        },
+        "25-25:import FileOutputStream": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.io.FileOutputStream;\n"
+            ]
+        },
+        "28-28:import InputStreamReader": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.io.InputStreamReader;\n"
+            ]
+        },
+        "32-32:import InvocationTargetException": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.lang.reflect.InvocationTargetException;\n"
+            ]
+        },
+        "31-31:import Constructor": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.lang.reflect.Constructor;\n"
+            ]
+        },
+        "33-33:import StandardCharsets": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.nio.charset.StandardCharsets;\n"
+            ]
+        },
+        "34-34:import Files": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.nio.file.Files;\n"
+            ]
+        },
+        "35-35:import Paths": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.nio.file.Paths;\n"
+            ]
+        },
+        "36-36:import GZIPInputStream": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.zip.GZIPInputStream;\n"
+            ]
+        },
+        "20-20:import IOUtils": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.io.IOUtils;\n"
+            ]
+        }
+    },
+    "classes": {
+        "PerformanceTest": {
+            "start": 40,
+            "end": 40,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Stats",
+                "new CSVParserFactory(...) { ... }",
+                "new CSVParserFactory(...) { ... }",
+                "new CSVParserFactory(...) { ... }",
+                "new CSVParserFactory(...) { ... }",
+                "CSVParserFactory"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "108-182:main": {
+                    "start": 108,
+                    "end": 182,
+                    "body": [
+                        "    public static void main(final String[] args) throws Exception {\n",
+                        "        if (BIG_FILE.exists()) {\n",
+                        "            System.out.printf(\"Found test fixture %s: %,d bytes.%n\", BIG_FILE, BIG_FILE.length());\n",
+                        "        } else {\n",
+                        "            System.out.println(\"Decompressing test fixture to: \" + BIG_FILE + \"...\");\n",
+                        "            try (final InputStream input =\n",
+                        "                            new GZIPInputStream(\n",
+                        "                                    PerformanceTest.class\n",
+                        "                                            .getClassLoader()\n",
+                        "                                            .getResourceAsStream(TEST_RESRC));\n",
+                        "                    final OutputStream output = new FileOutputStream(BIG_FILE)) {\n",
+                        "                IOUtils.copy(input, output);\n",
+                        "                System.out.println(\n",
+                        "                        String.format(\n",
+                        "                                \"Decompressed test fixture %s: %,d bytes.\",\n",
+                        "                                BIG_FILE, BIG_FILE.length()));\n",
+                        "            }\n",
+                        "        }\n",
+                        "        final int argc = args.length;\n",
+                        "        if (argc > 0) {\n",
+                        "            max = Integer.parseInt(args[0]);\n",
+                        "        }\n",
+                        "\n",
+                        "        final String[] tests;\n",
+                        "        if (argc > 1) {\n",
+                        "            tests = new String[argc - 1];\n",
+                        "            System.arraycopy(args, 1, tests, 0, argc - 1);\n",
+                        "        } else {\n",
+                        "            tests =\n",
+                        "                    new String[] {\n",
+                        "                        \"file\",\n",
+                        "                        \"split\",\n",
+                        "                        \"extb\",\n",
+                        "                        \"exts\",\n",
+                        "                        \"csv\",\n",
+                        "                        \"csv-path\",\n",
+                        "                        \"csv-path-db\",\n",
+                        "                        \"csv-url\",\n",
+                        "                        \"lexreset\",\n",
+                        "                        \"lexnew\"\n",
+                        "                    };\n",
+                        "        }\n",
+                        "        for (final String p : PROPERTY_NAMES) {\n",
+                        "            System.out.printf(\"%s=%s%n\", p, System.getProperty(p));\n",
+                        "        }\n",
+                        "        System.out.printf(\"Max count: %d%n%n\", max);\n",
+                        "\n",
+                        "        for (final String test : tests) {\n",
+                        "            if (\"file\".equals(test)) {\n",
+                        "                testReadBigFile(false);\n",
+                        "            } else if (\"split\".equals(test)) {\n",
+                        "                testReadBigFile(true);\n",
+                        "            } else if (\"csv\".equals(test)) {\n",
+                        "                testParseCommonsCSV();\n",
+                        "            } else if (\"csv-path\".equals(test)) {\n",
+                        "                testParsePath();\n",
+                        "            } else if (\"csv-path-db\".equals(test)) {\n",
+                        "                testParsePathDoubleBuffering();\n",
+                        "            } else if (\"csv-url\".equals(test)) {\n",
+                        "                testParseURL();\n",
+                        "            } else if (\"lexreset\".equals(test)) {\n",
+                        "                testCSVLexer(false, test);\n",
+                        "            } else if (\"lexnew\".equals(test)) {\n",
+                        "                testCSVLexer(true, test);\n",
+                        "            } else if (test.startsWith(\"CSVLexer\")) {\n",
+                        "                testCSVLexer(false, test);\n",
+                        "            } else if (\"extb\".equals(test)) {\n",
+                        "                testExtendedBuffer(false);\n",
+                        "            } else if (\"exts\".equals(test)) {\n",
+                        "                testExtendedBuffer(true);\n",
+                        "            } else {\n",
+                        "                System.out.printf(\"Invalid test name: %s%n\", test);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "main(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "exists()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "printf(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/zip/GZIPInputStream",
+                            "GZIPInputStream(java.io.InputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/ClassLoader",
+                            "getResourceAsStream(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getClassLoader()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileOutputStream",
+                            "FileOutputStream(java.io.File)"
+                        ],
+                        [
+                            "library",
+                            "IOUtils",
+                            "copy(java.io.InputStream,java.io.OutputStream)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "format(java.lang.String,java.lang.Object[])"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "arraycopy(java.lang.Object,int,java.lang.Object,int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "getProperty(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "348-359:testReadBigFile"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "303-305:testParseCommonsCSV"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "307-315:testParsePath"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "317-325:testParsePathDoubleBuffering"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "340-346:testParseURL"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "213-260:testCSVLexer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "262-301:testExtendedBuffer"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def main(args: typing.List[typing.List[str]]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "348-359:testReadBigFile": {
+                    "start": 348,
+                    "end": 359,
+                    "body": [
+                        "    private static void testReadBigFile(final boolean split) throws Exception {\n",
+                        "        for (int i = 0; i < max; i++) {\n",
+                        "            final long startMillis;\n",
+                        "            final Stats stats;\n",
+                        "            try (final BufferedReader in = new BufferedReader(createReader())) {\n",
+                        "                startMillis = System.currentTimeMillis();\n",
+                        "                stats = readAll(in, split);\n",
+                        "            }\n",
+                        "            show1(split ? \"file+split\" : \"file\", stats, startMillis);\n",
+                        "        }\n",
+                        "        show0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testReadBigFile(boolean)",
+                    "parameters": [
+                        "split"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "BufferedReader(java.io.Reader)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "78-80:createReader"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "184-193:readAll"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "206-211:show1"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "195-204:show0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testReadBigFile(split: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "340-346:testParseURL": {
+                    "start": 340,
+                    "end": 346,
+                    "body": [
+                        "    private static void testParseURL() throws Exception {\n",
+                        "        testParser(\n",
+                        "                \"CSV-URL\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse5(\n",
+                        "                                BIG_FILE.toURI().toURL(), StandardCharsets.ISO_8859_1, format));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testParseURL()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "327-338:testParser"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testParseURL() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "327-338:testParser": {
+                    "start": 327,
+                    "end": 338,
+                    "body": [
+                        "    private static void testParser(final String msg, final CSVParserFactory fac) throws Exception {\n",
+                        "        for (int i = 0; i < max; i++) {\n",
+                        "            final long startMillis;\n",
+                        "            final Stats stats;\n",
+                        "            try (final CSVParser parser = fac.createParser()) {\n",
+                        "                startMillis = System.currentTimeMillis();\n",
+                        "                stats = iterate(parser);\n",
+                        "            }\n",
+                        "            show1(msg, stats, startMillis);\n",
+                        "        }\n",
+                        "        show0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testParser(String, CSVParserFactory)",
+                    "parameters": [
+                        "msg",
+                        "fac"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "CSVParserFactory",
+                            "44-44:createParser"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "98-106:iterate"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "206-211:show1"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "195-204:show0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testParser(msg: str, fac: CSVParserFactory) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "317-325:testParsePathDoubleBuffering": {
+                    "start": 317,
+                    "end": 325,
+                    "body": [
+                        "    private static void testParsePathDoubleBuffering() throws Exception {\n",
+                        "        testParser(\n",
+                        "                \"CSV-PATH-DB\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse3(\n",
+                        "                                Files.newBufferedReader(\n",
+                        "                                        Paths.get(BIG_FILE.toURI()), StandardCharsets.ISO_8859_1),\n",
+                        "                                format));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testParsePathDoubleBuffering()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "327-338:testParser"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testParsePathDoubleBuffering() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "307-315:testParsePath": {
+                    "start": 307,
+                    "end": 315,
+                    "body": [
+                        "    private static void testParsePath() throws Exception {\n",
+                        "        testParser(\n",
+                        "                \"CSV-PATH\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse1(\n",
+                        "                                Files.newInputStream(Paths.get(BIG_FILE.toURI())),\n",
+                        "                                StandardCharsets.ISO_8859_1,\n",
+                        "                                format));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testParsePath()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "327-338:testParser"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testParsePath() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "303-305:testParseCommonsCSV": {
+                    "start": 303,
+                    "end": 305,
+                    "body": [
+                        "    private static void testParseCommonsCSV() throws Exception {\n",
+                        "        testParser(\"CSV\", () -> CSVParser.CSVParser1(createReader(), format));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testParseCommonsCSV()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "327-338:testParser"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testParseCommonsCSV() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "262-301:testExtendedBuffer": {
+                    "start": 262,
+                    "end": 301,
+                    "body": [
+                        "    private static void testExtendedBuffer(final boolean makeString) throws Exception {\n",
+                        "        for (int i = 0; i < max; i++) {\n",
+                        "            int fields = 0;\n",
+                        "            int lines = 0;\n",
+                        "            final long startMillis;\n",
+                        "            try (final ExtendedBufferedReader in = new ExtendedBufferedReader(createReader())) {\n",
+                        "                startMillis = System.currentTimeMillis();\n",
+                        "                int read;\n",
+                        "                if (makeString) {\n",
+                        "                    StringBuilder sb = new StringBuilder();\n",
+                        "                    while ((read = in.read0()) != -1) {\n",
+                        "                        sb.append((char) read);\n",
+                        "                        if (read == ',') { // count delimiters\n",
+                        "                            sb.toString();\n",
+                        "                            sb = new StringBuilder();\n",
+                        "                            fields++;\n",
+                        "                        } else if (read == '\\n') {\n",
+                        "                            sb.toString();\n",
+                        "                            sb = new StringBuilder();\n",
+                        "                            lines++;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                } else {\n",
+                        "                    while ((read = in.read0()) != -1) {\n",
+                        "                        if (read == ',') { // count delimiters\n",
+                        "                            fields++;\n",
+                        "                        } else if (read == '\\n') {\n",
+                        "                            lines++;\n",
+                        "                        }\n",
+                        "                    }\n",
+                        "                }\n",
+                        "                fields += lines; // EOL is a delimiter too\n",
+                        "            }\n",
+                        "            show1(\n",
+                        "                    \"Extended\" + (makeString ? \" toString\" : \"\"),\n",
+                        "                    new Stats(lines, fields),\n",
+                        "                    startMillis);\n",
+                        "        }\n",
+                        "        show0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testExtendedBuffer(boolean)",
+                    "parameters": [
+                        "makeString"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "78-80:createReader"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "155-168:read0"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "206-211:show1"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "Stats",
+                            "51-54:Stats"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "195-204:show0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testExtendedBuffer(makeString: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "213-260:testCSVLexer": {
+                    "start": 213,
+                    "end": 260,
+                    "body": [
+                        "    private static void testCSVLexer(final boolean newToken, final String test) throws Exception {\n",
+                        "        Token token = new Token();\n",
+                        "        String dynamic = \"\";\n",
+                        "        for (int i = 0; i < max; i++) {\n",
+                        "            final String simpleName;\n",
+                        "            final Stats stats;\n",
+                        "            final long startMillis;\n",
+                        "            try (final ExtendedBufferedReader input = new ExtendedBufferedReader(createReader());\n",
+                        "                    final Lexer lexer = createTestCSVLexer(test, input)) {\n",
+                        "                if (test.startsWith(\"CSVLexer\")) {\n",
+                        "                    dynamic = \"!\";\n",
+                        "                }\n",
+                        "                simpleName = lexer.getClass().getSimpleName();\n",
+                        "                int count = 0;\n",
+                        "                int fields = 0;\n",
+                        "                startMillis = System.currentTimeMillis();\n",
+                        "                do {\n",
+                        "                    if (newToken) {\n",
+                        "                        token = new Token();\n",
+                        "                    } else {\n",
+                        "                        token.reset();\n",
+                        "                    }\n",
+                        "                    lexer.nextToken(token);\n",
+                        "                    switch (token.type) {\n",
+                        "                        case EOF:\n",
+                        "                            break;\n",
+                        "                        case EORECORD:\n",
+                        "                            fields++;\n",
+                        "                            count++;\n",
+                        "                            break;\n",
+                        "                        case INVALID:\n",
+                        "                            throw new IOException(\n",
+                        "                                    \"invalid parse sequence <\" + token.content.toString() + \">\");\n",
+                        "                        case TOKEN:\n",
+                        "                            fields++;\n",
+                        "                            break;\n",
+                        "                        case COMMENT: // not really expecting these\n",
+                        "                            break;\n",
+                        "                        default:\n",
+                        "                            throw new IllegalStateException(\"Unexpected Token type: \" + token.type);\n",
+                        "                    }\n",
+                        "                } while (!token.type.equals(Token.Type.EOF));\n",
+                        "                stats = new Stats(count, fields);\n",
+                        "            }\n",
+                        "            show1(simpleName + dynamic + \" \" + (newToken ? \"new\" : \"reset\"), stats, startMillis);\n",
+                        "        }\n",
+                        "        show0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testCSVLexer(boolean, String)",
+                    "parameters": [
+                        "newToken",
+                        "test"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Token",
+                            "Token",
+                            "Token"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.ExtendedBufferedReader",
+                            "ExtendedBufferedReader",
+                            "50-52:ExtendedBufferedReader"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "78-80:createReader"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "82-90:createTestCSVLexer"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getSimpleName()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Token",
+                            "Token",
+                            "60-65:reset"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "223-285:nextToken"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/IOException",
+                            "IOException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalStateException",
+                            "IllegalStateException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Enum",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "Stats",
+                            "51-54:Stats"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "206-211:show1"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "195-204:show0"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __testCSVLexer(newToken: bool, test: str) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "206-211:show1": {
+                    "start": 206,
+                    "end": 211,
+                    "body": [
+                        "    private static void show1(final String msg, final Stats s, final long start) {\n",
+                        "        final long elapsed = System.currentTimeMillis() - start;\n",
+                        "        System.out.printf(\"%-20s: %5dms %d lines %d fields%n\", msg, elapsed, s.count, s.fields);\n",
+                        "        ELAPSED_TIMES[num] = elapsed;\n",
+                        "        num++;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "show1(String, Stats, long)",
+                    "parameters": [
+                        "msg",
+                        "s",
+                        "start"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "printf(java.lang.String,java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __show1(msg: str, s: Stats, start: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "195-204:show0": {
+                    "start": 195,
+                    "end": 204,
+                    "body": [
+                        "    private static void show0() {\n",
+                        "        if (num > 1) {\n",
+                        "            long tot = 0;\n",
+                        "            for (int i = 1; i < num; i++) { // skip first test\n",
+                        "                tot += ELAPSED_TIMES[i];\n",
+                        "            }\n",
+                        "            System.out.printf(\"%-20s: %5dms%n%n\", \"Average(not first)\", tot / (num - 1));\n",
+                        "        }\n",
+                        "        num = 0; // ready for next set\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "show0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "printf(java.lang.String,java.lang.Object[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __show0() -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "184-193:readAll": {
+                    "start": 184,
+                    "end": 193,
+                    "body": [
+                        "    private static Stats readAll(final BufferedReader in, final boolean split) throws IOException {\n",
+                        "        int count = 0;\n",
+                        "        int fields = 0;\n",
+                        "        String record;\n",
+                        "        while ((record = in.readLine()) != null) {\n",
+                        "            count++;\n",
+                        "            fields += split ? record.split(\",\").length : 1;\n",
+                        "        }\n",
+                        "        return new Stats(count, fields);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Stats",
+                            "Stats"
+                        ]
+                    ],
+                    "signature": "readAll(BufferedReader, boolean)",
+                    "parameters": [
+                        "in",
+                        "split"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/BufferedReader",
+                            "readLine()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "split(java.lang.String)"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "Stats",
+                            "51-54:Stats"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __readAll(in_: io.BufferedReader, split: bool) -> Stats:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "98-106:iterate": {
+                    "start": 98,
+                    "end": 106,
+                    "body": [
+                        "    private static Stats iterate(final Iterable<CSVRecord> iterable) {\n",
+                        "        int count = 0;\n",
+                        "        int fields = 0;\n",
+                        "        for (final CSVRecord record : iterable) {\n",
+                        "            count++;\n",
+                        "            fields += record.size();\n",
+                        "        }\n",
+                        "        return new Stats(count, fields);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Stats",
+                            "Stats"
+                        ]
+                    ],
+                    "signature": "iterate(Iterable<CSVRecord>)",
+                    "parameters": [
+                        "iterable"
+                    ],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVRecord",
+                            "CSVRecord",
+                            "276-278:size"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "Stats",
+                            "51-54:Stats"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __iterate(iterable: typing.Iterable[CSVRecord]) -> Stats:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "92-96:getLexerCtor": {
+                    "start": 92,
+                    "end": 96,
+                    "body": [
+                        "    private static Constructor<Lexer> getLexerCtor(final String clazz) throws Exception {\n",
+                        "        @SuppressWarnings(\"unchecked\")\n",
+                        "        final Class<Lexer> lexer = (Class<Lexer>) Class.forName(\"org.apache.commons.csv.\" + clazz);\n",
+                        "        return lexer.getConstructor(CSVFormat.class, ExtendedBufferedReader.class);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Constructor<Lexer>",
+                            "java.lang.reflect.Constructor<Lexer>"
+                        ]
+                    ],
+                    "signature": "getLexerCtor(String)",
+                    "parameters": [
+                        "clazz"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "forName(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "getConstructor(java.lang.Class[])"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __getLexerCtor(clazz: str) -> typing.Callable[..., Lexer]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "82-90:createTestCSVLexer": {
+                    "start": 82,
+                    "end": 90,
+                    "body": [
+                        "    private static Lexer createTestCSVLexer(final String test, final ExtendedBufferedReader input)\n",
+                        "            throws InstantiationException,\n",
+                        "                    IllegalAccessException,\n",
+                        "                    InvocationTargetException,\n",
+                        "                    Exception {\n",
+                        "        return test.startsWith(\"CSVLexer\")\n",
+                        "                ? getLexerCtor(test).newInstance(format, input)\n",
+                        "                : new Lexer(format, input);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Lexer",
+                            "Lexer"
+                        ]
+                    ],
+                    "signature": "createTestCSVLexer(String, ExtendedBufferedReader)",
+                    "parameters": [
+                        "test",
+                        "input"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "startsWith(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/reflect/Constructor",
+                            "newInstance(java.lang.Object[])"
+                        ],
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.Lexer",
+                            "Lexer",
+                            "67-77:Lexer"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "92-96:getLexerCtor"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __createTestCSVLexer(test: str, input_: ExtendedBufferedReader) -> Lexer:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "78-80:createReader": {
+                    "start": 78,
+                    "end": 80,
+                    "body": [
+                        "    private static Reader createReader() throws IOException {\n",
+                        "        return new InputStreamReader(new FileInputStream(BIG_FILE), StandardCharsets.ISO_8859_1);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Reader",
+                            "java.io.Reader"
+                        ]
+                    ],
+                    "signature": "createReader()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/InputStreamReader",
+                            "InputStreamReader(java.io.InputStream,java.nio.charset.Charset)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/FileInputStream",
+                            "FileInputStream(java.io.File)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __createReader() -> typing.Union[io.TextIOWrapper, io.BufferedReader, io.TextIOBase]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "75-76:BIG_FILE": {
+                    "start": 75,
+                    "end": 76,
+                    "body": [
+                        "    private static final File BIG_FILE =\n",
+                        "            new File(System.getProperty(\"java.io.tmpdir\"), \"worldcitiespop.txt\");\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "File",
+                            "java.io.File"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __BIG_FILE: pathlib.Path = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "73-73:TEST_RESRC": {
+                    "start": 73,
+                    "end": 73,
+                    "body": [
+                        "    private static final String TEST_RESRC = \"org/apache/commons/csv/perf/worldcitiespop.txt.gz\";\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __TEST_RESRC: str = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "71-71:format": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private static final CSVFormat format = CSVFormat.EXCEL;\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CSVFormat",
+                            "CSVFormat"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __format: CSVFormat = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "70-70:ELAPSED_TIMES": {
+                    "start": 70,
+                    "end": 70,
+                    "body": [
+                        "    private static final long[] ELAPSED_TIMES = new long[max];\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long[]",
+                            "long[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __ELAPSED_TIMES: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "68-68:num": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private static int num; // number of elapsed times recorded\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __num: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "66-66:max": {
+                    "start": 66,
+                    "end": 66,
+                    "body": [
+                        "    private static int max = 11; // skip first test\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __max: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "57-65:PROPERTY_NAMES": {
+                    "start": 57,
+                    "end": 65,
+                    "body": [
+                        "    private static final String[] PROPERTY_NAMES = {\n",
+                        "        \"java.version\", // Java Runtime Environment version\n",
+                        "        \"java.vendor\", // Java Runtime Environment vendor\n",
+                        "        \"java.vm.version\", // Java Virtual Machine implementation version\n",
+                        "        \"java.vm.name\", // Java Virtual Machine implementation name\n",
+                        "        \"os.name\", // Operating system name\n",
+                        "        \"os.arch\", // Operating system architecture\n",
+                        "        \"os.version\", // Operating system version\n",
+                        "    };\n"
+                    ],
+                    "modifiers": [
+                        "static",
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "String[]",
+                            "java.lang.String[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __PROPERTY_NAMES: typing.List[typing.List[str]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class PerformanceTest:\n\n"
+        },
+        "Stats": {
+            "start": 47,
+            "end": 47,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "PerformanceTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "51-54:Stats": {
+                    "start": 51,
+                    "end": 54,
+                    "body": [
+                        "        Stats(final int c, final int f) {\n",
+                        "            count = c;\n",
+                        "            fields = f;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Stats(int, int)",
+                    "parameters": [
+                        "c",
+                        "f"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, c: int, f: int) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "49-49:fields": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "        final int fields;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    fields: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "48-48:count": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "        final int count;\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    count: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Stats:\n\n"
+        },
+        "new CSVParserFactory(...) { ... }": {
+            "start": 304,
+            "end": 304,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "PerformanceTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "304-304:createParser": {
+                    "start": 304,
+                    "end": 304,
+                    "body": [
+                        "        testParser(\"CSV\", () -> CSVParser.CSVParser1(createReader(), format));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "CSVParser",
+                            "CSVParser"
+                        ]
+                    ],
+                    "signature": "createParser()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "377-380:CSVParser1"
+                        ],
+                        [
+                            "commons-csv.src.test.org.apache.commons.csv.PerformanceTest",
+                            "PerformanceTest",
+                            "78-80:createReader"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "308-314:createParser": {
+                    "start": 308,
+                    "end": 314,
+                    "body": [
+                        "        testParser(\n",
+                        "                \"CSV-PATH\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse1(\n",
+                        "                                Files.newInputStream(Paths.get(BIG_FILE.toURI())),\n",
+                        "                                StandardCharsets.ISO_8859_1,\n",
+                        "                                format));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "CSVParser",
+                            "CSVParser"
+                        ]
+                    ],
+                    "signature": "createParser()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "235-241:parse1"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/file/Files",
+                            "newInputStream"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/file/Paths",
+                            "get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "toURI"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "318-324:createParser": {
+                    "start": 318,
+                    "end": 324,
+                    "body": [
+                        "        testParser(\n",
+                        "                \"CSV-PATH-DB\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse3(\n",
+                        "                                Files.newBufferedReader(\n",
+                        "                                        Paths.get(BIG_FILE.toURI()), StandardCharsets.ISO_8859_1),\n",
+                        "                                format));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "CSVParser",
+                            "CSVParser"
+                        ]
+                    ],
+                    "signature": "createParser()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "277-279:parse3"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/file/Files",
+                            "newBufferedReader"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/nio/file/Paths",
+                            "get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "toURI"
+                        ]
+                    ],
+                    "is_overload": true
+                },
+                "341-345:createParser": {
+                    "start": 341,
+                    "end": 345,
+                    "body": [
+                        "        testParser(\n",
+                        "                \"CSV-URL\",\n",
+                        "                () ->\n",
+                        "                        CSVParser.parse5(\n",
+                        "                                BIG_FILE.toURI().toURL(), StandardCharsets.ISO_8859_1, format));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "CSVParser",
+                            "CSVParser"
+                        ]
+                    ],
+                    "signature": "createParser()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-csv.src.main.org.apache.commons.csv.CSVParser",
+                            "CSVParser",
+                            "313-320:parse5"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/net/URI",
+                            "toURL"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/File",
+                            "toURI"
+                        ]
+                    ],
+                    "is_overload": true
+                }
+            },
+            "fields": {}
+        },
+        "CSVParserFactory": {
+            "start": 43,
+            "end": 43,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": "PerformanceTest",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "44-44:createParser": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "        CSVParser createParser() throws IOException;\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "CSVParser",
+                            "CSVParser"
+                        ]
+                    ],
+                    "signature": "createParser()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def createParser(self) -> CSVParser:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "python_class_declaration": "class CSVParserFactory(ABC):\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import unittest",
+        "import pytest",
+        "from abc import ABC",
+        "import pathlib",
+        "from io import IOBase",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.csv.CSVFormat import *",
+        "from src.main.org.apache.commons.csv.CSVParser import *",
+        "from src.main.org.apache.commons.csv.CSVRecord import *",
+        "from src.main.org.apache.commons.csv.ExtendedBufferedReader import *",
+        "from src.main.org.apache.commons.csv.Lexer import *",
+        "from src.main.org.apache.commons.csv.Token import *",
+        "# from src.main.org.apache.commons.io.IOUtils import *"
+    ]
+}

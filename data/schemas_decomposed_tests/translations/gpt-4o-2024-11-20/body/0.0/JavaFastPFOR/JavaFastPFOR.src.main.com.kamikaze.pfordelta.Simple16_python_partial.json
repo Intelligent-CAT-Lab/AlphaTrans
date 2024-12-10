@@ -1,0 +1,384 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/main/java/com/kamikaze/pfordelta/Simple16.java",
+    "imports": {},
+    "classes": {
+        "Simple16": {
+            "start": 23,
+            "end": 23,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "128-139:s16Decompress": {
+                    "start": 128,
+                    "end": 139,
+                    "body": [
+                        "        public static final int s16Decompress(int[] out, int outOffset,\n",
+                        "                int[] in, int inOffset, int n) {\n",
+                        "                int numIdx, j = 0, bits = 0;\n",
+                        "                numIdx = in[inOffset] >>> S16_BITSSIZE;\n",
+                        "                int num = S16_NUM[numIdx] < n ? S16_NUM[numIdx] : n;\n",
+                        "                for (j = 0, bits = 0; j < num; j++) {\n",
+                        "                        out[outOffset + j] = readBitsForS16(in, inOffset, bits,\n",
+                        "                                S16_BITS[numIdx][j]);\n",
+                        "                        bits += S16_BITS[numIdx][j];\n",
+                        "                }\n",
+                        "                return num;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "s16Decompress(int[], int, int[], int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n"
+                    ],
+                    "calls": [
+                        [
+                            "JavaFastPFOR.src.main.com.kamikaze.pfordelta.Simple16",
+                            "Simple16",
+                            "154-158:readBitsForS16"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def s16Decompress(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "84-111:s16Compress": {
+                    "start": 84,
+                    "end": 111,
+                    "body": [
+                        "        public static final int s16Compress(int[] out, int outOffset, int[] in,\n",
+                        "                int inOffset, int n, int blockSize) {\n",
+                        "                int numIdx = 0, j = 0, num = 0, bits = 0;\n",
+                        "                try {\n",
+                        "                        for (numIdx = 0; numIdx < S16_NUMSIZE; numIdx++) {\n",
+                        "                                out[outOffset] = numIdx << S16_BITSSIZE;\n",
+                        "                                num = (S16_NUM[numIdx] < n) ? S16_NUM[numIdx]\n",
+                        "                                        : n;\n",
+                        "\n",
+                        "                                for (j = 0, bits = 0; (j < num)\n",
+                        "                                        && in[inOffset + j] < (1 << S16_BITS[numIdx][j]);) {\n",
+                        "                                        out[outOffset] |= (in[inOffset + j] << bits);\n",
+                        "                                        bits += S16_BITS[numIdx][j];\n",
+                        "                                        j++;\n",
+                        "                                }\n",
+                        "\n",
+                        "                                if (j == num) {\n",
+                        "                                        return num;\n",
+                        "                                }\n",
+                        "                        }\n",
+                        "                } catch (Exception e) {\n",
+                        "                        System.out.println(\"s16Compress: \" + \"numIdx:\" + numIdx\n",
+                        "                                + \",j:\" + j + \",num:\" + num + \",bits: \" + bits);\n",
+                        "                        e.printStackTrace();\n",
+                        "                }\n",
+                        "\n",
+                        "                return -1;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "final",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "s16Compress(int[], int, int[], int, int, int)",
+                    "parameters": [
+                        "out",
+                        "outOffset",
+                        "in",
+                        "inOffset",
+                        "n",
+                        "blockSize"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def s16Compress(out: typing.List[int], outOffset: int, in_: typing.List[int], inOffset: int, n: int, blockSize: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "154-158:readBitsForS16": {
+                    "start": 154,
+                    "end": 158,
+                    "body": [
+                        "        static private int readBitsForS16(int[] in, final int inIntOffset,\n",
+                        "                final int inWithIntOffset, final int bits) {\n",
+                        "                final int val = (in[inIntOffset] >>> inWithIntOffset);\n",
+                        "                return val & (0xffffffff >>> (32 - bits));\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "readBitsForS16(int[], int, int, int)",
+                    "parameters": [
+                        "in",
+                        "inIntOffset",
+                        "inWithIntOffset",
+                        "bits"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def __readBitsForS16(in_: typing.List[int], inIntOffset: int, inWithIntOffset: int, bits: int) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "34-66:S16_BITS": {
+                    "start": 34,
+                    "end": 66,
+                    "body": [
+                        "        private static final int[][] S16_BITS = {\n",
+                        "                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n",
+                        "                        1, 1, 1, 1, 1, 1, 1, 1 },\n",
+                        "                { 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\n",
+                        "                        1, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1,\n",
+                        "                        1, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,\n",
+                        "                        2, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 4, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 3, 4, 4, 4, 4, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 5, 5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 4, 4, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 6, 6, 6, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 5, 5, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 10, 9, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 },\n",
+                        "                { 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+                        "                        0, 0, 0, 0, 0, 0, 0, 0 } };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[][]",
+                            "int[][]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITS: typing.List[typing.List[int]] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "30-31:S16_NUM": {
+                    "start": 30,
+                    "end": 31,
+                    "body": [
+                        "        private static final int[] S16_NUM = { 28, 21, 21, 21, 14, 9, 8, 7, 6,\n",
+                        "                6, 5, 5, 4, 3, 2, 1 };\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int[]",
+                            "int[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUM: typing.List[int] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "26-26:S16_BITSSIZE": {
+                    "start": 26,
+                    "end": 26,
+                    "body": [
+                        "        private static final int S16_BITSSIZE = 28;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_BITSSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "25-25:S16_NUMSIZE": {
+                    "start": 25,
+                    "end": 25,
+                    "body": [
+                        "        private static final int S16_NUMSIZE = 16;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __S16_NUMSIZE: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Simple16:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.me.lemire.integercompression.IntWrapper import *",
+        "from src.main.me.lemire.integercompression.IntegerCODEC import *",
+        "from src.main.me.lemire.integercompression.SkippableIntegerCODEC import *"
+    ]
+}

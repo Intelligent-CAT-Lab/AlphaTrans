@@ -1,0 +1,339 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/JavaFastPFOR/src/test/java/me/lemire/integercompression/SkippableBasicTest.java",
+    "imports": {
+        "10-10:import Arrays": {
+            "start": 10,
+            "end": 10,
+            "body": [
+                "import java.util.Arrays;\n"
+            ]
+        },
+        "12-12:import Test": {
+            "start": 12,
+            "end": 12,
+            "body": [
+                "import org.junit.Test;\n"
+            ]
+        }
+    },
+    "classes": {
+        "SkippableBasicTest": {
+            "start": 21,
+            "end": 21,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "114-153:varyingLengthTest2_test0_decomposed": {
+                    "start": 114,
+                    "end": 153,
+                    "body": [
+                        "    public void varyingLengthTest2_test0_decomposed()  {\n",
+                        "        int N = 128;\n",
+                        "        int[] data = new int[N];\n",
+                        "        data[127] = -1;\n",
+                        "        for (SkippableIntegerCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.varyingLengthTest2] codec = \"+c);\n",
+                        "\n",
+                        "            try {\n",
+                        "                // CODEC Simple9 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple9\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            try {\n",
+                        "                // CODEC Simple16 is limited to \"small\" integers.\n",
+                        "                if (c.getClass().equals(\n",
+                        "                        Class.forName(\"me.lemire.integercompression.Simple16\")))\n",
+                        "                    continue;\n",
+                        "            } catch (ClassNotFoundException e) {\n",
+                        "                e.printStackTrace();\n",
+                        "            }\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug at k = \"+k+\" \"+answer[k]+\" \"+data[k]+\" for \"+c.toString());\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest2_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "getClass()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Class",
+                            "forName(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "printStackTrace()"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "121-127:compressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "129-136:uncompressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "88-111:varyingLengthTest_test0_decomposed": {
+                    "start": 88,
+                    "end": 111,
+                    "body": [
+                        "    public void varyingLengthTest_test0_decomposed()  {\n",
+                        "        int N = 4096;\n",
+                        "        int[] data = new int[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k;\n",
+                        "        for (SkippableIntegerCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.varyingLengthTest] codec = \"+c);\n",
+                        "            for (int L = 1; L <= 128; L++) {\n",
+                        "                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug \"+c.toString()+\" \"+k+\" \"+answer[k]+\" \"+data[k]);\n",
+                        "            }\n",
+                        "            for (int L = 128; L <= N; L *= 2) {\n",
+                        "                int[] comp = TestUtils.compressHeadless(c, Arrays.copyOf(data, L));\n",
+                        "                int[] answer = TestUtils.uncompressHeadless(c, comp, L);\n",
+                        "                for (int k = 0; k < L; ++k)\n",
+                        "                    if (answer[k] != data[k])\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "            }\n",
+                        "\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "varyingLengthTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "121-127:compressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Arrays",
+                            "copyOf(int[],int)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.test.me.lemire.integercompression.TestUtils",
+                            "TestUtils",
+                            "129-136:uncompressHeadless"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ]
+                    ]
+                },
+                "54-85:consistentTest_test0_decomposed": {
+                    "start": 54,
+                    "end": 85,
+                    "body": [
+                        "    public void consistentTest_test0_decomposed()  {\n",
+                        "        int N = 4096;\n",
+                        "        int[] data = new int[N];\n",
+                        "        int[] rev = new int[N];\n",
+                        "        for (int k = 0; k < N; ++k)\n",
+                        "            data[k] = k % 128;\n",
+                        "        for (SkippableIntegerCODEC c : codecs) {\n",
+                        "            System.out.println(\"[SkippeableBasicTest.consistentTest] codec = \"\n",
+                        "                    + c);\n",
+                        "            int[] outBuf = new int[N + 1024];\n",
+                        "            for (int n = 0; n <= N; ++n) {\n",
+                        "                IntWrapper inPos = IntWrapper.IntWrapper1();\n",
+                        "                IntWrapper outPos = IntWrapper.IntWrapper1();\n",
+                        "                c.headlessCompress(data, inPos, n, outBuf, outPos);\n",
+                        "\n",
+                        "                IntWrapper inPoso = IntWrapper.IntWrapper1();\n",
+                        "                IntWrapper outPoso = IntWrapper.IntWrapper1();\n",
+                        "                c.headlessUncompress(outBuf, inPoso, outPos.get(), rev,\n",
+                        "                        outPoso, n);\n",
+                        "                if (outPoso.get() != n) {\n",
+                        "                    throw new RuntimeException(\"bug \"+n);\n",
+                        "                }\n",
+                        "                if (inPoso.get() != outPos.get()) {\n",
+                        "                    throw new RuntimeException(\"bug \"+n+\" \"+inPoso.get()+\" \"+outPos.get());\n",
+                        "                }\n",
+                        "                for (int j = 0; j < n; ++j)\n",
+                        "                    if (data[j] != rev[j]) {\n",
+                        "                        throw new RuntimeException(\"bug\");\n",
+                        "                    }\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "consistentTest_test0_decomposed()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "24-26:IntWrapper1"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "44-46:headlessCompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.SkippableIntegerCODEC",
+                            "SkippableIntegerCODEC",
+                            "66-68:headlessUncompress"
+                        ],
+                        [
+                            "JavaFastPFOR.src.main.me.lemire.integercompression.IntWrapper",
+                            "IntWrapper",
+                            "62-64:get"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/RuntimeException",
+                            "RuntimeException(java.lang.String)"
+                        ]
+                    ]
+                }
+            },
+            "fields": {
+                "22-35:codecs": {
+                    "start": 22,
+                    "end": 35,
+                    "body": [
+                        "\tfinal SkippableIntegerCODEC[] codecs = {\n",
+                        "            new JustCopy(),\n",
+                        "            new VariableByte(),\n",
+                        "            new SkippableComposition(new BinaryPacking(), new VariableByte()),\n",
+                        "            new SkippableComposition(new NewPFD(), new VariableByte()),\n",
+                        "            new SkippableComposition(new NewPFDS9(), new VariableByte()),\n",
+                        "            new SkippableComposition(new NewPFDS16(), new VariableByte()),\n",
+                        "            new SkippableComposition(new OptPFD(), new VariableByte()),\n",
+                        "            new SkippableComposition(new OptPFDS9(), new VariableByte()),\n",
+                        "            new SkippableComposition(new OptPFDS16(), new VariableByte()),\n",
+                        "            new SkippableComposition(FastPFOR128.FastPFOR1281(), new VariableByte()),\n",
+                        "            new SkippableComposition(FastPFOR.FastPFOR1(), new VariableByte()),\n",
+                        "            new Simple9(),\n",
+                        "            new Simple16() };\n"
+                    ],
+                    "modifiers": [
+                        "final"
+                    ],
+                    "types": [
+                        [
+                            "SkippableIntegerCODEC[]",
+                            "SkippableIntegerCODEC[]"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

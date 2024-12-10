@@ -1,0 +1,908 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-exec/src/main/java/org/apache/commons/exec/Watchdog.java",
+    "imports": {
+        "20-20:import Duration": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "23-23:import Supplier": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.function.Supplier;\n"
+            ]
+        },
+        "21-21:import Vector": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.util.Vector;\n"
+            ]
+        },
+        "22-22:import ThreadFactory": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.concurrent.ThreadFactory;\n"
+            ]
+        }
+    },
+    "classes": {
+        "Watchdog": {
+            "start": 30,
+            "end": 30,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [
+                "Builder",
+                "new Consumer<TimeoutObserver>(...) { ... }"
+            ],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "148-169:run": {
+                    "start": 148,
+                    "end": 169,
+                    "body": [
+                        "    public void run() {\n",
+                        "        final long startTimeMillis = System.currentTimeMillis();\n",
+                        "        boolean isWaiting;\n",
+                        "        synchronized (this) {\n",
+                        "            long timeLeftMillis = timeoutMillis - (System.currentTimeMillis() - startTimeMillis);\n",
+                        "            isWaiting = timeLeftMillis > 0;\n",
+                        "            while (!stopped && isWaiting) {\n",
+                        "                try {\n",
+                        "                    wait(timeLeftMillis);\n",
+                        "                } catch (final InterruptedException ignore) {\n",
+                        "                    // ignore\n",
+                        "                }\n",
+                        "                timeLeftMillis = timeoutMillis - (System.currentTimeMillis() - startTimeMillis);\n",
+                        "                isWaiting = timeLeftMillis > 0;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        // notify the listeners outside of the synchronized block (see EXEC-60)\n",
+                        "        if (!isWaiting) {\n",
+                        "            fireTimeoutOccured();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "run()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "currentTimeMillis()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "wait(long)"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "134-136:fireTimeoutOccured"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def run(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "104-106:Watchdog0": {
+                    "start": 104,
+                    "end": 106,
+                    "body": [
+                        "    public static Watchdog Watchdog0(final long timeoutMillis) {\n",
+                        "        return new Watchdog(null, Duration.ofMillis(timeoutMillis));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Deprecated",
+                        "Deprecated"
+                    ],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Watchdog",
+                            "Watchdog"
+                        ]
+                    ],
+                    "signature": "Watchdog0(long)",
+                    "parameters": [
+                        "timeoutMillis"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "114-120:Watchdog"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "ofMillis(long)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def Watchdog0(timeoutMillis: int) -> Watchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "182-185:stop": {
+                    "start": 182,
+                    "end": 185,
+                    "body": [
+                        "    public synchronized void stop() {\n",
+                        "        stopped = true;\n",
+                        "        notifyAll();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "stop()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "notifyAll()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def stop(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "174-177:start": {
+                    "start": 174,
+                    "end": 177,
+                    "body": [
+                        "    public synchronized void start() {\n",
+                        "        stopped = false;\n",
+                        "        ThreadUtil.newThread(threadFactory, this, \"CommonsExecWatchdog-\", true).start();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "start()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Thread",
+                            "start()"
+                        ],
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.ThreadUtil",
+                            "ThreadUtil",
+                            "36-44:newThread"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def start(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "143-145:removeTimeoutObserver": {
+                    "start": 143,
+                    "end": 145,
+                    "body": [
+                        "    public void removeTimeoutObserver(final TimeoutObserver to) {\n",
+                        "        observers.removeElement(to);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "removeTimeoutObserver(TimeoutObserver)",
+                    "parameters": [
+                        "to"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Vector",
+                            "removeElement(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeTimeoutObserver(self, to: TimeoutObserver) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "134-136:fireTimeoutOccured": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "    protected final void fireTimeoutOccured() {\n",
+                        "        observers.forEach(o -> o.timeoutOccured(this));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "final",
+                        "protected"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "fireTimeoutOccured()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Vector",
+                            "forEach(java.util.function.Consumer)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def _fireTimeoutOccured(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "127-129:addTimeoutObserver": {
+                    "start": 127,
+                    "end": 129,
+                    "body": [
+                        "    public void addTimeoutObserver(final TimeoutObserver to) {\n",
+                        "        observers.addElement(to);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "addTimeoutObserver(TimeoutObserver)",
+                    "parameters": [
+                        "to"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Vector",
+                            "addElement(org.apache.commons.exec.TimeoutObserver)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addTimeoutObserver(self, to: TimeoutObserver) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "82-84:builder": {
+                    "start": 82,
+                    "end": 84,
+                    "body": [
+                        "    public static Builder builder() {\n",
+                        "        return new Builder();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "builder()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def builder() -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "114-120:Watchdog": {
+                    "start": 114,
+                    "end": 120,
+                    "body": [
+                        "    private Watchdog(final ThreadFactory threadFactory, final Duration timeout) {\n",
+                        "        if (timeout.isNegative() || Duration.ZERO.equals(timeout)) {\n",
+                        "            throw new IllegalArgumentException(\"timeout must not be less than 1.\");\n",
+                        "        }\n",
+                        "        this.timeoutMillis = timeout.toMillis();\n",
+                        "        this.threadFactory = threadFactory;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "Watchdog(ThreadFactory, Duration)",
+                    "parameters": [
+                        "threadFactory",
+                        "timeout"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toMillis()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, threadFactory: threading.Thread, timeout: datetime.timedelta) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "95-95:threadFactory": {
+                    "start": 95,
+                    "end": 95,
+                    "body": [
+                        "    private final ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "90-90:stopped": {
+                    "start": 90,
+                    "end": 90,
+                    "body": [
+                        "    private boolean stopped;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __stopped: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "88-88:timeoutMillis": {
+                    "start": 88,
+                    "end": 88,
+                    "body": [
+                        "    private final long timeoutMillis;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __timeoutMillis: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "86-86:observers": {
+                    "start": 86,
+                    "end": 86,
+                    "body": [
+                        "    private final Vector<TimeoutObserver> observers = new Vector<>(1);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Vector<TimeoutObserver>",
+                            "java.util.Vector<TimeoutObserver>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __observers: typing.List[TimeoutObserver] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Watchdog():\n\n"
+        },
+        "Builder": {
+            "start": 37,
+            "end": 37,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Watchdog",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "48-50:get": {
+                    "start": 48,
+                    "end": 50,
+                    "body": [
+                        "        public Watchdog get() {\n",
+                        "            return new Watchdog(threadFactory, timeout);\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Override"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Watchdog",
+                            "Watchdog"
+                        ]
+                    ],
+                    "signature": "get()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.Watchdog",
+                            "Watchdog",
+                            "114-120:Watchdog"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def get(self) -> Watchdog:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "69-72:setTimeout": {
+                    "start": 69,
+                    "end": 72,
+                    "body": [
+                        "        public Builder setTimeout(final Duration timeout) {\n",
+                        "            this.timeout = timeout;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setTimeout(Duration)",
+                    "parameters": [
+                        "timeout"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setTimeout(self, timeout: datetime.timedelta) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "58-61:setThreadFactory": {
+                    "start": 58,
+                    "end": 61,
+                    "body": [
+                        "        public Builder setThreadFactory(final ThreadFactory threadFactory) {\n",
+                        "            this.threadFactory = threadFactory;\n",
+                        "            return this;\n",
+                        "        }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Builder",
+                            "Builder"
+                        ]
+                    ],
+                    "signature": "setThreadFactory(ThreadFactory)",
+                    "parameters": [
+                        "threadFactory"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setThreadFactory(self, threadFactory: threading.Thread) -> Builder:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "40-40:timeout": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "        private Duration timeout;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __timeout: datetime.timedelta = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "39-39:threadFactory": {
+                    "start": 39,
+                    "end": 39,
+                    "body": [
+                        "        private ThreadFactory threadFactory;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "ThreadFactory",
+                            "java.util.concurrent.ThreadFactory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __threadFactory: threading.Thread = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class Builder():\n\n"
+        },
+        "new Consumer<TimeoutObserver>(...) { ... }": {
+            "start": 135,
+            "end": 135,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": "Watchdog",
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "135-135:accept": {
+                    "start": 135,
+                    "end": 135,
+                    "body": [
+                        "        observers.forEach(o -> o.timeoutOccured(this));\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "accept(TimeoutObserver)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "commons-exec.src.main.org.apache.commons.exec.TimeoutObserver",
+                            "TimeoutObserver",
+                            "32-32:timeoutOccured"
+                        ]
+                    ],
+                    "is_overload": false
+                }
+            },
+            "fields": {}
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import threading",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "from src.main.org.apache.commons.exec.ThreadUtil import *",
+        "from src.main.org.apache.commons.exec.TimeoutObserver import *"
+    ]
+}

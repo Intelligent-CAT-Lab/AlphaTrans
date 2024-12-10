@@ -1,0 +1,1682 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-pool/src/main/java/org/apache/commons/pool2/impl/DefaultPooledObject.java",
+    "imports": {
+        "23-23:import PrintWriter": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.io.PrintWriter;\n"
+            ]
+        },
+        "25-25:import Duration": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import java.time.Duration;\n"
+            ]
+        },
+        "26-26:import Instant": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import java.time.Instant;\n"
+            ]
+        },
+        "24-24:import Clock": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.time.Clock;\n"
+            ]
+        },
+        "19-19:import PooledObject": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.pool2.PooledObject;\n"
+            ]
+        },
+        "20-20:import PooledObjectState": {
+            "start": 20,
+            "end": 20,
+            "body": [
+                "import org.apache.commons.pool2.PooledObjectState;\n"
+            ]
+        },
+        "21-21:import TrackedUse": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import org.apache.commons.pool2.TrackedUse;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultPooledObject": {
+            "start": 36,
+            "end": 36,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "262-265:use": {
+                    "start": 262,
+                    "end": 265,
+                    "body": [
+                        "    public void use() {\n",
+                        "        lastUseInstant = now();\n",
+                        "        usedBy.fillInStackTrace();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "use()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "218-220:now"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.CallStack",
+                            "CallStack",
+                            "46-46:fillInStackTrace"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def use(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "251-260:toString": {
+                    "start": 251,
+                    "end": 260,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        final StringBuilder result = new StringBuilder();\n",
+                        "        result.append(\"Object: \");\n",
+                        "        result.append(object.toString());\n",
+                        "        result.append(\", State: \");\n",
+                        "        synchronized (this) {\n",
+                        "            result.append(state.toString());\n",
+                        "        }\n",
+                        "        return result.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Enum",
+                            "toString()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "243-249:startEvictionTest": {
+                    "start": 243,
+                    "end": 249,
+                    "body": [
+                        "    public synchronized boolean startEvictionTest() {\n",
+                        "        if (state == PooledObjectState.IDLE) {\n",
+                        "            state = PooledObjectState.EVICTION;\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "startEvictionTest()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def startEvictionTest(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "230-232:setLogAbandoned": {
+                    "start": 230,
+                    "end": 232,
+                    "body": [
+                        "    public void setLogAbandoned(final boolean logAbandoned) {\n",
+                        "        this.logAbandoned = logAbandoned;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setLogAbandoned(boolean)",
+                    "parameters": [
+                        "logAbandoned"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setLogAbandoned(self, logAbandoned: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "222-228:printStackTrace": {
+                    "start": 222,
+                    "end": 228,
+                    "body": [
+                        "    public void printStackTrace(final PrintWriter writer) {\n",
+                        "        boolean written = borrowedBy.printStackTrace(writer);\n",
+                        "        written |= usedBy.printStackTrace(writer);\n",
+                        "        if (written) {\n",
+                        "            writer.flush();\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "printStackTrace(PrintWriter)",
+                    "parameters": [
+                        "writer"
+                    ],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.CallStack",
+                            "CallStack",
+                            "55-55:printStackTrace"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintWriter",
+                            "flush()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def printStackTrace(self, writer: typing.Union[io.TextIOWrapper, io.StringIO]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "209-211:markReturning": {
+                    "start": 209,
+                    "end": 211,
+                    "body": [
+                        "    public synchronized void markReturning() {\n",
+                        "        state = PooledObjectState.RETURNING;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "markReturning()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def markReturning(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "204-206:markAbandoned": {
+                    "start": 204,
+                    "end": 206,
+                    "body": [
+                        "    public synchronized void markAbandoned() {\n",
+                        "        state = PooledObjectState.ABANDONED;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "markAbandoned()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def markAbandoned(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "199-201:invalidate": {
+                    "start": 199,
+                    "end": 201,
+                    "body": [
+                        "    public synchronized void invalidate() {\n",
+                        "        state = PooledObjectState.INVALID;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "invalidate()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def invalidate(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "194-196:getState": {
+                    "start": 194,
+                    "end": 196,
+                    "body": [
+                        "    public synchronized PooledObjectState getState() {\n",
+                        "        return state;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "PooledObjectState",
+                            "PooledObjectState"
+                        ]
+                    ],
+                    "signature": "getState()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getState(self) -> PooledObjectState:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "185-187:getObject": {
+                    "start": 185,
+                    "end": 187,
+                    "body": [
+                        "    public T getObject() {\n",
+                        "        return object;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "signature": "getObject()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getObject(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "181-183:getLastUsedTime": {
+                    "start": 181,
+                    "end": 183,
+                    "body": [
+                        "    public long getLastUsedTime() {\n",
+                        "        return getLastUsedInstant().toEpochMilli();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLastUsedTime()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "toEpochMilli()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "166-171:getLastUsedInstant"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastUsedTime(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "166-171:getLastUsedInstant": {
+                    "start": 166,
+                    "end": 171,
+                    "body": [
+                        "    public Instant getLastUsedInstant() {\n",
+                        "        if (object instanceof TrackedUse) {\n",
+                        "            return PoolImplUtils.max(((TrackedUse) object).getLastUsedInstant(), lastUseInstant);\n",
+                        "        }\n",
+                        "        return lastUseInstant;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "getLastUsedInstant()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.PoolImplUtils",
+                            "PoolImplUtils",
+                            "159-161:max"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.TrackedUse",
+                            "TrackedUse",
+                            "50-52:getLastUsedInstant"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastUsedInstant(self) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "154-156:getLastReturnTime": {
+                    "start": 154,
+                    "end": 156,
+                    "body": [
+                        "    public long getLastReturnTime() {\n",
+                        "        return lastReturnInstant.toEpochMilli();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLastReturnTime()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "toEpochMilli()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastReturnTime(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "150-152:getLastReturnInstant": {
+                    "start": 150,
+                    "end": 152,
+                    "body": [
+                        "    public Instant getLastReturnInstant() {\n",
+                        "        return lastReturnInstant;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "getLastReturnInstant()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastReturnInstant(self) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "146-148:getLastBorrowTime": {
+                    "start": 146,
+                    "end": 148,
+                    "body": [
+                        "    public long getLastBorrowTime() {\n",
+                        "        return lastBorrowInstant.toEpochMilli();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getLastBorrowTime()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "toEpochMilli()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastBorrowTime(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "142-144:getLastBorrowInstant": {
+                    "start": 142,
+                    "end": 144,
+                    "body": [
+                        "    public Instant getLastBorrowInstant() {\n",
+                        "        return lastBorrowInstant;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "getLastBorrowInstant()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getLastBorrowInstant(self) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "138-140:getIdleTimeMillis": {
+                    "start": 138,
+                    "end": 140,
+                    "body": [
+                        "    public long getIdleTimeMillis() {\n",
+                        "        return getIdleDuration().toMillis();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getIdleTimeMillis()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "toMillis()"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "129-132:getIdleDuration"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getIdleTimeMillis(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "134-136:getIdleTime": {
+                    "start": 134,
+                    "end": 136,
+                    "body": [
+                        "    public Duration getIdleTime() {\n",
+                        "        return getIdleDuration();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "signature": "getIdleTime()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "129-132:getIdleDuration"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getIdleTime(self) -> datetime.timedelta:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "129-132:getIdleDuration": {
+                    "start": 129,
+                    "end": 132,
+                    "body": [
+                        "    public Duration getIdleDuration() {\n",
+                        "        final Duration elapsed = Duration.between(lastReturnInstant, now());\n",
+                        "        return elapsed.isNegative() ? Duration.ZERO : elapsed;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Duration",
+                            "java.time.Duration"
+                        ]
+                    ],
+                    "signature": "getIdleDuration()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "between(java.time.temporal.Temporal,java.time.temporal.Temporal)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "218-220:now"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/time/Duration",
+                            "isNegative()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getIdleDuration(self) -> datetime.timedelta:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "125-127:getCreateTime": {
+                    "start": 125,
+                    "end": 127,
+                    "body": [
+                        "    public long getCreateTime() {\n",
+                        "        return createInstant.toEpochMilli();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getCreateTime()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "toEpochMilli()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getCreateTime(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "121-123:getCreateInstant": {
+                    "start": 121,
+                    "end": 123,
+                    "body": [
+                        "    public Instant getCreateInstant() {\n",
+                        "        return createInstant;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "getCreateInstant()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getCreateInstant(self) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "117-119:getBorrowedCount": {
+                    "start": 117,
+                    "end": 119,
+                    "body": [
+                        "    public long getBorrowedCount() {\n",
+                        "        return borrowedCount;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "signature": "getBorrowedCount()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def getBorrowedCount(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "100-109:deallocate": {
+                    "start": 100,
+                    "end": 109,
+                    "body": [
+                        "    public synchronized boolean deallocate() {\n",
+                        "        if (state == PooledObjectState.ALLOCATED || state == PooledObjectState.RETURNING) {\n",
+                        "            state = PooledObjectState.IDLE;\n",
+                        "            lastReturnInstant = now();\n",
+                        "            borrowedBy.clear();\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "deallocate()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "218-220:now"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.CallStack",
+                            "CallStack",
+                            "39-39:clear"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def deallocate(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "84-90:compareTo": {
+                    "start": 84,
+                    "end": 90,
+                    "body": [
+                        "    public int compareTo(final PooledObject<T> other) {\n",
+                        "        final int compareTo = getLastReturnInstant().compareTo(other.getLastReturnInstant());\n",
+                        "        if (compareTo == 0) {\n",
+                        "            return System.identityHashCode(this) - System.identityHashCode(other);\n",
+                        "        }\n",
+                        "        return compareTo;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compareTo(PooledObject<T>)",
+                    "parameters": [
+                        "other"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Instant",
+                            "compareTo(java.time.Instant)"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "150-152:getLastReturnInstant"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/pool2/PooledObject",
+                            "getLastReturnInstant()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "identityHashCode(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def compareTo(self, other: PooledObject[typing.Any]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "67-82:allocate": {
+                    "start": 67,
+                    "end": 82,
+                    "body": [
+                        "    public synchronized boolean allocate() {\n",
+                        "        if (state == PooledObjectState.IDLE) {\n",
+                        "            state = PooledObjectState.ALLOCATED;\n",
+                        "            lastBorrowInstant = now();\n",
+                        "            lastUseInstant = lastBorrowInstant;\n",
+                        "            borrowedCount++;\n",
+                        "            if (logAbandoned) {\n",
+                        "                borrowedBy.fillInStackTrace();\n",
+                        "            }\n",
+                        "            return true;\n",
+                        "        }\n",
+                        "        if (state == PooledObjectState.EVICTION) {\n",
+                        "            state = PooledObjectState.EVICTION_RETURN_TO_HEAD;\n",
+                        "        }\n",
+                        "        return false;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "synchronized"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "allocate()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.DefaultPooledObject",
+                            "DefaultPooledObject",
+                            "218-220:now"
+                        ],
+                        [
+                            "commons-pool.src.main.org.apache.commons.pool2.impl.CallStack",
+                            "CallStack",
+                            "46-46:fillInStackTrace"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def allocate(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "58-60:DefaultPooledObject": {
+                    "start": 58,
+                    "end": 60,
+                    "body": [
+                        "    public DefaultPooledObject(final T object) {\n",
+                        "        this.object = object;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultPooledObject(T)",
+                    "parameters": [
+                        "object"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, object_: typing.Any) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "218-220:now": {
+                    "start": 218,
+                    "end": 220,
+                    "body": [
+                        "    private Instant now() {\n",
+                        "        return systemClock.instant();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "signature": "now()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/time/Clock",
+                            "instant()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __now(self) -> datetime.datetime:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "50-50:borrowedCount": {
+                    "start": 50,
+                    "end": 50,
+                    "body": [
+                        "    private volatile long borrowedCount;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "long",
+                            "long"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __borrowedCount: int = 0",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-49:usedBy": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private volatile CallStack usedBy = NoOpCallStack.INSTANCE;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CallStack",
+                            "CallStack"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __usedBy: CallStack = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "48-48:borrowedBy": {
+                    "start": 48,
+                    "end": 48,
+                    "body": [
+                        "    private volatile CallStack borrowedBy = NoOpCallStack.INSTANCE;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "CallStack",
+                            "CallStack"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __borrowedBy: CallStack = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "47-47:logAbandoned": {
+                    "start": 47,
+                    "end": 47,
+                    "body": [
+                        "    private volatile boolean logAbandoned;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __logAbandoned: bool = False",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "46-46:lastReturnInstant": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private volatile Instant lastReturnInstant = createInstant;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __lastReturnInstant: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "45-45:lastUseInstant": {
+                    "start": 45,
+                    "end": 45,
+                    "body": [
+                        "    private volatile Instant lastUseInstant = createInstant;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __lastUseInstant: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "44-44:lastBorrowInstant": {
+                    "start": 44,
+                    "end": 44,
+                    "body": [
+                        "    private volatile Instant lastBorrowInstant = createInstant;\n"
+                    ],
+                    "modifiers": [
+                        "volatile",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __lastBorrowInstant: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "42-42:createInstant": {
+                    "start": 42,
+                    "end": 42,
+                    "body": [
+                        "    private final Instant createInstant = now();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Instant",
+                            "java.time.Instant"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __createInstant: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "41-41:systemClock": {
+                    "start": 41,
+                    "end": 41,
+                    "body": [
+                        "    private final Clock systemClock = Clock.systemUTC();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Clock",
+                            "java.time.Clock"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __systemClock: datetime.datetime = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "39-40:state": {
+                    "start": 39,
+                    "end": 40,
+                    "body": [
+                        "    private PooledObjectState state =\n",
+                        "            PooledObjectState.IDLE; // @GuardedBy(\"this\") to ensure transitions are valid\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "PooledObjectState",
+                            "PooledObjectState"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __state: PooledObjectState = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "38-38:object": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final T object;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "T",
+                            "T"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __object: typing.Any = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class DefaultPooledObject:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "from io import StringIO",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import datetime",
+        "import sys",
+        "from src.main.org.apache.commons.pool2.PooledObject import *",
+        "from src.main.org.apache.commons.pool2.PooledObjectState import *",
+        "from src.main.org.apache.commons.pool2.TrackedUse import *",
+        "from src.main.org.apache.commons.pool2.impl.CallStack import *",
+        "from src.main.org.apache.commons.pool2.impl.NoOpCallStack import *",
+        "from src.main.org.apache.commons.pool2.impl.PoolImplUtils import *"
+    ]
+}

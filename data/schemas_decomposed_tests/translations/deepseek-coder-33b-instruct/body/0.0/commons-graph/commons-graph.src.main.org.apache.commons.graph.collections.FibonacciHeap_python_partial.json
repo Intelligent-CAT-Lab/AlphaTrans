@@ -1,0 +1,2307 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/collections/FibonacciHeap.java",
+    "imports": {
+        "32-32:import Iterator": {
+            "start": 32,
+            "end": 32,
+            "body": [
+                "import java.util.Iterator;\n"
+            ]
+        },
+        "30-30:import Comparator": {
+            "start": 30,
+            "end": 30,
+            "body": [
+                "import java.util.Comparator;\n"
+            ]
+        },
+        "33-33:import List": {
+            "start": 33,
+            "end": 33,
+            "body": [
+                "import java.util.List;\n"
+            ]
+        },
+        "29-29:import Collection": {
+            "start": 29,
+            "end": 29,
+            "body": [
+                "import java.util.Collection;\n"
+            ]
+        },
+        "36-36:import Set": {
+            "start": 36,
+            "end": 36,
+            "body": [
+                "import java.util.Set;\n"
+            ]
+        },
+        "35-35:import Queue": {
+            "start": 35,
+            "end": 35,
+            "body": [
+                "import java.util.Queue;\n"
+            ]
+        },
+        "28-28:import ArrayList": {
+            "start": 28,
+            "end": 28,
+            "body": [
+                "import java.util.ArrayList;\n"
+            ]
+        },
+        "31-31:import HashSet": {
+            "start": 31,
+            "end": 31,
+            "body": [
+                "import java.util.HashSet;\n"
+            ]
+        },
+        "34-34:import NoSuchElementException": {
+            "start": 34,
+            "end": 34,
+            "body": [
+                "import java.util.NoSuchElementException;\n"
+            ]
+        },
+        "37-37:import Stack": {
+            "start": 37,
+            "end": 37,
+            "body": [
+                "import java.util.Stack;\n"
+            ]
+        },
+        "24-24:import static Math.floor": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import static java.lang.Math.floor;\n"
+            ]
+        },
+        "25-25:import static Math.log": {
+            "start": 25,
+            "end": 25,
+            "body": [
+                "import static java.lang.Math.log;\n"
+            ]
+        },
+        "26-26:import static Math.sqrt": {
+            "start": 26,
+            "end": 26,
+            "body": [
+                "import static java.lang.Math.sqrt;\n"
+            ]
+        },
+        "22-22:import static Assertions.checkNotNull": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static org.apache.commons.graph.utils.Assertions.checkNotNull;\n"
+            ]
+        }
+    },
+    "classes": {
+        "FibonacciHeap": {
+            "start": 50,
+            "end": 50,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "540-577:toString": {
+                    "start": 540,
+                    "end": 577,
+                    "body": [
+                        "    public String toString() {\n",
+                        "        if (minimumNode == null) {\n",
+                        "            return \"FibonacciHeap=[]\";\n",
+                        "        }\n",
+                        "\n",
+                        "        Stack<FibonacciHeapNode<E>> stack = new Stack<FibonacciHeapNode<E>>();\n",
+                        "        stack.push(minimumNode);\n",
+                        "\n",
+                        "        StringBuilder buf = new StringBuilder(\"FibonacciHeap=[\");\n",
+                        "\n",
+                        "        while (!stack.empty()) {\n",
+                        "            FibonacciHeapNode<E> curr = stack.pop();\n",
+                        "            buf.append(curr);\n",
+                        "            buf.append(\", \");\n",
+                        "\n",
+                        "            if (curr.getChild() != null) {\n",
+                        "                stack.push(curr.getChild());\n",
+                        "            }\n",
+                        "\n",
+                        "            FibonacciHeapNode<E> start = curr;\n",
+                        "            curr = curr.getRight();\n",
+                        "\n",
+                        "            while (curr != start) {\n",
+                        "                buf.append(curr);\n",
+                        "                buf.append(\", \");\n",
+                        "\n",
+                        "                if (curr.getChild() != null) {\n",
+                        "                    stack.push(curr.getChild());\n",
+                        "                }\n",
+                        "\n",
+                        "                curr = curr.getRight();\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        buf.append(']');\n",
+                        "\n",
+                        "        return buf.toString();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "toString()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "Stack<FibonacciHeapNode<E>>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "StringBuilder(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "push(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "empty()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Stack",
+                            "pop()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getChild()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getRight()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "append(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/StringBuilder",
+                            "toString()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toString(self) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "531-533:toArray1": {
+                    "start": 531,
+                    "end": 533,
+                    "body": [
+                        "    public <T> T[] toArray1(T[] a) {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T[]",
+                            "T[]"
+                        ]
+                    ],
+                    "signature": "toArray1(T[])",
+                    "parameters": [
+                        "a"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toArray1(self, a: typing.List[typing.Any]) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "526-528:toArray": {
+                    "start": 526,
+                    "end": 528,
+                    "body": [
+                        "    public <T> T[] toArray(T[] a) {\n",
+                        "        return toArray1(a);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "T[]",
+                            "T[]"
+                        ]
+                    ],
+                    "signature": "toArray(T[])",
+                    "parameters": [
+                        "a"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "531-533:toArray1"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def toArray(self, a: typing.List[typing.Any]) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "522-524:toArray0": {
+                    "start": 522,
+                    "end": 524,
+                    "body": [
+                        "    public Object[] toArray0() {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object[]",
+                            "java.lang.Object[]"
+                        ]
+                    ],
+                    "signature": "toArray0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def toArray0(self) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "517-519:toArray": {
+                    "start": 517,
+                    "end": 519,
+                    "body": [
+                        "    public Object[] toArray() {\n",
+                        "        return toArray0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Object[]",
+                            "java.lang.Object[]"
+                        ]
+                    ],
+                    "signature": "toArray()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "522-524:toArray0"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def toArray(self) -> typing.List[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "513-515:size": {
+                    "start": 513,
+                    "end": 515,
+                    "body": [
+                        "    public int size() {\n",
+                        "        return size;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "size()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def size(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "508-510:retainAll": {
+                    "start": 508,
+                    "end": 510,
+                    "body": [
+                        "    public boolean retainAll(Collection<?> c) {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "retainAll(Collection<?>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def retainAll(self, c: typing.Collection[typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "503-505:removeAll": {
+                    "start": 503,
+                    "end": 505,
+                    "body": [
+                        "    public boolean removeAll(Collection<?> c) {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "removeAll(Collection<?>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def removeAll(self, c: typing.Collection[typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "498-500:remove1": {
+                    "start": 498,
+                    "end": 500,
+                    "body": [
+                        "    public boolean remove1(Object o) {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "remove1(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def remove1(self, o: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "493-495:remove": {
+                    "start": 493,
+                    "end": 495,
+                    "body": [
+                        "    public boolean remove(Object o) {\n",
+                        "        return remove1(o);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "remove(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "498-500:remove1"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def remove(self, o: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "484-491:remove0": {
+                    "start": 484,
+                    "end": 491,
+                    "body": [
+                        "    public E remove0() {\n",
+                        "\n",
+                        "        if (isEmpty()) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "\n",
+                        "        return poll();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "remove0()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "431-468:poll"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def remove0(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "479-481:remove": {
+                    "start": 479,
+                    "end": 481,
+                    "body": [
+                        "    public E remove() {\n",
+                        "        return remove0();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "remove()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "484-491:remove0"
+                        ]
+                    ],
+                    "is_overload": true,
+                    "partial_translation": [
+                        "    def remove(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "475-477:potential": {
+                    "start": 475,
+                    "end": 477,
+                    "body": [
+                        "    public int potential() {\n",
+                        "        return trees + 2 * markedNodes;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "potential()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def potential(self) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "431-468:poll": {
+                    "start": 431,
+                    "end": 468,
+                    "body": [
+                        "    public E poll() {\n",
+                        "        if (isEmpty()) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        FibonacciHeapNode<E> z = minimumNode;\n",
+                        "        int numOfKids = z.getDegree();\n",
+                        "\n",
+                        "        FibonacciHeapNode<E> x = z.getChild();\n",
+                        "        FibonacciHeapNode<E> tempRight;\n",
+                        "\n",
+                        "        while (numOfKids > 0) {\n",
+                        "            tempRight = x.getRight();\n",
+                        "\n",
+                        "            moveToRoot(x);\n",
+                        "\n",
+                        "            x.setParent(null);\n",
+                        "\n",
+                        "            x = tempRight;\n",
+                        "            numOfKids--;\n",
+                        "        }\n",
+                        "\n",
+                        "        z.getLeft().setRight(z.getRight());\n",
+                        "        z.getRight().setLeft(z.getLeft());\n",
+                        "\n",
+                        "        if (z == z.getRight()) {\n",
+                        "            minimumNode = null;\n",
+                        "        } else {\n",
+                        "            minimumNode = z.getRight();\n",
+                        "            consolidate();\n",
+                        "        }\n",
+                        "\n",
+                        "        size--;\n",
+                        "\n",
+                        "        E minimum = z.getElement();\n",
+                        "        elementsIndex.remove(minimum);\n",
+                        "        return minimum;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "poll()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getDegree()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getChild()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getElement()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getRight()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "382-398:moveToRoot"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setParent(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setRight(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getLeft()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setLeft(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "208-274:consolidate"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "remove(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def poll(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "406-412:peek": {
+                    "start": 406,
+                    "end": 412,
+                    "body": [
+                        "    public E peek() {\n",
+                        "        if (isEmpty()) {\n",
+                        "            return null;\n",
+                        "        }\n",
+                        "\n",
+                        "        return minimumNode.getElement();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "peek()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getElement()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def peek(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "401-403:offer": {
+                    "start": 401,
+                    "end": 403,
+                    "body": [
+                        "    public boolean offer(E e) {\n",
+                        "        return add(e);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "offer(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "107-119:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def offer(self, e: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "336-338:iterator": {
+                    "start": 336,
+                    "end": 338,
+                    "body": [
+                        "    public Iterator<E> iterator() {\n",
+                        "        throw new UnsupportedOperationException();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Iterator<E>",
+                            "java.util.Iterator<E>"
+                        ]
+                    ],
+                    "signature": "iterator()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/UnsupportedOperationException",
+                            "UnsupportedOperationException()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def iterator(self) -> typing.Iterator[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "331-333:isEmpty": {
+                    "start": 331,
+                    "end": 333,
+                    "body": [
+                        "    public boolean isEmpty() {\n",
+                        "        return minimumNode == null;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isEmpty()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isEmpty(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "323-328:element": {
+                    "start": 323,
+                    "end": 328,
+                    "body": [
+                        "    public E element() {\n",
+                        "        if (isEmpty()) {\n",
+                        "            throw new NoSuchElementException();\n",
+                        "        }\n",
+                        "        return peek();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "E",
+                            "E"
+                        ]
+                    ],
+                    "signature": "element()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/NoSuchElementException",
+                            "NoSuchElementException()"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "406-412:peek"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def element(self) -> typing.Any:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "286-298:containsAll": {
+                    "start": 286,
+                    "end": 298,
+                    "body": [
+                        "    public boolean containsAll(Collection<?> c) {\n",
+                        "        if (c == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        for (Object o : c) {\n",
+                        "            if (!contains(o)) {\n",
+                        "                return false;\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "containsAll(Collection<?>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "277-283:contains"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def containsAll(self, c: typing.Collection[typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "277-283:contains": {
+                    "start": 277,
+                    "end": 283,
+                    "body": [
+                        "    public boolean contains(Object o) {\n",
+                        "        if (o == null) {\n",
+                        "            return false;\n",
+                        "        }\n",
+                        "\n",
+                        "        return elementsIndex.contains(o);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "contains(Object)",
+                    "parameters": [
+                        "o"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "contains(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def contains(self, o: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "158-164:clear": {
+                    "start": 158,
+                    "end": 164,
+                    "body": [
+                        "    public void clear() {\n",
+                        "        minimumNode = null;\n",
+                        "        size = 0;\n",
+                        "        trees = 0;\n",
+                        "        markedNodes = 0;\n",
+                        "        elementsIndex.clear();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "clear()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "clear()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def clear(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "122-128:addAll": {
+                    "start": 122,
+                    "end": 128,
+                    "body": [
+                        "    public boolean addAll(Collection<? extends E> c) {\n",
+                        "        for (E element : c) {\n",
+                        "            add(element);\n",
+                        "        }\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "addAll(Collection<? extends E>)",
+                    "parameters": [
+                        "c"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "107-119:add"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def addAll(self, c: typing.Collection[typing.Any]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "107-119:add": {
+                    "start": 107,
+                    "end": 119,
+                    "body": [
+                        "    public boolean add(E e) {\n",
+                        "        checkNotNull(e, \"Null elements not allowed in this FibonacciHeap implementation.\");\n",
+                        "\n",
+                        "        FibonacciHeapNode<E> node = new FibonacciHeapNode<E>(e);\n",
+                        "\n",
+                        "        moveToRoot(node);\n",
+                        "\n",
+                        "        size++;\n",
+                        "\n",
+                        "        elementsIndex.add(e);\n",
+                        "\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "add(E)",
+                    "parameters": [
+                        "e"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "FibonacciHeapNode<E>(java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.utils.Assertions",
+                            "Assertions",
+                            "64-70:checkNotNull"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "382-398:moveToRoot"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Set",
+                            "add(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def add(self, e: typing.Any) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "80-82:FibonacciHeap1": {
+                    "start": 80,
+                    "end": 82,
+                    "body": [
+                        "    public static FibonacciHeap FibonacciHeap1() {\n",
+                        "        return new FibonacciHeap(null);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "FibonacciHeap<>",
+                            "FibonacciHeap<>"
+                        ]
+                    ],
+                    "signature": "FibonacciHeap1()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeap",
+                            "FibonacciHeap<>(java.util.Comparator)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    @staticmethod\n",
+                        "    def FibonacciHeap1() -> FibonacciHeap[typing.Any]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "76-78:FibonacciHeap": {
+                    "start": 76,
+                    "end": 78,
+                    "body": [
+                        "    public FibonacciHeap(/* @Nullable */ Comparator<? super E> comparator) {\n",
+                        "        this.comparator = comparator;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "FibonacciHeap(Comparator<? super E>)",
+                    "parameters": [
+                        "comparator"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self, comparator: typing.Callable[[typing.Any, typing.Any], int]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "382-398:moveToRoot": {
+                    "start": 382,
+                    "end": 398,
+                    "body": [
+                        "    private void moveToRoot(FibonacciHeapNode<E> node) {\n",
+                        "        if (isEmpty()) {\n",
+                        "            minimumNode = node;\n",
+                        "        } else {\n",
+                        "            node.getLeft().setRight(node.getRight());\n",
+                        "            node.getRight().setLeft(node.getLeft());\n",
+                        "\n",
+                        "            node.setLeft(minimumNode);\n",
+                        "            node.setRight(minimumNode.getRight());\n",
+                        "            minimumNode.setRight(node);\n",
+                        "            node.getRight().setLeft(node);\n",
+                        "\n",
+                        "            if (compare(node, minimumNode) < 0) {\n",
+                        "                minimumNode = node;\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "moveToRoot(FibonacciHeapNode<E>)",
+                    "parameters": [
+                        "node"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setRight(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getLeft()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getRight()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setLeft(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "175-182:compare"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __moveToRoot(self, node: FibonacciHeapNode[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "351-372:link": {
+                    "start": 351,
+                    "end": 372,
+                    "body": [
+                        "    private void link(FibonacciHeapNode<E> y, FibonacciHeapNode<E> x) {\n",
+                        "        y.getLeft().setRight(y.getRight());\n",
+                        "        y.getRight().setLeft(y.getLeft());\n",
+                        "\n",
+                        "        y.setParent(x);\n",
+                        "\n",
+                        "        if (x.getChild() == null) {\n",
+                        "            x.setChild(y);\n",
+                        "            y.setRight(y);\n",
+                        "            y.setLeft(y);\n",
+                        "        } else {\n",
+                        "            y.setLeft(x.getChild());\n",
+                        "            y.setRight(x.getChild().getRight());\n",
+                        "            x.getChild().setRight(y);\n",
+                        "            y.getRight().setLeft(y);\n",
+                        "        }\n",
+                        "\n",
+                        "        x.incraeseDegree();\n",
+                        "\n",
+                        "        y.setMarked(false);\n",
+                        "        markedNodes++;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "link(FibonacciHeapNode<E>, FibonacciHeapNode<E>)",
+                    "parameters": [
+                        "y",
+                        "x"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setRight(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getLeft()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getRight()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setLeft(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setParent(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getChild()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setChild(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "incraeseDegree()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setMarked(boolean)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __link(self, y: FibonacciHeapNode[typing.Any], x: FibonacciHeapNode[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "312-320:cut": {
+                    "start": 312,
+                    "end": 320,
+                    "body": [
+                        "    private void cut(FibonacciHeapNode<E> x, FibonacciHeapNode<E> y) {\n",
+                        "        moveToRoot(x);\n",
+                        "\n",
+                        "        y.decraeseDegree();\n",
+                        "        x.setParent(null);\n",
+                        "\n",
+                        "        x.setMarked(false);\n",
+                        "        markedNodes--;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cut(FibonacciHeapNode<E>, FibonacciHeapNode<E>)",
+                    "parameters": [
+                        "x",
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "382-398:moveToRoot"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "decraeseDegree()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setParent(org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setMarked(boolean)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __cut(self, x: FibonacciHeapNode[typing.Any], y: FibonacciHeapNode[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "208-274:consolidate": {
+                    "start": 208,
+                    "end": 274,
+                    "body": [
+                        "    private void consolidate() {\n",
+                        "        if (isEmpty()) {\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        int arraySize = ((int) floor(log(size) / LOG_PHI));\n",
+                        "\n",
+                        "        List<FibonacciHeapNode<E>> nodeSequence = new ArrayList<FibonacciHeapNode<E>>(arraySize);\n",
+                        "        for (int i = 0; i < arraySize; i++) {\n",
+                        "            nodeSequence.add(i, null);\n",
+                        "        }\n",
+                        "\n",
+                        "        int numRoots = 0;\n",
+                        "\n",
+                        "        FibonacciHeapNode<E> x = minimumNode;\n",
+                        "\n",
+                        "        if (x != null) {\n",
+                        "            numRoots++;\n",
+                        "            x = x.getRight();\n",
+                        "\n",
+                        "            while (x != minimumNode) {\n",
+                        "                numRoots++;\n",
+                        "                x = x.getRight();\n",
+                        "            }\n",
+                        "        }\n",
+                        "\n",
+                        "        while (numRoots > 0) {\n",
+                        "            int degree = x.getDegree();\n",
+                        "            FibonacciHeapNode<E> next = x.getRight();\n",
+                        "\n",
+                        "            while (nodeSequence.get(degree) != null) {\n",
+                        "                FibonacciHeapNode<E> y = nodeSequence.get(degree);\n",
+                        "\n",
+                        "                if (compare(x, y) > 0) {\n",
+                        "                    FibonacciHeapNode<E> pointer = y;\n",
+                        "                    y = x;\n",
+                        "                    x = pointer;\n",
+                        "                }\n",
+                        "\n",
+                        "                link(y, x);\n",
+                        "\n",
+                        "                nodeSequence.set(degree, null);\n",
+                        "\n",
+                        "                degree++;\n",
+                        "            }\n",
+                        "\n",
+                        "            nodeSequence.set(degree, x);\n",
+                        "\n",
+                        "            x = next;\n",
+                        "            numRoots--;\n",
+                        "        }\n",
+                        "\n",
+                        "        minimumNode = null;\n",
+                        "\n",
+                        "        for (FibonacciHeapNode<E> pointer : nodeSequence) {\n",
+                        "            if (pointer == null) {\n",
+                        "                continue;\n",
+                        "            }\n",
+                        "            if (minimumNode == null) {\n",
+                        "                minimumNode = pointer;\n",
+                        "            }\n",
+                        "\n",
+                        "            if (minimumNode != null) {\n",
+                        "                moveToRoot(pointer);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "consolidate()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "floor(double)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "log(double)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/ArrayList",
+                            "ArrayList<FibonacciHeapNode<E>>(int)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "331-333:isEmpty"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(int,org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getRight()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getDegree()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "175-182:compare"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "351-372:link"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "set(int,org.apache.commons.graph.collections.FibonacciHeapNode)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "382-398:moveToRoot"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __consolidate(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "175-182:compare": {
+                    "start": 175,
+                    "end": 182,
+                    "body": [
+                        "    private int compare(FibonacciHeapNode<E> o1, FibonacciHeapNode<E> o2) {\n",
+                        "        if (comparator != null) {\n",
+                        "            return comparator.compare(o1.getElement(), o2.getElement());\n",
+                        "        }\n",
+                        "        @SuppressWarnings(\"unchecked\") // it will throw a ClassCastException at runtime\n",
+                        "        Comparable<? super E> o1Comparable = (Comparable<? super E>) o1.getElement();\n",
+                        "        return o1Comparable.compareTo(o2.getElement());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "compare(FibonacciHeapNode<E>, FibonacciHeapNode<E>)",
+                    "parameters": [
+                        "o1",
+                        "o2"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getElement()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/Comparator",
+                            "compare(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Comparable",
+                            "compareTo(java.lang.Object)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __compare(self, o1: FibonacciHeapNode[typing.Any], o2: FibonacciHeapNode[typing.Any]) -> int:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "143-155:cascadingCut": {
+                    "start": 143,
+                    "end": 155,
+                    "body": [
+                        "    private void cascadingCut(FibonacciHeapNode<E> y) {\n",
+                        "        FibonacciHeapNode<E> z = y.getParent();\n",
+                        "\n",
+                        "        if (z != null) {\n",
+                        "            if (!y.isMarked()) {\n",
+                        "                y.setMarked(true);\n",
+                        "                markedNodes++;\n",
+                        "            } else {\n",
+                        "                cut(y, z);\n",
+                        "                cascadingCut(z);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "cascadingCut(FibonacciHeapNode<E>)",
+                    "parameters": [
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "getParent()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "isMarked()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/collections/FibonacciHeapNode",
+                            "setMarked(boolean)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "312-320:cut"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.collections.FibonacciHeap",
+                            "FibonacciHeap",
+                            "143-155:cascadingCut"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __cascadingCut(self, y: FibonacciHeapNode[typing.Any]) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "71-71:minimumNode": {
+                    "start": 71,
+                    "end": 71,
+                    "body": [
+                        "    private FibonacciHeapNode<E> minimumNode;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "FibonacciHeapNode<E>",
+                            "FibonacciHeapNode<E>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __minimumNode: FibonacciHeapNode[typing.Any] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "68-68:markedNodes": {
+                    "start": 68,
+                    "end": 68,
+                    "body": [
+                        "    private int markedNodes = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __markedNodes: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "65-65:trees": {
+                    "start": 65,
+                    "end": 65,
+                    "body": [
+                        "    private int trees = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __trees: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "62-62:size": {
+                    "start": 62,
+                    "end": 62,
+                    "body": [
+                        "    private int size = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __size: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "59-59:comparator": {
+                    "start": 59,
+                    "end": 59,
+                    "body": [
+                        "    private final Comparator<? super E> comparator;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Comparator<? super E>",
+                            "java.util.Comparator<? super E>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __comparator: typing.Callable[[typing.Any, typing.Any], int] = None",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "56-56:elementsIndex": {
+                    "start": 56,
+                    "end": 56,
+                    "body": [
+                        "    private final Set<E> elementsIndex = new HashSet<E>();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Set<E>",
+                            "java.util.Set<E>"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __elementsIndex: typing.Set[typing.Any] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "53-53:LOG_PHI": {
+                    "start": 53,
+                    "end": 53,
+                    "body": [
+                        "    private static final double LOG_PHI = log((1 + sqrt(5)) / 2);\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __LOG_PHI: float = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class FibonacciHeap():\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "from src.main.org.apache.commons.graph.collections.FibonacciHeapNode import *",
+        "from src.main.org.apache.commons.graph.utils.Assertions import *"
+    ]
+}

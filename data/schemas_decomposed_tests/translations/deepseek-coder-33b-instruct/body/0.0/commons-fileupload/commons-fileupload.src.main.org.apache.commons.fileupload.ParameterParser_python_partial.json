@@ -1,0 +1,970 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/ParameterParser.java",
+    "imports": {
+        "21-21:import UnsupportedEncodingException": {
+            "start": 21,
+            "end": 21,
+            "body": [
+                "import java.io.UnsupportedEncodingException;\n"
+            ]
+        },
+        "23-23:import Locale": {
+            "start": 23,
+            "end": 23,
+            "body": [
+                "import java.util.Locale;\n"
+            ]
+        },
+        "24-24:import Map": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import java.util.Map;\n"
+            ]
+        },
+        "22-22:import HashMap": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import java.util.HashMap;\n"
+            ]
+        },
+        "19-19:import MimeUtility": {
+            "start": 19,
+            "end": 19,
+            "body": [
+                "import org.apache.commons.fileupload.util.mime.MimeUtility;\n"
+            ]
+        }
+    },
+    "classes": {
+        "ParameterParser": {
+            "start": 34,
+            "end": 34,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "250-289:parse3": {
+                    "start": 250,
+                    "end": 289,
+                    "body": [
+                        "    public Map<String, String> parse3(\n",
+                        "            final char[] charArray, int offset, int length, char separator) {\n",
+                        "\n",
+                        "        if (charArray == null) {\n",
+                        "            return new HashMap<String, String>();\n",
+                        "        }\n",
+                        "        HashMap<String, String> params = new HashMap<String, String>();\n",
+                        "        this.chars = charArray;\n",
+                        "        this.pos = offset;\n",
+                        "        this.len = length;\n",
+                        "\n",
+                        "        String paramName = null;\n",
+                        "        String paramValue = null;\n",
+                        "        while (hasChar()) {\n",
+                        "            paramName = parseToken(new char[] {'=', separator});\n",
+                        "            paramValue = null;\n",
+                        "            if (hasChar() && (charArray[pos] == '=')) {\n",
+                        "                pos++; // skip '='\n",
+                        "                paramValue = parseQuotedToken(new char[] {separator});\n",
+                        "\n",
+                        "                if (paramValue != null) {\n",
+                        "                    try {\n",
+                        "                        paramValue = MimeUtility.decodeText(paramValue);\n",
+                        "                    } catch (UnsupportedEncodingException e) {\n",
+                        "                    }\n",
+                        "                }\n",
+                        "            }\n",
+                        "            if (hasChar() && (charArray[pos] == separator)) {\n",
+                        "                pos++; // skip separator\n",
+                        "            }\n",
+                        "            if ((paramName != null) && (paramName.length() > 0)) {\n",
+                        "                if (this.lowerCaseNames) {\n",
+                        "                    paramName = paramName.toLowerCase(Locale.ENGLISH);\n",
+                        "                }\n",
+                        "\n",
+                        "                params.put(paramName, paramValue);\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return params;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ],
+                    "signature": "parse3(char[], int, int, char)",
+                    "parameters": [
+                        "charArray",
+                        "offset",
+                        "length",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,String>()"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "64-66:hasChar"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "119-132:parseToken"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "142-161:parseQuotedToken"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.util.mime.MimeUtility",
+                            "MimeUtility",
+                            "79-145:decodeText"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toLowerCase(java.util.Locale)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "put(java.lang.String,java.lang.String)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse3(self, charArray: typing.List[str], offset: int, length: int, separator: str) -> typing.Dict[str, str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "233-238:parse2": {
+                    "start": 233,
+                    "end": 238,
+                    "body": [
+                        "    public Map<String, String> parse2(final char[] charArray, char separator) {\n",
+                        "        if (charArray == null) {\n",
+                        "            return new HashMap<String, String>();\n",
+                        "        }\n",
+                        "        return parse3(charArray, 0, charArray.length, separator);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ],
+                    "signature": "parse2(char[], char)",
+                    "parameters": [
+                        "charArray",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,String>()"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "250-289:parse3"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse2(self, charArray: typing.List[str], separator: str) -> typing.Dict[str, str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "218-223:parse1": {
+                    "start": 218,
+                    "end": 223,
+                    "body": [
+                        "    public Map<String, String> parse1(final String str, char separator) {\n",
+                        "        if (str == null) {\n",
+                        "            return new HashMap<String, String>();\n",
+                        "        }\n",
+                        "        return parse2(str.toCharArray(), separator);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ],
+                    "signature": "parse1(String, char)",
+                    "parameters": [
+                        "str",
+                        "separator"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,String>()"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "233-238:parse2"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toCharArray()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse1(self, str_: str, separator: str) -> typing.Dict[str, str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "193-209:parse0": {
+                    "start": 193,
+                    "end": 209,
+                    "body": [
+                        "    public Map<String, String> parse0(final String str, char[] separators) {\n",
+                        "        if (separators == null || separators.length == 0) {\n",
+                        "            return new HashMap<String, String>();\n",
+                        "        }\n",
+                        "        char separator = separators[0];\n",
+                        "        if (str != null) {\n",
+                        "            int idx = str.length();\n",
+                        "            for (char separator2 : separators) {\n",
+                        "                int tmp = str.indexOf(separator2);\n",
+                        "                if (tmp != -1 && tmp < idx) {\n",
+                        "                    idx = tmp;\n",
+                        "                    separator = separator2;\n",
+                        "                }\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return parse1(str, separator);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "Map<String,String>",
+                            "java.util.Map<String,String>"
+                        ]
+                    ],
+                    "signature": "parse0(String, char[])",
+                    "parameters": [
+                        "str",
+                        "separators"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/util/HashMap",
+                            "HashMap<String,String>()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "length()"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "indexOf(int)"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "218-223:parse1"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def parse0(self, str_: str, separators: typing.List[str]) -> typing.Dict[str, str]:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "181-183:setLowerCaseNames": {
+                    "start": 181,
+                    "end": 183,
+                    "body": [
+                        "    public void setLowerCaseNames(boolean b) {\n",
+                        "        this.lowerCaseNames = b;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setLowerCaseNames(boolean)",
+                    "parameters": [
+                        "b"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def setLowerCaseNames(self, b: bool) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "170-172:isLowerCaseNames": {
+                    "start": 170,
+                    "end": 172,
+                    "body": [
+                        "    public boolean isLowerCaseNames() {\n",
+                        "        return this.lowerCaseNames;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isLowerCaseNames()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def isLowerCaseNames(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "55-57:ParameterParser": {
+                    "start": 55,
+                    "end": 57,
+                    "body": [
+                        "    public ParameterParser() {\n",
+                        "        super();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "ParameterParser()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Object",
+                            "Object()"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __init__(self) -> None:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "142-161:parseQuotedToken": {
+                    "start": 142,
+                    "end": 161,
+                    "body": [
+                        "    private String parseQuotedToken(final char[] terminators) {\n",
+                        "        char ch;\n",
+                        "        i1 = pos;\n",
+                        "        i2 = pos;\n",
+                        "        boolean quoted = false;\n",
+                        "        boolean charEscaped = false;\n",
+                        "        while (hasChar()) {\n",
+                        "            ch = chars[pos];\n",
+                        "            if (!quoted && isOneOf(ch, terminators)) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            if (!charEscaped && ch == '\"') {\n",
+                        "                quoted = !quoted;\n",
+                        "            }\n",
+                        "            charEscaped = (!charEscaped && ch == '\\\\');\n",
+                        "            i2++;\n",
+                        "            pos++;\n",
+                        "        }\n",
+                        "        return getToken(true);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "parseQuotedToken(char[])",
+                    "parameters": [
+                        "terminators"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "64-66:hasChar"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "101-110:isOneOf"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "75-91:getToken"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __parseQuotedToken(self, terminators: typing.List[str]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "119-132:parseToken": {
+                    "start": 119,
+                    "end": 132,
+                    "body": [
+                        "    private String parseToken(final char[] terminators) {\n",
+                        "        char ch;\n",
+                        "        i1 = pos;\n",
+                        "        i2 = pos;\n",
+                        "        while (hasChar()) {\n",
+                        "            ch = chars[pos];\n",
+                        "            if (isOneOf(ch, terminators)) {\n",
+                        "                break;\n",
+                        "            }\n",
+                        "            i2++;\n",
+                        "            pos++;\n",
+                        "        }\n",
+                        "        return getToken(false);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "parseToken(char[])",
+                    "parameters": [
+                        "terminators"
+                    ],
+                    "calls": [
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "64-66:hasChar"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "101-110:isOneOf"
+                        ],
+                        [
+                            "commons-fileupload.src.main.org.apache.commons.fileupload.ParameterParser",
+                            "ParameterParser",
+                            "75-91:getToken"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __parseToken(self, terminators: typing.List[str]) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "101-110:isOneOf": {
+                    "start": 101,
+                    "end": 110,
+                    "body": [
+                        "    private boolean isOneOf(char ch, final char[] charray) {\n",
+                        "        boolean result = false;\n",
+                        "        for (char element : charray) {\n",
+                        "            if (ch == element) {\n",
+                        "                result = true;\n",
+                        "                break;\n",
+                        "            }\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "isOneOf(char, char[])",
+                    "parameters": [
+                        "ch",
+                        "charray"
+                    ],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __isOneOf(self, ch: str, charray: typing.List[str]) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "75-91:getToken": {
+                    "start": 75,
+                    "end": 91,
+                    "body": [
+                        "    private String getToken(boolean quoted) {\n",
+                        "        while ((i1 < i2) && (Character.isWhitespace(chars[i1]))) {\n",
+                        "            i1++;\n",
+                        "        }\n",
+                        "        while ((i2 > i1) && (Character.isWhitespace(chars[i2 - 1]))) {\n",
+                        "            i2--;\n",
+                        "        }\n",
+                        "        if (quoted && ((i2 - i1) >= 2) && (chars[i1] == '\"') && (chars[i2 - 1] == '\"')) {\n",
+                        "            i1++;\n",
+                        "            i2--;\n",
+                        "        }\n",
+                        "        String result = null;\n",
+                        "        if (i2 > i1) {\n",
+                        "            result = new String(chars, i1, i2 - i1);\n",
+                        "        }\n",
+                        "        return result;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "String",
+                            "java.lang.String"
+                        ]
+                    ],
+                    "signature": "getToken(boolean)",
+                    "parameters": [
+                        "quoted"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Character",
+                            "isWhitespace(char)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "String(char[],int,int)"
+                        ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __getToken(self, quoted: bool) -> str:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "64-66:hasChar": {
+                    "start": 64,
+                    "end": 66,
+                    "body": [
+                        "    private boolean hasChar() {\n",
+                        "        return this.pos < this.len;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "hasChar()",
+                    "parameters": [],
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "    def __hasChar(self) -> bool:\n",
+                        "        pass\n\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "52-52:lowerCaseNames": {
+                    "start": 52,
+                    "end": 52,
+                    "body": [
+                        "    private boolean lowerCaseNames = false;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __lowerCaseNames: bool = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "49-49:i2": {
+                    "start": 49,
+                    "end": 49,
+                    "body": [
+                        "    private int i2 = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __i2: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "46-46:i1": {
+                    "start": 46,
+                    "end": 46,
+                    "body": [
+                        "    private int i1 = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __i1: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "43-43:len": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    private int len = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __len: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "40-40:pos": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private int pos = 0;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __pos: int = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                },
+                "37-37:chars": {
+                    "start": 37,
+                    "end": 37,
+                    "body": [
+                        "    private char[] chars = null;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "char[]",
+                            "char[]"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "    __chars: typing.List[str] = <placeholder>",
+                        ""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "deepseek-coder-33b-instruct",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "python_class_declaration": "class ParameterParser:\n\n"
+        }
+    },
+    "python_imports": [
+        "from __future__ import annotations",
+        "import io",
+        "import typing\nfrom typing import *",
+        "import os",
+        "from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *"
+    ]
+}

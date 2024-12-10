@@ -1,0 +1,412 @@
+{
+    "path": "java_projects/cleaned_final_projects_decomposed_tests/commons-graph/src/main/java/org/apache/commons/graph/elo/DefaultKFactorBuilder.java",
+    "imports": {
+        "24-24:import DirectedGraph": {
+            "start": 24,
+            "end": 24,
+            "body": [
+                "import org.apache.commons.graph.DirectedGraph;\n"
+            ]
+        },
+        "22-22:import static Math.pow": {
+            "start": 22,
+            "end": 22,
+            "body": [
+                "import static java.lang.Math.pow;\n"
+            ]
+        }
+    },
+    "classes": {
+        "DefaultKFactorBuilder": {
+            "start": 26,
+            "end": 26,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [
+                "KFactorBuilder<P>"
+            ],
+            "extends": [],
+            "methods": {
+                "92-99:withKFactor": {
+                    "start": 92,
+                    "end": 99,
+                    "body": [
+                        "    public void withKFactor(int kFactor) {\n",
+                        "        for (P player : tournamentGraph.getVertices0()) {\n",
+                        "            for (P opponent : tournamentGraph.getOutbound(player)) {\n",
+                        "                GameResult gameResult = tournamentGraph.getEdge(player, opponent);\n",
+                        "                evaluateMatch(player, gameResult, opponent, kFactor);\n",
+                        "            }\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "withKFactor(int)",
+                    "parameters": [
+                        "kFactor"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getVertices0()"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/DirectedGraph",
+                            "getOutbound(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/Graph",
+                            "getEdge(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.elo.DefaultKFactorBuilder",
+                            "DefaultKFactorBuilder",
+                            "53-81:evaluateMatch"
+                        ]
+                    ]
+                },
+                "88-90:withDefaultKFactor": {
+                    "start": 88,
+                    "end": 90,
+                    "body": [
+                        "    public void withDefaultKFactor() {\n",
+                        "        withKFactor(DEFAULT_K_FACTOR);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "withDefaultKFactor()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.elo.DefaultKFactorBuilder",
+                            "DefaultKFactorBuilder",
+                            "92-99:withKFactor"
+                        ]
+                    ]
+                },
+                "42-46:DefaultKFactorBuilder": {
+                    "start": 42,
+                    "end": 46,
+                    "body": [
+                        "    public DefaultKFactorBuilder(\n",
+                        "            DirectedGraph<P, GameResult> tournamentGraph, PlayersRank<P> playerRanking) {\n",
+                        "        this.tournamentGraph = tournamentGraph;\n",
+                        "        this.playerRanking = playerRanking;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": true,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "DefaultKFactorBuilder(DirectedGraph<P,GameResult>, PlayersRank<P>)",
+                    "parameters": [
+                        "tournamentGraph",
+                        "playerRanking"
+                    ],
+                    "calls": []
+                },
+                "83-86:updateRanking": {
+                    "start": 83,
+                    "end": 86,
+                    "body": [
+                        "    private void updateRanking(P player, double kFactor, double sFactor, double eFactor) {\n",
+                        "        double newRanking = playerRanking.getRanking(player) + (kFactor * (sFactor - eFactor));\n",
+                        "        playerRanking.updateRanking(player, newRanking);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "updateRanking(P, double, double, double)",
+                    "parameters": [
+                        "player",
+                        "kFactor",
+                        "sFactor",
+                        "eFactor"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/elo/PlayersRank",
+                            "getRanking(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "org/apache/commons/graph/elo/PlayersRank",
+                            "updateRanking(java.lang.Object,java.lang.Double)"
+                        ]
+                    ]
+                },
+                "53-81:evaluateMatch": {
+                    "start": 53,
+                    "end": 81,
+                    "body": [
+                        "    private boolean evaluateMatch(P playerA, GameResult gameResult, P playerB, int kFactor) {\n",
+                        "        double qA = calculateQFactor(playerA);\n",
+                        "        double qB = calculateQFactor(playerB);\n",
+                        "\n",
+                        "        double eA = calculateEFactor(qA, qB);\n",
+                        "        double eB = calculateEFactor(qB, qA);\n",
+                        "\n",
+                        "        double sA;\n",
+                        "        double sB;\n",
+                        "        switch (gameResult) {\n",
+                        "            case WIN:\n",
+                        "                sA = 1;\n",
+                        "                sB = 0;\n",
+                        "                break;\n",
+                        "\n",
+                        "            case DRAW:\n",
+                        "                final double number = 0.5;\n",
+                        "                sA = number;\n",
+                        "                sB = number;\n",
+                        "                break;\n",
+                        "\n",
+                        "            default: // should not happen\n",
+                        "                throw new IllegalArgumentException(\"Input GameResult not accepted\");\n",
+                        "        }\n",
+                        "\n",
+                        "        updateRanking(playerA, kFactor, sA, eA);\n",
+                        "        updateRanking(playerB, kFactor, sB, eB);\n",
+                        "        return true;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "boolean",
+                            "boolean"
+                        ]
+                    ],
+                    "signature": "evaluateMatch(P, GameResult, P, int)",
+                    "parameters": [
+                        "playerA",
+                        "gameResult",
+                        "playerB",
+                        "kFactor"
+                    ],
+                    "calls": [
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.elo.DefaultKFactorBuilder",
+                            "DefaultKFactorBuilder",
+                            "48-51:calculateQFactor"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.elo.DefaultKFactorBuilder",
+                            "DefaultKFactorBuilder",
+                            "34-36:calculateEFactor"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "commons-graph.src.main.org.apache.commons.graph.elo.DefaultKFactorBuilder",
+                            "DefaultKFactorBuilder",
+                            "83-86:updateRanking"
+                        ]
+                    ]
+                },
+                "48-51:calculateQFactor": {
+                    "start": 48,
+                    "end": 51,
+                    "body": [
+                        "    private double calculateQFactor(P player) {\n",
+                        "        double ranking = playerRanking.getRanking(player);\n",
+                        "        return pow(DEFAULT_POW_BASE, ranking / DEFAULT_DIVISOR);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ],
+                    "signature": "calculateQFactor(P)",
+                    "parameters": [
+                        "player"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "org/apache/commons/graph/elo/PlayersRank",
+                            "getRanking(java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Math",
+                            "pow(double,double)"
+                        ]
+                    ]
+                },
+                "34-36:calculateEFactor": {
+                    "start": 34,
+                    "end": 36,
+                    "body": [
+                        "    private static double calculateEFactor(double qA, double qB) {\n",
+                        "        return qA / (qA + qB);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ],
+                    "signature": "calculateEFactor(double, double)",
+                    "parameters": [
+                        "qA",
+                        "qB"
+                    ],
+                    "calls": []
+                }
+            },
+            "fields": {
+                "40-40:playerRanking": {
+                    "start": 40,
+                    "end": 40,
+                    "body": [
+                        "    private final PlayersRank<P> playerRanking;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "PlayersRank<P>",
+                            "PlayersRank<P>"
+                        ]
+                    ]
+                },
+                "38-38:tournamentGraph": {
+                    "start": 38,
+                    "end": 38,
+                    "body": [
+                        "    private final DirectedGraph<P, GameResult> tournamentGraph;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "DirectedGraph<P,GameResult>",
+                            "DirectedGraph<P,GameResult>"
+                        ]
+                    ]
+                },
+                "32-32:DEFAULT_K_FACTOR": {
+                    "start": 32,
+                    "end": 32,
+                    "body": [
+                        "    private static final int DEFAULT_K_FACTOR = 32;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ]
+                },
+                "30-30:DEFAULT_DIVISOR": {
+                    "start": 30,
+                    "end": 30,
+                    "body": [
+                        "    private static final double DEFAULT_DIVISOR = 400;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ]
+                },
+                "28-28:DEFAULT_POW_BASE": {
+                    "start": 28,
+                    "end": 28,
+                    "body": [
+                        "    private static final double DEFAULT_POW_BASE = 10;\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "double",
+                            "double"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}
