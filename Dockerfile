@@ -53,3 +53,15 @@ RUN echo "VLLM_API_URL=" >> .env
 RUN mkdir -p /home/AlphaTrans/misc/sitter-libs
 RUN git clone https://github.com/tree-sitter/tree-sitter-java.git /home/AlphaTrans/misc/sitter-libs/java
 RUN git clone https://github.com/tree-sitter/py-tree-sitter /home/AlphaTrans/misc/sitter-libs/python
+
+RUN wget https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.20.0/codeql-bundle-linux64.tar.gz
+RUN tar -xvf codeql-bundle-linux64.tar.gz -C /home/AlphaTrans/misc
+RUN rm codeql-bundle-linux64.tar.gz
+ENV PATH="/home/AlphaTrans/misc/codeql:$PATH"
+
+RUN git clone https://github.com/github/vscode-codeql-starter.git
+WORKDIR /home/AlphaTrans/vscode-codeql-starter
+RUN git submodule update --init --remote
+
+WORKDIR /home/AlphaTrans
+RUN cp queries/* vscode-codeql-starter/codeql-custom-queries-java

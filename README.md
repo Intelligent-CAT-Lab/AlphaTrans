@@ -35,13 +35,12 @@ If you are interested in building on top of AlphaTrans and add more projects, pl
 
 ### 1. CodeQL Database Creation & Static Analysis
 
-AlphaTrans requires CodeQL for database creation and static analysis. Please install [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) and then follow the steps below:
+AlphaTrans requires [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) for database creation and static analysis. We already install CodeQL using Docker. We also clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository required for executing CodeQL queries. Please follow the steps below to create project database and execute queries:
 
-1. Clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository into the root directory of this repository. Pull the `ql` submodule of this repository as directed in the README of the repository.
-2. Place the project in `<project_directory>`. The `<project_directory>` can be `java_projects/original_projects`.
-3. Create project database with CodeQL. Please see `create_database_java` function in [`setup.sh`](/setup.sh) as reference.
-4. Copy all the contents of the [`queries`](/queries/) directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `bash simplify_script.sh <project_name> <project_name>`. Again, change the project name based on your new project.
-5. Once all queries are executed, query outputs will be stored under `data/query_outputs_decomposed_tests`.
+1. Place your Java project in `<project_directory>`. The `<project_directory>` can be `java_projects/original_projects` in AlphaTrans root.
+2. Create project database with CodeQL. Please see `create_database_java` function in [`setup.sh`](/setup.sh) as reference.
+3. We have already copied all CodeQL files from [`queries`](/queries/) directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `bash execute_codeql_queries.sh <project_name> <database_name> <output_path>`. Please see [`run.sh`](/queries/run.sh) for reference.
+4. Once all queries are executed, query outputs will be stored under `data/<output_path>`.
 
 ### 2. Program Transformation
 Execute the following from the root directory of the repository to perform program transformation on the projects.
@@ -92,9 +91,6 @@ Execute the following from the root directory of the project to run the Graal-ba
 ```bash
 python src/compositional_glue_tests/semantic_check.py --project <project_name> [--class=<class_name>] [--method=<method_name>]
 ```
-
-> [!NOTE]
-> GraalVM must be installed on the system and the default Java path must be set to GraalVM's installation directory.
 
 If a `pom.xml` does not already exist for the project, the script will copy the original `pom.xml` to the project directory and throw an exception. You are required to manually check that the Java version in the `pom.xml` is set to at least 8 and that GraalVM is included in the dependencies. Once this is done, you can run the script again.
 
