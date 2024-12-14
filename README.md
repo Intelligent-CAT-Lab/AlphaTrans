@@ -12,7 +12,7 @@ docker run -it alphatrans bash
 Please refer to [Reproduce AlphaTrans Results](#reproduce-alphatrans-results) for instructions on how to reproduce the results of AlphaTrans. If you are interested in translating more projects, please refer to [Translate New Java Projects](#translate-new-java-projects).
 
 ## Reproduce AlphaTrans Results
-AlphaTrans currently supports prompting OpenAI models (e.g., `GPT-4o-2024-11-20`) and open-source models (e.g., `deepseek-ai/deepseek-coder-33b-instruct`) served by vLLM (please see the [vLLM Project](https://github.com/vllm-project/vllm) on how to start an engine). We have created a `.env` file to store API keys and model endpoints. If prompting with vLLM, please simply paste in your `VLLM_API_KEY` (set to `EMPTY` if you don't have a key) and `VLLM_API_URL` (e.g., `http://0.0.0.0:5000/v1` when the engine `IP` is `0.0.0.0` and `PORT` is `5000`). If prompting with OpenAI models, you only need to paste in your key in `OPENAI_API_KEY`.
+AlphaTrans currently supports prompting OpenAI models (e.g., `GPT-4o-2024-11-20`) and open-source models (e.g., `deepseek-ai/deepseek-coder-33b-instruct`) served by ollama (please see the [Ollama Project](https://ollama.com/) on how to start an engine). We have created a `.env` file to store API keys and model endpoints. If prompting with ollama, please simply paste in your `OLLAMA_HOST` (e.g., `http://0.0.0.0:5000` when the engine `IP` is `0.0.0.0` and `PORT` is `5000`). If prompting with OpenAI models, you only need to paste in your key in `OPENAI_API_KEY`.
 
 ```
 vim .env

@@ -47,8 +47,7 @@ RUN conda env create -f environment.yml
 RUN bash setup.sh install_graal
 
 RUN echo "OPENAI_API_KEY=" >> .env
-RUN echo "VLLM_API_KEY=" >> .env
-RUN echo "VLLM_API_URL=" >> .env
+RUN echo "OLLAMA_HOST=" >> .env
 
 RUN mkdir -p /home/AlphaTrans/misc/sitter-libs
 RUN git clone https://github.com/tree-sitter/tree-sitter-java.git /home/AlphaTrans/misc/sitter-libs/java
