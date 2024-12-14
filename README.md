@@ -42,7 +42,7 @@ First, from the root of the repository, execute the following to create a CodeQL
 ```bash
 mkdir -p databases
 
-cd path/to/<project_name>
+cd path/to/project/<project_name>
 # eg. cd java_projects/cleaned_final_projects_decomposed_tests/commons-cli
 
 codeql database create /path/to/databases/<project_name>_decomposed_tests --language=java --overwrite
@@ -64,8 +64,8 @@ The query outputs will be saved under `data/output_directory`.
 Execute the following from the root directory of the repository to perform program transformation on the projects.
 
 ```bash
-bash scripts/program_transformation.sh path/to/<project_name> <project_name>
-# eg. bash scripts/program_transformation.sh java_projects/cleaned_final_projects_decomposed_tests/commons-cli commons-cli
+bash scripts/program_transformation.sh path/to/project <project_name>
+# eg. bash scripts/program_transformation.sh java_projects/cleaned_final_projects_decomposed_tests commons-cli
 ```
 
 ### 3. Program Decomposition
