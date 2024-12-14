@@ -72,7 +72,7 @@ public class LongJustCopy_ESTest_scaffolding {
   public static void setSystemProperties() {
  
     java.lang.System.setProperties((java.util.Properties) defaultProperties.clone()); 
-    java.lang.System.setProperty("user.dir", "/home/ali/Documents/AlphaTrans/java_projects/cleaned_final_projects/JavaFastPFOR"); 
+    java.lang.System.setProperty("user.dir", "/home/AlphaTrans/java_projects/cleaned_final_projects/JavaFastPFOR"); 
     java.lang.System.setProperty("java.io.tmpdir", "/tmp"); 
   }
 

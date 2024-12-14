@@ -81,7 +81,7 @@ public class JansiLoader_ESTest_scaffolding {
  
     java.lang.System.setProperties((java.util.Properties) defaultProperties.clone()); 
     java.lang.System.setProperty("java.io.tmpdir", "/tmp"); 
-    java.lang.System.setProperty("user.dir", "/home/ali/Documents/AlphaTrans/java_projects/cleaned_final_projects/jansi"); 
+    java.lang.System.setProperty("user.dir", "/home/AlphaTrans/java_projects/cleaned_final_projects/jansi"); 
   }
 
   private static void initializeClasses() {

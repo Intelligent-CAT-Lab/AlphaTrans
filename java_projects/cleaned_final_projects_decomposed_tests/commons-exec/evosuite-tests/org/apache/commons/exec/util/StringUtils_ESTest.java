@@ -208,7 +208,7 @@ public class StringUtils_ESTest extends StringUtils_ESTest_scaffolding {
 
   @Test(timeout = 4000)
   public void test17()  throws Throwable  {
-      String[] stringArray0 = StringUtils.split("/home/ali/Documents/AlphaTrans/java_projects/cleaned_final_projects/commons-exec/\"", "IryWd$q}lO0LY8$>YZl");
+      String[] stringArray0 = StringUtils.split("/home/AlphaTrans/java_projects/cleaned_final_projects/commons-exec/\"", "IryWd$q}lO0LY8$>YZl");
       assertEquals(9, stringArray0.length);
   }
 

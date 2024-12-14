@@ -73,7 +73,7 @@ public class PathNotFoundException_ESTest_scaffolding {
  
     java.lang.System.setProperties((java.util.Properties) defaultProperties.clone()); 
     java.lang.System.setProperty("java.io.tmpdir", "/tmp"); 
-    java.lang.System.setProperty("user.dir", "/home/ali/Documents/AlphaTrans/java_projects/cleaned_final_projects/commons-graph"); 
+    java.lang.System.setProperty("user.dir", "/home/AlphaTrans/java_projects/cleaned_final_projects/commons-graph"); 
   }
 
   private static void initializeClasses() {
