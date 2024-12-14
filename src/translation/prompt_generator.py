@@ -17,8 +17,8 @@ class PromptGenerator:
         self.meta_data = {
                             'deepseek-coder-33b-instruct-persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
                             'gpt-4o-2024-11-20-persona': '',
-                            'llama-3-1-405b-instruct-fp8-persona': '',
-                            'Qwen2.5-Coder-32B-Instruct-persona': '',
+                            'llama-3-3-70b-instruct-persona': '',
+                            'Qwen2.5-Coder-32B-Instruct-persona': 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.',
                             'icl': {
                                 'field': 'Java code:\n```\npublic class Calculator {\n    public int x;\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    x: int = \n```\n\nPython field translation:\n```\n    x: int = 0\n```',
                                 'method': 'Java code:\n```\npublic class Calculator {\n    public int add(int a, int b) {\n        return a + b;\n    }\n}\n```\n\nPartial Python translation:\n```\nclass Calculator:\n    def add(self, a: int, b: int) -> int:\n        pass\n```\n\nPython method translation:\n```\n    def add(self, a: int, b: int) -> int:\n        return a + b\n```',

@@ -7,6 +7,7 @@ import re
 import math
 import datetime
 from openai import OpenAI
+from ollama import Client
 import tiktoken
 import requests
 
@@ -17,7 +18,7 @@ from field_exercise_validation import field_exercise_validation
 from test_validation import test_validation
 from graal_validation import graal_validation
 from get_reverse_traversal import get_reverse_traversal
-from prompt_generator import PromptGenerator
+from src.translation.prompt_generator import PromptGenerator
 
 
 def get_eligible_tests(fragment, processed_fragments, args):
@@ -219,9 +220,9 @@ def get_total_input_tokens(prompt, args, model_info):
     if args.use_openai and args.model_name == 'gpt-4o-2024-11-20':
         encoding = tiktoken.encoding_for_model('gpt-4o')
         total_tokens = len(encoding.encode(prompt))
-    elif args.use_vllm:
-        response = requests.post(url='/'.join(os.environ['VLLM_API_URL'].split('/')[:-1]) + '/tokenize', headers={'accept': 'application/json', 'VLLM_API_KEY': os.environ['VLLM_API_KEY'], 'Content-Type': 'application/json'}, json={'model': model_info[args.model_name]['model_id'], 'prompt': prompt, 'add_special_tokens': True})
-        total_tokens = response.json()['count']
+    elif args.use_ollama: # TODO: implement token count when OLLAMA supports it
+        encoding = tiktoken.encoding_for_model('gpt-4o')
+        total_tokens = len(encoding.encode(prompt))
 
     return total_tokens
 
@@ -249,17 +250,20 @@ def prompt_model(model_info, client, prompt, total_input_tokens, args):
 
         generation = completion.choices[0].message.content
 
-    elif args.use_vllm:
-        completion = client.completions.create(
+    elif args.use_ollama:
+        completion = client.chat(
             model=model_info[args.model_name]['model_id'],
-            prompt=prompt,
-            temperature=args.temperature,
-            echo=True,
-            max_tokens=max_new_tokens
+            messages=[
+            {
+                'role': 'user',
+                'content': prompt,
+            }],
+            options={
+                "temperature": args.temperature,
+                "num_predict": max_new_tokens
+            }
         )
-
-        generation = completion.choices[0].text
-        generation = generation[generation.find('### Response:') + len('### Response:'):]
+        generation = completion.message.content
     
     else:
         raise ValueError('No API specified')
@@ -353,16 +357,14 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
 
     model_info = {
                     'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
-                    'llama-3-70b-instruct': {'total': 8192, 'max_new_tokens': 2048, 'model_id': 'meta-llama/llama-3-70b-instruct'},
                     'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
-                    'llama-3-1-405b-instruct-fp8': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'meta-llama/llama-3-1-405b-instruct-fp8'},
-                    'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'Qwen/Qwen2.5-Coder-32B-Instruct'}
+                    'llama-3-3-70b-instruct': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'llama3.3'},
+                    'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'krith/qwen2.5-coder-32b-instruct:IQ4_XS'}
                 }
 
-    if args.use_vllm:
-        client = OpenAI(
-            api_key=os.environ["VLLM_API_KEY"],  
-            base_url=os.environ["VLLM_API_URL"],
+    if args.use_ollama:
+        client = Client(
+            host=os.environ["OLLAMA_HOST"],
         )
     elif args.use_openai:
         client = OpenAI(
@@ -607,7 +609,7 @@ def main(args):
 
     # constant variables
     args.prompt_type = 'body' if args.include_implementation else 'signature'
-    args.use_openai = True if not args.use_vllm else False
+    args.use_openai = True if not args.use_ollama else False
     args.translation_dir = f'data/schemas{args.suffix}/translations/{args.model_name}/{args.prompt_type}/{args.temperature}/{args.project_name}'
 
     # extract the reverse-topological order of fragments based on call graph
@@ -645,6 +647,6 @@ if __name__ == '__main__':
     parser_.add_argument('--temperature', type=float, dest='temperature', help='temperature for generation')
     parser_.add_argument('--suffix', type=str, dest='suffix', help='suffix for the translated files')
     parser_.add_argument('--recursion_depth', type=int, dest='recursion_depth', help='depth of recursion for translation')
-    parser_.add_argument('--use_vllm', action='store_true', help='use VLLM engine for prompting')
+    parser_.add_argument('--use_ollama', action='store_true', help='use VLLM engine for prompting')
     args = parser_.parse_args()
     main(args)

@@ -16,5 +16,5 @@ python3 src/translation/compositional_translation_validation.py \
     --temperature=$TEMPERATURE \
     --validate_by_graal \
     --recursion_depth=2 \
-    --use_vllm \
+    --use_ollama \
     --include_implementation | tee ${PROJECT}_${MODEL}_body.log
