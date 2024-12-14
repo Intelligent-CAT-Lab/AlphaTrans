@@ -35,18 +35,37 @@ If you are interested in building on top of AlphaTrans and add more projects, pl
 
 ### 1. CodeQL Database Creation & Static Analysis
 
-AlphaTrans requires [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) for database creation and static analysis. We already install CodeQL using Docker. We also clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository required for executing CodeQL queries. Please follow the steps below to create project database and execute queries:
+AlphaTrans requires [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) for database creation and static analysis. We already install CodeQL using Docker. We also clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository required for executing CodeQL queries.
 
-1. Place your Java project in `<project_directory>`. The `<project_directory>` can be `java_projects/original_projects` in AlphaTrans root.
-2. Create project database with CodeQL. Please see `create_database_java` function in [`setup.sh`](/setup.sh) as reference.
-3. We have already copied all CodeQL files from [`queries`](/queries/) directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `bash execute_codeql_queries.sh <project_name> <database_name> <output_path>`. Please see [`run.sh`](/queries/run.sh) for reference.
-4. Once all queries are executed, query outputs will be stored under `data/<output_path>`.
+First, from the root of the repository, execute the following to create a CodeQL database for your project.
+
+```bash
+mkdir -p databases
+
+cd path/to/<project_name>
+# eg. cd java_projects/cleaned_final_projects_decomposed_tests/commons-cli
+
+codeql database create /path/to/databases/<project_name>_decomposed_tests --language=java --overwrite
+# eg. codeql database create ../../../databases/commons-cli_decomposed_tests --language=java --overwrite
+```
+
+Now, to execute CodeQL queries, return to the root of the repository and execute the following.
+
+```bash
+cd vscode-codeql-starter/codeql-custom-queries-java/
+
+bash execute_codeql_queries.sh <project_name> <project_name>_decomposed_tests /path/to/output_directory
+# eg. bash execute_codeql_queries.sh commons-cli commons-cli_decomposed_tests query_outputs_decomposed_tests
+```
+
+The query outputs will be saved under `data/output_directory`.
 
 ### 2. Program Transformation
 Execute the following from the root directory of the repository to perform program transformation on the projects.
 
-```
-bash scripts/program_transformation.sh <project_dir> <project_name>
+```bash
+bash scripts/program_transformation.sh path/to/<project_name> <project_name>
+# eg. bash scripts/program_transformation.sh java_projects/cleaned_final_projects_decomposed_tests/commons-cli commons-cli
 ```
 
 ### 3. Program Decomposition
