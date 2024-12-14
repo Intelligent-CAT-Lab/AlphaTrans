@@ -43,10 +43,10 @@ First, from the root of the repository, execute the following to create a CodeQL
 mkdir -p databases
 
 cd path/to/project/<project_name>
-# eg. cd java_projects/cleaned_final_projects_decomposed_tests/commons-cli
+# eg. cd java_projects/cleaned_final_projects/commons-cli
 
-codeql database create /path/to/databases/<project_name>_decomposed_tests --language=java --overwrite
-# eg. codeql database create ../../../databases/commons-cli_decomposed_tests --language=java --overwrite
+codeql database create /path/to/databases/<project_name> --language=java --overwrite
+# eg. codeql database create ../../../databases/commons-cli --language=java --overwrite
 ```
 
 Now, to execute CodeQL queries, return to the root of the repository and execute the following.
@@ -54,8 +54,8 @@ Now, to execute CodeQL queries, return to the root of the repository and execute
 ```bash
 cd vscode-codeql-starter/codeql-custom-queries-java/
 
-bash execute_codeql_queries.sh <project_name> <project_name>_decomposed_tests /path/to/output_directory
-# eg. bash execute_codeql_queries.sh commons-cli commons-cli_decomposed_tests query_outputs_decomposed_tests
+bash execute_codeql_queries.sh <project_name> <project_name> /path/to/output_directory
+# eg. bash execute_codeql_queries.sh commons-cli commons-cli query_outputs
 ```
 
 The query outputs will be saved under `data/output_directory`.
@@ -65,7 +65,7 @@ Execute the following from the root directory of the repository to perform progr
 
 ```bash
 bash scripts/program_transformation.sh path/to/project <project_name>
-# eg. bash scripts/program_transformation.sh java_projects/cleaned_final_projects_decomposed_tests commons-cli
+# eg. bash scripts/program_transformation.sh java_projects/cleaned_final_projects commons-cli
 ```
 
 ### 3. Program Decomposition
@@ -74,15 +74,15 @@ bash scripts/program_transformation.sh path/to/project <project_name>
 Execute the following for source decomposition from the root directory of the repository.
 
 ```bash
-bash scripts/create_schema.sh
-bash scripts/extract_call_graph.sh
+python3 src/static_analysis/create_schema.py --project_name=<project_name> --suffix=_decomposed_tests
+python3 src/static_analysis/extract_call_graph.py --project_name=<project_name> --suffix=_decomposed_tests
 ```
 
 #### Test Decomposition
 Execute the following for test decomposition from the root directory of the repository.
 
 ```bash
-bash scripts/decompose_test.sh
+python3 src/static_analysis/decompose_dev_test.py --project_name=<project_name>
 ```
 
 ### 4. Type Translation
