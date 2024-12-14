@@ -4,13 +4,14 @@ import sys
 
 projects_dir = sys.argv[1]
 project = sys.argv[2]
+suffix = sys.argv[3]
 os.system(f'rm -rf java_projects/preprocessed_0/{project}')
 temp_project_path = f'java_projects/preprocessed_0/'
 os.makedirs(temp_project_path, exist_ok=True)
 os.system(f'cp -r {projects_dir}/{project} {temp_project_path}')
 
 def get_overloaded_methods():
-    methods_query_out = f'data/query_outputs/{project}/{project}_all_methods.txt'
+    methods_query_out = f'data/query_outputs{suffix}/{project}/{project}_all_methods.txt'
     methods_lines = []
     with open(methods_query_out, 'r') as f:
         methods_lines = f.readlines()
@@ -106,7 +107,7 @@ def get_overloaded_methods():
 
 
 def get_overloaded_method_call_sites(overloaded_methods, all_methods):
-    call_graph_query_out = f'data/query_outputs/{project}/{project}_method_call_graph.txt'
+    call_graph_query_out = f'data/query_outputs{suffix}/{project}/{project}_method_call_graph.txt'
     call_graph_lines = []
     with open(call_graph_query_out, 'r') as f:
         call_graph_lines = f.readlines()
@@ -334,7 +335,7 @@ def rewrite_overloaded_method_calls(overloaded_method_locations):
 
 
 def rewrite_overridden_methods(overloaded_methods):
-    overridden_methods_query_out = f'data/query_outputs/{project}/{project}_overridden_methods.txt'
+    overridden_methods_query_out = f'data/query_outputs{suffix}/{project}/{project}_overridden_methods.txt'
     overridden_methods_lines = []
     with open(overridden_methods_query_out, 'r') as f:
         overridden_methods_lines = f.readlines()
