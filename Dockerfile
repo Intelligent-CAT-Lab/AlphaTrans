@@ -31,6 +31,10 @@ RUN pip3 install --upgrade pip
 
 WORKDIR /home
 
+RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
+RUN tar xzvf apache-maven-3.9.9-bin.tar.gz
+ENV PATH="/home/apache-maven-3.9.9/bin:${PATH}"
+
 RUN git clone https://github.com/Intelligent-CAT-Lab/AlphaTrans.git
 
 WORKDIR /home/AlphaTrans
