@@ -21,6 +21,9 @@ vim .env
 For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-cli` with `deepseek-coder-33b-instruct` model with `temperature=0.0`):
 
 ```
+bash scripts/get_dependencies.sh _decomposed_tests
+bash scrtips/generate_test_invocation_map.sh _decomposed_tests
+bash scripts/extract_coverage.sh _decomposed_tests
 bash scripts/translate_fragment.sh commons-cli 0.0 gpt-4o-2024-11-20
 ```
 
@@ -61,8 +64,8 @@ Once all queries are executed, query outputs will be stored under `data/query_ou
 
 Execute the following to decompose programs and create project schemas:
 ```
-bash scripts/create_schema.sh
-bash scripts/extract_call_graph.sh
+bash scripts/create_schema.sh _decomposed_tests
+bash scripts/extract_call_graph.sh _decomposed_tests
 ```
 These scripts will properly store project schemas in JSON format under `data/schemas_decomposed_tests`.
 
@@ -81,8 +84,8 @@ The `<type>` can be either `simple` or `source_description`. The former prompts 
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
 
 ```bash
-bash scripts/get_dependencies.sh
-bash scripts/create_skeleton.sh
+bash scripts/get_dependencies.sh _decomposed_tests
+bash scripts/create_skeleton.sh _decomposed_tests
 ```
 
 This command should create proper skeletons in target language under `data/skeletons/<project_name>`.
@@ -92,12 +95,12 @@ This command should create proper skeletons in target language under `data/skele
 Finally, execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
 
 ```bash
-bash scrtips/generate_test_invocation_map.sh <suffix>
-bash scripts/extract_coverage.sh <suffix>
+bash scrtips/generate_test_invocation_map.sh _decomposed_tests
+bash scripts/extract_coverage.sh _decomposed_tests
 bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 ```
 
-You can use `project_name=commons-cli`, `temperature=0.0`, `model=gpt-4o-2024-11-20`, `suffix=_decomposed_tests` as an example.
+You can use `project_name=commons-cli`, `temperature=0.0`, and `model=gpt-4o-2024-11-20` as an example.
 
 ## Project Reduction, Program Transformation and Test Decomposition
 In this section, we provide the steps on how to get rid of third-party libraries from original projects.

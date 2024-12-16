@@ -116,7 +116,7 @@ def get_reverse_traversal(args):
     schemas = os.listdir(args.translation_dir)
 
     executed_tests = {}
-    with open(f'data/source_test_execution_decomposed_tests/{args.project_name}/tests.json') as f:
+    with open(f'data/source_test_execution{args.suffix}/{args.project_name}/tests.json') as f:
         executed_tests = json.load(f)
 
     # extract all fields and static initializers

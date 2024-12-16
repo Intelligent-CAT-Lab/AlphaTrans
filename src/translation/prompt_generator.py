@@ -190,7 +190,7 @@ class PromptGenerator:
 
         # add necessary dependencies from imported classes
         dependencies = {}
-        dependencies_path = f'data/dependencies/{self.args.project_name}/dependencies.json'
+        dependencies_path = f'data/dependencies{self.args.suffix}/{self.args.project_name}/dependencies.json'
         if self.args.translate_evosuite:
             dependencies_path = f'data/dependencies_evosuite/{self.args.project_name}/dependencies.json'
 

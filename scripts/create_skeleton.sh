@@ -1,5 +1,7 @@
 #!/bin/bash
 
+$SUFFIX=$1
+
 pwd=$(pwd)
 for model in 'deepseek-coder-33b-instruct' 'gpt-4o-2024-11-20';
 do
@@ -11,7 +13,7 @@ do
             do
                 echo "creating skeleton for $project"
                 export PYTHONPATH=$pwd/data/skeletons/$project
-                python3 src/static_analysis/create_skeleton.py --project_name=$project --model_name=$model --type=$type --suffix=_decomposed_tests --temperature=$temperature
+                python3 src/static_analysis/create_skeleton.py --project_name=$project --model_name=$model --type=$type --suffix=$SUFFIX --temperature=$temperature
             done
         done
     done
