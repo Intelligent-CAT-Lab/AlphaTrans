@@ -21,55 +21,55 @@ vim .env
 For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-cli` with `deepseek-coder-33b-instruct` model with `temperature=0.0`):
 
 ```
-bash scripts/translate_fragment.sh commons-cli 0.0 deepseek-coder-33b-instruct
+bash scripts/translate_fragment.sh commons-cli 0.0 gpt-4o-2024-11-20
 ```
 
 This script will translate the project fragment by fragment in reverse-call graph order and store translations in JSON files along with validation results (e.g., syntactical correctness, GraalVM correctness, test execution correctness, etc.). If you want to create standalone python projects, simply recompose all translations with the following script:
 
 ```
-bash scripts/recompose.sh commons-cli 0.0 deepseek-coder-33b-instruct
+bash scripts/recompose.sh commons-cli 0.0 gpt-4o-2024-11-20
 ```
 
 ## Translate New Java Projects
-If you are interested in building on top of AlphaTrans and add more projects, please follow the following steps:
+In this section, we discuss how to add more projects and translate with AlphaTrans. Below, we provide the steps for the ten subject projects in our work. If you add a new project, it should be similar to existing ones. For every project, we provide two specific snapshots as shown below:
+
+1. [`original_projects`](/java_projects/original_projects): Original snapshot of the projects cloned from GitHub.
+2. [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/): Snapshot of the `original_projects` with third-party libraries removed, overload methods/constructors transformed, and tests decomposed.
+
+You can start experimenting from the second snapshot (`cleaned_final_projects_decomposed_tests`) as project reduction, transformation, and decomposition can potentially take hours. Please refer to [Project Reduction, Program Transformation and Test Decomposition](#project-reduction-program-transformation-and-test-decomposition) for further preprocessing steps.
 
 ### 1. CodeQL Database Creation & Static Analysis
 
-AlphaTrans requires [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) for database creation and static analysis. We already install CodeQL using Docker. We also clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository required for executing CodeQL queries. Please follow the steps below to create project database and execute queries:
+AlphaTrans requires [CodeQL CLI](https://docs.github.com/en/code-security/codeql-cli/getting-started-with-the-codeql-cli/setting-up-the-codeql-cli) for database creation and static analysis of projects. We already install CodeQL using Docker. We also clone the [vscode-codeql-starter](https://github.com/github/vscode-codeql-starter) repository required for executing CodeQL queries. Please follow the steps below to create project database and execute queries on [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/):
 
-1. Place your Java project in `<project_directory>`. The `<project_directory>` can be `java_projects/original_projects` in AlphaTrans root.
-2. Create project database with CodeQL. Please see `create_database_java` function in [`setup.sh`](/setup.sh) as reference.
-3. We have already copied all CodeQL files from [`queries`](/queries/) directory into the `vscode-codeql-starter/codeql-custom-queries-java` directory. `cd` into this directory and execute `bash execute_codeql_queries.sh <project_name> <database_name> <output_path>`. Please see [`run.sh`](/queries/run.sh) for reference.
-4. Once all queries are executed, query outputs will be stored under `data/<output_path>`.
-
-### 2. Program Transformation
-Execute the following from the root directory of the repository to perform program transformation on the projects.
-
+#### Create CodeQL Project Database
+Create project database with CodeQL by executing the following script:
 ```
-bash scripts/program_transformation.sh <project_dir> <project_name>
+bash scripts/create_database.sh _decomposed_tests
 ```
+After successful execution, the databases should be created under `databases/<project_name>_decomposed_tests`.
 
-### 3. Program Decomposition
+#### Execute CodeQL Queries
+We have already copied all CodeQL files from [`queries`](/queries/) into the `vscode-codeql-starter/codeql-custom-queries-java` directory. Execute the following to run all necessary CodeQL queries:
+```
+cd vscode-codeql-starter/codeql-custom-queries-java
+bash run.sh
+```
+Once all queries are executed, query outputs will be stored under `data/query_outputs_decomposed_tests`.
 
-#### Source Decomposition
-Execute the following for source decomposition from the root directory of the repository.
+### 2. Program Decomposition
 
-```bash
+Execute the following to decompose programs and create project schemas:
+```
 bash scripts/create_schema.sh
 bash scripts/extract_call_graph.sh
 ```
+These scripts will properly store project schemas in JSON format under `data/schemas_decomposed_tests`.
 
-#### Test Decomposition
-Execute the following for test decomposition from the root directory of the repository.
+### 3. Type Translation
+We provide our universal type map under [`data/type_resolution/universal_type_map_final.json`](/data/type_resolution/universal_type_map_final.json). This type map can be directly used, however, if you want to translate types again, please execute the following from the root directory of the repository to perform type translation on the projects.
 
-```bash
-bash scripts/decompose_test.sh
 ```
-
-### 4. Type Translation
-Execute the following from the root directory of the repository to perform type translation on the projects.
-
-```bash
 bash scripts/extract_types.sh
 bash scripts/crawl_type_desc.sh
 bash scripts/translate_types.sh <type>
@@ -77,7 +77,7 @@ bash scripts/translate_types.sh <type>
 
 The `<type>` can be either `simple` or `source_description`. The former prompts the model with vanilla prompt, while the latter prompts the model with source PL type description.
 
-### 5. Skeleton Construction
+### 4. Skeleton Construction
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
 
 ```bash
@@ -87,21 +87,68 @@ bash scripts/create_skeleton.sh
 
 This command should create proper skeletons in target language under `data/skeletons/<project_name>`.
 
-Execute the following from the root directory of the project to run the Graal-based semantic check of generated skeletons.
-```bash
-python src/compositional_glue_tests/semantic_check.py --project <project_name> [--class=<class_name>] [--method=<method_name>]
-```
+### 5. Compositional Translation and Validation
 
-If a `pom.xml` does not already exist for the project, the script will copy the original `pom.xml` to the project directory and throw an exception. You are required to manually check that the Java version in the `pom.xml` is set to at least 8 and that GraalVM is included in the dependencies. Once this is done, you can run the script again.
-
-### 6. Compositional Translation and Validation
-
-Execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
+Finally, execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
 
 ```bash
-bash scripts/extract_coverage.sh <project_name>
+bash scrtips/generate_test_invocation_map.sh <suffix>
+bash scripts/extract_coverage.sh <suffix>
 bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 ```
+
+You can use `project_name=commons-cli`, `temperature=0.0`, `model=gpt-4o-2024-11-20`, `suffix=_decomposed_tests` as an example.
+
+## Project Reduction, Program Transformation and Test Decomposition
+In this section, we provide the steps on how to get rid of third-party libraries from original projects.
+
+### 1. Project Reduction
+
+#### Add the Maven JAR Plugin
+
+Run the following script to add the `maven-jar-plugin` to a project for a test jar:
+```
+bash scripts/project_reduction/add_plugin.sh <project_path>
+```
+
+#### Build and Merge Source and Test JARs
+Run this script to build the project and merge the source and test JARs:
+```
+bash scripts/project_reduction/merge_jar.sh <project_path>
+```
+
+#### Generate a Call Graph
+
+Generate a simple call graph (via JavaCG) of the entire project using the merged JAR:
+```
+bash scripts/project_reduction/generate_cg.sh <project_path>
+```
+
+#### Reduce Project
+```
+python3 scripts/project_reduction/reduce_third_party_libs.py <project_path>
+```
+
+### 2. Program Transformation
+Execute the following from the root directory of the repository to perform program transformation on a specific project.
+
+```
+bash scripts/program_transformation.sh <project_dir_overload_methods> <project_dir_overload_constructors> <project_name>
+```
+
+### 3. Test Decomposition
+AlphaTrans performs test decomposition on transformed projects as a step to address the long-call chain problem when executing tests in target language. Please execute the following to first extract executed tests and their coverage, and use this information to decompose tests properly:
+```
+bash scripts/extract_coverage.sh ''
+```
+Once this executes properly, it should create a directory called `source_test_execution` under [`data`](/data/). Then execute the following to decompose tests:
+```
+bash scripts/decompose_test.sh
+```
+After successful execution, this should create the [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/) directory under [`java_projects`](/java_projects/).
+
+> [!NOTE]
+> There might be a need to do some small manual changes after test decomposition. For instance removing `@Test(expected = IllegalArgumentException.class)` from test annotation as we do not know ahead of time which decomposed tests throw exception. Please refer to our reference decomposed tests (e.g., [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/)) for specific examples. A project with decomposed tests is considered ok as long as it can be compiled by maven.
 
 ## Contact
 We look forward to hearing your feedback. Please open an issue for any questions or comments 🙏.

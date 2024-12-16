@@ -18,7 +18,7 @@ from field_exercise_validation import field_exercise_validation
 from test_validation import test_validation
 from graal_validation import graal_validation
 from get_reverse_traversal import get_reverse_traversal
-from src.translation.prompt_generator import PromptGenerator
+from prompt_generator import PromptGenerator
 
 
 def get_eligible_tests(fragment, processed_fragments, args):

@@ -7,23 +7,24 @@ import os
 import re
 from subprocess import Popen
 import logging
-from genai.client import Client
-from genai.credentials import Credentials
-from genai.schema import (
-    DecodingMethod,
-    TextGenerationParameters,
-    TextGenerationReturnOptions,
-)
+from ollama import Client
 
 
 def main(args):
 
-    if not os.path.exists(f"data/type_resolution/universal_type_map.json"):
-        with open(f"data/type_resolution/universal_type_map.json", "w") as f:
+    model_info = {
+                    'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
+                    'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
+                    'llama-3-3-70b-instruct': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'llama3.3'},
+                    'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'krith/qwen2.5-coder-32b-instruct:IQ4_XS'}
+                }
+    
+    if not os.path.exists(f"data/type_resolution/universal_type_map_final.json"):
+        with open(f"data/type_resolution/universal_type_map_final.json", "w") as f:
             json.dump({}, f)
 
     universal_type_map = {}
-    with open(f"data/type_resolution/universal_type_map.json", "r") as f:
+    with open(f"data/type_resolution/universal_type_map_final.json", "r") as f:
         universal_type_map = json.load(f)
 
     logging.basicConfig(filename=f"data/type_resolution/{args.project_name}/{args.type}.log", level=logging.INFO, format='%(asctime)s %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -106,22 +107,23 @@ def main(args):
         logging.info(prompt)
         logging.info('*' * 100)
 
-        client = Client(credentials=Credentials.from_env())
-        model_id = "deepseek-ai/deepseek-coder-33b-instruct"
+        client = Client(
+            host=os.environ["OLLAMA_HOST"],
+        )
 
-        parameters = TextGenerationParameters(  decoding_method=DecodingMethod.GREEDY,
-                                                min_new_tokens=1,
-                                                max_new_tokens=1024,
-                                                return_options=TextGenerationReturnOptions(
-                                                    input_text=True,
-                                                ),
-                                                time_limit=60000,
-                                            )
-
-        for response in client.text.generation.create(model_id=model_id, input=prompt, parameters=parameters):
-            generation = response.results[0].input_text + response.results[0].generated_text
-
-        generation = generation[generation.find('### Response:') + len('### Response:'):].strip()
+        completion = client.chat(
+            model=model_info[args.model_name]['model_id'],
+            messages=[
+            {
+                'role': 'user',
+                'content': prompt,
+            }],
+            options={
+                "temperature": 0,
+                "num_predict": 1024
+            }
+        )
+        generation = completion.message.content.strip()
 
         generation = generation.replace('```python', '```')
         pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
@@ -223,7 +225,7 @@ def main(args):
     with open(out_fname, "w") as f:
         json.dump(types, f, indent=4)
     
-    with open(f"data/type_resolution/universal_type_map.json", "w") as f:
+    with open(f"data/type_resolution/universal_type_map_final.json", "w") as f:
         json.dump(universal_type_map, f, indent=4)
 
     logging.info(f"Total success: {total_success}")

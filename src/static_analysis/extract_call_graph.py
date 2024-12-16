@@ -50,14 +50,9 @@ def main(args):
             callee_location = callee_location.replace('.class:0:0:0:0', '').replace('.sig:0:0:0:0', '')
             if 'file:///' in callee_location:
                 callee_location = '/'.join(callee_location[callee_location.find('file:///') + len('file:///'):].split('/')[1:])
-            
-            if 'ali/' in callee_location:
-                print(callee_location)
-            
+                        
             assert 'file:///' not in callee_location, f'callee_location: {callee_location}'
             assert '.class:0:0:0:0' not in callee_location, f'callee_location: {callee_location}'
-        #     print(caller_name, callee_location, callee_name)
-        #     continue
 
         callee_path = callee_location[callee_location.find(':')+1:callee_location.find(':', callee_location.find(':')+1)]
         callee_path = callee_path[callee_path.find(project):]
@@ -142,10 +137,10 @@ def main(args):
 
             callee_schema_name = callee_path[callee_path.find(project):].replace('/', '.').replace('.java', '')
 
-            # if callee_name == 'getCompBuffer' and 'JavaFastPFOR' in callee_schema_name:
-            #     callee_start_line = 84
-            # if callee_name == 'RoaringIntPacking' and 'JavaFastPFOR' in callee_schema_name:
-            #     continue
+            if callee_name == 'getCompBuffer' and 'JavaFastPFOR' in callee_schema_name:
+                callee_start_line = 84
+            if callee_name == 'RoaringIntPacking' and 'JavaFastPFOR' in callee_schema_name:
+                continue
 
             callee_method_class_name, callee_method_key_name = None, None
             callee_schema = {}

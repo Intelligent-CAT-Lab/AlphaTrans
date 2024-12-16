@@ -31,6 +31,11 @@ RUN pip3 install --upgrade pip
 
 WORKDIR /home
 
+RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.tar.gz
+RUN tar xzvf apache-maven-3.9.9-bin.tar.gz
+ENV PATH="/home/apache-maven-3.9.9/bin:${PATH}"
+RUN rm apache-maven-3.9.9-bin.tar.gz
+
 RUN git clone https://github.com/Intelligent-CAT-Lab/AlphaTrans.git
 
 WORKDIR /home/AlphaTrans
@@ -44,14 +49,14 @@ RUN echo "source /root/.bashrc && conda activate alphatrans" > /etc/profile.d/co
 
 RUN conda env create -f environment.yml
 
-RUN bash setup.sh install_graal
+RUN bash scripts/install_graal.sh
 
 RUN echo "OPENAI_API_KEY=" >> .env
 RUN echo "OLLAMA_HOST=" >> .env
 
 RUN mkdir -p /home/AlphaTrans/misc/sitter-libs
 RUN git clone https://github.com/tree-sitter/tree-sitter-java.git /home/AlphaTrans/misc/sitter-libs/java
-RUN git clone https://github.com/tree-sitter/py-tree-sitter /home/AlphaTrans/misc/sitter-libs/python
+RUN git clone https://github.com/tree-sitter/tree-sitter-python.git /home/AlphaTrans/misc/sitter-libs/python
 
 RUN wget https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.20.0/codeql-bundle-linux64.tar.gz
 RUN tar -xvf codeql-bundle-linux64.tar.gz -C /home/AlphaTrans/misc
@@ -64,3 +69,5 @@ RUN git submodule update --init --remote
 
 WORKDIR /home/AlphaTrans
 RUN cp queries/* vscode-codeql-starter/codeql-custom-queries-java
+
+RUN bash scripts/download_original_projects.sh

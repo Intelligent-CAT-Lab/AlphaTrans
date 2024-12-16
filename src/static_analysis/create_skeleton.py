@@ -122,7 +122,7 @@ def main(args):
 
     schemas = os.listdir(f'data/schemas{args.suffix}/{args.project_name}')
 
-    dependencies_dir = f'data/dependencies'
+    dependencies_dir = f'data/dependencies{args.suffix}'
 
     dependencies = {}
     with open(f'{dependencies_dir}/{args.project_name}/dependencies.json', 'r') as f:

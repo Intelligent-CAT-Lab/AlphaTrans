@@ -487,28 +487,48 @@ def get_superclass_name(node, code):
     return None
 
 
-def get_main_application_methods(args):
+def get_class_method_names(node, code):
+    """
+    Extracts all method names from a class declaration node.
+    """
+    method_names = []
+    # recursively search for method declarations
+    for child in node.children:
+        if child.type == 'method_declaration' or child.type == 'constructor_declaration':
+            method_name_node = child.child_by_field_name('name')
+            method_name = extract_text_by_bytes(code, method_name_node.start_byte, method_name_node.end_byte)
+            method_names.append(method_name)
+        method_names.extend(get_class_method_names(child, code))
+    
+    return method_names
+
+
+def get_main_application_methods(args, parser):
 
     main_application_methods = set()
 
-    for schema_file in os.listdir(f'data/schemas/{args.project_name}'):
+    src_path = f'java_projects/cleaned_final_projects_decomposed_tests/{args.project_name}/src'
+    src_files = []
+    for root, dirs, files in os.walk(src_path):
+        for file in files:
+            if file.endswith('.java') and 'ESTest' not in file and 'scaffolding' not in file:
+                src_files.append(os.path.join(root, file))
 
-        if 'ESTest' in schema_file or 'scaffolding' in schema_file:
-            continue
-
-        schema = {}
-        with open(f'data/schemas/{args.project_name}/{schema_file}', 'r') as f:
-            schema = json.load(f)
+    for src_file in src_files:
+        java_code = ''
+        with open(src_file, 'r') as f:
+            java_code = f.read()
         
-        for class_ in schema['classes']:
+        tree = parser.parse(bytes(java_code, "utf8"))
 
-            if 'new' in class_ or '{' in class_: # skip nested and nameless classes
-                continue
+        for node in tree.root_node.children:
+            if node.type == 'class_declaration':
+                class_name_node = node.child_by_field_name('name')
+                class_name = extract_text_by_bytes(java_code, class_name_node.start_byte, class_name_node.end_byte)
+                main_application_methods.add(class_name)
 
-            main_application_methods.add(class_)
-
-            for method in schema['classes'][class_]['methods']:
-                main_application_methods.add(method.split(':')[1])
+                method_names = get_class_method_names(node, java_code)
+                main_application_methods.update(method_names)
 
     return main_application_methods
 
@@ -536,7 +556,7 @@ def main(args):
             if file.endswith('.java'):
                 test_files.append(os.path.join(root, file))
     
-    main_application_methods = get_main_application_methods(args)
+    main_application_methods = get_main_application_methods(args, parser)
     
     decomposed_method_details = {}
     ignored_test_methods = {}
