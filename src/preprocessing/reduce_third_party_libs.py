@@ -41,7 +41,7 @@ class_regex = (
     r'(\s+implements\s+[\w\s,<>]+)?'
     r'\s*\{'
 )
-max_multiline = 5
+max_multiline = 10
 
 def identify_current_project_packages(source_code_path):
     packages = set()
@@ -519,6 +519,34 @@ def identify_third_party_dependencies(call_graph, third_party_packages, override
     return classes_to_remove, dependent_class_methods
 
 
+def is_special_test_class(file_path):
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+        content = file.read()
+    if re.search(r'@RunWith\(\s*Parameterized\.class\s*\)', content):
+        return True
+
+    if re.search(r'extends\s+TestCase', content):
+        return True
+
+    return False
+
+def has_test_methods(file_path):
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+        content = file.read()
+
+    if re.search(r'@Test', content):
+        return True
+
+    if re.search(r'public\s+void\s+test\w*\(', content):
+        return True
+
+    return False
+
+def extract_class_name(file_path):
+    class_name = file_path.split("/")[-1].split(".java")[0]
+    return class_name
+
+
 def refactor_code(source_code_path, dependent_class_methods, third_party_packages, classes_to_remove):
     classes_names_to_remove = [path.replace("$", ".").split(".")[-1] for path in classes_to_remove]
     for class_name in third_party_packages:
@@ -533,13 +561,28 @@ def refactor_code(source_code_path, dependent_class_methods, third_party_package
                 class_base_path = class_path.split("$")[0]
 
                 methods_to_remove = set()
-                # Find all keys in the format "{path}.Outer$xxxxxxx" and add to methods_to_remove
                 for key, methods in dependent_class_methods.items():
                     if key.split("$")[0] == class_base_path:
                         methods_to_remove.update(methods)
                 
+                test_class_dependent_on_third_party_fields = False
+
                 if not methods_to_remove:
-                    continue
+                    if has_test_methods(file_path):
+                        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                            lines = f.readlines()
+                            for i, line in enumerate(lines):
+                                import_match = re.match(r'import\s+(static\s+)?([\w.]+(\.\*)?);', line.strip())
+                                if import_match:
+                                    imported = import_match.group(2)
+                                    if (any(imported.startswith(third_pkg) for third_pkg in third_party_packages)) \
+                                        or (any(imported.startswith(dep_method.replace(":", ".").replace("$", ".")) for dep_method in third_party_packages)) \
+                                        or (any((imported == class_to_remove.replace("$", ".")) for class_to_remove in classes_to_remove)) \
+                                        or (any((imported.rsplit('.', 1)[0] == class_to_remove.replace("$", ".")) for class_to_remove in classes_to_remove)):
+                                        test_class_dependent_on_third_party_fields = True
+                                        break
+                    if not test_class_dependent_on_third_party_fields:
+                        continue
                 
                 print(f"Refactoring {class_path}")
 
@@ -548,6 +591,8 @@ def refactor_code(source_code_path, dependent_class_methods, third_party_package
 
                 with open(file_path, 'w') as f:
                     skip_class = False
+                    if test_class_dependent_on_third_party_fields:
+                        classes_to_remove.add(class_base_path)
                     for class_to_remove in classes_to_remove:
                         if class_to_remove == class_base_path:
                             placeholder_written = False
@@ -736,9 +781,43 @@ def refactor_code(source_code_path, dependent_class_methods, third_party_package
 
                         f.write(multiline)
 
+    classes_removed = []
+    for root, _, files in os.walk(source_code_path):
+        for file in files:
+            if file.endswith('.java'):
+                file_path = os.path.join(root, file)
+
+                if is_special_test_class(file_path) and not has_test_methods(file_path):
+                    class_name = extract_class_name(file_path)
+                    print(f"Deleting file: {file_path}")
+                    os.remove(file_path)
+                    classes_removed.append(class_name)
+
+    for root, _, files in os.walk(source_code_path):
+        for file in files:
+            if file.endswith('.java'):
+                file_path = os.path.join(root, file)
+
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
+                    content = file.read()
+                    for class_name in classes_removed:
+                        if re.search(r'extends\s+' + re.escape(class_name), content):
+                            print(f"Deleting file (depends on removed class): {file_path}")
+                            os.remove(file_path)
+                            break
 
 
-def main(project_dir):
+
+def main(project_name):
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    project_dir = os.path.dirname(os.path.dirname(script_dir)) + f"/java_projects/automated_reduced_projects/{project_name}"
+
+    
+    if not os.path.isdir(project_dir):
+        print(f"Error: Reduced Project directory '{project_dir}' does not exist.")
+        sys.exit(1)
     try:
         os.chdir(project_dir)
     except FileNotFoundError:
@@ -780,8 +859,8 @@ def main(project_dir):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 reduce_third_party_libs.py <project_dir>")
+        print("Usage: python3 reduce_third_party_libs.py project_name")
         sys.exit(1)
     
-    project_dir = sys.argv[1]
-    main(project_dir)
+    project_name = sys.argv[1]
+    main(project_name)

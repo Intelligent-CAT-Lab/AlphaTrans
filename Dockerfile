@@ -58,6 +58,10 @@ RUN mkdir -p /home/AlphaTrans/misc/sitter-libs
 RUN git clone https://github.com/tree-sitter/tree-sitter-java.git /home/AlphaTrans/misc/sitter-libs/java
 RUN git clone https://github.com/tree-sitter/tree-sitter-python.git /home/AlphaTrans/misc/sitter-libs/python
 
+RUN mkdir -p /home/AlphaTrans/misc/java-callgraph
+RUN git clone https://github.com/gousiosg/java-callgraph.git /home/AlphaTrans/misc/java-callgraph
+RUN cd /home/AlphaTrans/misc/java-callgraph && mvn clean install -DskipTests
+
 RUN wget https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.20.0/codeql-bundle-linux64.tar.gz
 RUN tar -xvf codeql-bundle-linux64.tar.gz -C /home/AlphaTrans/misc
 RUN rm codeql-bundle-linux64.tar.gz

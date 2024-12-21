@@ -22,18 +22,29 @@ EOF
 )
 
 if [ $# -ne 1 ]; then
-    echo "Usage: ./add_plugin.sh <directory_containing_pom.xml>"
+    echo "Usage: ./add_plugin.sh <project_name>"
     exit 1
 fi
 
-project_dir="$1"
-if ! cd "$project_dir" 2>/dev/null; then
-    echo "Error: Cannot access directory '$project_dir'."
+project_name="$1"
+original_dir="./java_projects/original_projects/$project_name"
+reduced_dir="./java_projects/automated_reduced_projects/$project_name"
+
+if [ ! -d "$original_dir" ]; then
+    echo "Error: Project '$project_name' not found in /java_projects/original_projects/"
     exit 1
 fi
+
+cp -r "$original_dir" "$reduced_dir"
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to copy project '$project_name' to $reduced_dir."
+    exit 1
+fi
+
+cd "$reduced_dir" || exit
 
 if [ ! -f "pom.xml" ]; then
-    echo "Error: pom.xml not found in $project_dir."
+    echo "Error: pom.xml not found in $reduced_dir."
     exit 1
 fi
 
@@ -54,5 +65,5 @@ else
     exit 1
 fi
 
-echo "Plugin configuration added to pom.xml in $project_dir"
+echo "Plugin configuration added to pom.xml in $reduced_dir"
 

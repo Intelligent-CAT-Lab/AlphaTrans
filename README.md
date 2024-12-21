@@ -111,26 +111,27 @@ In this section, we provide the steps on how to get rid of third-party libraries
 
 Run the following script to add the `maven-jar-plugin` to a project for a test jar:
 ```
-bash scripts/project_reduction/add_plugin.sh <project_path>
+bash scripts/add_plugin.sh <project_name>
 ```
 
 #### Build and Merge Source and Test JARs
 Run this script to build the project and merge the source and test JARs:
 ```
-bash scripts/project_reduction/merge_jar.sh <project_path>
+bash scripts/merge_jar.sh <project_name>
 ```
 
 #### Generate a Call Graph
 
 Generate a simple call graph (via JavaCG) of the entire project using the merged JAR:
 ```
-bash scripts/project_reduction/generate_cg.sh <project_path>
+bash scripts/generate_cg.sh <project_name>
 ```
 
 #### Reduce Project
 ```
-python3 scripts/project_reduction/reduce_third_party_libs.py <project_path>
+python3 src/preprocessing/reduce_third_party_libs.py <project_name>
 ```
+The project name is the name of a directory from `/java_projects/original_projects`. After reduction, a directory of the same name will appear under `/java_projects/automated_reduced_projects/`.
 
 ### 2. Program Transformation
 Execute the following from the root directory of the repository to perform program transformation on a specific project.

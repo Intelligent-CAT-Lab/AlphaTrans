@@ -1,10 +1,11 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-  echo "Usage: ./merge_jar.sh <path_to_project>"
+  echo "Usage: ./merge_jar.sh <project_name>"
   exit 1
 fi
-PROJECT_DIR="$1"
+PROJECT_NAME="$1"
+PROJECT_DIR="./java_projects/automated_reduced_projects/$PROJECT_NAME"
 
 if [ ! -d "$PROJECT_DIR" ]; then
   echo "Error: Directory '$PROJECT_DIR' does not exist."
@@ -14,7 +15,7 @@ fi
 cd "$PROJECT_DIR" || exit 1
 
 echo "Running 'mvn clean install' in $PROJECT_DIR..."
-if ! mvn clean install -DskipTests -Drat.skip -Dgpg.skip; then
+if ! mvn clean install -DskipTests -Drat.skip -Dgpg.skip -Dcheckstyle.skip; then
   echo "Error: Maven build failed."
   exit 1
 fi
