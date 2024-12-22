@@ -50,6 +50,7 @@ RUN echo "source /root/.bashrc && conda activate alphatrans" > /etc/profile.d/co
 RUN conda env create -f environment.yml
 
 RUN bash scripts/install_graal.sh
+ENV JAVA_HOME="/root/.sdkman/candidates/java/current"
 
 RUN echo "OPENAI_API_KEY=" >> .env
 RUN echo "OLLAMA_HOST=" >> .env
