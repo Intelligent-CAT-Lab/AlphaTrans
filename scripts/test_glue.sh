@@ -2,17 +2,7 @@
 
 # To execute, run `bash scripts/test_glue.sh <project>` from the root directory
 
-projects=(
-    'commons-cli' \
-    'commons-codec' \
-    'commons-csv' \
-    'commons-validator' \
-    'commons-fileupload' \
-    'commons-pool' \
-    'commons-graph' \
-    'joda-money' \
-    'joda-convert'\
-    )
+projects=('commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi' 'JavaFastPFOR')
 
 if [[ " ${projects[@]} " =~ " $1 " ]]; then
     echo "Running tests for $1"

@@ -19,6 +19,7 @@ main=$(pwd);
 for project in "${projects[@]}"; do
     echo "building $project"
     cd "$projects_dir/$project" || exit
-    mvn clean compile -Drat.skip --log-file build.log
+    mvn clean compile -Drat.skip
+    mvn clean test-compile -Drat.skip
     cd "$main" || exit
 done

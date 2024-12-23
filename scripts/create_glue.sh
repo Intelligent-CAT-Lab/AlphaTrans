@@ -1,16 +1,6 @@
 #!/bin/bash
 
-projects=(
-    'commons-cli' \
-    'commons-codec' \
-    'commons-csv' \
-    'commons-validator' \
-    'commons-fileupload' \
-    'commons-pool' \
-    'commons-graph' \
-    'joda-money' \
-    'joda-convert'\
-    )
+projects=('commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi' 'JavaFastPFOR')
 
 # if no project name is provided, generate glue for all projects
 if [ -z "$1" ]; then
