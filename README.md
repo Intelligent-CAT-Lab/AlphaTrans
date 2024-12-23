@@ -22,7 +22,7 @@ For all ten projects, we provide the project skeletons and partial translations.
 
 ```
 bash scripts/get_dependencies.sh _decomposed_tests
-bash scrtips/generate_test_invocation_map.sh _decomposed_tests
+bash scripts/generate_test_invocation_map.sh _decomposed_tests
 bash scripts/extract_coverage.sh _decomposed_tests
 bash scripts/translate_fragment.sh commons-cli 0.0 gpt-4o-2024-11-20
 ```
@@ -103,7 +103,7 @@ bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 You can use `project_name=commons-cli`, `temperature=0.0`, and `model=gpt-4o-2024-11-20` as an example.
 
 ## Project Reduction, Program Transformation and Test Decomposition
-In this section, we provide the steps on how to get rid of third-party libraries from original projects.
+In this section, we provide the steps on how to get rid of third-party libraries from original projects, transform programs and perform test decomposition.
 
 ### 1. Project Reduction
 
@@ -131,10 +131,11 @@ bash scripts/generate_cg.sh <project_name>
 ```
 python3 src/preprocessing/reduce_third_party_libs.py <project_name>
 ```
-The project name is the name of a directory from `/java_projects/original_projects`. After reduction, a directory of the same name will appear under `/java_projects/automated_reduced_projects/`.
+The project name is the name of a directory from `java_projects/original_projects`. After reduction, a directory of the same name will appear under `java_projects/automated_reduced_projects/`.
 
 ### 2. Program Transformation
-Execute the following from the root directory of the repository to perform program transformation on a specific project.
+
+Before doing program transformation, please follow the steps mentioned in [CodeQL Database Creation and Static Analysis](#1-codeql-database-creation--static-analysis) to properly create databases of reduced projects and generate query outputs. Then, execute the following to perform program transformation on a specific project. The `<project_dir_overload_methods>` and `<project_dir_overload_constructors>` are the directories of projects with overload methods and constructors. You can choose the directory names.
 
 ```
 bash scripts/program_transformation.sh <project_dir_overload_methods> <project_dir_overload_constructors> <project_name>

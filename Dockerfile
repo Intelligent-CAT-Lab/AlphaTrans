@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
+    rsync \
     vim \
     && rm -rf /var/lib/apt/lists/*
 
@@ -79,3 +80,5 @@ WORKDIR /home/AlphaTrans
 RUN cp queries/* vscode-codeql-starter/codeql-custom-queries-java
 
 RUN bash scripts/download_original_projects.sh
+
+RUN bash scripts/build_java_projects.sh
