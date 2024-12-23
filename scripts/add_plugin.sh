@@ -1,23 +1,23 @@
 #!/bin/bash
 
 plugin_config=$(cat <<'EOF'
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.0</version>
-        <configuration>
-            <excludes>
-                <exclude>module-info.class</exclude>
-            </excludes>
-        </configuration>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>test-jar</goal>
-                </goals>
-            </execution>
-        </executions>
-    </plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>3.2.0</version>
+    <configuration>
+        <excludes>
+            <exclude>module-info.class</exclude>
+        </excludes>
+    </configuration>
+    <executions>
+        <execution>
+            <goals>
+                <goal>test-jar</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
 EOF
 )
 
@@ -35,7 +35,8 @@ if [ ! -d "$original_dir" ]; then
     exit 1
 fi
 
-cp -r "$original_dir" "$reduced_dir"
+mkdir -p "$reduced_dir"
+rsync -a --exclude='.git' "$original_dir/" "$reduced_dir"
 if [ $? -ne 0 ]; then
     echo "Error: Failed to copy project '$project_name' to $reduced_dir."
     exit 1
@@ -48,22 +49,16 @@ if [ ! -f "pom.xml" ]; then
     exit 1
 fi
 
-insertion_point="<plugins>"
-
-OS=$(uname)
-
-if [ "$OS" = "Linux" ]; then
-    sed -i "/$insertion_point/a\\
-$plugin_config" pom.xml
-elif [ "$OS" = "Darwin" ]; then
-    sed "/$insertion_point/ r /dev/stdin" pom.xml > pom.xml.new <<EOF
-$plugin_config
-EOF
-    mv pom.xml.new pom.xml
-else
-    echo "Unsupported OS: $OS"
-    exit 1
-fi
+awk -v config="$plugin_config" '
+    BEGIN { in_build = 0 }
+    /<build>/ { in_build = 1 }
+    /<\/build>/ { in_build = 0 }
+    in_build && /<plugins>/ {
+        print; 
+        print config; 
+        next 
+    }
+    { print }
+' pom.xml > pom.xml.new && mv pom.xml.new pom.xml
 
 echo "Plugin configuration added to pom.xml in $reduced_dir"
-

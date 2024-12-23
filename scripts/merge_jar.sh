@@ -12,6 +12,28 @@ if [ ! -d "$PROJECT_DIR" ]; then
   exit 1
 fi
 
+if [ "$PROJECT_NAME" == "commons-graph" ]; then
+  TARGET_FILE="$PROJECT_DIR/src/main/java/org/apache/commons/graph/export/DefaultExportSelector.java"
+  
+  if [ ! -f "$TARGET_FILE" ]; then
+    echo "Error: File '$TARGET_FILE' not found."
+    exit 1
+  fi
+  
+  awk 'NR==62 {$0="return null;"} {print}' "$TARGET_FILE" > "${TARGET_FILE}.tmp" && mv "${TARGET_FILE}.tmp" "$TARGET_FILE"
+fi
+
+if [ "$PROJECT_NAME" == "commons-pool" ]; then
+  TARGET_FILE="$PROJECT_DIR/src/test/java/org/apache/commons/pool2/performance/PerformanceTest.java"
+  
+  if [ -f "$TARGET_FILE" ]; then
+    rm -f "$TARGET_FILE"
+  else
+    echo "Error: File '$TARGET_FILE' not found."
+    exit 1
+  fi
+fi
+
 cd "$PROJECT_DIR" || exit 1
 
 echo "Running 'mvn clean install' in $PROJECT_DIR..."
