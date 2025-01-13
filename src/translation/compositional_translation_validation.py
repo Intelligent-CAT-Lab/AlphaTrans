@@ -357,8 +357,8 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
 
     model_info = {
                     'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
+                    'llama3.3': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'llama3.3'},
                     'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
-                    'llama-3-3-70b-instruct': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'llama3.3'},
                     'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'krith/qwen2.5-coder-32b-instruct:IQ4_XS'}
                 }
 
