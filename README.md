@@ -2,7 +2,7 @@
 This repository contains artifacts of AlphaTrans from the paper ["Repository-Level Compositional Code Translation and Validation"](https://arxiv.org/abs/2410.24117).
 
 ## Getting Started
-We provide a [`Dockerfile`](/Dockerfile) which installs all necessary dependencies to reproduce the results of AlphaTrans. Please execute the following to create a docker image and execute the container in interactive mode:
+We provide a [`Dockerfile`](/Dockerfile) which installs all necessary dependencies to reproduce the results of AlphaTrans. Please download [Docker](https://www.docker.com/), and then execute the following to create a docker image and execute the container in interactive mode:
 
 ```
 docker build --no-cache -t alphatrans .
@@ -12,20 +12,23 @@ docker run -it alphatrans bash
 Please refer to [Reproduce AlphaTrans Results](#reproduce-alphatrans-results) for instructions on how to reproduce the results of AlphaTrans. If you are interested in translating more projects, please refer to [Translate New Java Projects](#translate-new-java-projects).
 
 ## Reproduce AlphaTrans Results
-AlphaTrans currently supports prompting OpenAI models (e.g., `GPT-4o-2024-11-20`) and open-source models (e.g., `deepseek-ai/deepseek-coder-33b-instruct`) served by ollama (please see the [Ollama Project](https://ollama.com/) on how to start an engine). We have created a `.env` file to store API keys and model endpoints. If prompting with ollama, please simply paste in your `OLLAMA_HOST` (e.g., `http://0.0.0.0:5000` when the engine `IP` is `0.0.0.0` and `PORT` is `5000`). If prompting with OpenAI models, you only need to paste in your key in `OPENAI_API_KEY`.
+AlphaTrans currently supports prompting OpenAI models (e.g., `gpt-4o-2024-11-20`) and open-source models (e.g., `deepseek-ai/deepseek-coder-33b-instruct`) served by ollama (please see the [Ollama Project](https://ollama.com/) on how to start an engine). We have created a `.env` file to store API keys and model endpoints. If prompting with ollama, please simply paste in your `OLLAMA_HOST` (e.g., `http://0.0.0.0:5000` where the engine `IP` is `0.0.0.0` and `PORT` is `5000`). If prompting with OpenAI models, you only need to paste in your key in `OPENAI_API_KEY`.
 
 ```
 vim .env
 ```
 
-For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-cli` with `deepseek-coder-33b-instruct` model with `temperature=0.0`):
+For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-cli` project with `gpt-4o-2024-11-20` model and with `temperature=0.0`):
 
 ```
 bash scripts/get_dependencies.sh _decomposed_tests
 bash scripts/generate_test_invocation_map.sh _decomposed_tests
-bash scripts/extract_coverage.sh _decomposed_tests
+bash scripts/extract_coverage.sh commons-cli _decomposed_tests
 bash scripts/translate_fragment.sh commons-cli 0.0 gpt-4o-2024-11-20
 ```
+
+> [!NOTE]
+> Executing the script `extract_coverage.sh` can take some time. Please be patient.
 
 This script will translate the project fragment by fragment in reverse-call graph order and store translations in JSON files along with validation results (e.g., syntactical correctness, GraalVM correctness, test execution correctness, etc.). If you want to create standalone python projects, simply recompose all translations with the following script:
 
@@ -96,7 +99,7 @@ Finally, execute the following from the root directory of the repository to perf
 
 ```bash
 bash scrtips/generate_test_invocation_map.sh _decomposed_tests
-bash scripts/extract_coverage.sh _decomposed_tests
+bash scripts/extract_coverage.sh <project_name> _decomposed_tests
 bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 ```
 
@@ -144,7 +147,7 @@ bash scripts/program_transformation.sh <project_dir_overload_methods> <project_d
 ### 3. Test Decomposition
 AlphaTrans performs test decomposition on transformed projects as a step to address the long-call chain problem when executing tests in target language. Please execute the following to first extract executed tests and their coverage, and use this information to decompose tests properly:
 ```
-bash scripts/extract_coverage.sh ''
+bash scripts/extract_coverage.sh <project_name> ''
 ```
 Once this executes properly, it should create a directory called `source_test_execution` under [`data`](/data/). Then execute the following to decompose tests:
 ```

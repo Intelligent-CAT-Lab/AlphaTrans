@@ -1,10 +1,7 @@
 #!/bin/bash
 
-suffix=$1
+project=$1
+suffix=$2
 
-for project in 'commons-cli' 'commons-codec' 'commons-csv' 'commons-validator' 'commons-fileupload' 'commons-pool' 'commons-graph' 'commons-exec' 'jansi' 'JavaFastPFOR';
-do
-    echo "extracting test coverage for $project"
-    python3 src/static_analysis/extract_source_tests.py --project_name=$project --suffix=$suffix
-
-done
+echo "extracting test coverage for $project"
+python3 src/static_analysis/extract_source_tests.py --project_name=$project --suffix=$suffix
