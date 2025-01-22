@@ -344,7 +344,7 @@ def main(args):
                       'configparser': 'import configparser\n', 'StringIO': 'from io import StringIO\n', 'IOBase': 'from io import IOBase\n', 'Number': 'import numbers\n', 'zoneinfo': 'import zoneinfo\n',
                       'urllib': 'import urllib\n', 'logging': 'import logging\n', 'mock': 'import mock\n', 'cmp_to_key': 'from functools import cmp_to_key\n', 'random': 'import random\n',
                       're': 'import re\n', 'locale': 'import locale\n', 'copy': 'import copy\n', 'traceback': 'import traceback\n', 'inspect': 'import inspect\n', 'time': 'import time\n',
-                      'sqrt': 'from math import *\n', 'math': 'import math\n'}
+                      'sqrt': 'from math import *\n', 'math': 'import math\n', 'abstractmethod': 'from abc import abstractmethod\n'}
 
         python_imports = data['python_imports']
         for key in import_map:

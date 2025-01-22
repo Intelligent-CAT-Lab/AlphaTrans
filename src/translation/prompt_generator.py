@@ -13,6 +13,7 @@ class PromptGenerator:
         self.prompt_status = 'success'
         self.use_icl_pool = use_icl_pool
         self.fragment_details = fragment_details
+        self.signature = None
 
         self.meta_data = {
                             'deepseek-coder-33b-instruct-persona': 'You are an AI programming assistant, utilizing the DeepSeek Coder model, developed by DeepSeek Company, and you only answer questions related to computer science. For politically sensitive questions, security and privacy issues, and other non-computer science questions, you will refuse to answer.',
@@ -401,10 +402,12 @@ class PromptGenerator:
         elif self.fragment_type == 'method':
             self.prompt += f'Python method translation:\n```\n'
             self.prompt += ''.join(self.schema_data['classes'][self.class_name]['methods'][self.fragment_name]['partial_translation']).rstrip().replace('    pass', '    ')
+            self.signature = ''.join(self.schema_data['classes'][self.class_name]['methods'][self.fragment_name]['partial_translation']).strip()
         
         elif self.fragment_type == 'static_initializer':
             self.prompt += f'Python method translation:\n```\n'
             self.prompt += '    @staticmethod\n    def run_static_init():\n        '        
+            self.signature = 'def run_static_init():'
 
     def single_line_break(self):
         self.prompt += '\n'

@@ -390,7 +390,8 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
     while budget[current_budget] > 0:
 
         ############################ <TRANSLATION> ############################
-        prompt = PromptGenerator(is_feedback=True if feedback else False, args=args, fragment_details=fragment, feedback=feedback).generate_prompt()
+        prompt_gen = PromptGenerator(is_feedback=True if feedback else False, args=args, fragment_details=fragment, feedback=feedback)
+        prompt = prompt_gen.generate_prompt()
 
         if args.debug:
             print('=======================PROMPT=======================', flush=True)
@@ -415,7 +416,7 @@ def translate(fragment, args, processed_fragments, budget={}, feedback=None, rec
 
         ############################ <SYNTACTIC VALIDATION> ############################
         current_budget = 'syntactic'
-        status, generation, feedback = syntactic_validation(generation, fragment, args)
+        status, generation, feedback = syntactic_validation(generation, fragment, args, prompt_gen.signature)
 
         if not status:
             if budget[current_budget] - 1 == 0:
