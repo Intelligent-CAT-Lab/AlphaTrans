@@ -1,3 +1,6 @@
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13826582.svg)](https://doi.org/10.5281/zenodo.13826582)
+
 # AlphaTrans
 This repository contains artifacts of AlphaTrans from the paper ["Repository-Level Compositional Code Translation and Validation"](https://arxiv.org/abs/2410.24117).
 
@@ -18,23 +21,32 @@ AlphaTrans currently supports prompting OpenAI models (e.g., `gpt-4o-2024-11-20`
 vim .env
 ```
 
-For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-cli` project with `gpt-4o-2024-11-20` model and with `temperature=0.0`):
+For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-fileupload` project with `gpt-4o-2024-11-20` model and with `temperature=0.0`):
 
 ```
 bash scripts/get_dependencies.sh _decomposed_tests
 bash scripts/generate_test_invocation_map.sh _decomposed_tests
-bash scripts/extract_coverage.sh commons-cli _decomposed_tests
-bash scripts/translate_fragment.sh commons-cli 0.0 gpt-4o-2024-11-20
+bash scripts/extract_coverage.sh commons-fileupload _decomposed_tests
+bash scripts/translate_fragment.sh commons-fileupload 0.0 gpt-4o-2024-11-20
 ```
 
 > [!NOTE]
 > Executing the script `extract_coverage.sh` can take some time. Please be patient.
 
-This script will translate the project fragment by fragment in reverse-call graph order and store translations in JSON files along with validation results (e.g., syntactical correctness, GraalVM correctness, test execution correctness, etc.). If you want to create standalone python projects, simply recompose all translations with the following script:
+These scripts will translate the project fragment by fragment in reverse-call graph order and store translations in JSON files along with validation results (e.g., syntactical correctness, GraalVM correctness, test execution correctness, etc.). If you want to create standalone python projects, simply recompose all translations with the following script:
 
 ```
-bash scripts/recompose.sh commons-cli 0.0 gpt-4o-2024-11-20
+bash scripts/recompose.sh commons-fileupload 0.0 gpt-4o-2024-11-20
 ```
+
+If you want to check the effectiveness of `gpt-4o-2024-11-20` in translating `commons-fileupload`, please either run the following script or refer to the provided excel sheets on [Zenodo](https://doi.org/10.5281/zenodo.13826582):
+
+```
+bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20
+```
+
+> [!NOTE]
+> Due to probabilistic behavior of models, the results might be slightly different when re-translating projects. You may run the experiment multiple times to adjust for this behavior.
 
 ## Translate New Java Projects
 In this section, we discuss how to add more projects and translate with AlphaTrans. Below, we provide the steps for the ten subject projects in our work. If you add a new project, it should be similar to existing ones. For every project, we provide two specific snapshots as shown below:
@@ -103,7 +115,7 @@ bash scripts/extract_coverage.sh <project_name> _decomposed_tests
 bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 ```
 
-You can use `project_name=commons-cli`, `temperature=0.0`, and `model=gpt-4o-2024-11-20` as an example.
+You can use `project_name=commons-fileupload`, `temperature=0.0`, and `model=gpt-4o-2024-11-20` as an example.
 
 ## Project Reduction, Program Transformation and Test Decomposition
 In this section, we provide the steps on how to get rid of third-party libraries from original projects, transform programs and perform test decomposition.
