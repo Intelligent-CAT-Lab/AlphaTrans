@@ -25,7 +25,7 @@ def calc_m1(graal_errors, test_pass):
 
 def main(args):
 
-    schema_path = f'data/results/{args.model}/body/{args.temperature}/{args.project_name}'
+    schema_path = f'{args.results_dir}/{args.model}/body/{args.temperature}/{args.project_name}'
 
     field_count = {'main': {'pending': 0, 'out_of_context': 0, 'attempted': 0}, 'test': {'pending': 0, 'out_of_context': 0, 'attempted': 0}}
     field_syntactic_count = {'main': {'pending': 0, 'parseable': 0, 'non-parseable': 0}, 'test': {'pending': 0, 'parseable': 0, 'non-parseable': 0}}
@@ -253,9 +253,9 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Print results')
+    parser.add_argument('--results_dir', type=str, help='Results directory')
     parser.add_argument('--project_name', type=str, help='Project name')
     parser.add_argument('--temperature', type=str, help='Temperature')
     parser.add_argument('--model', type=str, help='Model')
-    parser.add_argument('--suffix', type=str, help='Suffix')
     args = parser.parse_args()
     main(args)

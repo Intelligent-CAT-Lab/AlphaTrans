@@ -42,7 +42,7 @@ bash scripts/recompose.sh commons-fileupload 0.0 gpt-4o-2024-11-20
 If you want to check the effectiveness of `gpt-4o-2024-11-20` in translating `commons-fileupload`, please either run the following script or refer to the provided excel sheets on [Zenodo](https://doi.org/10.5281/zenodo.13826582):
 
 ```
-bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20
+bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 data/schemas_decomposed_tests/translations
 ```
 
 > [!NOTE]
