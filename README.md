@@ -1,6 +1,3 @@
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13826582.svg)](https://doi.org/10.5281/zenodo.13826582)
-
 # AlphaTrans
 This repository contains artifacts of AlphaTrans from the paper ["Repository-Level Compositional Code Translation and Validation"](https://arxiv.org/abs/2410.24117).
 
@@ -12,7 +9,7 @@ docker build --no-cache -t alphatrans .
 docker run -it alphatrans bash
 ```
 > [!NOTE]
-> If you are using MacOS with an Apple chip, please considering adding `--platform=linux/amd64` in `docker build`.
+> If you are using MacOS with an Apple chip, please consider adding `--platform=linux/amd64` in `docker build`.
 
 Please refer to [Reproduce AlphaTrans Results](#reproduce-alphatrans-results) for instructions on how to reproduce the results of AlphaTrans. If you are interested in translating more projects, please refer to [Translate New Java Projects](#translate-new-java-projects).
 
