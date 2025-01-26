@@ -8,16 +8,54 @@ import re
 from subprocess import Popen
 import logging
 from ollama import Client
+from openai import OpenAI
+
+
+def prompt_model(model_info, client, prompt, args):
+
+    if args.model_name == 'gpt-4o-2024-11-20':
+        completion = client.chat.completions.create(
+            model=args.model_name,
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            max_tokens=1024,
+            temperature=0.0,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0
+        )
+
+        generation = completion.choices[0].message.content
+
+    else:
+        completion = client.chat(
+            model=model_info[args.model_name]['model_id'],
+            messages=[
+            {
+                'role': 'user',
+                'content': prompt,
+            }],
+            options={
+                "temperature": 0.0,
+                "num_predict": 1024
+            }
+        )
+        generation = completion.message.content
+
+    return generation
 
 
 def main(args):
 
     model_info = {
-                    'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
-                    'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
-                    'llama-3-3-70b-instruct': {'total': 128000, 'max_new_tokens': 8196, 'model_id': 'llama3.3'},
-                    'Qwen2.5-Coder-32B-Instruct': {'total': 131072, 'max_new_tokens': 8196, 'model_id': 'krith/qwen2.5-coder-32b-instruct:IQ4_XS'}
-                }
+        'deepseek-coder-33b-instruct': {'total': 16384, 'max_new_tokens': 4096, 'model_id': 'deepseek-ai/deepseek-coder-33b-instruct'},
+        'gpt-4o-2024-11-20': {'total': 128000, 'max_new_tokens': 16384, 'model_id': 'gpt-4o-2024-11-20'},
+    }
     
     if not os.path.exists(f"data/type_resolution/universal_type_map_final.json"):
         with open(f"data/type_resolution/universal_type_map_final.json", "w") as f:
@@ -36,9 +74,6 @@ def main(args):
     if args.type == 'source_description':
         in_fname = f"data/type_resolution/{args.project_name}/s1_output.json"
         out_fname = f"data/type_resolution/{args.project_name}/s2_output.json"
-
-    logging.info(f"Translating types from {args.from_lang} to {args.to_lang} in project {args.project_name} using {args.model_name}")
-    logging.info(f"Target language version: {args.to_lang_version}. Translation type: {args.type}")
 
     types = {}
     with open(in_fname, "r") as f:
@@ -85,21 +120,19 @@ def main(args):
             pbar.update(1)
             continue
 
-        index += 1
-
-        icl = f"{args.from_lang} type:\nString\n\n{args.to_lang} type:\nstr"
-        instruction = f"### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:\n\n{args.from_lang} type:\n" + type_ + f"\n\n### Response:\n{args.to_lang} type:\n\n"
+        icl = f"Java type:\n```\nString\n```\n\nPython type:\n```\nstr\n```"
+        instruction = f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:\n\nJava type:\n```\n" + type_ + f"\n```\n\n### Response:\nPython type:\n\n"
 
         if args.type == 'source_description':
             description = type_description[type_]['summarized_text'].replace('\n', '')
-            instruction = instruction.replace(f'### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f"### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above. A description of {args.from_lang} type is given as well:\n\nType Description:\n{description}")
+            instruction = instruction.replace(f'### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:', f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above. A description of Java type is given as well:\n\nType Description:\n{description}")
 
             if include_feedback:
-                instruction = instruction.replace(f'A description of {args.from_lang} type is given as well:\n\nType Description:\n{description}', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of {args.from_lang} type is give as well:\n\nType Description:\n{description}')
+                instruction = instruction.replace(f'A description of Java type is given as well:\n\nType Description:\n{description}', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of Java type is give as well:\n\nType Description:\n{description}')
 
         elif args.type == 'simple':
             if include_feedback:
-                instruction = instruction.replace(f'### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\n### Instruction:\nTranslate the following {args.from_lang} type to {args.to_lang} {args.to_lang_version} type and write your response like the example above:')
+                instruction = instruction.replace(f'### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:', f'Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\n### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:')
 
         prompt = f"{icl}\n\n{instruction}"
 
@@ -107,23 +140,20 @@ def main(args):
         logging.info(prompt)
         logging.info('*' * 100)
 
-        client = Client(
-            host=os.environ["OLLAMA_HOST"],
-        )
+        client = None
+        if args.model_name in model_info:
+            if args.model_name == 'gpt-4o-2024-11-20':
+                client = OpenAI(
+                    api_key=os.environ["OPENAI_API_KEY"],
+                )
+            else:
+                client = Client(
+                    host=os.environ["OLLAMA_HOST"],
+                )
+        else:
+            raise ValueError('No model found')
 
-        completion = client.chat(
-            model=model_info[args.model_name]['model_id'],
-            messages=[
-            {
-                'role': 'user',
-                'content': prompt,
-            }],
-            options={
-                "temperature": 0,
-                "num_predict": 1024
-            }
-        )
-        generation = completion.message.content.strip()
+        generation = prompt_model(model_info, client, prompt, args)
 
         generation = generation.replace('```python', '```')
         pattern = r'```((?:[^`]|`[^`]|``[^`])*?)```'
@@ -203,7 +233,7 @@ def main(args):
         except subprocess.CalledProcessError as e:
             # logging.info(e.stderr.decode('utf-8'))
             logging.info(f'compile error for translated type {generation}... trying again for {type_}')
-            feedback = f'The translated type {generation} is syntactically incorrect in {args.to_lang} {args.to_lang_version}.\n\n'
+            feedback = f'The translated type {generation} is syntactically incorrect in Python 3.11.\n\n'
             include_feedback = True
             max_attempts -= 1
             continue
@@ -239,9 +269,6 @@ if __name__ == '__main__':
     parser_ = argparse.ArgumentParser(description='Translate java types to python types')
     parser_.add_argument('--project_name', type=str, dest='project_name', help='project name')
     parser_.add_argument('--model_name', type=str, dest='model_name', help='model name to use for translation')
-    parser_.add_argument('--from_lang', type=str, dest='from_lang', help='language to translate from')
-    parser_.add_argument('--to_lang', type=str, dest='to_lang', help='language to translate to')
-    parser_.add_argument('--to_lang_version', type=str, dest='to_lang_version', help='language version to translate to')
     parser_.add_argument('--type', type=str, dest='type', help='translation type')
     args = parser_.parse_args()
     main(args)

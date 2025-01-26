@@ -1,6 +1,5 @@
 import json
 import os
-from src.icl.icl_ranking import rank_icl
 
 
 class PromptGenerator:
@@ -97,26 +96,10 @@ class PromptGenerator:
             else:
                 self.adaptive_icl = self.meta_data['icl']['feedback']
         else:
-            # if not self.use_icl_pool or self.fragment_details['fragment_type'] != 'method':
             if used_assertions:
                 self.adaptive_icl = test_icl
             else:
                 self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
-            # else:
-            #     matched_icl = rank_icl(self.args.project_name, 1, 'library_api', self.args.suffix, f"{self.fragment_details['schema_name']}|{self.fragment_details['class_name']}|{self.fragment_details['fragment_name']}")
-            #     if len(matched_icl) == 0:
-            #         if used_assertions:
-            #             self.adaptive_icl = test_icl
-            #         else:
-            #             self.adaptive_icl = self.meta_data['icl'][self.fragment_type]
-                    
-            #         return
-                
-            #     source_code = '\n'.join(matched_icl[0]['source_code'])
-            #     translation_signature = matched_icl[0]['target_signature']
-            #     correct_translation = '\n'.join(matched_icl[0]['correct_translation'])
-            #     self.adaptive_icl = f"Java code:\n```\n{source_code}\n```" + f"\n\nPartial Python translation:\n```\n{translation_signature}\n        pass\n```\n\nPython method translation:\n```\n{correct_translation}\n```"
-
 
     def load_fragment(self, fragment_details):
         self.schema_name = fragment_details['schema_name']

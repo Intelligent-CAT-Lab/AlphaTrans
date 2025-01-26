@@ -49,6 +49,8 @@ def main(args):
     coverage_details = {}
     for test_class in test_details:
         for test_case in test_details[test_class]:
+
+            print(f'runnig: {test_class}#{test_case}')
             
             status = subprocess.run(f'mvn clean test -Drat.skip=true -Dtest="{test_class}#{test_case}"', shell=True, cwd=f'java_projects/cleaned_final_projects{args.suffix}/{args.project_name}')
 

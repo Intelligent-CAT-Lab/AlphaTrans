@@ -6,11 +6,11 @@ import argparse
 def main(args):
     all_types = []
     all_classes = []
-    filenames = os.listdir(f'data/schemas/{args.project_name}')
+    filenames = os.listdir(f'data/schemas{args.suffix}/{args.project_name}')
 
     for filename in filenames:
         data = {}
-        with open(f'data/schemas/{args.project_name}/{filename}', 'r') as f:
+        with open(f'data/schemas{args.suffix}/{args.project_name}/{filename}', 'r') as f:
             data = json.load(f)
 
         for class_ in data['classes']:
@@ -29,7 +29,7 @@ def main(args):
                 # all_types += signature_types
 
     types_query_output = []
-    with open(f'data/query_outputs/{args.project_name}/{args.project_name}_types.txt', 'r') as f:
+    with open(f'data/query_outputs{args.suffix}/{args.project_name}/{args.project_name}_types.txt', 'r') as f:
         types_query_output = f.readlines()
 
     for type_ in types_query_output:
@@ -85,5 +85,6 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Extract types from schemas')
     parser.add_argument('--project_name', type=str, help='Name of the project')
+    parser.add_argument('--suffix', type=str, help='Suffix for the project')
     args = parser.parse_args()
     main(args)

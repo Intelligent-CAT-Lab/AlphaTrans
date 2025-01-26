@@ -11,6 +11,8 @@ We provide a [`Dockerfile`](/Dockerfile) which installs all necessary dependenci
 docker build --no-cache -t alphatrans .
 docker run -it alphatrans bash
 ```
+> [!NOTE]
+> If you are using MacOS with an Apple chip, please considering adding `--platform=linux/amd64` in `docker build`.
 
 Please refer to [Reproduce AlphaTrans Results](#reproduce-alphatrans-results) for instructions on how to reproduce the results of AlphaTrans. If you are interested in translating more projects, please refer to [Translate New Java Projects](#translate-new-java-projects).
 
@@ -47,6 +49,14 @@ bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 data/sche
 
 > [!NOTE]
 > Due to probabilistic behavior of models, the results might be slightly different when re-translating projects. You may run the experiment multiple times to adjust for this behavior.
+
+If you want to merge results of two different models, please first move each model result under `data/results`, and then execute the following:
+
+```
+bash scripts/merge_results.sh 0.0 deepseek-coder-33b-instruct gpt-4o-2024-11-20
+```
+
+This will merge results and create a new directory under `data/results/{$first_model}_{$second_model}_MERGED`.
 
 ## Translate New Java Projects
 In this section, we discuss how to add more projects and translate with AlphaTrans. Below, we provide the steps for the ten subject projects in our work. If you add a new project, it should be similar to existing ones. For every project, we provide two specific snapshots as shown below:
@@ -88,12 +98,12 @@ These scripts will properly store project schemas in JSON format under `data/sch
 We provide our universal type map under [`data/type_resolution/universal_type_map_final.json`](/data/type_resolution/universal_type_map_final.json). This type map can be directly used, however, if you want to translate types again, please execute the following from the root directory of the repository to perform type translation on the projects.
 
 ```
-bash scripts/extract_types.sh
+bash scripts/extract_types.sh _decomposed_tests
 bash scripts/crawl_type_desc.sh
-bash scripts/translate_types.sh <type>
+bash scripts/translate_types.sh <type> <model_name>
 ```
 
-The `<type>` can be either `simple` or `source_description`. The former prompts the model with vanilla prompt, while the latter prompts the model with source PL type description.
+The `<type>` can be either `simple` or `source_description`. The former prompts the model with vanilla prompt, while the latter prompts the model with source PL type description. The model can be either `deepseek-coder-33b-instruct` or `gpt-4o-2024-11-20`.
 
 ### 4. Skeleton Construction
 Execute the following from the root directory of the repository to generate skeletons of projects and check their syntactical correctness
@@ -110,7 +120,7 @@ This command should create proper skeletons in target language under `data/skele
 Finally, execute the following from the root directory of the repository to perform compositional translation and validation on the projects.
 
 ```bash
-bash scrtips/generate_test_invocation_map.sh _decomposed_tests
+bash scripts/generate_test_invocation_map.sh _decomposed_tests
 bash scripts/extract_coverage.sh <project_name> _decomposed_tests
 bash scripts/translate_fragment.sh <project_name> <temperature> <model>
 ```
@@ -134,6 +144,8 @@ Run this script to build the project and merge the source and test JARs:
 ```
 bash scripts/merge_jar.sh <project_name>
 ```
+> [!NOTE]
+> If a project uses an older version of Java, please consider changing the `pom.xml` file or use `-Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8` flags to override the compiler versions during compilation.
 
 #### Generate a Call Graph
 
