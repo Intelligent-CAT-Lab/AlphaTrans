@@ -20,6 +20,7 @@ AlphaTrans currently supports prompting OpenAI models (e.g., `gpt-4o-2024-11-20`
 vim .env
 ```
 
+### RQ1: Effectiveness of AlphaTrans
 For all ten projects, we provide the project skeletons and partial translations. Please execute the following to start translating projects (e.g., `commons-fileupload` project with `gpt-4o-2024-11-20` model and with `temperature=0.0`):
 
 ```
@@ -47,13 +48,56 @@ bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 data/sche
 > [!NOTE]
 > Due to probabilistic behavior of models, the results might be slightly different when re-translating projects. You may run the experiment multiple times to adjust for this behavior.
 
+### RQ2: Translation Bugs and Fixes:
+Please refer to `data/manually_verified_translations` for four projects we complemented AlphaTrans and achieved 100% test pass. The details regarding our manual investigation is available in the paper.
+
+### RQ3: Impact of Test Decomposition
+After translating a project, you can execute the following to analyze the effectiveness of test decomposition and producing the raw data in RQ3 figure:
+
+```
+bash scripts/analyze_test_decomposition.sh <model_name> <translation_dir>
+```
+
+The `<model_name>` can be `gpt-4o-2024-11-20` or `deepseek-coder-33b-instruct`. Similarly, `translation_dir` can be `data/results` or `data/schemas_decomposed_tests/translations` depending on where your translations are saved.
+
+### RQ4: Impact of Test Coverage
+Please first refer to [EvoSuite](https://github.com/EvoSuite/evosuite) and use the tool for test generation on all our subject projects, and store them under `java_projects/cleaned_final_projects_evosuite`. We used the default values provided by the tool to generate tests. Then, please refer to steps in [Translate New Java Projects](#translate-new-java-projects) to translate EvoSuite tests. Note that these tests are no different from normal fragments, and are not treated differently.
+
+After following the steps for decomposition, coverage extraction, and translating of EvoSuite tests, you can execute the following to get the ATP+ and TPR+ values in RQ4:
+
+```
+python3 src/postprocessing/atp_tpr_plus.py --project_name=<project_name>
+```
+
+If you face any errors, there might be a problem in translating your EvoSuite tests. Please create an issue with the description of your problem.
+
+### RQ5: Ablation Study
+
+#### Impact of Program Transformation
+If you want to investigate the effect of program transformation, please simply follow the steps in [Project Reduction, Program Transformation and Test Decomposition](#project-reduction-program-transformation-and-test-decomposition), and only perform the reduction step. You can then use CodeQL for program analysis and schema creation as mentioned in [Translate New Java Projects](#translate-new-java-projects).
+
+#### Choice of LLM
 If you want to merge results of two different models, please first move each model result under `data/results`, and then execute the following:
 
 ```
 bash scripts/merge_results.sh 0.0 deepseek-coder-33b-instruct gpt-4o-2024-11-20
 ```
 
-This will merge results and create a new directory under `data/results/{$first_model}_{$second_model}_MERGED`.
+This will merge results and create a new directory under `data/results/{$first_model}_{$second_model}_MERGED`. You can then see the results by running:
+
+```
+bash scripts/print_results.sh commons-fileupload 0.0 deepseek-coder-33b-instruct_gpt-4o-2024-11-20_MERGED data/results
+```
+
+#### Impact of Program Decomposition
+If you want to perform file-by-file translation without program decomposition, please run the following scripts:
+
+```
+bash scripts/translate_class_by_class.sh <model_name>
+bash scripts/validate_class_by_class.sh <model_name>
+```
+
+The project name can be either `deepseek-coder-33b-instruct` or `gpt-4o-2024-11-20`.
 
 ## Translate New Java Projects
 In this section, we discuss how to add more projects and translate with AlphaTrans. Below, we provide the steps for the ten subject projects in our work. If you add a new project, it should be similar to existing ones. For every project, we provide two specific snapshots as shown below:
