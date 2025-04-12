@@ -9,13 +9,6 @@ from src.main.org.apache.commons.fileupload.util.mime.MimeUtility import *
 
 class ParameterParser:
 
-    __lowerCaseNames: bool = False
-    __i2: int = 0
-    __i1: int = 0
-    __len: int = 0
-    __pos: int = 0
-    __chars: typing.List[str] = None
-
     def parse3(
         self, charArray: typing.List[str], offset: int, length: int, separator: str
     ) -> typing.Dict[str, str]:
@@ -89,6 +82,13 @@ class ParameterParser:
 
     def __init__(self) -> None:
         super().__init__()
+        self.__lowerCaseNames: bool = False
+        self.__i2: int = 0
+        self.__i1: int = 0
+        self.__len: int = 0
+        self.__pos: int = 0
+        self.__chars: typing.List[str] = None
+
 
     def __parseQuotedToken(self, terminators: typing.List[str]) -> str:
 

@@ -3,6 +3,7 @@ import re
 import enum
 from io import IOBase
 from io import StringIO
+from io import BytesIO
 import io
 import typing
 from typing import *
@@ -22,9 +23,11 @@ class OptionComparator:
         return self.compare(opt1, opt2)
 
     def compare(self, opt1: Option, opt2: Option) -> int:
-        if opt1.getKey().casefold() < opt2.getKey().casefold():
+        opt1Key = opt1.getKey()
+        opt2Key = opt2.getKey()
+        if opt1Key.casefold() < opt2Key.casefold():
             return -1
-        if opt1.getKey().casefold() > opt2.getKey().casefold():
+        if opt1Key.casefold() > opt2Key.casefold():
             return 1
         return 0
 
@@ -218,7 +221,10 @@ class HelpFormatter:
         sb = StringIO()
 
         self.__renderWrappedTextBlock(sb, width, nextLineTabStop, text)
-        pw.write(sb.getvalue() + os.linesep)
+        if isinstance(pw, BytesIO):
+            pw.write((sb.getvalue() + os.linesep).encode("utf-8"))
+        else:
+            pw.write(sb.getvalue() + os.linesep)
 
     def printUsage1(
         self,
@@ -281,7 +287,10 @@ class HelpFormatter:
         sb = StringIO()
 
         self._renderOptions(sb, width, options, leftPad, descPad)
-        pw.write(sb.getvalue() + os.linesep)
+        if isinstance(pw, BytesIO):
+            pw.write((sb.getvalue() + os.linesep).encode("utf-8"))
+        else:
+            pw.write(sb.getvalue() + os.linesep)
 
     def printHelp7(
         self,

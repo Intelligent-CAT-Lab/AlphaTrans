@@ -198,14 +198,6 @@ class MalformedStreamException:
 
 class ProgressNotifier:
 
-    __items: int = 0
-
-    __bytesRead: int = 0
-
-    __contentLength: int = 0
-
-    __listener: ProgressListener = None
-
     def __notifyListener(self) -> None:
         if self.__listener is not None:
             self.__listener.update(self.__bytesRead, self.__contentLength, self.__items)
@@ -221,6 +213,8 @@ class ProgressNotifier:
     def __init__(self, pListener: ProgressListener, pContentLength: int) -> None:
         self.__listener = pListener
         self.__contentLength = pContentLength
+        self.__items: int = 0
+        self.__bytesRead: int = 0
 
 
 class MultipartStream:

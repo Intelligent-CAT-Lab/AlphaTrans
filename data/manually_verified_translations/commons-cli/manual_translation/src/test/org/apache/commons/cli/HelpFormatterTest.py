@@ -139,10 +139,10 @@ class HelpFormatterTest(unittest.TestCase):
         opts.addOption0(optionB)
         opts.addOption0(optionC)
         helpFormatter = HelpFormatter()
-        out = StringIO()
+        out = BytesIO()
         helpFormatter.printUsage1(out, 80, "app", opts)
         self.assertEqual(
-            "usage: app [-a] [-b] [-c]" + self.__EOL, out.getvalue()
+            "usage: app [-a] [-b] [-c]" + self.__EOL, out.getvalue().decode()
         )
 
     def testPrintSortedUsageWithNullComparator(self) -> None:
@@ -333,7 +333,7 @@ class HelpFormatterTest(unittest.TestCase):
     def testPrintHelpNewlineHeader(self) -> None:
 
         formatter = HelpFormatter()
-        out = io.StringIO()
+        out = io.BytesIO()
 
         options = Options()
         options.addOption2("a", "b")
@@ -358,12 +358,12 @@ class HelpFormatterTest(unittest.TestCase):
             + self.__EOL
         )
         out.flush()
-        self.assertEqual(expected, out.getvalue(), "header newline")
+        self.assertEqual(expected, out.getvalue().decode(), "header newline")
 
     def testPrintHelpNewlineFooter(self) -> None:
 
         formatter = HelpFormatter()
-        out = io.StringIO()
+        out = io.BytesIO()
 
         options = Options()
         options.addOption2("a", "b")
@@ -388,7 +388,7 @@ class HelpFormatterTest(unittest.TestCase):
             + self.__EOL
         )
         out.flush()
-        self.assertEqual(expected, out.getvalue(), "footer newline")
+        self.assertEqual(expected, out.getvalue().decode(), "footer newline")
 
     def testOptionWithoutShortFormat2(self) -> None:
 
@@ -664,12 +664,12 @@ class HelpFormatterTest(unittest.TestCase):
         hf = HelpFormatter()
         options = Options()
         expected = "usage: app [-a]"
-        out = io.StringIO()
+        out = io.BytesIO()
 
         options.addOption1("a", False, "aaaa aaaa aaaa aaaa aaaa")
         hf.printUsage1(out, 60, "app", options)
         out.flush()
-        self.assertEqual(expected, out.getvalue().strip(), "simple auto usage")
+        self.assertEqual(expected, out.getvalue().decode().strip(), "simple auto usage")
         out.seek(0)
         out.truncate()
 
@@ -681,7 +681,7 @@ class HelpFormatterTest(unittest.TestCase):
         )
         hf.printUsage1(out, 60, "app", options)
         out.flush()
-        self.assertEqual(expected, out.getvalue().strip(), "simple auto usage")
+        self.assertEqual(expected, out.getvalue().decode().strip(), "simple auto usage")
         out.seek(0)
         out.truncate()
 

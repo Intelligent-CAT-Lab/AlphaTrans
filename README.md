@@ -7,6 +7,8 @@ Authors are [Ali Reza Ibrahimzada][ali], Kaiyao Ke, Mrigank Pawagi, Muhammad Sal
 [ali]: https://alirezai.cs.illinois.edu/
 [reyhaneh]: https://reyhaneh.cs.illinois.edu/index.htm
 
+## Data Archive
+Please visit [Zenodo](https://doi.org/10.5281/zenodo.13826582) to access the results of AlphaTrans. We will refer to certain files from this archive in the following sections.
 
 ## Getting Started
 We provide a [`Dockerfile`](/Dockerfile) which installs all necessary dependencies to reproduce the results of AlphaTrans. Please download [Docker](https://www.docker.com/), and then execute the following to create a docker image and execute the container in interactive mode:
@@ -51,6 +53,12 @@ bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 data/sche
 > [!NOTE]
 > Due to probabilistic behavior of models, the results might be slightly different when re-translating projects. You may run the experiment multiple times to adjust for this behavior.
 
+If you want to reproduce the results of AlphaTrans from Table 2 (e.g., the command is for `commons-fileupload`, but feel free to change it to any project), please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+
+```
+bash scripts/print_results.sh commons-fileupload 0.0 deepseek-coder-33b-instruct alphatrans-artifacts/results
+```
+
 ### RQ2: Translation Bugs and Fixes:
 Please refer to `data/manually_verified_translations` for four projects we complemented AlphaTrans and achieved 100% test pass. The details regarding our manual investigation is available in the paper.
 
@@ -63,6 +71,12 @@ bash scripts/analyze_test_decomposition.sh <model_name> <translation_dir>
 
 The `<model_name>` can be `gpt-4o-2024-11-20` or `deepseek-coder-33b-instruct`. Similarly, `translation_dir` can be `data/results` or `data/schemas_decomposed_tests/translations` depending on where your translations are saved.
 
+If you want to reproduce the raw results of AlphaTrans from Figure 6, please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+
+```
+bash scripts/analyze_test_decomposition.sh deepseek-coder-33b-instruct alphatrans-artifacts/results
+```
+
 ### RQ4: Impact of Test Coverage
 Please first refer to [EvoSuite](https://github.com/EvoSuite/evosuite) and use the tool for test generation on all our subject projects, and store them under `java_projects/cleaned_final_projects_evosuite`. We used the default values provided by the tool to generate tests. Then, please refer to steps in [Translate New Java Projects](#translate-new-java-projects) to translate EvoSuite tests. Note that these tests are no different from normal fragments, and are not treated differently.
 
@@ -74,16 +88,36 @@ python3 src/postprocessing/atp_tpr_plus.py --project_name=<project_name>
 
 If you face any errors, there might be a problem in translating your EvoSuite tests. Please create an issue with the description of your problem.
 
+If you want to reproduce the results of AlphaTrans from Table 3 (e.g., the command is for `commons-fileupload`, but feel free to change it to any project), please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+```
+cp -r alphatrans-artifacts/results/deepseek-coder-33b-instruct data/schemas_decomposed_tests/translations
+cp -r alphatrans-artifacts/results/gpt-4o-2024-11-20 data/schemas_decomposed_tests/translations
+```
+
+Then, you can execute the first command (`python3 src/postprocessing/atp_tpr_plus.py --project_name=commons-fileupload`) to get the results. Please note that, since EvoSuite only works with Java 11, you may need to install it with `sdk`.
+
 ### RQ5: Ablation Study
 
 #### Impact of Program Transformation
 If you want to investigate the effect of program transformation, please simply follow the steps in [Project Reduction, Program Transformation and Test Decomposition](#project-reduction-program-transformation-and-test-decomposition), and only perform the reduction step. You can then use CodeQL for program analysis and schema creation as mentioned in [Translate New Java Projects](#translate-new-java-projects).
+
+If you want to reproduce the results of AlphaTrans from Table 4 (e.g., the command is for `commons-fileupload`, but feel free to change it to any project), please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+
+```
+bash scripts/print_results.sh commons-fileupload 0.0 deepseek-coder-33b-instruct_NO_TRANSFORMATION alphatrans-artifacts/results
+```
 
 #### Choice of LLM
 If you want to see the results of GPT-4o, please execute the following for different projects:
 
 ```
 bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 data/schemas_decomposed_tests/translations
+```
+
+If you want to reproduce the results of AlphaTrans from Table 5 (e.g., the command is for `commons-fileupload`, but feel free to change it to any project), please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+
+```
+bash scripts/print_results.sh commons-fileupload 0.0 gpt-4o-2024-11-20 alphatrans-artifacts/results
 ```
 
 #### Impact of Program Decomposition
@@ -94,7 +128,14 @@ bash scripts/translate_class_by_class.sh <model_name>
 bash scripts/validate_class_by_class.sh <model_name>
 ```
 
-The project name can be either `deepseek-coder-33b-instruct` or `gpt-4o-2024-11-20`.
+If you want to reproduce the results of AlphaTrans from Table 6, please download and unzip `alphatrans-artifacts.zip` from Zenodo. Once unzipped inside the repository directory, you can execute the following to get the results:
+
+```
+cp -r alphatrans-artifacts/class_by_class_prompting .
+bash scripts/validate_class_by_class.sh <model_name>
+```
+
+The model name can be either `deepseek-coder-33b-instruct` or `gpt-4o-2024-11-20`.
 
 ## Translate New Java Projects
 In this section, we discuss how to add more projects and translate with AlphaTrans. Below, we provide the steps for the ten subject projects in our work. If you add a new project, it should be similar to existing ones. For every project, we provide two specific snapshots as shown below:
@@ -230,9 +271,6 @@ After successful execution, this should create the [`cleaned_final_projects_deco
 
 > [!NOTE]
 > There might be a need to do some small manual changes after test decomposition. For instance removing `@Test(expected = IllegalArgumentException.class)` from test annotation as we do not know ahead of time which decomposed tests throw exception. Please refer to our reference decomposed tests (e.g., [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/)) for specific examples. A project with decomposed tests is considered ok as long as it can be compiled by maven.
-
-## Partial Translations
-All generated partial Python translations are available on [Zenodo](https://doi.org/10.5281/zenodo.13826582).
 
 ## Contact
 We look forward to hearing your feedback. Please open an issue for any questions or comments 🙏.

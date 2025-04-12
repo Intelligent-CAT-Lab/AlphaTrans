@@ -168,9 +168,27 @@ class Option:
         )
 
     def clone(self) -> typing.Any:
-
         try:
-            option = copy.deepcopy(self)
+            option = object.__new__(type(self))
+            def manual_deepcopy(obj):
+                module = obj.__module__ if hasattr(obj, '__module__') else "" 
+                if isinstance(obj, dict):
+                    return {key: manual_deepcopy(value) for key, value in obj.items()}
+                elif isinstance(obj, list):
+                    return [manual_deepcopy(item) for item in obj]
+                elif isinstance(obj, set):
+                    return {manual_deepcopy(item) for item in obj}
+                elif isinstance(obj, tuple):
+                    return tuple(manual_deepcopy(item) for item in obj)
+                elif "org.apache.commons.cli" in module:  # custom object
+                    new_obj = object.__new__(obj.__class__)
+                    for key, val in obj.__dict__.items():
+                        setattr(new_obj, key, manual_deepcopy(val))
+                    return new_obj
+                else:
+                    return obj  # Immutable types
+            for key, val in self.__dict__.items():
+                option.__dict__[key] = manual_deepcopy(val)
             return option
         except Exception as e:
             raise RuntimeError("An exception was thrown: " + str(e))

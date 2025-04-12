@@ -8,8 +8,6 @@ from src.main.org.apache.commons.fileupload.FileItemHeaders import *
 
 class FileItemHeadersImpl(FileItemHeaders):
 
-    __headerNameToValueListMap: typing.Dict[str, typing.List[str]] = {}
-
     __serialVersionUID: int = -4455695752627032559
 
     def getHeaders(self, name: str) -> typing.Iterator[str]:
@@ -38,3 +36,7 @@ class FileItemHeadersImpl(FileItemHeaders):
             headerValueList = []
             self.__headerNameToValueListMap[nameLower] = headerValueList
         headerValueList.append(value)
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.__headerNameToValueListMap: typing.Dict[str, typing.List[str]] = {}
