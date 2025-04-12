@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project default="compile">
+
+  <property name="benchmark.target" value="Benchmark" />
+
+  <target name="compile">
+    <mkdir dir="target/classes" />
+    <depend srcdir="src/main/java" destdir="target/classes" />
+    <javac includeantruntime="false" destdir="target/classes">
+      <src path="src/main/java" />
+      <exclude name="me/lemire/integercompression/vector/*.java" />
+      <exclude name="module-info.java" />
+    </javac>
+  </target>
+
+  <target name="vector-fastpfor">
+    <mkdir dir="target/classes" />
+    <depend srcdir="src/main/java" destdir="target/classes" />
+    <javac includeantruntime="false" destdir="target/classes" release="19">
+      <src path="src/main/java" />
+    </javac>
+  </target>
+
+  <target name="Benchmark" depends="compile">
+    <java
+      classpath="target/classes"
+      classname="me.lemire.integercompression.benchmarktools.${benchmark.target}"
+      fork="true">
+      <jvmarg value="-server" />
+    </java>
+  </target>
+
+  <target name="clean">
+    <delete dir="target" />
+  </target>
+
+</project>
