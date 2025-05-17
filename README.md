@@ -1,11 +1,16 @@
 # AlphaTrans
 
+[<img padding="10" align="right" src="https://www.acm.org/binaries/content/gallery/acm/publications/artifact-review-v1_1-badges/artifacts_evaluated_functional_v1_1.png" alt="ACM Artifacts Evaluated - Functional v1.1" width="114" height="113"/>][paper]
+[<img padding="10" align="right" src="https://www.acm.org/binaries/content/gallery/acm/publications/artifact-review-v1_1-badges/artifacts_available_v1_1.png" alt="ACM Artifacts Available v1.1" width="114" height="113"/>][paper]
+
 Artifact repository for the paper [_AlphaTrans: A Neuro-Symbolic Compositional Approach for Repository-Level Code Translation and Validation_](https://arxiv.org/abs/2410.24117), accepted at _FSE 2025_, Trondheim, Norway.
 Authors are [Ali Reza Ibrahimzada][ali], Kaiyao Ke, Mrigank Pawagi, Muhammad Salman Abid, [Rangeet Pan][rangeet], Saurabh Sinha, and [Reyhaneh Jabbarvand][reyhaneh].
 
 [rangeet]: https://rangeetpan.github.io/
 [ali]: https://alirezai.cs.illinois.edu/
 [reyhaneh]: https://reyhaneh.cs.illinois.edu/index.htm
+
+[paper]: https://doi.org/10.1145/3729379
 
 ## Data Archive
 Please visit [Zenodo](https://doi.org/10.5281/zenodo.13826582) to access the results of AlphaTrans. We will refer to certain files from this archive in the following sections.
