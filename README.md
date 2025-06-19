@@ -277,5 +277,27 @@ After successful execution, this should create the [`cleaned_final_projects_deco
 > [!NOTE]
 > There might be a need to do some small manual changes after test decomposition. For instance removing `@Test(expected = IllegalArgumentException.class)` from test annotation as we do not know ahead of time which decomposed tests throw exception. Please refer to our reference decomposed tests (e.g., [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/)) for specific examples. A project with decomposed tests is considered ok as long as it can be compiled by maven.
 
+## Please Cite as
+```
+@article{10.1145/3729379,
+  author = {Ibrahimzada, Ali Reza and Ke, Kaiyao and Pawagi, Mrigank and Abid, Muhammad Salman and Pan, Rangeet and Sinha, Saurabh and Jabbarvand, Reyhaneh},
+  title = {AlphaTrans: A Neuro-Symbolic Compositional Approach for Repository-Level Code Translation and Validation},
+  year = {2025},
+  issue_date = {July 2025},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  volume = {2},
+  number = {FSE},
+  url = {https://doi.org/10.1145/3729379},
+  doi = {10.1145/3729379},
+  abstract = {Code translation transforms programs from one programming language (PL) to another. One prominent use case is application modernization to enhance maintainability and reliability. Several rule-based transpilers have been designed to automate code translation between different pairs of PLs. However, the rules can become obsolete as the PLs evolve and cannot generalize to other PLs. Recent studies have explored the automation of code translation using Large Language Models (LLMs). One key observation is that such techniques may work well for crafted benchmarks but fail to generalize to the scale and complexity of real-world projects with inter- and intra-class dependencies, custom types, PL-specific features, etc. We propose AlphaTrans, a neuro-symbolic approach to automate repository-level code translation. AlphaTrans translates both source and test code, and employs multiple levels of validation to ensure the translation preserves the functionality of the source program. To break down the problem for LLMs, AlphaTrans leverages program analysis to decompose the program into fragments and translates them in the reverse call order. We leveraged AlphaTrans to translate ten real-world open-source projects consisting of ⟨836, 8575, 2719⟩ (application and test) classes, (application and test) methods, and unit tests. AlphaTrans breaks down these projects into 17874 fragments and translates the entire repository. 96.40\% of the translated fragments are syntactically correct, and AlphaTrans validates the translations’ runtime behavior and functional correctness for 27.03\% and 25.14\% of the application method fragments. On average, integrated translation and validation takes 34 hours (min=3, max=121) to translate a project, showing its scalability in practice. For the syntactically or semantically incorrect translations, AlphaTrans generates a report including existing translation, stack trace, test errors, or assertion failures. We provided these artifacts to two developers to fix the translation bugs in four projects. They fixed the issues in 20.1 hours on average (5.5 hours for the smallest and 34 hours for the largest project) and achieved all passing tests. Without AlphaTrans, translating and validating such big projects could take weeks, if not months.},
+  journal = {Proc. ACM Softw. Eng.},
+  month = jun,
+  articleno = {FSE109},
+  numpages = {23},
+  keywords = {Neuro-Symbolic Code Translation and Validation}
+}
+```
+
 ## Contact
 We look forward to hearing your feedback. Please open an issue for any questions or comments 🙏.
