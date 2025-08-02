@@ -278,7 +278,7 @@ After successful execution, this should create the [`cleaned_final_projects_deco
 > There might be a need to do some small manual changes after test decomposition. For instance removing `@Test(expected = IllegalArgumentException.class)` from test annotation as we do not know ahead of time which decomposed tests throw exception. Please refer to our reference decomposed tests (e.g., [`cleaned_final_projects_decomposed_tests`](/java_projects/cleaned_final_projects_decomposed_tests/)) for specific examples. A project with decomposed tests is considered ok as long as it can be compiled by maven.
 
 ## Please Cite as
-```
+```bibtex
 @article{10.1145/3729379,
   author = {Ibrahimzada, Ali Reza and Ke, Kaiyao and Pawagi, Mrigank and Abid, Muhammad Salman and Pan, Rangeet and Sinha, Saurabh and Jabbarvand, Reyhaneh},
   title = {AlphaTrans: A Neuro-Symbolic Compositional Approach for Repository-Level Code Translation and Validation},
